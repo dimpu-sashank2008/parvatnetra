@@ -33,12 +33,22 @@ class EdgeStore:
 
     def __init__(self, db_path: Optional[str] = None) -> None:
         if db_path is None:
-            base_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "data", "edge")
-            os.makedirs(base_dir, exist_ok=True)
-            self.db_path = os.path.join(base_dir, "edge_store.db")
+            # Detect serverless / Vercel read-only filesystem
+            if os.environ.get("VERCEL") or os.environ.get("AWS_LAMBDA_FUNCTION_NAME"):
+                base_dir = os.path.join("/tmp", "edge")
+            else:
+                base_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "data", "edge")
+            try:
+                os.makedirs(base_dir, exist_ok=True)
+                self.db_path = os.path.join(base_dir, "edge_store.db")
+            except (OSError, PermissionError):
+                self.db_path = ":memory:"
         else:
             if db_path != ":memory:":
-                os.makedirs(os.path.dirname(os.path.abspath(db_path)), exist_ok=True)
+                try:
+                    os.makedirs(os.path.dirname(os.path.abspath(db_path)), exist_ok=True)
+                except (OSError, PermissionError):
+                    db_path = ":memory:"
             self.db_path = db_path
 
         self._lock = threading.Lock()
