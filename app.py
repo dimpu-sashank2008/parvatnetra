@@ -354,7 +354,13 @@ def pahad_ai():
     role = session.get("role") or session.get("user_role") or "authority"
     return render_template("pahad_ai.html", user_role=role)
 
-
+@app.route("/demo")
+def public_demo():
+    """
+    Public interactive 50m geofence evaluation & scenario demonstration portal (Phase 11A).
+    Designed for judges and evaluators to test geolocation, geofence status, and safe dispatch over HTTPS.
+    """
+    return render_template("demo.html")
 
 @app.route("/favicon.ico")
 def favicon():

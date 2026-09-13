@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-[#070B10]">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PARVAT NETRA ? Public Interactive Demo & 50m Geofence Evaluator</title>
+    <link rel="icon" type="image/png" href="/static/images/parvat_netra_emblem.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Inter"', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace']
+                    },
+                    colors: {
+                        obsidian: '#070B10',
+                        obsidianCard: '#0B132B',
+                        slateBorder: '#1E293B',
+                        accentBlue: '#2563EB',
+                        accentAmber: '#F59E0B',
+                        accentEmerald: '#10B981',
+                        accentRed: '#EF4444'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #070B10; color: #F1F5F9; }
+        .font-mono { font-family: 'JetBrains Mono', monospace !important; }
+        @keyframes pulse-fast { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.85; transform: scale(1.02); } }
+        .pulse-danger { animation: pulse-fast 1.5s infinite ease-in-out; }
+    </style>
+</head>
+<body class="h-full flex flex-col overflow-y-auto">
+
+    <!-- Institutional Header -->
+    <header class="h-14 bg-[#0B132B] border-b border-[#1E293B] px-4 flex items-center justify-between shrink-0 sticky top-0 z-30">
+        <div class="flex items-center space-x-3">
+            <a href="/" class="flex items-center space-x-2 text-slate-300 hover:text-white transition">
+                <img src="/static/images/parvat_netra_emblem.png" alt="Emblem" class="w-8 h-8 object-contain">
+                <div>
+                    <span class="font-bold tracking-wider text-sm block leading-none">PARVAT NETRA</span>
+                    <span class="text-[10px] text-sky-400 font-mono tracking-wider block">PAHAD AI EVALUATOR PORTAL</span>
+                </div>
+            </a>
+            <div class="h-5 w-px bg-slate-700 hidden sm:block"></div>
+            <span class="hidden sm:inline-block px-2 py-0.5 text-[10px] font-mono font-bold rounded bg-amber-950/80 text-amber-300 border border-amber-700/60">
+                [PUBLIC DEMO ? 50M GEOFENCE GATE]
+            </span>
+        </div>
+        <div class="flex items-center space-x-2">
+            <a href="/" class="px-2.5 py-1 text-xs rounded border border-slate-700 hover:border-slate-500 text-slate-300 transition">
+                Dashboard
+            </a>
+            <a href="/health" target="_blank" class="px-2.5 py-1 text-xs rounded border border-slate-700 hover:border-emerald-500 text-emerald-400 font-mono transition">
+                /health
+            </a>
+            <a href="/notifications" class="px-2.5 py-1 text-xs rounded border border-slate-700 hover:border-slate-500 text-slate-300 transition">
+                Alerts
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 max-w-6xl w-full mx-auto p-4 sm:p-6 space-y-6">
+        
+        <!-- Top Banner: System Safety Invariants -->
+        <div class="bg-[#0B132B] border border-blue-900/50 rounded-lg p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-md">
+            <div>
+                <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+                    <span class="text-xs font-bold uppercase tracking-wider text-sky-300 font-mono">Phase 11A Public Evaluator Sandbox</span>
+                </div>
+                <p class="text-xs text-slate-300 mt-1">
+                    Evaluate browser HTTPS geolocation, sub-100m proximity thresholding, and multichannel emergency drill isolation.
+                </p>
+            </div>
+            <div class="flex items-center gap-2 text-[10px] font-mono shrink-0">
+                <span class="px-2 py-1 rounded bg-slate-900 border border-slate-700 text-slate-400">PUBLIC_DISPATCH: 0</span>
+                <span class="px-2 py-1 rounded bg-slate-900 border border-slate-700 text-slate-400">SIREN_DRY_RUN: 1</span>
+            </div>
+        </div>
+
+        <!-- Grid Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+            <!-- Left Panel: 50m Geofence Engine (lg:col-span-7) -->
+            <div class="lg:col-span-7 bg-[#0B132B] border border-[#1E293B] rounded-lg p-5 space-y-5 shadow-lg">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                    <div>
+                        <h2 class="text-sm font-bold tracking-wide text-white uppercase font-mono flex items-center gap-2">
+                            <span class="text-sky-400">01.</span> 50-Meter Life-Safety Geofence Engine
+                        </h2>
+                        <p class="text-xs text-slate-400 mt-0.5">High-precision haversine radius calculated relative to active hazard centroid</p>
+                    </div>
+                    <span id="session-badge" class="text-[10px] font-mono text-slate-400 px-2 py-0.5 rounded bg-slate-900 border border-slate-800">
+                        SESSION: INIT
+                    </span>
+                </div>
+
+                <!-- Active Hazard Centroid -->
+                <div class="bg-slate-900/90 border border-slate-800 rounded p-3 text-xs font-mono space-y-1">
+                    <div class="text-slate-400 font-semibold uppercase text-[10px] tracking-wider">Hazard Centroid Reference</div>
+                    <div class="flex justify-between items-center text-slate-200">
+                        <span>Sector: <strong class="text-amber-400">SK-NH10-KM48 (29th Mile Slump)</strong></span>
+                        <span class="text-slate-400">Lat: 27.0984, Lng: 88.4892</span>
+                    </div>
+                </div>
+
+                <!-- Geolocation Controls -->
+                <div class="space-y-3">
+                    <div class="flex flex-wrap gap-2">
+                        <button id="btn-acquire-gps" onclick="acquireRealLocation()" class="flex-1 min-w-[200px] py-2 px-3 bg-blue-600 hover:bg-blue-500 text-white rounded font-medium text-xs transition flex items-center justify-center gap-2 shadow">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            Acquire GPS via HTTPS
+                        </button>
+                        <button onclick="simulateProximity(35)" class="py-2 px-3 bg-red-950/70 hover:bg-red-900 text-red-300 border border-red-800 rounded font-medium text-xs transition">
+                            Simulate Inside (35m)
+                        </button>
+                        <button onclick="simulateProximity(180)" class="py-2 px-3 bg-emerald-950/70 hover:bg-emerald-900 text-emerald-300 border border-emerald-800 rounded font-medium text-xs transition">
+                            Simulate Outside (180m)
+                        </button>
+                    </div>
+                    <p id="gps-status" class="text-[11px] font-mono text-slate-400 italic">
+                        Click "Acquire GPS" to request browser coordinates or select a simulation preset.
+                    </p>
+                </div>
+
+                <!-- Dynamic Geofence Status Card -->
+                <div id="geofence-card" class="rounded-lg p-5 border border-slate-700 bg-slate-900/60 transition-all">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-mono uppercase tracking-wider text-slate-400">Current Radius State</span>
+                        <span id="geofence-tag" class="text-xs font-mono font-bold px-2.5 py-1 rounded bg-slate-800 text-slate-300 border border-slate-700">
+                            AWAITING POSITION
+                        </span>
+                    </div>
+
+                    <div class="mt-4 flex items-baseline justify-between">
+                        <div>
+                            <div class="text-2xl sm:text-3xl font-bold font-mono text-white" id="distance-readout">--- m</div>
+                            <div class="text-xs text-slate-400 mt-0.5">Calculated distance to slide slip surface</div>
+                        </div>
+                        <div class="text-right font-mono text-xs text-slate-400">
+                            <div>Geofence Limit: <strong class="text-amber-400">50.0 m</strong></div>
+                            <div>Corridor Buffer: <strong class="text-slate-200">15.0 km</strong></div>
+                        </div>
+                    </div>
+
+                    <!-- Visual Progress Bar -->
+                    <div class="w-full bg-slate-800 rounded-full h-2.5 mt-4 overflow-hidden">
+                        <div id="distance-bar" class="bg-blue-500 h-2.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+                    </div>
+
+                    <div id="geofence-advisory" class="mt-4 p-3 rounded text-xs font-mono text-slate-300 bg-slate-950 border border-slate-800">
+                        System standing by. Grant location permission or choose a simulated coordinate to evaluate the life-safety barrier.
+                    </div>
+                </div>
+
+                <!-- Physics Corroboration -->
+                <div class="grid grid-cols-3 gap-3 text-center font-mono text-xs">
+                    <div class="p-2.5 bg-slate-900 rounded border border-slate-800">
+                        <div class="text-[10px] text-slate-400 uppercase">Slope Factor of Safety</div>
+                        <div class="text-base font-bold text-red-400 mt-1">FoS 0.88</div>
+                        <div class="text-[9px] text-red-300">Mohr-Coulomb Limit</div>
+                    </div>
+                    <div class="p-2.5 bg-slate-900 rounded border border-slate-800">
+                        <div class="text-[10px] text-slate-400 uppercase">Composite Risk (CRI)</div>
+                        <div class="text-base font-bold text-amber-400 mt-1">94.2 / 100</div>
+                        <div class="text-[9px] text-amber-300">Extreme Threat</div>
+                    </div>
+                    <div class="p-2.5 bg-slate-900 rounded border border-slate-800">
+                        <div class="text-[10px] text-slate-400 uppercase">Acoustic Siren Gate</div>
+                        <div class="text-base font-bold text-sky-400 mt-1">ARMED [DRY]</div>
+                        <div class="text-[9px] text-sky-300">130dB Relay Ready</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right Panel: Safe Scenario & Multi-Channel Drill (lg:col-span-5) -->
+            <div class="lg:col-span-5 bg-[#0B132B] border border-[#1E293B] rounded-lg p-5 space-y-5 shadow-lg flex flex-col justify-between">
+                <div class="space-y-4">
+                    <div class="border-b border-slate-800 pb-3">
+                        <h2 class="text-sm font-bold tracking-wide text-white uppercase font-mono flex items-center gap-2">
+                            <span class="text-sky-400">02.</span> Multichannel Evaluator Drill
+                        </h2>
+                        <p class="text-xs text-slate-400 mt-0.5">Test isolated SMS, Voice, and CAP notification pipeline safely</p>
+                    </div>
+
+                    <!-- Scenario Preset -->
+                    <div class="space-y-1.5">
+                        <label class="text-[11px] font-mono text-slate-300 uppercase font-semibold">Test Disaster Scenario</label>
+                        <select id="scenario-select" class="w-full bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded p-2 font-mono focus:border-blue-500 outline-hidden">
+                            <option value="scen_monsoon">Scenario A: 72h Antecedent Monsoon Rainfall (Rain: 185mm)</option>
+                            <option value="scen_seismic">Scenario B: Sikkim Himalayan Fault M4.8 Seismic Trigger</option>
+                            <option value="scen_toe_erosion">Scenario C: Teesta Basin Flash Flood Toe Cutting</option>
+                        </select>
+                    </div>
+
+                    <!-- Destination Input -->
+                    <div class="space-y-3 pt-2">
+                        <div>
+                            <label class="text-[11px] font-mono text-slate-300 uppercase font-semibold">Evaluation Email (Optional)</label>
+                            <input id="drill-email" type="email" placeholder="judge@smartindiahackathon.gov.in" class="w-full mt-1 bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded p-2 font-mono focus:border-blue-500 outline-hidden">
+                        </div>
+                        <div>
+                            <label class="text-[11px] font-mono text-slate-300 uppercase font-semibold">Evaluation Mobile (Optional)</label>
+                            <input id="drill-phone" type="tel" placeholder="+91 9876543210" class="w-full mt-1 bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded p-2 font-mono focus:border-blue-500 outline-hidden">
+                        </div>
+                    </div>
+
+                    <!-- Dispatch Trigger -->
+                    <button id="btn-trigger-drill" onclick="executeSafeDrill()" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded transition flex items-center justify-center gap-2 font-mono shadow-md">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        EXECUTE ISOLATED TEST DRILL
+                    </button>
+                    
+                    <p class="text-[10px] text-slate-400 font-mono text-center">
+                        Guaranteed zero public dispatch ? Audit trail logged to /api/notifications/demo/journal
+                    </p>
+                </div>
+
+                <!-- Live Audit Feed -->
+                <div class="border-t border-slate-800 pt-3 space-y-2">
+                    <div class="flex items-center justify-between text-[11px] font-mono text-slate-400">
+                        <span>LIVE AUDIT TRAIL</span>
+                        <button onclick="refreshJournal()" class="hover:text-sky-300 transition">? Refresh</button>
+                    </div>
+                    <div id="journal-output" class="h-36 overflow-y-auto bg-slate-950 border border-slate-800 rounded p-2 text-[10px] font-mono text-slate-300 space-y-1">
+                        <div class="text-slate-500">// Evaluator audit feed initialized. Ready for drill invocation.</div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-[#0B132B] border-t border-[#1E293B] py-3 px-4 text-center text-xs text-slate-400 font-mono shrink-0">
+        PARVAT NETRA ? Smart India Hackathon (SIH 26001) ? MDoNER / NDMA Sentinel Architecture
+    </footer>
+
+    <!-- Geofence & Demonstration Logic -->
+    <script>
+        const HAZARD_CENTROID = { lat: 27.0984, lng: 88.4892 };
+        const GEOFENCE_RADIUS_METERS = 50.0;
+        let currentSessionId = 'DEMO-' + Math.random().toString(36).substring(2, 8).toUpperCase();
+
+        document.getElementById('session-badge').innerText = 'SESSION: ' + currentSessionId;
+
+        function haversineMeters(lat1, lon1, lat2, lon2) {
+            const R = 6371000; // Earth radius in meters
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                      Math.sin(dLon/2) * Math.sin(dLon/2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            return R * c;
+        }
+
+        function updateGeofenceDisplay(distanceMeters, isSimulated = false) {
+            const isInside = distanceMeters <= GEOFENCE_RADIUS_METERS;
+            const readout = document.getElementById('distance-readout');
+            const card = document.getElementById('geofence-card');
+            const tag = document.getElementById('geofence-tag');
+            const bar = document.getElementById('distance-bar');
+            const advisory = document.getElementById('geofence-advisory');
+
+            readout.innerText = distanceMeters.toFixed(1) + ' m';
+
+            // Progress bar capped at 200m
+            const pct = Math.min(100, Math.max(5, (1 - (distanceMeters / 200)) * 100));
+            bar.style.width = pct + '%';
+
+            if (isInside) {
+                card.className = 'rounded-lg p-5 border-2 border-red-500 bg-red-950/50 pulse-danger transition-all';
+                tag.className = 'text-xs font-mono font-bold px-2.5 py-1 rounded bg-red-600 text-white shadow';
+                tag.innerText = 'INSIDE 50M GEOFENCE [ALERT]';
+                bar.className = 'bg-red-500 h-2.5 rounded-full transition-all duration-500';
+                advisory.className = 'mt-4 p-3 rounded text-xs font-mono text-red-200 bg-red-950 border border-red-800';
+                advisory.innerHTML = `<strong>?? IMMEDIATE EVACUATION ORDER:</strong> You are within ${distanceMeters.toFixed(1)}m of the slip surface. Acoustic siren triggered (dry-run). Move towards North Bypass Route NH-717A immediately.`;
+            } else {
+                card.className = 'rounded-lg p-5 border border-emerald-500/50 bg-emerald-950/30 transition-all';
+                tag.className = 'text-xs font-mono font-bold px-2.5 py-1 rounded bg-emerald-600/30 text-emerald-400 border border-emerald-500';
+                tag.innerText = 'OUTSIDE 50M GEOFENCE [SAFE]';
+                bar.className = 'bg-emerald-500 h-2.5 rounded-full transition-all duration-500';
+                advisory.className = 'mt-4 p-3 rounded text-xs font-mono text-emerald-200 bg-emerald-950 border border-emerald-800';
+                advisory.innerHTML = `<strong>? STANDBY & MONITOR:</strong> You are located ${distanceMeters.toFixed(1)}m from the critical slip hazard. Safe standoff maintained. Continue monitoring telemetry alerts.`;
+            }
+
+            logAudit(`[GEOFENCE] Computed distance: ${distanceMeters.toFixed(1)}m | Status: ${isInside ? 'INSIDE' : 'OUTSIDE'} ${isSimulated ? '(Simulated)' : '(GPS)'}`);
+        }
+
+        function acquireRealLocation() {
+            const statusEl = document.getElementById('gps-status');
+            if (!navigator.geolocation) {
+                statusEl.innerText = 'Geolocation not supported by this browser. Use simulation buttons below.';
+                return;
+            }
+            statusEl.innerText = 'Querying browser GPS coordinates...';
+            navigator.geolocation.getCurrentPosition(
+                (pos) => {
+                    const lat = pos.coords.latitude;
+                    const lng = pos.coords.longitude;
+                    statusEl.innerText = `GPS Locked: ${lat.toFixed(4)}, ${lng.toFixed(4)} (Accuracy: ${pos.coords.accuracy.toFixed(0)}m)`;
+                    const dist = haversineMeters(lat, lng, HAZARD_CENTROID.lat, HAZARD_CENTROID.lng);
+                    updateGeofenceDisplay(dist, false);
+                },
+                (err) => {
+                    statusEl.innerText = `GPS Error: ${err.message}. Defaulting to simulation options.`;
+                    simulateProximity(35);
+                },
+                { enableHighAccuracy: true, timeout: 10000 }
+            );
+        }
+
+        function simulateProximity(meters) {
+            document.getElementById('gps-status').innerText = `Simulating user proximity at ${meters} meters from centroid.`;
+            updateGeofenceDisplay(meters, true);
+        }
+
+        async function executeSafeDrill() {
+            const btn = document.getElementById('btn-trigger-drill');
+            btn.disabled = true;
+            btn.innerText = 'DISPATCHING DRILL...';
+
+            const email = document.getElementById('drill-email').value.trim();
+            const phone = document.getElementById('drill-phone').value.trim();
+            const scenario = document.getElementById('scenario-select').value;
+
+            try {
+                const res = await fetch('/api/notifications/demo/send-test', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: email || undefined,
+                        phone: phone || undefined,
+                        scenario: scenario,
+                        session_id: currentSessionId
+                    })
+                });
+                const data = await res.json();
+                logAudit(`[DRILL SUCCESS] Dispatched test notification. ID: ${data.dispatch_id || 'OK'} | Channel: ${data.channel || 'DUAL'}`);
+                refreshJournal();
+            } catch (err) {
+                logAudit(`[DRILL ERROR] ${err.message}`);
+            } finally {
+                btn.disabled = false;
+                btn.innerText = 'EXECUTE ISOLATED TEST DRILL';
+            }
+        }
+
+        async function refreshJournal() {
+            try {
+                const res = await fetch('/api/notifications/demo/journal?limit=6');
+                if (!res.ok) return;
+                const items = await res.json();
+                const out = document.getElementById('journal-output');
+                if (Array.isArray(items) && items.length > 0) {
+                    out.innerHTML = items.map(it => {
+                        return `<div class="border-b border-slate-900 pb-1">
+                            <span class="text-sky-400">[${(it.timestamp || '').substring(11, 19)}]</span>
+                            <span class="text-amber-300 font-bold">${it.channel || 'ALERT'}</span>:
+                            ${it.recipient || it.dest || 'DEMO_DEST'} &rarr; ${it.status || 'SENT'}
+                        </div>`;
+                    }).join('');
+                }
+            } catch(e) {}
+        }
+
+        function logAudit(msg) {
+            const out = document.getElementById('journal-output');
+            const row = document.createElement('div');
+            const now = new Date().toISOString().substring(11, 19);
+            row.innerHTML = `<span class="text-slate-500">[${now}]</span> ${msg}`;
+            out.prepend(row);
+        }
+
+        // Initialize with realistic proximity simulation
+        setTimeout(() => simulateProximity(35), 500);
+    </script>
+</body>
+</html>
