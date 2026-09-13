@@ -1,6 +1,6 @@
 {
   "data": {
-    "timestamp": "2026-09-13T10:35:46.531996+00:00",
+    "timestamp": "2026-09-13T11:51:28.866411+00:00",
     "location": {
       "lat": 27.502,
       "lon": 88.528,
@@ -8,7 +8,7 @@
       "state": "Sikkim"
     },
     "rainfall": {
-      "current_mm_hr": 0.2,
+      "current_mm_hr": 0.1,
       "rain_1h_mm": 0.7,
       "rain_6h_mm": 8.5,
       "rain_24h_mm": 52.3,
@@ -49,11 +49,11 @@
       ]
     },
     "atmosphere": {
-      "temperature_c": 25.7,
-      "humidity_pct": 99.0,
-      "pressure_hpa": 926.0,
-      "wind_kmh": 0.9,
-      "cloud_pct": 98.0
+      "temperature_c": 25.3,
+      "humidity_pct": 98.0,
+      "pressure_hpa": 926.2,
+      "wind_kmh": 0.4,
+      "cloud_pct": 100.0
     },
     "derived_pahad": {
       "antecedent_rainfall": 146.6,
@@ -64,9 +64,9 @@
       "rainfall_threshold_status": {
         "id_threshold_mm_hr": 1.828,
         "ed_threshold_mm": 43.872,
-        "intensity_mm_hr": 0.2,
+        "intensity_mm_hr": 0.1,
         "duration_hours": 24.0,
-        "exceedance_ratio": 0.109,
+        "exceedance_ratio": 0.055,
         "threshold_exceeded": false,
         "state": "NORMAL_EQUILIBRIUM"
       },
@@ -74,15 +74,15 @@
     },
     "source": "Open-Meteo Global Forecasting",
     "provenance": "LIVE",
-    "last_successful_fetch": "2026-09-13T10:35:46.531996+00:00",
+    "last_successful_fetch": "2026-09-13T11:51:28.866411+00:00",
     "data_age_seconds": 0.0
   },
-  "fetched_at": 1789295747.4474056,
+  "fetched_at": 1789300289.6638484,
   "ttl": 900,
   "meta": {
     "source": "Open-Meteo Global Forecasting",
     "provenance": "[LIVE]",
-    "stored_at": "2026-09-13T10:35:47Z",
+    "stored_at": "2026-09-13T11:51:29Z",
     "ttl": 900
   }
 }

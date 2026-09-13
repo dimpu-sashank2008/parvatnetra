@@ -1,0 +1,13 @@
+{
+  "data": {
+    "rainfall_mm": 12.0
+  },
+  "fetched_at": 1789300637.590065,
+  "ttl": 300,
+  "meta": {
+    "source": "",
+    "provenance": "[LIVE]",
+    "stored_at": "2026-09-13T11:57:17Z",
+    "ttl": 300
+  }
+}

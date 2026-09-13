@@ -1,0 +1,24 @@
+# Vercel Ignore file
+.git/
+.venv/
+.agents/
+.idea/
+.pytest_cache/
+__pycache__/
+*.py[cod]
+*$py.class
+parvat_netra_mobile/
+docs/
+firmware/
+scratch/
+tests/
+mcp/
+PARVAT_NETRA/
+*.pptx
+*.bak
+*.db
+*.sqlite3
+*.log
+*.lock
+*.bin
+data/observations/

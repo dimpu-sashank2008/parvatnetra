@@ -13,12 +13,12 @@
       "provenance": "LIVE"
     }
   ],
-  "fetched_at": 1789299362.4086206,
+  "fetched_at": 1789300517.9220488,
   "ttl": 300,
   "meta": {
     "source": "USGS Earthquake Hazards Program",
     "provenance": "[LIVE]",
-    "stored_at": "2026-09-13T11:36:02Z",
+    "stored_at": "2026-09-13T11:55:17Z",
     "ttl": 300
   }
 }

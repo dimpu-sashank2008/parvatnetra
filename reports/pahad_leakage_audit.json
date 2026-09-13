@@ -1,0 +1,21 @@
+{
+  "status": "PASSED",
+  "train_max_dt": "2023-10-04 01:30:00+00:00",
+  "val_min_dt": "2024-02-14 03:00:00+00:00",
+  "val_max_dt": "2024-06-25 13:00:00+00:00",
+  "test_min_dt": "2024-07-02 08:00:00+00:00",
+  "test_max_dt": "2024-10-04 06:00:00+00:00",
+  "train_samples": 16,
+  "val_samples": 12,
+  "test_samples": 8,
+  "train_positives": 8,
+  "val_positives": 4,
+  "test_positives": 5,
+  "hashes": {
+    "train_sha256": "79ece554fd0d2fc62d69a21fd4d39172f7dd4995d5645e126a91d1a08c1c579e",
+    "val_sha256": "ed732e2054f1b028cab9380a35ad31affbbb5e93a3cb207fda1582665aa0bd81",
+    "test_sha256": "29f84cf974241844a16086736e1cab833484a9587519946dd24ee09ae09d28da"
+  },
+  "violations_count": 0,
+  "violations": []
+}

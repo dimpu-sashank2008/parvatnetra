@@ -1,0 +1,13 @@
+{
+  "data": {
+    "rain": 50.0
+  },
+  "fetched_at": 1789300624.2888603,
+  "ttl": 1,
+  "meta": {
+    "source": "TestProvider",
+    "provenance": "[LIVE]",
+    "stored_at": "2026-09-13T11:57:04Z",
+    "ttl": 1
+  }
+}
