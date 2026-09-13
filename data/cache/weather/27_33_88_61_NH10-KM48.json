@@ -1,0 +1,88 @@
+{
+  "data": {
+    "timestamp": "2026-09-13T11:59:07.241100+00:00",
+    "location": {
+      "lat": 27.33,
+      "lon": 88.61,
+      "district": "Kalimpong-Sikkim Border",
+      "state": "Sikkim"
+    },
+    "rainfall": {
+      "current_mm_hr": 7.5,
+      "rain_1h_mm": 7.5,
+      "rain_6h_mm": 51.3,
+      "rain_24h_mm": 135.0,
+      "rain_72h_mm": 283.5
+    },
+    "forecast": {
+      "1h_mm": 8.25,
+      "3h_mm": 24.0,
+      "6h_mm": 61.56,
+      "12h_mm": 74.25,
+      "24h_mm": 128.25,
+      "48h_mm": 229.5,
+      "hourly_trend": [
+        4.5,
+        5.06,
+        5.62,
+        6.19,
+        6.75,
+        7.31,
+        4.5,
+        5.06,
+        5.62,
+        6.19,
+        6.75,
+        7.31,
+        4.5,
+        5.06,
+        5.62,
+        6.19,
+        6.75,
+        7.31,
+        4.5,
+        5.06,
+        5.62,
+        6.19,
+        6.75,
+        7.31
+      ]
+    },
+    "atmosphere": {
+      "temperature_c": 17.5,
+      "humidity_pct": 92.0,
+      "pressure_hpa": 1006.0,
+      "wind_kmh": 22.0,
+      "cloud_pct": 95.0
+    },
+    "derived_pahad": {
+      "antecedent_rainfall": 283.5,
+      "api_3d": 249.76,
+      "api_7d": 367.16,
+      "api_30d": 454.55,
+      "rainfall_intensity_duration_state": "CRITICAL_EXCEEDED",
+      "rainfall_threshold_status": {
+        "id_threshold_mm_hr": 1.828,
+        "ed_threshold_mm": 43.872,
+        "intensity_mm_hr": 7.5,
+        "duration_hours": 24.0,
+        "exceedance_ratio": 4.103,
+        "threshold_exceeded": true,
+        "state": "CRITICAL_EXCEEDED"
+      },
+      "forecast_rainfall_loading": 1.0
+    },
+    "source": "PAHAD Eastern Himalayan Climate Simulator",
+    "provenance": "DEMO",
+    "last_successful_fetch": "2026-09-13T11:59:07.241100+00:00",
+    "data_age_seconds": 0.0
+  },
+  "fetched_at": 1789300747.2411003,
+  "ttl": 900,
+  "meta": {
+    "source": "PAHAD Eastern Himalayan Climate Simulator",
+    "provenance": "[LIVE]",
+    "stored_at": "2026-09-13T11:59:07Z",
+    "ttl": 900
+  }
+}

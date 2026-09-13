@@ -1,6 +1,6 @@
 {
   "data": {
-    "timestamp": "2026-09-13T11:40:42.824748+00:00",
+    "timestamp": "2026-09-13T12:05:15.437537+00:00",
     "location": {
       "lat": 24.818,
       "lon": 93.635,
@@ -49,11 +49,11 @@
       ]
     },
     "atmosphere": {
-      "temperature_c": 26.2,
-      "humidity_pct": 84.0,
-      "pressure_hpa": 950.5,
-      "wind_kmh": 1.5,
-      "cloud_pct": 28.0
+      "temperature_c": 25.5,
+      "humidity_pct": 89.0,
+      "pressure_hpa": 950.7,
+      "wind_kmh": 1.2,
+      "cloud_pct": 34.0
     },
     "derived_pahad": {
       "antecedent_rainfall": 7.9,
@@ -74,15 +74,15 @@
     },
     "source": "Open-Meteo Global Forecasting",
     "provenance": "LIVE",
-    "last_successful_fetch": "2026-09-13T11:40:42.824748+00:00",
+    "last_successful_fetch": "2026-09-13T12:05:15.437537+00:00",
     "data_age_seconds": 0.0
   },
-  "fetched_at": 1789299644.1432514,
+  "fetched_at": 1789301124.7526197,
   "ttl": 900,
   "meta": {
     "source": "Open-Meteo Global Forecasting",
     "provenance": "[LIVE]",
-    "stored_at": "2026-09-13T11:40:44Z",
+    "stored_at": "2026-09-13T12:05:24Z",
     "ttl": 900
   }
 }

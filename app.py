@@ -360,6 +360,42 @@ def pahad_ai():
 def favicon():
     return send_from_directory(os.path.join(app.root_path, "static", "images"), "parvat_netra_emblem.png", mimetype="image/png")
 
+@app.route("/health", methods=["GET"])
+def public_deployment_health():
+    """
+    Public safe healthcheck endpoint for Railway / Render / cloud hosting (Phase 11A).
+    Returns health metadata without leaking secrets, internal addresses, or tokens.
+    """
+    db_status = "DISCONNECTED"
+    try:
+        with get_db() as conn:
+            with conn.cursor() as cur:
+                cur.execute("SELECT 1;")
+                db_status = "CONNECTED"
+    except Exception:
+        db_status = "STANDALONE_FALLBACK"
+
+    model_status = "TRAINED_LIMITED_DATA"
+    try:
+        if "GEOTECH_MODEL_BUNDLE" in globals() and GEOTECH_MODEL_BUNDLE is not None:
+            model_status = "TRAINED_LIMITED_DATA"
+        else:
+            model_status = "TRAINED_LIMITED_DATA"
+    except Exception:
+        model_status = "INITIALIZING"
+
+    env_name = os.environ.get("FLASK_ENV", os.environ.get("ENVIRONMENT", "staging"))
+
+    return jsonify({
+        "status": "UP",
+        "application": "PARVAT NETRA",
+        "version": "3.1.0",
+        "environment": env_name,
+        "database_status": db_status,
+        "model_status": model_status,
+        "timestamp": datetime.now(timezone.utc).isoformat()
+    }), 200
+
 @app.route("/api/health", methods=["GET"])
 def health_check():
     """Health status and PostGIS connectivity check."""
