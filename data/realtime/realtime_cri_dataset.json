@@ -1,13 +1,13 @@
 {
   "dataset_name": "PARVAT NETRA — Real-Time Multimodal CRI Dataset",
-  "generated_at_utc": "2026-09-13T11:05:52.794151+00:00",
+  "generated_at_utc": "2026-09-13T11:10:12.123773+00:00",
   "sector_count": 20,
   "provenance_standard": "SIH 26001 / NDMA / GSI Guidelines",
   "evaluation_engine": "PAHAD AI Multimodal Fusion Engine v3.1",
   "records": [
     {
-      "record_id": "CRI_RT_SK_NH10_KM48_20260913_110201",
-      "timestamp": "2026-09-13T11:01:47.455944+00:00",
+      "record_id": "CRI_RT_SK_NH10_KM48_20260913_110737",
+      "timestamp": "2026-09-13T11:07:27.960277+00:00",
       "sector_id": "SK-NH10-KM48",
       "sector_name": "NH-10 Km 48 (29th Mile Sector)",
       "state": "Sikkim",
@@ -36,7 +36,7 @@
       "humidity_pct": 89.0,
       "rainfall_threshold_status": "EXCEEDED",
       "weather_source": "Open-Meteo Global Forecasting",
-      "weather_provenance": "LIVE",
+      "weather_provenance": "CACHED",
       "recent_earthquake_id": "us7000tgq0",
       "seismic_magnitude": 4.2,
       "seismic_distance_km": 803.5,
@@ -73,11 +73,11 @@
       "evidence_confidence": 0.81,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Accelerate telemetry polling to 5-minute intervals",
-      "data_hash_sha256": "17acc7a1f4a4451f9e26bd1c0d45a5c051de0cf5d6e94ba9a62ed0e7ea54d996"
+      "data_hash_sha256": "27736ae516f51df35d6e892352fd427f9e5f43916c14c576ff20efff51532182"
     },
     {
-      "record_id": "CRI_RT_SK_SINGTAM_01_20260913_110207",
-      "timestamp": "2026-09-13T11:02:01.529415+00:00",
+      "record_id": "CRI_RT_SK_SINGTAM_01_20260913_110744",
+      "timestamp": "2026-09-13T11:07:37.521377+00:00",
       "sector_id": "SK-SINGTAM-01",
       "sector_name": "Singtam Teesta Basin Toe-Scour Zone",
       "state": "Sikkim",
@@ -102,11 +102,11 @@
       "api_7d_mm": 224.64,
       "api_30d_mm": 285.91,
       "forecast_24h_mm": 66.3,
-      "temperature_c": 26.8,
+      "temperature_c": 26.6,
       "humidity_pct": 98.0,
       "rainfall_threshold_status": "EXCEEDED",
       "weather_source": "Open-Meteo Global Forecasting",
-      "weather_provenance": "CACHED",
+      "weather_provenance": "LIVE",
       "recent_earthquake_id": "us7000tgq0",
       "seismic_magnitude": 4.2,
       "seismic_distance_km": 813.5,
@@ -143,11 +143,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Accelerate telemetry polling to 5-minute intervals",
-      "data_hash_sha256": "4c807c76866ae8b202e7af18858c6c41bcd3e89ad80851c15b6a61b7940a3ab1"
+      "data_hash_sha256": "1e928349eb46892e6997d3377f11c1fb5915cce4cc6214ccca70b2c5a7d01ee1"
     },
     {
-      "record_id": "CRI_RT_SK_DIKCHU_01_20260913_110229",
-      "timestamp": "2026-09-13T11:02:07.548495+00:00",
+      "record_id": "CRI_RT_SK_DIKCHU_01_20260913_110758",
+      "timestamp": "2026-09-13T11:07:44.339604+00:00",
       "sector_id": "SK-DIKCHU-01",
       "sector_name": "Dikchu Hydro Sector Bluffs",
       "state": "Sikkim",
@@ -172,11 +172,11 @@
       "api_7d_mm": 80.46,
       "api_30d_mm": 106.12,
       "forecast_24h_mm": 13.8,
-      "temperature_c": 21.4,
-      "humidity_pct": 87.0,
+      "temperature_c": 21.0,
+      "humidity_pct": 89.0,
       "rainfall_threshold_status": "EXCEEDED",
       "weather_source": "Open-Meteo Global Forecasting",
-      "weather_provenance": "CACHED",
+      "weather_provenance": "LIVE",
       "recent_earthquake_id": "us7000tgq0",
       "seismic_magnitude": 4.2,
       "seismic_distance_km": 806.7,
@@ -213,11 +213,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "a477c4e1d7d69458fb8e3df9151df74d7cdf892c7f6e3328898661b86c91f260"
+      "data_hash_sha256": "0c9fc98736658c28c5fcedc3a5a93fc7d3457df95c1ad524123dced1ea2d8e8e"
     },
     {
-      "record_id": "CRI_RT_SK_MANGAN_01_20260913_110235",
-      "timestamp": "2026-09-13T11:02:29.241216+00:00",
+      "record_id": "CRI_RT_SK_MANGAN_01_20260913_110805",
+      "timestamp": "2026-09-13T11:07:58.564021+00:00",
       "sector_id": "SK-MANGAN-01",
       "sector_name": "Mangan Relict Landslide Complex",
       "state": "Sikkim",
@@ -242,11 +242,11 @@
       "api_7d_mm": 199.72,
       "api_30d_mm": 255.22,
       "forecast_24h_mm": 54.0,
-      "temperature_c": 25.6,
+      "temperature_c": 25.5,
       "humidity_pct": 99.0,
       "rainfall_threshold_status": "EXCEEDED",
       "weather_source": "Open-Meteo Global Forecasting",
-      "weather_provenance": "CACHED",
+      "weather_provenance": "LIVE",
       "recent_earthquake_id": "us7000tgq0",
       "seismic_magnitude": 4.2,
       "seismic_distance_km": 813.6,
@@ -283,11 +283,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Accelerate telemetry polling to 5-minute intervals",
-      "data_hash_sha256": "14f9969da4561042a14408c36f4bf2a7722635b1d7baddf138536ea94e941cf8"
+      "data_hash_sha256": "121716aa247f6a25c9d64e57927124e7e1c2fb0e63f60085b3a06df1f95b02b2"
     },
     {
-      "record_id": "CRI_RT_MZ_HUNTHAR_01_20260913_110241",
-      "timestamp": "2026-09-13T11:02:35.273530+00:00",
+      "record_id": "CRI_RT_MZ_HUNTHAR_01_20260913_110813",
+      "timestamp": "2026-09-13T11:08:05.367223+00:00",
       "sector_id": "MZ-HUNTHAR-01",
       "sector_name": "Aizawl NH-6 Hunthar Veng Slump",
       "state": "Mizoram",
@@ -312,11 +312,11 @@
       "api_7d_mm": 24.94,
       "api_30d_mm": 32.7,
       "forecast_24h_mm": 3.9,
-      "temperature_c": 23.6,
-      "humidity_pct": 92.0,
+      "temperature_c": 23.1,
+      "humidity_pct": 94.0,
       "rainfall_threshold_status": "EXCEEDED",
       "weather_source": "Open-Meteo Global Forecasting",
-      "weather_provenance": "CACHED",
+      "weather_provenance": "LIVE",
       "recent_earthquake_id": "us7000tgq0",
       "seismic_magnitude": 4.2,
       "seismic_distance_km": 493.0,
@@ -353,11 +353,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Accelerate telemetry polling to 5-minute intervals",
-      "data_hash_sha256": "4a64cfb351b482c71fe44df0b8e46fe388f261c3dd79cfe5b34f8a463e30cf63"
+      "data_hash_sha256": "9b31148ddafc7b14b6fa0744a80ca8ccc0aaf5481a729fe98ba490d437fb2368"
     },
     {
-      "record_id": "CRI_RT_MZ_SAIRANG_01_20260913_110247",
-      "timestamp": "2026-09-13T11:02:41.300148+00:00",
+      "record_id": "CRI_RT_MZ_SAIRANG_01_20260913_110820",
+      "timestamp": "2026-09-13T11:08:13.009229+00:00",
       "sector_id": "MZ-SAIRANG-01",
       "sector_name": "Sairang Railway Terminal Ridge",
       "state": "Mizoram",
@@ -382,11 +382,11 @@
       "api_7d_mm": 23.16,
       "api_30d_mm": 30.22,
       "forecast_24h_mm": 4.4,
-      "temperature_c": 27.6,
-      "humidity_pct": 94.0,
+      "temperature_c": 27.2,
+      "humidity_pct": 95.0,
       "rainfall_threshold_status": "EXCEEDED",
       "weather_source": "Open-Meteo Global Forecasting",
-      "weather_provenance": "CACHED",
+      "weather_provenance": "LIVE",
       "recent_earthquake_id": "us7000tgq0",
       "seismic_magnitude": 4.2,
       "seismic_distance_km": 492.8,
@@ -423,11 +423,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "a5847a40915b7d52514eee17690e52ec7e40a43fbd6137996f8b68f1d08c5ab4"
+      "data_hash_sha256": "c853a4e09bad30bfa6b4f6f26b382a5e6510d052e44fa56c22c8b5e945274d14"
     },
     {
-      "record_id": "CRI_RT_MZ_KOLASIB_01_20260913_110321",
-      "timestamp": "2026-09-13T11:02:47.324687+00:00",
+      "record_id": "CRI_RT_MZ_KOLASIB_01_20260913_110839",
+      "timestamp": "2026-09-13T11:08:20.369482+00:00",
       "sector_id": "MZ-KOLASIB-01",
       "sector_name": "Kolasib Sinking Carriageway",
       "state": "Mizoram",
@@ -493,11 +493,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "569d4a946e46694ed5a90332d1bea6aeb9d45bfca84de80f8f982d8f078eccbc"
+      "data_hash_sha256": "19c82379db1b75a31f55f4955d4acad75c13ee52730856eb97df0e7f97b88da1"
     },
     {
-      "record_id": "CRI_RT_NL_PAGALA_01_20260913_110356",
-      "timestamp": "2026-09-13T11:03:21.807464+00:00",
+      "record_id": "CRI_RT_NL_PAGALA_01_20260913_110846",
+      "timestamp": "2026-09-13T11:08:39.103393+00:00",
       "sector_id": "NL-PAGALA-01",
       "sector_name": "Kohima NH-29 Pagala Pahar",
       "state": "Nagaland",
@@ -522,11 +522,11 @@
       "api_7d_mm": 26.31,
       "api_30d_mm": 30.07,
       "forecast_24h_mm": 13.2,
-      "temperature_c": 17.4,
-      "humidity_pct": 99.0,
+      "temperature_c": 17.3,
+      "humidity_pct": 100.0,
       "rainfall_threshold_status": "EXCEEDED",
       "weather_source": "Open-Meteo Global Forecasting",
-      "weather_provenance": "CACHED",
+      "weather_provenance": "LIVE",
       "recent_earthquake_id": "us7000tgq0",
       "seismic_magnitude": 4.2,
       "seismic_distance_km": 276.4,
@@ -563,11 +563,11 @@
       "evidence_confidence": 0.81,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Issue Watch advisory to District Disaster Management Authority (DDMA)",
-      "data_hash_sha256": "f9f119a2525468370a7efd80a1429e7b6b9227c06f8b43f2b0d256aeb1697638"
+      "data_hash_sha256": "855243150f3ed25ce4cb2a1418988cc990ffa6f745043ff5beada5c575149ddd"
     },
     {
-      "record_id": "CRI_RT_NL_DZUDZA_01_20260913_110410",
-      "timestamp": "2026-09-13T11:03:56.615752+00:00",
+      "record_id": "CRI_RT_NL_DZUDZA_01_20260913_110853",
+      "timestamp": "2026-09-13T11:08:46.228048+00:00",
       "sector_id": "NL-DZUDZA-01",
       "sector_name": "Dzüdza River Bridge Bluffs",
       "state": "Nagaland",
@@ -592,11 +592,11 @@
       "api_7d_mm": 57.66,
       "api_30d_mm": 71.19,
       "forecast_24h_mm": 19.1,
-      "temperature_c": 21.2,
+      "temperature_c": 21.1,
       "humidity_pct": 100.0,
       "rainfall_threshold_status": "EXCEEDED",
       "weather_source": "Open-Meteo Global Forecasting",
-      "weather_provenance": "CACHED",
+      "weather_provenance": "LIVE",
       "recent_earthquake_id": "us7000tgq0",
       "seismic_magnitude": 4.2,
       "seismic_distance_km": 273.6,
@@ -633,11 +633,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Accelerate telemetry polling to 5-minute intervals",
-      "data_hash_sha256": "c5ea1c4e12d7842fa0f8aeda79d262870f07e2028835b6d7cc6744a0624e05b7"
+      "data_hash_sha256": "f05830963322dd7a7cb88e340c34ebed2a890f8f6946094e698aa14216f29849"
     },
     {
-      "record_id": "CRI_RT_NL_PIPHEMA_01_20260913_110419",
-      "timestamp": "2026-09-13T11:04:10.067902+00:00",
+      "record_id": "CRI_RT_NL_PIPHEMA_01_20260913_110904",
+      "timestamp": "2026-09-13T11:08:53.951319+00:00",
       "sector_id": "NL-PIPHEMA-01",
       "sector_name": "Piphema Sinking Zone",
       "state": "Nagaland",
@@ -666,7 +666,7 @@
       "humidity_pct": 96.0,
       "rainfall_threshold_status": "EXCEEDED",
       "weather_source": "Open-Meteo Global Forecasting",
-      "weather_provenance": "LIVE",
+      "weather_provenance": "CACHED",
       "recent_earthquake_id": "us7000tgq0",
       "seismic_magnitude": 4.2,
       "seismic_distance_km": 281.3,
@@ -675,7 +675,7 @@
       "seismic_trigger_score": 0.08,
       "seismic_trigger_level": "MODERATE",
       "seismic_source": "SeismicService (USGS/NCS/HimalayanFaults)",
-      "seismic_provenance": "CACHED",
+      "seismic_provenance": "LIVE",
       "pore_water_pressure_kpa": 0.0,
       "displacement_rate_mm_day": 0.18,
       "cumulative_displacement_mm": 2.42,
@@ -703,11 +703,11 @@
       "evidence_confidence": 0.81,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Issue Watch advisory to District Disaster Management Authority (DDMA)",
-      "data_hash_sha256": "da0a3f5d8249e85bb0c081534d25d3b80ea63f76a0d89eb41414e8fd1640e7d6"
+      "data_hash_sha256": "b534d798c7ff6afa0e559c251426be1d1aa25852fea4821cc0d259be0d3e3e12"
     },
     {
-      "record_id": "CRI_RT_AR_BHALUK_01_20260913_110435",
-      "timestamp": "2026-09-13T11:04:19.893092+00:00",
+      "record_id": "CRI_RT_AR_BHALUK_01_20260913_110910",
+      "timestamp": "2026-09-13T11:09:04.429425+00:00",
       "sector_id": "AR-BHALUK-01",
       "sector_name": "Bhalukpong-Tawang Axis Km 32",
       "state": "Arunachal Pradesh",
@@ -736,7 +736,7 @@
       "humidity_pct": 82.0,
       "rainfall_threshold_status": "EXCEEDED",
       "weather_source": "Open-Meteo Global Forecasting",
-      "weather_provenance": "LIVE",
+      "weather_provenance": "CACHED",
       "recent_earthquake_id": "us7000tgq0",
       "seismic_magnitude": 4.2,
       "seismic_distance_km": 403.1,
@@ -773,11 +773,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "6025f44c6b9e3bd6280868a3635bb4159ce7dcf810dd1f5964616187665e6ef0"
+      "data_hash_sha256": "1b87a7ad81f02ba5112404fb575b0c04efaa6b8fd3e777cffd1da44177fe4ca6"
     },
     {
-      "record_id": "CRI_RT_AR_PASIGHAT_01_20260913_110442",
-      "timestamp": "2026-09-13T11:04:35.351062+00:00",
+      "record_id": "CRI_RT_AR_PASIGHAT_01_20260913_110916",
+      "timestamp": "2026-09-13T11:09:10.459677+00:00",
       "sector_id": "AR-PASIGHAT-01",
       "sector_name": "Pasighat Siang River Scour Escarpment",
       "state": "Arunachal Pradesh",
@@ -806,7 +806,7 @@
       "humidity_pct": 79.0,
       "rainfall_threshold_status": "EXCEEDED",
       "weather_source": "Open-Meteo Global Forecasting",
-      "weather_provenance": "LIVE",
+      "weather_provenance": "CACHED",
       "recent_earthquake_id": "us7000tgq0",
       "seismic_magnitude": 4.2,
       "seismic_distance_km": 228.0,
@@ -843,11 +843,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "01c3c0b34c4249c7858928a8f7c20f9566c74d855217ae1aa3a14423120dd572"
+      "data_hash_sha256": "3083ebd11730468f8c44f189236b0347d92493f348d046950d71623cdeb1340e"
     },
     {
-      "record_id": "CRI_RT_AR_SELA_01_20260913_110449",
-      "timestamp": "2026-09-13T11:04:42.178892+00:00",
+      "record_id": "CRI_RT_AR_SELA_01_20260913_110922",
+      "timestamp": "2026-09-13T11:09:16.488621+00:00",
       "sector_id": "AR-SELA-01",
       "sector_name": "Sela Pass North Approach Km 8",
       "state": "Arunachal Pradesh",
@@ -876,7 +876,7 @@
       "humidity_pct": 76.0,
       "rainfall_threshold_status": "EXCEEDED",
       "weather_source": "Open-Meteo Global Forecasting",
-      "weather_provenance": "LIVE",
+      "weather_provenance": "CACHED",
       "recent_earthquake_id": "us7000tgq0",
       "seismic_magnitude": 4.2,
       "seismic_distance_km": 466.9,
@@ -913,11 +913,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "5f3c0ab39c68004eed54bf885a2a7c819cdec47e5e9bb91da51ea11edf1d9785"
+      "data_hash_sha256": "8d76fa0403454cdee3a24c8e7c259da617581d69d0abad7b2d1d7f7238ba67c5"
     },
     {
-      "record_id": "CRI_RT_MN_TUPUL_01_20260913_110502",
-      "timestamp": "2026-09-13T11:04:49.947256+00:00",
+      "record_id": "CRI_RT_MN_TUPUL_01_20260913_110928",
+      "timestamp": "2026-09-13T11:09:22.516727+00:00",
       "sector_id": "MN-TUPUL-01",
       "sector_name": "Noney Tupul Railway Corridor",
       "state": "Manipur",
@@ -946,7 +946,7 @@
       "humidity_pct": 79.0,
       "rainfall_threshold_status": "EXCEEDED",
       "weather_source": "Open-Meteo Global Forecasting",
-      "weather_provenance": "LIVE",
+      "weather_provenance": "CACHED",
       "recent_earthquake_id": "us7000tgq0",
       "seismic_magnitude": 4.2,
       "seismic_distance_km": 348.0,
@@ -983,11 +983,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "fa7efd20a7e6d66d6f58867d5fb4692fa6673c0cd8d8a87a2789b916ae04ef5c"
+      "data_hash_sha256": "e8eaf7f82404059864cba6e7270032932a0192e5ac74779028341fcf36cbfb2e"
     },
     {
-      "record_id": "CRI_RT_MN_JIRIBAM_01_20260913_110509",
-      "timestamp": "2026-09-13T11:05:02.247202+00:00",
+      "record_id": "CRI_RT_MN_JIRIBAM_01_20260913_110934",
+      "timestamp": "2026-09-13T11:09:28.538615+00:00",
       "sector_id": "MN-JIRIBAM-01",
       "sector_name": "Imphal-Jiribam NH-37 Km 78",
       "state": "Manipur",
@@ -1016,7 +1016,7 @@
       "humidity_pct": 89.0,
       "rainfall_threshold_status": "EXCEEDED",
       "weather_source": "Open-Meteo Global Forecasting",
-      "weather_provenance": "LIVE",
+      "weather_provenance": "CACHED",
       "recent_earthquake_id": "us7000tgq0",
       "seismic_magnitude": 4.2,
       "seismic_distance_km": 367.6,
@@ -1053,11 +1053,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "65f2c5728b58a940a220d6020e5b26c9991b043483cfdba3fa9af2277220fe64"
+      "data_hash_sha256": "b017791ba569528cacb318162fdcf442161edaa8ad221eb75a43605e147fa218"
     },
     {
-      "record_id": "CRI_RT_ML_SONAPUR_01_20260913_110515",
-      "timestamp": "2026-09-13T11:05:09.439267+00:00",
+      "record_id": "CRI_RT_ML_SONAPUR_01_20260913_110940",
+      "timestamp": "2026-09-13T11:09:34.571644+00:00",
       "sector_id": "ML-SONAPUR-01",
       "sector_name": "Sonapur Tunnel NH-06",
       "state": "Meghalaya",
@@ -1123,11 +1123,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "b71a21bce8befd02ea33574a1ca6fa271eaef87aad4c4b46f8f9454ea26d2073"
+      "data_hash_sha256": "5ca9dadccb8067705162c4aa9c5292e9d89cd605f839c48e880583670177d67e"
     },
     {
-      "record_id": "CRI_RT_ML_CHERRA_01_20260913_110521",
-      "timestamp": "2026-09-13T11:05:15.460322+00:00",
+      "record_id": "CRI_RT_ML_CHERRA_01_20260913_110946",
+      "timestamp": "2026-09-13T11:09:40.595035+00:00",
       "sector_id": "ML-CHERRA-01",
       "sector_name": "Cherrapunji South Escarpment",
       "state": "Meghalaya",
@@ -1193,11 +1193,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "bc472ac87eea7582dc1704423a5b38c88310e8353e38b27bddbcd44c4ee48862"
+      "data_hash_sha256": "52ae502894a1841cb3d8ff3231a3030e17680f67a9d04c480f6c3cbf9ce8623b"
     },
     {
-      "record_id": "CRI_RT_AS_DIMA_01_20260913_110535",
-      "timestamp": "2026-09-13T11:05:21.839317+00:00",
+      "record_id": "CRI_RT_AS_DIMA_01_20260913_111000",
+      "timestamp": "2026-09-13T11:09:46.624157+00:00",
       "sector_id": "AS-DIMA-01",
       "sector_name": "Dima Hasao Hill Railway Corridor Km 42",
       "state": "Assam",
@@ -1263,11 +1263,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "99d2b90b55e5f90c846b0b563dda0131dd8aaad482350dd7cedaa40171a48811"
+      "data_hash_sha256": "4da21cf7cccbd4bda6a6abb8054d3d02367045911f85c8aee00cfe2a21f53fb2"
     },
     {
-      "record_id": "CRI_RT_AS_GUWAHATI_01_20260913_110543",
-      "timestamp": "2026-09-13T11:05:35.874099+00:00",
+      "record_id": "CRI_RT_AS_GUWAHATI_01_20260913_111006",
+      "timestamp": "2026-09-13T11:10:00.062619+00:00",
       "sector_id": "AS-GUWAHATI-01",
       "sector_name": "Guwahati Narakasur Hills",
       "state": "Assam",
@@ -1296,7 +1296,7 @@
       "humidity_pct": 73.0,
       "rainfall_threshold_status": "EXCEEDED",
       "weather_source": "Open-Meteo Global Forecasting",
-      "weather_provenance": "LIVE",
+      "weather_provenance": "CACHED",
       "recent_earthquake_id": "us7000tgq0",
       "seismic_magnitude": 4.2,
       "seismic_distance_km": 485.8,
@@ -1333,11 +1333,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "cc4e1c777ca9b2500679bafc927840eaef4d9e8897e2dabe66b3553b6a8e5d92"
+      "data_hash_sha256": "e8096386fd05c1aa9f255f3546db4ea644ba1faf926294d4fe47c334df80f622"
     },
     {
-      "record_id": "CRI_RT_TR_BARAMURA_01_20260913_110552",
-      "timestamp": "2026-09-13T11:05:43.316879+00:00",
+      "record_id": "CRI_RT_TR_BARAMURA_01_20260913_111012",
+      "timestamp": "2026-09-13T11:10:06.098179+00:00",
       "sector_id": "TR-BARAMURA-01",
       "sector_name": "Baramura Hill Range NH-08",
       "state": "Tripura",
@@ -1403,7 +1403,7 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "dbe65e0afb228b35821d9ee06fa5f0aa74ed7d6ef9291b7cee108ae7b3b2e1a6"
+      "data_hash_sha256": "d8e4d179391b226f9febb12ddea6539ce0ec67dc516ae4522498ad3f0cadddd7"
     }
   ]
 }
