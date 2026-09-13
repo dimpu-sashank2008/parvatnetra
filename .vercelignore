@@ -15,10 +15,12 @@ tests/
 mcp/
 PARVAT_NETRA/
 *.pptx
-*.bak
+*.bak*
+temp_fail.txt
 *.db
 *.sqlite3
 *.log
 *.lock
 *.bin
 data/observations/
+
