@@ -1,0 +1,19 @@
+﻿services:
+  - type: web
+    name: parvatnetra-app
+    runtime: docker
+    dockerfilePath: Dockerfile
+    plan: free
+    region: oregon
+    healthCheckPath: /api/health
+    envVars:
+      - key: PORT
+        value: 8080
+      - key: FLASK_ENV
+        value: production
+      - key: PYTHONUNBUFFERED
+        value: "1"
+      - key: SECRET_KEY
+        generateValue: true
+      - key: PAHAD_DEMO_MODE
+        value: "0"

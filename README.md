@@ -1,8 +1,11 @@
-﻿# PARVAT NETRA — NER Sentinel
+# PARVAT NETRA — NER Sentinel
 
 > **"See the risk. Act before the disaster."**  
 > *Smart India Hackathon (SIH) Grade National Disaster-Intelligence Platform*  
 > *Operational Paradigm: **Predict -> Detect -> Explain -> Warn -> Prioritise -> Respond -> Recover***
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/dimpu-sashank2008/parvatnetra)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/dimpu-sashank2008/parvatnetra)
 
 ---
 
