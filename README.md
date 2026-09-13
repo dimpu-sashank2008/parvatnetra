@@ -4,6 +4,9 @@
 > *Smart India Hackathon (SIH) Grade National Disaster-Intelligence Platform*  
 > *Operational Paradigm: **Predict -> Detect -> Explain -> Warn -> Prioritise -> Respond -> Recover***
 
+[![Live Staging on Render](https://img.shields.io/badge/Render-Live%20Staging-success?style=for-the-badge&logo=render)](https://parvat-netra.onrender.com)
+[![50m Geofence Demo](https://img.shields.io/badge/Evaluator-50m%20Geofence%20Portal-blue?style=for-the-badge)](https://parvat-netra.onrender.com/demo)
+[![Production Health](https://img.shields.io/badge/HealthCheck-UP%20200-brightgreen?style=for-the-badge)](https://parvat-netra.onrender.com/health)
 [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/dimpu-sashank2008/parvatnetra)
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/dimpu-sashank2008/parvatnetra)
 
