@@ -1,6 +1,6 @@
 {
   "data": {
-    "timestamp": "2026-09-13T11:59:07.241100+00:00",
+    "timestamp": "2026-09-13T18:01:25.908669+00:00",
     "location": {
       "lat": 27.33,
       "lon": 88.61,
@@ -74,15 +74,15 @@
     },
     "source": "PAHAD Eastern Himalayan Climate Simulator",
     "provenance": "DEMO",
-    "last_successful_fetch": "2026-09-13T11:59:07.241100+00:00",
+    "last_successful_fetch": "2026-09-13T18:01:25.908669+00:00",
     "data_age_seconds": 0.0
   },
-  "fetched_at": 1789300747.2411003,
+  "fetched_at": 1789322485.9086695,
   "ttl": 900,
   "meta": {
     "source": "PAHAD Eastern Himalayan Climate Simulator",
     "provenance": "[LIVE]",
-    "stored_at": "2026-09-13T11:59:07Z",
+    "stored_at": "2026-09-13T18:01:25Z",
     "ttl": 900
   }
 }
