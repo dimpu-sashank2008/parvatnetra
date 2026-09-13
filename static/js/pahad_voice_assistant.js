@@ -388,8 +388,38 @@
             this.setState(AssistantState.IDLE);
           }
         } else if (res.status === 401) {
-          this.addMessage('assistant', 'Session expired. Reconnecting...', '[SECURITY]');
+          console.warn('[PAHAD ASSISTANT] Session token expired, renewing session...');
           await this.initSession();
+          if (this.sessionToken) {
+            try {
+              const retryRes = await fetch('/api/pahad/assistant/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  query: queryText,
+                  corridor_id: this.activeCorridor,
+                  token: this.sessionToken,
+                  channel: channel
+                })
+              });
+              if (retryRes.ok) {
+                const retryData = await retryRes.json();
+                const prov = retryData.provenance || '[LIVE / GROUNDED]';
+                const responseText = retryData.response || 'Telemetry briefing unavailable.';
+                const spokenText = retryData.spoken_response || responseText;
+                this.addMessage('assistant', responseText, prov, retryData.is_safety_rejection);
+                if (!this.isMuted && spokenText) {
+                  this.speak(spokenText);
+                } else {
+                  this.setState(AssistantState.IDLE);
+                }
+                return;
+              }
+            } catch (retryErr) {
+              console.warn('[PAHAD ASSISTANT] Retry failed:', retryErr);
+            }
+          }
+          this.addMessage('assistant', 'Session refreshed. Please send your inquiry again.', '[SECURITY]');
           this.setState(AssistantState.IDLE);
         } else if (res.status === 429) {
           this.addMessage('assistant', 'Rate limit exceeded (30 requests/minute). Please pause momentarily.', '[SECURITY]');
