@@ -6,10 +6,10 @@
     <title>PARVAT NETRA • Seismic Intelligence & Tectonic Destabilization Workspace</title>
     <link rel="icon" type="image/png" href="/static/images/parvat_netra_emblem.png">
     
-    <!-- Typography -->
+    <!-- Typography: Noto Sans & Noto Sans Devanagari (SIH Standard) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700;800;900&family=Noto+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -19,7 +19,7 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['"Inter"', 'sans-serif'],
+                        sans: ['"Noto Sans"', '"Noto Sans Devanagari"', 'system-ui', '-apple-system', 'sans-serif'],
                         mono: ['"JetBrains Mono"', 'monospace']
                     },
                     colors: {
@@ -96,40 +96,40 @@
             </div>
         </div>
         
-        <!-- Navigation Links -->
-        <div class="flex items-center space-x-2">
-            <a href="/" class="px-2.5 py-1 text-xs rounded border border-slate-700 hover:border-slate-500 text-slate-300 transition">
+        <!-- Navigation Links (SIH Standard Pure Text, Zero Modules/Outlines, Navy Blue Font) -->
+        <nav class="flex items-center space-x-2 sm:space-x-4" aria-label="Portal Primary Navigation">
+            <a href="/" class="portal-nav-link text-xs sm:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors cursor-pointer" title="National Landslide Risk Dashboard">
                 Dashboard
             </a>
-            <a href="/pahad-ai" class="px-2.5 py-1 text-xs rounded border border-cyan-700 bg-cyan-950/40 text-cyan-300 hover:border-cyan-500 transition">
-                PAHAD AI
-            </a>
-            <a href="/climate-map" class="px-2.5 py-1 text-xs rounded border border-slate-700 hover:border-slate-500 text-slate-300 transition">
+            <a href="/climate-map" class="portal-nav-link text-xs sm:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors cursor-pointer" title="NER Real-Time Weather, Precipitation & Radar">
                 Climate Map
             </a>
-            <a href="/seismic" class="px-2.5 py-1 text-xs rounded bg-purple-950/70 border border-purple-500 text-purple-200 font-medium transition">
+            <a href="/seismic" class="portal-nav-link active text-xs sm:text-[13px] font-bold text-[#1A2972] dark:text-white hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors cursor-pointer" title="NCS & USGS Seismological Sentinel">
                 Seismic
             </a>
-            <a href="/terrain-3d" class="px-2.5 py-1 text-xs rounded border border-slate-700 hover:border-slate-500 text-slate-300 transition">
+            <a href="/terrain-3d" class="portal-nav-link text-xs sm:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors cursor-pointer" title="ISRO CartoDEM & GLO-30 3D Digital Twin">
                 3D Terrain
             </a>
-            <a href="/console" class="px-2.5 py-1 text-xs rounded border border-slate-700 hover:border-slate-500 text-slate-300 transition hidden md:inline-block">
-                Console
+            <a href="/edge-network" class="portal-nav-link text-xs sm:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors cursor-pointer hidden md:inline-block" title="Edge Network">
+                Edge Network
             </a>
-            <div class="h-4 w-px bg-slate-700"></div>
+            <a href="/notifications" class="portal-nav-link text-xs sm:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors cursor-pointer" title="Notifications">
+                Notifications
+            </a>
+            <div class="h-4 w-px bg-slate-400/40"></div>
             <span id="header-prov-badge" class="px-2 py-0.5 text-[10px] font-mono rounded bg-purple-950/80 border border-purple-500/50 text-purple-300">
                 [LIVE]
             </span>
-            <button id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Switch color theme" title="Switch color theme" class="px-2.5 py-1 bg-[#12213D] border border-blue-300/30 rounded text-sky-100 hover:bg-[#1A3158] hover:text-white transition flex items-center gap-1.5 text-xs font-semibold shadow-xs active:scale-95 cursor-pointer">
+            <button id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Switch color theme" title="Switch color theme" class="portal-nav-link text-xs sm:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors cursor-pointer flex items-center gap-1 bg-transparent border-0 p-0">
                 <span id="theme-icon" class="flex items-center justify-center">
-                    <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                    <svg class="w-3.5 h-3.5 text-amber-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
                 </span>
                 <span id="theme-text" class="text-[11px] hidden sm:inline">Light Mode</span>
             </button>
             <button onclick="refreshSeismicData()" title="Refresh Seismic Feeds" class="p-1.5 rounded border border-slate-700 hover:bg-slate-800 text-slate-300 transition">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
             </button>
-        </div>
+        </nav>
     </header>
 
     <!-- MAIN WORKSPACE LAYOUT (MAP + SIDE DRAWER) -->

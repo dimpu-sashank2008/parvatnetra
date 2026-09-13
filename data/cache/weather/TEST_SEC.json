@@ -2,12 +2,12 @@
   "data": {
     "rain": 50.0
   },
-  "fetched_at": 1789300624.2888603,
+  "fetched_at": 1789322397.3183117,
   "ttl": 1,
   "meta": {
     "source": "TestProvider",
     "provenance": "[LIVE]",
-    "stored_at": "2026-09-13T11:57:04Z",
+    "stored_at": "2026-09-13T17:59:57Z",
     "ttl": 1
   }
 }

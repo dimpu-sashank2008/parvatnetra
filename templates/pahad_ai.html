@@ -6,10 +6,10 @@
     <title>PAHAD AI — Predictive Hillslope Intelligence Observatory | PARVAT NETRA</title>
     <link rel="icon" type="image/png" href="/static/images/parvat_netra_emblem_circle.png">
 
-    <!-- Typography: Inter & JetBrains Mono -->
+    <!-- Typography: SIH Standard Noto Sans & JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700;800;900&family=Noto+Sans+Devanagari:wght@400;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -19,7 +19,7 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['"Inter"', 'sans-serif'],
+                        sans: ['"Noto Sans"', '"Noto Sans Devanagari"', 'system-ui', '-apple-system', 'sans-serif'],
                         mono: ['"JetBrains Mono"', 'monospace']
                     },
                     colors: {
@@ -345,43 +345,43 @@
                 </div>
             </div>
 
-            <!-- Right Navigation Links & Operational Badges -->
-            <div class="flex items-center space-x-1.5 sm:space-x-2">
-                <a href="/" class="px-2.5 py-1 text-xs rounded border border-slate-700/80 hover:border-slate-500 text-slate-300 transition flex items-center gap-1">
+            <!-- Right Navigation Links & Operational Badges (SIH Standard Pure Text, Zero Modules/Outlines, Navy Blue Font) -->
+            <nav class="flex items-center space-x-2 sm:space-x-4" aria-label="Portal Primary Navigation">
+                <a href="/" class="portal-nav-link text-xs sm:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors flex items-center gap-1 cursor-pointer" title="National Landslide Risk Dashboard">
                     <i class="ph-bold ph-gauge text-xs"></i>
                     <span>Dashboard</span>
                 </a>
-                <a href="/pahad-ai" class="px-2.5 py-1 text-xs rounded bg-sky-950/80 border border-sky-500/80 text-sky-200 font-semibold transition flex items-center gap-1 shadow-xs">
-                    <i class="ph-bold ph-telescope text-xs text-sky-400"></i>
+                <a href="/pahad-ai" class="portal-nav-link active text-xs sm:text-[13px] font-bold text-[#1A2972] dark:text-sky-300 transition-colors flex items-center gap-1 cursor-pointer" title="PAHAD AI Observatory">
+                    <i class="ph-bold ph-telescope text-xs"></i>
                     <span>Observatory</span>
                 </a>
-                <a href="/climate-map" class="px-2.5 py-1 text-xs rounded border border-slate-700/80 hover:border-slate-500 text-slate-300 transition hidden lg:inline-flex items-center gap-1">
+                <a href="/climate-map" class="portal-nav-link text-xs sm:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors hidden lg:inline-flex items-center gap-1 cursor-pointer" title="NER Real-Time Weather & Radar">
                     <i class="ph-bold ph-cloud-rain text-xs"></i>
                     <span>Climate Map</span>
                 </a>
-                <a href="/seismic" class="px-2.5 py-1 text-xs rounded border border-slate-700/80 hover:border-slate-500 text-slate-300 transition hidden lg:inline-flex items-center gap-1">
+                <a href="/seismic" class="portal-nav-link text-xs sm:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors hidden lg:inline-flex items-center gap-1 cursor-pointer" title="NCS & USGS Seismological Sentinel">
                     <i class="ph-bold ph-activity text-xs"></i>
                     <span>Seismic</span>
                 </a>
-                <a href="/terrain-3d" class="px-2.5 py-1 text-xs rounded border border-slate-700/80 hover:border-slate-500 text-slate-300 transition hidden md:inline-flex items-center gap-1">
+                <a href="/terrain-3d" class="portal-nav-link text-xs sm:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors hidden md:inline-flex items-center gap-1 cursor-pointer" title="3D Digital Twin & Terrain Intelligence">
                     <i class="ph-bold ph-mountains text-xs"></i>
                     <span>3D Terrain</span>
                 </a>
-                <a href="/edge-network" class="px-2.5 py-1 text-xs rounded border border-slate-700/80 hover:border-slate-500 text-slate-300 transition hidden xl:inline-flex items-center gap-1">
+                <a href="/edge-network" class="portal-nav-link text-xs sm:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors hidden xl:inline-flex items-center gap-1 cursor-pointer" title="Edge IoT Node Mesh">
                     <i class="ph-bold ph-broadcast text-xs"></i>
                     <span>Edge Network</span>
                 </a>
-                <a href="/notifications" class="px-2.5 py-1 text-xs rounded border border-slate-700/80 hover:border-slate-500 text-slate-300 transition flex items-center gap-1">
+                <a href="/notifications" class="portal-nav-link text-xs sm:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors flex items-center gap-1 cursor-pointer" title="Notification Center & Alerts">
                     <i class="ph-bold ph-bell text-xs"></i>
                     <span class="hidden sm:inline">Notifications</span>
                 </a>
                 
-                <div class="h-4 w-px bg-slate-800"></div>
+                <div class="h-4 w-px bg-slate-800 hidden sm:block"></div>
                 <span class="px-2 py-0.5 text-[10px] font-mono rounded bg-emerald-950/90 border border-emerald-500/60 text-emerald-400 flex items-center gap-1.5 font-semibold">
                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                     PAHAD AI ACTIVE
                 </span>
-            </div>
+            </nav>
         </div>
     </header>
 

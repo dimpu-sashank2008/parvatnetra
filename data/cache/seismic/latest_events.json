@@ -2,7 +2,7 @@
   "data": [
     {
       "event_id": "SIM-EQ-NER-01",
-      "origin_time": "2026-09-13T12:06:17.184893+00:00",
+      "origin_time": "2026-09-13T18:00:03.650005+00:00",
       "latitude": 27.42,
       "longitude": 88.58,
       "depth_km": 12.5,
@@ -14,7 +14,7 @@
     },
     {
       "event_id": "SIM-EQ-NER-02",
-      "origin_time": "2026-09-13T12:06:17.184893+00:00",
+      "origin_time": "2026-09-13T18:00:03.650005+00:00",
       "latitude": 26.85,
       "longitude": 89.12,
       "depth_km": 18.0,
@@ -26,7 +26,7 @@
     },
     {
       "event_id": "SIM-EQ-NER-03",
-      "origin_time": "2026-09-13T12:06:17.184893+00:00",
+      "origin_time": "2026-09-13T18:00:03.650005+00:00",
       "latitude": 25.68,
       "longitude": 91.85,
       "depth_km": 25.0,
@@ -37,12 +37,12 @@
       "provenance": "DEMO"
     }
   ],
-  "fetched_at": 1789301177.1848931,
+  "fetched_at": 1789322403.6500053,
   "ttl": 300,
   "meta": {
     "source": "PAHAD Himalayan Seismic Simulator",
     "provenance": "[LIVE]",
-    "stored_at": "2026-09-13T12:06:17Z",
+    "stored_at": "2026-09-13T18:00:03Z",
     "ttl": 300
   }
 }

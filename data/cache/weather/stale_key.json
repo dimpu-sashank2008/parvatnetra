@@ -2,12 +2,12 @@
   "data": {
     "rainfall_mm": 5.0
   },
-  "fetched_at": 1789300650.5705655,
+  "fetched_at": 1789322421.4866428,
   "ttl": 1,
   "meta": {
     "source": "",
     "provenance": "[LIVE]",
-    "stored_at": "2026-09-13T11:57:30Z",
+    "stored_at": "2026-09-13T18:00:21Z",
     "ttl": 1
   }
 }

@@ -33,18 +33,106 @@ body.light-mode header span.text-slate-500 {
     color: #475569 !important;
 }
 
-body.light-mode header a,
-body.light-mode nav a {
+body.light-mode header a:not(.portal-nav-link):not(.brand-link),
+body.light-mode nav a:not(.portal-nav-link):not(.brand-link) {
     background-color: #FFFFFF !important;
     border-color: #FED7AA !important;
     color: #1E293B !important;
 }
 
-body.light-mode header a:hover,
-body.light-mode nav a:hover {
+body.light-mode header a:not(.portal-nav-link):not(.brand-link):hover,
+body.light-mode nav a:not(.portal-nav-link):not(.brand-link):hover {
     background-color: #FFEDD5 !important;
     color: #9A3412 !important;
 }
+
+/* ========================================================================= */
+/* SIH STANDARD PORTAL NAV LINKS — ZERO MODULES / PURE NAVY BLUE TEXT       */
+/* ========================================================================= */
+.portal-nav-link,
+header nav a.portal-nav-link,
+header a.portal-nav-link,
+nav a.portal-nav-link,
+body.light-mode header a.portal-nav-link,
+body.light-mode nav a.portal-nav-link,
+body.light-mode .portal-nav-link {
+    font-family: 'Noto Sans', 'Noto Sans Devanagari', system-ui, -apple-system, sans-serif !important;
+    color: #1A2972 !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    padding: 0.25rem 0.5rem !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.25rem !important;
+    cursor: pointer !important;
+    white-space: nowrap !important;
+    transition: color 0.15s ease-in-out, border-color 0.15s ease-in-out !important;
+}
+
+.portal-nav-link:hover,
+header nav a.portal-nav-link:hover,
+header a.portal-nav-link:hover,
+nav a.portal-nav-link:hover,
+body.light-mode header a.portal-nav-link:hover,
+body.light-mode nav a.portal-nav-link:hover,
+body.light-mode .portal-nav-link:hover {
+    color: #0A1648 !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    text-decoration: underline !important;
+}
+
+.portal-nav-link.active,
+header nav a.portal-nav-link.active,
+header a.portal-nav-link.active,
+nav a.portal-nav-link.active,
+body.light-mode header a.portal-nav-link.active,
+body.light-mode nav a.portal-nav-link.active,
+body.light-mode .portal-nav-link.active {
+    color: #1A2972 !important;
+    font-weight: 700 !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    border-bottom: 2px solid #1A2972 !important;
+    border-radius: 0 !important;
+    text-decoration: none !important;
+}
+
+/* Dark Mode Overrides for Portal Nav Links */
+body.dark-mode .portal-nav-link,
+body.dark-mode header a.portal-nav-link,
+body.dark-mode nav a.portal-nav-link {
+    color: #CBD5E1 !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+}
+
+body.dark-mode .portal-nav-link:hover,
+body.dark-mode header a.portal-nav-link:hover,
+body.dark-mode nav a.portal-nav-link:hover {
+    color: #38BDF8 !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+}
+
+body.dark-mode .portal-nav-link.active,
+body.dark-mode header a.portal-nav-link.active,
+body.dark-mode nav a.portal-nav-link.active {
+    color: #FFFFFF !important;
+    border-bottom: 2px solid #38BDF8 !important;
+}
+
 
 /* Primary cards & panels in Light Mode */
 body.light-mode main,
