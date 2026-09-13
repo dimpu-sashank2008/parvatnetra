@@ -64,9 +64,10 @@ RUN mkdir -p /app/static/uploads/field_reports
 # Expose national sentinel gateway port
 EXPOSE 8080
 
-# Production Health Check querying the /api/health endpoint
+# Production Health Check querying the /health endpoint
 HEALTHCHECK --interval=30s --timeout=10s --start-period=15s --retries=3 \
-    CMD curl -f http://localhost:8080/api/health || exit 1
+    CMD curl -f http://localhost:${PORT:-8080}/health || exit 1
 
-# Launch with production multi-threaded Gunicorn WSGI server
-CMD ["gunicorn", "--bind", "0.0.0.0:8080", "--workers", "2", "--threads", "4", "--timeout", "120", "app:app"]
+# Launch with production multi-threaded Gunicorn WSGI server respecting dynamic $PORT
+CMD ["sh", "-c", "gunicorn --bind 0.0.0.0:${PORT:-8080} --workers 2 --threads 4 --timeout 120 app:app"]
+

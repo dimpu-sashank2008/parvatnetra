@@ -1,0 +1,44 @@
+name: PARVAT NETRA CI & Smoke Tests
+
+on:
+  push:
+    branches: [ main, staging ]
+  pull_request:
+    branches: [ main, staging ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        cache: 'pip'
+
+    - name: Install System Spatial Dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libgeos-dev libproj-dev libgdal-dev
+
+    - name: Install Python Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pytest
+
+    - name: Verify Zero Credential Leaks
+      run: |
+        python mcp/scripts/validate_config.py
+
+    - name: Verify WSGI Entrypoint & Healthcheck Endpoint
+      run: |
+        python -c "from app import app; c = app.test_client(); res = c.get('/health'); assert res.status_code == 200; data = res.get_json(); assert data['status'] == 'UP'; assert data['application'] == 'PARVAT NETRA'; print('HEALTH CHECK PASSED:', data)"
+
+    - name: Run Core Geotechnical & Realtime Tests
+      run: |
+        python -m pytest tests/test_pahad_engine.py tests/test_realtime_cri_dataset.py tests/test_phase10j_dual_channel.py tests/test_phase10j_failover.py
