@@ -64,6 +64,15 @@ class BaseSMSProvider:
     def send(self, phone: str, message: str) -> Dict[str, Any]:
         raise NotImplementedError
 
+    def send_sms(
+        self,
+        recipient_phone: str,
+        message: str,
+        dlt_template_id: Optional[str] = None,
+        metadata: Optional[Dict[str, Any]] = None
+    ) -> Dict[str, Any]:
+        raise NotImplementedError
+
 
 class MockSMSProvider(BaseSMSProvider):
     """Safe software mock provider for evaluation, tests, and CI."""
@@ -74,6 +83,23 @@ class MockSMSProvider(BaseSMSProvider):
             "status": "SIMULATED_DELIVERY",
             "message_length": len(message),
             "chars_remaining": max(0, 160 - len(message))
+        }
+
+    def send_sms(
+        self,
+        recipient_phone: str,
+        message: str,
+        dlt_template_id: Optional[str] = None,
+        metadata: Optional[Dict[str, Any]] = None
+    ) -> Dict[str, Any]:
+        res = self.send(recipient_phone, message)
+        return {
+            "provider": "MOCK_SMS_GATEWAY",
+            "success": True,
+            "status": "SIMULATED",
+            "provider_reference": f"SMS-REF-{uuid.uuid4().hex[:8].upper()}",
+            "message_length": res.get("message_length", len(message)),
+            "dlt_template_id": dlt_template_id
         }
 
 
@@ -102,6 +128,229 @@ class CDACSMSProvider(BaseSMSProvider):
             "status": "QUEUED_CDAC_DISPATCH"
         }
 
+    def send_sms(
+        self,
+        recipient_phone: str,
+        message: str,
+        dlt_template_id: Optional[str] = None,
+        metadata: Optional[Dict[str, Any]] = None
+    ) -> Dict[str, Any]:
+        res = self.send(recipient_phone, message)
+        status = "SENT" if res.get("success") else "FAILED"
+        return {
+            "provider": res.get("provider", "CDAC_MOBILE_SEVA"),
+            "success": res.get("success", False),
+            "status": status,
+            "provider_reference": f"CDAC-REF-{uuid.uuid4().hex[:8].upper()}" if res.get("success") else None,
+            "error": res.get("error")
+        }
+
+
+class Fast2SMSProvider(BaseSMSProvider):
+    """
+    Fast2SMS Provider for instant SMS delivery to Indian (+91) phone numbers.
+    Supports instant developer testing with free signup credits.
+    """
+    def __init__(self, api_key: Optional[str] = None):
+        self.api_key = os.getenv("FAST2SMS_API_KEY", "") if api_key is None else api_key
+        self.is_configured = bool(self.api_key and self.api_key.strip())
+
+    def send(self, phone: str, message: str) -> Dict[str, Any]:
+        if not self.is_configured:
+            return {
+                "provider": "FAST2SMS",
+                "success": False,
+                "status": "FAILED_UNCONFIGURED_CREDENTIALS",
+                "error": "FAST2SMS_API_KEY not configured in environment or .env."
+            }
+        import urllib.request
+        import urllib.parse
+        import json
+        import re
+
+        clean_phone = re.sub(r"[^\d]", "", phone)
+        if clean_phone.startswith("91") and len(clean_phone) == 12:
+            clean_phone = clean_phone[2:]
+        elif clean_phone.startswith("0") and len(clean_phone) == 11:
+            clean_phone = clean_phone[1:]
+
+        api_key = self.api_key.strip() if self.api_key else ""
+
+        # Use 'q' (quick route for modern Fast2SMS bulkV2 API)
+        for route in ["q", "v3"]:
+            payload = {
+                "route": route,
+                "message": message[:160],
+                "language": "english",
+                "flash": 0,
+                "numbers": clean_phone
+            }
+
+            try:
+                req = urllib.request.Request(
+                    "https://www.fast2sms.com/dev/bulkV2",
+                    data=urllib.parse.urlencode(payload).encode("utf-8"),
+                    headers={
+                        "authorization": api_key,
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    method="POST"
+                )
+                with urllib.request.urlopen(req, timeout=10) as resp:
+                    data = json.loads(resp.read().decode("utf-8"))
+                    if data.get("return") is True:
+                        req_id = data.get("request_id") or uuid.uuid4().hex[:8].upper()
+                        return {
+                            "provider": "FAST2SMS",
+                            "success": True,
+                            "status": "SENT",
+                            "provider_reference": f"F2S-{req_id}",
+                            "message_length": len(message)
+                        }
+                    else:
+                        # Try next route if available
+                        continue
+            except urllib.error.HTTPError as http_err:
+                try:
+                    err_data = json.loads(http_err.read().decode("utf-8"))
+                    err_msg = err_data.get("message") or str(http_err)
+                except Exception:
+                    err_msg = str(http_err)
+                # If authentication failed, no need to retry route
+                if http_err.code in (401, 403) or "authentication" in err_msg.lower():
+                    logger.error(f"[Fast2SMSProvider] Auth error: {err_msg}")
+                    return {
+                        "provider": "FAST2SMS",
+                        "success": False,
+                        "status": "FAILED",
+                        "error": f"Fast2SMS: {err_msg}"
+                    }
+                logger.error(f"[Fast2SMSProvider] Route {route} HTTP error: {err_msg}")
+            except Exception as exc:
+                logger.error(f"[Fast2SMSProvider] Dispatch exception: {exc}")
+                return {
+                    "provider": "FAST2SMS",
+                    "success": False,
+                    "status": "FAILED",
+                    "error": str(exc)
+                }
+
+        return {
+            "provider": "FAST2SMS",
+            "success": False,
+            "status": "FAILED",
+            "error": "Fast2SMS dispatch failed on all available routes."
+        }
+
+    def send_sms(
+        self,
+        recipient_phone: str,
+        message: str,
+        dlt_template_id: Optional[str] = None,
+        metadata: Optional[Dict[str, Any]] = None
+    ) -> Dict[str, Any]:
+        res = self.send(recipient_phone, message)
+        return {
+            "provider": "FAST2SMS",
+            "success": res.get("success", False),
+            "status": res.get("status", "FAILED"),
+            "provider_reference": res.get("provider_reference"),
+            "error": res.get("error")
+        }
+
+
+class TwilioSMSProvider(BaseSMSProvider):
+    """
+    Twilio SMS Gateway adapter for international & domestic SMS dispatch.
+    Requires TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, and TWILIO_PHONE_NUMBER.
+    """
+    def __init__(
+        self,
+        account_sid: Optional[str] = None,
+        auth_token: Optional[str] = None,
+        from_number: Optional[str] = None
+    ):
+        self.account_sid = account_sid or os.getenv("TWILIO_ACCOUNT_SID")
+        self.auth_token = auth_token or os.getenv("TWILIO_AUTH_TOKEN")
+        self.from_number = from_number or os.getenv("TWILIO_PHONE_NUMBER")
+        self.is_configured = bool(self.account_sid and self.auth_token and self.from_number)
+
+    def send(self, phone: str, message: str) -> Dict[str, Any]:
+        if not self.is_configured:
+            return {
+                "provider": "TWILIO",
+                "success": False,
+                "status": "FAILED_UNCONFIGURED_CREDENTIALS",
+                "error": "TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, or TWILIO_PHONE_NUMBER missing."
+            }
+        import urllib.request
+        import urllib.parse
+        import json
+        import base64
+        import re
+
+        clean_phone = phone.strip()
+        if not clean_phone.startswith("+"):
+            digits = re.sub(r"[^\d]", "", clean_phone)
+            if len(digits) == 10:
+                clean_phone = f"+91{digits}"
+            else:
+                clean_phone = f"+{digits}"
+
+        url = f"https://api.twilio.com/2010-04-01/Accounts/{self.account_sid}/Messages.json"
+        payload = {
+            "From": self.from_number,
+            "To": clean_phone,
+            "Body": message[:160]
+        }
+        credentials = f"{self.account_sid}:{self.auth_token}"
+        auth_hdr = "Basic " + base64.b64encode(credentials.encode("utf-8")).decode("utf-8")
+
+        try:
+            req = urllib.request.Request(
+                url,
+                data=urllib.parse.urlencode(payload).encode("utf-8"),
+                headers={
+                    "Authorization": auth_hdr,
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                method="POST"
+            )
+            with urllib.request.urlopen(req, timeout=10) as resp:
+                data = json.loads(resp.read().decode("utf-8"))
+                sid = data.get("sid", uuid.uuid4().hex[:8].upper())
+                return {
+                    "provider": "TWILIO",
+                    "success": True,
+                    "status": "SENT",
+                    "provider_reference": f"TWILIO-{sid}",
+                    "message_length": len(message)
+                }
+        except Exception as exc:
+            logger.error(f"[TwilioSMSProvider] Dispatch error: {exc}")
+            return {
+                "provider": "TWILIO",
+                "success": False,
+                "status": "FAILED",
+                "error": str(exc)
+            }
+
+    def send_sms(
+        self,
+        recipient_phone: str,
+        message: str,
+        dlt_template_id: Optional[str] = None,
+        metadata: Optional[Dict[str, Any]] = None
+    ) -> Dict[str, Any]:
+        res = self.send(recipient_phone, message)
+        return {
+            "provider": "TWILIO",
+            "success": res.get("success", False),
+            "status": res.get("status", "FAILED"),
+            "provider_reference": res.get("provider_reference"),
+            "error": res.get("error")
+        }
+
 
 class SMSService:
     """
@@ -111,9 +360,18 @@ class SMSService:
     def __init__(self, dry_run: bool = DEFAULT_DRY_RUN, provider_name: str = SMS_PROVIDER):
         self.dry_run = dry_run
         self.provider_name = provider_name
-        self.provider: BaseSMSProvider = (
-            CDACSMSProvider() if provider_name == "cdac" else MockSMSProvider()
-        )
+        if provider_name == "cdac":
+            self.provider: BaseSMSProvider = CDACSMSProvider()
+        elif provider_name == "fast2sms":
+            self.provider = Fast2SMSProvider()
+        elif provider_name == "twilio":
+            self.provider = TwilioSMSProvider()
+        elif os.getenv("FAST2SMS_API_KEY"):
+            self.provider = Fast2SMSProvider()
+        elif os.getenv("TWILIO_ACCOUNT_SID") and os.getenv("TWILIO_AUTH_TOKEN"):
+            self.provider = TwilioSMSProvider()
+        else:
+            self.provider = MockSMSProvider()
         self._delivery_history: List[SMSDeliveryRecord] = []
 
     def format_sms_message(

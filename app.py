@@ -15,16 +15,17 @@ from services.ai_triage import AI_TRIAGE_ENGINE
 from services.sar_tracking import SAR_TRACKING_SERVICE
 from services.ai_sitrep import AI_SITREP_SERVICE
 
-# Load local .env if present
+# Load local .env if present (checks both silly-fermi and root directory)
 def load_env():
     env_path = os.path.join(os.path.dirname(__file__), ".env")
-    if os.path.exists(env_path):
-        with open(env_path, "r", encoding="utf-8") as f:
-            for line in f:
-                line = line.strip()
-                if line and not line.startswith("#") and "=" in line:
-                    k, v = line.split("=", 1)
-                    if k.strip() not in os.environ:
+    parent_env = os.path.join(os.path.dirname(os.path.dirname(__file__)), ".env")
+    for path in [parent_env, env_path]:
+        if os.path.exists(path):
+            with open(path, "r", encoding="utf-8") as f:
+                for line in f:
+                    line = line.strip()
+                    if line and not line.startswith("#") and "=" in line:
+                        k, v = line.split("=", 1)
                         os.environ[k.strip()] = v.strip()
 
 load_env()
@@ -113,6 +114,14 @@ try:
     logging.getLogger("PARVAT_NETRA").info("Registered Phase 10I Production SMS blueprint.")
 except Exception as sms_err:
     logging.getLogger("PARVAT_NETRA").warning(f"Could not register SMS routes blueprint: {sms_err}")
+
+# Register Real-Time CRI Dataset & Dynamic Evaluation Blueprint
+try:
+    from backend.realtime_routes import realtime_bp
+    app.register_blueprint(realtime_bp)
+    logging.getLogger("PARVAT_NETRA").info("Registered Real-Time CRI Dataset & Evaluation blueprint.")
+except Exception as rt_err:
+    logging.getLogger("PARVAT_NETRA").warning(f"Could not register Realtime routes blueprint: {rt_err}")
 
 
 

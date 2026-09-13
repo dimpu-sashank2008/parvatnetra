@@ -74,6 +74,14 @@ def run_scheduler_cycle(max_retries=3):
 
             time.sleep(0.5)
 
+            # 2b. Real-Time Multimodal CRI Dataset Harvester & Filer
+            try:
+                from services.realtime_cri_service import REALTIME_CRI_SERVICE
+                rt_res = REALTIME_CRI_SERVICE.refresh_and_file_dataset()
+                results["realtime_cri_records"] = rt_res.get("record_count", 0)
+            except Exception as rt_err:
+                logger.warning(f"Scheduler Realtime CRI update deferred: {rt_err}")
+
             # 3. Emergency Routing & Habitation Isolation Engine
             routing_engine = EmergencyRoutingEngine()
             cycle_res = routing_engine.run_routing_cycle()
@@ -82,7 +90,7 @@ def run_scheduler_cycle(max_retries=3):
             results["settlements_evaluated"] = len(cycle_res.get("habitations", []))
 
             elapsed = time.time() - start_time
-            heartbeat = f"[HEARTBEAT] Telemetry synced ({results['telemetry_readings']} nodes) -> 5M Risk updated ({results['risk_evaluations']} sectors) -> Evacuation routes refreshed (Primary: {results['primary_road_status']}, Elapsed: {elapsed:.2f}s)."
+            heartbeat = f"[HEARTBEAT] Telemetry synced ({results['telemetry_readings']} nodes) -> 5M Risk updated ({results['risk_evaluations']} sectors) -> RT CRI filed ({results.get('realtime_cri_records', 0)}) -> Evacuation routes refreshed (Primary: {results['primary_road_status']}, Elapsed: {elapsed:.2f}s)."
             results["heartbeat"] = heartbeat
             logger.info(heartbeat)
             return results

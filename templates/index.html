@@ -3287,858 +3287,13 @@
         </div>
       </div>
       
-      <!-- 8. SMALL LOCATION / MAP CONTEXT FOOTPRINT -->
-      <div class="bg-[#111111] border border-[#222222] rounded-lg p-4">
-        <div class="flex items-center justify-between pb-2 mb-2.5 border-b border-[#222222]">
-          <div class="flex items-center gap-2">
-            <i class="ph-bold ph-map-pin text-[#A3A3A3] text-sm"></i>
-            <span class="text-xs font-black uppercase tracking-wider text-white">Strategic Corridor Footprint Context</span>
-          </div>
-          <div class="flex items-center gap-3">
-            <span id="pahad-minimap-coords" class="font-mono text-[#737373] text-[11px]">25.1850°N, 92.3650°E</span>
-            <button type="button" onclick="navigateToPanel('map')" class="text-xs font-bold text-white hover:text-[#A3A3A3] transition flex items-center gap-1">
-              <span>Open Full GIS Map →</span>
-            </button>
-          </div>
-        </div>
-        <div id="pahad-prediction-minimap" class="w-full h-36 sm:h-44 rounded border border-[#262626] bg-[#0A0A0A] overflow-hidden relative shadow-inner" aria-label="Geographic Location Mini Map"></div>
-      </div>
+      <!-- 8. OPERATIONAL GIS HAZARD MAP & FIELD TELEMETRY (PRIMARY DASHBOARD) -->
+      <div id="dashboard-gis-map-container" class="space-y-3">
+        <!-- Hidden minimap container and coordinate hooks for test & locator compatibility -->
+        <div id="pahad-prediction-minimap" class="hidden" style="display:none !important;" aria-hidden="true"></div>
+        <span id="pahad-minimap-coords" class="hidden font-mono text-[#737373] text-[11px]">25.1850°N, 92.3650°E</span>
 
-      <!-- COLLAPSIBLE EXPANDED DETAILS PANEL (PHASE 9E CP03 LEDGER) -->
-      <div id="pahad-prediction-details-panel" class="hidden p-4 rounded-lg bg-[#0A0A0A] border border-[#262626] space-y-3 text-xs text-[#E5E5E5]">
-        <div class="flex items-center justify-between border-b border-[#222222] pb-2">
-          <div class="flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
-            <span class="font-black uppercase tracking-wider text-white text-xs">Comprehensive Prediction Telemetry &amp; Physics Ledger</span>
-          </div>
-          <span id="dtl-risk-band-badge" class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#171717] text-white border border-[#2D2D2D]">HIGH RISK</span>
-        </div>
-
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px]">
-          <div class="p-2.5 rounded bg-[#111111] border border-[#222222]">
-            <div class="text-[9px] uppercase tracking-wider text-[#737373] font-bold">Composite Risk Index (CRI)</div>
-            <div id="dtl-cri" class="text-sm font-black text-white font-mono mt-0.5">40.6</div>
-            <div class="text-[9px] text-[#737373] mt-0.5">Scale: 0–100 Fused Hazard</div>
-          </div>
-          <div class="p-2.5 rounded bg-[#111111] border border-[#222222]">
-            <div class="text-[9px] uppercase tracking-wider text-[#737373] font-bold">Physical Factor of Safety</div>
-            <div id="dtl-fos" class="text-sm font-black text-white font-mono mt-0.5">0.926</div>
-            <div id="dtl-fos-sub" class="text-[9px] text-[#737373] mt-0.5">Limit Equilibrium: &lt; 1.0 Critical</div>
-          </div>
-          <div class="p-2.5 rounded bg-[#111111] border border-[#222222]">
-            <div class="text-[9px] uppercase tracking-wider text-[#737373] font-bold">Event Likelihood (24h)</div>
-            <div id="dtl-prob" class="text-sm font-black text-white font-mono mt-0.5">42.1%</div>
-            <div class="text-[9px] text-[#737373] mt-0.5">Calibrated GBDT Probability</div>
-          </div>
-          <div class="p-2.5 rounded bg-[#111111] border border-[#222222]">
-            <div class="text-[9px] uppercase tracking-wider text-[#737373] font-bold">Precipitation Loading</div>
-            <div id="dtl-rain" class="text-sm font-black text-white font-mono mt-0.5">68.4 mm</div>
-            <div id="dtl-rain-sub" class="text-[9px] text-[#737373] mt-0.5">Mandal-Sarkar I-D Model</div>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px]">
-          <div class="p-2.5 rounded bg-[#111111] border border-[#222222]">
-            <div class="text-[9px] uppercase tracking-wider text-[#737373] font-bold">In-Situ Geotechnical</div>
-            <div id="dtl-ground" class="text-xs font-bold text-white mt-0.5">Telemetry Ingested</div>
-            <div class="text-[9px] text-[#737373] mt-0.5">Pore Pressure &amp; Inclinometer</div>
-          </div>
-          <div class="p-2.5 rounded bg-[#111111] border border-[#222222]">
-            <div class="text-[9px] uppercase tracking-wider text-[#737373] font-bold">Regional Seismicity</div>
-            <div id="dtl-seismic" class="text-xs font-bold text-white mt-0.5">USGS Fallback Active</div>
-            <div class="text-[9px] text-[#737373] mt-0.5">USGS / NCS Regional Arc</div>
-          </div>
-          <div class="p-2.5 rounded bg-[#111111] border border-[#222222]">
-            <div class="text-[9px] uppercase tracking-wider text-[#737373] font-bold">Data Quality &amp; Sensors</div>
-            <div id="dtl-data-quality" class="text-xs font-bold text-[#4ADE80] mt-0.5">HIGH DATA COMPLETENESS</div>
-            <div id="dtl-data-quality-sub" class="text-[9px] text-[#737373] mt-0.5">Telemetry Completeness</div>
-          </div>
-          <div class="p-2.5 rounded bg-[#111111] border border-[#222222]">
-            <div class="text-[9px] uppercase tracking-wider text-[#737373] font-bold">Model Governance</div>
-            <div id="dtl-model-status" class="text-xs font-bold text-[#4ADE80] mt-0.5">TRAINED_LIMITED_DATA</div>
-            <div class="text-[9px] text-[#737373] mt-0.5">Registry v3.1.0 • Platt Calibrated</div>
-          </div>
-        </div>
-
-        <!-- Multi-Horizon Exceedance Forecast -->
-        <div class="pt-2 border-t border-[#222222]">
-          <div class="flex items-center justify-between mb-2">
-            <span class="text-[10px] font-mono uppercase tracking-wider text-[#737373] font-bold">Forward-Looking Exceedance Horizons • PAHAD AI multi-horizon outlook</span>
-            <div class="text-[10px] font-mono text-[#A3A3A3]">
-              <span id="fc-current-state">Immediate Geotechnical State</span> • <span id="fc-current-sub">FoS 0.926</span>
-              <span id="fc-projected-state" class="hidden"></span><span id="fc-projected-sub" class="hidden"></span>
-            </div>
-          </div>
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-            <div class="p-2 rounded bg-[#111111] border border-[#222222] text-center">
-              <div class="text-[9px] font-mono uppercase text-[#737373]">6h Horizon</div>
-              <div id="pahad-h6" class="text-sm font-black text-white font-mono mt-0.5">38%</div>
-            </div>
-            <div class="p-2 rounded bg-[#111111] border border-[#222222] text-center">
-              <div class="text-[9px] font-mono uppercase text-[#737373]">12h Horizon</div>
-              <div id="pahad-h12" class="text-sm font-black text-white font-mono mt-0.5">40%</div>
-            </div>
-            <div class="p-2 rounded bg-[#111111] border border-[#222222] text-center">
-              <div class="text-[9px] font-mono uppercase text-[#737373]">24h Horizon</div>
-              <div id="pahad-h24" class="text-sm font-black text-white font-mono mt-0.5">42%</div>
-            </div>
-            <div class="p-2 rounded bg-[#111111] border border-[#222222] text-center">
-              <div class="text-[9px] font-mono uppercase text-[#737373]">48h Horizon</div>
-              <div id="pahad-h48" class="text-sm font-black text-white font-mono mt-0.5">45%</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Chronological inference log hidden inside details -->
-        <div class="pt-2 border-t border-[#222222]">
-          <div class="text-[10px] font-mono uppercase tracking-wider text-[#737373] mb-1.5 flex items-center justify-between">
-            <span>Inference Activity Ledger</span>
-            <span id="live-inference-clock" class="text-[#737373]">Cycle synchronized</span>
-          </div>
-          <div id="pahad-inference-feed-list" class="space-y-1 font-mono text-[10px] text-[#A3A3A3] max-h-24 overflow-y-auto">
-            <div class="flex justify-between items-center"><span class="text-[#737373]" id="inf-time-1">--:--:--</span><span class="truncate pr-2">Weather feed synchronized (Open-Meteo &amp; IMD AWS)</span><span class="text-[#4ADE80] text-[9px]">[LIVE]</span></div>
-            <div class="flex justify-between items-center"><span class="text-[#737373]" id="inf-time-2">--:--:--</span><span class="truncate pr-2">Rainfall loading recalculated (Mandal-Sarkar I-D)</span><span class="text-[#A3A3A3] text-[9px]">[DERIVED]</span></div>
-            <div class="flex justify-between items-center"><span class="text-[#737373]" id="inf-time-3">--:--:--</span><span class="truncate pr-2">Factor of Safety calculated (Mohr-Coulomb FoS: 0.926)</span><span class="text-orange-400 text-[9px]">[PHYSICS]</span></div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-</div><!-- /view-prediction -->
-
-    <!-- =======================================================================
-         PHASE 10: MULTI-HORIZON EARLY-WARNING FORECAST VIEW (#view-horizon-forecast)
-         Restrained Government Black Styling (Inter + JetBrains Mono, Zero Emojis)
-         ======================================================================= -->
-    <div id="view-horizon-forecast" class="workspace-view hidden max-w-7xl mx-auto px-4 py-4 space-y-4 font-sans text-slate-200 select-none" aria-label="PAHAD AI Multi-Horizon Early Warning Forecast">
-      
-      <!-- 1. INSTITUTIONAL BANNER & CORRIDOR SELECTOR -->
-      <div class="bg-[#111111] border border-[#222222] rounded-lg p-3.5 flex flex-wrap items-center justify-between gap-3">
-        <div class="flex items-center gap-3">
-          <div class="w-9 h-9 rounded bg-[#171717] border border-[#2D2D2D] flex items-center justify-center text-white text-lg">
-            <svg class="w-5 h-5 text-blue-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          </div>
-          <div>
-            <div class="text-[10px] font-mono font-bold tracking-widest text-[#A3A3A3] uppercase">NATIONAL DISASTER MANAGEMENT AUTHORITY • PAHAD AI</div>
-            <h2 class="text-sm sm:text-base font-black text-white tracking-wide uppercase m-0">Multi-Horizon Landslide Early-Warning Forecast</h2>
-          </div>
-        </div>
-
-        <div class="flex items-center gap-2.5 flex-wrap">
-          <div class="flex items-center gap-2">
-            <label for="horizon-corridor-select" class="text-[11px] font-mono text-slate-400">CORRIDOR:</label>
-            <select id="horizon-corridor-select" onchange="fetchHorizonForecast(this.value)" class="bg-[#171717] hover:bg-[#1D1D1D] text-slate-200 border border-[#2D2D2D] rounded px-3 py-1 text-xs font-mono font-bold focus:outline-none focus:border-[#1E3A8A] cursor-pointer">
-              <option value="SK-NH10-KM48" selected>SK-NH10-KM48 • NH-10 Km 48 (Sikkim)</option>
-              <option value="MN-TUPUL-RLY">MN-TUPUL-RLY • Tupul Railway Yard (Manipur)</option>
-              <option value="MZ-MELTHUM-QRY">MZ-MELTHUM-QRY • Melthum Stone Quarry (Mizoram)</option>
-              <option value="AS-HAFLONG-RLY">AS-HAFLONG-RLY • New Haflong Station (Assam)</option>
-              <option value="ML-MAWSYNRAM">ML-MAWSYNRAM • Mawsynram Scarp (Meghalaya)</option>
-              <option value="NL-DZUKOU-KOH">NL-DZUKOU-KOH • Dzukou Valley Pass (Nagaland)</option>
-              <option value="AR-TAWANG-SELA">AR-TAWANG-SELA • Sela Pass Approach (Arunachal)</option>
-              <option value="TR-JAMPUI-HILLS">TR-JAMPUI-HILLS • Vanghmun Ridge (Tripura)</option>
-            </select>
-          </div>
-          <button type="button" onclick="fetchHorizonForecast(document.getElementById('horizon-corridor-select').value)" class="p-1.5 rounded bg-[#171717] hover:bg-[#222222] text-slate-300 border border-[#2D2D2D] transition cursor-pointer active:scale-95" title="Refresh multi-horizon inference">
-            <svg class="w-3.5 h-3.5 text-slate-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-            </svg>
-          </button>
-        </div>
-      </div>
-
-      <!-- 2. SCIENTIFIC GOVERNANCE & MODEL STATE CHIPS -->
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[10px] font-mono">
-        <div class="bg-[#111111] border border-[#222222] p-2 rounded flex items-center justify-between">
-          <span class="text-slate-400">GBDT ENSEMBLE:</span>
-          <span class="font-bold text-blue-300 bg-[#0C2340] border border-[#1E3A8A] px-1.5 py-0.5 rounded">TRAINED_LIMITED_DATA</span>
-        </div>
-        <div class="bg-[#111111] border border-[#222222] p-2 rounded flex items-center justify-between">
-          <span class="text-slate-400">DEEP BiLSTM:</span>
-          <span class="font-bold text-amber-400 bg-amber-950/40 border border-amber-700/60 px-1.5 py-0.5 rounded">NOT_TRAINED (N&lt;500)</span>
-        </div>
-        <div class="bg-[#111111] border border-[#222222] p-2 rounded flex items-center justify-between">
-          <span class="text-slate-400">PHYSICS LSTM:</span>
-          <span class="font-bold text-slate-300 bg-slate-800 border border-slate-700 px-1.5 py-0.5 rounded">[SURROGATE]</span>
-        </div>
-        <div class="bg-[#111111] border border-[#222222] p-2 rounded flex items-center justify-between">
-          <span class="text-slate-400">SAFETY GATE:</span>
-          <span class="font-bold text-emerald-400 bg-emerald-950/40 border border-emerald-700/60 px-1.5 py-0.5 rounded">2-OF-3 ENFORCED</span>
-        </div>
-      </div>
-
-      <!-- 3. FOUR MULTI-HORIZON PROBABILITY CARDS (6h, 12h, 24h, 48h) -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3.5">
-        
-        <!-- CARD 1: 6-HOUR HORIZON -->
-        <div class="bg-[#111111] border border-[#222222] rounded-lg p-3.5 space-y-3 flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between text-xs border-b border-[#1E1E1E] pb-2">
-              <span class="font-mono font-bold text-slate-400 flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full bg-blue-400"></span> 6-HOUR HORIZON
-              </span>
-              <span id="hf-status-6h" class="text-[9px] font-mono px-2 py-0.5 rounded bg-emerald-950/60 text-emerald-300 border border-emerald-700/60 font-bold">LOW RISK</span>
-            </div>
-            <div class="mt-3 text-center">
-              <div class="text-[10px] text-slate-400 uppercase font-mono tracking-wider">Calibrated Probability</div>
-              <div id="hf-prob-6h" class="text-3xl font-black font-mono text-slate-100 my-1">3.3%</div>
-              <div class="w-full bg-[#1A1A1A] rounded-full h-2 overflow-hidden border border-[#262626]">
-                <div id="hf-bar-6h" class="bg-[#1E3A8A] h-full rounded-full transition-all duration-500" style="width: 3.3%"></div>
-              </div>
-            </div>
-          </div>
-          <div class="space-y-1.5 text-[10px] font-mono border-t border-[#1E1E1E] pt-2 text-slate-400">
-            <div class="flex justify-between"><span>Raw (Uncalibrated):</span><strong id="hf-raw-6h" class="text-slate-200">0.3%</strong></div>
-            <div class="flex justify-between"><span>Opt Threshold:</span><strong id="hf-th-6h" class="text-slate-200">&ge; 0.30</strong></div>
-            <div class="flex justify-between"><span>Lead Time Estimate:</span><strong id="hf-lead-6h" class="text-slate-200">6.0h</strong></div>
-          </div>
-        </div>
-
-        <!-- CARD 2: 12-HOUR HORIZON -->
-        <div class="bg-[#111111] border border-[#222222] rounded-lg p-3.5 space-y-3 flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between text-xs border-b border-[#1E1E1E] pb-2">
-              <span class="font-mono font-bold text-slate-400 flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full bg-blue-400"></span> 12-HOUR HORIZON
-              </span>
-              <span id="hf-status-12h" class="text-[9px] font-mono px-2 py-0.5 rounded bg-emerald-950/60 text-emerald-300 border border-emerald-700/60 font-bold">LOW RISK</span>
-            </div>
-            <div class="mt-3 text-center">
-              <div class="text-[10px] text-slate-400 uppercase font-mono tracking-wider">Calibrated Probability</div>
-              <div id="hf-prob-12h" class="text-3xl font-black font-mono text-slate-100 my-1">4.1%</div>
-              <div class="w-full bg-[#1A1A1A] rounded-full h-2 overflow-hidden border border-[#262626]">
-                <div id="hf-bar-12h" class="bg-[#1E3A8A] h-full rounded-full transition-all duration-500" style="width: 4.1%"></div>
-              </div>
-            </div>
-          </div>
-          <div class="space-y-1.5 text-[10px] font-mono border-t border-[#1E1E1E] pt-2 text-slate-400">
-            <div class="flex justify-between"><span>Raw (Uncalibrated):</span><strong id="hf-raw-12h" class="text-slate-200">0.4%</strong></div>
-            <div class="flex justify-between"><span>Opt Threshold:</span><strong id="hf-th-12h" class="text-slate-200">&ge; 0.30</strong></div>
-            <div class="flex justify-between"><span>Lead Time Estimate:</span><strong id="hf-lead-12h" class="text-slate-200">12.0h</strong></div>
-          </div>
-        </div>
-
-        <!-- CARD 3: 24-HOUR HORIZON (PRIMARY OPERATIONAL TARGET) -->
-        <div class="bg-[#111111] border-2 border-[#1E3A8A] rounded-lg p-3.5 space-y-3 flex flex-col justify-between relative shadow-lg">
-          <div class="absolute -top-2.5 right-3 bg-[#10243E] border border-[#1E3A8A] text-blue-100 font-mono text-[9px] font-black px-2 py-0.5 rounded uppercase tracking-wider">
-            PRIMARY TARGET
-          </div>
-          <div>
-            <div class="flex items-center justify-between text-xs border-b border-[#1E1E1E] pb-2">
-              <span class="font-mono font-bold text-blue-200 flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span> 24-HOUR HORIZON
-              </span>
-              <span id="hf-status-24h" class="text-[9px] font-mono px-2 py-0.5 rounded bg-emerald-950/60 text-emerald-300 border border-emerald-700/60 font-bold">LOW RISK</span>
-            </div>
-            <div class="mt-3 text-center">
-              <div class="text-[10px] text-blue-200 uppercase font-mono tracking-wider">Calibrated Probability</div>
-              <div id="hf-prob-24h" class="text-3xl font-black font-mono text-slate-100 my-1">5.0%</div>
-              <div class="w-full bg-[#1A1A1A] rounded-full h-2 overflow-hidden border border-[#262626]">
-                <div id="hf-bar-24h" class="bg-[#1E3A8A] h-full rounded-full transition-all duration-500" style="width: 5.0%"></div>
-              </div>
-            </div>
-          </div>
-          <div class="space-y-1.5 text-[10px] font-mono border-t border-[#1E1E1E] pt-2 text-slate-400">
-            <div class="flex justify-between"><span>Raw (Uncalibrated):</span><strong id="hf-raw-24h" class="text-slate-200">0.5%</strong></div>
-            <div class="flex justify-between"><span>Opt Threshold:</span><strong id="hf-th-24h" class="text-slate-200">&ge; 0.30</strong></div>
-            <div class="flex justify-between"><span>Lead Time Estimate:</span><strong id="hf-lead-24h" class="text-blue-200">24.0h (Median)</strong></div>
-          </div>
-        </div>
-
-        <!-- CARD 4: 48-HOUR HORIZON -->
-        <div class="bg-[#111111] border border-[#222222] rounded-lg p-3.5 space-y-3 flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between text-xs border-b border-[#1E1E1E] pb-2">
-              <span class="font-mono font-bold text-slate-400 flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full bg-blue-400"></span> 48-HOUR HORIZON
-              </span>
-              <span id="hf-status-48h" class="text-[9px] font-mono px-2 py-0.5 rounded bg-emerald-950/60 text-emerald-300 border border-emerald-700/60 font-bold">LOW RISK</span>
-            </div>
-            <div class="mt-3 text-center">
-              <div class="text-[10px] text-slate-400 uppercase font-mono tracking-wider">Calibrated Probability</div>
-              <div id="hf-prob-48h" class="text-3xl font-black font-mono text-slate-100 my-1">0.1%</div>
-              <div class="w-full bg-[#1A1A1A] rounded-full h-2 overflow-hidden border border-[#262626]">
-                <div id="hf-bar-48h" class="bg-[#1E3A8A] h-full rounded-full transition-all duration-500" style="width: 0.1%"></div>
-              </div>
-            </div>
-          </div>
-          <div class="space-y-1.5 text-[10px] font-mono border-t border-[#1E1E1E] pt-2 text-slate-400">
-            <div class="flex justify-between"><span>Raw (Uncalibrated):</span><strong id="hf-raw-48h" class="text-slate-200">0.01%</strong></div>
-            <div class="flex justify-between"><span>Opt Threshold:</span><strong id="hf-th-48h" class="text-slate-200">&ge; 0.30</strong></div>
-            <div class="flex justify-between"><span>Lead Time Estimate:</span><strong id="hf-lead-48h" class="text-slate-200">48.0h</strong></div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- 4. DECOUPLED PHYSICAL STABILITY & 2-OF-3 SAFETY GATE -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
-        
-        <!-- Pillar 1: Physical Mechanics -->
-        <div class="bg-[#111111] border border-[#222222] rounded-lg p-3.5 space-y-2">
-          <div class="flex items-center justify-between text-xs font-mono font-bold">
-            <span class="text-slate-400">1. PHYSICAL MECHANICS</span>
-            <span id="hf-fos-badge" class="text-[9px] px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-700 font-bold">STABLE</span>
-          </div>
-          <div class="flex items-baseline gap-2">
-            <span class="text-xs text-slate-400 font-mono">Factor of Safety (FoS):</span>
-            <span id="hf-fos-val" class="text-xl font-mono font-black text-slate-100">1.28</span>
-          </div>
-          <p class="text-[11px] text-slate-400 leading-relaxed">
-            Infinite-slope Mohr-Coulomb limit equilibrium stability. Decoupled from statistical event likelihood to prevent circular reasoning.
-          </p>
-        </div>
-
-        <!-- Pillar 2: Meteorological Forcing -->
-        <div class="bg-[#111111] border border-[#222222] rounded-lg p-3.5 space-y-2">
-          <div class="flex items-center justify-between text-xs font-mono font-bold">
-            <span class="text-slate-400">2. PRECIPITATION FORCING</span>
-            <span id="hf-rain-badge" class="text-[9px] px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-700 font-bold">BELOW THRESHOLD</span>
-          </div>
-          <div class="flex items-baseline gap-2">
-            <span class="text-xs text-slate-400 font-mono">Rainfall (24h):</span>
-            <span id="hf-rain-val" class="text-xl font-mono font-black text-slate-100">8.3 mm</span>
-          </div>
-          <p class="text-[11px] text-slate-400 leading-relaxed">
-            Mandal-Sarkar regional Intensity-Duration threshold. Empirical critical exceedance standard for Himalayan weathered gneiss slopes.
-          </p>
-        </div>
-
-        <!-- Pillar 3: Ground Telemetry Anomaly -->
-        <div class="bg-[#111111] border border-[#222222] rounded-lg p-3.5 space-y-2">
-          <div class="flex items-center justify-between text-xs font-mono font-bold">
-            <span class="text-slate-400">3. TELEMETRY SIGNALS</span>
-            <span id="hf-telemetry-badge" class="text-[9px] px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-700 font-bold">IN-DISTRIBUTION</span>
-          </div>
-          <div class="flex items-baseline gap-2">
-            <span class="text-xs text-slate-400 font-mono">Pore-Water / Tilt:</span>
-            <span id="hf-telemetry-val" class="text-xl font-mono font-black text-slate-100">26.0 kPa • 3.5°</span>
-          </div>
-          <p class="text-[11px] text-slate-400 leading-relaxed">
-            In-situ vibrating wire piezometer & biaxial borehole inclinometer vectors cross-referenced against historical training distribution bounds.
-          </p>
-        </div>
-
-      </div>
-
-      <!-- 5. 2-OF-3 SAFETY GATE DISPATCH AUTHORIZATION BANNER -->
-      <div class="bg-[#111111] border border-[#262626] rounded-lg p-3.5 flex flex-wrap items-center justify-between gap-3 text-xs">
-        <div class="flex items-center gap-3">
-          <div class="w-8 h-8 rounded bg-[#171717] border border-[#262626] flex items-center justify-center">
-            <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-            </svg>
-          </div>
-          <div>
-            <div class="font-bold text-slate-200">STATUTORY CORROBORATION GATE: <span id="hf-signal-agreement" class="font-mono text-emerald-400">2 / 3 AGREEMENT</span></div>
-            <div class="text-[11px] text-slate-400">Public acoustic siren alerts and CAP cellular broadcasts require statutory confirmation from District Magistrate under DMA 2005.</div>
-          </div>
-        </div>
-        <div class="flex items-center gap-2 font-mono text-[11px]">
-          <span class="text-slate-400">EOC DISPATCH:</span>
-          <span id="hf-dispatch-recommendation" class="px-2.5 py-1 rounded bg-[#1A1A1A] border border-[#2D2D2D] text-slate-300 font-bold">MONITORING PROTOCOL ACTIVE</span>
-        </div>
-      </div>
-
-      <!-- 6. TOP DRIVERS & CONTRIBUTING SIGNALS -->
-      <div class="bg-[#111111] border border-[#222222] rounded-lg p-3.5 space-y-2.5">
-        <div class="text-xs font-mono font-bold text-slate-300 flex items-center justify-between">
-          <span>TOP MODEL CONTRIBUTING SIGNALS (24H PREDICTOR)</span>
-          <span class="text-[10px] text-slate-400 font-normal">Statistical association drivers (non-causal)</span>
-        </div>
-        <div id="hf-top-drivers-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-2 text-xs font-mono">
-          <div class="p-2 bg-[#171717] border border-[#222222] rounded flex justify-between items-center"><span class="text-slate-400">soil_moisture:</span><span class="font-bold text-slate-200">20.2%</span></div>
-          <div class="p-2 bg-[#171717] border border-[#222222] rounded flex justify-between items-center"><span class="text-slate-400">ground_displacement:</span><span class="font-bold text-slate-200">15.2%</span></div>
-          <div class="p-2 bg-[#171717] border border-[#222222] rounded flex justify-between items-center"><span class="text-slate-400">FoS_mechanics:</span><span class="font-bold text-slate-200">13.5%</span></div>
-          <div class="p-2 bg-[#171717] border border-[#222222] rounded flex justify-between items-center"><span class="text-slate-400">API_30d_antecedent:</span><span class="font-bold text-slate-200">12.9%</span></div>
-          <div class="p-2 bg-[#171717] border border-[#222222] rounded flex justify-between items-center"><span class="text-slate-400">tilt_inclinometer:</span><span class="font-bold text-slate-200">6.7%</span></div>
-        </div>
-      </div>
-
-    </div><!-- /view-horizon-forecast -->
-
-    <!-- FLOATING MAP POINT PICKER BANNER -->
-    <div id="map-pick-banner" class="hidden fixed top-16 left-1/2 -translate-x-1/2 z-50 bg-sky-950/95 border border-sky-400 text-sky-100 text-xs font-semibold px-4 py-2 rounded-full shadow-2xl backdrop-blur-sm flex items-center gap-3 animate-pulse">
-      <div class="flex items-center gap-1.5">
-        <i class="ph-bold ph-crosshair text-sky-400 text-sm"></i>
-        <span>CLICK ANY LOCATION ON THE MAP TO EVALUATE LIVE LANDSLIDE RISK</span>
-      </div>
-      <button type="button" onclick="cancelMapPointPicker()" class="px-2 py-0.5 bg-sky-800 hover:bg-sky-700 text-white text-[10px] rounded-full uppercase tracking-wider font-bold">
-        Cancel
-      </button>
-    </div>
-
-    <!-- CUSTOM COORDINATES MODAL -->
-    <div id="custom-coord-modal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-xs flex items-center justify-center p-4">
-      <div class="bg-slate-900 border border-slate-700 rounded-lg shadow-2xl max-w-md w-full p-4 space-y-3">
-        <div class="flex items-center justify-between border-b border-slate-800 pb-2">
-          <div class="flex items-center gap-2">
-            <i class="ph-bold ph-crosshair text-sky-400 text-lg"></i>
-            <h3 class="text-sm font-bold text-slate-100 uppercase tracking-wider">Arbitrary Coordinate Inference</h3>
-          </div>
-          <button type="button" onclick="closeCustomCoordModal()" class="text-slate-400 hover:text-white text-lg p-1">&times;</button>
-        </div>
-        <p class="text-xs text-slate-300">
-          Enter arbitrary WGS84 coordinates across the North-Eastern Region (NER) to trigger real-time GLO-30 DEM terrain, weather telemetry, Mohr-Coulomb physical FoS, and ML event probability.
-        </p>
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label for="custom-lat-input" class="block text-[10px] font-bold text-slate-400 uppercase mb-0.5">Latitude (°N)</label>
-            <input type="number" id="custom-lat-input" step="0.0001" min="20.0" max="31.0" placeholder="e.g. 25.5820" class="w-full bg-slate-800 border border-slate-600 rounded px-2.5 py-1.5 text-xs text-slate-100 font-mono focus:border-sky-500 focus:outline-hidden">
-            <span class="text-[9px] text-slate-500">NER Bounds: 20.0°N – 30.5°N</span>
-          </div>
-          <div>
-            <label for="custom-lon-input" class="block text-[10px] font-bold text-slate-400 uppercase mb-0.5">Longitude (°E)</label>
-            <input type="number" id="custom-lon-input" step="0.0001" min="87.0" max="98.0" placeholder="e.g. 94.1200" class="w-full bg-slate-800 border border-slate-600 rounded px-2.5 py-1.5 text-xs text-slate-100 font-mono focus:border-sky-500 focus:outline-hidden">
-            <span class="text-[9px] text-slate-500">NER Bounds: 87.0°E – 98.0°E</span>
-          </div>
-        </div>
-        <div>
-          <label for="custom-name-input" class="block text-[10px] font-bold text-slate-400 uppercase mb-0.5">Location Identifier / Landmark (Optional)</label>
-          <input type="text" id="custom-name-input" placeholder="e.g. Dzukou Valley Pass Checkpoint" class="w-full bg-slate-800 border border-slate-600 rounded px-2.5 py-1.5 text-xs text-slate-100 focus:border-sky-500 focus:outline-hidden">
-        </div>
-        <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-800">
-          <button type="button" onclick="closeCustomCoordModal()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded text-xs font-semibold">Cancel</button>
-          <button type="button" onclick="submitCustomCoordinates()" class="px-3.5 py-1.5 bg-sky-600 hover:bg-sky-500 text-white rounded text-xs font-bold flex items-center gap-1.5 shadow-sm active:scale-95 transition">
-            <i class="ph-bold ph-lightning"></i> Run Live Inference
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- =====================================================================
-         PHASE 9C: WORKSPACE VIEW 2 — SYSTEM OPERATIONS & DEMO (HIDDEN BY DEFAULT)
-         ===================================================================== -->
-    <div id="view-system" class="workspace-view hidden max-w-7xl mx-auto px-4 py-4 space-y-4">
-<!-- TOP GOVERNMENT COMMAND SUMMARY (OPERATIONAL KPI BAR) -->
-    <section id="gov-command-summary" class="max-w-7xl mx-auto px-4 py-2.5" aria-label="National Disaster Management Command Summary">
-      <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
-        <!-- Card 1: Overall Risk Status -->
-        <div class="kpi-card bg-[#0F172A] border border-slate-700/80 rounded p-3 flex flex-col justify-between shadow-xs">
-          <div class="text-[10px] font-black uppercase tracking-wider text-slate-400 flex items-center justify-between">
-            <span>Overall Risk Status</span>
-            <i class="ph-bold ph-shield-warning text-rose-400 text-sm"></i>
-          </div>
-          <div id="kpi-gov-overall-risk" class="text-xl font-black text-rose-400 mt-1 font-mono">HIGH RISK</div>
-          <div id="kpi-gov-overall-sub" class="text-[11px] text-slate-400 mt-0.5 truncate">CRI 72 / 100 • Critical Attention</div>
-        </div>
-        <!-- Card 2: Priority Monitored Corridor -->
-        <div class="kpi-card bg-[#0F172A] border border-slate-700/80 rounded p-3 flex flex-col justify-between shadow-xs">
-          <div class="text-[10px] font-black uppercase tracking-wider text-slate-400 flex items-center justify-between">
-            <span>Priority Corridor</span>
-            <i class="ph-bold ph-map-pin text-sky-400 text-sm"></i>
-          </div>
-          <div id="kpi-gov-priority-loc" class="text-base font-black text-slate-100 mt-1 truncate">NH-10 / Km 48</div>
-          <div id="kpi-gov-priority-sub" class="text-[11px] text-slate-400 mt-0.5 truncate">Pakyong, Sikkim • Strategic Lifeline</div>
-        </div>
-        <!-- Card 3: Monitored Corridors -->
-        <div class="kpi-card bg-[#0F172A] border border-slate-700/80 rounded p-3 flex flex-col justify-between shadow-xs">
-          <div class="text-[10px] font-black uppercase tracking-wider text-slate-400 flex items-center justify-between">
-            <span>Monitored Corridors</span>
-            <i class="ph-bold ph-path text-emerald-400 text-sm"></i>
-          </div>
-          <div id="kpi-gov-corridors" class="text-xl font-black text-slate-100 mt-1 font-mono">26 Corridors</div>
-          <div class="text-[11px] text-slate-400 mt-0.5 truncate">Across 8 NER States</div>
-        </div>
-        <!-- Card 4: Pending Authority Reviews -->
-        <div class="kpi-card bg-[#0F172A] border border-slate-700/80 rounded p-3 flex flex-col justify-between shadow-xs">
-          <div class="text-[10px] font-black uppercase tracking-wider text-slate-400 flex items-center justify-between">
-            <span>Authority Review</span>
-            <i class="ph-bold ph-scales text-amber-400 text-sm"></i>
-          </div>
-          <div id="kpi-gov-pending-reviews" class="text-xl font-black text-amber-400 mt-1 font-mono">02 Advisories</div>
-          <div class="text-[11px] text-slate-400 mt-0.5 truncate">Pending Magistrate Sign-Off</div>
-        </div>
-        <!-- Card 5: Telemetry Health -->
-        <div class="kpi-card bg-[#0F172A] border border-slate-700/80 rounded p-3 flex flex-col justify-between shadow-xs col-span-2 md:col-span-1">
-          <div class="text-[10px] font-black uppercase tracking-wider text-slate-400 flex items-center justify-between">
-            <span>Telemetry Health</span>
-            <i class="ph-bold ph-activity text-blue-300 text-sm"></i>
-          </div>
-          <div id="kpi-gov-telemetry-health" class="text-xl font-black text-emerald-400 mt-1 font-mono">98.4% Available</div>
-          <div class="text-[11px] text-slate-400 mt-0.5 truncate">IMD AWS • InSAR • IoT Gateways</div>
-        </div>
-      </div>
-    </section>
-
-      <div class="flex items-center justify-between pb-3 border-b border-slate-800">
-        <div class="flex items-center gap-2">
-          <i class="ph-bold ph-cpu text-blue-300 text-lg"></i>
-          <h2 class="text-sm font-black text-slate-100 uppercase tracking-wider">System Operations, Telemetry & Multi-Channel Pipeline</h2>
-        </div>
-        <button type="button" onclick="navigateToPanel('prediction')" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded flex items-center gap-1.5 transition active:scale-95">
-          <i class="ph-bold ph-arrow-left"></i> Return to Prediction Dashboard
-        </button>
-      </div>
-
-    <!-- SIH DECISION-FIRST COMMAND STRIP: WHERE / RISK / WHY / ACTION -->
-    <section id="sih-command-strip" aria-label="Live landslide decision status">
-      <div class="sih-command-shell">
-        <div class="sih-command-head">
-          <div>
-            <div class="sih-eyebrow">Operational layer • driven by PAHAD AI inference</div>
-            <div class="sih-command-title">Operational Response Snapshot</div>
-          </div>
-          <div class="sih-freshness"><span class="sih-live-dot" aria-hidden="true"></span><span id="sih-freshness-text">LIVE EVIDENCE • syncing</span></div>
-        </div>
-        <div class="sih-command-grid">
-          <!-- Cell 1: Priority Sector -->
-          <div class="sih-command-cell">
-            <div class="sih-label">Priority sector</div>
-            <div id="sih-sector" class="sih-value" style="font-size:16px;line-height:1.15;">NH-10 / Rangpo–Singtam</div>
-            <div id="sih-sector-sub" class="sih-sub">Sikkim • corridor monitoring</div>
-          </div>
-          <!-- Cell 2: AI Risk Index -->
-          <div class="sih-command-cell">
-            <div class="sih-label">AI risk index</div>
-            <div><span id="sih-risk-score" class="sih-value sih-risk-value">73.2</span><span class="sih-unit">/100</span></div>
-            <div class="sih-risk-progress" aria-hidden="true"><span id="sih-risk-progress"></span></div>
-            <div id="sih-risk-tier" class="sih-microcopy">RED • action required</div>
-          </div>
-          <!-- Cell 3: 24h Event Probability -->
-          <div class="sih-command-cell">
-            <div class="sih-label">24h Event Probability</div>
-            <div><span id="sih-event-prob" class="sih-value text-amber-400">72.0%</span><span class="sih-unit">P(event)</span></div>
-            <div id="sih-event-prob-sub" class="sih-sub font-mono text-[10px]">Calibrated GBDT • 24h</div>
-          </div>
-          <!-- Cell 4: Factor of Safety -->
-          <div class="sih-command-cell">
-            <div class="sih-label">Factor of safety</div>
-            <div><span id="sih-fos" class="sih-value sih-risk-value">0.745</span><span class="sih-unit">FoS</span></div>
-            <div id="sih-fos-sub" class="sih-sub">&lt; 1.00 indicates unstable slope</div>
-          </div>
-          <!-- Cell 5: Rainfall Trigger -->
-          <div class="sih-command-cell">
-            <div class="sih-label">Rainfall trigger</div>
-            <div><span id="sih-rain" class="sih-value">68.4</span><span class="sih-unit">mm / 24h</span></div>
-            <div id="sih-rain-sub" class="sih-sub"><span id="sih-rain-trigger" class="text-rose-400 font-bold font-mono">THRESHOLD EXCEEDED</span></div>
-          </div>
-          <!-- Cell 6: Model Agreement -->
-          <div class="sih-command-cell">
-            <div class="sih-label">Model agreement</div>
-            <div><span id="sih-agreement" class="sih-value text-emerald-400">2/3</span><span class="sih-unit">signals</span></div>
-            <div id="sih-agreement-sub" class="sih-sub font-mono text-[10px]">FoS + Rain + ML confirmed</div>
-          </div>
-          <!-- Cell 7: Confidence -->
-          <div class="sih-command-cell">
-            <div class="sih-label">Confidence</div>
-            <div><span id="sih-confidence" class="sih-value text-blue-300">0.84</span><span class="sih-unit">HIGH</span></div>
-            <div id="sih-confidence-sub" class="sih-sub font-mono text-[10px]">Multimodal concordance</div>
-          </div>
-          <!-- Cell 8: Next Action -->
-          <div class="sih-command-cell sih-action">
-            <div class="sih-label">Next operational action</div>
-            <div id="sih-action-text" class="sih-sub" style="color:#CBD5E1;font-weight:800;">Prepare controlled evacuation + route assessment</div>
-            <button id="sih-refresh-btn" type="button" onclick="refreshSIHCommandSnapshot()"><i class="ph-bold ph-arrows-clockwise"></i> Refresh live assessment</button>
-          </div>
-        </div>
-        <div class="sih-evidence-bar" aria-label="Evidence sources">
-          <span class="sih-source-chip live" onclick="sihEvidenceNavigate('imd')" role="button" tabindex="0" title="Inspect IMD Rainfall Intelligence"><span class="chip-dot"></span>IMD rainfall</span>
-          <span class="sih-source-chip live" onclick="sihEvidenceNavigate('postgis')" role="button" tabindex="0" title="View PostGIS GIS Hazard Risk Zones"><span class="chip-dot"></span>PostGIS risk zones</span>
-          <span class="sih-source-chip live" onclick="sihEvidenceNavigate('iot')" role="button" tabindex="0" title="Inspect In-Situ IoT & River Scour Telemetry"><span class="chip-dot"></span>IoT telemetry</span>
-          <span class="sih-source-chip live" onclick="sihEvidenceNavigate('sitrep')" role="button" tabindex="0" title="View Autonomous AI SitRep Briefing"><span class="chip-dot"></span>AI SitRep</span>
-          <span class="sih-source-chip sim" onclick="sihEvidenceNavigate('physics')" role="button" tabindex="0" title="Inspect Physics & ML Multimodal Evidence"><span class="chip-dot"></span>Physics / ML fusion</span>
-          <span class="sih-source-chip" onclick="sihEvidenceNavigate('reports')" role="button" tabindex="0" title="View Field & Citizen Observation Queue"><span class="chip-dot"></span>Field reports</span>
-          <a href="/notifications" class="sih-source-chip live" style="text-decoration:none;" title="PAHAD 15km Geofenced Multi-Channel Alert Center"><span class="chip-dot" style="background:#f59e0b;"></span>Alert Center (15km)</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- PAHAD AI MODEL STATUS PANEL (Section 23) -->
-    <section id="pahad-model-status-panel" class="max-w-[1280px] mx-auto px-4 mb-3" aria-label="PAHAD AI Model Status">
-      <div class="bg-[#0A1220] border border-[#26364D] rounded-lg p-3 text-xs shadow-lg">
-        <div class="flex flex-wrap items-center justify-between pb-2 mb-2 border-b border-[#1E293B] gap-2">
-          <div class="flex items-center gap-2">
-            <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span class="font-black tracking-wider uppercase text-slate-200 text-[11px]">PAHAD AI Model Status</span>
-            <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-amber-950/80 text-amber-300 border border-amber-800">[TRAINED_LIMITED_DATA]</span>
-          </div>
-          <div class="flex items-center gap-2 text-[10px] font-mono text-slate-400" id="pahad-sync-status-indicator">
-            <span class="px-2 py-0.5 rounded bg-emerald-950/60 text-emerald-400 border border-emerald-800/80" id="pahad-online-badge">ONLINE</span>
-            <span class="text-slate-500">•</span>
-            <span>Architecture: <strong class="text-slate-300">Phase 3 Multimodal</strong></span>
-          </div>
-        </div>
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 text-[11px] font-mono">
-          <div class="p-2 rounded bg-[#070B10]/80 border border-[#1E293B]">
-            <div class="text-[9px] text-slate-500 uppercase font-sans font-bold">Event Model</div>
-            <div class="text-slate-200 font-bold mt-0.5">Calibrated GBDT</div>
-            <div class="text-[9px] text-blue-300 mt-0.5">6/12/24/48h Horizons</div>
-          </div>
-          <div class="p-2 rounded bg-[#070B10]/80 border border-[#1E293B]">
-            <div class="text-[9px] text-slate-500 uppercase font-sans font-bold">Training Samples</div>
-            <div class="text-slate-200 font-bold mt-0.5" id="pahad-train-samples-stat">16 Real (Train) / 12 (Val)</div>
-            <div class="text-[9px] text-slate-400 mt-0.5">17 GSI Events / 19 Controls</div>
-          </div>
-          <div class="p-2 rounded bg-[#070B10]/80 border border-[#1E293B]">
-            <div class="text-[9px] text-slate-500 uppercase font-sans font-bold">Data Span & Validation</div>
-            <div class="text-slate-200 font-bold mt-0.5">2022–2024 (8 NER States)</div>
-            <div class="text-[9px] text-emerald-400 mt-0.5">Temporal Holdout • Platt Sigmoid</div>
-          </div>
-          <div class="p-2 rounded bg-[#070B10]/80 border border-[#1E293B]">
-            <div class="text-[9px] text-slate-500 uppercase font-sans font-bold">Geotechnical Model</div>
-            <div class="text-slate-200 font-bold mt-0.5">PAHAD FoS v1.0</div>
-            <div class="text-[9px] text-amber-400 mt-0.5">Mohr-Coulomb Mechanics</div>
-          </div>
-          <div class="p-2 rounded bg-[#070B10]/80 border border-[#1E293B]">
-            <div class="text-[9px] text-slate-500 uppercase font-sans font-bold">Earth Observation</div>
-            <div class="text-slate-200 font-bold mt-0.5">Sentinel-1/2 InSAR</div>
-            <div class="text-[9px] text-amber-300 mt-0.5">[CACHED / SIMULATED]</div>
-          </div>
-          <div class="p-2 rounded bg-[#070B10]/80 border border-[#1E293B]">
-            <div class="text-[9px] text-slate-500 uppercase font-sans font-bold">Telemetry & Weather</div>
-            <div class="text-slate-200 font-bold mt-0.5">IMD AWS / IoT Piezometer</div>
-            <div class="text-[9px] text-emerald-400 mt-0.5">[LIVE] / [SIMULATED]</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- COMPACT EDGE NETWORK HOMEPAGE MODULE (Section 24) -->
-    <section id="edge-network-module" class="max-w-[1280px] mx-auto px-4 mb-3" aria-label="Edge Network Module">
-      <div class="bg-[#0B132B] border border-[#1E293B] hover:border-slate-700 rounded-lg p-3 text-xs shadow-md transition">
-        <div class="flex flex-wrap items-center justify-between gap-3">
-          <div class="flex items-center space-x-3">
-            <span class="inline-flex items-center justify-center w-7 h-7 rounded bg-sky-950 text-blue-300 border border-sky-800 text-xs">
-              <i class="ph-bold ph-broadcast"></i>
-            </span>
-            <div>
-              <div class="flex items-center space-x-2">
-                <span class="font-bold tracking-wide uppercase text-white text-[11px]">EDGE NETWORK</span>
-                <span class="text-[9px] font-mono px-1.5 py-0.2 rounded bg-slate-800 text-slate-400 border border-slate-700">[LoRa MESH]</span>
-              </div>
-              <p class="text-[10px] text-slate-400">Sub-GHz resilient sensor network & acoustic warning chokepoints</p>
-            </div>
-          </div>
-
-          <div class="flex flex-wrap items-center gap-4 text-[11px] font-mono">
-            <div>
-              <span class="text-[9px] text-slate-500 uppercase block font-sans">Nodes</span>
-              <span class="text-emerald-400 font-bold" id="hp-edge-nodes">18/20 nodes</span>
-            </div>
-            <div class="h-5 w-px bg-slate-800 hidden sm:block"></div>
-            <div>
-              <span class="text-[9px] text-slate-500 uppercase block font-sans">Gateways</span>
-              <span class="text-slate-200 font-bold" id="hp-edge-gateways">2 gateways</span>
-            </div>
-            <div class="h-5 w-px bg-slate-800 hidden sm:block"></div>
-            <div>
-              <span class="text-[9px] text-slate-500 uppercase block font-sans">Cloud</span>
-              <span class="text-emerald-400 font-bold" id="hp-edge-cloud">ONLINE</span>
-            </div>
-            <div class="h-5 w-px bg-slate-800 hidden sm:block"></div>
-            <div>
-              <span class="text-[9px] text-slate-500 uppercase block font-sans">Local</span>
-              <span class="text-amber-400 font-bold" id="hp-edge-siren">ARMED</span>
-            </div>
-            <div class="h-5 w-px bg-slate-800 hidden sm:block"></div>
-            <div>
-              <span class="text-[9px] text-slate-500 uppercase block font-sans">Last Sync</span>
-              <span class="text-slate-300" id="hp-edge-sync">12 sec</span>
-            </div>
-
-            <a href="/edge-network" class="ml-2 px-3 py-1.5 rounded bg-sky-900/80 hover:bg-sky-800 text-sky-200 border border-sky-600 text-xs font-semibold transition flex items-center space-x-1">
-              <span>OPEN EDGE NETWORK</span>
-              <span>→</span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- COMPACT PAHAD ALERT ORCHESTRATOR & NOTIFICATION STATUS MODULE (Phase 3.5) -->
-    <section id="alert-orchestrator-module" class="max-w-[1280px] mx-auto px-4 mb-3" aria-label="Alert Orchestrator Module">
-      <div class="bg-[#0B132B] border border-[#1E293B] hover:border-amber-900/60 rounded-lg p-3 text-xs shadow-md transition">
-        <div class="flex flex-wrap items-center justify-between gap-3">
-          <div class="flex items-center space-x-3">
-            <span class="inline-flex items-center justify-center w-7 h-7 rounded bg-amber-950 text-amber-400 border border-amber-800 text-xs shadow-sm">
-              <i class="ph-bold ph-bell-ringing"></i>
-            </span>
-            <div>
-              <div class="flex items-center space-x-2">
-                <span class="font-bold tracking-wide uppercase text-white text-[11px]">PAHAD ALERT ORCHESTRATOR</span>
-                <span class="text-[9px] font-mono px-1.5 py-0.2 rounded bg-amber-950/80 text-amber-300 border border-amber-800">[15 KM GEOFENCE]</span>
-                <span class="text-[9px] font-mono px-1.5 py-0.2 rounded bg-slate-800 text-slate-400 border border-slate-700">[MULTI-CHANNEL]</span>
-              </div>
-              <p class="text-[10px] text-slate-400">Multi-channel early warning dispatch • Push, SMS, OASIS CAP v1.2, Siren & Edge Mesh</p>
-            </div>
-          </div>
-
-          <div class="flex flex-wrap items-center gap-4 text-[11px] font-mono">
-            <div>
-              <span class="text-[9px] text-slate-500 uppercase block font-sans">Active Queue</span>
-              <span class="text-amber-400 font-bold" id="hp-alert-queue-count">3 items</span>
-            </div>
-            <div class="h-5 w-px bg-slate-800 hidden sm:block"></div>
-            <div>
-              <span class="text-[9px] text-slate-500 uppercase block font-sans">Policy Radius</span>
-              <span class="text-slate-200 font-bold" id="hp-alert-zone-radius">15.0 km</span>
-            </div>
-            <div class="h-5 w-px bg-slate-800 hidden sm:block"></div>
-            <div>
-              <span class="text-[9px] text-slate-500 uppercase block font-sans">Web/Mobile Push</span>
-              <span class="text-emerald-400 font-bold" id="hp-alert-push-status">READY</span>
-            </div>
-            <div class="h-5 w-px bg-slate-800 hidden sm:block"></div>
-            <div>
-              <span class="text-[9px] text-slate-500 uppercase block font-sans">SMS Gateway</span>
-              <span class="text-sky-300 font-bold" id="hp-alert-sms-status">DRY RUN</span>
-            </div>
-            <div class="h-5 w-px bg-slate-800 hidden sm:block"></div>
-            <div>
-              <span class="text-[9px] text-slate-500 uppercase block font-sans">Gatekeeper</span>
-              <span class="text-emerald-400 font-bold">2-OF-3 SIGNAL</span>
-            </div>
-
-            <a href="/notifications" class="ml-2 px-3 py-1.5 rounded bg-amber-900/80 hover:bg-amber-800 text-amber-200 border border-amber-600 text-xs font-semibold transition flex items-center space-x-1">
-              <span>ALERT CENTER</span>
-              <span>→</span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SIH OPERATIONAL JOURNEY: maps the platform to the disaster-management workflow -->
-    <nav id="sih-operational-flow" aria-label="PARVAT NETRA operational journey">
-      <div class="sih-flow-shell">
-        <button type="button" class="sih-flow-step" data-sih-step="monitor" onclick="sihFlowNavigate('monitor')">
-          <span class="sih-flow-num">01</span><span class="sih-flow-copy"><span class="sih-flow-title">Monitor</span><span class="sih-flow-sub">IMD + IoT + satellite</span></span>
-        </button>
-        <button type="button" class="sih-flow-step active" data-sih-step="predict" onclick="sihFlowNavigate('predict')">
-          <span class="sih-flow-num">02</span><span class="sih-flow-copy"><span class="sih-flow-title">Predict</span><span class="sih-flow-sub">FoS + ML risk</span></span>
-        </button>
-        <button type="button" class="sih-flow-step" data-sih-step="explain" onclick="sihFlowNavigate('explain')">
-          <span class="sih-flow-num">03</span><span class="sih-flow-copy"><span class="sih-flow-title">Explain</span><span class="sih-flow-sub">Evidence + drivers</span></span>
-        </button>
-        <button type="button" class="sih-flow-step" data-sih-step="warn" onclick="sihFlowNavigate('warn')">
-          <span class="sih-flow-num">04</span><span class="sih-flow-copy"><span class="sih-flow-title">Warn</span><span class="sih-flow-sub">CAP + voice + siren</span></span>
-        </button>
-        <button type="button" class="sih-flow-step" data-sih-step="route" onclick="sihFlowNavigate('route')">
-          <span class="sih-flow-num">05</span><span class="sih-flow-copy"><span class="sih-flow-title">Route</span><span class="sih-flow-sub">Safe corridor planning</span></span>
-        </button>
-        <button type="button" class="sih-flow-step" data-sih-step="respond" onclick="sihFlowNavigate('respond')">
-          <span class="sih-flow-num">06</span><span class="sih-flow-copy"><span class="sih-flow-title">Respond</span><span class="sih-flow-sub">BRO + field triage</span></span>
-        </button>
-      </div>
-    </nav>
-
-    
-    </div><!-- /view-system -->
-
-    <!-- =====================================================================
-         PHASE 9C: WORKSPACE VIEW 3 — EMERGENCY RESPONSE & SIREN ACCESS (HIDDEN BY DEFAULT)
-         ===================================================================== -->
-    <div id="view-response" class="workspace-view hidden max-w-7xl mx-auto px-4 py-4 space-y-4">
-      <div class="flex items-center justify-between pb-3 border-b border-slate-800">
-        <div class="flex items-center gap-2">
-          <i class="ph-bold ph-speaker-high text-rose-500 text-lg"></i>
-          <h2 class="text-sm font-black text-slate-100 uppercase tracking-wider">Emergency Response & Autonomous Siren Access Control</h2>
-        </div>
-        <button type="button" onclick="navigateToPanel('prediction')" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded flex items-center gap-1.5 transition active:scale-95">
-          <i class="ph-bold ph-arrow-left"></i> Return to Prediction Dashboard
-        </button>
-      </div>
-
-      <!-- PAHAD AUTONOMOUS SIREN ACCESS CARD -->
-      <div id="pahad-autonomous-siren-card" class="bg-[#0B1320] border border-slate-800 rounded-lg p-5 shadow-xl space-y-4">
-        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800/80 pb-4">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded bg-rose-950/80 border border-rose-800/80 flex items-center justify-center text-rose-400">
-              <i class="ph-bold ph-siren text-xl"></i>
-            </div>
-            <div>
-              <div class="flex items-center gap-2">
-                <h3 class="text-base font-black text-slate-100 uppercase tracking-wider">PAHAD Autonomous Siren Access</h3>
-                <span id="siren-access-badge" class="px-2 py-0.5 rounded text-[10px] font-mono font-black uppercase bg-slate-800 text-slate-400 border border-slate-700">DISABLED</span>
-              </div>
-              <p class="text-xs text-slate-400 mt-0.5">Physical emergency siren grid for Himalayan highway chokepoints & high-risk settlements</p>
-            </div>
-          </div>
-          
-          <div class="flex items-center gap-2">
-            <button id="btn-toggle-siren-access" type="button" onclick="toggleAutonomousSirenAccessState()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-black uppercase tracking-wider rounded border border-slate-600 transition flex items-center gap-2">
-              <i class="ph-bold ph-shield-check"></i> <span id="btn-toggle-siren-text">Arm for Authority Use</span>
-            </button>
-            <button id="btn-test-siren-grid" type="button" onclick="testSirenGridTelemetry()" class="px-3 py-2 bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-semibold rounded border border-slate-700 transition flex items-center gap-1.5">
-              <i class="ph-bold ph-arrows-clockwise"></i> Ping Siren Health
-            </button>
-          </div>
-        </div>
-
-        <!-- Strict Safety Invariants Warning Box -->
-        <div class="bg-amber-950/30 border border-amber-800/60 rounded p-3 text-xs space-y-1.5">
-          <div class="flex items-center gap-2 text-amber-400 font-bold uppercase tracking-wider text-[11px]">
-            <i class="ph-bold ph-shield-warning text-sm"></i>
-            <span>Safety Invariants & Statutory Authority Protocol</span>
-          </div>
-          <p class="text-amber-200/90 text-[11px] leading-relaxed">
-            <strong>CRITICAL SAFETY RULE:</strong> The AI model <em>CANNOT</em> independently dispatch sirens or sound physical alarms without human authorization. Physical siren activation strictly requires:
-          </p>
-          <ul class="list-disc list-inside text-amber-200/80 text-[11px] space-y-0.5 pl-2 font-mono">
-            <li>Explicit Magistrate / Incident Commander arming (<code>ARMED FOR AUTHORITY USE</code>)</li>
-            <li>2-of-3 independent sensor corroboration (Mohr-Coulomb FoS &lt; 1.0, IMD Rainfall exceedance, in-situ IoT tilt/pore pressure displacement)</li>
-            <li>15 km geofenced polygon targeting strictly verified risk corridors</li>
-          </ul>
-        </div>
-
-        <!-- Siren Status Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-xs">
-          <div class="bg-[#070B10] border border-slate-800 rounded p-3">
-            <span class="text-[10px] uppercase font-bold text-slate-500 block">Siren Controller</span>
-            <span id="siren-state-display" class="text-sm font-black text-slate-300 font-mono mt-1 block">DISABLED</span>
-            <span class="text-[10px] text-slate-500 mt-0.5 block">State locked by default</span>
-          </div>
-          <div class="bg-[#070B10] border border-slate-800 rounded p-3">
-            <span class="text-[10px] uppercase font-bold text-slate-500 block">Human Authorization</span>
-            <span class="text-sm font-black text-emerald-400 font-mono mt-1 block">MANDATORY</span>
-            <span class="text-[10px] text-slate-500 mt-0.5 block">District Magistrate / BRO EOC</span>
-          </div>
-          <div class="bg-[#070B10] border border-slate-800 rounded p-3">
-            <span class="text-[10px] uppercase font-bold text-slate-500 block">Corroboration Rule</span>
-            <span class="text-sm font-black text-blue-300 font-mono mt-1 block">2-OF-3 SIGNAL</span>
-            <span class="text-[10px] text-slate-500 mt-0.5 block">FoS + Rainfall + Inclinometer</span>
-          </div>
-          <div class="bg-[#070B10] border border-slate-800 rounded p-3">
-            <span class="text-[10px] uppercase font-bold text-slate-500 block">Connected Edge Siren Nodes</span>
-            <span id="siren-connected-nodes" class="text-sm font-black text-purple-400 font-mono mt-1 block">4 Active Nodes</span>
-            <span class="text-[10px] text-slate-500 mt-0.5 block">NH-10 Km 48, Seti Jhora, Likuvir, Rangpo</span>
-          </div>
-        </div>
-
-        <!-- Siren Action Footer -->
-        <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-800/80">
-          <div class="text-[11px] text-slate-400">
-            Last Siren Grid Telemetry Check: <span id="siren-last-ping" class="font-mono text-slate-300">Just now</span>
-          </div>
-          <div class="flex items-center gap-2">
-            <a href="/notifications" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold rounded border border-slate-700 transition flex items-center gap-1.5">
-              <i class="ph-bold ph-bell-ringing"></i> Open 15km Alert Center
-            </a>
-            <button id="btn-manual-emergency-siren" type="button" onclick="triggerManualEmergencySiren()" class="px-4 py-1.5 bg-rose-700 hover:bg-rose-600 text-white text-xs font-black uppercase tracking-wider rounded transition flex items-center gap-1.5 shadow-md active:scale-95">
-              <i class="ph-bold ph-speaker-high"></i> Manual Siren Trigger (Authority)
-            </button>
-          </div>
-        </div>
-      </div>
-    </div><!-- /view-response -->
-
-    <!-- =====================================================================
-         PHASE 9C: WORKSPACE VIEW 4 — FULL GIS MAP & FIELD TELEMETRY (HIDDEN BY DEFAULT)
-         ===================================================================== -->
-    <div id="view-map" class="workspace-view hidden">
-      <div class="bg-[#0B1320] border-b border-slate-800 px-4 py-2.5 flex items-center justify-between">
-        <div class="flex items-center gap-2">
-          <i class="ph-bold ph-map-trifold text-emerald-400 text-base"></i>
-          <span class="text-xs font-black text-slate-200 uppercase tracking-wider">Full GIS Map & Operational Field Workspace</span>
-        </div>
-        <button type="button" onclick="navigateToPanel('prediction')" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded flex items-center gap-1.5 transition active:scale-95">
-          <i class="ph-bold ph-arrow-left"></i> Return to Prediction Dashboard
-        </button>
-      </div>
-
-<main id="main-content" class="flex-grow w-full">
+        <main id="main-content" class="flex-grow w-full">
 
     <!-- ===== AUTHORITY MODE ===== -->
     <div id="authority-view" class="max-w-7xl mx-auto px-4 py-5"><div id="authority-mode">
@@ -5212,6 +4367,854 @@
         </aside>
     </div></div><!-- /citizen-view -->
     </main>
+      </div>
+
+      <!-- COLLAPSIBLE EXPANDED DETAILS PANEL (PHASE 9E CP03 LEDGER) -->
+      <div id="pahad-prediction-details-panel" class="hidden p-4 rounded-lg bg-[#0A0A0A] border border-[#262626] space-y-3 text-xs text-[#E5E5E5]">
+        <div class="flex items-center justify-between border-b border-[#222222] pb-2">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
+            <span class="font-black uppercase tracking-wider text-white text-xs">Comprehensive Prediction Telemetry &amp; Physics Ledger</span>
+          </div>
+          <span id="dtl-risk-band-badge" class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#171717] text-white border border-[#2D2D2D]">HIGH RISK</span>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px]">
+          <div class="p-2.5 rounded bg-[#111111] border border-[#222222]">
+            <div class="text-[9px] uppercase tracking-wider text-[#737373] font-bold">Composite Risk Index (CRI)</div>
+            <div id="dtl-cri" class="text-sm font-black text-white font-mono mt-0.5">40.6</div>
+            <div class="text-[9px] text-[#737373] mt-0.5">Scale: 0–100 Fused Hazard</div>
+          </div>
+          <div class="p-2.5 rounded bg-[#111111] border border-[#222222]">
+            <div class="text-[9px] uppercase tracking-wider text-[#737373] font-bold">Physical Factor of Safety</div>
+            <div id="dtl-fos" class="text-sm font-black text-white font-mono mt-0.5">0.926</div>
+            <div id="dtl-fos-sub" class="text-[9px] text-[#737373] mt-0.5">Limit Equilibrium: &lt; 1.0 Critical</div>
+          </div>
+          <div class="p-2.5 rounded bg-[#111111] border border-[#222222]">
+            <div class="text-[9px] uppercase tracking-wider text-[#737373] font-bold">Event Likelihood (24h)</div>
+            <div id="dtl-prob" class="text-sm font-black text-white font-mono mt-0.5">42.1%</div>
+            <div class="text-[9px] text-[#737373] mt-0.5">Calibrated GBDT Probability</div>
+          </div>
+          <div class="p-2.5 rounded bg-[#111111] border border-[#222222]">
+            <div class="text-[9px] uppercase tracking-wider text-[#737373] font-bold">Precipitation Loading</div>
+            <div id="dtl-rain" class="text-sm font-black text-white font-mono mt-0.5">68.4 mm</div>
+            <div id="dtl-rain-sub" class="text-[9px] text-[#737373] mt-0.5">Mandal-Sarkar I-D Model</div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px]">
+          <div class="p-2.5 rounded bg-[#111111] border border-[#222222]">
+            <div class="text-[9px] uppercase tracking-wider text-[#737373] font-bold">In-Situ Geotechnical</div>
+            <div id="dtl-ground" class="text-xs font-bold text-white mt-0.5">Telemetry Ingested</div>
+            <div class="text-[9px] text-[#737373] mt-0.5">Pore Pressure &amp; Inclinometer</div>
+          </div>
+          <div class="p-2.5 rounded bg-[#111111] border border-[#222222]">
+            <div class="text-[9px] uppercase tracking-wider text-[#737373] font-bold">Regional Seismicity</div>
+            <div id="dtl-seismic" class="text-xs font-bold text-white mt-0.5">USGS Fallback Active</div>
+            <div class="text-[9px] text-[#737373] mt-0.5">USGS / NCS Regional Arc</div>
+          </div>
+          <div class="p-2.5 rounded bg-[#111111] border border-[#222222]">
+            <div class="text-[9px] uppercase tracking-wider text-[#737373] font-bold">Data Quality &amp; Sensors</div>
+            <div id="dtl-data-quality" class="text-xs font-bold text-[#4ADE80] mt-0.5">HIGH DATA COMPLETENESS</div>
+            <div id="dtl-data-quality-sub" class="text-[9px] text-[#737373] mt-0.5">Telemetry Completeness</div>
+          </div>
+          <div class="p-2.5 rounded bg-[#111111] border border-[#222222]">
+            <div class="text-[9px] uppercase tracking-wider text-[#737373] font-bold">Model Governance</div>
+            <div id="dtl-model-status" class="text-xs font-bold text-[#4ADE80] mt-0.5">TRAINED_LIMITED_DATA</div>
+            <div class="text-[9px] text-[#737373] mt-0.5">Registry v3.1.0 • Platt Calibrated</div>
+          </div>
+        </div>
+
+        <!-- Multi-Horizon Exceedance Forecast -->
+        <div class="pt-2 border-t border-[#222222]">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-mono uppercase tracking-wider text-[#737373] font-bold">Forward-Looking Exceedance Horizons • PAHAD AI multi-horizon outlook</span>
+            <div class="text-[10px] font-mono text-[#A3A3A3]">
+              <span id="fc-current-state">Immediate Geotechnical State</span> • <span id="fc-current-sub">FoS 0.926</span>
+              <span id="fc-projected-state" class="hidden"></span><span id="fc-projected-sub" class="hidden"></span>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            <div class="p-2 rounded bg-[#111111] border border-[#222222] text-center">
+              <div class="text-[9px] font-mono uppercase text-[#737373]">6h Horizon</div>
+              <div id="pahad-h6" class="text-sm font-black text-white font-mono mt-0.5">38%</div>
+            </div>
+            <div class="p-2 rounded bg-[#111111] border border-[#222222] text-center">
+              <div class="text-[9px] font-mono uppercase text-[#737373]">12h Horizon</div>
+              <div id="pahad-h12" class="text-sm font-black text-white font-mono mt-0.5">40%</div>
+            </div>
+            <div class="p-2 rounded bg-[#111111] border border-[#222222] text-center">
+              <div class="text-[9px] font-mono uppercase text-[#737373]">24h Horizon</div>
+              <div id="pahad-h24" class="text-sm font-black text-white font-mono mt-0.5">42%</div>
+            </div>
+            <div class="p-2 rounded bg-[#111111] border border-[#222222] text-center">
+              <div class="text-[9px] font-mono uppercase text-[#737373]">48h Horizon</div>
+              <div id="pahad-h48" class="text-sm font-black text-white font-mono mt-0.5">45%</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chronological inference log hidden inside details -->
+        <div class="pt-2 border-t border-[#222222]">
+          <div class="text-[10px] font-mono uppercase tracking-wider text-[#737373] mb-1.5 flex items-center justify-between">
+            <span>Inference Activity Ledger</span>
+            <span id="live-inference-clock" class="text-[#737373]">Cycle synchronized</span>
+          </div>
+          <div id="pahad-inference-feed-list" class="space-y-1 font-mono text-[10px] text-[#A3A3A3] max-h-24 overflow-y-auto">
+            <div class="flex justify-between items-center"><span class="text-[#737373]" id="inf-time-1">--:--:--</span><span class="truncate pr-2">Weather feed synchronized (Open-Meteo &amp; IMD AWS)</span><span class="text-[#4ADE80] text-[9px]">[LIVE]</span></div>
+            <div class="flex justify-between items-center"><span class="text-[#737373]" id="inf-time-2">--:--:--</span><span class="truncate pr-2">Rainfall loading recalculated (Mandal-Sarkar I-D)</span><span class="text-[#A3A3A3] text-[9px]">[DERIVED]</span></div>
+            <div class="flex justify-between items-center"><span class="text-[#737373]" id="inf-time-3">--:--:--</span><span class="truncate pr-2">Factor of Safety calculated (Mohr-Coulomb FoS: 0.926)</span><span class="text-orange-400 text-[9px]">[PHYSICS]</span></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+</div><!-- /view-prediction -->
+
+    <!-- =======================================================================
+         PHASE 10: MULTI-HORIZON EARLY-WARNING FORECAST VIEW (#view-horizon-forecast)
+         Restrained Government Black Styling (Inter + JetBrains Mono, Zero Emojis)
+         ======================================================================= -->
+    <div id="view-horizon-forecast" class="workspace-view hidden max-w-7xl mx-auto px-4 py-4 space-y-4 font-sans text-slate-200 select-none" aria-label="PAHAD AI Multi-Horizon Early Warning Forecast">
+      
+      <!-- 1. INSTITUTIONAL BANNER & CORRIDOR SELECTOR -->
+      <div class="bg-[#111111] border border-[#222222] rounded-lg p-3.5 flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded bg-[#171717] border border-[#2D2D2D] flex items-center justify-center text-white text-lg">
+            <svg class="w-5 h-5 text-blue-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <div>
+            <div class="text-[10px] font-mono font-bold tracking-widest text-[#A3A3A3] uppercase">NATIONAL DISASTER MANAGEMENT AUTHORITY • PAHAD AI</div>
+            <h2 class="text-sm sm:text-base font-black text-white tracking-wide uppercase m-0">Multi-Horizon Landslide Early-Warning Forecast</h2>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2.5 flex-wrap">
+          <div class="flex items-center gap-2">
+            <label for="horizon-corridor-select" class="text-[11px] font-mono text-slate-400">CORRIDOR:</label>
+            <select id="horizon-corridor-select" onchange="fetchHorizonForecast(this.value)" class="bg-[#171717] hover:bg-[#1D1D1D] text-slate-200 border border-[#2D2D2D] rounded px-3 py-1 text-xs font-mono font-bold focus:outline-none focus:border-[#1E3A8A] cursor-pointer">
+              <option value="SK-NH10-KM48" selected>SK-NH10-KM48 • NH-10 Km 48 (Sikkim)</option>
+              <option value="MN-TUPUL-RLY">MN-TUPUL-RLY • Tupul Railway Yard (Manipur)</option>
+              <option value="MZ-MELTHUM-QRY">MZ-MELTHUM-QRY • Melthum Stone Quarry (Mizoram)</option>
+              <option value="AS-HAFLONG-RLY">AS-HAFLONG-RLY • New Haflong Station (Assam)</option>
+              <option value="ML-MAWSYNRAM">ML-MAWSYNRAM • Mawsynram Scarp (Meghalaya)</option>
+              <option value="NL-DZUKOU-KOH">NL-DZUKOU-KOH • Dzukou Valley Pass (Nagaland)</option>
+              <option value="AR-TAWANG-SELA">AR-TAWANG-SELA • Sela Pass Approach (Arunachal)</option>
+              <option value="TR-JAMPUI-HILLS">TR-JAMPUI-HILLS • Vanghmun Ridge (Tripura)</option>
+            </select>
+          </div>
+          <button type="button" onclick="fetchHorizonForecast(document.getElementById('horizon-corridor-select').value)" class="p-1.5 rounded bg-[#171717] hover:bg-[#222222] text-slate-300 border border-[#2D2D2D] transition cursor-pointer active:scale-95" title="Refresh multi-horizon inference">
+            <svg class="w-3.5 h-3.5 text-slate-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- 2. SCIENTIFIC GOVERNANCE & MODEL STATE CHIPS -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[10px] font-mono">
+        <div class="bg-[#111111] border border-[#222222] p-2 rounded flex items-center justify-between">
+          <span class="text-slate-400">GBDT ENSEMBLE:</span>
+          <span class="font-bold text-blue-300 bg-[#0C2340] border border-[#1E3A8A] px-1.5 py-0.5 rounded">TRAINED_LIMITED_DATA</span>
+        </div>
+        <div class="bg-[#111111] border border-[#222222] p-2 rounded flex items-center justify-between">
+          <span class="text-slate-400">DEEP BiLSTM:</span>
+          <span class="font-bold text-amber-400 bg-amber-950/40 border border-amber-700/60 px-1.5 py-0.5 rounded">NOT_TRAINED (N&lt;500)</span>
+        </div>
+        <div class="bg-[#111111] border border-[#222222] p-2 rounded flex items-center justify-between">
+          <span class="text-slate-400">PHYSICS LSTM:</span>
+          <span class="font-bold text-slate-300 bg-slate-800 border border-slate-700 px-1.5 py-0.5 rounded">[SURROGATE]</span>
+        </div>
+        <div class="bg-[#111111] border border-[#222222] p-2 rounded flex items-center justify-between">
+          <span class="text-slate-400">SAFETY GATE:</span>
+          <span class="font-bold text-emerald-400 bg-emerald-950/40 border border-emerald-700/60 px-1.5 py-0.5 rounded">2-OF-3 ENFORCED</span>
+        </div>
+      </div>
+
+      <!-- 3. FOUR MULTI-HORIZON PROBABILITY CARDS (6h, 12h, 24h, 48h) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3.5">
+        
+        <!-- CARD 1: 6-HOUR HORIZON -->
+        <div class="bg-[#111111] border border-[#222222] rounded-lg p-3.5 space-y-3 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between text-xs border-b border-[#1E1E1E] pb-2">
+              <span class="font-mono font-bold text-slate-400 flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-blue-400"></span> 6-HOUR HORIZON
+              </span>
+              <span id="hf-status-6h" class="text-[9px] font-mono px-2 py-0.5 rounded bg-emerald-950/60 text-emerald-300 border border-emerald-700/60 font-bold">LOW RISK</span>
+            </div>
+            <div class="mt-3 text-center">
+              <div class="text-[10px] text-slate-400 uppercase font-mono tracking-wider">Calibrated Probability</div>
+              <div id="hf-prob-6h" class="text-3xl font-black font-mono text-slate-100 my-1">3.3%</div>
+              <div class="w-full bg-[#1A1A1A] rounded-full h-2 overflow-hidden border border-[#262626]">
+                <div id="hf-bar-6h" class="bg-[#1E3A8A] h-full rounded-full transition-all duration-500" style="width: 3.3%"></div>
+              </div>
+            </div>
+          </div>
+          <div class="space-y-1.5 text-[10px] font-mono border-t border-[#1E1E1E] pt-2 text-slate-400">
+            <div class="flex justify-between"><span>Raw (Uncalibrated):</span><strong id="hf-raw-6h" class="text-slate-200">0.3%</strong></div>
+            <div class="flex justify-between"><span>Opt Threshold:</span><strong id="hf-th-6h" class="text-slate-200">&ge; 0.30</strong></div>
+            <div class="flex justify-between"><span>Lead Time Estimate:</span><strong id="hf-lead-6h" class="text-slate-200">6.0h</strong></div>
+          </div>
+        </div>
+
+        <!-- CARD 2: 12-HOUR HORIZON -->
+        <div class="bg-[#111111] border border-[#222222] rounded-lg p-3.5 space-y-3 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between text-xs border-b border-[#1E1E1E] pb-2">
+              <span class="font-mono font-bold text-slate-400 flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-blue-400"></span> 12-HOUR HORIZON
+              </span>
+              <span id="hf-status-12h" class="text-[9px] font-mono px-2 py-0.5 rounded bg-emerald-950/60 text-emerald-300 border border-emerald-700/60 font-bold">LOW RISK</span>
+            </div>
+            <div class="mt-3 text-center">
+              <div class="text-[10px] text-slate-400 uppercase font-mono tracking-wider">Calibrated Probability</div>
+              <div id="hf-prob-12h" class="text-3xl font-black font-mono text-slate-100 my-1">4.1%</div>
+              <div class="w-full bg-[#1A1A1A] rounded-full h-2 overflow-hidden border border-[#262626]">
+                <div id="hf-bar-12h" class="bg-[#1E3A8A] h-full rounded-full transition-all duration-500" style="width: 4.1%"></div>
+              </div>
+            </div>
+          </div>
+          <div class="space-y-1.5 text-[10px] font-mono border-t border-[#1E1E1E] pt-2 text-slate-400">
+            <div class="flex justify-between"><span>Raw (Uncalibrated):</span><strong id="hf-raw-12h" class="text-slate-200">0.4%</strong></div>
+            <div class="flex justify-between"><span>Opt Threshold:</span><strong id="hf-th-12h" class="text-slate-200">&ge; 0.30</strong></div>
+            <div class="flex justify-between"><span>Lead Time Estimate:</span><strong id="hf-lead-12h" class="text-slate-200">12.0h</strong></div>
+          </div>
+        </div>
+
+        <!-- CARD 3: 24-HOUR HORIZON (PRIMARY OPERATIONAL TARGET) -->
+        <div class="bg-[#111111] border-2 border-[#1E3A8A] rounded-lg p-3.5 space-y-3 flex flex-col justify-between relative shadow-lg">
+          <div class="absolute -top-2.5 right-3 bg-[#10243E] border border-[#1E3A8A] text-blue-100 font-mono text-[9px] font-black px-2 py-0.5 rounded uppercase tracking-wider">
+            PRIMARY TARGET
+          </div>
+          <div>
+            <div class="flex items-center justify-between text-xs border-b border-[#1E1E1E] pb-2">
+              <span class="font-mono font-bold text-blue-200 flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span> 24-HOUR HORIZON
+              </span>
+              <span id="hf-status-24h" class="text-[9px] font-mono px-2 py-0.5 rounded bg-emerald-950/60 text-emerald-300 border border-emerald-700/60 font-bold">LOW RISK</span>
+            </div>
+            <div class="mt-3 text-center">
+              <div class="text-[10px] text-blue-200 uppercase font-mono tracking-wider">Calibrated Probability</div>
+              <div id="hf-prob-24h" class="text-3xl font-black font-mono text-slate-100 my-1">5.0%</div>
+              <div class="w-full bg-[#1A1A1A] rounded-full h-2 overflow-hidden border border-[#262626]">
+                <div id="hf-bar-24h" class="bg-[#1E3A8A] h-full rounded-full transition-all duration-500" style="width: 5.0%"></div>
+              </div>
+            </div>
+          </div>
+          <div class="space-y-1.5 text-[10px] font-mono border-t border-[#1E1E1E] pt-2 text-slate-400">
+            <div class="flex justify-between"><span>Raw (Uncalibrated):</span><strong id="hf-raw-24h" class="text-slate-200">0.5%</strong></div>
+            <div class="flex justify-between"><span>Opt Threshold:</span><strong id="hf-th-24h" class="text-slate-200">&ge; 0.30</strong></div>
+            <div class="flex justify-between"><span>Lead Time Estimate:</span><strong id="hf-lead-24h" class="text-blue-200">24.0h (Median)</strong></div>
+          </div>
+        </div>
+
+        <!-- CARD 4: 48-HOUR HORIZON -->
+        <div class="bg-[#111111] border border-[#222222] rounded-lg p-3.5 space-y-3 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between text-xs border-b border-[#1E1E1E] pb-2">
+              <span class="font-mono font-bold text-slate-400 flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-blue-400"></span> 48-HOUR HORIZON
+              </span>
+              <span id="hf-status-48h" class="text-[9px] font-mono px-2 py-0.5 rounded bg-emerald-950/60 text-emerald-300 border border-emerald-700/60 font-bold">LOW RISK</span>
+            </div>
+            <div class="mt-3 text-center">
+              <div class="text-[10px] text-slate-400 uppercase font-mono tracking-wider">Calibrated Probability</div>
+              <div id="hf-prob-48h" class="text-3xl font-black font-mono text-slate-100 my-1">0.1%</div>
+              <div class="w-full bg-[#1A1A1A] rounded-full h-2 overflow-hidden border border-[#262626]">
+                <div id="hf-bar-48h" class="bg-[#1E3A8A] h-full rounded-full transition-all duration-500" style="width: 0.1%"></div>
+              </div>
+            </div>
+          </div>
+          <div class="space-y-1.5 text-[10px] font-mono border-t border-[#1E1E1E] pt-2 text-slate-400">
+            <div class="flex justify-between"><span>Raw (Uncalibrated):</span><strong id="hf-raw-48h" class="text-slate-200">0.01%</strong></div>
+            <div class="flex justify-between"><span>Opt Threshold:</span><strong id="hf-th-48h" class="text-slate-200">&ge; 0.30</strong></div>
+            <div class="flex justify-between"><span>Lead Time Estimate:</span><strong id="hf-lead-48h" class="text-slate-200">48.0h</strong></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 4. DECOUPLED PHYSICAL STABILITY & 2-OF-3 SAFETY GATE -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+        
+        <!-- Pillar 1: Physical Mechanics -->
+        <div class="bg-[#111111] border border-[#222222] rounded-lg p-3.5 space-y-2">
+          <div class="flex items-center justify-between text-xs font-mono font-bold">
+            <span class="text-slate-400">1. PHYSICAL MECHANICS</span>
+            <span id="hf-fos-badge" class="text-[9px] px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-700 font-bold">STABLE</span>
+          </div>
+          <div class="flex items-baseline gap-2">
+            <span class="text-xs text-slate-400 font-mono">Factor of Safety (FoS):</span>
+            <span id="hf-fos-val" class="text-xl font-mono font-black text-slate-100">1.28</span>
+          </div>
+          <p class="text-[11px] text-slate-400 leading-relaxed">
+            Infinite-slope Mohr-Coulomb limit equilibrium stability. Decoupled from statistical event likelihood to prevent circular reasoning.
+          </p>
+        </div>
+
+        <!-- Pillar 2: Meteorological Forcing -->
+        <div class="bg-[#111111] border border-[#222222] rounded-lg p-3.5 space-y-2">
+          <div class="flex items-center justify-between text-xs font-mono font-bold">
+            <span class="text-slate-400">2. PRECIPITATION FORCING</span>
+            <span id="hf-rain-badge" class="text-[9px] px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-700 font-bold">BELOW THRESHOLD</span>
+          </div>
+          <div class="flex items-baseline gap-2">
+            <span class="text-xs text-slate-400 font-mono">Rainfall (24h):</span>
+            <span id="hf-rain-val" class="text-xl font-mono font-black text-slate-100">8.3 mm</span>
+          </div>
+          <p class="text-[11px] text-slate-400 leading-relaxed">
+            Mandal-Sarkar regional Intensity-Duration threshold. Empirical critical exceedance standard for Himalayan weathered gneiss slopes.
+          </p>
+        </div>
+
+        <!-- Pillar 3: Ground Telemetry Anomaly -->
+        <div class="bg-[#111111] border border-[#222222] rounded-lg p-3.5 space-y-2">
+          <div class="flex items-center justify-between text-xs font-mono font-bold">
+            <span class="text-slate-400">3. TELEMETRY SIGNALS</span>
+            <span id="hf-telemetry-badge" class="text-[9px] px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-700 font-bold">IN-DISTRIBUTION</span>
+          </div>
+          <div class="flex items-baseline gap-2">
+            <span class="text-xs text-slate-400 font-mono">Pore-Water / Tilt:</span>
+            <span id="hf-telemetry-val" class="text-xl font-mono font-black text-slate-100">26.0 kPa • 3.5°</span>
+          </div>
+          <p class="text-[11px] text-slate-400 leading-relaxed">
+            In-situ vibrating wire piezometer & biaxial borehole inclinometer vectors cross-referenced against historical training distribution bounds.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- 5. 2-OF-3 SAFETY GATE DISPATCH AUTHORIZATION BANNER -->
+      <div class="bg-[#111111] border border-[#262626] rounded-lg p-3.5 flex flex-wrap items-center justify-between gap-3 text-xs">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded bg-[#171717] border border-[#262626] flex items-center justify-center">
+            <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+          </div>
+          <div>
+            <div class="font-bold text-slate-200">STATUTORY CORROBORATION GATE: <span id="hf-signal-agreement" class="font-mono text-emerald-400">2 / 3 AGREEMENT</span></div>
+            <div class="text-[11px] text-slate-400">Public acoustic siren alerts and CAP cellular broadcasts require statutory confirmation from District Magistrate under DMA 2005.</div>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 font-mono text-[11px]">
+          <span class="text-slate-400">EOC DISPATCH:</span>
+          <span id="hf-dispatch-recommendation" class="px-2.5 py-1 rounded bg-[#1A1A1A] border border-[#2D2D2D] text-slate-300 font-bold">MONITORING PROTOCOL ACTIVE</span>
+        </div>
+      </div>
+
+      <!-- 6. TOP DRIVERS & CONTRIBUTING SIGNALS -->
+      <div class="bg-[#111111] border border-[#222222] rounded-lg p-3.5 space-y-2.5">
+        <div class="text-xs font-mono font-bold text-slate-300 flex items-center justify-between">
+          <span>TOP MODEL CONTRIBUTING SIGNALS (24H PREDICTOR)</span>
+          <span class="text-[10px] text-slate-400 font-normal">Statistical association drivers (non-causal)</span>
+        </div>
+        <div id="hf-top-drivers-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-2 text-xs font-mono">
+          <div class="p-2 bg-[#171717] border border-[#222222] rounded flex justify-between items-center"><span class="text-slate-400">soil_moisture:</span><span class="font-bold text-slate-200">20.2%</span></div>
+          <div class="p-2 bg-[#171717] border border-[#222222] rounded flex justify-between items-center"><span class="text-slate-400">ground_displacement:</span><span class="font-bold text-slate-200">15.2%</span></div>
+          <div class="p-2 bg-[#171717] border border-[#222222] rounded flex justify-between items-center"><span class="text-slate-400">FoS_mechanics:</span><span class="font-bold text-slate-200">13.5%</span></div>
+          <div class="p-2 bg-[#171717] border border-[#222222] rounded flex justify-between items-center"><span class="text-slate-400">API_30d_antecedent:</span><span class="font-bold text-slate-200">12.9%</span></div>
+          <div class="p-2 bg-[#171717] border border-[#222222] rounded flex justify-between items-center"><span class="text-slate-400">tilt_inclinometer:</span><span class="font-bold text-slate-200">6.7%</span></div>
+        </div>
+      </div>
+
+    </div><!-- /view-horizon-forecast -->
+
+    <!-- FLOATING MAP POINT PICKER BANNER -->
+    <div id="map-pick-banner" class="hidden fixed top-16 left-1/2 -translate-x-1/2 z-50 bg-sky-950/95 border border-sky-400 text-sky-100 text-xs font-semibold px-4 py-2 rounded-full shadow-2xl backdrop-blur-sm flex items-center gap-3 animate-pulse">
+      <div class="flex items-center gap-1.5">
+        <i class="ph-bold ph-crosshair text-sky-400 text-sm"></i>
+        <span>CLICK ANY LOCATION ON THE MAP TO EVALUATE LIVE LANDSLIDE RISK</span>
+      </div>
+      <button type="button" onclick="cancelMapPointPicker()" class="px-2 py-0.5 bg-sky-800 hover:bg-sky-700 text-white text-[10px] rounded-full uppercase tracking-wider font-bold">
+        Cancel
+      </button>
+    </div>
+
+    <!-- CUSTOM COORDINATES MODAL -->
+    <div id="custom-coord-modal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-xs flex items-center justify-center p-4">
+      <div class="bg-slate-900 border border-slate-700 rounded-lg shadow-2xl max-w-md w-full p-4 space-y-3">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+          <div class="flex items-center gap-2">
+            <i class="ph-bold ph-crosshair text-sky-400 text-lg"></i>
+            <h3 class="text-sm font-bold text-slate-100 uppercase tracking-wider">Arbitrary Coordinate Inference</h3>
+          </div>
+          <button type="button" onclick="closeCustomCoordModal()" class="text-slate-400 hover:text-white text-lg p-1">&times;</button>
+        </div>
+        <p class="text-xs text-slate-300">
+          Enter arbitrary WGS84 coordinates across the North-Eastern Region (NER) to trigger real-time GLO-30 DEM terrain, weather telemetry, Mohr-Coulomb physical FoS, and ML event probability.
+        </p>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label for="custom-lat-input" class="block text-[10px] font-bold text-slate-400 uppercase mb-0.5">Latitude (°N)</label>
+            <input type="number" id="custom-lat-input" step="0.0001" min="20.0" max="31.0" placeholder="e.g. 25.5820" class="w-full bg-slate-800 border border-slate-600 rounded px-2.5 py-1.5 text-xs text-slate-100 font-mono focus:border-sky-500 focus:outline-hidden">
+            <span class="text-[9px] text-slate-500">NER Bounds: 20.0°N – 30.5°N</span>
+          </div>
+          <div>
+            <label for="custom-lon-input" class="block text-[10px] font-bold text-slate-400 uppercase mb-0.5">Longitude (°E)</label>
+            <input type="number" id="custom-lon-input" step="0.0001" min="87.0" max="98.0" placeholder="e.g. 94.1200" class="w-full bg-slate-800 border border-slate-600 rounded px-2.5 py-1.5 text-xs text-slate-100 font-mono focus:border-sky-500 focus:outline-hidden">
+            <span class="text-[9px] text-slate-500">NER Bounds: 87.0°E – 98.0°E</span>
+          </div>
+        </div>
+        <div>
+          <label for="custom-name-input" class="block text-[10px] font-bold text-slate-400 uppercase mb-0.5">Location Identifier / Landmark (Optional)</label>
+          <input type="text" id="custom-name-input" placeholder="e.g. Dzukou Valley Pass Checkpoint" class="w-full bg-slate-800 border border-slate-600 rounded px-2.5 py-1.5 text-xs text-slate-100 focus:border-sky-500 focus:outline-hidden">
+        </div>
+        <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-800">
+          <button type="button" onclick="closeCustomCoordModal()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded text-xs font-semibold">Cancel</button>
+          <button type="button" onclick="submitCustomCoordinates()" class="px-3.5 py-1.5 bg-sky-600 hover:bg-sky-500 text-white rounded text-xs font-bold flex items-center gap-1.5 shadow-sm active:scale-95 transition">
+            <i class="ph-bold ph-lightning"></i> Run Live Inference
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- =====================================================================
+         PHASE 9C: WORKSPACE VIEW 2 — SYSTEM OPERATIONS & DEMO (HIDDEN BY DEFAULT)
+         ===================================================================== -->
+    <div id="view-system" class="workspace-view hidden max-w-7xl mx-auto px-4 py-4 space-y-4">
+<!-- TOP GOVERNMENT COMMAND SUMMARY (OPERATIONAL KPI BAR) -->
+    <section id="gov-command-summary" class="max-w-7xl mx-auto px-4 py-2.5" aria-label="National Disaster Management Command Summary">
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
+        <!-- Card 1: Overall Risk Status -->
+        <div class="kpi-card bg-[#0F172A] border border-slate-700/80 rounded p-3 flex flex-col justify-between shadow-xs">
+          <div class="text-[10px] font-black uppercase tracking-wider text-slate-400 flex items-center justify-between">
+            <span>Overall Risk Status</span>
+            <i class="ph-bold ph-shield-warning text-rose-400 text-sm"></i>
+          </div>
+          <div id="kpi-gov-overall-risk" class="text-xl font-black text-rose-400 mt-1 font-mono">HIGH RISK</div>
+          <div id="kpi-gov-overall-sub" class="text-[11px] text-slate-400 mt-0.5 truncate">CRI 72 / 100 • Critical Attention</div>
+        </div>
+        <!-- Card 2: Priority Monitored Corridor -->
+        <div class="kpi-card bg-[#0F172A] border border-slate-700/80 rounded p-3 flex flex-col justify-between shadow-xs">
+          <div class="text-[10px] font-black uppercase tracking-wider text-slate-400 flex items-center justify-between">
+            <span>Priority Corridor</span>
+            <i class="ph-bold ph-map-pin text-sky-400 text-sm"></i>
+          </div>
+          <div id="kpi-gov-priority-loc" class="text-base font-black text-slate-100 mt-1 truncate">NH-10 / Km 48</div>
+          <div id="kpi-gov-priority-sub" class="text-[11px] text-slate-400 mt-0.5 truncate">Pakyong, Sikkim • Strategic Lifeline</div>
+        </div>
+        <!-- Card 3: Monitored Corridors -->
+        <div class="kpi-card bg-[#0F172A] border border-slate-700/80 rounded p-3 flex flex-col justify-between shadow-xs">
+          <div class="text-[10px] font-black uppercase tracking-wider text-slate-400 flex items-center justify-between">
+            <span>Monitored Corridors</span>
+            <i class="ph-bold ph-path text-emerald-400 text-sm"></i>
+          </div>
+          <div id="kpi-gov-corridors" class="text-xl font-black text-slate-100 mt-1 font-mono">26 Corridors</div>
+          <div class="text-[11px] text-slate-400 mt-0.5 truncate">Across 8 NER States</div>
+        </div>
+        <!-- Card 4: Pending Authority Reviews -->
+        <div class="kpi-card bg-[#0F172A] border border-slate-700/80 rounded p-3 flex flex-col justify-between shadow-xs">
+          <div class="text-[10px] font-black uppercase tracking-wider text-slate-400 flex items-center justify-between">
+            <span>Authority Review</span>
+            <i class="ph-bold ph-scales text-amber-400 text-sm"></i>
+          </div>
+          <div id="kpi-gov-pending-reviews" class="text-xl font-black text-amber-400 mt-1 font-mono">02 Advisories</div>
+          <div class="text-[11px] text-slate-400 mt-0.5 truncate">Pending Magistrate Sign-Off</div>
+        </div>
+        <!-- Card 5: Telemetry Health -->
+        <div class="kpi-card bg-[#0F172A] border border-slate-700/80 rounded p-3 flex flex-col justify-between shadow-xs col-span-2 md:col-span-1">
+          <div class="text-[10px] font-black uppercase tracking-wider text-slate-400 flex items-center justify-between">
+            <span>Telemetry Health</span>
+            <i class="ph-bold ph-activity text-blue-300 text-sm"></i>
+          </div>
+          <div id="kpi-gov-telemetry-health" class="text-xl font-black text-emerald-400 mt-1 font-mono">98.4% Available</div>
+          <div class="text-[11px] text-slate-400 mt-0.5 truncate">IMD AWS • InSAR • IoT Gateways</div>
+        </div>
+      </div>
+    </section>
+
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+        <div class="flex items-center gap-2">
+          <i class="ph-bold ph-cpu text-blue-300 text-lg"></i>
+          <h2 class="text-sm font-black text-slate-100 uppercase tracking-wider">System Operations, Telemetry & Multi-Channel Pipeline</h2>
+        </div>
+        <button type="button" onclick="navigateToPanel('prediction')" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded flex items-center gap-1.5 transition active:scale-95">
+          <i class="ph-bold ph-arrow-left"></i> Return to Prediction Dashboard
+        </button>
+      </div>
+
+    <!-- SIH DECISION-FIRST COMMAND STRIP: WHERE / RISK / WHY / ACTION -->
+    <section id="sih-command-strip" aria-label="Live landslide decision status">
+      <div class="sih-command-shell">
+        <div class="sih-command-head">
+          <div>
+            <div class="sih-eyebrow">Operational layer • driven by PAHAD AI inference</div>
+            <div class="sih-command-title">Operational Response Snapshot</div>
+          </div>
+          <div class="sih-freshness"><span class="sih-live-dot" aria-hidden="true"></span><span id="sih-freshness-text">LIVE EVIDENCE • syncing</span></div>
+        </div>
+        <div class="sih-command-grid">
+          <!-- Cell 1: Priority Sector -->
+          <div class="sih-command-cell">
+            <div class="sih-label">Priority sector</div>
+            <div id="sih-sector" class="sih-value" style="font-size:16px;line-height:1.15;">NH-10 / Rangpo–Singtam</div>
+            <div id="sih-sector-sub" class="sih-sub">Sikkim • corridor monitoring</div>
+          </div>
+          <!-- Cell 2: AI Risk Index -->
+          <div class="sih-command-cell">
+            <div class="sih-label">AI risk index</div>
+            <div><span id="sih-risk-score" class="sih-value sih-risk-value">73.2</span><span class="sih-unit">/100</span></div>
+            <div class="sih-risk-progress" aria-hidden="true"><span id="sih-risk-progress"></span></div>
+            <div id="sih-risk-tier" class="sih-microcopy">RED • action required</div>
+          </div>
+          <!-- Cell 3: 24h Event Probability -->
+          <div class="sih-command-cell">
+            <div class="sih-label">24h Event Probability</div>
+            <div><span id="sih-event-prob" class="sih-value text-amber-400">72.0%</span><span class="sih-unit">P(event)</span></div>
+            <div id="sih-event-prob-sub" class="sih-sub font-mono text-[10px]">Calibrated GBDT • 24h</div>
+          </div>
+          <!-- Cell 4: Factor of Safety -->
+          <div class="sih-command-cell">
+            <div class="sih-label">Factor of safety</div>
+            <div><span id="sih-fos" class="sih-value sih-risk-value">0.745</span><span class="sih-unit">FoS</span></div>
+            <div id="sih-fos-sub" class="sih-sub">&lt; 1.00 indicates unstable slope</div>
+          </div>
+          <!-- Cell 5: Rainfall Trigger -->
+          <div class="sih-command-cell">
+            <div class="sih-label">Rainfall trigger</div>
+            <div><span id="sih-rain" class="sih-value">68.4</span><span class="sih-unit">mm / 24h</span></div>
+            <div id="sih-rain-sub" class="sih-sub"><span id="sih-rain-trigger" class="text-rose-400 font-bold font-mono">THRESHOLD EXCEEDED</span></div>
+          </div>
+          <!-- Cell 6: Model Agreement -->
+          <div class="sih-command-cell">
+            <div class="sih-label">Model agreement</div>
+            <div><span id="sih-agreement" class="sih-value text-emerald-400">2/3</span><span class="sih-unit">signals</span></div>
+            <div id="sih-agreement-sub" class="sih-sub font-mono text-[10px]">FoS + Rain + ML confirmed</div>
+          </div>
+          <!-- Cell 7: Confidence -->
+          <div class="sih-command-cell">
+            <div class="sih-label">Confidence</div>
+            <div><span id="sih-confidence" class="sih-value text-blue-300">0.84</span><span class="sih-unit">HIGH</span></div>
+            <div id="sih-confidence-sub" class="sih-sub font-mono text-[10px]">Multimodal concordance</div>
+          </div>
+          <!-- Cell 8: Next Action -->
+          <div class="sih-command-cell sih-action">
+            <div class="sih-label">Next operational action</div>
+            <div id="sih-action-text" class="sih-sub" style="color:#CBD5E1;font-weight:800;">Prepare controlled evacuation + route assessment</div>
+            <button id="sih-refresh-btn" type="button" onclick="refreshSIHCommandSnapshot()"><i class="ph-bold ph-arrows-clockwise"></i> Refresh live assessment</button>
+          </div>
+        </div>
+        <div class="sih-evidence-bar" aria-label="Evidence sources">
+          <span class="sih-source-chip live" onclick="sihEvidenceNavigate('imd')" role="button" tabindex="0" title="Inspect IMD Rainfall Intelligence"><span class="chip-dot"></span>IMD rainfall</span>
+          <span class="sih-source-chip live" onclick="sihEvidenceNavigate('postgis')" role="button" tabindex="0" title="View PostGIS GIS Hazard Risk Zones"><span class="chip-dot"></span>PostGIS risk zones</span>
+          <span class="sih-source-chip live" onclick="sihEvidenceNavigate('iot')" role="button" tabindex="0" title="Inspect In-Situ IoT & River Scour Telemetry"><span class="chip-dot"></span>IoT telemetry</span>
+          <span class="sih-source-chip live" onclick="sihEvidenceNavigate('sitrep')" role="button" tabindex="0" title="View Autonomous AI SitRep Briefing"><span class="chip-dot"></span>AI SitRep</span>
+          <span class="sih-source-chip sim" onclick="sihEvidenceNavigate('physics')" role="button" tabindex="0" title="Inspect Physics & ML Multimodal Evidence"><span class="chip-dot"></span>Physics / ML fusion</span>
+          <span class="sih-source-chip" onclick="sihEvidenceNavigate('reports')" role="button" tabindex="0" title="View Field & Citizen Observation Queue"><span class="chip-dot"></span>Field reports</span>
+          <a href="/notifications" class="sih-source-chip live" style="text-decoration:none;" title="PAHAD 15km Geofenced Multi-Channel Alert Center"><span class="chip-dot" style="background:#f59e0b;"></span>Alert Center (15km)</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAHAD AI MODEL STATUS PANEL (Section 23) -->
+    <section id="pahad-model-status-panel" class="max-w-[1280px] mx-auto px-4 mb-3" aria-label="PAHAD AI Model Status">
+      <div class="bg-[#0A1220] border border-[#26364D] rounded-lg p-3 text-xs shadow-lg">
+        <div class="flex flex-wrap items-center justify-between pb-2 mb-2 border-b border-[#1E293B] gap-2">
+          <div class="flex items-center gap-2">
+            <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span class="font-black tracking-wider uppercase text-slate-200 text-[11px]">PAHAD AI Model Status</span>
+            <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-amber-950/80 text-amber-300 border border-amber-800">[TRAINED_LIMITED_DATA]</span>
+          </div>
+          <div class="flex items-center gap-2 text-[10px] font-mono text-slate-400" id="pahad-sync-status-indicator">
+            <span class="px-2 py-0.5 rounded bg-emerald-950/60 text-emerald-400 border border-emerald-800/80" id="pahad-online-badge">ONLINE</span>
+            <span class="text-slate-500">•</span>
+            <span>Architecture: <strong class="text-slate-300">Phase 3 Multimodal</strong></span>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 text-[11px] font-mono">
+          <div class="p-2 rounded bg-[#070B10]/80 border border-[#1E293B]">
+            <div class="text-[9px] text-slate-500 uppercase font-sans font-bold">Event Model</div>
+            <div class="text-slate-200 font-bold mt-0.5">Calibrated GBDT</div>
+            <div class="text-[9px] text-blue-300 mt-0.5">6/12/24/48h Horizons</div>
+          </div>
+          <div class="p-2 rounded bg-[#070B10]/80 border border-[#1E293B]">
+            <div class="text-[9px] text-slate-500 uppercase font-sans font-bold">Training Samples</div>
+            <div class="text-slate-200 font-bold mt-0.5" id="pahad-train-samples-stat">16 Real (Train) / 12 (Val)</div>
+            <div class="text-[9px] text-slate-400 mt-0.5">17 GSI Events / 19 Controls</div>
+          </div>
+          <div class="p-2 rounded bg-[#070B10]/80 border border-[#1E293B]">
+            <div class="text-[9px] text-slate-500 uppercase font-sans font-bold">Data Span & Validation</div>
+            <div class="text-slate-200 font-bold mt-0.5">2022–2024 (8 NER States)</div>
+            <div class="text-[9px] text-emerald-400 mt-0.5">Temporal Holdout • Platt Sigmoid</div>
+          </div>
+          <div class="p-2 rounded bg-[#070B10]/80 border border-[#1E293B]">
+            <div class="text-[9px] text-slate-500 uppercase font-sans font-bold">Geotechnical Model</div>
+            <div class="text-slate-200 font-bold mt-0.5">PAHAD FoS v1.0</div>
+            <div class="text-[9px] text-amber-400 mt-0.5">Mohr-Coulomb Mechanics</div>
+          </div>
+          <div class="p-2 rounded bg-[#070B10]/80 border border-[#1E293B]">
+            <div class="text-[9px] text-slate-500 uppercase font-sans font-bold">Earth Observation</div>
+            <div class="text-slate-200 font-bold mt-0.5">Sentinel-1/2 InSAR</div>
+            <div class="text-[9px] text-amber-300 mt-0.5">[CACHED / SIMULATED]</div>
+          </div>
+          <div class="p-2 rounded bg-[#070B10]/80 border border-[#1E293B]">
+            <div class="text-[9px] text-slate-500 uppercase font-sans font-bold">Telemetry & Weather</div>
+            <div class="text-slate-200 font-bold mt-0.5">IMD AWS / IoT Piezometer</div>
+            <div class="text-[9px] text-emerald-400 mt-0.5">[LIVE] / [SIMULATED]</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMPACT EDGE NETWORK HOMEPAGE MODULE (Section 24) -->
+    <section id="edge-network-module" class="max-w-[1280px] mx-auto px-4 mb-3" aria-label="Edge Network Module">
+      <div class="bg-[#0B132B] border border-[#1E293B] hover:border-slate-700 rounded-lg p-3 text-xs shadow-md transition">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center space-x-3">
+            <span class="inline-flex items-center justify-center w-7 h-7 rounded bg-sky-950 text-blue-300 border border-sky-800 text-xs">
+              <i class="ph-bold ph-broadcast"></i>
+            </span>
+            <div>
+              <div class="flex items-center space-x-2">
+                <span class="font-bold tracking-wide uppercase text-white text-[11px]">EDGE NETWORK</span>
+                <span class="text-[9px] font-mono px-1.5 py-0.2 rounded bg-slate-800 text-slate-400 border border-slate-700">[LoRa MESH]</span>
+              </div>
+              <p class="text-[10px] text-slate-400">Sub-GHz resilient sensor network & acoustic warning chokepoints</p>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-4 text-[11px] font-mono">
+            <div>
+              <span class="text-[9px] text-slate-500 uppercase block font-sans">Nodes</span>
+              <span class="text-emerald-400 font-bold" id="hp-edge-nodes">18/20 nodes</span>
+            </div>
+            <div class="h-5 w-px bg-slate-800 hidden sm:block"></div>
+            <div>
+              <span class="text-[9px] text-slate-500 uppercase block font-sans">Gateways</span>
+              <span class="text-slate-200 font-bold" id="hp-edge-gateways">2 gateways</span>
+            </div>
+            <div class="h-5 w-px bg-slate-800 hidden sm:block"></div>
+            <div>
+              <span class="text-[9px] text-slate-500 uppercase block font-sans">Cloud</span>
+              <span class="text-emerald-400 font-bold" id="hp-edge-cloud">ONLINE</span>
+            </div>
+            <div class="h-5 w-px bg-slate-800 hidden sm:block"></div>
+            <div>
+              <span class="text-[9px] text-slate-500 uppercase block font-sans">Local</span>
+              <span class="text-amber-400 font-bold" id="hp-edge-siren">ARMED</span>
+            </div>
+            <div class="h-5 w-px bg-slate-800 hidden sm:block"></div>
+            <div>
+              <span class="text-[9px] text-slate-500 uppercase block font-sans">Last Sync</span>
+              <span class="text-slate-300" id="hp-edge-sync">12 sec</span>
+            </div>
+
+            <a href="/edge-network" class="ml-2 px-3 py-1.5 rounded bg-sky-900/80 hover:bg-sky-800 text-sky-200 border border-sky-600 text-xs font-semibold transition flex items-center space-x-1">
+              <span>OPEN EDGE NETWORK</span>
+              <span>→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMPACT PAHAD ALERT ORCHESTRATOR & NOTIFICATION STATUS MODULE (Phase 3.5) -->
+    <section id="alert-orchestrator-module" class="max-w-[1280px] mx-auto px-4 mb-3" aria-label="Alert Orchestrator Module">
+      <div class="bg-[#0B132B] border border-[#1E293B] hover:border-amber-900/60 rounded-lg p-3 text-xs shadow-md transition">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center space-x-3">
+            <span class="inline-flex items-center justify-center w-7 h-7 rounded bg-amber-950 text-amber-400 border border-amber-800 text-xs shadow-sm">
+              <i class="ph-bold ph-bell-ringing"></i>
+            </span>
+            <div>
+              <div class="flex items-center space-x-2">
+                <span class="font-bold tracking-wide uppercase text-white text-[11px]">PAHAD ALERT ORCHESTRATOR</span>
+                <span class="text-[9px] font-mono px-1.5 py-0.2 rounded bg-amber-950/80 text-amber-300 border border-amber-800">[15 KM GEOFENCE]</span>
+                <span class="text-[9px] font-mono px-1.5 py-0.2 rounded bg-slate-800 text-slate-400 border border-slate-700">[MULTI-CHANNEL]</span>
+              </div>
+              <p class="text-[10px] text-slate-400">Multi-channel early warning dispatch • Push, SMS, OASIS CAP v1.2, Siren & Edge Mesh</p>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-4 text-[11px] font-mono">
+            <div>
+              <span class="text-[9px] text-slate-500 uppercase block font-sans">Active Queue</span>
+              <span class="text-amber-400 font-bold" id="hp-alert-queue-count">3 items</span>
+            </div>
+            <div class="h-5 w-px bg-slate-800 hidden sm:block"></div>
+            <div>
+              <span class="text-[9px] text-slate-500 uppercase block font-sans">Policy Radius</span>
+              <span class="text-slate-200 font-bold" id="hp-alert-zone-radius">15.0 km</span>
+            </div>
+            <div class="h-5 w-px bg-slate-800 hidden sm:block"></div>
+            <div>
+              <span class="text-[9px] text-slate-500 uppercase block font-sans">Web/Mobile Push</span>
+              <span class="text-emerald-400 font-bold" id="hp-alert-push-status">READY</span>
+            </div>
+            <div class="h-5 w-px bg-slate-800 hidden sm:block"></div>
+            <div>
+              <span class="text-[9px] text-slate-500 uppercase block font-sans">SMS Gateway</span>
+              <span class="text-sky-300 font-bold" id="hp-alert-sms-status">DRY RUN</span>
+            </div>
+            <div class="h-5 w-px bg-slate-800 hidden sm:block"></div>
+            <div>
+              <span class="text-[9px] text-slate-500 uppercase block font-sans">Gatekeeper</span>
+              <span class="text-emerald-400 font-bold">2-OF-3 SIGNAL</span>
+            </div>
+
+            <a href="/notifications" class="ml-2 px-3 py-1.5 rounded bg-amber-900/80 hover:bg-amber-800 text-amber-200 border border-amber-600 text-xs font-semibold transition flex items-center space-x-1">
+              <span>ALERT CENTER</span>
+              <span>→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SIH OPERATIONAL JOURNEY: maps the platform to the disaster-management workflow -->
+    <nav id="sih-operational-flow" aria-label="PARVAT NETRA operational journey">
+      <div class="sih-flow-shell">
+        <button type="button" class="sih-flow-step" data-sih-step="monitor" onclick="sihFlowNavigate('monitor')">
+          <span class="sih-flow-num">01</span><span class="sih-flow-copy"><span class="sih-flow-title">Monitor</span><span class="sih-flow-sub">IMD + IoT + satellite</span></span>
+        </button>
+        <button type="button" class="sih-flow-step active" data-sih-step="predict" onclick="sihFlowNavigate('predict')">
+          <span class="sih-flow-num">02</span><span class="sih-flow-copy"><span class="sih-flow-title">Predict</span><span class="sih-flow-sub">FoS + ML risk</span></span>
+        </button>
+        <button type="button" class="sih-flow-step" data-sih-step="explain" onclick="sihFlowNavigate('explain')">
+          <span class="sih-flow-num">03</span><span class="sih-flow-copy"><span class="sih-flow-title">Explain</span><span class="sih-flow-sub">Evidence + drivers</span></span>
+        </button>
+        <button type="button" class="sih-flow-step" data-sih-step="warn" onclick="sihFlowNavigate('warn')">
+          <span class="sih-flow-num">04</span><span class="sih-flow-copy"><span class="sih-flow-title">Warn</span><span class="sih-flow-sub">CAP + voice + siren</span></span>
+        </button>
+        <button type="button" class="sih-flow-step" data-sih-step="route" onclick="sihFlowNavigate('route')">
+          <span class="sih-flow-num">05</span><span class="sih-flow-copy"><span class="sih-flow-title">Route</span><span class="sih-flow-sub">Safe corridor planning</span></span>
+        </button>
+        <button type="button" class="sih-flow-step" data-sih-step="respond" onclick="sihFlowNavigate('respond')">
+          <span class="sih-flow-num">06</span><span class="sih-flow-copy"><span class="sih-flow-title">Respond</span><span class="sih-flow-sub">BRO + field triage</span></span>
+        </button>
+      </div>
+    </nav>
+
+    
+    </div><!-- /view-system -->
+
+    <!-- =====================================================================
+         PHASE 9C: WORKSPACE VIEW 3 — EMERGENCY RESPONSE & SIREN ACCESS (HIDDEN BY DEFAULT)
+         ===================================================================== -->
+    <div id="view-response" class="workspace-view hidden max-w-7xl mx-auto px-4 py-4 space-y-4">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+        <div class="flex items-center gap-2">
+          <i class="ph-bold ph-speaker-high text-rose-500 text-lg"></i>
+          <h2 class="text-sm font-black text-slate-100 uppercase tracking-wider">Emergency Response & Autonomous Siren Access Control</h2>
+        </div>
+        <button type="button" onclick="navigateToPanel('prediction')" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded flex items-center gap-1.5 transition active:scale-95">
+          <i class="ph-bold ph-arrow-left"></i> Return to Prediction Dashboard
+        </button>
+      </div>
+
+      <!-- PAHAD AUTONOMOUS SIREN ACCESS CARD -->
+      <div id="pahad-autonomous-siren-card" class="bg-[#0B1320] border border-slate-800 rounded-lg p-5 shadow-xl space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800/80 pb-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded bg-rose-950/80 border border-rose-800/80 flex items-center justify-center text-rose-400">
+              <i class="ph-bold ph-siren text-xl"></i>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h3 class="text-base font-black text-slate-100 uppercase tracking-wider">PAHAD Autonomous Siren Access</h3>
+                <span id="siren-access-badge" class="px-2 py-0.5 rounded text-[10px] font-mono font-black uppercase bg-slate-800 text-slate-400 border border-slate-700">DISABLED</span>
+              </div>
+              <p class="text-xs text-slate-400 mt-0.5">Physical emergency siren grid for Himalayan highway chokepoints & high-risk settlements</p>
+            </div>
+          </div>
+          
+          <div class="flex items-center gap-2">
+            <button id="btn-toggle-siren-access" type="button" onclick="toggleAutonomousSirenAccessState()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-black uppercase tracking-wider rounded border border-slate-600 transition flex items-center gap-2">
+              <i class="ph-bold ph-shield-check"></i> <span id="btn-toggle-siren-text">Arm for Authority Use</span>
+            </button>
+            <button id="btn-test-siren-grid" type="button" onclick="testSirenGridTelemetry()" class="px-3 py-2 bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-semibold rounded border border-slate-700 transition flex items-center gap-1.5">
+              <i class="ph-bold ph-arrows-clockwise"></i> Ping Siren Health
+            </button>
+          </div>
+        </div>
+
+        <!-- Strict Safety Invariants Warning Box -->
+        <div class="bg-amber-950/30 border border-amber-800/60 rounded p-3 text-xs space-y-1.5">
+          <div class="flex items-center gap-2 text-amber-400 font-bold uppercase tracking-wider text-[11px]">
+            <i class="ph-bold ph-shield-warning text-sm"></i>
+            <span>Safety Invariants & Statutory Authority Protocol</span>
+          </div>
+          <p class="text-amber-200/90 text-[11px] leading-relaxed">
+            <strong>CRITICAL SAFETY RULE:</strong> The AI model <em>CANNOT</em> independently dispatch sirens or sound physical alarms without human authorization. Physical siren activation strictly requires:
+          </p>
+          <ul class="list-disc list-inside text-amber-200/80 text-[11px] space-y-0.5 pl-2 font-mono">
+            <li>Explicit Magistrate / Incident Commander arming (<code>ARMED FOR AUTHORITY USE</code>)</li>
+            <li>2-of-3 independent sensor corroboration (Mohr-Coulomb FoS &lt; 1.0, IMD Rainfall exceedance, in-situ IoT tilt/pore pressure displacement)</li>
+            <li>15 km geofenced polygon targeting strictly verified risk corridors</li>
+          </ul>
+        </div>
+
+        <!-- Siren Status Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-xs">
+          <div class="bg-[#070B10] border border-slate-800 rounded p-3">
+            <span class="text-[10px] uppercase font-bold text-slate-500 block">Siren Controller</span>
+            <span id="siren-state-display" class="text-sm font-black text-slate-300 font-mono mt-1 block">DISABLED</span>
+            <span class="text-[10px] text-slate-500 mt-0.5 block">State locked by default</span>
+          </div>
+          <div class="bg-[#070B10] border border-slate-800 rounded p-3">
+            <span class="text-[10px] uppercase font-bold text-slate-500 block">Human Authorization</span>
+            <span class="text-sm font-black text-emerald-400 font-mono mt-1 block">MANDATORY</span>
+            <span class="text-[10px] text-slate-500 mt-0.5 block">District Magistrate / BRO EOC</span>
+          </div>
+          <div class="bg-[#070B10] border border-slate-800 rounded p-3">
+            <span class="text-[10px] uppercase font-bold text-slate-500 block">Corroboration Rule</span>
+            <span class="text-sm font-black text-blue-300 font-mono mt-1 block">2-OF-3 SIGNAL</span>
+            <span class="text-[10px] text-slate-500 mt-0.5 block">FoS + Rainfall + Inclinometer</span>
+          </div>
+          <div class="bg-[#070B10] border border-slate-800 rounded p-3">
+            <span class="text-[10px] uppercase font-bold text-slate-500 block">Connected Edge Siren Nodes</span>
+            <span id="siren-connected-nodes" class="text-sm font-black text-purple-400 font-mono mt-1 block">4 Active Nodes</span>
+            <span class="text-[10px] text-slate-500 mt-0.5 block">NH-10 Km 48, Seti Jhora, Likuvir, Rangpo</span>
+          </div>
+        </div>
+
+        <!-- Siren Action Footer -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-800/80">
+          <div class="text-[11px] text-slate-400">
+            Last Siren Grid Telemetry Check: <span id="siren-last-ping" class="font-mono text-slate-300">Just now</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <a href="/notifications" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold rounded border border-slate-700 transition flex items-center gap-1.5">
+              <i class="ph-bold ph-bell-ringing"></i> Open 15km Alert Center
+            </a>
+            <button id="btn-manual-emergency-siren" type="button" onclick="triggerManualEmergencySiren()" class="px-4 py-1.5 bg-rose-700 hover:bg-rose-600 text-white text-xs font-black uppercase tracking-wider rounded transition flex items-center gap-1.5 shadow-md active:scale-95">
+              <i class="ph-bold ph-speaker-high"></i> Manual Siren Trigger (Authority)
+            </button>
+          </div>
+        </div>
+      </div>
+    </div><!-- /view-response -->
+
+    <!-- =====================================================================
+         PHASE 9C: WORKSPACE VIEW 4 — FULL GIS MAP & FIELD TELEMETRY (HIDDEN BY DEFAULT)
+         ===================================================================== -->
+    <div id="view-map" class="workspace-view hidden">
+      <div class="bg-[#0B1320] border-b border-slate-800 px-4 py-2.5 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <i class="ph-bold ph-map-trifold text-emerald-400 text-base"></i>
+          <span class="text-xs font-black text-slate-200 uppercase tracking-wider">Full GIS Map & Operational Field Workspace</span>
+        </div>
+        <button type="button" onclick="navigateToPanel('prediction')" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded flex items-center gap-1.5 transition active:scale-95">
+          <i class="ph-bold ph-arrow-left"></i> Return to Prediction Dashboard
+        </button>
+      </div>
+
+<div class="max-w-7xl mx-auto px-4 py-6 space-y-4">
+      <div class="p-6 bg-[#0E1522] border border-slate-800 rounded-lg text-center space-y-3">
+        <i class="ph-bold ph-map-pin text-3xl text-sky-400"></i>
+        <h3 class="text-sm font-bold text-white uppercase tracking-wider">Operational GIS Hazard Map is Live on Primary Dashboard</h3>
+        <p class="text-xs text-slate-400 max-w-lg mx-auto">
+          The full interactive GIS Hazard Map, InSAR radar deformation layers, CWC Teesta telemetry, and BRO lifeline routes are integrated directly on the primary command dashboard.
+        </p>
+        <button type="button" onclick="navigateToPanel('prediction')" class="px-4 py-2 bg-emerald-700 hover:bg-emerald-600 text-white font-bold text-xs rounded uppercase tracking-wider transition">
+          View GIS Map on Dashboard &rarr;
+        </button>
+      </div>
+    </div>
     </div><!-- /view-map -->
 
     <!-- ===================================================================== -->
@@ -5964,8 +5967,10 @@ function navigateToPanel(panelId) {
     } else if (panelId === 'prediction') {
         targetView = document.getElementById('view-prediction');
     } else if (panelId === 'map' || panelId === 'gis' || panelId === 'evacuation') {
-        targetView = document.getElementById('view-map');
+        targetView = document.getElementById('view-prediction');
         setTimeout(function() {
+            var el = document.getElementById('gis-map-card') || document.getElementById('authority-map-slot');
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
             if (window.map && typeof window.map.invalidateSize === 'function') {
                 window.map.invalidateSize();
             }

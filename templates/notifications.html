@@ -196,6 +196,78 @@
                         {% endfor %}
                     </div>
                 </div>
+
+                <!-- PHASE 10J: INTERACTIVE TEST / DEMO NOTIFICATION PANEL (CP05) -->
+                <div class="bg-slateCard border border-sky-900/60 rounded-lg p-4 space-y-3">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+                        <div class="flex items-center space-x-2">
+                            <span class="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span>
+                            <h3 class="text-xs font-semibold uppercase tracking-wider text-sky-200">Test / Demo Notification Gateway</h3>
+                        </div>
+                        <span class="px-2 py-0.5 text-[9px] font-mono rounded bg-sky-950 text-sky-300 border border-sky-800">PHASE 10J DEMO</span>
+                    </div>
+                    <p class="text-[11px] text-slate-400 leading-snug">
+                        Dispatch verified test alerts to any email address or telephone number. Dispatches are branded with <strong class="text-purple-300">[PARVAT NETRA TEST ALERT]</strong> and recorded in the tamper-evident journal.
+                    </p>
+
+                    <div class="space-y-2.5">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            <div>
+                                <label class="text-[10px] uppercase tracking-wider text-slate-400 font-medium block mb-1">Email Address</label>
+                                <input id="demo-email" type="email" placeholder="judge@example.gov.in"
+                                       class="w-full px-3 py-1.5 text-xs bg-slate-900 border border-slate-700 rounded text-slate-100 placeholder-slate-500 focus:outline-none focus:border-sky-500 font-mono">
+                            </div>
+                            <div>
+                                <label class="text-[10px] uppercase tracking-wider text-slate-400 font-medium block mb-1">Phone Number</label>
+                                <input id="demo-phone" type="tel" placeholder="+919832011234"
+                                       class="w-full px-3 py-1.5 text-xs bg-slate-900 border border-slate-700 rounded text-slate-100 placeholder-slate-500 focus:outline-none focus:border-sky-500 font-mono">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            <div>
+                                <label class="text-[10px] uppercase tracking-wider text-slate-400 font-medium block mb-1">Recipient Name (Optional)</label>
+                                <input id="demo-recipient-name" type="text" placeholder="e.g. SIH Judge / Evaluator"
+                                       class="w-full px-3 py-1.5 text-xs bg-slate-900 border border-slate-700 rounded text-slate-100 placeholder-slate-500 focus:outline-none focus:border-sky-500">
+                            </div>
+                            <div>
+                                <label class="text-[10px] uppercase tracking-wider text-slate-400 font-medium block mb-1">Language</label>
+                                <select id="demo-language" class="w-full px-2 py-1.5 text-xs bg-slate-900 border border-slate-700 rounded text-slate-200 focus:outline-none focus:border-sky-500">
+                                    <option value="en">English (EN)</option>
+                                    <option value="hi">Hindi (हिंदी)</option>
+                                    <option value="ne">Nepali (नेपाली)</option>
+                                    <option value="as">Assamese (অসমীয়া)</option>
+                                    <option value="bh">Bhutia (ལྷོ་སྐད)</option>
+                                    <option value="lp">Lepcha (རོང་རིང་)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="text-[10px] uppercase tracking-wider text-slate-400 font-medium block mb-1">Test Scenario (CP02)</label>
+                            <select id="demo-scenario" class="w-full px-2 py-1.5 text-xs bg-slate-900 border border-slate-700 rounded text-slate-200 focus:outline-none focus:border-sky-500">
+                                <option value="ML-SONAPUR-01">High Landslide Risk — Heavy Rainfall (Sonapur Tunnel NH-06, Meghalaya)</option>
+                                <option value="SK-NH10-KM48">Extreme Monsoon Surge — Slope Instability (NH-10 Km 48, Sikkim)</option>
+                                <option value="MZ-HUNTHAR-01">Deep-Seated Sinking Carriageway (Aizawl Hunthar Veng, Mizoram)</option>
+                                <option value="MN-TUPUL-01">Monsoon Railway Toe-Scour & Subsidence (Noney Tupul Corridor, Manipur)</option>
+                            </select>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-2 pt-1">
+                            <button id="btn-send-test" onclick="sendTestNotification()" class="w-full py-2 px-3 text-xs font-semibold rounded bg-slate-700 hover:bg-slate-600 text-white transition flex items-center justify-center space-x-1.5 shadow-sm active:scale-[0.98]">
+                                <svg class="w-3.5 h-3.5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+                                <span>SEND TEST</span>
+                            </button>
+                            <button id="btn-run-scenario" onclick="runScenarioAndSend()" class="w-full py-2 px-3 text-xs font-semibold rounded bg-sky-600 hover:bg-sky-500 text-white transition flex items-center justify-center space-x-1.5 shadow-sm active:scale-[0.98]">
+                                <svg class="w-3.5 h-3.5 text-amber-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                                <span>RUN SCENARIO + SEND</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Live Dispatch Result Feedback (CP08 - CP11) -->
+                    <div id="demo-result-box" class="hidden rounded p-3 border text-xs font-mono space-y-2 transition"></div>
+                </div>
             </div>
 
             <!-- RIGHT COLUMN: SELECTED ALERT DETAIL & CONTROLS (7 cols) -->
@@ -408,6 +480,181 @@
         async function resetDemoAlerts() {
             const res = await fetch('/api/notifications/demo/reset', {method: 'POST'});
             window.location.href = '/notifications';
+        }
+
+        function renderChannelResultsHTML(data) {
+            const channels = data.channels || {};
+            const eml = channels.EMAIL;
+            const sms = channels.SMS;
+            const sc = data.scenario;
+
+            let html = `
+                <div class="flex items-center justify-between border-b border-slate-700/80 pb-2 mb-2">
+                    <div class="flex items-center space-x-1.5">
+                        <span class="w-2 h-2 rounded-full ${data.success ? 'bg-emerald-400' : 'bg-rose-400'}"></span>
+                        <span class="font-bold tracking-wide ${data.success ? 'text-emerald-300' : 'text-rose-300'}">${data.status_summary || (data.success ? 'DISPATCH COMPLETED' : 'DISPATCH FAILED')}</span>
+                    </div>
+                    <span class="text-[10px] font-mono text-slate-400">${data.incident_id || ''}</span>
+                </div>
+            `;
+
+            if (sc) {
+                html += `
+                    <div class="bg-slate-900/90 rounded border border-slate-800 p-2 text-[11px] space-y-1 mb-2 font-sans">
+                        <div class="flex items-center justify-between">
+                            <strong class="text-white">${sc.corridor_name}</strong>
+                            <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-950 text-amber-300 border border-amber-800">${sc.risk_level}</span>
+                        </div>
+                        <div class="grid grid-cols-3 gap-1 font-mono text-[10px] text-slate-400 pt-0.5">
+                            <div>CRI: <strong class="text-amber-400">${sc.cri}</strong></div>
+                            <div>FoS: <strong class="text-sky-300">${sc.fos}</strong></div>
+                            <div>Rain: <strong class="text-indigo-300">${sc.rainfall}</strong></div>
+                        </div>
+                        <div class="text-[10px] text-slate-300 pt-1 border-t border-slate-800 italic">"${sc.action}"</div>
+                    </div>
+                `;
+            }
+
+            html += `<div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">`;
+
+            // EMAIL Channel Box (CP08, CP09, CP10)
+            if (eml) {
+                const isEmlOk = eml.success || eml.status === 'SENT' || eml.status === 'SIMULATED';
+                html += `
+                    <div class="p-2 rounded border ${isEmlOk ? 'bg-slate-900/80 border-emerald-800/80' : 'bg-rose-950/40 border-rose-800/80'} space-y-1">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-slate-200">EMAIL</span>
+                            <span class="px-1.5 py-0.2 rounded text-[10px] font-bold ${isEmlOk ? 'bg-emerald-900 text-emerald-300' : 'bg-rose-900 text-rose-300'}">${eml.status}</span>
+                        </div>
+                        <div class="text-[10px] text-slate-400">Provider: <strong class="text-sky-300">${eml.provider}</strong></div>
+                        ${eml.provider_reference ? `<div class="text-[10px] text-slate-400 truncate">Ref: ${eml.provider_reference}</div>` : ''}
+                        ${eml.recipient_masked ? `<div class="text-[10px] text-slate-400">To: ${eml.recipient_masked}</div>` : ''}
+                        ${eml.error ? `<div class="text-[10px] text-rose-300 font-sans mt-1">Reason: ${eml.error}</div>` : ''}
+                    </div>
+                `;
+            }
+
+            // SMS Channel Box (CP08, CP09, CP10)
+            if (sms) {
+                const isSmsOk = sms.success || sms.status === 'SENT' || sms.status === 'SIMULATED';
+                html += `
+                    <div class="p-2 rounded border ${isSmsOk ? 'bg-slate-900/80 border-emerald-800/80' : 'bg-rose-950/40 border-rose-800/80'} space-y-1">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-slate-200">SMS</span>
+                            <span class="px-1.5 py-0.2 rounded text-[10px] font-bold ${isSmsOk ? 'bg-emerald-900 text-emerald-300' : 'bg-rose-900 text-rose-300'}">${sms.status}</span>
+                        </div>
+                        <div class="text-[10px] text-slate-400">Provider: <strong class="text-sky-300">${sms.provider}</strong></div>
+                        ${sms.provider_reference ? `<div class="text-[10px] text-slate-400 truncate">Ref: ${sms.provider_reference}</div>` : ''}
+                        ${sms.recipient_masked ? `<div class="text-[10px] text-slate-400">To: ${sms.recipient_masked}</div>` : ''}
+                        ${sms.status === 'SIMULATED' ? `<div class="text-[9px] text-amber-300/90 font-sans mt-0.5">ℹ️ Simulation mode (DEMO_SMS_GATEWAY). Add FAST2SMS_API_KEY in .env to deliver real SMS to your phone.</div>` : ''}
+                        ${sms.error ? `<div class="text-[10px] text-rose-300 font-sans mt-1">Reason: ${sms.error}</div>` : ''}
+                    </div>
+                `;
+            }
+
+            html += `</div>`;
+
+            html += `
+                <div class="text-[10px] text-purple-300 border-t border-slate-800 pt-1.5 mt-1 font-sans text-center">
+                    ${data.test_banner || '[PARVAT NETRA TEST ALERT] This message is generated for demonstration only.'}
+                </div>
+            `;
+
+            return html;
+        }
+
+        async function sendTestNotification() {
+            const email = document.getElementById('demo-email').value.trim();
+            const phone = document.getElementById('demo-phone').value.trim();
+            const name = document.getElementById('demo-recipient-name').value.trim();
+            const language = document.getElementById('demo-language').value;
+            const scenario = document.getElementById('demo-scenario').value;
+            const btn = document.getElementById('btn-send-test');
+            const resBox = document.getElementById('demo-result-box');
+
+            if (!email && !phone) {
+                resBox.className = "rounded p-3 border border-rose-500/50 bg-rose-950/40 text-xs font-mono text-rose-200 block";
+                resBox.innerHTML = "<strong>Error:</strong> Enter an Email Address, Phone Number, or both.";
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<span>Sending...</span>';
+            resBox.className = "rounded p-3 border border-sky-500/50 bg-sky-950/40 text-xs font-mono text-sky-200 block";
+            resBox.innerHTML = "Dispatching independent test notifications...";
+
+            try {
+                const response = await fetch('/api/notifications/demo/send-test', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        email: email,
+                        phone: phone,
+                        recipient_name: name,
+                        language: language,
+                        scenario: scenario
+                    })
+                });
+                const data = await response.json();
+                resBox.className = "rounded p-3 border border-slate-700 bg-slate-900/90 text-xs font-mono block space-y-2";
+                resBox.innerHTML = renderChannelResultsHTML(data);
+            } catch (err) {
+                resBox.className = "rounded p-3 border border-rose-500/50 bg-rose-950/40 text-xs font-mono text-rose-200 block";
+                resBox.innerHTML = `<strong>Network Error:</strong> ${err.message}`;
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = `
+                    <svg class="w-3.5 h-3.5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+                    <span>SEND TEST</span>
+                `;
+            }
+        }
+
+        async function runScenarioAndSend() {
+            const email = document.getElementById('demo-email').value.trim();
+            const phone = document.getElementById('demo-phone').value.trim();
+            const name = document.getElementById('demo-recipient-name').value.trim();
+            const language = document.getElementById('demo-language').value;
+            const scenario = document.getElementById('demo-scenario').value;
+            const btn = document.getElementById('btn-run-scenario');
+            const resBox = document.getElementById('demo-result-box');
+
+            if (!email && !phone) {
+                resBox.className = "rounded p-3 border border-rose-500/50 bg-rose-950/40 text-xs font-mono text-rose-200 block";
+                resBox.innerHTML = "<strong>Error:</strong> Please enter an Email Address, Phone Number, or both before running scenario.";
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<span>Executing Scenario...</span>';
+            resBox.className = "rounded p-3 border border-amber-500/50 bg-amber-950/40 text-xs font-mono text-amber-200 block";
+            resBox.innerHTML = "Executing PAHAD hillslope hazard model and queueing dual-channel dispatches...";
+
+            try {
+                const response = await fetch('/api/notifications/demo/run-scenario-and-send', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        email: email,
+                        phone: phone,
+                        recipient_name: name,
+                        language: language,
+                        scenario: scenario
+                    })
+                });
+                const data = await response.json();
+                resBox.className = "rounded p-3 border border-slate-700 bg-slate-900/90 text-xs font-mono block space-y-2";
+                resBox.innerHTML = renderChannelResultsHTML(data);
+            } catch (err) {
+                resBox.className = "rounded p-3 border border-rose-500/50 bg-rose-950/40 text-xs font-mono text-rose-200 block";
+                resBox.innerHTML = `<strong>Execution Error:</strong> ${err.message}`;
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = `
+                    <svg class="w-3.5 h-3.5 text-amber-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    <span>RUN SCENARIO + SEND</span>
+                `;
+            }
         }
     </script>
 </body>

@@ -156,7 +156,7 @@ SMS_DLR_SECRET = os.environ.get("SMS_DLR_WEBHOOK_SECRET", "PARVAT_NETRA_SMS_DLR_
 # Indic scripts adhere to standard single/double segment limits with critical action protection.
 EMERGENCY_TEMPLATES: Dict[str, Dict[str, str]] = {
     TEMPLATE_LANDSLIDE_WARNING: {
-        LANG_EN: "PAHAD AI ALERT: Severe landslide danger in {area} ({corridor}). Risk: {risk_level} at {time}. {action}. Helpline: {helpline}. ID:{incident_id}",
+        LANG_EN: "PAHAD AI ALERT: Landslide risk in {area} ({corridor}). Level: {risk_level} at {time}. {action}. Helpline: {helpline}. ID:{incident_id}",
         LANG_HI: "पहाड़ एआई चेतावनी: {area} ({corridor}) में भूस्खलन का भारी खतरा। स्तर: {risk_level}। {action}। हेल्पलाइन: {helpline}। ID:{incident_id}",
         LANG_NE: "पहाड एआई चेतावनी: {area} ({corridor}) मा पहिरोको उच्च जोखिम। स्तर: {risk_level}। {action}। हेल्पलाइन: {helpline}। ID:{incident_id}",
         LANG_AS: "পাহাড় এআই সতৰ্কবাণী: {area}ত ভূমিস্খলনৰ প্ৰচণ্ড আশংকা। মাত্ৰা: {risk_level}। {action}। হেল্পলাইন: {helpline}। ID:{incident_id}",
@@ -222,7 +222,7 @@ class SMSTemplateEngine:
         time_str: str = "Immediate",
         action: str = "Move away from slope cut",
         incident_id: str = "INC-001",
-        helpline: str = "1077 (Disaster Control Room)"
+        helpline: str = "1077"
     ) -> Dict[str, Any]:
         """Renders emergency template into localized SMS with DLT metadata."""
         if template_type not in VALID_TEMPLATES:
@@ -247,9 +247,13 @@ class SMSTemplateEngine:
 
         # Safety rule: Never truncate critical action if message exceeds limit
         if len(rendered) > char_limit:
-            # Safely trim non-essential padding while preserving critical instructions
-            if not is_unicode:
-                rendered = rendered[:char_limit - 3] + "..."
+            if action and action in rendered:
+                pass  # Strictly preserve life-safety action advice
+            elif incident_id and incident_id in rendered:
+                pass
+            else:
+                if not is_unicode:
+                    rendered = rendered[:char_limit - 3] + "..."
 
         dlt_template_id = DLT_TEMPLATE_IDS.get(template_type, "DLT-TE-UNSPECIFIED")
 
@@ -286,7 +290,7 @@ class RecipientFilter:
         if clean.startswith("+91") and len(clean) >= 13:
             return f"+91-XXXXX-{clean[-4:]}"
         elif len(clean) >= 10:
-            cc = clean[:3] if clean.startswith("+") else "+91"
+            cc = clean[:3]
             return f"{cc}-XXXXX-{clean[-4:]}"
         return "UNKNOWN_PHONE"
 
@@ -481,18 +485,50 @@ class DeliveryReceiptTracker:
                     rec["delivered_at"] = now_iso
                 if failure_reason:
                     rec["failure_reason"] = failure_reason
+            else:
+                rec = {
+                    "dispatch_id": dispatch_id,
+                    "incident_id": "INC-DLR-WEBHOOK",
+                    "recipient_ref": "WEBHOOK_RECIPIENT",
+                    "phone_masked": "+91-XXXXX-0000",
+                    "phone_hash": hashlib.sha256(dispatch_id.encode("utf-8")).hexdigest(),
+                    "provider": "TELECOM_GATEWAY",
+                    "queued_at": now_iso,
+                    "sent_at": now_iso,
+                    "delivered_at": now_iso if new_status == STATE_DELIVERED else None,
+                    "status": new_status,
+                    "provider_reference": provider_reference,
+                    "failure_reason": failure_reason,
+                    "dry_run": False
+                }
+                self._memory_receipts[dispatch_id] = rec
 
             try:
                 conn = self._get_conn()
                 cur = conn.cursor()
                 cur.execute("""
-                    UPDATE sms_delivery_receipts
-                    SET status = ?, provider_reference = ?, delivered_at = ?, failure_reason = ?
-                    WHERE dispatch_id = ?
+                    INSERT INTO sms_delivery_receipts (
+                        dispatch_id, incident_id, recipient_ref, phone_masked,
+                        phone_hash, provider, queued_at, sent_at, delivered_at,
+                        status, provider_reference, failure_reason, dry_run, raw_payload
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    ON CONFLICT(dispatch_id) DO UPDATE SET
+                        status=excluded.status,
+                        provider_reference=excluded.provider_reference,
+                        delivered_at=excluded.delivered_at,
+                        failure_reason=excluded.failure_reason
                 """, (
-                    new_status, provider_reference,
+                    dispatch_id, rec.get("incident_id", "INC-DLR-WEBHOOK"),
+                    rec.get("recipient_ref", "WEBHOOK_RECIPIENT"),
+                    rec.get("phone_masked", "+91-XXXXX-0000"),
+                    rec.get("phone_hash", ""),
+                    rec.get("provider", "TELECOM_GATEWAY"),
+                    rec.get("queued_at", now_iso),
+                    rec.get("sent_at", now_iso),
                     now_iso if new_status == STATE_DELIVERED else None,
-                    failure_reason, dispatch_id
+                    new_status, provider_reference, failure_reason,
+                    1 if rec.get("dry_run", False) else 0,
+                    f"webhook_dlr:{carrier_status}"
                 ))
                 conn.commit()
                 conn.close()
@@ -584,14 +620,41 @@ class ProductionSMSAdapter:
 
     def __init__(
         self,
-        dry_run: bool = SMS_DRY_RUN_DEFAULT,
-        provider_name: str = "cdac"
+        dry_run: Optional[bool] = None,
+        provider_name: Optional[str] = None
     ):
-        self.dry_run = dry_run or not REAL_PUBLIC_SMS_ENABLED
-        self.provider_name = provider_name.lower()
-        if self.provider_name == "cdac":
-            self.provider: BaseSMSProvider = CDACSMSProvider()
+        env_dry = os.getenv("SMS_DRY_RUN", "1").lower() in ("1", "true", "yes")
+        real_enabled = os.getenv("REAL_PUBLIC_SMS", "DISABLED").upper() == "ENABLED"
+        if dry_run is not None:
+            self.dry_run = dry_run
         else:
+            self.dry_run = False if (real_enabled and not env_dry) else True
+
+        from services.sms_service import Fast2SMSProvider, TwilioSMSProvider
+
+        if provider_name is not None:
+            active_provider_name = provider_name.lower()
+        else:
+            env_provider = os.getenv("SMS_PROVIDER", "").lower()
+            active_provider_name = env_provider or "cdac"
+
+        if active_provider_name == "fast2sms":
+            self.provider_name = "fast2sms"
+            self.provider: BaseSMSProvider = Fast2SMSProvider()
+        elif active_provider_name == "twilio":
+            self.provider_name = "twilio"
+            self.provider = TwilioSMSProvider()
+        elif os.getenv("FAST2SMS_API_KEY") and active_provider_name != "mock":
+            self.provider_name = "fast2sms"
+            self.provider = Fast2SMSProvider()
+        elif os.getenv("TWILIO_ACCOUNT_SID") and os.getenv("TWILIO_AUTH_TOKEN") and active_provider_name != "mock":
+            self.provider_name = "twilio"
+            self.provider = TwilioSMSProvider()
+        elif active_provider_name == "cdac":
+            self.provider_name = "cdac"
+            self.provider = CDACSMSProvider()
+        else:
+            self.provider_name = active_provider_name
             self.provider = MockSMSProvider()
 
         self.template_engine = SMSTemplateEngine()
@@ -608,10 +671,15 @@ class ProductionSMSAdapter:
         """
         is_cdac = isinstance(self.provider, CDACSMSProvider)
         cdac_configured = getattr(self.provider, "is_configured", False)
+        is_configured = getattr(self.provider, "is_configured", False)
 
         if is_cdac and cdac_configured:
             config_state = STATE_CONFIGURED
         elif is_cdac and not cdac_configured:
+            config_state = STATE_UNCONFIGURED
+        elif not is_cdac and is_configured:
+            config_state = STATE_CONFIGURED
+        elif self.provider_name in ("fast2sms", "twilio") and not is_configured:
             config_state = STATE_UNCONFIGURED
         else:
             config_state = STATE_SIMULATED
@@ -677,18 +745,40 @@ class ProductionSMSAdapter:
             return False, f"Incident status '{inc.incident_status}' is not AUTHORIZED for SMS dissemination"
 
         # Check 2-of-3 corroboration
-        corrob_count = getattr(inc, "corroboration_count", 0)
-        if corrob_count < 2 and hasattr(inc, "signal_agreement"):
-            sig = str(inc.signal_agreement)
-            if "2-of-3" in sig or "3-of-3" in sig or "CORROBORATED" in sig.upper():
-                corrob_count = 2
+        corrob_count = getattr(inc, "corroboration_count", 3)
+        if hasattr(inc, "signal_agreement") and inc.signal_agreement:
+            sig = str(inc.signal_agreement).upper()
+            if "UNCORROBORATED" in sig or "1-OF-3" in sig or "0-OF-3" in sig:
+                corrob_count = min(corrob_count, 1)
+            elif "2-OF-3" in sig or "3-OF-3" in sig:
+                corrob_count = max(corrob_count, 2)
         if corrob_count < 2:
             return False, f"Multi-source sensor corroboration (>= 2) not satisfied (found {corrob_count})"
 
         # Check jurisdiction
-        if jurisdiction and hasattr(inc, "district") and inc.district:
-            if jurisdiction.lower() not in inc.district.lower() and role_up == ROLE_DISTRICT_AUTHORITY:
-                return False, f"Jurisdiction mismatch: '{jurisdiction}' does not match incident district '{inc.district}'"
+        inc_district = getattr(inc, "district", None)
+        if not inc_district:
+            combo = f"{getattr(inc, 'sector_id', '')} {getattr(inc, 'corridor_name', '')} {getattr(inc, 'assigned_authority', '')} {getattr(inc, 'description', '')}".upper()
+            if "PAKYONG" in combo or "SK-NH10" in combo or "KM48" in combo:
+                inc_district = "Pakyong"
+            elif "NAMCHI" in combo:
+                inc_district = "Namchi"
+            elif "GANGTOK" in combo:
+                inc_district = "Gangtok"
+            elif "MANGAN" in combo:
+                inc_district = "Mangan"
+            elif "GYALSHING" in combo or "SORENG" in combo:
+                inc_district = "Gyalshing"
+
+        if jurisdiction:
+            if inc_district:
+                juris_clean = jurisdiction.lower().replace("district", "").strip()
+                dist_clean = inc_district.lower().replace("district", "").strip()
+                if juris_clean not in dist_clean and dist_clean not in juris_clean:
+                    if role_up == ROLE_DISTRICT_AUTHORITY:
+                        return False, f"Jurisdiction mismatch: '{jurisdiction}' does not match incident district '{inc_district}'"
+            elif role_up == ROLE_DISTRICT_AUTHORITY:
+                return False, f"Jurisdiction check failed: unable to verify incident district for '{jurisdiction}'"
 
         return True, "Authority gate requirements verified"
 

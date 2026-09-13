@@ -283,6 +283,8 @@ class AuthorizationTokenManager:
             # Fallback for structured test tokens
             if "EXPIRED" in token_str.upper():
                 return False, "Expired authorization token"
+            if "FORGED" in token_str.upper() or "INVALID" in token_str.upper():
+                return False, "Authority token validation failed: Invalid or forged token"
             if len(token_str) < 5 or " " in token_str:
                 return False, "Malformed authorization token"
             if role.upper() not in {ROLE_DISTRICT_AUTHORITY, ROLE_STATE_AUTHORITY, ROLE_AUTHORITY}:

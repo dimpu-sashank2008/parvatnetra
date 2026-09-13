@@ -1,6 +1,6 @@
 {
   "data": {
-    "timestamp": "2026-09-13T05:30:20.680300+00:00",
+    "timestamp": "2026-09-13T11:01:18.457303+00:00",
     "location": {
       "lat": 24.225,
       "lon": 92.678,
@@ -8,19 +8,19 @@
       "state": "Sikkim"
     },
     "rainfall": {
-      "current_mm_hr": 0.0,
+      "current_mm_hr": 0.1,
       "rain_1h_mm": 0.3,
       "rain_6h_mm": 4.4,
-      "rain_24h_mm": 10.1,
-      "rain_72h_mm": 17.8
+      "rain_24h_mm": 11.0,
+      "rain_72h_mm": 19.8
     },
     "forecast": {
       "1h_mm": 0.5,
       "3h_mm": 1.5,
-      "6h_mm": 7.5,
-      "12h_mm": 8.2,
-      "24h_mm": 10.2,
-      "48h_mm": 12.1,
+      "6h_mm": 4.3,
+      "12h_mm": 4.6,
+      "24h_mm": 10.7,
+      "48h_mm": 13.1,
       "hourly_trend": [
         0.3,
         0.5,
@@ -28,61 +28,61 @@
         0.4,
         1.2,
         1.4,
-        3.4,
         0.2,
+        0.0,
+        0.0,
         0.1,
         0.1,
         0.1,
-        0.1,
-        0.1,
-        0.1,
-        0.9,
+        0.0,
+        0.0,
+        0.0,
+        0.8,
         0.2,
-        0.3,
         0.0,
         0.0,
         0.0,
         0.0,
-        0.0,
-        0.0,
+        3.1,
+        1.9,
         0.1
       ]
     },
     "atmosphere": {
-      "temperature_c": 26.9,
-      "humidity_pct": 71.0,
-      "pressure_hpa": 940.2,
-      "wind_kmh": 5.1,
-      "cloud_pct": 22.0
+      "temperature_c": 26.1,
+      "humidity_pct": 89.0,
+      "pressure_hpa": 935.8,
+      "wind_kmh": 2.5,
+      "cloud_pct": 16.0
     },
     "derived_pahad": {
-      "antecedent_rainfall": 17.8,
-      "api_3d": 16.05,
-      "api_7d": 22.14,
-      "api_30d": 26.67,
+      "antecedent_rainfall": 19.8,
+      "api_3d": 17.8,
+      "api_7d": 24.76,
+      "api_30d": 29.94,
       "rainfall_intensity_duration_state": "NORMAL_EQUILIBRIUM",
       "rainfall_threshold_status": {
         "id_threshold_mm_hr": 1.828,
         "ed_threshold_mm": 43.872,
-        "intensity_mm_hr": 0.42083333333333334,
+        "intensity_mm_hr": 0.1,
         "duration_hours": 24.0,
-        "exceedance_ratio": 0.23,
+        "exceedance_ratio": 0.055,
         "threshold_exceeded": false,
         "state": "NORMAL_EQUILIBRIUM"
       },
-      "forecast_rainfall_loading": 0.085
+      "forecast_rainfall_loading": 0.089
     },
     "source": "Open-Meteo Global Forecasting",
     "provenance": "LIVE",
-    "last_successful_fetch": "2026-09-13T05:30:20.680300+00:00",
+    "last_successful_fetch": "2026-09-13T11:01:18.457303+00:00",
     "data_age_seconds": 0.0
   },
-  "fetched_at": 1789277421.4962301,
+  "fetched_at": 1789297280.775447,
   "ttl": 900,
   "meta": {
     "source": "Open-Meteo Global Forecasting",
     "provenance": "[LIVE]",
-    "stored_at": "2026-09-13T05:30:21Z",
+    "stored_at": "2026-09-13T11:01:20Z",
     "ttl": 900
   }
 }

@@ -25,6 +25,7 @@ Problem Statement: SIH 26001
 from __future__ import annotations
 
 import os
+import time
 import logging
 from typing import Optional
 from flask import Blueprint, jsonify, request, render_template
@@ -323,6 +324,213 @@ def reset_demo_alerts():
         "message": f"Cleared {count} demonstration alerts.",
         "remaining_alerts": len(NOTIFICATION_ORCHESTRATOR._alerts)
     }), 200
+
+
+# ---------------------------------------------------------------------------
+# 6. Phase 10J: Reliable Multi-Channel Demo & Email/SMS Verification APIs
+# ---------------------------------------------------------------------------
+# Simple In-Memory Rate Limiter (CP14)
+DEMO_RATE_LIMITS: Dict[str, List[float]] = {}
+RATE_LIMIT_MAX_PER_MINUTE = 20
+
+def check_demo_rate_limit(client_ip: str) -> bool:
+    now = time.time()
+    timestamps = DEMO_RATE_LIMITS.setdefault(client_ip, [])
+    # Filter out timestamps older than 60 seconds
+    timestamps = [t for t in timestamps if now - t < 60.0]
+    DEMO_RATE_LIMITS[client_ip] = timestamps
+    if len(timestamps) >= RATE_LIMIT_MAX_PER_MINUTE:
+        return False
+    timestamps.append(now)
+    return True
+
+
+@notifications_bp.route("/api/notifications/demo/send-test", methods=["POST"])
+def send_test_notification():
+    """
+    POST /api/notifications/demo/send-test
+    Input:
+      recipient: email address or telephone number
+      email: optional explicit email
+      phone: optional explicit phone
+      channel: 'AUTO' | 'EMAIL' | 'SMS'
+      recipient_name: optional
+      language: 'en' | 'hi' | 'ne' | 'as' | 'bh' | 'lp'
+      alert_type: 'TEST_ALERT' | ...
+      corridor: optional corridor string
+      scenario: optional scenario ID
+    """
+    client_ip = request.remote_addr or "127.0.0.1"
+    if not check_demo_rate_limit(client_ip):
+        return jsonify({
+            "success": False,
+            "status": "RATE_LIMITED",
+            "error": "Rate limit exceeded. Maximum 20 demo dispatches per minute."
+        }), 429
+
+    try:
+        from services.unified_notification_service import UNIFIED_NOTIFICATION_SERVICE
+        body = request.get_json(force=True, silent=True) or {}
+        recipient = body.get("recipient")
+        email = body.get("email") or (recipient if recipient and "@" in str(recipient) else None)
+        phone = body.get("phone") or (recipient if recipient and "@" not in str(recipient) else None)
+        channel = body.get("channel", "AUTO")
+        recipient_name = body.get("recipient_name")
+        language = body.get("language", "en")
+        alert_type = body.get("alert_type", "TEST_ALERT")
+        corridor = body.get("corridor") or body.get("scenario") or "NH-10 (Sikkim Lifeline KM 48)"
+
+        # If both email and phone provided, run dual channel dispatch
+        if email and phone:
+            result = UNIFIED_NOTIFICATION_SERVICE.dispatch_dual_test_notification(
+                email_address=email,
+                phone_number=phone,
+                recipient_name=recipient_name,
+                language=language,
+                scenario_id=corridor,
+                actor="EOC_WEB_DEMO_OPERATOR"
+            )
+            return jsonify(result), 200 if result.get("success", False) else 400
+
+        # Fallback to single channel auto-detection
+        target_recip = recipient or email or phone
+        if not target_recip:
+            return jsonify({
+                "success": False,
+                "status": "FAILED",
+                "error": "Missing recipient. Enter an email address, telephone number, or both."
+            }), 400
+
+        result = UNIFIED_NOTIFICATION_SERVICE.dispatch_test_notification(
+            recipient=target_recip,
+            channel=channel,
+            recipient_name=recipient_name,
+            language=language,
+            alert_type=alert_type,
+            corridor=corridor,
+            actor="EOC_WEB_DEMO_OPERATOR"
+        )
+
+        status_code = 200 if result.get("success", False) else 400
+        return jsonify(result), status_code
+
+    except Exception as exc:
+        logger.error(f"[Notifications] Error in send_test_notification: {exc}")
+        return jsonify({
+            "success": False,
+            "status": "FAILED",
+            "error": str(exc)
+        }), 500
+
+
+@notifications_bp.route("/api/notifications/demo/run-scenario-and-send", methods=["POST"])
+def run_scenario_and_send():
+    """
+    POST /api/notifications/demo/run-scenario-and-send
+    CP02 & CP03: Executes scenario and queues dispatches to BOTH Email and SMS independently.
+    Input:
+      email: email address
+      phone: phone number
+      recipient_name: optional
+      language: 'en' | 'hi' | 'ne' | 'as' | 'bh' | 'lp'
+      scenario: 'ML-SONAPUR-01' | 'SK-NH10-KM48' | 'MZ-HUNTHAR-01' | 'MN-TUPUL-01'
+      idempotency_key: optional key
+    """
+    client_ip = request.remote_addr or "127.0.0.1"
+    if not check_demo_rate_limit(client_ip):
+        return jsonify({
+            "success": False,
+            "status": "RATE_LIMITED",
+            "error": "Rate limit exceeded. Maximum 20 demo dispatches per minute."
+        }), 429
+
+    try:
+        from services.unified_notification_service import UNIFIED_NOTIFICATION_SERVICE
+        body = request.get_json(force=True, silent=True) or {}
+        email = body.get("email")
+        phone = body.get("phone")
+        recipient_name = body.get("recipient_name")
+        language = body.get("language", "en")
+        scenario = body.get("scenario", "ML-SONAPUR-01")
+        idempotency_key = body.get("idempotency_key")
+        force_real_email = bool(body.get("force_real_email", False))
+        force_real_sms = bool(body.get("force_real_sms", False))
+
+        if not email and not phone:
+            return jsonify({
+                "success": False,
+                "status": "FAILED",
+                "error": "At least one recipient (Email or Phone) is required to run scenario and send."
+            }), 400
+
+        result = UNIFIED_NOTIFICATION_SERVICE.dispatch_dual_test_notification(
+            email_address=email,
+            phone_number=phone,
+            recipient_name=recipient_name,
+            language=language,
+            scenario_id=scenario,
+            actor="EOC_JUDGE_DEMO_OPERATOR",
+            is_test=True,
+            idempotency_key=idempotency_key,
+            force_real_email=force_real_email,
+            force_real_sms=force_real_sms
+        )
+
+        status_code = 200 if result.get("success", False) else 400
+        return jsonify(result), status_code
+
+    except Exception as exc:
+        logger.error(f"[Notifications] Error in run_scenario_and_send: {exc}")
+        return jsonify({
+            "success": False,
+            "status": "FAILED",
+            "error": str(exc)
+        }), 500
+
+
+@notifications_bp.route("/api/notifications/demo/journal", methods=["GET"])
+def get_demo_journal():
+    """
+    GET /api/notifications/demo/journal
+    Returns recent tamper-evident audit journal records.
+    """
+    try:
+        from services.unified_notification_service import UNIFIED_NOTIFICATION_SERVICE
+        limit = int(request.args.get("limit", 25))
+        incident_id = request.args.get("incident_id")
+        entries = UNIFIED_NOTIFICATION_SERVICE.journal.list_entries(limit=limit, incident_id=incident_id)
+        return jsonify({
+            "status": "SUCCESS",
+            "count": len(entries),
+            "journal": entries
+        }), 200
+    except Exception as exc:
+        logger.error(f"[Notifications] Error fetching journal: {exc}")
+        return jsonify({
+            "status": "ERROR",
+            "message": str(exc)
+        }), 500
+
+
+@notifications_bp.route("/api/notifications/providers/status", methods=["GET"])
+def get_providers_status():
+    """
+    GET /api/notifications/providers/status
+    Reports status of all 7 alert channels: SMS, Email, Push, CAP, Cell Broadcast, Siren.
+    """
+    try:
+        from services.unified_notification_service import UNIFIED_NOTIFICATION_SERVICE
+        status_data = UNIFIED_NOTIFICATION_SERVICE.get_channels_status()
+        return jsonify({
+            "status": "SUCCESS",
+            "data": status_data
+        }), 200
+    except Exception as exc:
+        logger.error(f"[Notifications] Error fetching providers status: {exc}")
+        return jsonify({
+            "status": "ERROR",
+            "message": str(exc)
+        }), 500
 
 
 def register_notification_routes(flask_app) -> None:

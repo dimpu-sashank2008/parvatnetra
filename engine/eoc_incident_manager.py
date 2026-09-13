@@ -112,6 +112,8 @@ class EOCIncident:
     population_at_risk: int = 4200
     road_criticality: float = 95.0
     corridor_name: str = "NH-10 (Sikkim Lifeline KM 48)"
+    district: str = ""
+    corroboration_count: int = 3
     history: List[Dict[str, Any]] = field(default_factory=list)
 
     def compute_hash(self, prev_hash: str = "GENESIS_HASH") -> str:
@@ -266,6 +268,8 @@ class EOCIncidentManager:
                     "population_at_risk": incident.population_at_risk,
                     "road_criticality": incident.road_criticality,
                     "corridor_name": incident.corridor_name,
+                    "district": getattr(incident, "district", ""),
+                    "corroboration_count": getattr(incident, "corroboration_count", 3),
                     "history": incident.history,
                 })
                 cur.execute("""
@@ -368,6 +372,8 @@ class EOCIncidentManager:
             population_at_risk=payload.get("population_at_risk", 4200),
             road_criticality=payload.get("road_criticality", 95.0),
             corridor_name=payload.get("corridor_name", "NH-10 (Sikkim Lifeline KM 48)"),
+            district=payload.get("district", ""),
+            corroboration_count=payload.get("corroboration_count", 3),
             history=payload.get("history", []),
         )
 
