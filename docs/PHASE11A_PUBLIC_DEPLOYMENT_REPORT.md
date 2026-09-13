@@ -1,4 +1,4 @@
-﻿# PARVAT NETRA / PAHAD AI — PHASE 11A PUBLIC DEPLOYMENT REPORT
+# PARVAT NETRA / PAHAD AI — PHASE 11A PUBLIC DEPLOYMENT REPORT
 **Platform:** PARVAT NETRA — NER Sentinel  
 **Engine:** PAHAD AI (Predictive AI for Hillslope Analysis & Disaster-response)  
 **Primary Staging Platform:** Render (Docker Web Service)  
@@ -17,12 +17,11 @@ Phase 11A establishes the public staging deployment foundation for the PARVAT NE
 
 | Service / Purpose | Live Public HTTPS URL | Status | Response |
 |---|---|---|---|
-| **Primary Live Application** | https://parvat-netra.onrender.com | **LIVE** | HTTP 200 OK |
-| **Production Health Probe (CP04)** | https://parvat-netra.onrender.com/health | **LIVE** | status: UP, database: CONNECTED |
-| **50m Geofence Evaluator (CP21)** | https://parvat-netra.onrender.com/demo | **LIVE** | HTTP 200 OK (Interactive Sandbox) |
-| **PAHAD Event Model Status** | https://parvat-netra.onrender.com/api/pahad/event-model/status | **LIVE** | HTTP 200 OK |
-| **PAHAD Multimodal Event Predictor** | https://parvat-netra.onrender.com/api/pahad/predict-event | **LIVE** | HTTP 200 OK (Calibrated Probabilities) |
-| **Secondary Edge Deployment** | https://parvatnetra.vercel.app | **LIVE** | HTTP 200 OK |
+| **Primary Live Application (Render)** | https://parvat-netra.onrender.com | **LIVE** | HTTP 200 OK |
+| **Edge Live Application (Vercel)** | https://silly-fermi.vercel.app | **LIVE** | HTTP 200 OK |
+| **Vercel Production Health Probe** | https://silly-fermi.vercel.app/health | **LIVE** | status: UP, database: CONNECTED |
+| **50m Geofence Evaluator (Vercel)** | https://silly-fermi.vercel.app/demo | **LIVE** | HTTP 200 OK (Interactive Sandbox) |
+| **PAHAD Highest Risk Corridor (Vercel)** | https://silly-fermi.vercel.app/api/pahad/highest-risk-corridor | **LIVE** | HTTP 200 OK (26 Corridors) |
 
 ---
 
