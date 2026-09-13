@@ -1,0 +1,88 @@
+{
+  "data": {
+    "timestamp": "2026-09-13T03:35:45.327755+00:00",
+    "location": {
+      "lat": 28.067,
+      "lon": 95.326,
+      "district": "East Siang",
+      "state": "Arunachal Pradesh"
+    },
+    "rainfall": {
+      "current_mm_hr": 0.0,
+      "rain_1h_mm": 0.0,
+      "rain_6h_mm": 0.5,
+      "rain_24h_mm": 1.1,
+      "rain_72h_mm": 10.1
+    },
+    "forecast": {
+      "1h_mm": 0.3,
+      "3h_mm": 0.5,
+      "6h_mm": 0.5,
+      "12h_mm": 0.8,
+      "24h_mm": 1.1,
+      "48h_mm": 2.7,
+      "hourly_trend": [
+        0.0,
+        0.3,
+        0.1,
+        0.1,
+        0.0,
+        0.0,
+        0.0,
+        0.1,
+        0.1,
+        0.1,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.2,
+        0.1,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "atmosphere": {
+      "temperature_c": 28.9,
+      "humidity_pct": 77.0,
+      "pressure_hpa": 994.5,
+      "wind_kmh": 3.2,
+      "cloud_pct": 12.0
+    },
+    "derived_pahad": {
+      "antecedent_rainfall": 10.1,
+      "api_3d": 8.06,
+      "api_7d": 15.17,
+      "api_30d": 20.47,
+      "rainfall_intensity_duration_state": "NORMAL_EQUILIBRIUM",
+      "rainfall_threshold_status": {
+        "id_threshold_mm_hr": 1.828,
+        "ed_threshold_mm": 43.872,
+        "intensity_mm_hr": 0.04583333333333334,
+        "duration_hours": 24.0,
+        "exceedance_ratio": 0.025,
+        "threshold_exceeded": false,
+        "state": "NORMAL_EQUILIBRIUM"
+      },
+      "forecast_rainfall_loading": 0.009
+    },
+    "source": "Open-Meteo Global Forecasting",
+    "provenance": "LIVE",
+    "last_successful_fetch": "2026-09-13T03:35:45.327755+00:00",
+    "data_age_seconds": 0.0
+  },
+  "fetched_at": 1789270547.6561856,
+  "ttl": 900,
+  "meta": {
+    "source": "Open-Meteo Global Forecasting",
+    "provenance": "[LIVE]",
+    "stored_at": "2026-09-13T03:35:47Z",
+    "ttl": 900
+  }
+}

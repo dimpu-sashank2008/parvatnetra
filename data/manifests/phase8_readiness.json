@@ -1,0 +1,81 @@
+{
+  "phase": "PHASE_8_EOC_OPERATIONS_DISPATCH_INTEGRATION_AND_STATUTORY_AUTHORITY_HANDOVER",
+  "audit_timestamp": "2026-09-11T10:10:00Z",
+  "platform": "PARVAT NETRA",
+  "ai_engine": "PAHAD AI",
+  "pilot_corridor": "CORR-NH10-SIKKIM-KM48",
+  "final_gate": "EOC_OPERATIONAL_VERIFIED",
+  "safety_invariants": {
+    "ENABLE_PUBLIC_DISPATCH": 0,
+    "SIREN_DRY_RUN": 1,
+    "AUTHORITY_GATE": "ENFORCED_FAIL_CLOSED",
+    "CORROBORATION_GATE": "2_OF_3_MANDATORY",
+    "ALL_CLEAR_GATE": "TRIPLE_GATE_MANDATORY",
+    "PHYSICAL_SENSOR_STATUS": "PHYSICAL_DEPLOYMENT_PENDING"
+  },
+  "readiness_tiers": {
+    "SOFTWARE_VERIFIED": {
+      "status": "YES",
+      "basis": "175 / 175 automated test suite pass rate across 41 files in 41.91s. Zero failures, zero skips."
+    },
+    "SHADOW_READY": {
+      "status": "YES",
+      "basis": "Operational in parallel with live EOC watchstands. Zero risk of autonomous public false alarms due to fail-closed dispatch lock."
+    },
+    "CONTROLLED_SUPERVISED_READY": {
+      "status": "YES",
+      "basis": "Verified workflow for EOC Operators and District Magistrates with two-stage authority review, digital tokens, and audit hash chaining."
+    },
+    "PHYSICAL_FIELD_PILOT_READY": {
+      "status": "NO",
+      "reason": "PENDING: Physical borehole drilling, inclinometers, and LoRaWAN hardware along NH-10 KM48 are pending physical installation."
+    },
+    "AUTONOMOUS_PUBLIC_ALERT_READY": {
+      "status": "NO",
+      "reason": "STRICTLY PROHIBITED: Autonomous public dispatch violates national disaster doctrine. Mandatory 2-of-3 corroboration and statutory human signoff enforced."
+    }
+  },
+  "forensic_test_verification": {
+    "unified_pytest_run": {
+      "total_test_files": 41,
+      "file_breakdown": {
+        "phase8": 15,
+        "phase7h": 9,
+        "phase7g": 9,
+        "phase7f": 6,
+        "routing_chaos": 2
+      },
+      "total_tests_passed": 175,
+      "total_tests_failed": 0,
+      "total_tests_skipped": 0,
+      "duration_seconds": 41.91,
+      "pass_rate_percent": 100.0
+    }
+  },
+  "forensic_measured_latencies_ms": {
+    "incident_creation": 7.72,
+    "geofence_calculation": 1.69,
+    "notification_dispatch": 13.12,
+    "command_brief_generation": 71.92,
+    "eoc_dashboard_rest_api": 70.13
+  },
+  "channel_provenance_verification": {
+    "web_push": "[DEV_SAFE_TEST]",
+    "mobile_push": "[SIMULATED] (PUSH_TEST_BLOCKED)",
+    "sms": "[SIMULATED SMS]",
+    "cap": "[TEST / DRY_RUN]",
+    "siren": "[SIREN_DRY_RUN_LOCKED]"
+  },
+  "blocking_items": {
+    "P0": [],
+    "P1": [
+      "Physical borehole drilling and sensor transducer installation at NH-10 KM48 (29th Mile)",
+      "Institutional credentials and MOUs for live IMD and NCS telemetry APIs",
+      "National CDAC CAP / SMS Gateway official production credentials"
+    ],
+    "P2": [
+      "Host compilation of Flutter mobile application (Flutter SDK not installed on host)",
+      "Multi-station acoustic siren hardware installation along corridor road segments"
+    ]
+  }
+}

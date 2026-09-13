@@ -1,0 +1,25 @@
+{
+  "model_name": "PAHAD-FoS",
+  "version": "2.0.0-phase2a",
+  "algorithm": "GradientBoostingRegressor",
+  "trained_at": "2026-09-09T05:12:59.047675+00:00",
+  "features": [
+    "rainfall_24h",
+    "pore_water_pressure",
+    "river_scour_tau_b"
+  ],
+  "dataset_provenance": "[SIMULATED] GSI Sikkim Colluvium & Teesta Basin Mohr-Coulomb Calibration",
+  "validation": {
+    "r2_score": 0.9985,
+    "cv_5fold_r2": 0.9984,
+    "rmse": 0.0136,
+    "mae": 0.0104,
+    "train_samples": 1600,
+    "test_samples": 400
+  },
+  "feature_importances": {
+    "rainfall_24h": 0.1014,
+    "pore_water_pressure": 0.832,
+    "river_scour_tau_b": 0.0665
+  }
+}

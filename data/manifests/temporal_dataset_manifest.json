@@ -1,0 +1,69 @@
+{
+  "build_timestamp": "2026-09-09T18:08:08.204391+00:00",
+  "seed": 42,
+  "dataset_hash_sha256": "a3b1bad4833945f80dc095194b9e7e0b15ae0fb5cab28664bb821621b8624b87",
+  "source_file": "C:\\Users\\dimpu\\Downloads\\PARVAT_NETRA_PAHAD_AI_FIRST\\silly-fermi\\data\\raw\\historical_landslides_ner.csv",
+  "total_records": 21,
+  "event_records": 17,
+  "control_records": 4,
+  "rejected_events": [],
+  "train_records": 12,
+  "val_records": 4,
+  "test_records": 5,
+  "positive_train": 8,
+  "negative_train": 4,
+  "states_covered": [
+    "Arunachal Pradesh",
+    "Assam",
+    "Manipur",
+    "Meghalaya",
+    "Mizoram",
+    "Nagaland",
+    "Sikkim",
+    "Tripura"
+  ],
+  "date_range": {
+    "earliest": "2022-05-16T09:00:00Z",
+    "latest": "2024-10-04T06:00:00Z"
+  },
+  "feature_columns": [
+    "event_id",
+    "timestamp",
+    "latitude",
+    "longitude",
+    "state",
+    "district",
+    "sector_id",
+    "geographic_group",
+    "event_label",
+    "rainfall_24h",
+    "soil_moisture",
+    "pore_pressure_kpa",
+    "tilt_deg",
+    "ground_displacement_mm",
+    "slope_deg",
+    "elevation_m",
+    "fos",
+    "seismic_magnitude",
+    "ndvi_anomaly",
+    "source",
+    "source_confidence",
+    "provenance"
+  ],
+  "provenance_strategy": {
+    "events": "[HISTORICAL] — all from GSI/NRSC/SDMA documented records",
+    "controls": "[MODELLED] — dry-season windows from same geographic groups, FoS>=1.20",
+    "fos": "[MODELLED] — computed via infinite slope Mohr-Coulomb formula",
+    "seismic_magnitude": "[MISSING] — historical event seismicity not recovered",
+    "ndvi_anomaly": "[MISSING] — historical NDVI records not available"
+  },
+  "model_limitation": "Dataset: 17 real events, 4 modelled controls. Total N=21 — significantly below threshold for robust NER-wide classifier (N>200). Model status remains: TRAINED_LIMITED_DATA.",
+  "output_files": {
+    "events": "C:\\Users\\dimpu\\Downloads\\PARVAT_NETRA_PAHAD_AI_FIRST\\silly-fermi\\data\\processed\\temporal_events.csv",
+    "controls": "C:\\Users\\dimpu\\Downloads\\PARVAT_NETRA_PAHAD_AI_FIRST\\silly-fermi\\data\\processed\\temporal_controls.csv",
+    "full": "C:\\Users\\dimpu\\Downloads\\PARVAT_NETRA_PAHAD_AI_FIRST\\silly-fermi\\data\\processed\\temporal_full.csv",
+    "train": "C:\\Users\\dimpu\\Downloads\\PARVAT_NETRA_PAHAD_AI_FIRST\\silly-fermi\\data\\processed\\temporal_train.csv",
+    "val": "C:\\Users\\dimpu\\Downloads\\PARVAT_NETRA_PAHAD_AI_FIRST\\silly-fermi\\data\\processed\\temporal_val.csv",
+    "test": "C:\\Users\\dimpu\\Downloads\\PARVAT_NETRA_PAHAD_AI_FIRST\\silly-fermi\\data\\processed\\temporal_test.csv"
+  }
+}

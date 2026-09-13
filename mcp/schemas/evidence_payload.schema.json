@@ -1,0 +1,120 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MultimodalEvidencePayload",
+  "description": "Normalized data contract for multimodal evidence fusion in PARVAT NETRA.",
+  "type": "object",
+  "required": [
+    "incident_id",
+    "location",
+    "timestamp",
+    "data_mode",
+    "modalities"
+  ],
+  "properties": {
+    "incident_id": { "type": "string", "example": "A-17" },
+    "location": {
+      "type": "object",
+      "required": ["latitude", "longitude", "zone_name"],
+      "properties": {
+        "latitude": { "type": "number", "minimum": -90, "maximum": 90 },
+        "longitude": { "type": "number", "minimum": -180, "maximum": 180 },
+        "elevation_meters": { "type": "number" },
+        "zone_name": { "type": "string" },
+        "highway_corridor": { "type": "string" }
+      }
+    },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "data_mode": {
+      "type": "string",
+      "enum": ["LIVE", "SIMULATED", "DEMO", "HISTORICAL"]
+    },
+    "modalities": {
+      "type": "object",
+      "required": ["terrain", "rainfall", "geotechnical"],
+      "properties": {
+        "terrain": {
+          "type": "object",
+          "properties": {
+            "slope_degrees": { "type": "number" },
+            "aspect": { "type": "string" },
+            "geology_formation": { "type": "string" },
+            "soil_type": { "type": "string" }
+          }
+        },
+        "rainfall": {
+          "type": "object",
+          "properties": {
+            "current_hourly_mm": { "type": "number" },
+            "accumulated_24h_mm": { "type": "number" },
+            "accumulated_72h_mm": { "type": "number" },
+            "forecast_next_24h_mm": { "type": "number" },
+            "threshold_exceeded": { "type": "boolean" }
+          }
+        },
+        "geotechnical": {
+          "type": "object",
+          "properties": {
+            "pore_water_pressure_kpa": { "type": "number" },
+            "soil_moisture_percent": { "type": "number" },
+            "tilt_degrees": { "type": "number" },
+            "vibration_rms_g": { "type": "number" },
+            "inclinometer_displacement_mm": { "type": "number" }
+          }
+        },
+        "earth_observation": {
+          "type": "object",
+          "properties": {
+            "insar_deformation_rate_mm_year": { "type": "number" },
+            "ndvi_vegetation_loss_percent": { "type": "number" },
+            "sentinel_acquisition_date": { "type": "string" }
+          }
+        },
+        "computer_vision": {
+          "type": "object",
+          "properties": {
+            "camera_anomaly_detected": { "type": "boolean" },
+            "surface_cracks_detected": { "type": "boolean" },
+            "mudflow_detected": { "type": "boolean" },
+            "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+          }
+        },
+        "physics_engine": {
+          "type": "object",
+          "properties": {
+            "factor_of_safety": { "type": "number" },
+            "critical_threshold": { "type": "number", "default": 1.0 },
+            "equilibrium_state": { "type": "string", "enum": ["STABLE", "MARGINAL", "UNSTABLE"] }
+          }
+        },
+        "citizen_field_intelligence": {
+          "type": "object",
+          "properties": {
+            "verified_reports_count": { "type": "integer" },
+            "debris_on_road": { "type": "boolean" },
+            "water_spring_emergence": { "type": "boolean" }
+          }
+        }
+      }
+    },
+    "synthesis": {
+      "type": "object",
+      "properties": {
+        "fused_risk_score": { "type": "number", "minimum": 0, "maximum": 100 },
+        "threat_level": { "type": "string", "enum": ["WATCH", "ALERT", "WARNING", "EVACUATE"] },
+        "primary_trigger": { "type": "string" },
+        "confidence_level": { "type": "number", "minimum": 0, "maximum": 1 },
+        "explainability_breakdown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "modality": { "type": "string" },
+              "contribution_percent": { "type": "number" },
+              "observation": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

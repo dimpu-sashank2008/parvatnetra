@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MCPClientConfig",
+  "type": "object",
+  "required": ["mcpServers"],
+  "properties": {
+    "mcpServers": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "command": { "type": "string" },
+          "args": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "env": {
+            "type": "object",
+            "additionalProperties": { "type": "string" }
+          },
+          "serverUrl": { "type": "string", "format": "uri" },
+          "authProviderType": { "type": "string" }
+        },
+        "anyOf": [
+          { "required": ["command"] },
+          { "required": ["serverUrl"] }
+        ]
+      }
+    }
+  }
+}

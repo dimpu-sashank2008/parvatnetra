@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-[#070B10]">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PARVAT NETRA — Intelligent Notification Center & Alert Policy</title>
+    <link rel="icon" type="image/png" href="/static/images/parvat_netra_emblem.png">
+
+    <!-- Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Inter"', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace']
+                    },
+                    colors: {
+                        obsidian: '#070B10',
+                        obsidianLight: '#0B132B',
+                        slateCard: '#0F172A',
+                        borderMuted: '#1E293B',
+                        accentCyan: '#2563EB',
+                        accentAmber: '#F59E0B',
+                        accentRed: '#EF4444',
+                        accentGreen: '#10B981'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="/static/css/parvat_theme.css">
+    <script src="/static/js/theme.js"></script>
+
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #070B10; color: #F1F5F9; }
+        .font-mono { font-family: 'JetBrains Mono', monospace !important; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #070B10; }
+        ::-webkit-scrollbar-thumb { background: #1E293B; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #334155; }
+        .badge-live { background-color: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.4); color: #34D399; }
+        .badge-dryrun { background-color: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.4); color: #FBBF24; }
+        .badge-extreme { background-color: rgba(220, 38, 38, 0.2); border: 1px solid rgba(220, 38, 38, 0.6); color: #F87171; }
+        .badge-veryhigh { background-color: rgba(234, 88, 12, 0.2); border: 1px solid rgba(234, 88, 12, 0.6); color: #FB923C; }
+        .badge-high { background-color: rgba(249, 115, 22, 0.15); border: 1px solid rgba(249, 115, 22, 0.4); color: #FDBA74; }
+        .badge-watch { background-color: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.4); color: #FCD34D; }
+        .badge-low { background-color: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.4); color: #6EE7B7; }
+    </style>
+</head>
+<body class="h-full flex flex-col overflow-y-auto">
+
+    <!-- INSTITUTIONAL NAVIGATION HEADER -->
+    <header class="h-14 bg-[#0B132B] border-b border-borderMuted px-4 flex items-center justify-between shrink-0 z-30 sticky top-0">
+        <div class="flex items-center space-x-3">
+            <a href="/" class="flex items-center space-x-2 text-slate-300 hover:text-white transition">
+                <img src="/static/images/parvat_netra_emblem.png" alt="Emblem" class="w-8 h-8 object-contain">
+                <div>
+                    <span class="font-bold tracking-wider text-sm block leading-none">PARVAT NETRA</span>
+                    <span class="text-[10px] text-sky-300 font-mono tracking-wider block">PAHAD AI DISASTER INTELLIGENCE</span>
+                </div>
+            </a>
+            <div class="h-5 w-px bg-slate-700 hidden sm:block"></div>
+            <div class="hidden sm:block">
+                <h1 class="text-xs font-semibold text-slate-100 uppercase tracking-wider">NOTIFICATION CENTER & ALERT DISPATCH</h1>
+                <p class="text-[10px] text-slate-400 leading-tight">15 km Geofence • Multi-Channel Push/SMS/CAP • Authority Authorization Gate</p>
+            </div>
+        </div>
+
+        <!-- Navigation Links -->
+        <div class="flex items-center space-x-2">
+            <a href="/" class="px-2.5 py-1 text-xs rounded border border-slate-700 hover:border-slate-500 text-slate-300 transition">
+                Dashboard
+            </a>
+            <a href="/climate-map" class="px-2.5 py-1 text-xs rounded border border-slate-700 hover:border-slate-500 text-slate-300 transition hidden md:inline-block">
+                Climate Map
+            </a>
+            <a href="/seismic" class="px-2.5 py-1 text-xs rounded border border-slate-700 hover:border-slate-500 text-slate-300 transition hidden md:inline-block">
+                Seismic
+            </a>
+            <a href="/terrain-3d" class="px-2.5 py-1 text-xs rounded border border-slate-700 hover:border-slate-500 text-slate-300 transition hidden md:inline-block">
+                3D Terrain
+            </a>
+            <a href="/edge-network" class="px-2.5 py-1 text-xs rounded border border-slate-700 hover:border-slate-500 text-slate-300 transition">
+                Edge Network
+            </a>
+            <a href="/notifications" class="px-2.5 py-1 text-xs rounded bg-sky-900/60 border border-sky-500 text-sky-200 font-medium transition">
+                Notifications
+            </a>
+            <button id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Switch color theme" title="Switch color theme" class="px-2.5 py-1 bg-[#12213D] border border-blue-300/30 rounded text-sky-100 hover:bg-[#1A3158] hover:text-white transition flex items-center gap-1.5 text-xs font-semibold shadow-xs active:scale-95 cursor-pointer">
+                <span id="theme-icon" class="flex items-center justify-center">
+                    <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                </span>
+                <span id="theme-text" class="text-[11px] hidden sm:inline">Light Mode</span>
+            </button>
+            <div class="h-4 w-px bg-slate-700"></div>
+            <span class="px-2 py-0.5 text-[10px] font-mono rounded {% if dry_run %}badge-dryrun{% else %}badge-live{% endif %}">
+                {% if dry_run %}[DRY RUN] DISPATCH SIMULATED{% else %}[LIVE] TELECOM ACTIVE{% endif %}
+            </span>
+        </div>
+    </header>
+
+    <!-- MAIN NOTIFICATION WORKSPACE -->
+    <main class="flex-1 p-4 lg:p-6 space-y-6 max-w-7xl mx-auto w-full">
+
+        <!-- NOTICE BANNER: SAFETY POLICY INVARIANT -->
+        <div class="bg-slate-900/90 border border-amber-500/40 rounded-lg p-3.5 flex items-start justify-between text-xs">
+            <div class="flex items-start space-x-3">
+                <div class="p-1.5 rounded bg-amber-500/10 border border-amber-500/30 text-amber-400 mt-0.5 shrink-0">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-amber-200 tracking-wide">PAHAD AI Constitutional Safety Protocol: Multi-Tier Alert Escalation</h4>
+                    <p class="text-slate-300 text-[11px] mt-0.5 leading-relaxed">
+                        Public emergency broadcasts are never automatically triggered by raw AI model predictions.
+                        Escalations to <span class="font-semibold text-rose-300">EXTREME</span> require independent 2-of-3 signal corroboration
+                        (Physical Mohr-Coulomb FoS &le; 1.05 + Regional I-D Rainfall Threshold + ML Event Probability) followed by formal authority authorization.
+                    </p>
+                </div>
+            </div>
+            <div class="shrink-0 ml-4 flex items-center space-x-2">
+                <button onclick="triggerDemoScenario()" class="px-2.5 py-1 text-[11px] font-semibold rounded bg-rose-950 border border-rose-600 text-rose-200 hover:bg-rose-900 transition">
+                    Run Demo Surge
+                </button>
+                <button onclick="resetDemoAlerts()" class="px-2.5 py-1 text-[11px] font-medium rounded bg-slate-800 border border-slate-600 text-slate-300 hover:bg-slate-700 transition">
+                    Reset Demo
+                </button>
+            </div>
+        </div>
+
+        <!-- FILTER TABS BAR -->
+        <div class="flex items-center justify-between border-b border-borderMuted pb-3">
+            <div class="flex items-center space-x-2">
+                <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider mr-2">Filter Inbox:</span>
+                {% for st in ['ALL', 'ACTIVE', 'READY_FOR_AUTHORIZATION', 'AUTHORIZED', 'DISPATCHED', 'ACKNOWLEDGED', 'RESOLVED'] %}
+                <a href="/notifications?state={{ st }}" class="px-2.5 py-1 text-xs rounded {% if filter_state == st %}bg-sky-900/80 border border-sky-500 text-sky-200 font-semibold{% else %}bg-slate-800/60 border border-slate-700 text-slate-400 hover:text-slate-200{% endif %} transition">
+                    {{ st | replace('_', ' ') }}
+                </a>
+                {% endfor %}
+            </div>
+            <div class="text-xs text-slate-400 font-mono">
+                Active Alerts: <span class="text-sky-300 font-semibold">{{ alerts|length }}</span>
+            </div>
+        </div>
+
+        <!-- 2-COLUMN OPERATIONAL LAYOUT -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+            <!-- LEFT COLUMN: INBOX LIST (5 cols) -->
+            <div class="lg:col-span-5 space-y-3">
+                <div class="bg-slateCard border border-borderMuted rounded-lg p-3">
+                    <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2.5 flex items-center justify-between">
+                        <span>Emergency Alert Queue</span>
+                        <span class="text-[10px] text-slate-500 font-normal">Ordered by urgency</span>
+                    </h3>
+
+                    <div class="space-y-2 max-h-[640px] overflow-y-auto pr-1">
+                        {% for a in alerts %}
+                        <div onclick="window.location.href='/notifications?alert_id={{ a.alert_id }}&state={{ filter_state }}'"
+                             class="p-3 rounded-lg border cursor-pointer transition {% if selected_alert and selected_alert.alert_id == a.alert_id %}bg-slate-800/90 border-sky-500 shadow-md{% else %}bg-slate-900/60 border-slate-800 hover:border-slate-700{% endif %}">
+                            <div class="flex items-center justify-between mb-1.5">
+                                <div class="flex items-center space-x-2">
+                                    <span class="px-2 py-0.5 text-[10px] font-bold rounded
+                                        {% if a.alert_level == 'EXTREME' %}badge-extreme
+                                        {% elif a.alert_level == 'VERY_HIGH' %}badge-veryhigh
+                                        {% elif a.alert_level == 'HIGH' %}badge-high
+                                        {% elif a.alert_level == 'MODERATE' %}badge-watch
+                                        {% else %}badge-low{% endif %}">
+                                        {{ a.alert_level }}
+                                    </span>
+                                    <span class="text-xs font-semibold text-slate-200">{{ a.sector_id }}</span>
+                                </div>
+                                <span class="text-[10px] font-mono text-slate-400">{{ a.created_at[11:19] }} UTC</span>
+                            </div>
+
+                            <p class="text-xs text-slate-300 line-clamp-2 leading-relaxed mb-2">{{ a.why_this_alert }}</p>
+
+                            <div class="flex items-center justify-between text-[10px] text-slate-400 font-mono pt-1.5 border-t border-slate-800/80">
+                                <span>CRI: <strong class="text-amber-400">{{ a.cri }}</strong> | P: <strong class="text-sky-300">{{ (a.event_probability * 100)|round(0) }}%</strong></span>
+                                <span class="px-1.5 py-0.5 rounded bg-slate-800 text-slate-300 font-semibold">{{ a.lifecycle_state }}</span>
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="text-center py-12 text-xs text-slate-500">
+                            No emergency alerts matching filter criteria.
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN: SELECTED ALERT DETAIL & CONTROLS (7 cols) -->
+            <div class="lg:col-span-7 space-y-4">
+                {% if selected_alert %}
+                <!-- DETAIL PANEL -->
+                <div class="bg-slateCard border border-borderMuted rounded-lg p-5 space-y-5">
+
+                    <!-- Header & Status -->
+                    <div class="flex items-start justify-between border-b border-slate-800 pb-4">
+                        <div>
+                            <div class="flex items-center space-x-2 mb-1">
+                                <span class="text-base font-bold text-white tracking-wide">{{ selected_alert.alert_id }}</span>
+                                <span class="px-2 py-0.5 text-xs font-bold rounded
+                                    {% if selected_alert.alert_level == 'EXTREME' %}badge-extreme
+                                    {% elif selected_alert.alert_level == 'VERY_HIGH' %}badge-veryhigh
+                                    {% elif selected_alert.alert_level == 'HIGH' %}badge-high
+                                    {% else %}badge-watch{% endif %}">
+                                    {{ selected_alert.alert_level }} — {{ selected_alert.alert_level_name|upper }}
+                                </span>
+                                {% if selected_alert.is_demo %}
+                                <span class="px-1.5 py-0.5 text-[10px] font-mono rounded bg-purple-900/60 text-purple-300 border border-purple-500">[DEMO]</span>
+                                {% endif %}
+                            </div>
+                            <p class="text-xs text-slate-400">Target Hillslope: <strong class="text-slate-200">{{ selected_alert.sector_id }}</strong> • 15 km Advisory Zone</p>
+                        </div>
+
+                        <div class="text-right">
+                            <span class="text-[10px] uppercase tracking-wider text-slate-500 block">Lifecycle State</span>
+                            <span class="text-xs font-mono font-bold text-sky-300">{{ selected_alert.lifecycle_state }}</span>
+                        </div>
+                    </div>
+
+                    <!-- PAHAD Scientific Metrics Grid -->
+                    <div>
+                        <h4 class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-2">PAHAD AI Multi-Modal Evaluation</h4>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-mono">
+                            <div class="p-2.5 rounded bg-slate-900 border border-slate-800">
+                                <span class="text-[10px] text-slate-500 block">Composite Risk (CRI)</span>
+                                <span class="text-sm font-bold text-amber-400">{{ selected_alert.cri }} / 100</span>
+                            </div>
+                            <div class="p-2.5 rounded bg-slate-900 border border-slate-800">
+                                <span class="text-[10px] text-slate-500 block">Event Prob (24h)</span>
+                                <span class="text-sm font-bold text-sky-300">{{ (selected_alert.event_probability * 100)|round(1) }}%</span>
+                            </div>
+                            <div class="p-2.5 rounded bg-slate-900 border border-slate-800">
+                                <span class="text-[10px] text-slate-500 block">Mohr-Coulomb FoS</span>
+                                <span class="text-sm font-bold text-rose-400">{{ selected_alert.factor_of_safety }}</span>
+                            </div>
+                            <div class="p-2.5 rounded bg-slate-900 border border-slate-800">
+                                <span class="text-[10px] text-slate-500 block">Signal Agreement</span>
+                                <span class="text-sm font-bold text-emerald-400">{{ selected_alert.signal_agreement }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Why This Alert? (Explainability) -->
+                    <div class="p-3.5 rounded bg-slate-900/80 border border-slate-800 space-y-1.5">
+                        <span class="text-[10px] font-bold text-amber-400 uppercase tracking-wider">Explainability: Why This Alert?</span>
+                        <p class="text-xs text-slate-200 leading-relaxed">{{ selected_alert.why_this_alert }}</p>
+                        <div class="pt-2 flex flex-wrap gap-1.5">
+                            {% for drv in selected_alert.dominant_drivers %}
+                            <span class="px-2 py-0.5 text-[10px] rounded bg-slate-800 text-slate-300 border border-slate-700 font-mono">{{ drv }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- 15 km Impact Geofence Aggregates -->
+                    <div>
+                        <h4 class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-2">15 km Geofence Audience Summary (Zero-PII Aggregate)</h4>
+                        <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 text-xs font-mono">
+                            <div class="p-2 rounded bg-slate-900/60 border border-slate-800">
+                                <span class="text-[9px] text-slate-500 block">Total in Zone</span>
+                                <strong class="text-slate-200">{{ selected_alert.zone_aggregates.get('total_in_zone', 0) }}</strong>
+                            </div>
+                            <div class="p-2 rounded bg-slate-900/60 border border-slate-800">
+                                <span class="text-[9px] text-slate-500 block">Authorities</span>
+                                <strong class="text-sky-300">{{ selected_alert.zone_aggregates.get('authorities', 0) }}</strong>
+                            </div>
+                            <div class="p-2 rounded bg-slate-900/60 border border-slate-800">
+                                <span class="text-[9px] text-slate-500 block">Field Teams</span>
+                                <strong class="text-emerald-400">{{ selected_alert.zone_aggregates.get('field_teams', 0) }}</strong>
+                            </div>
+                            <div class="p-2 rounded bg-slate-900/60 border border-slate-800">
+                                <span class="text-[9px] text-slate-500 block">SMS Eligible</span>
+                                <strong class="text-amber-400">{{ selected_alert.zone_aggregates.get('sms_eligible', 0) }}</strong>
+                            </div>
+                            <div class="p-2 rounded bg-slate-900/60 border border-slate-800">
+                                <span class="text-[9px] text-slate-500 block">Push Eligible</span>
+                                <strong class="text-purple-400">{{ selected_alert.zone_aggregates.get('push_eligible', 0) }}</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Authority Controls -->
+                    <div class="p-4 rounded-lg bg-[#0B132B] border border-sky-900/60 space-y-3">
+                        <span class="text-[11px] font-bold text-sky-400 uppercase tracking-wider block">Incident Commander / Operator Controls</span>
+                        <div class="flex flex-wrap gap-2">
+                            {% if selected_alert.lifecycle_state == 'READY_FOR_AUTHORIZATION' %}
+                            <button onclick="authorizeAlert('{{ selected_alert.alert_id }}')" class="px-3 py-1.5 text-xs font-semibold rounded bg-emerald-600 hover:bg-emerald-500 text-white transition">
+                                Authorize Public Dispatch
+                            </button>
+                            {% endif %}
+
+                            {% if selected_alert.lifecycle_state in ['AUTHORIZED', 'READY_FOR_AUTHORIZATION'] %}
+                            <button onclick="dispatchAlert('{{ selected_alert.alert_id }}')" class="px-3 py-1.5 text-xs font-semibold rounded bg-sky-600 hover:bg-sky-500 text-white transition">
+                                Dispatch Multi-Channel Broadcast
+                            </button>
+                            {% endif %}
+
+                            <button onclick="acknowledgeAlert('{{ selected_alert.alert_id }}')" class="px-3 py-1.5 text-xs font-medium rounded bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition">
+                                Acknowledge Alert
+                            </button>
+                            <button onclick="resolveAlert('{{ selected_alert.alert_id }}')" class="px-3 py-1.5 text-xs font-medium rounded bg-slate-800 hover:bg-slate-700 text-slate-400 border border-slate-700 transition">
+                                Mark Resolved
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Multi-Channel Delivery Status Ribbon -->
+                    <div>
+                        <h4 class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-2">Multi-Channel Dissemination Status</h4>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-mono">
+                            <div class="p-2 rounded bg-slate-900 border border-slate-800">
+                                <span class="text-[10px] text-slate-500 block">Web/Mobile Push</span>
+                                <span class="text-xs text-purple-400 font-semibold">{% if 'push' in selected_alert.channels_dispatched %}DISPATCHED (DRY RUN){% else %}PENDING{% endif %}</span>
+                            </div>
+                            <div class="p-2 rounded bg-slate-900 border border-slate-800">
+                                <span class="text-[10px] text-slate-500 block">CDAC/Govt SMS</span>
+                                <span class="text-xs text-amber-400 font-semibold">{% if 'sms' in selected_alert.channels_dispatched %}SIMULATED SMS{% else %}PENDING{% endif %}</span>
+                            </div>
+                            <div class="p-2 rounded bg-slate-900 border border-slate-800">
+                                <span class="text-[10px] text-slate-500 block">OASIS CAP v1.2</span>
+                                <span class="text-xs text-sky-300 font-semibold">{% if 'cap' in selected_alert.channels_dispatched %}XML GENERATED{% else %}PENDING{% endif %}</span>
+                            </div>
+                            <div class="p-2 rounded bg-slate-900 border border-slate-800">
+                                <span class="text-[10px] text-slate-500 block">Tactical Siren</span>
+                                <span class="text-xs text-rose-400 font-semibold">{% if 'edge' in selected_alert.channels_dispatched %}DRY RUN TEST{% else %}ARMED{% endif %}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                {% else %}
+                <div class="bg-slateCard border border-borderMuted rounded-lg p-12 text-center text-xs text-slate-500">
+                    Select an alert from the queue to inspect scientific telemetry and trigger authorization dispatches.
+                </div>
+                {% endif %}
+            </div>
+
+        </div>
+
+    </main>
+
+    <script>
+        async function authorizeAlert(alertId) {
+            const res = await fetch(`/api/notifications/${alertId}/authorize`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({actor: 'District Magistrate', notes: 'Authorized via web console.'})
+            });
+            const data = await res.json();
+            if (data.status === 'AUTHORIZED') {
+                window.location.reload();
+            } else {
+                alert('Authorization failed: ' + (data.message || 'Unknown error'));
+            }
+        }
+
+        async function dispatchAlert(alertId) {
+            const res = await fetch(`/api/notifications/${alertId}/dispatch`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({actor: 'Operations Commander', channels: ['push', 'sms', 'cap', 'edge']})
+            });
+            const data = await res.json();
+            if (data.status === 'DISPATCHED') {
+                window.location.reload();
+            } else {
+                alert('Dispatch failed: ' + (data.message || 'Unknown error'));
+            }
+        }
+
+        async function acknowledgeAlert(alertId) {
+            const res = await fetch(`/api/notifications/${alertId}/acknowledge`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({actor: 'Incident Commander', notes: 'Acknowledged.'})
+            });
+            window.location.reload();
+        }
+
+        async function resolveAlert(alertId) {
+            const res = await fetch(`/api/notifications/${alertId}/acknowledge`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({actor: 'Incident Commander', notes: 'Resolved and cleared.'})
+            });
+            window.location.reload();
+        }
+
+        async function triggerDemoScenario() {
+            const res = await fetch('/api/notifications/demo/trigger', {method: 'POST'});
+            const data = await res.json();
+            if (data.alert) {
+                window.location.href = `/notifications?alert_id=${data.alert.alert_id}`;
+            }
+        }
+
+        async function resetDemoAlerts() {
+            const res = await fetch('/api/notifications/demo/reset', {method: 'POST'});
+            window.location.href = '/notifications';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication Checkpoint | PARVAT NETRA | Government of India</title>
+    <link rel="icon" type="image/png" href="/static/images/parvat_netra_emblem_circle.png">
+    <link rel="shortcut icon" type="image/png" href="/static/images/parvat_netra_emblem_circle.png">
+
+    <!-- Google Fonts: Playfair Display, Noto Sans & Noto Sans Devanagari -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700;800;900&family=Noto+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS with Noto Sans Government Configuration -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Noto Sans"', '"Noto Sans Devanagari"', 'system-ui', '-apple-system', 'sans-serif'],
+                        mono: ['"Noto Sans"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="/static/css/parvat_theme.css">
+    <script src="/static/js/theme.js"></script>
+
+    <style>
+        /* GIGW 3.0 Strict Noto Sans Typography Override */
+        html, body, * {
+            font-family: 'Noto Sans', 'Noto Sans Devanagari', system-ui, -apple-system, sans-serif !important;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .font-mono, [class*="mono"] {
+            font-family: 'Noto Sans', 'Noto Sans Devanagari', sans-serif !important;
+        }
+
+        /* Formal Institutional Brand Title Style */
+        .parvat-brand-title {
+            font-family: 'Playfair Display', Georgia, serif !important;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+        .parvat-brand-title * {
+            font-family: inherit !important;
+        }
+
+        /* Indian Tricolor Top Stripe */
+        .gov-tricolor-stripe {
+            height: 4px;
+            background: linear-gradient(90deg, #FF9933 0%, #FF9933 33.33%, #FFFFFF 33.33%, #FFFFFF 66.66%, #138808 66.66%, #138808 100%);
+        }
+
+        /* Portal card hover effects */
+        .portal-choice-card {
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .portal-choice-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+        }
+        /* High-contrast focus state for accessibility (GIGW 3.0) */
+        input:focus, button:focus, select:focus, a:focus {
+            outline: 2px solid #003366 !important;
+            outline-offset: 2px !important;
+        }
+    </style>
+</head>
+<body class="bg-[#F8FAFC] text-[#1E293B] min-h-screen flex flex-col justify-between">
+
+    <!-- 1. INDIAN TRICOLOR TOP STRIPE -->
+    <div class="gov-tricolor-stripe w-full"></div>
+
+    <!-- 2. SOLID NAVY ACCESSIBILITY UTILITY BAR -->
+    <div class="bg-[#0B192C] text-white text-xs py-1.5 px-4 border-b border-slate-800">
+        <div class="max-w-6xl mx-auto flex flex-wrap justify-between items-center gap-2">
+            <div class="flex items-center space-x-3 text-[11px]">
+                <span class="font-semibold">भारत सरकार | Government of India</span>
+                <span class="text-slate-500">|</span>
+                <span>उत्तर पूर्वी क्षेत्र विकास मंत्रालय (MDoNER)</span>
+                <span class="text-slate-500">|</span>
+                <a href="#main-content" class="text-slate-300 hover:text-white underline">मुख्य सामग्री पर जाएं | Skip to main content</a>
+            </div>
+            <div class="flex items-center space-x-3 text-[11px]">
+                <span class="bg-emerald-950 text-emerald-300 border border-emerald-700 px-2 py-0.5 rounded font-bold">
+                    NIC GIGW 3.0 VERIFIED
+                </span>
+                <span class="text-slate-500">|</span>
+                <button id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Switch color theme" title="Switch color theme" class="px-2.5 py-0.5 bg-[#12213D] border border-blue-300/30 rounded text-sky-100 hover:bg-[#1A3158] hover:text-white transition flex items-center gap-1.5 text-[11px] font-semibold shadow-xs active:scale-95 cursor-pointer">
+                    <span id="theme-icon" class="flex items-center justify-center">
+                        <svg class="w-3 h-3 text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                    </span>
+                    <span id="theme-text" class="text-[11px] hidden sm:inline">Light Mode</span>
+                </button>
+                <span class="text-slate-500">|</span>
+                <a href="/" class="text-slate-300 hover:text-white font-medium hover:underline flex items-center gap-1">
+                    <span>←</span> Public Command Center
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. OFFICIAL MASTHEAD -->
+    <header class="bg-white border-b border-slate-200 py-4 px-4 shadow-sm">
+        <div class="max-w-6xl mx-auto flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <!-- Official Emblem -->
+                <img src="/static/images/parvat_netra_emblem_circle.png" alt="Government of India Emblem" class="w-10 h-10 object-contain" onerror="this.src='/static/images/parvat_netra_emblem.png'">
+                
+                <!-- Title matching the formal institutional style -->
+                <div>
+                    <h1 class="parvat-brand-title text-xl text-slate-900 m-0 leading-tight">
+                        PARVAT NETRA <span class="text-sm font-normal lowercase tracking-normal text-slate-600">पर्वत नेत्र</span>
+                    </h1>
+                    <p class="text-[11px] text-slate-500 font-sans tracking-tight m-0">
+                        Unified Landslide Decision Intelligence &amp; Early Warning System
+                    </p>
+                </div>
+            </div>
+
+            <div class="hidden sm:flex items-center space-x-2 text-right">
+                <div class="text-[10px] text-slate-500 font-bold uppercase">Gateway Protocol</div>
+                <div class="text-xs font-bold text-[#003366] bg-blue-50 border border-blue-200 px-2.5 py-1 rounded">
+                    ISOLATED PERSONA ENFORCEMENT
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 4. ROUTING CHECKPOINT CONTAINER -->
+    <main id="main-content" class="flex-grow flex items-center justify-center p-4 sm:py-12">
+        <div class="w-full max-w-4xl space-y-6">
+            
+            <div class="text-center space-y-1.5">
+                <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-white border border-slate-300 shadow-inner mb-2 p-1">
+                    <img src="/static/images/parvat_netra_emblem_circle.png" 
+                         alt="PARVAT NETRA Emblem" 
+                         class="w-full h-full object-contain" 
+                         onerror="this.src='/static/images/parvat_netra_emblem.png'">
+                </div>
+                <h2 class="text-2xl font-black text-[#0B2545] tracking-tight">
+                    Select Authentication Portal
+                </h2>
+                <p class="text-sm text-slate-500 font-medium max-w-lg mx-auto">
+                    PARVAT NETRA maintains strict persona isolation between official emergency commanders and the general traveling public.
+                </p>
+            </div>
+
+            <!-- TWO ISOLATED PORTAL PATHWAYS -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <!-- OPTION 1: OFFICIAL AUTHORITY PORTAL -->
+                <div class="portal-choice-card bg-white border-2 border-[#003366] rounded-xl p-6 flex flex-col justify-between shadow-sm">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <i class="ph-bold ph-buildings text-3xl text-[#003366]"></i>
+                            <span class="px-2.5 py-1 bg-blue-50 text-[#003366] text-[10px] font-bold uppercase rounded border border-blue-200">
+                                Restricted Access
+                            </span>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-black text-[#0B2545]">
+                                Official Authority Portal
+                            </h3>
+                            <p class="text-xs text-slate-500 font-medium mt-1">
+                                Emergency Operations Centre (EOC) Command
+                            </p>
+                        </div>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Exclusively for District Magistrates, BRO Project Swastik officers, Geological Survey of India (GSI) scientists, and NDMA/SDMA operators.
+                        </p>
+                        <div class="border-t border-slate-100 pt-3 space-y-2">
+                            <div class="text-[11px] font-bold text-slate-700">Operational Capabilities:</div>
+                            <ul class="text-[11px] text-slate-600 space-y-1.5">
+                                <li class="flex items-center gap-2">
+                                    <i class="ph-bold ph-check text-[#003366]"></i> Real-time Infinite Slope FoS Telemetry
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i class="ph-bold ph-check text-[#003366]"></i> 3D Digital Elevation Models (DEM)
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i class="ph-bold ph-check text-[#003366]"></i> 2-Step Armed Tactical Siren Dispatch
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i class="ph-bold ph-check text-[#003366]"></i> Common Alerting Protocol (CAP) Broadcast
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="pt-6">
+                        <a href="/login/authority" 
+                           class="w-full py-3 px-4 bg-[#003366] hover:bg-[#002244] text-white font-bold text-xs rounded-lg shadow flex items-center justify-center gap-2 transition active:scale-[0.99] text-center">
+                            <i class="ph-bold ph-lock-key"></i>
+                            <span>Enter Official Authority Portal →</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- OPTION 2: PUBLIC CITIZEN ADVISORY -->
+                <div class="portal-choice-card bg-white border-2 border-[#D97706] rounded-xl p-6 flex flex-col justify-between shadow-sm">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <i class="ph-bold ph-users text-3xl text-emerald-600"></i>
+                            <span class="px-2.5 py-1 bg-amber-50 text-[#D97706] text-[10px] font-bold uppercase rounded border border-amber-200">
+                                Open Public Access
+                            </span>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-black text-[#0B2545]">
+                                Public Citizen Advisory
+                            </h3>
+                            <p class="text-xs text-slate-500 font-medium mt-1">
+                                Nagrik Portal for Mountain Travelers &amp; Residents
+                            </p>
+                        </div>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            For tourists, commercial transport drivers, mountain residents, and local community spotters navigating the North Eastern corridor.
+                        </p>
+                        <div class="border-t border-slate-100 pt-3 space-y-2">
+                            <div class="text-[11px] font-bold text-slate-700">Citizen Capabilities:</div>
+                            <ul class="text-[11px] text-slate-600 space-y-1.5">
+                                <li class="flex items-center gap-2">
+                                    <i class="ph-bold ph-check text-[#D97706]"></i> Real-time NH-10 Highway Closure Status
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i class="ph-bold ph-check text-[#D97706]"></i> Active Bypass Navigation (Lava 45T &amp; Mungpoo)
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i class="ph-bold ph-check text-[#D97706]"></i> 4-Language Audio Emergency Broadcast
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i class="ph-bold ph-check text-[#D97706]"></i> Field Evidence Photo Capture &amp; Edge CV Triage
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="pt-6">
+                        <a href="/login/citizen" 
+                           class="w-full py-3 px-4 bg-[#D97706] hover:bg-[#B45309] text-white font-bold text-xs rounded-lg shadow flex items-center justify-center gap-2 transition active:scale-[0.99] text-center">
+                            <i class="ph-bold ph-shield-check"></i>
+                            <span>Enter Public Citizen Portal →</span>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Direct Guest Bypass -->
+            <div class="text-center pt-2">
+                <a href="/?mode=citizen" class="text-xs font-bold text-slate-600 hover:text-[#003366] hover:underline inline-flex items-center gap-1.5">
+                    <i class="ph-bold ph-car mr-1"></i> Continue to Public Command Center (Without Login) &rarr;
+                </a>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- 5. INSTITUTIONAL FOOTER -->
+    <footer class="bg-[#0B192C] text-white text-xs py-4 px-4 border-t border-slate-800">
+        <div class="max-w-6xl mx-auto flex flex-wrap justify-between items-center text-[11px] text-slate-400 gap-2">
+            <div>
+                Designed &amp; Maintained by <strong>National Informatics Centre (NIC)</strong> | Ministry of Development of North Eastern Region (MDoNER)
+            </div>
+            <div class="flex items-center space-x-3 text-slate-400">
+                <a href="/" class="hover:text-white">Command Center</a>
+                <span>&bull;</span>
+                <a href="/api/docs" target="_blank" class="hover:text-white">OpenAPI Specification</a>
+                <span>&bull;</span>
+                <span>GIGW 3.0 Certified</span>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

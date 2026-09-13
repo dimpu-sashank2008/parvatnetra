@@ -1,0 +1,87 @@
+{
+  "split": "test",
+  "source_file": "data/features/real_test.csv",
+  "sha256_hash": "29f84cf974241844a16086736e1cab833484a9587519946dd24ee09ae09d28da",
+  "total_samples": 8,
+  "positive_count": 5,
+  "negative_count": 3,
+  "date_range": {
+    "min_timestamp": "2024-07-02 08:00:00+00:00",
+    "max_timestamp": "2024-10-04 06:00:00+00:00"
+  },
+  "validation_strategy": "TEMPORAL_HOLDOUT",
+  "samples": [
+    {
+      "sample_id": "test_001",
+      "sector_id": "MN-TAMENG-01",
+      "timestamp": "2024-07-02T08:00:00Z",
+      "event_label": 1,
+      "geographic_group": "manipur_west_corridor",
+      "FoS": 0.74,
+      "CRI": 82.0
+    },
+    {
+      "sample_id": "test_002",
+      "sector_id": "ML-SHILLONG-01",
+      "timestamp": "2024-07-10T10:00:00Z",
+      "event_label": 1,
+      "geographic_group": "meghalaya_plateau_corridor",
+      "FoS": 0.79,
+      "CRI": 79.5
+    },
+    {
+      "sample_id": "test_003",
+      "sector_id": "CTRL-AS-HEAVY-01",
+      "timestamp": "2024-07-22T12:00:00Z",
+      "event_label": 0,
+      "geographic_group": "assam_heavy_stable",
+      "FoS": 1.16,
+      "CRI": 53.0
+    },
+    {
+      "sample_id": "test_004",
+      "sector_id": "CTRL-ML-HEAVY-01",
+      "timestamp": "2024-07-25T12:00:00Z",
+      "event_label": 0,
+      "geographic_group": "meghalaya_heavy_stable",
+      "FoS": 1.1,
+      "CRI": 56.5
+    },
+    {
+      "sample_id": "test_005",
+      "sector_id": "CTRL-AR-HEAVY-01",
+      "timestamp": "2024-08-04T12:00:00Z",
+      "event_label": 0,
+      "geographic_group": "arunachal_heavy_stable",
+      "FoS": 1.12,
+      "CRI": 55.0
+    },
+    {
+      "sample_id": "test_006",
+      "sector_id": "TR-JAMPUI-01",
+      "timestamp": "2024-08-20T11:00:00Z",
+      "event_label": 1,
+      "geographic_group": "tripura_jampui_hills",
+      "FoS": 0.78,
+      "CRI": 78.5
+    },
+    {
+      "sample_id": "test_007",
+      "sector_id": "NL-KOHIMA-01",
+      "timestamp": "2024-09-03T07:00:00Z",
+      "event_label": 1,
+      "geographic_group": "nagaland_kohima_corridor",
+      "FoS": 0.72,
+      "CRI": 83.5
+    },
+    {
+      "sample_id": "test_008",
+      "sector_id": "SK-NH10-KM48",
+      "timestamp": "2024-10-04T06:00:00Z",
+      "event_label": 1,
+      "geographic_group": "sikkim_teesta_corridor",
+      "FoS": 0.62,
+      "CRI": 89.0
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "data": {
+    "timestamp": "2026-09-13T03:36:15.508520+00:00",
+    "location": {
+      "lat": 25.178,
+      "lon": 93.023,
+      "district": "Dima Hasao",
+      "state": "Assam"
+    },
+    "rainfall": {
+      "current_mm_hr": 5.83,
+      "rain_1h_mm": 5.83,
+      "rain_6h_mm": 39.9,
+      "rain_24h_mm": 105.0,
+      "rain_72h_mm": 220.5
+    },
+    "forecast": {
+      "1h_mm": 6.41,
+      "3h_mm": 18.66,
+      "6h_mm": 47.88,
+      "12h_mm": 57.75,
+      "24h_mm": 99.75,
+      "48h_mm": 178.5,
+      "hourly_trend": [
+        3.5,
+        3.94,
+        4.38,
+        4.81,
+        5.25,
+        5.69,
+        3.5,
+        3.94,
+        4.38,
+        4.81,
+        5.25,
+        5.69,
+        3.5,
+        3.94,
+        4.38,
+        4.81,
+        5.25,
+        5.69,
+        3.5,
+        3.94,
+        4.38,
+        4.81,
+        5.25,
+        5.69
+      ]
+    },
+    "atmosphere": {
+      "temperature_c": 17.5,
+      "humidity_pct": 92.0,
+      "pressure_hpa": 1006.0,
+      "wind_kmh": 22.0,
+      "cloud_pct": 95.0
+    },
+    "derived_pahad": {
+      "antecedent_rainfall": 220.5,
+      "api_3d": 194.26,
+      "api_7d": 285.57,
+      "api_30d": 353.54,
+      "rainfall_intensity_duration_state": "CRITICAL_EXCEEDED",
+      "rainfall_threshold_status": {
+        "id_threshold_mm_hr": 1.828,
+        "ed_threshold_mm": 43.872,
+        "intensity_mm_hr": 5.83,
+        "duration_hours": 24.0,
+        "exceedance_ratio": 3.189,
+        "threshold_exceeded": true,
+        "state": "CRITICAL_EXCEEDED"
+      },
+      "forecast_rainfall_loading": 0.831
+    },
+    "source": "PAHAD Eastern Himalayan Climate Simulator",
+    "provenance": "SIMULATED",
+    "last_successful_fetch": "2026-09-13T03:36:15.508520+00:00",
+    "data_age_seconds": 0.0
+  },
+  "fetched_at": 1789270586.459225,
+  "ttl": 900,
+  "meta": {
+    "source": "PAHAD Eastern Himalayan Climate Simulator",
+    "provenance": "[LIVE]",
+    "stored_at": "2026-09-13T03:36:26Z",
+    "ttl": 900
+  }
+}

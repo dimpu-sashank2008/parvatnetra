@@ -1,0 +1,286 @@
+{
+  "6h": {
+    "horizon_hours": 6,
+    "optimal_threshold": 0.3,
+    "test_metrics_calibrated": {
+      "threshold": 0.3,
+      "roc_auc": 1.0,
+      "pr_auc": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "pod": 1.0,
+      "far": 0.0,
+      "csi": 1.0,
+      "f1": 1.0,
+      "brier_score": 0.0043,
+      "ece": 0.0516,
+      "confusion_matrix": {
+        "true_positives": 4,
+        "false_positives": 0,
+        "false_negatives": 0,
+        "true_negatives": 20
+      }
+    },
+    "test_metrics_uncalibrated": {
+      "threshold": 0.5,
+      "roc_auc": 1.0,
+      "pr_auc": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "pod": 1.0,
+      "far": 0.0,
+      "csi": 1.0,
+      "f1": 1.0,
+      "brier_score": 0.0,
+      "ece": 0.0049,
+      "confusion_matrix": {
+        "true_positives": 4,
+        "false_positives": 0,
+        "false_negatives": 0,
+        "true_negatives": 20
+      }
+    },
+    "lead_time": {
+      "events_total": 4,
+      "events_detected": 4,
+      "detection_rate": 1.0,
+      "median_lead_time_hours": 6.0,
+      "mean_lead_time_hours": 6.0,
+      "p25_lead_time_hours": 6.0,
+      "p75_lead_time_hours": 6.0,
+      "min_lead_time_hours": 6.0,
+      "max_lead_time_hours": 6.0,
+      "per_event_lead_times": [
+        6.0,
+        6.0,
+        6.0,
+        6.0
+      ]
+    },
+    "top_drivers": {
+      "ndvi_anomaly": 1.0,
+      "rain_1h": 0.0,
+      "rain_3h": 0.0,
+      "rain_6h": 0.0,
+      "rain_12h": 0.0,
+      "rain_24h": 0.0,
+      "rain_48h": 0.0,
+      "rain_72h": 0.0,
+      "antecedent_rain_3d": 0.0,
+      "antecedent_rain_7d": 0.0
+    }
+  },
+  "12h": {
+    "horizon_hours": 12,
+    "optimal_threshold": 0.3,
+    "test_metrics_calibrated": {
+      "threshold": 0.3,
+      "roc_auc": 1.0,
+      "pr_auc": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "pod": 1.0,
+      "far": 0.0,
+      "csi": 1.0,
+      "f1": 1.0,
+      "brier_score": 0.0034,
+      "ece": 0.0547,
+      "confusion_matrix": {
+        "true_positives": 8,
+        "false_positives": 0,
+        "false_negatives": 0,
+        "true_negatives": 16
+      }
+    },
+    "test_metrics_uncalibrated": {
+      "threshold": 0.5,
+      "roc_auc": 1.0,
+      "pr_auc": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "pod": 1.0,
+      "far": 0.0,
+      "csi": 1.0,
+      "f1": 1.0,
+      "brier_score": 0.0001,
+      "ece": 0.008,
+      "confusion_matrix": {
+        "true_positives": 8,
+        "false_positives": 0,
+        "false_negatives": 0,
+        "true_negatives": 16
+      }
+    },
+    "lead_time": {
+      "events_total": 4,
+      "events_detected": 4,
+      "detection_rate": 1.0,
+      "median_lead_time_hours": 12.0,
+      "mean_lead_time_hours": 12.0,
+      "p25_lead_time_hours": 12.0,
+      "p75_lead_time_hours": 12.0,
+      "min_lead_time_hours": 12.0,
+      "max_lead_time_hours": 12.0,
+      "per_event_lead_times": [
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ]
+    },
+    "top_drivers": {
+      "ndvi_anomaly": 0.9571,
+      "rain_6h": 0.0396,
+      "rain_3h": 0.0031,
+      "rain_intensity": 0.0001,
+      "rain_1h": 0.0,
+      "rain_12h": 0.0,
+      "rain_24h": 0.0,
+      "rain_48h": 0.0,
+      "rain_72h": 0.0,
+      "antecedent_rain_3d": 0.0
+    }
+  },
+  "24h": {
+    "horizon_hours": 24,
+    "optimal_threshold": 0.3,
+    "test_metrics_calibrated": {
+      "threshold": 0.3,
+      "roc_auc": 1.0,
+      "pr_auc": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "pod": 1.0,
+      "far": 0.0,
+      "csi": 1.0,
+      "f1": 1.0,
+      "brier_score": 0.0045,
+      "ece": 0.0638,
+      "confusion_matrix": {
+        "true_positives": 12,
+        "false_positives": 0,
+        "false_negatives": 0,
+        "true_negatives": 12
+      }
+    },
+    "test_metrics_uncalibrated": {
+      "threshold": 0.5,
+      "roc_auc": 1.0,
+      "pr_auc": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "pod": 1.0,
+      "far": 0.0,
+      "csi": 1.0,
+      "f1": 1.0,
+      "brier_score": 0.0003,
+      "ece": 0.013,
+      "confusion_matrix": {
+        "true_positives": 12,
+        "false_positives": 0,
+        "false_negatives": 0,
+        "true_negatives": 12
+      }
+    },
+    "lead_time": {
+      "events_total": 4,
+      "events_detected": 4,
+      "detection_rate": 1.0,
+      "median_lead_time_hours": 24.0,
+      "mean_lead_time_hours": 24.0,
+      "p25_lead_time_hours": 24.0,
+      "p75_lead_time_hours": 24.0,
+      "min_lead_time_hours": 24.0,
+      "max_lead_time_hours": 24.0,
+      "per_event_lead_times": [
+        24.0,
+        24.0,
+        24.0,
+        24.0
+      ]
+    },
+    "top_drivers": {
+      "ndvi_anomaly": 0.8348,
+      "rain_48h": 0.0657,
+      "rain_72h": 0.0481,
+      "rain_intensity": 0.047,
+      "rain_3h": 0.002,
+      "fos": 0.0009,
+      "rain_24h": 0.0007,
+      "rain_1h": 0.0002,
+      "rain_6h": 0.0002,
+      "soil_moisture": 0.0002
+    }
+  },
+  "48h": {
+    "horizon_hours": 48,
+    "optimal_threshold": 0.3,
+    "test_metrics_calibrated": {
+      "threshold": 0.3,
+      "roc_auc": 1.0,
+      "pr_auc": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "pod": 1.0,
+      "far": 0.0,
+      "csi": 1.0,
+      "f1": 1.0,
+      "brier_score": 0.0084,
+      "ece": 0.0751,
+      "confusion_matrix": {
+        "true_positives": 20,
+        "false_positives": 0,
+        "false_negatives": 0,
+        "true_negatives": 4
+      }
+    },
+    "test_metrics_uncalibrated": {
+      "threshold": 0.5,
+      "roc_auc": 1.0,
+      "pr_auc": 1.0,
+      "precision": 0.8333,
+      "recall": 1.0,
+      "pod": 1.0,
+      "far": 0.1667,
+      "csi": 0.8333,
+      "f1": 0.9091,
+      "brier_score": 0.1409,
+      "ece": 0.1507,
+      "confusion_matrix": {
+        "true_positives": 20,
+        "false_positives": 4,
+        "false_negatives": 0,
+        "true_negatives": 0
+      }
+    },
+    "lead_time": {
+      "events_total": 4,
+      "events_detected": 4,
+      "detection_rate": 1.0,
+      "median_lead_time_hours": 48.0,
+      "mean_lead_time_hours": 48.0,
+      "p25_lead_time_hours": 48.0,
+      "p75_lead_time_hours": 48.0,
+      "min_lead_time_hours": 48.0,
+      "max_lead_time_hours": 48.0,
+      "per_event_lead_times": [
+        48.0,
+        48.0,
+        48.0,
+        48.0
+      ]
+    },
+    "top_drivers": {
+      "ndvi_anomaly": 0.4575,
+      "tilt": 0.097,
+      "antecedent_rain_7d": 0.0967,
+      "rain_24h": 0.0913,
+      "rain_intensity": 0.062,
+      "antecedent_rain_3d": 0.0499,
+      "rain_6h": 0.0361,
+      "ndvi": 0.036,
+      "rain_12h": 0.0294,
+      "rain_3h": 0.0189
+    }
+  }
+}

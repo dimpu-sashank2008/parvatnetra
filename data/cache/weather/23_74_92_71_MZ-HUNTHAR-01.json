@@ -1,0 +1,88 @@
+{
+  "data": {
+    "timestamp": "2026-09-13T05:21:05.561758+00:00",
+    "location": {
+      "lat": 23.742,
+      "lon": 92.708,
+      "district": "Aizawl",
+      "state": "Mizoram"
+    },
+    "rainfall": {
+      "current_mm_hr": 0.0,
+      "rain_1h_mm": 0.5,
+      "rain_6h_mm": 1.6,
+      "rain_24h_mm": 10.4,
+      "rain_72h_mm": 22.1
+    },
+    "forecast": {
+      "1h_mm": 0.3,
+      "3h_mm": 1.1,
+      "6h_mm": 1.1,
+      "12h_mm": 1.4,
+      "24h_mm": 9.9,
+      "48h_mm": 11.5,
+      "hourly_trend": [
+        0.5,
+        0.3,
+        0.8,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.1,
+        0.0,
+        0.0,
+        0.0,
+        0.1,
+        0.1,
+        0.4,
+        4.3,
+        3.5,
+        0.2,
+        0.1,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "atmosphere": {
+      "temperature_c": 26.7,
+      "humidity_pct": 73.0,
+      "pressure_hpa": 923.6,
+      "wind_kmh": 4.8,
+      "cloud_pct": 15.0
+    },
+    "derived_pahad": {
+      "antecedent_rainfall": 22.1,
+      "api_3d": 19.44,
+      "api_7d": 28.69,
+      "api_30d": 35.58,
+      "rainfall_intensity_duration_state": "NORMAL_EQUILIBRIUM",
+      "rainfall_threshold_status": {
+        "id_threshold_mm_hr": 1.828,
+        "ed_threshold_mm": 43.872,
+        "intensity_mm_hr": 0.43333333333333335,
+        "duration_hours": 24.0,
+        "exceedance_ratio": 0.237,
+        "threshold_exceeded": false,
+        "state": "NORMAL_EQUILIBRIUM"
+      },
+      "forecast_rainfall_loading": 0.083
+    },
+    "source": "Open-Meteo Global Forecasting",
+    "provenance": "LIVE",
+    "last_successful_fetch": "2026-09-13T05:21:05.561758+00:00",
+    "data_age_seconds": 0.0
+  },
+  "fetched_at": 1789276866.3883464,
+  "ttl": 900,
+  "meta": {
+    "source": "Open-Meteo Global Forecasting",
+    "provenance": "[LIVE]",
+    "stored_at": "2026-09-13T05:21:06Z",
+    "ttl": 900
+  }
+}

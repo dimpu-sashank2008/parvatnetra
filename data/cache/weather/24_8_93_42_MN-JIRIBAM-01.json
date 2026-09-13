@@ -1,0 +1,88 @@
+{
+  "data": {
+    "timestamp": "2026-09-13T03:36:04.907389+00:00",
+    "location": {
+      "lat": 24.802,
+      "lon": 93.421,
+      "district": "Tamenglong",
+      "state": "Manipur"
+    },
+    "rainfall": {
+      "current_mm_hr": 0.0,
+      "rain_1h_mm": 0.0,
+      "rain_6h_mm": 0.9,
+      "rain_24h_mm": 7.2,
+      "rain_72h_mm": 12.7
+    },
+    "forecast": {
+      "1h_mm": 0.2,
+      "3h_mm": 0.5,
+      "6h_mm": 1.0,
+      "12h_mm": 2.2,
+      "24h_mm": 7.3,
+      "48h_mm": 9.0,
+      "hourly_trend": [
+        0.0,
+        0.2,
+        0.2,
+        0.1,
+        0.1,
+        0.3,
+        0.1,
+        0.1,
+        0.1,
+        0.1,
+        0.1,
+        0.1,
+        0.7,
+        3.6,
+        0.5,
+        0.4,
+        0.1,
+        0.1,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.3
+      ]
+    },
+    "atmosphere": {
+      "temperature_c": 26.0,
+      "humidity_pct": 80.0,
+      "pressure_hpa": 944.2,
+      "wind_kmh": 4.4,
+      "cloud_pct": 36.0
+    },
+    "derived_pahad": {
+      "antecedent_rainfall": 12.7,
+      "api_3d": 11.45,
+      "api_7d": 15.8,
+      "api_30d": 19.04,
+      "rainfall_intensity_duration_state": "NORMAL_EQUILIBRIUM",
+      "rainfall_threshold_status": {
+        "id_threshold_mm_hr": 1.828,
+        "ed_threshold_mm": 43.872,
+        "intensity_mm_hr": 0.3,
+        "duration_hours": 24.0,
+        "exceedance_ratio": 0.164,
+        "threshold_exceeded": false,
+        "state": "NORMAL_EQUILIBRIUM"
+      },
+      "forecast_rainfall_loading": 0.061
+    },
+    "source": "Open-Meteo Global Forecasting",
+    "provenance": "LIVE",
+    "last_successful_fetch": "2026-09-13T03:36:04.907389+00:00",
+    "data_age_seconds": 0.0
+  },
+  "fetched_at": 1789270566.295744,
+  "ttl": 900,
+  "meta": {
+    "source": "Open-Meteo Global Forecasting",
+    "provenance": "[LIVE]",
+    "stored_at": "2026-09-13T03:36:06Z",
+    "ttl": 900
+  }
+}

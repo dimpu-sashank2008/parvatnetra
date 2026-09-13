@@ -1,0 +1,315 @@
+{
+  "phase": "PHASE_7_PRODUCTION_HARDENING_AND_FIELD_PILOT_READINESS",
+  "timestamp": "2026-09-10T23:05:00Z",
+  "platform": "PARVAT NETRA",
+  "ai_engine": "PAHAD AI",
+  "pilot_corridor": "CORR-NH10-SIKKIM-KM48",
+  "checkpoint_results": {
+    "CP01": "PASS",
+    "CP02": "PASS",
+    "CP03": "PASS",
+    "CP04": "PASS",
+    "CP05": "PASS",
+    "CP06": "PASS",
+    "CP07": "BLOCKED",
+    "CP08": "PARTIAL",
+    "CP09": "PASS",
+    "CP10": "PASS",
+    "CP11": "PASS",
+    "CP12": "PASS",
+    "CP13": "PASS",
+    "CP14": "PASS"
+  },
+  "software_status": "READY",
+  "data_status": "TRAINED_LIMITED_DATA",
+  "model_status": "RESEARCH_PROTOTYPE (TRAINED_LIMITED_DATA)",
+  "weather_status": "LIVE_FALLBACK (Open-Meteo active, IMD auth pending)",
+  "seismic_status": "LIVE_FALLBACK (USGS active, NCS auth pending)",
+  "eo_status": "CACHED (CDSE auth pending, Bhoonidhi registration pending)",
+  "terrain_status": "READY (Cartosat DEM & GLO-30 active)",
+  "iot_status": "STANDBY_READY_FOR_DEVICES (Hardware pending)",
+  "edge_status": "SOFTWARE_TESTBENCH_READY (Hardware pending)",
+  "mobile_status": "BACKEND_CONTRACT_VERIFIED (Flutter host tooling absent)",
+  "security_status": "COMPLIANT (Zero leaks, sirens dry-run locked)",
+  "authority_status": "ENFORCED (2-stage human signoff mandatory)",
+  "observability_status": "READY (Prometheus export, dead-man switch active)",
+  "disaster_recovery_status": "VERIFIED (Tamper-evident backup/restore operational)",
+  "overall_verdict": "SOFTWARE_READY_SHADOW_ONLY",
+  "blocking_items": {
+    "P0": [],
+    "P1": [
+      "Physical borehole drilling and transducer installation pending at KM48",
+      "Institutional MOUs required for IMD and NCS live credential provisioning"
+    ],
+    "P2": [
+      "Historical event catalog scale currently N=17 (GSI expansion to N>=150 in progress)",
+      "Flutter SDK not installed on host for local mobile binary compilation"
+    ]
+  },
+  "test_summary": {
+    "total": 114,
+    "passed": 114,
+    "failed": 0,
+    "skipped": 0,
+    "regressions": 0
+  },
+  "dataset_hash": "79ece554fd0d2fc62d69a21fd4d39172f7dd4995d5645e126a91d1a08c1c579e",
+  "model_hash": "e2f077603caa0bac0d61bd9671b5d2aff32eb40efde993f7be761b84f772025d",
+  "config_hash": "d40b0ee77038eb80214f3a784db7270586df6c2ac3916bdf23fd7e6422f1b415",
+  "phase7e": {
+    "audit_date": "2026-09-11T00:20:00Z",
+    "final_gate": "PARTIALLY_LIVE",
+    "checkpoints": {
+      "CP4A_weather": {
+        "open_meteo": "LIVE",
+        "imd": "AUTH_REQUIRED"
+      },
+      "CP4B_seismic": {
+        "usgs": "LIVE",
+        "ncs": "AUTH_REQUIRED"
+      },
+      "CP4C_eo": {
+        "cdse": "REGISTRATION_REQUIRED",
+        "bhoonidhi": "REGISTRATION_REQUIRED"
+      },
+      "CP4D_terrain": {
+        "dem_glo30": "CACHED"
+      },
+      "CP4E_postgis": {
+        "postgis": "UNAVAILABLE",
+        "sqlite_obs_store": "CONFIGURED"
+      },
+      "CP4F_iot": {
+        "mqtt": "UNAVAILABLE",
+        "physical_sensors": "STANDBY_READY_FOR_DEVICES"
+      },
+      "CP4G_freshness": {
+        "engine": "OPERATIONAL",
+        "sector_freshness": "UNAVAILABLE"
+      },
+      "CP4H_snapshot": {
+        "data_quality_score": 0.375,
+        "imputed_features": 5,
+        "total_features": 10
+      },
+      "CP4I_inference": {
+        "pipeline": "OPERATIONAL",
+        "safety_gate": "SHADOW_ONLY"
+      },
+      "CP4J_failure": {
+        "safe_degradation": "CONFIRMED",
+        "fabricated_live": "NONE_DETECTED"
+      },
+      "CP4K_reports": {
+        "connector_matrix": "WRITTEN",
+        "verification_report": "WRITTEN"
+      },
+      "CP4L_tests": {
+        "phase7e_total": 53,
+        "phase7e_passed": 53,
+        "phase7e_failed": 0
+      },
+      "CP4M_gate": "PARTIALLY_LIVE"
+    },
+    "live_sources": [
+      "Open-Meteo",
+      "USGS FDSNws"
+    ],
+    "auth_required": [
+      "IMD",
+      "NCS"
+    ],
+    "registration_required": [
+      "Copernicus CDSE",
+      "NRSC/Bhoonidhi"
+    ],
+    "unavailable": [
+      "PostGIS",
+      "MQTT"
+    ],
+    "not_deployed": [
+      "Physical IoT sensors at NH10 KM48"
+    ],
+    "blockers": [
+      "IMD_API_KEY not configured",
+      "NCS_API_KEY not configured",
+      "CDSE account not registered",
+      "PostgreSQL not running",
+      "MQTT broker not running",
+      "Physical sensors not installed at CORR-NH10-SIKKIM-KM48"
+    ]
+  },
+  "phase7f": {
+    "audit_date": "2026-09-11T02:40:00Z",
+    "corridor": "CORR-NH10-SIKKIM-KM48",
+    "final_gate": "PHYSICAL_DEPLOYMENT_PENDING",
+    "gates": {
+      "G1_sensor_hardware": "PARTIAL",
+      "G2_calibration": "PASS",
+      "G3_installation": "BLOCKED",
+      "G4_power": "PARTIAL",
+      "G5_edge_gateway": "PASS",
+      "G6_mqtt_lorawan": "PARTIAL",
+      "G7_telemetry_ingestion": "PASS",
+      "G8_data_validation": "PASS",
+      "G9_provenance": "PASS",
+      "G10_observation_store": "PASS",
+      "G11_pahad_integration": "PASS",
+      "G12_failure_handling": "PASS",
+      "G13_safety_gate": "PASS",
+      "G14_field_acceptance": "BLOCKED"
+    },
+    "broker_status": "BROKER_UNAVAILABLE",
+    "hil_status": "OPERATIONAL",
+    "physical_hardware_status": "PHYSICAL_DEPLOYMENT_PENDING",
+    "terrain_authority": "CORRIDOR_REGISTRY_MODELLED",
+    "safety_status": {
+      "two_of_three_rule": "ENFORCED",
+      "public_dispatch": "DISABLED",
+      "sirens": "DRY_RUN"
+    },
+    "tests": {
+      "targeted_passed": 38,
+      "targeted_total": 38,
+      "pass_rate": "100%"
+    }
+  },
+  "phase7g": {
+    "audit_date": "2026-09-11T03:30:00Z",
+    "corridor": "CORR-NH10-SIKKIM-KM48",
+    "final_gate": "AUTHORITY_WORKFLOW_VERIFIED",
+    "gates": {
+      "G1_rbac": "PASS",
+      "G2_state_machine": "PASS",
+      "G3_review_contract": "PASS",
+      "G4_authorization_tokens": "PASS",
+      "G5_field_verification": "PASS",
+      "G6_corroboration_gate": "PASS",
+      "G7_timeout_governance": "PASS",
+      "G8_warning_rollback": "PASS",
+      "G9_cap_v1_2": "PASS",
+      "G10_notification_simulation": "PASS",
+      "G11_tamper_evident_audit": "PASS",
+      "G12_emergency_override": "PASS",
+      "G13_fail_closed_drills": "PASS"
+    },
+    "safety_status": {
+      "two_of_three_rule": "ENFORCED",
+      "public_dispatch": "DISABLED",
+      "sirens": "DRY_RUN",
+      "ai_recommendation_interlock": "ENFORCED"
+    },
+    "tests": {
+      "phase7g_targeted_passed": 46,
+      "phase7g_targeted_total": 46,
+      "regression_passed": 43,
+      "pass_rate": "100%"
+    }
+  },
+  "phase7h": {
+    "audit_date": "2026-09-11T05:30:00Z",
+    "corridor": "CORR-NH10-SIKKIM-KM48",
+    "final_gate": "FIELD_RESILIENCE_VERIFIED",
+    "resilience_domains": {
+      "edge_wan_blackout": "PASS",
+      "edge_overflow_quarantine": "PASS",
+      "mobile_offline_autonomy": "PASS",
+      "offline_vector_routing": "PASS",
+      "offline_map_caching": "PASS",
+      "multihazard_cascade": "PASS",
+      "seismic_rainfall_interaction": "PASS",
+      "sensor_outage_degradation": "PASS",
+      "edge_power_resilience": "PASS",
+      "weather_api_outage": "PASS",
+      "seismic_api_outage": "PASS",
+      "satellite_pipeline_outage": "PASS",
+      "database_connection_outage": "PASS",
+      "model_inference_timeout": "PASS",
+      "authority_review_fail_closed": "PASS",
+      "cross_store_consistency": "PASS",
+      "disaster_recovery_rto_rpo": "PASS",
+      "multilingual_ui_resilience": "PASS"
+    },
+    "recovery_metrics": {
+      "peak_rto_seconds": 2.01,
+      "peak_rpo_seconds": 0.20,
+      "rto_sla_met": true,
+      "rpo_sla_met": true
+    },
+    "safety_status": {
+      "two_of_three_rule": "ENFORCED",
+      "public_dispatch": "DISABLED",
+      "sirens": "DRY_RUN",
+      "fail_closed_doctrine": "ENFORCED",
+      "physical_field_status": "PHYSICAL_FIELD_VALIDATION_PENDING"
+    },
+    "tests": {
+      "phase7h_targeted_passed": 34,
+      "phase7h_targeted_total": 34,
+      "regression_passed": 57,
+      "pass_rate": "100%"
+    }
+  },
+  "phase8": {
+    "audit_date": "2026-09-11T09:00:00Z",
+    "corridor": "CORR-NH10-SIKKIM-KM48",
+    "final_gate": "EOC_OPERATIONAL_VERIFIED",
+    "checkpoints": {
+      "CP8_01_operating_model": "PASS",
+      "CP8_02_command_dashboard": "PASS",
+      "CP8_03_persistent_incident": "PASS",
+      "CP8_04_queue_prioritization": "PASS",
+      "CP8_05_eoc_map_layers": "PASS",
+      "CP8_06_15km_geofence": "PASS",
+      "CP8_07_subscription_registry": "PASS",
+      "CP8_08_web_push": "PASS",
+      "CP8_09_mobile_push_contract": "PASS",
+      "CP8_10_sms_abstraction": "PASS",
+      "CP8_11_multilingual_templates": "PASS",
+      "CP8_12_statutory_authorization": "PASS",
+      "CP8_13_channel_orchestrator": "PASS",
+      "CP8_14_geofenced_dispatch": "PASS",
+      "CP8_15_acknowledgements": "PASS",
+      "CP8_16_field_task_dispatch": "PASS",
+      "CP8_17_response_routing": "PASS",
+      "CP8_18_escalation_engine": "PASS",
+      "CP8_19_all_clear_protocol": "PASS",
+      "CP8_20_false_alarm_retraction": "PASS",
+      "CP8_21_sitrep_generator": "PASS",
+      "CP8_22_command_brief": "PASS",
+      "CP8_23_after_action_review": "PASS",
+      "CP8_24_phone_test": "PASS (PUSH_TEST_BLOCKED)",
+      "CP8_25_siren_replay_protection": "PASS (DRY_RUN)",
+      "CP8_26_cap_v1_2_generation": "PASS (TEST/DRY_RUN)",
+      "CP8_27_e2e_drill": "PASS",
+      "CP8_28_failure_drill": "PASS (FAIL_CLOSED)",
+      "CP8_29_security_audit": "PASS",
+      "CP8_30_test_suites": "PASS",
+      "CP8_31_performance": "PASS",
+      "CP8_32_documentation": "PASS"
+    },
+    "latencies_ms": {
+      "incident_creation": 7.32,
+      "geofence_calculation": 1.67,
+      "notification_queue": 28.23,
+      "cap_generation": 0.23,
+      "dashboard_response": 38.10
+    },
+    "safety_status": {
+      "two_of_three_rule": "ENFORCED",
+      "public_dispatch": "DISABLED",
+      "sirens": "DRY_RUN",
+      "fail_closed_doctrine": "ENFORCED",
+      "physical_field_status": "PHYSICAL_DEPLOYMENT_PENDING"
+    },
+    "tests": {
+      "phase8_targeted_passed": 46,
+      "phase8_targeted_total": 46,
+      "phase7h_regression_passed": 34,
+      "phase7g_regression_passed": 46,
+      "phase7f_regression_passed": 38,
+      "total_verified_passed": 175,
+      "pass_rate": "100%"
+    }
+  }
+}

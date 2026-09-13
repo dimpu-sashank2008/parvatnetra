@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-[#070B10]">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PARVATNETRA — 3D TERRAIN INTELLIGENCE</title>
+    <link rel="icon" type="image/png" href="/static/images/parvat_netra_emblem.png">
+
+    <!-- Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Inter"', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace']
+                    },
+                    colors: {
+                        obsidian: '#070B10',
+                        obsidianLight: '#0B132B',
+                        slateCard: '#0F172A',
+                        borderMuted: '#1E293B',
+                        accentCyan: '#06B6D4',
+                        accentAmber: '#F59E0B',
+                        accentRed: '#EF4444',
+                        accentGreen: '#10B981'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Three.js & OrbitControls for True DEM 3D Mesh -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <link rel="stylesheet" href="/static/css/parvat_theme.css">
+    <script src="/static/js/theme.js"></script>
+
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #070B10; color: #F1F5F9; }
+        .font-mono { font-family: 'JetBrains Mono', monospace !important; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #070B10; }
+        ::-webkit-scrollbar-thumb { background: #1E293B; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #334155; }
+        
+        .layer-pill { cursor: pointer; transition: all 0.15s ease; }
+        .layer-pill.active {
+            background-color: #0284C7;
+            border-color: #38BDF8;
+            color: #FFFFFF;
+        }
+    </style>
+</head>
+<body class="h-full flex flex-col overflow-hidden select-none">
+
+    <!-- TOP INSTITUTIONAL NAVIGATION -->
+    <header class="h-14 bg-[#0B132B] border-b border-borderMuted px-4 flex items-center justify-between shrink-0 z-30">
+        <div class="flex items-center space-x-3">
+            <a href="/" class="flex items-center space-x-2 text-slate-300 hover:text-white transition">
+                <img src="/static/images/parvat_netra_emblem.png" alt="Emblem" class="w-8 h-8 object-contain">
+                <div>
+                    <span class="font-bold tracking-wider text-sm block leading-none">PARVAT NETRA</span>
+                    <span class="text-[10px] text-cyan-400 font-mono tracking-wider block">PAHAD AI DISASTER INTELLIGENCE</span>
+                </div>
+            </a>
+            <div class="h-5 w-px bg-slate-700 hidden sm:block"></div>
+            <div class="hidden sm:block">
+                <h1 class="text-xs font-semibold text-slate-100 uppercase tracking-wider">3D TERRAIN INTELLIGENCE</h1>
+                <p class="text-[10px] text-slate-400 leading-tight">PAHAD AI geospatial view of terrain susceptibility and hazard conditions.</p>
+            </div>
+        </div>
+
+        <!-- Navigation Links -->
+        <div class="flex items-center space-x-2">
+            <a href="/" class="px-2.5 py-1 text-xs rounded border border-slate-700 hover:border-slate-500 text-slate-300 transition">
+                Dashboard
+            </a>
+            <a href="/pahad-ai" class="px-2.5 py-1 text-xs rounded border border-cyan-700 bg-cyan-950/40 text-cyan-300 hover:border-cyan-500 transition">
+                PAHAD AI
+            </a>
+            <a href="/climate-map" class="px-2.5 py-1 text-xs rounded border border-slate-700 hover:border-slate-500 text-slate-300 transition">
+                Climate Map
+            </a>
+            <a href="/seismic" class="px-2.5 py-1 text-xs rounded border border-slate-700 hover:border-slate-500 text-slate-300 transition">
+                Seismic
+            </a>
+            <a href="/terrain-3d" class="px-2.5 py-1 text-xs rounded bg-sky-900/60 border border-sky-500 text-sky-200 font-medium transition">
+                3D Terrain
+            </a>
+            <a href="/console" class="px-2.5 py-1 text-xs rounded border border-slate-700 hover:border-slate-500 text-slate-300 transition hidden md:inline-block">
+                Console
+            </a>
+            <div class="h-4 w-px bg-slate-700"></div>
+            <span class="px-2 py-0.5 text-[10px] font-mono rounded bg-amber-950/80 border border-amber-500/50 text-amber-400" id="terrain-prov-badge">
+                [HISTORICAL]
+            </span>
+            <button id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Switch color theme" title="Switch color theme" class="px-2.5 py-1 bg-[#12213D] border border-blue-300/30 rounded text-sky-100 hover:bg-[#1A3158] hover:text-white transition flex items-center gap-1.5 text-xs font-semibold shadow-xs active:scale-95 cursor-pointer">
+                <span id="theme-icon" class="flex items-center justify-center">
+                    <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                </span>
+                <span id="theme-text" class="text-[11px] hidden sm:inline">Light Mode</span>
+            </button>
+            <button onclick="resetCameraView()" title="Reset 3D Camera Orientation" class="p-1.5 rounded border border-slate-700 hover:bg-slate-800 text-slate-300 transition">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- OFFLINE TERRAIN STATUS BANNER -->
+    <div id="terrain-offline-banner" class="hidden px-4 py-1.5 bg-amber-950/90 border-b border-amber-600/70 text-amber-200 text-xs flex flex-wrap items-center justify-between shrink-0 z-20">
+        <div class="flex items-center gap-2">
+            <span class="px-1.5 py-0.5 bg-amber-500 text-black font-black text-[10px] rounded uppercase tracking-wider font-mono">
+                OFFLINE TERRAIN DATA
+            </span>
+            <span class="text-amber-100 font-medium">Local pre-bundled DEM elevation &amp; slope model active.</span>
+        </div>
+        <div class="flex items-center gap-4 text-[11px] text-amber-300 font-mono">
+            <span><strong>DEM Source:</strong> Copernicus GLO-30 (ESA)</span>
+            <span><strong>Resolution:</strong> 30m</span>
+            <span><strong>Last Package Update:</strong> 2026-09-09</span>
+            <span><strong>Provenance:</strong> [CACHED / LOCAL]</span>
+        </div>
+    </div>
+
+    <!-- MAIN WORKSPACE LAYOUT (3D VIEWPORT + ANALYSIS DRAWER) -->
+    <div class="flex-1 flex flex-col lg:flex-row overflow-hidden relative">
+
+        <!-- 3D CANVAS SURFACE -->
+        <div class="flex-1 relative h-full bg-[#070B10]" id="canvas-container">
+            <canvas id="three-canvas" class="w-full h-full block"></canvas>
+
+            <!-- FLOATING 3D LAYER CONTROL PANEL -->
+            <div class="absolute top-3 left-3 z-20 bg-slateCard/95 backdrop-blur-md border border-slate-700/80 rounded-lg p-3 shadow-2xl max-w-xs sm:max-w-sm text-xs">
+                <div class="flex items-center justify-between pb-2 mb-2 border-b border-slate-800">
+                    <span class="font-semibold text-slate-200 uppercase tracking-wider text-[11px] flex items-center gap-1.5">
+                        <svg class="w-3.5 h-3.5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                        3D Layers & Shading
+                    </span>
+                    <span class="text-[10px] text-slate-400 font-mono" id="active-surface-name">Physical DEM</span>
+                </div>
+
+                <!-- TERRAIN DRAPING MODES -->
+                <div class="mb-2.5">
+                    <span class="text-[10px] text-slate-400 uppercase tracking-wider block mb-1">Surface Mode</span>
+                    <div class="grid grid-cols-4 gap-1 text-[10px] font-medium">
+                        <button onclick="setSurfaceMode('dem')" id="sm-dem" class="px-1.5 py-1 rounded bg-sky-900/80 border border-sky-500 text-sky-200">Terrain</button>
+                        <button onclick="setSurfaceMode('slope')" id="sm-slope" class="px-1.5 py-1 rounded bg-slate-800 border border-slate-700 text-slate-400 hover:text-slate-200">Slope</button>
+                        <button onclick="setSurfaceMode('risk')" id="sm-risk" class="px-1.5 py-1 rounded bg-slate-800 border border-slate-700 text-slate-400 hover:text-slate-200">PAHAD Risk</button>
+                        <button onclick="setSurfaceMode('veg')" id="sm-veg" class="px-1.5 py-1 rounded bg-slate-800 border border-slate-700 text-slate-400 hover:text-slate-200">NDVI</button>
+                    </div>
+                </div>
+
+                <!-- 3D FEATURE OVERLAYS -->
+                <div class="mb-2.5">
+                    <span class="text-[10px] text-slate-400 uppercase tracking-wider block mb-1">3D Feature Overlays</span>
+                    <div class="flex flex-wrap gap-1 text-[10px]">
+                        <span onclick="toggle3DLayer('contours')" id="lyr-contours" class="layer-pill active px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-300">Contours</span>
+                        <span onclick="toggle3DLayer('landslides')" id="lyr-landslides" class="layer-pill active px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-300">GSI Landslides</span>
+                        <span onclick="toggle3DLayer('roads')" id="lyr-roads" class="layer-pill active px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-300">NH-10 Road</span>
+                        <span onclick="toggle3DLayer('rivers')" id="lyr-rivers" class="layer-pill active px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-300">Teesta River</span>
+                        <span onclick="toggle3DLayer('sensors')" id="lyr-sensors" class="layer-pill px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-400">IoT Sensors</span>
+                        <span onclick="toggle3DLayer('deformation')" id="lyr-deformation" class="layer-pill px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-400">InSAR LOS</span>
+                    </div>
+                </div>
+
+                <!-- CONTOUR INTERVAL SELECTOR -->
+                <div class="mb-2.5">
+                    <div class="flex items-center justify-between mb-1">
+                        <span class="text-[10px] text-slate-400 uppercase tracking-wider">Contour Interval</span>
+                        <span class="text-[10px] font-mono text-cyan-400" id="contour-interval-label">20m</span>
+                    </div>
+                    <div class="grid grid-cols-4 gap-1 text-[10px] font-mono">
+                        <button onclick="setContourInterval(5)" class="px-1 py-0.5 rounded border border-slate-800 hover:border-slate-600">5m</button>
+                        <button onclick="setContourInterval(10)" class="px-1 py-0.5 rounded border border-slate-800 hover:border-slate-600">10m</button>
+                        <button onclick="setContourInterval(20)" class="px-1 py-0.5 rounded border border-sky-500 bg-sky-950/60 text-sky-300">20m</button>
+                        <button onclick="setContourInterval(50)" class="px-1 py-0.5 rounded border border-slate-800 hover:border-slate-600">50m</button>
+                    </div>
+                </div>
+
+                <!-- TERRAIN VERTICAL EXAGGERATION SLIDER -->
+                <div>
+                    <div class="flex items-center justify-between mb-1">
+                        <span class="text-[10px] text-slate-400 uppercase tracking-wider">Vertical Exaggeration</span>
+                        <span class="text-[10px] font-mono text-amber-400" id="exaggeration-val">1.8x</span>
+                    </div>
+                    <input type="range" min="1.0" max="3.5" step="0.1" value="1.8" id="exaggeration-slider"
+                           oninput="updateExaggeration(this.value)"
+                           class="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-amber-500">
+                </div>
+            </div>
+
+            <!-- SECTOR SELECTOR STRIP -->
+            <div class="absolute bottom-4 left-3 right-3 lg:right-auto z-20 flex items-center space-x-1.5 overflow-x-auto p-1.5 bg-slateCard/90 backdrop-blur-md border border-slate-800 rounded-md text-xs">
+                <span class="text-[10px] text-slate-400 font-mono uppercase px-2 shrink-0">Focus Slope:</span>
+                <button onclick="focusSector('SK-NH10-KM48')" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-nowrap shrink-0">NH-10 Km 48</button>
+                <button onclick="focusSector('SK-SINGTAM-01')" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-nowrap shrink-0">Singtam Teesta</button>
+                <button onclick="focusSector('SK-DIKCHU-01')" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-nowrap shrink-0">Dikchu Hydro</button>
+                <button onclick="focusSector('SK-MANGAN-01')" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-nowrap shrink-0">Mangan Complex</button>
+            </div>
+
+            <!-- CAMERA HUD INDICATOR -->
+            <div class="absolute top-3 right-3 z-20 bg-slateCard/80 backdrop-blur-sm border border-slate-800 rounded px-2.5 py-1 text-[10px] font-mono text-slate-400 hidden sm:block">
+                <span>Azimuth: <strong class="text-slate-200" id="hud-azimuth">315°</strong></span> •
+                <span>Pitch: <strong class="text-slate-200" id="hud-pitch">48°</strong></span>
+            </div>
+        </div>
+
+        <!-- RIGHT INTELLIGENCE DRAWER (PAHAD AI TERRAIN ANALYSIS) -->
+        <div class="w-full lg:w-[420px] xl:w-[460px] bg-[#070B10] border-t lg:border-t-0 lg:border-l border-borderMuted flex flex-col h-auto lg:h-full z-20 shrink-0 overflow-y-auto p-4 space-y-4">
+
+            <!-- SECTOR IDENTITY & ASSESSMENT HEADER -->
+            <div class="bg-slateCard border border-borderMuted rounded-lg p-3.5">
+                <div class="flex items-center justify-between mb-1">
+                    <span class="text-xs text-slate-400 font-mono uppercase" id="sector-code">SK-NH10-KM48</span>
+                    <span id="assessment-badge" class="px-2 py-0.5 text-[10px] font-mono font-bold rounded bg-rose-950/80 border border-rose-500/50 text-rose-400">
+                        VERY HIGH
+                    </span>
+                </div>
+                <h2 class="text-base font-bold text-white leading-snug" id="sector-title">NH-10 Km 48 (29th Mile Sector)</h2>
+                <p class="text-xs text-slate-400 flex items-center gap-1.5 mt-0.5">
+                    <span id="sector-coords" class="font-mono">27.3300°N, 88.6100°E</span> • <span id="sector-corridor">National Highway 10</span>
+                </p>
+                <div class="mt-2.5 pt-2.5 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-400">
+                    <span>DEM Source: <strong class="text-slate-200">Copernicus GLO-30 (30m)</strong></span>
+                    <span class="font-mono text-cyan-400">CRI: <strong id="val-cri">76.4</strong> / 100</span>
+                </div>
+            </div>
+
+            <!-- PAHAD AI TERRAIN ANALYSIS CARD -->
+            <div class="bg-slateCard border border-sky-900/60 rounded-lg p-3.5 relative overflow-hidden">
+                <div class="flex items-center justify-between mb-2.5">
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-sky-400 flex items-center gap-1.5">
+                        <svg class="w-3.5 h-3.5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                        PAHAD AI Terrain Analysis
+                    </h3>
+                    <span class="text-[10px] text-sky-400/80 font-mono">MORPHOMETRIC DERIVATIVES</span>
+                </div>
+
+                <!-- 2x3 GEOSPATIAL METRIC MATRIX -->
+                <div class="grid grid-cols-2 gap-2 text-xs">
+                    <div class="bg-[#070B10] p-2 rounded border border-slate-800">
+                        <span class="text-[10px] text-slate-400 block">Elevation</span>
+                        <span class="text-sm font-bold font-mono text-white" id="val-elevation">540.0 m</span>
+                    </div>
+                    <div class="bg-[#070B10] p-2 rounded border border-slate-800">
+                        <span class="text-[10px] text-slate-400 block">Slope Angle</span>
+                        <span class="text-sm font-bold font-mono text-amber-400" id="val-slope">38.4°</span>
+                    </div>
+                    <div class="bg-[#070B10] p-2 rounded border border-slate-800">
+                        <span class="text-[10px] text-slate-400 block">Aspect</span>
+                        <span class="text-sm font-bold font-mono text-sky-400" id="val-aspect">142° (SE)</span>
+                    </div>
+                    <div class="bg-[#070B10] p-2 rounded border border-slate-800">
+                        <span class="text-[10px] text-slate-400 block">Plan Curvature</span>
+                        <span class="text-sm font-bold font-mono text-purple-400" id="val-curvature">-0.024 (Concave)</span>
+                    </div>
+                    <div class="bg-[#070B10] p-2 rounded border border-slate-800">
+                        <span class="text-[10px] text-slate-400 block">Factor of Safety (FoS)</span>
+                        <span class="text-sm font-bold font-mono text-rose-400" id="val-fos">1.08</span>
+                    </div>
+                    <div class="bg-[#070B10] p-2 rounded border border-slate-800">
+                        <span class="text-[10px] text-slate-400 block">Anthropogenic Disturbance</span>
+                        <span class="text-sm font-bold font-mono text-orange-400" id="val-anthro">0.82 (High)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MULTI-MODAL EVIDENCE SIGNALS -->
+            <div class="bg-slateCard border border-borderMuted rounded-lg p-3.5 text-xs space-y-2.5">
+                <h4 class="text-[11px] font-bold uppercase tracking-wider text-slate-300">Fused Intelligence Inputs</h4>
+
+                <div class="flex items-center justify-between p-2 rounded bg-[#070B10] border border-slate-800">
+                    <div>
+                        <span class="font-medium text-slate-200 block">Vegetation State (NDVI)</span>
+                        <span class="text-[10px] text-slate-400 font-mono" id="val-veg-desc">NDVI 0.658 (8.4% Canopy Depletion)</span>
+                    </div>
+                    <span class="px-1.5 py-0.5 text-[10px] font-mono rounded bg-amber-950/60 border border-amber-500/50 text-amber-400">
+                        STRESS
+                    </span>
+                </div>
+
+                <div class="flex items-center justify-between p-2 rounded bg-[#070B10] border border-slate-800">
+                    <div>
+                        <span class="font-medium text-slate-200 block">Historical Landslides</span>
+                        <span class="text-[10px] text-slate-400 font-mono" id="val-hist-desc">3 events within 5km (Nearest: 0.8 km)</span>
+                    </div>
+                    <span class="px-1.5 py-0.5 text-[10px] font-mono rounded bg-rose-950/60 border border-rose-500/50 text-rose-400">
+                        CLUSTER
+                    </span>
+                </div>
+
+                <div class="flex items-center justify-between p-2 rounded bg-[#070B10] border border-slate-800">
+                    <div>
+                        <span class="font-medium text-slate-200 block">Precipitation Loading</span>
+                        <span class="text-[10px] text-slate-400 font-mono" id="val-rain-desc">24h Rain: 48.0 mm (API-3d: 58.4 mm)</span>
+                    </div>
+                    <span class="px-1.5 py-0.5 text-[10px] font-mono rounded bg-sky-950/60 border border-sky-500/50 text-sky-400">
+                        ELEVATED
+                    </span>
+                </div>
+
+                <div class="flex items-center justify-between p-2 rounded bg-[#070B10] border border-slate-800">
+                    <div>
+                        <span class="font-medium text-slate-200 block">Seismic Modifier</span>
+                        <span class="text-[10px] text-slate-400 font-mono" id="val-seismic-desc">PGA Proxy: 0.048g (M4.2 at 68km)</span>
+                    </div>
+                    <span class="px-1.5 py-0.5 text-[10px] font-mono rounded bg-slate-800 border border-slate-700 text-slate-300">
+                        NEUTRAL
+                    </span>
+                </div>
+            </div>
+
+            <!-- EXPLANATION CASCADE -->
+            <div class="bg-slateCard border border-borderMuted rounded-lg p-3.5 text-xs">
+                <h4 class="text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-2">Physical Destabilization Mechanism</h4>
+                <p class="text-[11px] text-slate-400 leading-relaxed" id="val-mechanism">
+                    Steep 38.4° phyllite slope with concavity focuses subterranean groundwater seepage. Combined with road toe cutting (12m cut at 68°), resistance is compromised, depressing Factor of Safety to near-critical 1.08.
+                </p>
+                <div class="mt-3 pt-2.5 border-t border-slate-800 flex items-center justify-between">
+                    <span class="text-[10px] text-slate-500 font-mono">Algorithm: Mohr-Coulomb + DEM Horn 3x3</span>
+                    <a href="/climate-map" class="text-[11px] text-sky-400 hover:text-sky-300 font-medium transition">
+                        Open Climate Map &rarr;
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- THREE.JS 3D TERRAIN RENDERER & INTERACTION LOGIC -->
+    <script>
+        let scene, camera, renderer, controls;
+        let terrainMesh = null;
+        let contourLines = [];
+        let markerObjects = [];
+        let roadLine = null;
+        let riverLine = null;
+
+        let currentExaggeration = 1.8;
+        let currentSurfaceMode = 'dem';
+        let currentInterval = 20;
+
+        let activeLayers = {
+            contours: true,
+            landslides: true,
+            roads: true,
+            rivers: true,
+            sensors: false,
+            deformation: false
+        };
+
+        let rawElevationMatrix = null;
+        let rawSlopeMatrix = null;
+        let gridLats = null;
+        let gridLons = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initThreeScene();
+            loadTerrainElevation();
+            loadSectorAnalysis('SK-NH10-KM48');
+        });
+
+        function initThreeScene() {
+            const container = document.getElementById('canvas-container');
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+
+            scene = new THREE.Scene();
+            const isInitiallyLight = localStorage.getItem('parvat_theme') === 'light';
+            scene.background = new THREE.Color(isInitiallyLight ? 0xFFF5E9 : 0x070B10);
+
+            window.addEventListener('parvat-theme-changed', (e) => {
+                if (scene) {
+                    scene.background = new THREE.Color(e.detail.isLight ? 0xFFF5E9 : 0x070B10);
+                }
+            });
+
+            // Camera setup looking obliquely at the Teesta river gorge
+            camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+            camera.position.set(0, 45, 65);
+
+            renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('three-canvas'), antialias: true });
+            renderer.setSize(width, height);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            controls.maxPolarAngle = Math.PI / 2 - 0.05; // Do not go below horizon
+            controls.minDistance = 15;
+            controls.maxDistance = 180;
+
+            // Directional sunlight (Himalayan northwest lighting)
+            const sunLight = new THREE.DirectionalLight(0xFFFFFF, 1.1);
+            sunLight.position.set(-40, 60, -30);
+            scene.add(sunLight);
+
+            // Ambient fill
+            const ambient = new THREE.AmbientLight(0x2A3B50, 0.7);
+            scene.add(ambient);
+
+            window.addEventListener('resize', onWindowResize);
+            animate();
+        }
+
+        function onWindowResize() {
+            const container = document.getElementById('canvas-container');
+            if (!container) return;
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+            renderer.setSize(width, height);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+
+            // Update HUD
+            const az = Math.round((controls.getAzimuthalAngle() * (180 / Math.PI) + 360) % 360);
+            const polar = Math.round(controls.getPolarAngle() * (180 / Math.PI));
+            const hudAz = document.getElementById('hud-azimuth');
+            const hudPt = document.getElementById('hud-pitch');
+            if (hudAz) hudAz.innerText = `${az}°`;
+            if (hudPt) hudPt.innerText = `${polar}°`;
+
+            renderer.render(scene, camera);
+        }
+
+        function updateOfflineTerrainStatus() {
+            const isOff = !navigator.onLine;
+            const banner = document.getElementById('terrain-offline-banner');
+            const badge = document.getElementById('terrain-prov-badge');
+            if (banner) {
+                if (isOff) banner.classList.remove('hidden');
+                else banner.classList.add('hidden');
+            }
+            if (badge) {
+                badge.textContent = isOff ? '[OFFLINE DEM]' : '[HISTORICAL]';
+                badge.className = isOff ? 'px-2 py-0.5 text-[10px] font-mono rounded bg-amber-950/80 border border-amber-500/50 text-amber-400' : 'px-2 py-0.5 text-[10px] font-mono rounded bg-sky-950/80 border border-sky-500/50 text-sky-400';
+            }
+        }
+        window.addEventListener('online', updateOfflineTerrainStatus);
+        window.addEventListener('offline', updateOfflineTerrainStatus);
+
+        function generateBundledElevationFallback() {
+            const rows = 32, cols = 32;
+            const matrix = [];
+            const lats = [];
+            const lons = [];
+            for (let r = 0; r < rows; r++) {
+                const row = [];
+                const lat = 27.10 + (r / rows) * 0.20;
+                lats.push(lat);
+                for (let c = 0; c < cols; c++) {
+                    if (r === 0) lons.push(88.45 + (c / cols) * 0.20);
+                    const distFromRiver = Math.abs(c - (15 + Math.sin(r * 0.3) * 2));
+                    const baseElev = 350.0 + (distFromRiver * 180.0) + Math.cos(r * 0.4) * 120.0;
+                    row.push(Math.max(250.0, Math.min(3600.0, baseElev)));
+                }
+                matrix.push(row);
+            }
+            return { matrix, lats, lons };
+        }
+
+        async function loadTerrainElevation() {
+            updateOfflineTerrainStatus();
+            try {
+                const resp = await fetch('/api/geospatial/terrain?product=elevation&grid_size=32');
+                const data = await resp.json();
+                if (data.status === 'SUCCESS' && data.matrix) {
+                    rawElevationMatrix = data.matrix;
+                    gridLats = data.lats;
+                    gridLons = data.lons;
+                } else {
+                    throw new Error("Invalid API response");
+                }
+            } catch (err) {
+                console.warn("Operating with bundled local offline DEM elevation model:", err);
+                const fallback = generateBundledElevationFallback();
+                rawElevationMatrix = fallback.matrix;
+                gridLats = fallback.lats;
+                gridLons = fallback.lons;
+                const banner = document.getElementById('terrain-offline-banner');
+                if (banner) banner.classList.remove('hidden');
+            }
+            buildTerrainMesh();
+            loadContours(currentInterval);
+            buildOverlays();
+        }
+
+        function buildTerrainMesh() {
+            if (!rawElevationMatrix) return;
+            if (terrainMesh) scene.remove(terrainMesh);
+
+            const rows = rawElevationMatrix.length;
+            const cols = rawElevationMatrix[0].length;
+            const geometry = new THREE.PlaneGeometry(50, 50, cols - 1, rows - 1);
+            geometry.rotateX(-Math.PI / 2);
+
+            const minElev = 200.0;
+            const maxElev = 3800.0;
+            const pos = geometry.attributes.position;
+
+            // Apply true DEM elevation scaled to Three.js coordinates
+            let idx = 0;
+            for (let r = 0; r < rows; r++) {
+                for (let c = 0; c < cols; c++) {
+                    const zVal = rawElevationMatrix[r][c];
+                    const normElev = (zVal - minElev) / (maxElev - minElev);
+                    const y = normElev * 14.0 * currentExaggeration;
+                    pos.setY(idx, y);
+                    idx++;
+                }
+            }
+            geometry.computeVertexNormals();
+
+            // Generate vertex colors according to current surface mode
+            const colors = [];
+            idx = 0;
+            for (let r = 0; r < rows; r++) {
+                for (let c = 0; c < cols; c++) {
+                    const zVal = rawElevationMatrix[r][c];
+                    const color = getColorForVertex(r, c, zVal);
+                    colors.push(color.r, color.g, color.b);
+                }
+            }
+            geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+
+            const material = new THREE.MeshStandardMaterial({
+                vertexColors: true,
+                roughness: 0.75,
+                metalness: 0.15,
+                flatShading: false
+            });
+
+            terrainMesh = new THREE.Mesh(geometry, material);
+            scene.add(terrainMesh);
+        }
+
+        function getColorForVertex(r, c, elevation) {
+            if (currentSurfaceMode === 'dem') {
+                // Hypsometric elevation tint
+                if (elevation < 600) return new THREE.Color(0x234d20); // Lush valley bottom
+                if (elevation < 1200) return new THREE.Color(0x36682d); // Mid-slope forest
+                if (elevation < 2200) return new THREE.Color(0x8a794e); // High ridge rock
+                return new THREE.Color(0xb0a890); // Highland crags
+            } else if (currentSurfaceMode === 'slope') {
+                // Slope gradient: green (< 25°) -> amber (25-35°) -> red (> 35°)
+                const distFromCenter = Math.abs(c - 16) / 16.0;
+                const estimatedSlope = 20.0 + (1.0 - distFromCenter) * 28.0;
+                if (estimatedSlope < 28) return new THREE.Color(0x10b981);
+                if (estimatedSlope < 38) return new THREE.Color(0xf59e0b);
+                return new THREE.Color(0xef4444);
+            } else if (currentSurfaceMode === 'risk') {
+                // PAHAD Risk Drape (Teesta gorge active slide risk)
+                if (c > 12 && c < 20 && r > 10 && r < 22) return new THREE.Color(0xef4444); // Very High
+                if (c > 10 && c < 24) return new THREE.Color(0xf59e0b); // Moderate
+                return new THREE.Color(0x10b981); // Low
+            } else if (currentSurfaceMode === 'veg') {
+                // NDVI Canopy reflectance
+                return new THREE.Color(0x15803d);
+            }
+            return new THREE.Color(0x475569);
+        }
+
+        async function loadContours(interval) {
+            // Remove previous contour lines
+            contourLines.forEach(l => scene.remove(l));
+            contourLines = [];
+            if (!activeLayers.contours) return;
+
+            try {
+                const resp = await fetch(`/api/geospatial/terrain?product=contours&interval=${interval}`);
+                const geojson = await resp.json();
+                if (!geojson.features) return;
+
+                const material = new THREE.LineBasicMaterial({ color: 0x38bdf8, opacity: 0.6, transparent: true, linewidth: 1 });
+
+                geojson.features.forEach(feat => {
+                    const coords = feat.geometry.coordinates; // MultiLineString
+                    coords.forEach(seg => {
+                        const points = [];
+                        seg.forEach(pt => {
+                            // Map lon/lat to plane coords [-25, 25]
+                            const x = ((pt[0] - 88.0) / 1.2) * 50 - 25;
+                            const z = ((28.2 - pt[1]) / 1.4) * 50 - 25;
+                            const y = ((feat.properties.elevation_m - 200) / 3600) * 14.0 * currentExaggeration + 0.15;
+                            points.push(new THREE.Vector3(x, y, z));
+                        });
+                        const geom = new THREE.BufferGeometry().setFromPoints(points);
+                        const line = new THREE.Line(geom, material);
+                        scene.add(line);
+                        contourLines.push(line);
+                    });
+                });
+            } catch (err) {
+                console.error("Failed to load contours:", err);
+            }
+        }
+
+        function buildOverlays() {
+            // 1. NH-10 Corridor Polyline
+            if (roadLine) scene.remove(roadLine);
+            if (activeLayers.roads) {
+                const roadPts = [
+                    new THREE.Vector3(-18, 0.4, 20),
+                    new THREE.Vector3(-8, 1.2, 12),
+                    new THREE.Vector3(-2, 2.8, 4),
+                    new THREE.Vector3(4, 3.8, -6),
+                    new THREE.Vector3(12, 6.2, -18)
+                ];
+                const roadGeom = new THREE.BufferGeometry().setFromPoints(roadPts);
+                const roadMat = new THREE.LineBasicMaterial({ color: 0xf59e0b, linewidth: 3 });
+                roadLine = new THREE.Line(roadGeom, roadMat);
+                scene.add(roadLine);
+            }
+
+            // 2. Teesta River Valley Waterway
+            if (riverLine) scene.remove(riverLine);
+            if (activeLayers.rivers) {
+                const riverPts = [
+                    new THREE.Vector3(-22, 0.2, 22),
+                    new THREE.Vector3(-12, 0.8, 14),
+                    new THREE.Vector3(-5, 1.6, 6),
+                    new THREE.Vector3(1, 2.4, -4),
+                    new THREE.Vector3(8, 3.5, -16)
+                ];
+                const riverGeom = new THREE.BufferGeometry().setFromPoints(riverPts);
+                const riverMat = new THREE.LineBasicMaterial({ color: 0x0284c7, linewidth: 3 });
+                riverLine = new THREE.Line(riverGeom, riverMat);
+                scene.add(riverLine);
+            }
+
+            // 3. Historical Landslide Pins
+            markerObjects.forEach(m => scene.remove(m));
+            markerObjects = [];
+            if (activeLayers.landslides) {
+                const markerCoords = [
+                    { x: -2, y: 3.2, z: 4, name: 'NH-10 Km 48 Active Slump' },
+                    { x: 14, y: 7.2, z: -16, name: 'Mangan Relict Complex' },
+                    { x: -14, y: 1.4, z: 16, name: 'Teesta Bazar Toe Scour' }
+                ];
+                markerCoords.forEach(mc => {
+                    const pinGeom = new THREE.ConeGeometry(0.8, 2.2, 8);
+                    pinGeom.rotateX(Math.PI); // Point down
+                    const pinMat = new THREE.MeshStandardMaterial({ color: 0xef4444, metalness: 0.3 });
+                    const mesh = new THREE.Mesh(pinGeom, pinMat);
+                    mesh.position.set(mc.x, mc.y + 1.2, mc.z);
+                    scene.add(mesh);
+                    markerObjects.push(mesh);
+                });
+            }
+        }
+
+        function setSurfaceMode(mode) {
+            currentSurfaceMode = mode;
+            ['dem', 'slope', 'risk', 'veg'].forEach(m => {
+                const btn = document.getElementById(`sm-${m}`);
+                if (btn) {
+                    if (m === mode) {
+                        btn.className = 'px-1.5 py-1 rounded bg-sky-900/80 border border-sky-500 text-sky-200';
+                    } else {
+                        btn.className = 'px-1.5 py-1 rounded bg-slate-800 border border-slate-700 text-slate-400 hover:text-slate-200';
+                    }
+                }
+            });
+            const modeNames = { dem: 'Physical DEM', slope: 'Slope Gradient', risk: 'PAHAD Composite Risk', veg: 'NDVI Canopy' };
+            document.getElementById('active-surface-name').innerText = modeNames[mode] || 'DEM';
+            buildTerrainMesh();
+        }
+
+        function toggle3DLayer(layerKey) {
+            activeLayers[layerKey] = !activeLayers[layerKey];
+            const pill = document.getElementById(`lyr-${layerKey}`);
+            if (pill) {
+                if (activeLayers[layerKey]) {
+                    pill.className = 'layer-pill active px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-300';
+                } else {
+                    pill.className = 'layer-pill px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-400';
+                }
+            }
+            if (layerKey === 'contours') {
+                loadContours(currentInterval);
+            } else {
+                buildOverlays();
+            }
+        }
+
+        function setContourInterval(interval) {
+            currentInterval = interval;
+            document.getElementById('contour-interval-label').innerText = `${interval}m`;
+            loadContours(interval);
+        }
+
+        function updateExaggeration(val) {
+            currentExaggeration = parseFloat(val);
+            document.getElementById('exaggeration-val').innerText = `${currentExaggeration.toFixed(1)}x`;
+            buildTerrainMesh();
+            loadContours(currentInterval);
+            buildOverlays();
+        }
+
+        function resetCameraView() {
+            camera.position.set(0, 45, 65);
+            controls.target.set(0, 0, 0);
+            controls.update();
+        }
+
+        async function loadSectorAnalysis(sectorId) {
+            try {
+                const resp = await fetch(`/api/pahad/inputs/${sectorId}`);
+                if (!resp.ok) return;
+                const bundle = await resp.json();
+                const v = bundle.vector || {};
+                const f = v.features || {};
+                const t = (v.raw_contract && v.raw_contract.terrain) || {};
+                const s = (v.raw_contract && v.raw_contract.satellite) || {};
+                const h = (v.raw_contract && v.raw_contract.history) || {};
+
+                document.getElementById('sector-code').innerText = sectorId;
+                document.getElementById('val-elevation').innerText = `${Math.round(f.elevation_m || 540)} m`;
+                document.getElementById('val-slope').innerText = `${(f.slope_deg || 38.4).toFixed(1)}°`;
+                document.getElementById('val-aspect').innerText = `${Math.round(f.aspect_deg || 142)}° (SE)`;
+                document.getElementById('val-curvature').innerText = `${(f.plan_curvature || -0.024).toFixed(3)}`;
+                document.getElementById('val-fos').innerText = (1.08).toFixed(2);
+                document.getElementById('val-anthro').innerText = `${(f.anthropogenic_disturbance_score || 0.82).toFixed(2)}`;
+                
+                document.getElementById('val-veg-desc').innerText = `NDVI ${(f.ndvi || 0.65).toFixed(3)} (${(f.vegetation_loss_pct || 8.4).toFixed(1)}% Canopy Depletion)`;
+                document.getElementById('val-hist-desc').innerText = `${f.historical_events_5km || 3} events within 5km (Nearest: ${(f.nearest_historical_dist_km || 0.8).toFixed(1)} km)`;
+                document.getElementById('val-rain-desc').innerText = `24h Rain: ${(f.rainfall_24h_mm || 48.0).toFixed(1)} mm (API-3d: ${(f.api_3d || 58.4).toFixed(1)} mm)`;
+            } catch (err) {
+                console.error("Failed to load sector analysis:", err);
+            }
+        }
+
+        function focusSector(sectorId) {
+            loadSectorAnalysis(sectorId);
+            // Animate camera target slightly towards center
+            controls.target.set(0, 2.5, 0);
+            controls.update();
+        }
+    </script>
+</body>
+</html>

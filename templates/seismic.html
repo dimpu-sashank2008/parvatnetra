@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-[#070B10]">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PARVAT NETRA • Seismic Intelligence & Tectonic Destabilization Workspace</title>
+    <link rel="icon" type="image/png" href="/static/images/parvat_netra_emblem.png">
+    
+    <!-- Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Inter"', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace']
+                    },
+                    colors: {
+                        obsidian: '#070B10',
+                        obsidianLight: '#0B132B',
+                        slateCard: '#0F172A',
+                        borderMuted: '#1E293B',
+                        accentCyan: '#06B6D4',
+                        accentAmber: '#F59E0B',
+                        accentRed: '#EF4444',
+                        accentGreen: '#10B981'
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Leaflet & Chart.js -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="/static/css/parvat_theme.css">
+    <script src="/static/js/theme.js"></script>
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #070B10; color: #F1F5F9; }
+        .font-mono { font-family: 'JetBrains Mono', monospace !important; }
+        
+        /* Custom scrollbars */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #070B10; }
+        ::-webkit-scrollbar-thumb { background: #1E293B; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #334155; }
+        
+        /* Leaflet custom styling */
+        .leaflet-container { background: #070B10 !important; }
+        .leaflet-popup-content-wrapper {
+            background: #0F172A !important;
+            color: #F8FAFC !important;
+            border: 1px solid #334155 !important;
+            border-radius: 6px !important;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.7) !important;
+        }
+        .leaflet-popup-tip { background: #0F172A !important; }
+        
+        /* Layer pills */
+        .layer-pill {
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .layer-pill.active {
+            background-color: #7C3AED;
+            border-color: #A78BFA;
+            color: #FFFFFF;
+        }
+    </style>
+</head>
+<body class="h-full flex flex-col overflow-hidden">
+
+    <!-- TOP INSTITUTIONAL NAVIGATION -->
+    <header class="h-14 bg-[#0B132B] border-b border-borderMuted px-4 flex items-center justify-between shrink-0 z-30">
+        <div class="flex items-center space-x-3">
+            <a href="/" class="flex items-center space-x-2 text-slate-300 hover:text-white transition">
+                <img src="/static/images/parvat_netra_emblem.png" alt="Emblem" class="w-8 h-8 object-contain">
+                <div>
+                    <span class="font-bold tracking-wider text-sm block leading-none">PARVAT NETRA</span>
+                    <span class="text-[10px] text-purple-400 font-mono tracking-wider block">PAHAD AI DISASTER INTELLIGENCE</span>
+                </div>
+            </a>
+            <div class="h-5 w-px bg-slate-700 hidden sm:block"></div>
+            <div class="hidden sm:block">
+                <h1 class="text-xs font-semibold text-slate-100 uppercase tracking-wider">SEISMIC INTELLIGENCE</h1>
+                <p class="text-[10px] text-slate-400 leading-tight">Recent seismic activity and potential landslide-trigger influence across NER</p>
+            </div>
+        </div>
+        
+        <!-- Navigation Links -->
+        <div class="flex items-center space-x-2">
+            <a href="/" class="px-2.5 py-1 text-xs rounded border border-slate-700 hover:border-slate-500 text-slate-300 transition">
+                Dashboard
+            </a>
+            <a href="/pahad-ai" class="px-2.5 py-1 text-xs rounded border border-cyan-700 bg-cyan-950/40 text-cyan-300 hover:border-cyan-500 transition">
+                PAHAD AI
+            </a>
+            <a href="/climate-map" class="px-2.5 py-1 text-xs rounded border border-slate-700 hover:border-slate-500 text-slate-300 transition">
+                Climate Map
+            </a>
+            <a href="/seismic" class="px-2.5 py-1 text-xs rounded bg-purple-950/70 border border-purple-500 text-purple-200 font-medium transition">
+                Seismic
+            </a>
+            <a href="/terrain-3d" class="px-2.5 py-1 text-xs rounded border border-slate-700 hover:border-slate-500 text-slate-300 transition">
+                3D Terrain
+            </a>
+            <a href="/console" class="px-2.5 py-1 text-xs rounded border border-slate-700 hover:border-slate-500 text-slate-300 transition hidden md:inline-block">
+                Console
+            </a>
+            <div class="h-4 w-px bg-slate-700"></div>
+            <span id="header-prov-badge" class="px-2 py-0.5 text-[10px] font-mono rounded bg-purple-950/80 border border-purple-500/50 text-purple-300">
+                [LIVE]
+            </span>
+            <button id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Switch color theme" title="Switch color theme" class="px-2.5 py-1 bg-[#12213D] border border-blue-300/30 rounded text-sky-100 hover:bg-[#1A3158] hover:text-white transition flex items-center gap-1.5 text-xs font-semibold shadow-xs active:scale-95 cursor-pointer">
+                <span id="theme-icon" class="flex items-center justify-center">
+                    <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                </span>
+                <span id="theme-text" class="text-[11px] hidden sm:inline">Light Mode</span>
+            </button>
+            <button onclick="refreshSeismicData()" title="Refresh Seismic Feeds" class="p-1.5 rounded border border-slate-700 hover:bg-slate-800 text-slate-300 transition">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN WORKSPACE LAYOUT (MAP + SIDE DRAWER) -->
+    <div class="flex-1 flex flex-col lg:flex-row overflow-hidden relative">
+
+        <!-- PRIMARY MAP CANVAS -->
+        <div class="flex-1 relative h-full bg-[#070B10]">
+            <div id="seismic-map-canvas" class="w-full h-full z-10"></div>
+            
+            <!-- FLOATING LAYER & BASEMAP CONTROL PANEL -->
+            <div class="absolute top-3 left-3 z-20 bg-slateCard/95 backdrop-blur-md border border-slate-700/80 rounded-lg p-3 shadow-2xl max-w-xs sm:max-w-sm text-xs select-none">
+                <div class="flex items-center justify-between pb-2 mb-2 border-b border-slate-800">
+                    <span class="font-semibold text-slate-200 uppercase tracking-wider text-[11px] flex items-center gap-1.5">
+                        <svg class="w-3.5 h-3.5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        Seismic Layers & Basemap
+                    </span>
+                    <span class="text-[10px] text-slate-400 font-mono" id="layer-active-count">5 Active</span>
+                </div>
+                
+                <!-- BASEMAP SELECTOR -->
+                <div class="mb-2.5">
+                    <span class="text-[10px] text-slate-400 uppercase tracking-wider block mb-1">Basemap</span>
+                    <div class="grid grid-cols-4 gap-1 text-[10px] font-medium">
+                        <button onclick="switchBasemap('dark')" id="bm-dark" class="px-1.5 py-1 rounded bg-purple-950/80 border border-purple-500 text-purple-200">Dark</button>
+                        <button onclick="switchBasemap('street')" id="bm-street" class="px-1.5 py-1 rounded bg-slate-800 border border-slate-700 text-slate-400 hover:text-slate-200">Street</button>
+                        <button onclick="switchBasemap('satellite')" id="bm-satellite" class="px-1.5 py-1 rounded bg-slate-800 border border-slate-700 text-slate-400 hover:text-slate-200">Satellite</button>
+                        <button onclick="switchBasemap('topo')" id="bm-topo" class="px-1.5 py-1 rounded bg-slate-800 border border-slate-700 text-slate-400 hover:text-slate-200">Topo</button>
+                    </div>
+                </div>
+
+                <!-- SEISMIC OVERLAYS -->
+                <div class="mb-2.5">
+                    <span class="text-[10px] text-slate-400 uppercase tracking-wider block mb-1">Seismic Overlays</span>
+                    <div class="flex flex-wrap gap-1 text-[10px]">
+                        <span onclick="toggleLayer('epicenters')" id="lyr-epicenters" class="layer-pill active px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-300">Epicenters</span>
+                        <span onclick="toggleLayer('influence_buffers')" id="lyr-influence_buffers" class="layer-pill active px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-300">Affected Zones</span>
+                        <span onclick="toggleLayer('vulnerable_sectors')" id="lyr-vulnerable_sectors" class="layer-pill active px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-300">Corridor Sectors</span>
+                    </div>
+                </div>
+
+                <!-- INFRASTRUCTURE & FAULTS -->
+                <div>
+                    <span class="text-[10px] text-slate-400 uppercase tracking-wider block mb-1">Infrastructure & Faults</span>
+                    <div class="flex flex-wrap gap-1 text-[10px]">
+                        <span onclick="toggleLayer('major_faults')" id="lyr-major_faults" class="layer-pill active px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-300">MCT / MBT Faults</span>
+                        <span onclick="toggleLayer('roads')" id="lyr-roads" class="layer-pill active px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-300">Strategic Roads</span>
+                        <span onclick="toggleLayer('settlements')" id="lyr-settlements" class="layer-pill px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-400">Settlements</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- REGIONAL SUMMARY BADGE (BOTTOM LEFT) -->
+            <div class="absolute bottom-4 left-3 z-20 flex items-center space-x-2 p-2 bg-slateCard/90 backdrop-blur-md border border-slate-800 rounded-md text-xs">
+                <span class="w-2 h-2 rounded-full bg-purple-400 animate-pulse"></span>
+                <span class="text-[11px] text-slate-300">NER Seismic Bounding Box: <strong class="text-white font-mono">20°–30°N, 87°–98°E</strong></span>
+                <span class="text-[10px] text-slate-500 font-mono">| MCT / MBT Active Arc</span>
+            </div>
+        </div>
+
+        <!-- RIGHT INTELLIGENCE DRAWER (SCROLLABLE) -->
+        <div class="w-full lg:w-[420px] xl:w-[460px] bg-[#070B10] border-t lg:border-t-0 lg:border-l border-borderMuted flex flex-col h-auto lg:h-full z-20 shrink-0">
+            
+            <!-- PANEL TABS -->
+            <div class="flex border-b border-borderMuted bg-[#0B132B] text-xs font-medium shrink-0">
+                <button onclick="switchTab('event-details')" id="tab-btn-event-details" class="flex-1 py-2.5 text-center border-b-2 border-purple-500 text-white font-semibold transition">
+                    Event Details
+                </button>
+                <button onclick="switchTab('impact-matrix')" id="tab-btn-impact-matrix" class="flex-1 py-2.5 text-center border-b-2 border-transparent text-slate-400 hover:text-slate-200 transition">
+                    Sector Re-evaluation
+                </button>
+                <button onclick="switchTab('recent-catalog')" id="tab-btn-recent-catalog" class="flex-1 py-2.5 text-center border-b-2 border-transparent text-slate-400 hover:text-slate-200 transition">
+                    Catalog (<span id="tab-event-count">0</span>)
+                </button>
+            </div>
+
+            <!-- TAB CONTENT CONTAINER -->
+            <div class="flex-1 overflow-y-auto p-4 space-y-4">
+                
+                <!-- TAB 1: EARTHQUAKE EVENT DETAILS & PAHAD INTERPRETATION -->
+                <div id="tab-event-details" class="space-y-4">
+                    
+                    <!-- SELECTED EVENT CARD -->
+                    <div class="bg-slateCard border border-borderMuted rounded-lg p-3.5">
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="text-xs text-slate-400 font-mono uppercase" id="evt-id">SEIS-NCS-LIVE</span>
+                            <span id="evt-prov-badge" class="px-2 py-0.5 text-[10px] font-mono rounded bg-purple-950/80 border border-purple-500/50 text-purple-300">
+                                [LIVE]
+                            </span>
+                        </div>
+                        <h2 class="text-base font-bold text-white leading-snug" id="evt-place">Loading recent seismic data...</h2>
+                        <p class="text-xs text-slate-400 flex items-center gap-1.5 mt-0.5">
+                            <span id="evt-coords" class="font-mono">--°N, --°E</span> • <span id="evt-time">Origin: --</span>
+                        </p>
+                        <div class="mt-2.5 pt-2.5 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-400">
+                            <span>Provider: <strong class="text-slate-200" id="evt-provider-name">National Center for Seismology (NCS)</strong></span>
+                            <span class="font-mono" id="evt-status">STATUS: OK</span>
+                        </div>
+                    </div>
+
+                    <!-- EVENT TELEMETRY METRICS -->
+                    <div class="grid grid-cols-3 gap-2 text-xs">
+                        <div class="bg-[#070B10] p-2.5 rounded border border-slate-800 text-center">
+                            <span class="text-[10px] text-slate-400 block">Magnitude</span>
+                            <span class="text-lg font-bold font-mono text-purple-400" id="evt-mag">--</span>
+                        </div>
+                        <div class="bg-[#070B10] p-2.5 rounded border border-slate-800 text-center">
+                            <span class="text-[10px] text-slate-400 block">Depth</span>
+                            <span class="text-lg font-bold font-mono text-cyan-400" id="evt-depth">-- <span class="text-xs font-normal text-slate-400">km</span></span>
+                        </div>
+                        <div class="bg-[#070B10] p-2.5 rounded border border-slate-800 text-center">
+                            <span class="text-[10px] text-slate-400 block">Affected Radius</span>
+                            <span class="text-lg font-bold font-mono text-amber-400" id="evt-radius">-- <span class="text-xs font-normal text-slate-400">km</span></span>
+                        </div>
+                    </div>
+
+                    <!-- DISTANCE TO SELECTED CORRIDOR -->
+                    <div class="bg-slateCard border border-borderMuted rounded-lg p-3.5 space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-semibold text-slate-300">Sector Geodesic Proximity</span>
+                            <select id="select-target-sector" onchange="onTargetSectorChanged()" class="bg-slate-900 border border-slate-700 text-xs text-slate-200 rounded px-2 py-1 font-mono">
+                                <option value="SK-NH10-KM48">SK-NH10-KM48 (29th Mile)</option>
+                                <option value="SK-SINGTAM-01">SK-SINGTAM-01 (Singtam)</option>
+                                <option value="SK-DIKCHU-01">SK-DIKCHU-01 (Dikchu North)</option>
+                                <option value="SK-MANGAN-01">SK-MANGAN-01 (Mangan Complex)</option>
+                                <option value="MZ-HUNTHAR-01">MZ-HUNTHAR-01 (Hunthar Aizawl)</option>
+                                <option value="AS-GUWAHATI-01">AS-GUWAHATI-01 (Guwahati Hills)</option>
+                            </select>
+                        </div>
+                        <div class="flex items-center justify-between text-xs pt-1 border-t border-slate-800">
+                            <span class="text-slate-400">Distance to Epicenter:</span>
+                            <span class="font-mono text-white font-semibold" id="sector-dist-km">-- km</span>
+                        </div>
+                        <div class="flex items-center justify-between text-xs">
+                            <span class="text-slate-400">Ground-Shaking Proxy (PGA):</span>
+                            <span class="font-mono text-purple-300 font-semibold" id="sector-pga-proxy">-- g</span>
+                        </div>
+                    </div>
+
+                    <!-- PAHAD SEISMIC INTERPRETATION -->
+                    <div class="bg-slateCard border border-borderMuted rounded-lg p-3.5 space-y-3">
+                        <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+                            <div class="flex items-center space-x-1.5">
+                                <span class="w-2 h-2 rounded-full bg-purple-400"></span>
+                                <h3 class="text-xs font-semibold uppercase tracking-wider text-purple-300">PAHAD Seismic Interpretation</h3>
+                            </div>
+                            <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-800 text-slate-300">INTELLIGENCE</span>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-2 text-xs">
+                            <div class="bg-[#070B10] p-2 rounded border border-slate-800">
+                                <span class="text-[10px] text-slate-400 block mb-0.5">Seismic Trigger</span>
+                                <span class="font-bold text-xs font-mono" id="seis-trigger-level">--</span>
+                            </div>
+                            <div class="bg-[#070B10] p-2 rounded border border-slate-800">
+                                <span class="text-[10px] text-slate-400 block mb-0.5">PAHAD Risk Impact</span>
+                                <span class="font-bold text-xs font-mono" id="seis-impact-pts">--</span>
+                            </div>
+                        </div>
+
+                        <!-- SCIENTIFIC GROUNDING & REASON -->
+                        <div class="p-2.5 rounded bg-[#0B132B] border border-slate-800 text-xs text-slate-300 leading-relaxed">
+                            <span class="text-[10px] font-mono uppercase text-purple-400 block mb-1">Trigger Correlation Rationale</span>
+                            <p id="seis-reason-text">
+                                Evaluating spatial overlap between seismic shaking radius and geotechnical slope susceptibility...
+                            </p>
+                        </div>
+
+                        <!-- IMPORTANT SCIENTIFIC DISCLAIMER -->
+                        <div class="p-2 rounded bg-amber-950/30 border border-amber-800/40 text-[11px] text-amber-300/90 leading-tight">
+                            <strong>Physics Note:</strong> An earthquake does not guarantee a landslide. It modifies hillslope shear resistance by inducing transient horizontal pseudostatic acceleration ($k_h$), reducing the Mohr-Coulomb Factor of Safety ($FoS$).
+                        </div>
+                    </div>
+
+                    <!-- EARTHQUAKE → PAHAD CAUSAL FLOW COMPONENT -->
+                    <div class="bg-slateCard border border-borderMuted rounded-lg p-3.5">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-300">Earthquake → PAHAD Flow</h3>
+                            <span class="text-[9px] font-mono text-purple-400 bg-purple-950/60 border border-purple-700/50 px-1.5 py-0.5 rounded">
+                                PROTOTYPE SEISMIC MODIFIER
+                            </span>
+                        </div>
+                        
+                        <div class="space-y-1.5 text-[11px] font-mono">
+                            <div class="flex items-center justify-between p-1.5 rounded bg-[#070B10] border border-slate-800">
+                                <span class="text-slate-400">1. Seismic Event</span>
+                                <span class="text-purple-300 font-semibold" id="flow-event">M --</span>
+                            </div>
+                            <div class="text-center text-slate-600 text-xs">↓ (geodesic decay)</div>
+                            <div class="flex items-center justify-between p-1.5 rounded bg-[#070B10] border border-slate-800">
+                                <span class="text-slate-400">2. Ground Shaking Proxy</span>
+                                <span class="text-amber-300 font-semibold" id="flow-pga">PGA ~ -- g</span>
+                            </div>
+                            <div class="text-center text-slate-600 text-xs">↓ (shear force addition)</div>
+                            <div class="flex items-center justify-between p-1.5 rounded bg-[#070B10] border border-slate-800">
+                                <span class="text-slate-400">3. Susceptible Slope</span>
+                                <span class="text-cyan-300 font-semibold" id="flow-slope">FoS Δ ~ --</span>
+                            </div>
+                            <div class="text-center text-slate-600 text-xs">↓ (fused risk synthesis)</div>
+                            <div class="flex items-center justify-between p-1.5 rounded bg-[#070B10] border border-slate-800">
+                                <span class="text-slate-400">4. Updated CRI Adjustment</span>
+                                <span class="text-rose-400 font-semibold" id="flow-cri">+-- pts</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 2: SECTORS REQUIRING RE-EVALUATION -->
+                <div id="tab-impact-matrix" class="hidden space-y-3">
+                    <div class="bg-slateCard border border-borderMuted rounded-lg p-3.5">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-300">Sectors Requiring Re-evaluation</h3>
+                            <span class="text-[10px] font-mono text-purple-400" id="matrix-summary-badge">0 Elevated</span>
+                        </div>
+                        <p class="text-[11px] text-slate-400 mb-3">
+                            Spatial intersection of seismic influence zones with mountain highway corridors, settlements, and critical infrastructure.
+                        </p>
+                        
+                        <!-- SUMMARY METRICS -->
+                        <div class="grid grid-cols-3 gap-2 text-center text-xs mb-3">
+                            <div class="bg-[#070B10] p-2 rounded border border-slate-800">
+                                <span class="text-[10px] text-slate-400 block">Re-evaluated</span>
+                                <span class="font-bold text-white font-mono" id="stat-reevaluated">8</span>
+                            </div>
+                            <div class="bg-[#070B10] p-2 rounded border border-slate-800">
+                                <span class="text-[10px] text-slate-400 block">Elevated</span>
+                                <span class="font-bold text-amber-400 font-mono" id="stat-elevated">0</span>
+                            </div>
+                            <div class="bg-[#070B10] p-2 rounded border border-slate-800">
+                                <span class="text-[10px] text-slate-400 block">Field Verification</span>
+                                <span class="font-bold text-rose-400 font-mono" id="stat-verify">0</span>
+                            </div>
+                        </div>
+
+                        <!-- SECTOR LIST TABLE -->
+                        <div class="space-y-2" id="impact-sector-container">
+                            <div class="text-center py-6 text-xs text-slate-500 font-mono">
+                                Loading seismic impact rankings across NER...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 3: RECENT SEISMIC CATALOG -->
+                <div id="tab-recent-catalog" class="hidden space-y-2">
+                    <div class="flex items-center justify-between pb-1">
+                        <span class="text-xs text-slate-400 font-mono">Showing recent events in NER</span>
+                        <div class="flex items-center space-x-1 text-[10px]">
+                            <button onclick="filterCatalog(2.0)" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">M2.0+</button>
+                            <button onclick="filterCatalog(3.5)" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">M3.5+</button>
+                            <button onclick="filterCatalog(4.5)" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">M4.5+</button>
+                        </div>
+                    </div>
+                    <div id="catalog-list-container" class="space-y-1.5">
+                        <div class="text-center py-6 text-xs text-slate-500 font-mono">
+                            Fetching seismic catalog...
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- CLIENT LOGIC -->
+    <script>
+        // State
+        let map;
+        let basemaps = {};
+        let activeLayers = {
+            epicenters: true,
+            influence_buffers: true,
+            vulnerable_sectors: true,
+            major_faults: true,
+            roads: true,
+            settlements: false
+        };
+        let layerGroups = {};
+        let currentEvents = [];
+        let selectedEvent = null;
+        let selectedSectorId = "SK-NH10-KM48";
+        let impactRankings = [];
+
+        // NER Monitoring Corridors & Sectors
+        const SECTORS = {
+            "SK-NH10-KM48": { name: "NH-10 Km 48 (29th Mile)", lat: 27.0500, lon: 88.4800, state: "Sikkim", baseSusceptibility: "HIGH" },
+            "SK-SINGTAM-01": { name: "Singtam Teesta Basin", lat: 27.2300, lon: 88.5000, state: "Sikkim", baseSusceptibility: "HIGH" },
+            "SK-DIKCHU-01": { name: "Dikchu Hydro Sector", lat: 27.3800, lon: 88.5500, state: "Sikkim", baseSusceptibility: "VERY HIGH" },
+            "SK-MANGAN-01": { name: "Mangan North Sikkim Corridor", lat: 27.5100, lon: 88.5300, state: "Sikkim", baseSusceptibility: "EXTREME" },
+            "MZ-HUNTHAR-01": { name: "Hunthar Veng Slope", lat: 23.7300, lon: 92.7100, state: "Mizoram", baseSusceptibility: "HIGH" },
+            "AS-GUWAHATI-01": { name: "Guwahati Hills Corridor", lat: 26.1400, lon: 91.7300, state: "Assam", baseSusceptibility: "MODERATE" }
+        };
+
+        // Major Tectonic Fault Traces (MCT & MBT Simplified Representation)
+        const FAULT_LINES = [
+            {
+                name: "Main Central Thrust (MCT) - Sikkim Segment",
+                coords: [[27.65, 88.10], [27.55, 88.45], [27.45, 88.75], [27.35, 89.10]]
+            },
+            {
+                name: "Main Boundary Thrust (MBT) - Foothills",
+                coords: [[26.85, 88.20], [26.90, 88.60], [26.95, 89.00], [27.00, 89.40]]
+            },
+            {
+                name: "Kopili Fault Zone (Assam-Meghalaya)",
+                coords: [[25.40, 92.20], [26.00, 92.80], [26.60, 93.40]]
+            }
+        ];
+
+        // Road Geometry (NH-10 Strategic Lifeline)
+        const NH10_COORDS = [
+            [26.72, 88.43], // Siliguri
+            [26.85, 88.45], // Sevoke
+            [27.05, 88.48], // 29th Mile
+            [27.12, 88.51], // Rangpo
+            [27.23, 88.50], // Singtam
+            [27.33, 88.61]  // Gangtok
+        ];
+
+        document.addEventListener("DOMContentLoaded", () => {
+            initMap();
+            refreshSeismicData();
+            // Periodic background sync every 60 seconds
+            setInterval(refreshSeismicData, 60000);
+        });
+
+        function initMap() {
+            map = L.map('seismic-map-canvas', {
+                center: [26.8, 90.0],
+                zoom: 7,
+                zoomControl: false
+            });
+
+            L.control.zoom({ position: 'topright' }).addTo(map);
+
+            // Basemap Providers
+            basemaps.dark = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+                attribution: '&copy; Esri, HERE, Garmin, &copy; OpenStreetMap contributors',
+                maxZoom: 19,
+                maxNativeZoom: 16
+            }).addTo(map);
+
+            basemaps.street = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap',
+                maxZoom: 19
+            });
+
+            basemaps.satellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                attribution: '&copy; Esri &copy; Earthstar Geographics',
+                maxZoom: 19
+            });
+
+            basemaps.topo = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenTopoMap',
+                maxZoom: 17
+            });
+
+            // Initialize Layer Groups
+            layerGroups.epicenters = L.layerGroup().addTo(map);
+            layerGroups.influence_buffers = L.layerGroup().addTo(map);
+            layerGroups.vulnerable_sectors = L.layerGroup().addTo(map);
+            layerGroups.major_faults = L.layerGroup().addTo(map);
+            layerGroups.roads = L.layerGroup().addTo(map);
+            layerGroups.settlements = L.layerGroup();
+
+            renderStaticOverlays();
+        }
+
+        function switchBasemap(type) {
+            Object.values(basemaps).forEach(bm => map.removeLayer(bm));
+            if (basemaps[type]) {
+                basemaps[type].addTo(map);
+            }
+            ['dark', 'street', 'satellite', 'topo'].forEach(t => {
+                const btn = document.getElementById('bm-' + t);
+                if (btn) {
+                    if (t === type) {
+                        btn.className = "px-1.5 py-1 rounded bg-purple-950/80 border border-purple-500 text-purple-200 font-medium";
+                    } else {
+                        btn.className = "px-1.5 py-1 rounded bg-slate-800 border border-slate-700 text-slate-400 hover:text-slate-200";
+                    }
+                }
+            });
+        }
+
+        function toggleLayer(lyrKey) {
+            activeLayers[lyrKey] = !activeLayers[lyrKey];
+            const pill = document.getElementById('lyr-' + lyrKey);
+            if (pill) {
+                if (activeLayers[lyrKey]) {
+                    pill.classList.add('active');
+                    pill.classList.replace('text-slate-400', 'text-slate-300');
+                    if (layerGroups[lyrKey]) map.addLayer(layerGroups[lyrKey]);
+                } else {
+                    pill.classList.remove('active');
+                    pill.classList.replace('text-slate-300', 'text-slate-400');
+                    if (layerGroups[lyrKey]) map.removeLayer(layerGroups[lyrKey]);
+                }
+            }
+            updateActiveLayerCount();
+        }
+
+        function updateActiveLayerCount() {
+            const count = Object.values(activeLayers).filter(v => v).length;
+            const el = document.getElementById('layer-active-count');
+            if (el) el.textContent = `${count} Active`;
+        }
+
+        function switchTab(tabId) {
+            ['event-details', 'impact-matrix', 'recent-catalog'].forEach(t => {
+                const tabContent = document.getElementById('tab-' + t);
+                const tabBtn = document.getElementById('tab-btn-' + t);
+                if (tabContent && tabBtn) {
+                    if (t === tabId) {
+                        tabContent.classList.remove('hidden');
+                        tabBtn.className = "flex-1 py-2.5 text-center border-b-2 border-purple-500 text-white font-semibold transition";
+                    } else {
+                        tabContent.classList.add('hidden');
+                        tabBtn.className = "flex-1 py-2.5 text-center border-b-2 border-transparent text-slate-400 hover:text-slate-200 transition";
+                    }
+                }
+            });
+        }
+
+        function renderStaticOverlays() {
+            // Render Major Faults
+            FAULT_LINES.forEach(fault => {
+                L.polyline(fault.coords, {
+                    color: '#EC4899',
+                    weight: 2,
+                    dashArray: '4, 4',
+                    opacity: 0.7
+                }).bindTooltip(`<div class="font-mono text-xs"><strong>${fault.name}</strong><br><span class="text-slate-400">Regional Tectonic Shear Boundary</span></div>`, {
+                    sticky: true
+                }).addTo(layerGroups.major_faults);
+            });
+
+            // Render Strategic Roads (NH-10)
+            L.polyline(NH10_COORDS, {
+                color: '#38BDF8',
+                weight: 3,
+                opacity: 0.8
+            }).bindTooltip('<div class="font-mono text-xs"><strong>NH-10 Lifeline Corridor</strong><br><span class="text-slate-400">Siliguri to Gangtok Transit</span></div>', {
+                sticky: true
+            }).addTo(layerGroups.roads);
+
+            // Render Critical Monitoring Sectors
+            Object.entries(SECTORS).forEach(([secId, sec]) => {
+                const marker = L.circleMarker([sec.lat, sec.lon], {
+                    radius: 6,
+                    fillColor: '#06B6D4',
+                    color: '#E0F2FE',
+                    weight: 1.5,
+                    fillOpacity: 0.9
+                });
+
+                marker.bindTooltip(`
+                    <div class="font-mono text-xs">
+                        <strong class="text-white">${sec.name}</strong><br>
+                        <span class="text-slate-300">Base Susceptibility: ${sec.baseSusceptibility}</span>
+                    </div>
+                `, { sticky: true });
+
+                marker.on('click', () => {
+                    document.getElementById('select-target-sector').value = secId;
+                    onTargetSectorChanged();
+                });
+
+                marker.addTo(layerGroups.vulnerable_sectors);
+            });
+        }
+
+        async function refreshSeismicData() {
+            try {
+                // 1. Fetch Recent Events Catalog
+                const recentResp = await fetch('/api/seismic/recent?limit=25&min_mag=2.0');
+                const recentData = await recentResp.json();
+                
+                if (recentData.status === "SUCCESS" && recentData.events && recentData.events.length > 0) {
+                    currentEvents = recentData.events;
+                    selectedEvent = currentEvents[0];
+                    renderEpicenters();
+                    renderRecentCatalog();
+                    updateEventPanel(selectedEvent);
+                } else {
+                    displayDegradedState("No live seismic events returned by regional providers.");
+                }
+
+                // 2. Fetch Impact Matrix for Sectors
+                const impactResp = await fetch('/api/seismic/impact?min_mag=2.5');
+                const impactData = await impactResp.json();
+                if (impactData.status === "SUCCESS" && impactData.impacts) {
+                    impactRankings = impactData.impacts;
+                    renderImpactMatrix();
+                }
+
+                // 3. Fetch Provider Status
+                const statusResp = await fetch('/api/seismic/status');
+                const statusData = await statusResp.json();
+                updateProviderBadges(statusData);
+
+            } catch (err) {
+                console.error("Seismic data refresh error:", err);
+                displayDegradedState("Connectivity to seismic telemetry service interrupted.");
+            }
+        }
+
+        function renderEpicenters() {
+            layerGroups.epicenters.clearLayers();
+            layerGroups.influence_buffers.clearLayers();
+
+            currentEvents.forEach(evt => {
+                const mag = parseFloat(evt.magnitude) || 3.0;
+                const radiusPx = Math.max(5, Math.min(22, (mag - 1.5) * 4.5));
+                
+                // Color ramp by magnitude
+                let color = "#A855F7"; // M < 3.5 (Purple)
+                if (mag >= 4.5) color = "#EF4444"; // M >= 4.5 (Red)
+                else if (mag >= 3.5) color = "#F59E0B"; // M 3.5-4.4 (Amber)
+
+                // Epicenter Symbol
+                const marker = L.circleMarker([evt.latitude, evt.longitude], {
+                    radius: radiusPx,
+                    fillColor: color,
+                    color: '#FFFFFF',
+                    weight: 1.5,
+                    fillOpacity: 0.85
+                });
+
+                // Influence Buffer (Subtle Shaking Proxy Radius)
+                const affRadiusKm = parseFloat(evt.affected_radius_km) || (mag * 12);
+                const bufferCircle = L.circle([evt.latitude, evt.longitude], {
+                    radius: affRadiusKm * 1000,
+                    color: color,
+                    weight: 1,
+                    dashArray: '3, 6',
+                    fillColor: color,
+                    fillOpacity: 0.08
+                });
+
+                bufferCircle.addTo(layerGroups.influence_buffers);
+
+                marker.bindPopup(`
+                    <div class="text-xs font-mono p-1">
+                        <div class="flex items-center justify-between border-b border-slate-700 pb-1 mb-1">
+                            <strong class="text-purple-300">M ${mag.toFixed(1)} Earthquake</strong>
+                            <span class="text-[10px] text-slate-400">${evt.provenance || '[LIVE]'}</span>
+                        </div>
+                        <div><strong>Location:</strong> ${evt.place}</div>
+                        <div><strong>Depth:</strong> ${evt.depth_km} km</div>
+                        <div><strong>Radius:</strong> ${affRadiusKm.toFixed(0)} km</div>
+                        <div><strong>Origin:</strong> ${evt.origin_time}</div>
+                        <div class="mt-2 pt-1 border-t border-slate-700">
+                            <button onclick="selectEventById('${evt.id}')" class="w-full text-center py-1 bg-purple-900/60 hover:bg-purple-800 text-purple-200 rounded border border-purple-500/50">
+                                Inspect PAHAD Impact
+                            </button>
+                        </div>
+                    </div>
+                `);
+
+                marker.on('click', () => {
+                    selectEvent(evt);
+                });
+
+                marker.addTo(layerGroups.epicenters);
+            });
+        }
+
+        function selectEventById(evtId) {
+            const found = currentEvents.find(e => e.id === evtId);
+            if (found) {
+                selectEvent(found);
+                switchTab('event-details');
+                map.setView([found.latitude, found.longitude], 8);
+            }
+        }
+
+        function selectEvent(evt) {
+            selectedEvent = evt;
+            updateEventPanel(evt);
+        }
+
+        function updateEventPanel(evt) {
+            if (!evt) return;
+
+            document.getElementById('evt-id').textContent = evt.id || "SEIS-LIVE";
+            document.getElementById('evt-prov-badge').textContent = evt.provenance || "[LIVE]";
+            document.getElementById('evt-place').textContent = evt.place || "Regional NER Epicenter";
+            document.getElementById('evt-coords').textContent = `${parseFloat(evt.latitude).toFixed(3)}°N, ${parseFloat(evt.longitude).toFixed(3)}°E`;
+            document.getElementById('evt-time').textContent = `Origin: ${evt.origin_time || 'Just now'}`;
+            document.getElementById('evt-provider-name').textContent = evt.source || "NCS / USGS";
+
+            const mag = parseFloat(evt.magnitude) || 3.0;
+            document.getElementById('evt-mag').textContent = mag.toFixed(1);
+            document.getElementById('evt-depth').innerHTML = `${parseFloat(evt.depth_km || 10).toFixed(0)} <span class="text-xs font-normal text-slate-400">km</span>`;
+            
+            const radius = parseFloat(evt.affected_radius_km) || (mag * 12);
+            document.getElementById('evt-radius').innerHTML = `${radius.toFixed(0)} <span class="text-xs font-normal text-slate-400">km</span>`;
+
+            // Calculate impact on currently selected corridor sector
+            evaluateSectorImpact(evt, selectedSectorId);
+        }
+
+        function onTargetSectorChanged() {
+            selectedSectorId = document.getElementById('select-target-sector').value;
+            if (selectedEvent) {
+                evaluateSectorImpact(selectedEvent, selectedSectorId);
+            }
+        }
+
+        function evaluateSectorImpact(evt, secId) {
+            const sector = SECTORS[secId];
+            if (!sector) return;
+
+            // Geodesic distance (Haversine formula in JS)
+            const distKm = calculateHaversine(evt.latitude, evt.longitude, sector.lat, sector.lon);
+            document.getElementById('sector-dist-km').textContent = `${distKm.toFixed(1)} km`;
+
+            // Estimated PGA proxy using Joyner-Boore empirical attenuation approximation
+            const mag = parseFloat(evt.magnitude) || 3.0;
+            const depth = parseFloat(evt.depth_km) || 10.0;
+            const hypocentralDist = Math.sqrt(distKm * distKm + depth * depth);
+            
+            // PGA Proxy log10(PGA) = 0.24*M - log10(R) - 0.0025*R (clamped)
+            let logPga = 0.24 * mag - Math.log10(hypocentralDist) - 0.0025 * hypocentralDist;
+            let pga = Math.max(0.001, Math.min(0.85, Math.pow(10, logPga)));
+            document.getElementById('sector-pga-proxy').textContent = `${pga.toFixed(3)} g`;
+
+            // PAHAD Seismic Modifier Calculation
+            let triggerLevel = "LOW";
+            let modifierPts = 0;
+            let triggerColor = "text-slate-300";
+
+            if (pga >= 0.15 || (mag >= 5.0 && distKm <= 50)) {
+                triggerLevel = "VERY HIGH";
+                modifierPts = 18;
+                triggerColor = "text-rose-400";
+            } else if (pga >= 0.08 || (mag >= 4.0 && distKm <= 75)) {
+                triggerLevel = "HIGH";
+                modifierPts = 12;
+                triggerColor = "text-amber-400";
+            } else if (pga >= 0.03 || (mag >= 3.2 && distKm <= 100)) {
+                triggerLevel = "MODERATE";
+                modifierPts = 6;
+                triggerColor = "text-purple-300";
+            } else {
+                triggerLevel = "LOW";
+                modifierPts = 1;
+                triggerColor = "text-slate-400";
+            }
+
+            const trigEl = document.getElementById('seis-trigger-level');
+            trigEl.textContent = triggerLevel;
+            trigEl.className = `font-bold text-xs font-mono ${triggerColor}`;
+
+            const modEl = document.getElementById('seis-impact-pts');
+            modEl.textContent = `+${modifierPts} CRI Points`;
+            modEl.className = `font-bold text-xs font-mono ${triggerColor}`;
+
+            // Explanation Reason
+            let reason = "";
+            if (modifierPts > 10) {
+                reason = `High ground-shaking proxy (${pga.toFixed(3)}g) from an M${mag.toFixed(1)} event at ${distKm.toFixed(0)}km directly overlaps the ${sector.baseSusceptibility.toLowerCase()} susceptibility profile of ${sector.name}. Seismic pseudostatic forcing may destabilize fractured rock masses.`;
+            } else if (modifierPts > 4) {
+                reason = `Moderate shaking (${pga.toFixed(3)}g) at ${distKm.toFixed(0)}km distance. While below catastrophic shear failure limits, it may enlarge tension cracks and increase slope sensitivity during concurrent rainfall.`;
+            } else {
+                reason = `Minor ground motion (${pga.toFixed(3)}g) at ${distKm.toFixed(0)}km. Epicentral attenuation limits kinetic transfer to hillslope shear planes. Base geotechnical regime remains primary.`;
+            }
+            document.getElementById('seis-reason-text').textContent = reason;
+
+            // Flow items
+            document.getElementById('flow-event').textContent = `M ${mag.toFixed(1)} (${distKm.toFixed(0)}km)`;
+            document.getElementById('flow-pga').textContent = `PGA ~ ${pga.toFixed(3)} g`;
+            document.getElementById('flow-slope').textContent = `FoS Δ ~ -${(modifierPts * 0.012).toFixed(2)}`;
+            document.getElementById('flow-cri').textContent = `+${modifierPts} pts`;
+        }
+
+        function calculateHaversine(lat1, lon1, lat2, lon2) {
+            const R = 6371.0;
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                      Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        }
+
+        function renderImpactMatrix() {
+            const container = document.getElementById('impact-sector-container');
+            if (!container) return;
+
+            let elevatedCount = 0;
+            let verifyCount = 0;
+
+            let html = '';
+            impactRankings.forEach(item => {
+                const mod = item.modifier_points || 0;
+                let badgeClass = "bg-slate-800 text-slate-400 border-slate-700";
+                if (mod >= 12) {
+                    badgeClass = "bg-rose-950/80 text-rose-300 border-rose-500/50";
+                    elevatedCount++;
+                    verifyCount++;
+                } else if (mod >= 6) {
+                    badgeClass = "bg-amber-950/80 text-amber-300 border-amber-500/50";
+                    elevatedCount++;
+                }
+
+                html += `
+                    <div class="p-2.5 rounded bg-[#070B10] border border-slate-800 hover:border-slate-700 transition">
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="font-semibold text-white text-xs">${item.sector_name || item.sector_id}</span>
+                            <span class="px-1.5 py-0.5 text-[10px] font-mono rounded border ${badgeClass}">
+                                +${mod} pts • ${item.trigger_level || 'LOW'}
+                            </span>
+                        </div>
+                        <div class="flex items-center justify-between text-[11px] text-slate-400">
+                            <span>Nearest: <strong class="text-slate-300 font-mono">${item.distance_km || '--'} km</strong></span>
+                            <span>PGA: <strong class="text-purple-300 font-mono">${(item.pga_proxy_g || 0).toFixed(3)}g</strong></span>
+                        </div>
+                        <p class="text-[10px] text-slate-500 mt-1 leading-tight">
+                            ${item.reason || 'Seismic forcing evaluated against sector bedrock strength.'}
+                        </p>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+            document.getElementById('stat-reevaluated').textContent = impactRankings.length;
+            document.getElementById('stat-elevated').textContent = elevatedCount;
+            document.getElementById('stat-verify').textContent = verifyCount;
+            document.getElementById('matrix-summary-badge').textContent = `${elevatedCount} Elevated`;
+        }
+
+        function renderRecentCatalog() {
+            const container = document.getElementById('catalog-list-container');
+            if (!container) return;
+
+            document.getElementById('tab-event-count').textContent = currentEvents.length;
+
+            let html = '';
+            currentEvents.forEach(evt => {
+                const mag = parseFloat(evt.magnitude) || 3.0;
+                let magColor = "text-purple-400";
+                if (mag >= 4.5) magColor = "text-rose-400";
+                else if (mag >= 3.5) magColor = "text-amber-400";
+
+                html += `
+                    <div onclick="selectEventById('${evt.id}')" class="p-2 rounded bg-[#070B10] border border-slate-800 hover:border-purple-500/50 cursor-pointer transition flex items-center justify-between text-xs">
+                        <div>
+                            <div class="font-semibold text-slate-200 text-[11px] truncate max-w-[240px]">${evt.place}</div>
+                            <div class="text-[10px] text-slate-500 font-mono mt-0.5">Depth: ${evt.depth_km}km • ${evt.origin_time}</div>
+                        </div>
+                        <div class="text-right shrink-0">
+                            <span class="text-sm font-bold font-mono ${magColor}">M ${mag.toFixed(1)}</span>
+                            <span class="block text-[9px] text-slate-400 font-mono">${evt.provenance || '[LIVE]'}</span>
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        function filterCatalog(minMag) {
+            const filtered = currentEvents.filter(e => parseFloat(e.magnitude) >= minMag);
+            const container = document.getElementById('catalog-list-container');
+            if (!container) return;
+
+            let html = '';
+            filtered.forEach(evt => {
+                const mag = parseFloat(evt.magnitude) || 3.0;
+                let magColor = "text-purple-400";
+                if (mag >= 4.5) magColor = "text-rose-400";
+                else if (mag >= 3.5) magColor = "text-amber-400";
+
+                html += `
+                    <div onclick="selectEventById('${evt.id}')" class="p-2 rounded bg-[#070B10] border border-slate-800 hover:border-purple-500/50 cursor-pointer transition flex items-center justify-between text-xs">
+                        <div>
+                            <div class="font-semibold text-slate-200 text-[11px] truncate max-w-[240px]">${evt.place}</div>
+                            <div class="text-[10px] text-slate-500 font-mono mt-0.5">Depth: ${evt.depth_km}km • ${evt.origin_time}</div>
+                        </div>
+                        <div class="text-right shrink-0">
+                            <span class="text-sm font-bold font-mono ${magColor}">M ${mag.toFixed(1)}</span>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function updateProviderBadges(statusData) {
+            const provBadge = document.getElementById('header-prov-badge');
+            const statusBadge = document.getElementById('evt-status');
+            
+            if (statusData && statusData.providers) {
+                const active = statusData.active_provider || "NCS Live FDSNWS";
+                const isLive = active.includes("Live");
+                
+                if (provBadge) {
+                    provBadge.textContent = isLive ? "[LIVE]" : "[DEMO / CACHED]";
+                    provBadge.className = isLive ? 
+                        "px-2 py-0.5 text-[10px] font-mono rounded bg-purple-950/80 border border-purple-500/50 text-purple-300" :
+                        "px-2 py-0.5 text-[10px] font-mono rounded bg-amber-950/80 border border-amber-500/50 text-amber-300";
+                }
+                if (statusBadge) {
+                    statusBadge.textContent = `STATUS: ${statusData.providers[statusData.active_provider] || 'CONNECTED'}`;
+                }
+            }
+        }
+
+        function displayDegradedState(msg) {
+            const provBadge = document.getElementById('header-prov-badge');
+            if (provBadge) {
+                provBadge.textContent = "[DEGRADED]";
+                provBadge.className = "px-2 py-0.5 text-[10px] font-mono rounded bg-rose-950/80 border border-rose-500/50 text-rose-300";
+            }
+            const reasonEl = document.getElementById('seis-reason-text');
+            if (reasonEl) {
+                reasonEl.textContent = `SEISMIC DATA DEGRADED: ${msg} Ground-shaking modifiers falling back to conservative geotechnical baseline.`;
+            }
+        }
+    </script>
+</body>
+</html>

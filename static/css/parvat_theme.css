@@ -1,0 +1,770 @@
+/* ========================================================================= */
+/* PARVAT NETRA / PAHAD AI — UNIFIED GIGW 3.0 THEME SYSTEM                   */
+/* Light Mode: Faded Saffron (#FFF5E9) & Soft Warm Amber (#FED7AA)           */
+/* Dark Mode: Dark Colour (#0A1124) & Light Faded Blue Combo                 */
+/* ========================================================================= */
+
+/* --- LIGHT MODE: FADED SAFFRON --- */
+body.light-mode {
+    background-color: #FFF5E9 !important;
+    color: #1E293B !important;
+}
+
+body.light-mode header,
+body.light-mode nav,
+body.light-mode .masthead-container {
+    background-color: #FFF5E9 !important;
+    border-bottom: 2px solid #FED7AA !important;
+    color: #1E293B !important;
+}
+
+body.light-mode header h1,
+body.light-mode header h2,
+body.light-mode header h3,
+body.light-mode header span.text-white,
+body.light-mode header span.text-slate-100,
+body.light-mode header span.text-slate-200 {
+    color: #1E293B !important;
+}
+
+body.light-mode header p,
+body.light-mode header span.text-slate-400,
+body.light-mode header span.text-slate-500 {
+    color: #475569 !important;
+}
+
+body.light-mode header a,
+body.light-mode nav a {
+    background-color: #FFFFFF !important;
+    border-color: #FED7AA !important;
+    color: #1E293B !important;
+}
+
+body.light-mode header a:hover,
+body.light-mode nav a:hover {
+    background-color: #FFEDD5 !important;
+    color: #9A3412 !important;
+}
+
+/* Primary cards & panels in Light Mode */
+body.light-mode main,
+body.light-mode aside,
+body.light-mode .dark-card,
+body.light-mode .kpi-card,
+body.light-mode .panel-card,
+body.light-mode .telemetry-card,
+body.light-mode .card,
+body.light-mode .bg-slateCard,
+body.light-mode [class*="bg-slateCard"],
+body.light-mode .bg-\[\#0B132B\],
+body.light-mode .bg-\[\#070B10\],
+body.light-mode .bg-\[\#0F172A\],
+body.light-mode .bg-\[\#0A0A0A\],
+body.light-mode .bg-\[\#050505\],
+body.light-mode .bg-\[\#080808\],
+body.light-mode .bg-\[\#0E1726\],
+body.light-mode .bg-\[\#0B1528\],
+body.light-mode .bg-black:not(#intro-splash-screen) {
+    background-color: #FFFFFF !important;
+    border-color: #FED7AA !important;
+    color: #1E293B !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* Intro splash screen must ALWAYS be pitch black (#000000) and keep glowing white/gold text */
+#intro-splash-screen,
+body.light-mode #intro-splash-screen,
+body.dark-mode #intro-splash-screen,
+div#intro-splash-screen {
+    background-color: #000000 !important;
+    background: #000000 !important;
+    color: #FFFFFF !important;
+}
+
+#intro-splash-screen h1,
+body.light-mode #intro-splash-screen h1,
+#intro-splash-screen .text-white,
+body.light-mode #intro-splash-screen .text-white {
+    color: #FFFFFF !important;
+}
+
+#intro-splash-screen .text-sky-300,
+#intro-splash-screen .text-amber-200,
+body.light-mode #intro-splash-screen .text-sky-300,
+body.light-mode #intro-splash-screen .text-amber-200 {
+    color: #FEF08A !important;
+}
+
+#intro-splash-screen .text-amber-400,
+body.light-mode #intro-splash-screen .text-amber-400 {
+    color: #FBBF24 !important;
+}
+
+#intro-splash-screen .text-slate-400,
+body.light-mode #intro-splash-screen .text-slate-400 {
+    color: #94A3B8 !important;
+}
+
+/* Inner sub-boxes & cards in Light Mode */
+body.light-mode .bg-\[\#171717\],
+body.light-mode .bg-\[\#141414\],
+body.light-mode .bg-\[\#121212\],
+body.light-mode .bg-\[\#1A1A1A\],
+body.light-mode .bg-\[\#1E293B\],
+body.light-mode .bg-\[\#1F2937\],
+body.light-mode .bg-slate-900,
+body.light-mode [class*="bg-slate-900"],
+body.light-mode .bg-slate-800,
+body.light-mode [class*="bg-slate-800"],
+body.light-mode .bg-neutral-900,
+body.light-mode .bg-neutral-800,
+body.light-mode .bg-zinc-900,
+body.light-mode .bg-zinc-800 {
+    background-color: #FFFDF9 !important;
+    border-color: #FED7AA !important;
+    color: #1E293B !important;
+}
+
+/* Borders in Light Mode */
+body.light-mode .border-\[\#222222\],
+body.light-mode .border-\[\#27272A\],
+body.light-mode .border-\[\#333333\],
+body.light-mode .border-borderMuted,
+body.light-mode .border-slate-800,
+body.light-mode .border-slate-700,
+body.light-mode .border-slate-600 {
+    border-color: #FED7AA !important;
+}
+
+/* Typography in Light Mode (Strict Government SIH Portal Standards) */
+body.light-mode h1,
+body.light-mode h2,
+body.light-mode h3,
+body.light-mode h4,
+body.light-mode .gov-heading,
+body.light-mode .section-title,
+body.light-mode .parvat-brand-title {
+    color: #0B2545 !important; /* Authentic SIH Deep Navy Blue */
+    font-weight: 800 !important;
+    letter-spacing: -0.015em;
+}
+
+body.light-mode p,
+body.light-mode .gov-text,
+body.light-mode .body-text,
+body.light-mode .secondary-context {
+    color: #1E3A5F !important; /* Authentic SIH Dark Charcoal-Navy */
+    line-height: 1.65 !important;
+    font-size: 14.5px;
+}
+
+body.light-mode .text-white,
+body.light-mode .text-slate-100,
+body.light-mode .text-slate-200,
+body.light-mode .text-slate-300,
+body.light-mode .text-neutral-100,
+body.light-mode .text-neutral-200,
+body.light-mode .text-neutral-300 {
+    color: #0B2545 !important;
+}
+
+body.light-mode .text-slate-400,
+body.light-mode .text-slate-500,
+body.light-mode .text-neutral-400,
+body.light-mode .text-neutral-500,
+body.light-mode .text-\[\#A3A3A3\],
+body.light-mode .text-\[\#737373\] {
+    color: #475569 !important;
+}
+
+/* ELIMINATE ALL NEON COLOURS IN LIGHT MODE */
+body.light-mode .text-sky-200,
+body.light-mode .text-sky-300,
+body.light-mode .text-sky-400,
+body.light-mode .text-sky-500,
+body.light-mode .text-cyan-200,
+body.light-mode .text-cyan-300,
+body.light-mode .text-cyan-400,
+body.light-mode .text-cyan-500,
+body.light-mode .text-blue-200,
+body.light-mode .text-blue-300,
+body.light-mode .text-blue-400,
+body.light-mode [class*="text-sky-"],
+body.light-mode [class*="text-cyan-"] {
+    color: #0B2545 !important; /* Deep Navy, zero neon */
+}
+
+/* Institutional Forest Green for online/ready/live statuses (no neon lime) */
+body.light-mode .text-emerald-300,
+body.light-mode .text-emerald-400,
+body.light-mode .text-emerald-500,
+body.light-mode .text-green-400,
+body.light-mode .text-green-500,
+body.light-mode .text-\[\#4ADE80\],
+body.light-mode [class*="text-emerald-"] {
+    color: #15803D !important; /* Official Forest Green */
+}
+
+/* Authentic Saffron Accent (matching #InnovationSeAtmanirbharBharat & SIH login) */
+body.light-mode .saffron-accent,
+body.light-mode .text-amber-500,
+body.light-mode .text-amber-600,
+body.light-mode .text-orange-500,
+body.light-mode .text-orange-600 {
+    color: #D9531E !important; /* Authentic National Saffron */
+}
+
+/* Neutralize neon badges and buttons in Light Mode */
+body.light-mode .bg-sky-950,
+body.light-mode .bg-sky-900,
+body.light-mode .bg-blue-950,
+body.light-mode .bg-cyan-950,
+body.light-mode .bg-\[\#0C2340\] {
+    background-color: #F0F7FF !important;
+    border-color: #BFDBFE !important;
+    color: #0B2545 !important;
+}
+
+body.light-mode .bg-emerald-950,
+body.light-mode .bg-emerald-900 {
+    background-color: #F0FDF4 !important;
+    border-color: #BBF7D0 !important;
+    color: #15803D !important;
+}
+
+body.light-mode .border-sky-500,
+body.light-mode .border-sky-600,
+body.light-mode .border-sky-700,
+body.light-mode .border-cyan-500,
+body.light-mode .border-cyan-600,
+body.light-mode .border-\[\#1E3A8A\] {
+    border-color: #BFDBFE !important;
+}
+
+body.light-mode .border-emerald-500,
+body.light-mode .border-emerald-600,
+body.light-mode .border-emerald-700 {
+    border-color: #BBF7D0 !important;
+}
+
+/* Remove glowing neon shadows & drop-shadows */
+body.light-mode * {
+    text-shadow: none !important;
+}
+body.light-mode [class*="drop-shadow-"] {
+    filter: none !important;
+}
+
+/* Inputs & selects in Light Mode */
+body.light-mode input,
+body.light-mode select,
+body.light-mode textarea {
+    background-color: #FFFFFF !important;
+    border: 1px solid #FED7AA !important;
+    color: #1E293B !important;
+}
+
+body.light-mode input:focus,
+body.light-mode select:focus,
+body.light-mode textarea:focus {
+    border-color: #EA580C !important;
+    outline: 2px solid #FED7AA !important;
+}
+
+/* Theme Toggle Button in Light Mode */
+body.light-mode #theme-toggle-btn {
+    background-color: #FFFFFF !important;
+    border: 1px solid #FED7AA !important;
+    color: #1E293B !important;
+    box-shadow: 0 1px 3px rgba(194, 65, 12, 0.1) !important;
+}
+
+body.light-mode #theme-toggle-btn:hover {
+    background-color: #FFEDD5 !important;
+    border-color: #FDBA74 !important;
+    color: #9A3412 !important;
+}
+
+/* Login & Authentication Cards in Light Mode */
+body.light-mode .portal-choice-card,
+body.light-mode .login-card,
+body.light-mode main .bg-white {
+    background-color: #FFFFFF !important;
+    border: 2px solid #FED7AA !important;
+    color: #1E293B !important;
+    box-shadow: 0 4px 15px rgba(251, 146, 60, 0.08) !important;
+}
+
+body.light-mode .portal-choice-card h3,
+body.light-mode .portal-choice-card p,
+body.light-mode .portal-choice-card span,
+body.light-mode .portal-choice-card li {
+    color: #1E293B !important;
+}
+
+body.light-mode .portal-choice-card .text-slate-500,
+body.light-mode .portal-choice-card .text-slate-600 {
+    color: #475569 !important;
+}
+
+body.light-mode .bg-\[\#0B192C\] {
+    background-color: #FFEDD5 !important;
+    border-bottom: 1px solid #FED7AA !important;
+    color: #1E293B !important;
+}
+body.light-mode .bg-\[\#0B192C\] span,
+body.light-mode .bg-\[\#0B192C\] a {
+    color: #1E293B !important;
+}
+
+/* Table and notice banner refinements in Light Mode */
+body.light-mode table {
+    color: #1E293B !important;
+}
+body.light-mode thead tr {
+    border-bottom: 2px solid #FED7AA !important;
+    background-color: #FFF7ED !important;
+}
+body.light-mode thead th {
+    color: #475569 !important;
+}
+body.light-mode tbody tr {
+    border-bottom: 1px solid #FED7AA !important;
+}
+body.light-mode tbody tr:hover {
+    background-color: #FFF5E9 !important;
+}
+body.light-mode tbody td {
+    color: #1E293B !important;
+}
+body.light-mode tbody td .text-slate-300,
+body.light-mode tbody td .text-slate-200 {
+    color: #1E293B !important;
+}
+body.light-mode .border-amber-500\/40 {
+    background-color: #FFFBEB !important;
+    border-color: #FCD34D !important;
+}
+body.light-mode .border-amber-500\/40 p,
+body.light-mode .border-amber-500\/40 span {
+    color: #92400E !important;
+}
+body.light-mode footer {
+    background-color: #FFF5E9 !important;
+    border-top: 1px solid #FED7AA !important;
+    color: #475569 !important;
+}
+
+/* ========================================================================= */
+/* --- DARK MODE: DARK COLOUR & LIGHT FADED BLUE COMBO ---                   */
+/* ========================================================================= */
+body:not(.light-mode),
+body.dark-mode {
+    background-color: #070B14 !important;
+    color: #F8FAFC !important;
+}
+
+body:not(.light-mode) header,
+body.dark-mode header,
+body:not(.light-mode) nav,
+body.dark-mode nav {
+    background-color: #080E1C !important;
+    border-bottom: 1px solid rgba(147, 197, 253, 0.22) !important;
+    color: #F8FAFC !important;
+}
+
+/* Primary cards & panels in Dark Mode */
+body:not(.light-mode) aside,
+body.dark-mode aside,
+body:not(.light-mode) .dark-card,
+body.dark-mode .dark-card,
+body:not(.light-mode) .kpi-card,
+body.dark-mode .kpi-card,
+body:not(.light-mode) .panel-card,
+body.dark-mode .panel-card,
+body:not(.light-mode) .telemetry-card,
+body.dark-mode .telemetry-card,
+body:not(.light-mode) .bg-slateCard,
+body.dark-mode .bg-slateCard,
+body:not(.light-mode) [class*="bg-slateCard"],
+body.dark-mode [class*="bg-slateCard"],
+body:not(.light-mode) .bg-\[\#0B132B\],
+body.dark-mode .bg-\[\#0B132B\],
+body:not(.light-mode) .bg-\[\#070B10\],
+body.dark-mode .bg-\[\#070B10\],
+body:not(.light-mode) .bg-\[\#0F172A\],
+body.dark-mode .bg-\[\#0F172A\],
+body:not(.light-mode) .bg-\[\#0A0A0A\],
+body.dark-mode .bg-\[\#0A0A0A\],
+body:not(.light-mode) .bg-\[\#050505\],
+body.dark-mode .bg-\[\#050505\],
+body:not(.light-mode) .bg-\[\#080808\],
+body.dark-mode .bg-\[\#080808\],
+body:not(.light-mode) .bg-\[\#0E1726\],
+body.dark-mode .bg-\[\#0E1726\],
+body:not(.light-mode) .bg-\[\#0B1528\],
+body.dark-mode .bg-\[\#0B1528\],
+body:not(.light-mode) .bg-black,
+body.dark-mode .bg-black {
+    background-color: #0A1124 !important;
+    border: 1px solid rgba(147, 197, 253, 0.28) !important;
+    color: #F8FAFC !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.55), 0 0 1px rgba(147, 197, 253, 0.2) !important;
+}
+
+/* Inner sub-boxes & cards in Dark Mode */
+body:not(.light-mode) .bg-\[\#171717\],
+body.dark-mode .bg-\[\#171717\],
+body:not(.light-mode) .bg-\[\#141414\],
+body.dark-mode .bg-\[\#141414\],
+body:not(.light-mode) .bg-\[\#121212\],
+body.dark-mode .bg-\[\#121212\],
+body:not(.light-mode) .bg-\[\#1A1A1A\],
+body.dark-mode .bg-\[\#1A1A1A\],
+body:not(.light-mode) .bg-\[\#1E293B\],
+body.dark-mode .bg-\[\#1E293B\],
+body:not(.light-mode) .bg-\[\#1F2937\],
+body.dark-mode .bg-\[\#1F2937\],
+body:not(.light-mode) .bg-slate-900,
+body.dark-mode .bg-slate-900,
+body:not(.light-mode) .bg-slate-800,
+body.dark-mode .bg-slate-800,
+body:not(.light-mode) .bg-neutral-900,
+body.dark-mode .bg-neutral-900,
+body:not(.light-mode) .bg-neutral-800,
+body.dark-mode .bg-neutral-800,
+body:not(.light-mode) .bg-zinc-900,
+body.dark-mode .bg-zinc-900,
+body:not(.light-mode) .bg-zinc-800,
+body.dark-mode .bg-zinc-800 {
+    background-color: #0E1833 !important;
+    border: 1px solid rgba(147, 197, 253, 0.2) !important;
+    color: #E2E8F0 !important;
+}
+
+/* Borders in Dark Mode (Light Faded Blue) */
+body:not(.light-mode) .border-\[\#222222\],
+body.dark-mode .border-\[\#222222\],
+body:not(.light-mode) .border-\[\#27272A\],
+body.dark-mode .border-\[\#27272A\],
+body:not(.light-mode) .border-\[\#333333\],
+body.dark-mode .border-\[\#333333\],
+body:not(.light-mode) .border-borderMuted,
+body.dark-mode .border-borderMuted,
+body:not(.light-mode) .border-slate-800,
+body.dark-mode .border-slate-800,
+body:not(.light-mode) .border-slate-700,
+body.dark-mode .border-slate-700,
+body:not(.light-mode) .border-slate-600,
+body.dark-mode .border-slate-600 {
+    border-color: rgba(147, 197, 253, 0.22) !important;
+}
+
+/* Navigation items in Dark Mode */
+body:not(.light-mode) header a,
+body.dark-mode header a,
+body:not(.light-mode) nav a,
+body.dark-mode nav a {
+    background-color: #0E1833 !important;
+    border: 1px solid rgba(147, 197, 253, 0.25) !important;
+    color: #BAE6FD !important;
+}
+
+body:not(.light-mode) header a:hover,
+body.dark-mode header a:hover,
+body:not(.light-mode) nav a:hover,
+body.dark-mode nav a:hover {
+    background-color: #12213D !important;
+    border-color: rgba(147, 197, 253, 0.45) !important;
+    color: #FFFFFF !important;
+}
+
+/* Inputs & selects in Dark Mode */
+body:not(.light-mode) input,
+body.dark-mode input,
+body:not(.light-mode) select,
+body.dark-mode select,
+body:not(.light-mode) textarea,
+body.dark-mode textarea {
+    background-color: #0B1428 !important;
+    border: 1px solid rgba(147, 197, 253, 0.24) !important;
+    color: #F0F6FC !important;
+}
+
+body:not(.light-mode) input:focus,
+body.dark-mode input:focus,
+body:not(.light-mode) select:focus,
+body.dark-mode select:focus,
+body:not(.light-mode) textarea:focus,
+body.dark-mode textarea:focus {
+    border-color: #38BDF8 !important;
+    outline: 2px solid rgba(56, 189, 248, 0.25) !important;
+}
+
+/* Theme Toggle Button in Dark Mode */
+body:not(.light-mode) #theme-toggle-btn,
+body.dark-mode #theme-toggle-btn {
+    background-color: #12213D !important;
+    border: 1px solid rgba(147, 197, 253, 0.3) !important;
+    color: #BAE6FD !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+}
+
+body:not(.light-mode) #theme-toggle-btn:hover,
+body.dark-mode #theme-toggle-btn:hover {
+    background-color: #1A3158 !important;
+    border-color: rgba(147, 197, 253, 0.5) !important;
+    color: #FFFFFF !important;
+}
+
+/* Login & Authentication Cards in Dark Mode */
+body:not(.light-mode) .portal-choice-card,
+body.dark-mode .portal-choice-card,
+body:not(.light-mode) .login-card,
+body.dark-mode .login-card,
+body:not(.light-mode) main .bg-white,
+body.dark-mode main .bg-white {
+    background-color: #0A1124 !important;
+    border: 1px solid rgba(147, 197, 253, 0.35) !important;
+    color: #F8FAFC !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 1px rgba(147, 197, 253, 0.3) !important;
+}
+
+body:not(.light-mode) .portal-choice-card h3,
+body.dark-mode .portal-choice-card h3,
+body:not(.light-mode) .portal-choice-card .text-\[\#0B2545\],
+body.dark-mode .portal-choice-card .text-\[\#0B2545\],
+body:not(.light-mode) h2.text-\[\#0B2545\],
+body.dark-mode h2.text-\[\#0B2545\],
+body:not(.light-mode) .text-\[\#003366\],
+body.dark-mode .text-\[\#003366\] {
+    color: #93C5FD !important;
+}
+
+body:not(.light-mode) .portal-choice-card p,
+body.dark-mode .portal-choice-card p,
+body:not(.light-mode) .portal-choice-card li,
+body.dark-mode .portal-choice-card li,
+body:not(.light-mode) .portal-choice-card .text-slate-600,
+body.dark-mode .portal-choice-card .text-slate-600,
+body:not(.light-mode) .portal-choice-card .text-slate-700,
+body.dark-mode .portal-choice-card .text-slate-700 {
+    color: #CBD5E1 !important;
+}
+
+body:not(.light-mode) .bg-\[\#0B192C\],
+body.dark-mode .bg-\[\#0B192C\] {
+    background-color: #060A14 !important;
+    border-bottom: 1px solid rgba(147, 197, 253, 0.2) !important;
+    color: #BAE6FD !important;
+}
+body:not(.light-mode) .bg-\[\#0B192C\] a,
+body.dark-mode .bg-\[\#0B192C\] a {
+    color: #BAE6FD !important;
+}
+
+/* ========================================================================= */
+/* CLIMATE CASCADE CARD COMPONENT (LIGHT & DARK MODES)                       */
+/* ========================================================================= */
+
+/* Light Mode */
+body.light-mode .climate-cascade-card {
+    background-color: #FFFFFF !important;
+    border: 1.5px solid #FED7AA !important;
+    color: #1E293B !important;
+    box-shadow: 0 4px 20px -2px rgba(249, 115, 22, 0.12), 0 2px 6px -1px rgba(0, 0, 0, 0.05) !important;
+}
+
+body.light-mode .climate-cascade-card h4 {
+    color: #0F172A !important;
+}
+
+body.light-mode .climate-cascade-card .connector-line {
+    border-left-color: #FDBA74 !important;
+    color: #475569 !important;
+    font-family: 'JetBrains Mono', monospace !important;
+}
+
+body.light-mode .climate-cascade-card span.w-4 {
+    background-color: #F1F5F9 !important;
+    color: #334155 !important;
+}
+
+/* Dark Mode */
+body:not(.light-mode) .climate-cascade-card,
+body.dark-mode .climate-cascade-card {
+    background-color: #0A1124 !important;
+    border: 1.5px solid rgba(147, 197, 253, 0.35) !important;
+    color: #F8FAFC !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 1px rgba(147, 197, 253, 0.3) !important;
+}
+
+body:not(.light-mode) .climate-cascade-card h4,
+body.dark-mode .climate-cascade-card h4 {
+    color: #F8FAFC !important;
+}
+
+body:not(.light-mode) .climate-cascade-card .connector-line,
+body.dark-mode .climate-cascade-card .connector-line {
+    border-left-color: #334155 !important;
+    color: #94A3B8 !important;
+    font-family: 'JetBrains Mono', monospace !important;
+}
+
+body:not(.light-mode) .climate-cascade-card span.w-4,
+body.dark-mode .climate-cascade-card span.w-4 {
+    background-color: #1E293B !important;
+    color: #CBD5E1 !important;
+}
+
+/* ========================================================================= */
+/* NEON COLOR NEUTRALIZATION IN DARK MODE                                     */
+/* ========================================================================= */
+body:not(.light-mode) .text-sky-300,
+body:not(.light-mode) .text-sky-400,
+body:not(.light-mode) .text-cyan-300,
+body:not(.light-mode) .text-cyan-400,
+body.dark-mode .text-sky-300,
+body.dark-mode .text-sky-400,
+body.dark-mode .text-cyan-300,
+body.dark-mode .text-cyan-400 {
+    color: #93C5FD !important; /* Muted atmospheric ice-blue, zero neon glow */
+}
+
+body:not(.light-mode) .text-emerald-400,
+body.dark-mode .text-emerald-400,
+body:not(.light-mode) .text-\[\#4ADE80\],
+body.dark-mode .text-\[\#4ADE80\] {
+    color: #34D399 !important;
+}
+
+body:not(.light-mode) .text-purple-400,
+body.dark-mode .text-purple-400 {
+    color: #C4B5FD !important;
+}
+
+/* ========================================================================= */
+/* INSTITUTIONAL TYPOGRAPHIC HIERARCHY (MATCHING SIH GOVT PORTAL)           */
+/* ========================================================================= */
+
+/* Level 1: Hero Titles & Main Brand (Top Importance) */
+.gov-title-hero,
+#parvat-brand-title {
+    font-size: 1.75rem !important; /* ~28px */
+    font-weight: 900 !important;
+    letter-spacing: -0.02em !important;
+    line-height: 1.2 !important;
+}
+@media (min-width: 640px) {
+    .gov-title-hero,
+    #parvat-brand-title {
+        font-size: 2.125rem !important; /* ~34px */
+    }
+}
+
+/* Level 2: Primary Section Headings (e.g. WHAT IS SIH? / PAHAD AI Overview) */
+h2,
+.gov-title-section {
+    font-size: 1.35rem !important; /* ~22px */
+    font-weight: 800 !important;
+    letter-spacing: -0.015em !important;
+    line-height: 1.3 !important;
+}
+@media (min-width: 640px) {
+    h2,
+    .gov-title-section {
+        font-size: 1.55rem !important; /* ~25px */
+    }
+}
+
+/* Level 3: Card & Sector Headings (e.g. Sonapur Tunnel, Key Evidence) */
+h3,
+.gov-title-card {
+    font-size: 1.1rem !important; /* ~17.5px */
+    font-weight: 700 !important;
+    line-height: 1.35 !important;
+}
+
+/* Level 4: Parameter & Subsection Labels */
+h4,
+.gov-title-sub {
+    font-size: 0.875rem !important; /* ~14px */
+    font-weight: 700 !important;
+    line-height: 1.4 !important;
+}
+
+/* Level 5: Body Content & Explanations (High Readability) */
+p,
+.gov-body-text {
+    font-size: 0.9375rem !important; /* 15px */
+    font-weight: 400 !important;
+    line-height: 1.65 !important;
+}
+
+/* Level 6: Meta Badges, Super-headers, Timestamps */
+.gov-meta-label {
+    font-size: 0.6875rem !important; /* 11px */
+    font-weight: 700 !important;
+    letter-spacing: 0.06em !important;
+    text-transform: uppercase !important;
+}
+
+/* Interactive Simulation Bar in Light Mode */
+body.light-mode #sih-presentation-demo-bar {
+    background-color: #FFFFFF !important;
+    border-bottom: 2px solid #FED7AA !important;
+    color: #0B2545 !important;
+}
+body.light-mode #sih-presentation-demo-bar .bg-\[\#0C2340\],
+body.light-mode #sih-presentation-demo-bar .bg-slate-900,
+body.light-mode #sih-presentation-demo-bar .bg-slate-800 {
+    background-color: #FFF7ED !important;
+    border-color: #FED7AA !important;
+    color: #0B2545 !important;
+}
+body.light-mode #sih-presentation-demo-bar #demo-scenario-badge,
+body.light-mode #sih-presentation-demo-bar .text-blue-200,
+body.light-mode #sih-presentation-demo-bar .text-blue-300,
+body.light-mode #sih-presentation-demo-bar .text-slate-100 {
+    color: #0B2545 !important;
+}
+body.light-mode #sih-presentation-demo-bar button,
+body.light-mode #sih-presentation-demo-bar a {
+    border-color: #FED7AA !important;
+    color: #0B2545 !important;
+}
+body.light-mode #sih-presentation-demo-bar #btn-demo-start {
+    background-color: #15803D !important;
+    color: #FFFFFF !important;
+    border-color: #166534 !important;
+}
+
+/* Onboarding Callout in Light Mode */
+body.light-mode #pahad-onboarding-callout {
+    background: #FFFDF9 !important;
+    border: 1.5px solid #FED7AA !important;
+}
+body.light-mode #pahad-onboarding-callout .text-sky-400,
+body.light-mode #pahad-onboarding-callout .text-sky-300 {
+    color: #0B2545 !important;
+}
+body.light-mode #pahad-onboarding-callout .w-8 {
+    background-color: #FFEDD5 !important;
+    border-color: #FED7AA !important;
+    color: #EA580C !important;
+}
+body.light-mode #pahad-onboarding-callout button.bg-sky-600 {
+    background-color: #0B2545 !important;
+    color: #FFFFFF !important;
+}
+body.light-mode #pahad-onboarding-callout button.bg-sky-600:hover {
+    background-color: #1E3A8A !important;
+}
+
+body.light-mode .statutory-signoff-copy {
+    color: #1E3A5F !important;
+}
+
+
+
+

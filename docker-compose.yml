@@ -1,0 +1,67 @@
+version: "3.8"
+
+services:
+  # ============================================================================
+  # PostGIS Spatial Database Service
+  # ============================================================================
+  db:
+    image: postgis/postgis:15-3.3
+    container_name: parvat_netra_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: parvat_netra
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: parvat_netra_secure_2026
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgis_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d parvat_netra"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - parvat_netra_net
+
+  # ============================================================================
+  # PARVAT NETRA Sentinel Decision API & Web Frontend (Gunicorn)
+  # ============================================================================
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: parvat_netra_web
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      - DATABASE_URL=postgresql://postgres:parvat_netra_secure_2026@db:5432/parvat_netra
+      - PORT=8080
+      - SCHEDULER_ENABLED=true
+      - SCHEDULER_INTERVAL=60
+    volumes:
+      - ./static/uploads:/app/static/uploads
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    networks:
+      - parvat_netra_net
+
+volumes:
+  postgis_data:
+    name: parvat_netra_postgis_data
+
+networks:
+  parvat_netra_net:
+    name: parvat_netra_network
+    driver: bridge

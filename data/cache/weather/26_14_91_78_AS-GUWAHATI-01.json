@@ -1,0 +1,88 @@
+{
+  "data": {
+    "timestamp": "2026-09-13T03:36:27.468999+00:00",
+    "location": {
+      "lat": 26.142,
+      "lon": 91.776,
+      "district": "Kamrup Metropolitan",
+      "state": "Assam"
+    },
+    "rainfall": {
+      "current_mm_hr": 4.7,
+      "rain_1h_mm": 4.7,
+      "rain_6h_mm": 32.15,
+      "rain_24h_mm": 84.6,
+      "rain_72h_mm": 177.66
+    },
+    "forecast": {
+      "1h_mm": 5.17,
+      "3h_mm": 15.04,
+      "6h_mm": 38.58,
+      "12h_mm": 46.53,
+      "24h_mm": 80.37,
+      "48h_mm": 143.82,
+      "hourly_trend": [
+        2.82,
+        3.17,
+        3.52,
+        3.88,
+        4.23,
+        4.58,
+        2.82,
+        3.17,
+        3.52,
+        3.88,
+        4.23,
+        4.58,
+        2.82,
+        3.17,
+        3.52,
+        3.88,
+        4.23,
+        4.58,
+        2.82,
+        3.17,
+        3.52,
+        3.88,
+        4.23,
+        4.58
+      ]
+    },
+    "atmosphere": {
+      "temperature_c": 17.5,
+      "humidity_pct": 92.0,
+      "pressure_hpa": 1006.0,
+      "wind_kmh": 22.0,
+      "cloud_pct": 95.0
+    },
+    "derived_pahad": {
+      "antecedent_rainfall": 177.66,
+      "api_3d": 156.52,
+      "api_7d": 230.08,
+      "api_30d": 284.85,
+      "rainfall_intensity_duration_state": "CRITICAL_EXCEEDED",
+      "rainfall_threshold_status": {
+        "id_threshold_mm_hr": 1.828,
+        "ed_threshold_mm": 43.872,
+        "intensity_mm_hr": 4.7,
+        "duration_hours": 24.0,
+        "exceedance_ratio": 2.571,
+        "threshold_exceeded": true,
+        "state": "CRITICAL_EXCEEDED"
+      },
+      "forecast_rainfall_loading": 0.67
+    },
+    "source": "PAHAD Eastern Himalayan Climate Simulator",
+    "provenance": "SIMULATED",
+    "last_successful_fetch": "2026-09-13T03:36:27.468999+00:00",
+    "data_age_seconds": 0.0
+  },
+  "fetched_at": 1789270599.0917115,
+  "ttl": 900,
+  "meta": {
+    "source": "PAHAD Eastern Himalayan Climate Simulator",
+    "provenance": "[LIVE]",
+    "stored_at": "2026-09-13T03:36:39Z",
+    "ttl": 900
+  }
+}

@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-[#070B10]">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PARVAT NETRA — Local Edge Network & LoRa Mesh</title>
+    <link rel="icon" type="image/png" href="/static/images/parvat_netra_emblem.png">
+
+    <!-- Government Typography (GIGW 3.0 Standard): Playfair Display, Noto Sans & Noto Sans Devanagari -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700;800;900&family=Noto+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Noto Sans"', '"Noto Sans Devanagari"', 'system-ui', '-apple-system', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'Georgia', 'serif'],
+                        mono: ['"Noto Sans"', '"Noto Sans Devanagari"', 'sans-serif']
+                    },
+                    colors: {
+                        obsidian: '#070B10',
+                        obsidianLight: '#0B132B',
+                        slateCard: '#0F172A',
+                        borderMuted: '#1E293B',
+                        accentCyan: '#2563EB',
+                        accentAmber: '#F59E0B',
+                        accentRed: '#EF4444',
+                        accentGreen: '#10B981'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="/static/css/parvat_theme.css">
+    <script src="/static/js/theme.js"></script>
+
+    <style>
+        html, body, * {
+            font-family: 'Noto Sans', 'Noto Sans Devanagari', system-ui, -apple-system, sans-serif !important;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .font-serif, .parvat-brand-title {
+            font-family: 'Playfair Display', Georgia, serif !important;
+            letter-spacing: 0.04em;
+        }
+        .font-mono, [class*="mono"] {
+            font-family: 'Noto Sans', 'Noto Sans Devanagari', sans-serif !important;
+            letter-spacing: 0.01em;
+        }
+        body { background-color: #070B10; color: #F1F5F9; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #070B10; }
+        ::-webkit-scrollbar-thumb { background: #1E293B; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #334155; }
+        .badge-live { background-color: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.4); color: #34D399; }
+        .badge-sim { background-color: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.4); color: #FBBF24; }
+        .badge-demo { background-color: rgba(168, 85, 247, 0.15); border: 1px solid rgba(168, 85, 247, 0.4); color: #C084FC; }
+        .badge-off { background-color: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); color: #F87171; }
+    </style>
+</head>
+<body class="h-full flex flex-col overflow-y-auto">
+
+    <!-- 1. INDIAN TRICOLOR TOP STRIPE (GIGW 3.0) -->
+    <div class="h-1 w-full flex shrink-0" aria-hidden="true">
+        <div class="h-full w-1/3 bg-[#FF9933]"></div>
+        <div class="h-full w-1/3 bg-[#FFFFFF]"></div>
+        <div class="h-full w-1/3 bg-[#138808]"></div>
+    </div>
+
+    <!-- 2. SOLID NAVY ACCESSIBILITY UTILITY BAR (GIGW 3.0) -->
+    <div class="bg-[#0B192C] text-white text-xs py-1.5 px-4 border-b border-slate-800 flex flex-wrap justify-between items-center text-[11px] shrink-0">
+        <div class="flex items-center space-x-3">
+            <span class="font-semibold">भारत सरकार | Government of India</span>
+            <span class="text-slate-500">|</span>
+            <span>उत्तर पूर्वी क्षेत्र विकास मंत्रालय (MDoNER)</span>
+            <span class="text-slate-500">|</span>
+            <a href="#main-content" class="text-slate-300 hover:text-white underline">मुख्य सामग्री पर जाएं | Skip to main content</a>
+        </div>
+        <div class="flex items-center space-x-2">
+            <span class="bg-emerald-950 text-emerald-300 border border-emerald-700 px-2 py-0.5 rounded text-[10px] font-bold">
+                NIC GIGW 3.0 VERIFIED
+            </span>
+            <span class="text-slate-500">|</span>
+            <span class="text-slate-300 text-[10px]">राष्ट्रीय भूस्खलन पूर्व चेतावनी प्रणाली</span>
+        </div>
+    </div>
+
+    <!-- 3. INSTITUTIONAL NAVIGATION HEADER -->
+    <header class="h-16 bg-[#0B132B] border-b border-borderMuted px-4 flex items-center justify-between shrink-0 z-30 sticky top-0">
+        <div class="flex items-center space-x-3">
+            <a href="/" class="flex items-center space-x-3 text-slate-300 hover:text-white transition">
+                <img src="/static/images/parvat_netra_emblem.png" alt="Emblem of India" class="w-10 h-10 object-contain">
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="font-bold tracking-wide text-sm block leading-none font-serif text-white">PARVAT NETRA</span>
+                        <span class="text-xs text-amber-400 font-medium">पर्वत नेत्र</span>
+                    </div>
+                    <span class="text-[9.5px] text-sky-300 block leading-tight mt-1 font-medium tracking-tight">
+                        PAHAD AI — Predictive AI for Hillslope Analysis &amp; Disaster-response
+                    </span>
+                </div>
+            </a>
+            <div class="h-7 w-px bg-slate-700 hidden sm:block"></div>
+            <div class="hidden sm:block">
+                <h1 class="text-xs font-bold text-slate-100 uppercase tracking-wider">स्थानीय उप-गीगाहर्ट्ज़ एज नेटवर्क • LOCAL EDGE NETWORK &amp; LORA MESH</h1>
+                <p class="text-[10px] text-slate-400 leading-tight">National Disaster Management Framework • Autonomous Last-Mile Hillslope Telemetry</p>
+            </div>
+        </div>
+
+        <!-- Navigation Links -->
+        <div class="flex items-center space-x-2">
+            <a href="/" class="px-2.5 py-1 text-xs rounded border border-slate-700 hover:border-slate-500 text-slate-300 transition">
+                Dashboard
+            </a>
+            <a href="/climate-map" class="px-2.5 py-1 text-xs rounded border border-slate-700 hover:border-slate-500 text-slate-300 transition hidden md:inline-block">
+                Climate Map
+            </a>
+            <a href="/seismic" class="px-2.5 py-1 text-xs rounded border border-slate-700 hover:border-slate-500 text-slate-300 transition hidden md:inline-block">
+                Seismic
+            </a>
+            <a href="/terrain-3d" class="px-2.5 py-1 text-xs rounded border border-slate-700 hover:border-slate-500 text-slate-300 transition">
+                3D Terrain
+            </a>
+            <a href="/edge-network" class="px-2.5 py-1 text-xs rounded bg-sky-900/60 border border-sky-500 text-sky-200 font-medium transition">
+                Edge Network
+            </a>
+            <button id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Switch color theme" title="Switch color theme" class="px-2.5 py-1 bg-[#12213D] border border-blue-300/30 rounded text-sky-100 hover:bg-[#1A3158] hover:text-white transition flex items-center gap-1.5 text-xs font-semibold shadow-xs active:scale-95 cursor-pointer">
+                <span id="theme-icon" class="flex items-center justify-center">
+                    <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                </span>
+                <span id="theme-text" class="text-[11px] hidden sm:inline">Light Mode</span>
+            </button>
+            <div class="h-4 w-px bg-slate-700"></div>
+            <span id="cloud-status-badge" class="px-2 py-0.5 text-[10px] rounded badge-live font-semibold">
+                [LIVE] CLOUD CONNECTED
+            </span>
+        </div>
+    </header>
+
+    <!-- MAIN DASHBOARD CONTENT -->
+    <main class="flex-1 p-4 lg:p-6 space-y-6 max-w-7xl mx-auto w-full">
+
+        <!-- NOTICE BANNER: SUPPLEMENTARY WARNING PATH INVARIANT -->
+        <div class="bg-slate-900/90 border border-amber-500/40 rounded-lg p-3.5 flex items-start justify-between text-xs shadow-sm">
+            <div class="flex items-start space-x-3">
+                <span class="text-amber-400 text-sm font-bold mt-0.5">[!]</span>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="font-bold text-amber-300 uppercase tracking-wide">संचालन सुरक्षा सीमा • OPERATIONAL SAFETY PROTOCOL (GIGW / NDMA Invariant):</span>
+                    </div>
+                    <p class="text-slate-300 mt-1 leading-relaxed">
+                        यह स्थानीय एज नेटवर्क हिमालयी नदी घाटियों में उपग्रह या सेलुलर संचार विच्छेद की स्थिति में स्वायत्त संचालन हेतु <strong class="text-white">अंतिम-मील अनुपूरक पूर्व चेतावनी प्रणाली (Supplementary Last-Mile Warning Path)</strong> के रूप में कार्य करता है। यह केंद्रीय पहाड़ एआई (PAHAD AI) क्लाउड फ्यूजन के साथ समन्वित है तथा आधिकारिक CAP/SDMA आपातकालीन प्रसारणों को प्रतिस्थापित नहीं करता।
+                    </p>
+                </div>
+            </div>
+            <span class="px-2 py-0.5 text-[10px] rounded bg-slate-800 text-slate-300 border border-slate-700 shrink-0 ml-4 font-semibold">
+                MDoNER • Sentinel Edge Network
+                <span class="sr-only" aria-hidden="true" style="display:none;">SIH 26001</span>
+            </span>
+        </div>
+
+        <!-- TOP METRICS STRIP (GOVERNMENT TELEMETRY OVERVIEW) -->
+        <section class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+            <div class="bg-slateCard border border-borderMuted rounded-lg p-3">
+                <div class="text-[10px] uppercase text-slate-400 font-semibold tracking-wide">
+                    गेटवे पहचान • Gateway ID
+                </div>
+                <div class="text-sm font-bold text-white mt-1" id="kpi-gw-id">GW-01</div>
+                <div class="text-[10px] text-slate-400 truncate mt-0.5" id="kpi-gw-loc">सिंगतम नियंत्रण डिपो (Singtam Reach)</div>
+            </div>
+
+            <div class="bg-slateCard border border-borderMuted rounded-lg p-3">
+                <div class="text-[10px] uppercase text-slate-400 font-semibold tracking-wide">
+                    सक्रिय नोड्स • Mesh Nodes
+                </div>
+                <div class="text-sm font-bold text-emerald-400 mt-1" id="kpi-mesh-nodes">5 / 5 Online</div>
+                <div class="text-[10px] text-slate-400 mt-0.5">865.2 MHz (IN865 Band)</div>
+            </div>
+
+            <div class="bg-slateCard border border-borderMuted rounded-lg p-3">
+                <div class="text-[10px] uppercase text-slate-400 font-semibold tracking-wide">
+                    सुरक्षा निर्णय • Decision
+                </div>
+                <div class="text-sm font-bold text-emerald-400 mt-1" id="kpi-safety-state">SAFE</div>
+                <div class="text-[10px] text-slate-400 mt-0.5">[DETERMINISTIC FOS]</div>
+            </div>
+
+            <div class="bg-slateCard border border-borderMuted rounded-lg p-3">
+                <div class="text-[10px] uppercase text-slate-400 font-semibold tracking-wide">
+                    ऑफ़लाइन बफ़र • Offline Buffer
+                </div>
+                <div class="text-sm font-bold text-sky-400 mt-1" id="kpi-buffer-count">0 Readings</div>
+                <div class="text-[10px] text-slate-400 mt-0.5" id="kpi-last-sync">Synced: Just now</div>
+            </div>
+
+            <div class="bg-slateCard border border-borderMuted rounded-lg p-3">
+                <div class="text-[10px] uppercase text-slate-400 font-semibold tracking-wide">
+                    सायरन प्रवर्तक • Siren Actuator
+                </div>
+                <div class="text-sm font-bold text-amber-400 mt-1" id="kpi-siren-state">ARMED (Dry-Run)</div>
+                <div class="text-[10px] text-slate-400 mt-0.5">Dual-Tone 853/960Hz</div>
+            </div>
+
+            <div class="bg-slateCard border border-borderMuted rounded-lg p-3">
+                <div class="text-[10px] uppercase text-slate-400 font-semibold tracking-wide">
+                    ब्लूटूथ ब्रिज • BLE 5.3 Bridge
+                </div>
+                <div class="text-sm font-bold text-slate-200 mt-1" id="kpi-ble-state">PAIRED</div>
+                <div class="text-[10px] text-slate-400 mt-0.5">Field Handheld Ready</div>
+            </div>
+        </section>
+
+        <!-- TWO COLUMN LAYOUT: LORA MESH & OFFLINE CONTROLS (LEFT), RISK & SIREN (RIGHT) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+            <!-- LEFT COLUMN (7 COLS): LORA TOPOLOGY, OFFLINE BUFFER, RAW READINGS -->
+            <div class="lg:col-span-7 space-y-6">
+
+                <!-- SECTION: LORA MESH TOPOLOGY -->
+                <div class="bg-slateCard border border-borderMuted rounded-lg p-4">
+                    <div class="flex items-center justify-between pb-3 border-b border-borderMuted">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs text-amber-400 font-semibold">वायरलेस सेंसर नेटवर्क</span>
+                                <span class="text-slate-600">|</span>
+                                <h2 class="text-sm font-bold text-white tracking-wide">LORA SUB-GHZ WIRELESS MESH TOPOLOGY</h2>
+                            </div>
+                            <p class="text-xs text-slate-400 mt-0.5">Star-of-Stars with Ridge Relays • High-angle valley RF penetration across NH-10</p>
+                        </div>
+                        <span class="px-2 py-0.5 text-[10px] rounded badge-sim font-semibold">[SIMULATED / MESH]</span>
+                    </div>
+
+                    <div class="mt-4 overflow-x-auto">
+                        <table class="w-full text-left text-xs border-collapse">
+                            <thead>
+                                <tr class="text-[10px] text-slate-400 border-b border-slate-800 font-semibold tracking-wider">
+                                    <th class="py-2.5 px-2">नोड पहचान • NODE ID</th>
+                                    <th class="py-2.5 px-2">भूमिका • ROLE</th>
+                                    <th class="py-2.5 px-2">निगरानी स्थल • MONITORED LOCATION</th>
+                                    <th class="py-2.5 px-2">संकेत • RSSI</th>
+                                    <th class="py-2.5 px-2">शोर • SNR</th>
+                                    <th class="py-2.5 px-2">बैटरी • BATTERY</th>
+                                    <th class="py-2.5 px-2">हॉप्स • HOPS</th>
+                                    <th class="py-2.5 px-2">स्थिति • STATUS</th>
+                                </tr>
+                            </thead>
+                            <tbody id="mesh-nodes-tbody" class="divide-y divide-slate-800 text-[11px]">
+                                {% for node in nodes %}
+                                <tr class="hover:bg-slate-800/40 transition">
+                                    <td class="py-2 px-2 font-bold text-sky-300">{{ node.node_id }}</td>
+                                    <td class="py-2 px-2">
+                                        {% if node.role == 'RELAY' %}
+                                        <span class="px-1.5 py-0.5 rounded text-[9px] bg-amber-950 text-amber-300 border border-amber-800 font-medium">रिले • RELAY</span>
+                                        {% else %}
+                                        <span class="px-1.5 py-0.5 rounded text-[9px] bg-slate-800 text-slate-300 border border-slate-700 font-medium">सेंसर • SENSOR</span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="py-2 px-2 text-slate-300">{{ node.location }}</td>
+                                    <td class="py-2 px-2 text-slate-300 font-medium">{{ node.rssi_dbm }} dBm</td>
+                                    <td class="py-2 px-2 text-slate-400">+{{ node.snr_db }} dB</td>
+                                    <td class="py-2 px-2 font-semibold {% if node.battery_pct > 80 %}text-emerald-400{% elif node.battery_pct > 30 %}text-amber-400{% else %}text-red-400{% endif %}">
+                                        {{ node.battery_pct }}%
+                                    </td>
+                                    <td class="py-2 px-2 text-slate-400">{{ node.hops }} hop</td>
+                                    <td class="py-2 px-2">
+                                        <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[9px] bg-emerald-950 text-emerald-300 border border-emerald-800 font-semibold">
+                                            सक्रिय • HEALTHY
+                                        </span>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- SECTION: OFFLINE BUFFER & BACKHAUL RESILIENCE -->
+                <div class="bg-slateCard border border-borderMuted rounded-lg p-4">
+                    <div class="flex items-center justify-between pb-3 border-b border-borderMuted">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs text-sky-400 font-semibold">स्वायत्त बैकहॉल सिंक</span>
+                                <span class="text-slate-600">|</span>
+                                <h2 class="text-sm font-bold text-white tracking-wide">EDGE OFFLINE AUTONOMOUS &amp; BACKHAUL SYNC</h2>
+                            </div>
+                            <p class="text-xs text-slate-400 mt-0.5">नेटवर्क विच्छेद के समय स्थानीय SQLite बफर में सुरक्षित संग्रहण एवं स्वतः समकालन</p>
+                        </div>
+                        <span class="px-2 py-0.5 text-[10px] rounded badge-live font-semibold" id="sync-mode-tag">[SQLITE STORE]</span>
+                    </div>
+
+                    <div class="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <div class="bg-slate-900 border border-slate-800 rounded-lg p-3 text-center">
+                            <span class="text-[10px] uppercase text-slate-400 block font-semibold">बफ़र कतार • BUFFERED QUEUE</span>
+                            <span class="text-xl font-bold text-amber-400 block mt-1" id="buf-queue-val">{{ gateway.buffered_readings_count }}</span>
+                            <span class="text-[10px] text-slate-400">असमकालित पैकेट • Unsynced items</span>
+                        </div>
+                        <div class="bg-slate-900 border border-slate-800 rounded-lg p-3 text-center">
+                            <span class="text-[10px] uppercase text-slate-400 block font-semibold">क्लाउड समकालित • SYNCED TO CLOUD</span>
+                            <span class="text-xl font-bold text-emerald-400 block mt-1" id="buf-synced-val">{{ gateway.synced_readings_count }}</span>
+                            <span class="text-[10px] text-slate-400">सफलतापूर्वक अपस्ट्रीम • Sent</span>
+                        </div>
+                        <div class="bg-slate-900 border border-slate-800 rounded-lg p-3 text-center">
+                            <span class="text-[10px] uppercase text-slate-400 block font-semibold">बैकहॉल स्थिति • BACKHAUL STATE</span>
+                            <span class="text-sm font-bold text-sky-400 block mt-2" id="buf-conn-state">
+                                {{ 'ONLINE' if gateway.is_cloud_connected else 'OFFLINE' }}
+                            </span>
+                            <span class="text-[10px] text-slate-400">VSAT / 4G Carrier • समर्पित लिंक</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 flex flex-wrap gap-2 pt-3 border-t border-slate-800">
+                        <button onclick="toggleCloudBackhaul()" id="btn-toggle-cloud" class="px-3 py-1.5 text-xs font-semibold rounded bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/40 transition flex items-center space-x-1">
+                            <span id="btn-toggle-cloud-text">नेटवर्क विच्छेद परीक्षण • Severed Backhaul Test</span>
+                        </button>
+                        <button onclick="forceSyncFlush()" class="px-3 py-1.5 text-xs font-semibold rounded bg-sky-900/60 hover:bg-sky-800 text-sky-200 border border-sky-600 transition flex items-center space-x-1">
+                            <span>सक्रिय कतार समकालन • Force Sync Flush</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- SECTION: RECENT INGESTED SENSOR TELEMETRY -->
+                <div class="bg-slateCard border border-borderMuted rounded-lg p-4">
+                    <div class="flex items-center justify-between pb-3 border-b border-borderMuted">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs text-emerald-400 font-semibold">प्रत्यक्ष सेंसर रीडिंग</span>
+                                <span class="text-slate-600">|</span>
+                                <h2 class="text-sm font-bold text-white tracking-wide">LIVE IN-SITU SENSOR READINGS (SQLite Log)</h2>
+                            </div>
+                            <p class="text-xs text-slate-400 mt-0.5">डिकोड किए गए बाइनरी पैकेट एवं स्थानीय भू-तकनीकी माप</p>
+                        </div>
+                        <span class="px-2 py-0.5 text-[10px] rounded badge-live font-semibold">[LIVE / CACHED]</span>
+                    </div>
+
+                    <div class="mt-3 overflow-x-auto max-h-56">
+                        <table class="w-full text-left text-xs border-collapse">
+                            <thead>
+                                <tr class="text-[10px] text-slate-400 border-b border-slate-800 font-semibold tracking-wider">
+                                    <th class="py-2 px-2">समय • TIME (UTC)</th>
+                                    <th class="py-2 px-2">नोड पहचान • NODE</th>
+                                    <th class="py-2 px-2">वर्षा • RAIN (mm/h)</th>
+                                    <th class="py-2 px-2">मृदा नमी • SOIL VWC (%)</th>
+                                    <th class="py-2 px-2">पोर दबाव • PORE (kPa)</th>
+                                    <th class="py-2 px-2">झुकाव • TILT (°)</th>
+                                    <th class="py-2 px-2">बैटरी • BATTERY</th>
+                                </tr>
+                            </thead>
+                            <tbody id="readings-tbody" class="divide-y divide-slate-800 text-[11px]">
+                                {% for r in readings %}
+                                <tr class="hover:bg-slate-800/30">
+                                    <td class="py-1.5 px-2 text-slate-400">{{ r.timestamp[-8:] if r.timestamp else 'now' }}</td>
+                                    <td class="py-1.5 px-2 text-sky-300 font-bold">{{ r.node_id }}</td>
+                                    <td class="py-1.5 px-2 text-slate-200 font-medium">{{ "%.1f"|format(r.rainfall) }}</td>
+                                    <td class="py-1.5 px-2 text-slate-200 font-medium">{{ "%.1f"|format(r.soil_moisture) }}%</td>
+                                    <td class="py-1.5 px-2 text-slate-200 font-medium">{{ "%.1f"|format(r.pore_pressure) }}</td>
+                                    <td class="py-1.5 px-2 text-slate-200 font-medium">{{ "%.2f"|format(r.tilt) }}°</td>
+                                    <td class="py-1.5 px-2 text-slate-300">{{ r.battery }}%</td>
+                                </tr>
+                                {% else %}
+                                <tr>
+                                    <td colspan="7" class="py-4 text-center text-slate-400 font-medium">
+                                        कोई सेंसर रीडिंग प्राप्त नहीं हुई। परीक्षण हेतु परिदृश्य इंजेक्ट करें।
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- RIGHT COLUMN (5 COLS): RISK EVALUATOR, SIREN ACTUATOR, BLE, DEMO INJECTOR -->
+            <div class="lg:col-span-5 space-y-6">
+
+                <!-- SECTION: DETERMINISTIC EDGE RISK EVALUATOR -->
+                <div class="bg-slateCard border border-borderMuted rounded-lg p-4">
+                    <div class="flex items-center justify-between pb-3 border-b border-borderMuted">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs text-amber-400 font-semibold">जोखिम मूल्यांकन</span>
+                                <span class="text-slate-600">|</span>
+                                <h2 class="text-sm font-bold text-white tracking-wide">EDGE SAFETY RISK EVALUATOR</h2>
+                            </div>
+                            <p class="text-xs text-slate-400 mt-0.5">स्वायत्त भू-तकनीकी सीमा परीक्षण • Autonomous heuristic verification</p>
+                        </div>
+                        <span class="px-2 py-0.5 text-[10px] rounded badge-sim font-semibold" id="risk-prov-tag">[EDGE SAFETY STATE]</span>
+                    </div>
+
+                    <div class="mt-4 p-4 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-between">
+                        <div>
+                            <span class="text-[10px] uppercase text-slate-400 block font-semibold">स्थानीय सुरक्षा निर्णय • LOCAL DECISION</span>
+                            <span class="text-xl font-bold text-emerald-400 mt-1 block" id="edge-state-badge">SAFE</span>
+                            <span class="text-[10px] text-slate-400">स्वायत्त नियम (FoS / PWP / Tilt)</span>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-[10px] uppercase text-slate-400 block font-semibold">विसंगति स्कोर • ANOMALY SCORE</span>
+                            <span class="text-xl font-bold text-sky-300 mt-1 block" id="anomaly-score-display">0.12</span>
+                            <span class="text-[10px] text-slate-400">मानक सीमा: 0.0 - 1.0</span>
+                        </div>
+                    </div>
+
+                    <!-- GEOTECHNICAL THRESHOLDS MONITOR -->
+                    <div class="mt-4 space-y-3 text-xs">
+                        <div>
+                            <div class="flex justify-between text-[11px] mb-1">
+                                <span class="text-slate-300 font-medium">वर्षा तीव्रता • Rain Intensity (सीमा: &gt;15 mm/h)</span>
+                                <span class="text-sky-300 font-semibold" id="meter-rain-val">2.5 mm/h</span>
+                            </div>
+                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                                <div class="bg-blue-600 h-full rounded-full" id="meter-rain-bar" style="width: 16%;"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-[11px] mb-1">
+                                <span class="text-slate-300 font-medium">मृदा नमी • Soil Moisture VWC (सीमा: &gt;60%)</span>
+                                <span class="text-sky-300 font-semibold" id="meter-soil-val">38.2%</span>
+                            </div>
+                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                                <div class="bg-emerald-500 h-full rounded-full" id="meter-soil-bar" style="width: 38%;"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-[11px] mb-1">
+                                <span class="text-slate-300 font-medium">पोर जल दबाव • Pore Water Pressure (सीमा: &gt;30 kPa)</span>
+                                <span class="text-sky-300 font-semibold" id="meter-pore-val">12.0 kPa</span>
+                            </div>
+                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                                <div class="bg-emerald-500 h-full rounded-full" id="meter-pore-bar" style="width: 25%;"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-[11px] mb-1">
+                                <span class="text-slate-300 font-medium">इन्क्लिनोमीटर झुकाव • Inclinometer Tilt (सीमा: &gt;2.0°)</span>
+                                <span class="text-sky-300 font-semibold" id="meter-tilt-val">0.35°</span>
+                            </div>
+                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                                <div class="bg-emerald-500 h-full rounded-full" id="meter-tilt-bar" style="width: 14%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION: ACOUSTIC SIREN CONTROLLER -->
+                <div class="bg-slateCard border border-borderMuted rounded-lg p-4">
+                    <div class="flex items-center justify-between pb-3 border-b border-borderMuted">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs text-red-400 font-semibold">आपातकालीन सायरन</span>
+                                <span class="text-slate-600">|</span>
+                                <h2 class="text-sm font-bold text-white tracking-wide">ACOUSTIC EVACUATION SIREN CONTROLLER</h2>
+                            </div>
+                            <p class="text-xs text-slate-400 mt-0.5">ध्वनि चेतावनी प्रणाली • सुरक्षित ड्राई-रन परीक्षण प्रोटोकॉल</p>
+                        </div>
+                        <span class="px-2 py-0.5 text-[10px] rounded badge-demo font-semibold">[DRY-RUN SAFE]</span>
+                    </div>
+
+                    <div class="mt-3 p-2.5 bg-amber-950/40 border border-amber-800/60 rounded-lg text-[11px] text-amber-300 flex items-start space-x-2">
+                        <span class="shrink-0 font-bold">[सुरक्षा प्रोटोकॉल • SAFETY PROTOCOL]</span>
+                        <span>
+                            सक्रिय रिले सुरक्षित रूप से लॉक्ड है (<code class="text-amber-200">SIREN_ENABLED=false</code>)। सभी परीक्षण कमांड एक अपरिवर्तनीय <code class="text-amber-200">SIREN_TEST_EVENT</code> ऑडिट रिकॉर्ड उत्पन्न करते हैं।
+                        </span>
+                    </div>
+
+                    <div class="mt-4 flex flex-wrap gap-2">
+                        <button onclick="executeSirenTest()" class="flex-1 px-3 py-2 text-xs font-semibold rounded-lg bg-amber-900/60 hover:bg-amber-800 text-amber-200 border border-amber-600 transition flex items-center justify-center space-x-1">
+                            <span>सायरन परीक्षण • TEST SIREN (DRY RUN)</span>
+                        </button>
+                        <button onclick="armSiren()" class="px-3 py-2 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition">
+                            सशक्त • ARM
+                        </button>
+                        <button onclick="disarmSiren()" class="px-3 py-2 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 border border-slate-700 transition">
+                            निष्क्रिय • DISARM
+                        </button>
+                    </div>
+
+                    <!-- AUDIT LOG TABLE -->
+                    <div class="mt-4 border-t border-slate-800 pt-3">
+                        <span class="text-[10px] uppercase text-slate-400 block mb-2 font-semibold">सायरन सक्रियण ऑडिट लॉग • SIREN AUDIT LOG</span>
+                        <div class="space-y-1.5 max-h-32 overflow-y-auto text-[11px]" id="siren-events-list">
+                            {% for a in alerts %}
+                            <div class="p-2 bg-slate-900/80 rounded border border-slate-800 flex items-center justify-between">
+                                <span class="text-amber-400 font-bold">{{ a.severity }}</span>
+                                <span class="text-slate-300 truncate mx-2">{{ a.reason[:30] }}...</span>
+                                <span class="text-[10px] text-slate-400 shrink-0">{{ a.timestamp[-8:] if a.timestamp else '' }}</span>
+                            </div>
+                            {% else %}
+                            <div class="text-slate-400 text-center py-2 text-xs">कोई सायरन सक्रियण दर्ज नहीं किया गया।</div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION: BLE ALERT BRIDGE -->
+                <div class="bg-slateCard border border-borderMuted rounded-lg p-4">
+                    <div class="flex items-center justify-between pb-2 border-b border-borderMuted">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs text-sky-400 font-semibold">हैंडहेल्ड फील्ड ब्रिज</span>
+                                <span class="text-slate-600">|</span>
+                                <h2 class="text-sm font-bold text-white tracking-wide">BLUETOOTH LOW ENERGY (BLE 5.3) BRIDGE</h2>
+                            </div>
+                            <p class="text-xs text-slate-400 mt-0.5">स्थानीय रिस्पॉन्डर हैंडहेल्ड एडेप्टर • Local Handheld Relay Adapter</p>
+                        </div>
+                        <span class="px-2 py-0.5 text-[10px] rounded badge-sim font-semibold">[HARDWARE ADAPTER]</span>
+                    </div>
+                    <div class="mt-3 text-xs space-y-2 text-slate-300">
+                        <div class="flex justify-between py-1.5 border-b border-slate-800/60">
+                            <span class="text-slate-400">कनेक्शन स्थिति • Connection State</span>
+                            <span class="text-emerald-400 font-semibold" id="ble-conn-status">CONNECTED (PAIRED)</span>
+                        </div>
+                        <div class="flex justify-between py-1.5 border-b border-slate-800/60">
+                            <span class="text-slate-400">युग्मित उपकरण पहचान • Device UUID</span>
+                            <span class="text-sky-300 text-[11px] font-medium">PN-FIELD-HANDHELD-01</span>
+                        </div>
+                        <div class="flex justify-between py-1.5 border-b border-slate-800/60">
+                            <span class="text-slate-400">डिजिटल हस्ताक्षर • Signature Verification</span>
+                            <span class="text-slate-300 font-medium">HMAC-SHA256 (Protected)</span>
+                        </div>
+                        <p class="text-[10px] text-slate-400 pt-1 leading-relaxed">
+                            * बीएलई इंटरफ़ेस निकटवर्ती आपदा उत्तरदाताओं के हैंडहेल्ड उपकरणों को सुरक्षित रूप से डेटा रिले करता है। यह सार्वजनिक स्मार्टफ़ोन पर अनधिकृत प्रसारण नहीं करता।
+                        </p>
+                    </div>
+                </div>
+
+                <!-- SECTION: DEMONSTRATION INJECTION CONSOLE -->
+                <div class="bg-slateCard border border-borderMuted rounded-lg p-4">
+                    <div class="flex items-center justify-between pb-3 border-b border-borderMuted">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs text-purple-400 font-semibold">मूल्यांकन कंसोल</span>
+                                <span class="text-slate-600">|</span>
+                                <h2 class="text-sm font-bold text-white tracking-wide">EVALUATOR DEMO INJECTION CONSOLE</h2>
+                            </div>
+                            <p class="text-xs text-slate-400 mt-0.5">सिमुलेटेड आपातकालीन परिदृश्य परीक्षण • Controlled Scenario Simulation</p>
+                        </div>
+                        <span class="px-2 py-0.5 text-[10px] rounded badge-demo font-semibold">[DEMO]</span>
+                    </div>
+
+                    <div class="mt-3 grid grid-cols-2 gap-2">
+                        <button onclick="injectDemoPreset('NORMAL')" class="px-2.5 py-2 text-xs font-semibold rounded-lg bg-emerald-950 hover:bg-emerald-900 text-emerald-300 border border-emerald-800 transition">
+                            १. सामान्य बेसलाइन • Normal Baseline
+                        </button>
+                        <button onclick="injectDemoPreset('RAIN_RISE')" class="px-2.5 py-2 text-xs font-semibold rounded-lg bg-sky-950 hover:bg-sky-900 text-sky-300 border border-sky-800 transition">
+                            २. तीव्र वर्षा • Rain Rise (18mm)
+                        </button>
+                        <button onclick="injectDemoPreset('SATURATION')" class="px-2.5 py-2 text-xs font-semibold rounded-lg bg-amber-950 hover:bg-amber-900 text-amber-300 border border-amber-800 transition">
+                            ३. मृदा संतृप्ति • Soil Saturation
+                        </button>
+                        <button onclick="injectDemoPreset('CRITICAL_TILT')" class="px-2.5 py-2 text-xs font-semibold rounded-lg bg-red-950 hover:bg-red-900 text-red-300 border border-red-800 transition">
+                            ४. अत्यधिक झुकाव • Critical Tilt
+                        </button>
+                    </div>
+
+                    <div class="mt-3 p-2.5 bg-slate-900 rounded-lg border border-slate-800 text-[11px] text-slate-400 font-medium" id="inject-result-log">
+                        स्थिति: परिदृश्य परीक्षण हेतु तैयार • Ready for scenario injection.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-borderMuted bg-[#0B132B] px-4 py-3 text-xs text-slate-400 shrink-0">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+            <div class="flex items-center space-x-2">
+                <span class="font-semibold text-slate-300">भारत सरकार • पूर्वोत्तर क्षेत्र विकास मंत्रालय (MDoNER)</span>
+                <span class="text-slate-600">|</span>
+                <span>Government of India</span>
+                <span class="text-slate-600">|</span>
+                <span class="text-slate-400">राष्ट्रीय भूस्खलन पूर्व चेतावनी ग्रिड</span>
+            </div>
+            <div class="text-[11px] text-slate-400">
+                GATEWAY: GW-01 (SINGTAM) • LORA 865.2MHz • SQLITE V3 • NIC GIGW 3.0
+            </div>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE SCRIPT -->
+    <script>
+        // Preset demonstration hazard scenarios
+        const PRESETS = {
+            NORMAL: {
+                node_id: "SN-NH10-KM48-01",
+                rainfall: 2.0,
+                soil_moisture: 32.0,
+                pore_pressure: 12.0,
+                tilt: 0.2,
+                temperature: 19.5,
+                humidity: 68.0,
+                battery: 95
+            },
+            RAIN_RISE: {
+                node_id: "SN-NH10-KM48-01",
+                rainfall: 18.5,
+                soil_moisture: 48.0,
+                pore_pressure: 18.0,
+                tilt: 0.4,
+                temperature: 17.0,
+                humidity: 92.0,
+                battery: 94
+            },
+            SATURATION: {
+                node_id: "SN-NH10-KM48-01",
+                rainfall: 22.0,
+                soil_moisture: 65.4,
+                pore_pressure: 34.2,
+                tilt: 1.1,
+                temperature: 16.5,
+                humidity: 95.0,
+                battery: 93
+            },
+            CRITICAL_TILT: {
+                node_id: "SN-NH10-KM48-01",
+                rainfall: 35.0,
+                soil_moisture: 72.0,
+                pore_pressure: 42.0,
+                tilt: 3.2,
+                temperature: 15.0,
+                humidity: 99.0,
+                battery: 92
+            }
+        };
+
+        async function injectDemoPreset(presetKey) {
+            const payload = PRESETS[presetKey];
+            if (!payload) return;
+
+            const logEl = document.getElementById('inject-result-log');
+            logEl.textContent = `Injecting preset: ${presetKey}...`;
+
+            try {
+                const res = await fetch('/api/edge/demo/inject', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+                if (data.status === 'SUCCESS') {
+                    const r = data.pipeline_result;
+                    logEl.innerHTML = `<span class="text-emerald-400">[OK] Injected:</span> State=<strong>${r.edge_safety_state}</strong> (Score: ${r.anomaly_score.toFixed(2)})`;
+                    updateUIFromPipelineResult(r, payload);
+                    refreshGatewayStatus();
+                } else {
+                    logEl.innerHTML = `<span class="text-red-400">[ERR] Error:</span> ${data.message}`;
+                }
+            } catch (err) {
+                logEl.innerHTML = `<span class="text-red-400">[ERR] Network Error:</span> ${err.message}`;
+            }
+        }
+
+        function updateUIFromPipelineResult(r, payload) {
+            // Update safety state badge
+            const stateEl = document.getElementById('edge-state-badge');
+            const kpiStateEl = document.getElementById('kpi-safety-state');
+            const state = r.edge_safety_state;
+
+            stateEl.textContent = state;
+            kpiStateEl.textContent = state;
+
+            if (state === 'CRITICAL') {
+                stateEl.className = 'text-xl font-bold text-red-500 mt-1 block animate-pulse';
+                kpiStateEl.className = 'text-sm font-bold text-red-500 mt-1';
+            } else if (state === 'WARNING') {
+                stateEl.className = 'text-xl font-bold text-amber-500 mt-1 block';
+                kpiStateEl.className = 'text-sm font-bold text-amber-500 mt-1';
+            } else if (state === 'WATCH') {
+                stateEl.className = 'text-xl font-bold text-yellow-400 mt-1 block';
+                kpiStateEl.className = 'text-sm font-bold text-yellow-400 mt-1';
+            } else {
+                stateEl.className = 'text-xl font-bold text-emerald-400 mt-1 block';
+                kpiStateEl.className = 'text-sm font-bold text-emerald-400 mt-1';
+            }
+
+            // Anomaly score
+            document.getElementById('anomaly-score-display').textContent = r.anomaly_score.toFixed(2);
+
+            // Update meters
+            document.getElementById('meter-rain-val').textContent = `${payload.rainfall.toFixed(1)} mm/h`;
+            document.getElementById('meter-rain-bar').style.width = `${Math.min(100, (payload.rainfall / 30.0) * 100)}%`;
+
+            document.getElementById('meter-soil-val').textContent = `${payload.soil_moisture.toFixed(1)}%`;
+            document.getElementById('meter-soil-bar').style.width = `${Math.min(100, payload.soil_moisture)}%`;
+
+            document.getElementById('meter-pore-val').textContent = `${payload.pore_pressure.toFixed(1)} kPa`;
+            document.getElementById('meter-pore-bar').style.width = `${Math.min(100, (payload.pore_pressure / 50.0) * 100)}%`;
+
+            document.getElementById('meter-tilt-val').textContent = `${payload.tilt.toFixed(2)}°`;
+            document.getElementById('meter-tilt-bar').style.width = `${Math.min(100, (payload.tilt / 4.0) * 100)}%`;
+
+            // If alert dispatched, prepend to siren audit log
+            if (r.siren_event) {
+                const sirenLog = document.getElementById('siren-events-list');
+                const div = document.createElement('div');
+                div.className = 'p-1.5 bg-slate-900/90 rounded border border-amber-600/50 flex items-center justify-between';
+                div.innerHTML = `<span class="text-red-400 font-bold">${r.siren_event.level || state}</span><span class="text-slate-300">Dry-run Siren Actuated</span><span class="text-[10px] text-slate-500">just now</span>`;
+                sirenLog.prepend(div);
+            }
+        }
+
+        async function executeSirenTest() {
+            const logEl = document.getElementById('inject-result-log');
+            logEl.textContent = 'Executing siren dry-run test...';
+            try {
+                const res = await fetch('/api/edge/siren/test', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ requested_by: "MISSION_CONTROL_CONSOLE" })
+                });
+                const data = await res.json();
+                if (data.status === 'SUCCESS') {
+                    logEl.innerHTML = `<span class="text-amber-400">[SIREN] Test Dispatched:</span> Event <strong>${data.event.event_type}</strong> logged. Dry-run mode guaranteed.`;
+                    
+                    const sirenLog = document.getElementById('siren-events-list');
+                    const div = document.createElement('div');
+                    div.className = 'p-1.5 bg-slate-900/90 rounded border border-amber-600/50 flex items-center justify-between';
+                    div.innerHTML = `<span class="text-amber-400 font-bold">TEST</span><span class="text-slate-300">SIREN_TEST_EVENT (Dry-Run)</span><span class="text-[10px] text-slate-500">just now</span>`;
+                    sirenLog.prepend(div);
+                }
+            } catch (err) {
+                logEl.innerHTML = `<span class="text-red-400">[ERR] Siren Test Failed:</span> ${err.message}`;
+            }
+        }
+
+        async function armSiren() {
+            await fetch('/api/edge/siren/arm', { method: 'POST' });
+            document.getElementById('kpi-siren-state').textContent = 'ARMED (Dry-Run)';
+            document.getElementById('inject-result-log').textContent = 'Siren controller ARMED.';
+        }
+
+        async function disarmSiren() {
+            await fetch('/api/edge/siren/disarm', { method: 'POST' });
+            document.getElementById('kpi-siren-state').textContent = 'DISARMED';
+            document.getElementById('inject-result-log').textContent = 'Siren controller DISARMED.';
+        }
+
+        async function toggleCloudBackhaul() {
+            try {
+                const res = await fetch('/api/edge/toggle-cloud', { method: 'POST' });
+                const data = await res.json();
+                const isConn = data.is_cloud_connected;
+
+                const badge = document.getElementById('cloud-status-badge');
+                const btnText = document.getElementById('btn-toggle-cloud-text');
+                const connState = document.getElementById('buf-conn-state');
+
+                if (isConn) {
+                    badge.className = 'px-2 py-0.5 text-[10px] rounded badge-live font-semibold';
+                    badge.textContent = '[LIVE] CLOUD CONNECTED';
+                    btnText.textContent = 'नेटवर्क विच्छेद परीक्षण • Severed Backhaul Test';
+                    connState.textContent = 'ONLINE';
+                } else {
+                    badge.className = 'px-2 py-0.5 text-[10px] rounded badge-off animate-pulse font-semibold';
+                    badge.textContent = '[OFFLINE] EDGE AUTONOMOUS';
+                    btnText.textContent = 'क्लाउड बैकहॉल पुनः स्थापित करें • Restore Backhaul';
+                    connState.textContent = 'OFFLINE (AUTONOMOUS)';
+                }
+
+                refreshGatewayStatus();
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        async function forceSyncFlush() {
+            const logEl = document.getElementById('inject-result-log');
+            logEl.textContent = 'Flushing buffered queue to cloud...';
+            try {
+                const res = await fetch('/api/edge/sync/flush', { method: 'POST' });
+                const data = await res.json();
+                if (data.status === 'SUCCESS') {
+                    logEl.innerHTML = `<span class="text-emerald-400">[OK] Sync Completed:</span> Synced ${data.sync_result.synced_count} records.`;
+                    refreshGatewayStatus();
+                }
+            } catch (err) {
+                logEl.innerHTML = `<span class="text-red-400">[ERR] Sync Failed:</span> ${err.message}`;
+            }
+        }
+
+        async function refreshGatewayStatus() {
+            try {
+                const res = await fetch('/api/edge/status');
+                const json = await res.json();
+                if (json.status === 'SUCCESS') {
+                    const d = json.data;
+                    document.getElementById('buf-queue-val').textContent = d.buffered_readings_count;
+                    document.getElementById('kpi-buffer-count').textContent = `${d.buffered_readings_count} Readings`;
+                    document.getElementById('buf-synced-val').textContent = d.synced_readings_count;
+                    if (d.last_cloud_sync) {
+                        document.getElementById('kpi-last-sync').textContent = `Last: ${d.last_cloud_sync.slice(-8)}`;
+                    }
+                }
+            } catch (e) {
+                console.error('Status refresh error:', e);
+            }
+        }
+
+        // Auto-refresh status periodically
+        setInterval(refreshGatewayStatus, 8000);
+    </script>
+</body>
+</html>

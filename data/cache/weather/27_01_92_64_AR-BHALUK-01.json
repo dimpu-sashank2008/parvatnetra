@@ -1,0 +1,88 @@
+{
+  "data": {
+    "timestamp": "2026-09-13T03:35:41.790816+00:00",
+    "location": {
+      "lat": 27.012,
+      "lon": 92.645,
+      "district": "West Kameng",
+      "state": "Arunachal Pradesh"
+    },
+    "rainfall": {
+      "current_mm_hr": 0.1,
+      "rain_1h_mm": 0.0,
+      "rain_6h_mm": 6.4,
+      "rain_24h_mm": 10.3,
+      "rain_72h_mm": 27.4
+    },
+    "forecast": {
+      "1h_mm": 0.0,
+      "3h_mm": 0.0,
+      "6h_mm": 8.8,
+      "12h_mm": 10.3,
+      "24h_mm": 10.3,
+      "48h_mm": 11.0,
+      "hourly_trend": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.1,
+        6.3,
+        2.4,
+        0.7,
+        0.2,
+        0.2,
+        0.2,
+        0.1,
+        0.1,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "atmosphere": {
+      "temperature_c": 27.4,
+      "humidity_pct": 82.0,
+      "pressure_hpa": 997.0,
+      "wind_kmh": 2.3,
+      "cloud_pct": 41.0
+    },
+    "derived_pahad": {
+      "antecedent_rainfall": 27.4,
+      "api_3d": 23.51,
+      "api_7d": 37.03,
+      "api_30d": 47.1,
+      "rainfall_intensity_duration_state": "NORMAL_EQUILIBRIUM",
+      "rainfall_threshold_status": {
+        "id_threshold_mm_hr": 1.828,
+        "ed_threshold_mm": 43.872,
+        "intensity_mm_hr": 0.1,
+        "duration_hours": 24.0,
+        "exceedance_ratio": 0.055,
+        "threshold_exceeded": false,
+        "state": "NORMAL_EQUILIBRIUM"
+      },
+      "forecast_rainfall_loading": 0.086
+    },
+    "source": "Open-Meteo Global Forecasting",
+    "provenance": "LIVE",
+    "last_successful_fetch": "2026-09-13T03:35:41.790816+00:00",
+    "data_age_seconds": 0.0
+  },
+  "fetched_at": 1789270544.3121433,
+  "ttl": 900,
+  "meta": {
+    "source": "Open-Meteo Global Forecasting",
+    "provenance": "[LIVE]",
+    "stored_at": "2026-09-13T03:35:44Z",
+    "ttl": 900
+  }
+}

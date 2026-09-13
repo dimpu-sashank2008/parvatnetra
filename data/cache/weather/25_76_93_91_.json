@@ -1,0 +1,88 @@
+{
+  "data": {
+    "timestamp": "2026-09-13T05:30:25.883275+00:00",
+    "location": {
+      "lat": 25.756,
+      "lon": 93.912,
+      "district": "Kalimpong-Sikkim",
+      "state": "Sikkim"
+    },
+    "rainfall": {
+      "current_mm_hr": 0.5,
+      "rain_1h_mm": 0.5,
+      "rain_6h_mm": 0.8,
+      "rain_24h_mm": 14.2,
+      "rain_72h_mm": 35.0
+    },
+    "forecast": {
+      "1h_mm": 0.3,
+      "3h_mm": 0.3,
+      "6h_mm": 0.3,
+      "12h_mm": 11.6,
+      "24h_mm": 13.7,
+      "48h_mm": 22.6,
+      "hourly_trend": [
+        0.5,
+        0.3,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.5,
+        4.1,
+        0.7,
+        2.3,
+        2.1,
+        1.6,
+        0.7,
+        0.7,
+        0.4,
+        0.2,
+        0.1,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "atmosphere": {
+      "temperature_c": 25.9,
+      "humidity_pct": 100.0,
+      "pressure_hpa": 951.3,
+      "wind_kmh": 5.0,
+      "cloud_pct": 92.0
+    },
+    "derived_pahad": {
+      "antecedent_rainfall": 35.0,
+      "api_3d": 30.27,
+      "api_7d": 46.72,
+      "api_30d": 58.96,
+      "rainfall_intensity_duration_state": "NORMAL_EQUILIBRIUM",
+      "rainfall_threshold_status": {
+        "id_threshold_mm_hr": 1.828,
+        "ed_threshold_mm": 43.872,
+        "intensity_mm_hr": 0.5,
+        "duration_hours": 24.0,
+        "exceedance_ratio": 0.274,
+        "threshold_exceeded": false,
+        "state": "NORMAL_EQUILIBRIUM"
+      },
+      "forecast_rainfall_loading": 0.114
+    },
+    "source": "Open-Meteo Global Forecasting",
+    "provenance": "LIVE",
+    "last_successful_fetch": "2026-09-13T05:30:25.883275+00:00",
+    "data_age_seconds": 0.0
+  },
+  "fetched_at": 1789277426.7801986,
+  "ttl": 900,
+  "meta": {
+    "source": "Open-Meteo Global Forecasting",
+    "provenance": "[LIVE]",
+    "stored_at": "2026-09-13T05:30:26Z",
+    "ttl": 900
+  }
+}

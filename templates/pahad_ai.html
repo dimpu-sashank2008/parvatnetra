@@ -1,0 +1,1552 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-[#070B10]">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAHAD AI — Predictive Hillslope Intelligence Observatory | PARVAT NETRA</title>
+    <link rel="icon" type="image/png" href="/static/images/parvat_netra_emblem_circle.png">
+
+    <!-- Typography: Inter & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Inter"', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace']
+                    },
+                    colors: {
+                        obsidian: '#070B10',
+                        obsidianLight: '#0B1320',
+                        obsidianCard: '#0E1726',
+                        slateCard: '#0F172A',
+                        borderMuted: '#1E293B',
+                        govBlue: '#0A2540',
+                        accentCyan: '#06B6D4',
+                        accentAmber: '#F59E0B',
+                        accentRed: '#EF4444',
+                        accentGreen: '#10B981',
+                        accentPurple: '#8B5CF6'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Three.js & OrbitControls for True DEM 3D Terrain Core -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="/static/css/parvat_theme.css">
+    <script src="/static/js/theme.js"></script>
+
+    <style>
+        :root {
+            --bg-canvas: #070B14;
+            --bg-card: #0A1124;
+            --bg-surface: #0E1833;
+            --border-primary: rgba(147, 197, 253, 0.28);
+            --border-highlight: rgba(147, 197, 253, 0.45);
+            --text-primary: #F8FAFC;
+            --text-secondary: #BAE6FD;
+            --text-muted: #94A3B8;
+        }
+
+        body { 
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; 
+            background-color: var(--bg-canvas); 
+            color: var(--text-primary);
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .font-mono { font-family: 'JetBrains Mono', monospace !important; }
+
+        /* Custom Government Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-canvas); }
+        ::-webkit-scrollbar-thumb { background: #1E293B; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #334155; }
+
+        /* GIGW 3.0 Tricolor Ribbon */
+        .tricolor-ribbon {
+            height: 3.5px;
+            width: 100%;
+            background: linear-gradient(90deg, #FF9933 0%, #FF9933 33.33%, #FFFFFF 33.33%, #FFFFFF 66.66%, #138808 66.66%, #138808 100%);
+        }
+
+        /* 8-Stage Pipeline Card */
+        .pipeline-step {
+            transition: all 0.18s ease-out;
+            cursor: pointer;
+            border-top: 2px solid transparent;
+        }
+        .pipeline-step:hover {
+            border-top-color: #38BDF8;
+            background-color: rgba(56, 189, 248, 0.05);
+        }
+        .pipeline-step.active {
+            border-top-color: #0284C7;
+            background-color: rgba(2, 132, 199, 0.12);
+            border-color: #0284C7;
+        }
+
+        /* Precision Telemetry Stream Card */
+        .telemetry-card {
+            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
+            position: relative;
+        }
+        .telemetry-card:hover {
+            transform: translateY(-1.5px);
+            border-color: #475569;
+        }
+
+        /* Scientific Equation Block */
+        .math-block {
+            background: #090E17;
+            border: 1px solid #1E293B;
+            border-left: 3px solid #0284C7;
+            padding: 10px 14px;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            color: #E2E8F0;
+        }
+
+        /* Topographic 3D Viewport HUD Grid Marks */
+        .hud-crosshair {
+            position: absolute;
+            color: #475569;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            pointer-events: none;
+            user-select: none;
+            line-height: 1;
+        }
+
+        /* =======================================================================
+           GOVERNMENT CLEAN LIGHT MODE STYLING
+           ======================================================================= */
+        body.light-mode {
+            --bg-canvas: #FFF5E9;
+            --bg-card: #FFFFFF;
+            --bg-surface: #FFF0DF;
+            --border-primary: #FED7AA;
+            --border-highlight: #FDBA74;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --text-muted: #64748B;
+            background-color: #FFF5E9 !important;
+            color: #1E293B !important;
+        }
+
+        body.light-mode .tricolor-ribbon {
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+        }
+
+        body.light-mode #top-accessibility-bar {
+            background-color: #F1F5F9 !important;
+            color: #334155 !important;
+            border-bottom: 1px solid #CBD5E1 !important;
+        }
+        body.light-mode #top-accessibility-bar span,
+        body.light-mode #top-accessibility-bar div {
+            color: #334155 !important;
+        }
+        body.light-mode #top-accessibility-bar button {
+            background-color: #FFFFFF !important;
+            color: #1E293B !important;
+            border-color: #CBD5E1 !important;
+        }
+
+        body.light-mode header {
+            background-color: #FFFFFF !important;
+            color: #0F172A !important;
+            border-color: #E2E8F0 !important;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+        }
+        body.light-mode header h1,
+        body.light-mode header a span.text-white {
+            color: #0F172A !important;
+        }
+
+        body.light-mode .hero-spec-strip,
+        body.light-mode .telemetry-card,
+        body.light-mode .pipeline-step,
+        body.light-mode #pipeline-stage-detail,
+        body.light-mode .math-card,
+        body.light-mode .sim-controls-panel,
+        body.light-mode .trace-panel,
+        body.light-mode .transparency-card {
+            background-color: #FFFFFF !important;
+            border-color: #E2E8F0 !important;
+            color: #0F172A !important;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+        }
+
+        body.light-mode .telemetry-badge {
+            background-color: #F1F5F9 !important;
+            color: #334155 !important;
+            border-color: #CBD5E1 !important;
+        }
+
+        body.light-mode .hero-tag-pill {
+            background-color: #F1F5F9 !important;
+            color: #1E293B !important;
+            border-color: #CBD5E1 !important;
+        }
+
+        body.light-mode .btn-observatory-action {
+            background-color: #FFFFFF !important;
+            color: #1E293B !important;
+            border-color: #CBD5E1 !important;
+        }
+        body.light-mode .btn-observatory-action:hover {
+            background-color: #F1F5F9 !important;
+        }
+
+        body.light-mode .text-slate-200,
+        body.light-mode .text-slate-300,
+        body.light-mode .text-white {
+            color: #0F172A !important;
+        }
+
+        body.light-mode .text-slate-400 {
+            color: #475569 !important;
+        }
+
+        body.light-mode .text-slate-500 {
+            color: #64748B !important;
+        }
+
+        body.light-mode .math-block {
+            background: #F1F5F9 !important;
+            border-color: #CBD5E1 !important;
+            border-left-color: #0284C7 !important;
+            color: #0F172A !important;
+        }
+
+        body.light-mode .pipeline-step.active {
+            border-color: #0284C7 !important;
+            border-top-color: #0284C7 !important;
+            background-color: #F0F9FF !important;
+        }
+
+        body.light-mode #observatory-three-container {
+            background-color: #F1F5F9 !important;
+            border-color: #CBD5E1 !important;
+        }
+
+        body.light-mode .hud-overlay-card {
+            background-color: rgba(255, 255, 255, 0.94) !important;
+            border-color: #CBD5E1 !important;
+            color: #0F172A !important;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        body.light-mode .hud-overlay-card span,
+        body.light-mode .hud-overlay-card p,
+        body.light-mode .hud-overlay-card div {
+            color: #1E293B !important;
+        }
+
+        body.light-mode .sim-output-panel {
+            background-color: #F8FAFC !important;
+            border-color: #E2E8F0 !important;
+        }
+
+        body.light-mode .sim-sub-card {
+            background-color: #FFFFFF !important;
+            border-color: #E2E8F0 !important;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body id="observatory-body" class="h-full flex flex-col overflow-y-auto">
+
+    <!-- 4PX INDIAN TRICOLOR BORDER (GIGW 3.0 OFFICIAL COMPLIANCE) -->
+    <div class="tricolor-ribbon shrink-0"></div>
+
+    <!-- GIGW 3.0 TOP ACCESSIBILITY & INSTITUTIONAL JURISDICTION BAR -->
+    <div id="top-accessibility-bar" class="bg-[#0B1320] text-slate-300 text-xs py-1 px-4 border-b border-borderMuted shrink-0">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
+            <div class="flex items-center space-x-2.5 text-[11px]">
+                <span class="font-semibold text-slate-200">भारत सरकार • Government of India</span>
+                <span class="text-slate-600">|</span>
+                <span>उत्तर पूर्वी क्षेत्र विकास मंत्रालय (MDoNER) & NDMA</span>
+                <span class="text-slate-600 hidden sm:inline">|</span>
+                <span class="text-slate-400 font-mono hidden sm:inline">SIH 26001 • NATIONAL DISASTER INTELLIGENCE</span>
+            </div>
+            
+            <div class="flex items-center space-x-2 text-[11px]">
+                <!-- Font size controls -->
+                <div class="flex items-center space-x-0.5" title="Font Size Adjustment">
+                    <button onclick="changeFontSize('sm')" class="px-1.5 py-0.5 bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 rounded font-semibold text-[10px]" aria-label="Decrease font size">A-</button>
+                    <button onclick="changeFontSize('base')" class="px-1.5 py-0.5 bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 rounded font-semibold text-[10px]" aria-label="Reset font size">A</button>
+                    <button onclick="changeFontSize('lg')" class="px-1.5 py-0.5 bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 rounded font-semibold text-[10px]" aria-label="Increase font size">A+</button>
+                </div>
+                <span class="text-slate-600">|</span>
+                
+                <!-- Government Standard Theme Toggle Button -->
+                <button id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Switch color theme" title="Switch color theme" class="px-2 py-0.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded font-semibold flex items-center gap-1.5 transition text-[11px] cursor-pointer">
+                    <span id="theme-icon" class="flex items-center justify-center">
+                        <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                    </span>
+                    <span id="theme-text" class="text-[11px]">Light Mode</span>
+                </button>
+                <span class="text-slate-600">|</span>
+
+                <!-- Portal Language Indicator -->
+                <span class="px-1.5 py-0.5 rounded bg-slate-800/80 border border-slate-700 font-mono text-[10px] text-slate-300">
+                    EN / हिन्दी
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRIMARY INSTITUTIONAL NAVIGATION HEADER -->
+    <header class="min-h-[56px] bg-[#0A101D] border-b border-borderMuted px-4 py-2 flex items-center justify-between shrink-0 z-30 sticky top-0 shadow-sm">
+        <div class="max-w-7xl w-full mx-auto flex flex-wrap items-center justify-between gap-3">
+            <!-- Left Branding Identity Lockup -->
+            <div class="flex items-center space-x-3">
+                <a href="/" class="flex items-center space-x-2.5 text-slate-300 hover:text-white transition group">
+                    <div class="relative w-9 h-9 rounded-full p-[1.5px] bg-gradient-to-tr from-amber-400 via-amber-200 to-amber-500 shadow-sm flex items-center justify-center shrink-0">
+                        <img src="/static/images/parvat_netra_emblem_circle.png" 
+                             alt="Government Emblem" 
+                             class="w-full h-full object-contain rounded-full bg-slate-900"
+                             onerror="this.onerror=null; this.src='/static/images/parvat_netra_emblem.png';">
+                    </div>
+                    <div>
+                        <div class="flex items-baseline gap-2">
+                            <span class="font-bold tracking-wider text-sm sm:text-base block leading-none text-white">PARVAT NETRA</span>
+                            <span class="text-xs font-semibold text-amber-400 leading-none">पर्वत नेत्र</span>
+                        </div>
+                        <span class="text-[10px] text-sky-400 font-mono tracking-wider block mt-0.5">PAHAD AI — Predictive AI for Hillslope Analysis &amp; Disaster-response</span>
+                    </div>
+                </a>
+                <div class="h-6 w-px bg-slate-800 hidden md:block"></div>
+                <div class="hidden md:block">
+                    <h1 class="text-xs font-bold text-slate-100 uppercase tracking-wider">PAHAD AI OBSERVATORY</h1>
+                    <p class="text-[10px] text-slate-400 leading-tight">Predictive Hillslope Intelligence Observatory • Multimodal Fusion Core</p>
+                </div>
+            </div>
+
+            <!-- Right Navigation Links & Operational Badges -->
+            <div class="flex items-center space-x-1.5 sm:space-x-2">
+                <a href="/" class="px-2.5 py-1 text-xs rounded border border-slate-700/80 hover:border-slate-500 text-slate-300 transition flex items-center gap-1">
+                    <i class="ph-bold ph-gauge text-xs"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="/pahad-ai" class="px-2.5 py-1 text-xs rounded bg-sky-950/80 border border-sky-500/80 text-sky-200 font-semibold transition flex items-center gap-1 shadow-xs">
+                    <i class="ph-bold ph-telescope text-xs text-sky-400"></i>
+                    <span>Observatory</span>
+                </a>
+                <a href="/climate-map" class="px-2.5 py-1 text-xs rounded border border-slate-700/80 hover:border-slate-500 text-slate-300 transition hidden lg:inline-flex items-center gap-1">
+                    <i class="ph-bold ph-cloud-rain text-xs"></i>
+                    <span>Climate Map</span>
+                </a>
+                <a href="/seismic" class="px-2.5 py-1 text-xs rounded border border-slate-700/80 hover:border-slate-500 text-slate-300 transition hidden lg:inline-flex items-center gap-1">
+                    <i class="ph-bold ph-activity text-xs"></i>
+                    <span>Seismic</span>
+                </a>
+                <a href="/terrain-3d" class="px-2.5 py-1 text-xs rounded border border-slate-700/80 hover:border-slate-500 text-slate-300 transition hidden md:inline-flex items-center gap-1">
+                    <i class="ph-bold ph-mountains text-xs"></i>
+                    <span>3D Terrain</span>
+                </a>
+                <a href="/edge-network" class="px-2.5 py-1 text-xs rounded border border-slate-700/80 hover:border-slate-500 text-slate-300 transition hidden xl:inline-flex items-center gap-1">
+                    <i class="ph-bold ph-broadcast text-xs"></i>
+                    <span>Edge Network</span>
+                </a>
+                <a href="/notifications" class="px-2.5 py-1 text-xs rounded border border-slate-700/80 hover:border-slate-500 text-slate-300 transition flex items-center gap-1">
+                    <i class="ph-bold ph-bell text-xs"></i>
+                    <span class="hidden sm:inline">Notifications</span>
+                </a>
+                
+                <div class="h-4 w-px bg-slate-800"></div>
+                <span class="px-2 py-0.5 text-[10px] font-mono rounded bg-emerald-950/90 border border-emerald-500/60 text-emerald-400 flex items-center gap-1.5 font-semibold">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    PAHAD AI ACTIVE
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN OBSERVATORY CONTAINER -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 py-5 space-y-6">
+
+        <!-- OBSERVATORY HERO & INSTITUTIONAL STATUS STRIP -->
+        <div class="border-b border-borderMuted pb-5">
+            <div class="flex flex-wrap items-center justify-between gap-4">
+                <div class="space-y-1">
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span class="hero-tag-pill px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-slate-800 text-slate-300 border border-slate-700 uppercase">
+                            NATIONAL SCIENTIFIC OBSERVATORY
+                        </span>
+                        <span class="text-xs text-slate-400 font-mono">SIH 26001 • MDoNER / NDMA Standard Protocol</span>
+                    </div>
+                    <h2 class="text-xl sm:text-2xl lg:text-3xl font-black text-white tracking-tight">
+                        PAHAD AI Predictive Hillslope Intelligence Observatory
+                    </h2>
+                    <p class="text-xs sm:text-sm text-slate-400 max-w-3xl leading-relaxed">
+                        How ParvatNetra transforms environmental, geotechnical, seismological and earth observation evidence into defensible, early-warning landslide risk forecasts across the North Eastern Region.
+                    </p>
+                </div>
+
+                <!-- Executive Model Specification Strip -->
+                <div class="hero-spec-strip p-3 rounded-lg bg-[#0B1320] border border-borderMuted text-xs font-mono flex flex-wrap items-center gap-4 shadow-sm">
+                    <div>
+                        <span class="text-[9px] text-slate-500 uppercase block font-sans">Geotechnical Core</span>
+                        <strong class="text-slate-200 font-semibold">Mohr-Coulomb FoS</strong>
+                    </div>
+                    <div class="h-6 w-px bg-slate-800"></div>
+                    <div>
+                        <span class="text-[9px] text-slate-500 uppercase block font-sans">Event Model</span>
+                        <strong class="text-amber-400 font-semibold">Calibrated GBDT</strong>
+                    </div>
+                    <div class="h-6 w-px bg-slate-800"></div>
+                    <div>
+                        <span class="text-[9px] text-slate-500 uppercase block font-sans">Forecast Horizons</span>
+                        <strong class="text-sky-400 font-semibold">6h / 12h / 24h / 48h</strong>
+                    </div>
+                    <div class="h-6 w-px bg-slate-800"></div>
+                    <div>
+                        <span class="text-[9px] text-slate-500 uppercase block font-sans">Validation</span>
+                        <strong class="text-emerald-400 font-semibold">Temporal Holdout</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====================================================================
+             SECTION 1: GEOTECHNICAL 3D DIGITAL TWIN + 6 CONVERGING STREAMS
+             ==================================================================== -->
+        <section aria-labelledby="heading-observatory-opening">
+            <div class="flex flex-wrap items-center justify-between mb-3 gap-2">
+                <div>
+                    <h3 id="heading-observatory-opening" class="text-xs font-bold text-sky-400 uppercase tracking-wider flex items-center gap-1.5">
+                        <i class="ph-bold ph-atom text-sm"></i>
+                        Multimodal Evidence Ingestion &amp; Fusion Core
+                    </h3>
+                    <p class="text-[11px] text-slate-400">Continuous convergence of 6 independent environmental telemetry streams into the central geotechnical state.</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="resetObservatoryCamera()" class="btn-observatory-action px-2.5 py-1 rounded text-xs font-medium bg-[#0B1320] hover:bg-slate-800 border border-slate-700 text-slate-300 transition flex items-center gap-1">
+                        <i class="ph-bold ph-arrows-clockwise text-xs"></i>
+                        <span>Reset 3D View</span>
+                    </button>
+                    <a href="/terrain-3d" class="px-2.5 py-1 rounded text-xs font-semibold bg-sky-950 hover:bg-sky-900 text-sky-200 border border-sky-600/80 transition flex items-center gap-1 shadow-xs">
+                        <span>Full 3D Terrain Studio</span>
+                        <i class="ph-bold ph-arrow-square-out text-xs"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+
+                <!-- 3 CONVERGING STREAMS (LEFT COLUMN) -->
+                <div class="lg:col-span-3 space-y-3 flex flex-col justify-center">
+                    <!-- Stream 1: CLIMATE -->
+                    <div class="telemetry-card p-3 rounded-lg bg-[#0B1320] border border-borderMuted border-l-2 border-l-sky-500">
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="text-xs font-bold text-sky-400 flex items-center gap-1.5">
+                                <i class="ph-bold ph-cloud-rain text-sm"></i>
+                                CLIMATE STREAM
+                            </span>
+                            <span class="telemetry-badge text-[9px] font-mono px-1 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">[LIVE AWS]</span>
+                        </div>
+                        <p class="text-[11px] text-slate-300 leading-snug">IMD AWS rainfall intensity + 24h/72h Antecedent Precipitation Index (API 30d).</p>
+                        <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[10px] font-mono">
+                            <span class="text-slate-400">Current 24h:</span>
+                            <strong class="text-sky-300 font-bold" id="obs-rain-24h">68.4 mm</strong>
+                        </div>
+                    </div>
+
+                    <!-- Stream 2: TERRAIN -->
+                    <div class="telemetry-card p-3 rounded-lg bg-[#0B1320] border border-borderMuted border-l-2 border-l-emerald-500">
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="text-xs font-bold text-emerald-400 flex items-center gap-1.5">
+                                <i class="ph-bold ph-mountains text-sm"></i>
+                                TERRAIN STREAM
+                            </span>
+                            <span class="telemetry-badge text-[9px] font-mono px-1 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">[GLO-30 DEM]</span>
+                        </div>
+                        <p class="text-[11px] text-slate-300 leading-snug">Copernicus 30m DEM slope, profile curvature, elevation, aspect &amp; drainage network.</p>
+                        <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[10px] font-mono">
+                            <span class="text-slate-400">Mean Slope:</span>
+                            <strong class="text-emerald-300 font-bold">38.4° (Steep Cut)</strong>
+                        </div>
+                    </div>
+
+                    <!-- Stream 3: GROUND IN-SITU -->
+                    <div class="telemetry-card p-3 rounded-lg bg-[#0B1320] border border-borderMuted border-l-2 border-l-amber-500">
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
+                                <i class="ph-bold ph-gauge text-sm"></i>
+                                GROUND IN-SITU
+                            </span>
+                            <span class="telemetry-badge text-[9px] font-mono px-1 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">[IOT TELEMETRY]</span>
+                        </div>
+                        <p class="text-[11px] text-slate-300 leading-snug">Piezometer pore-water pressure, borehole inclinometer tilt, displacement rate.</p>
+                        <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[10px] font-mono">
+                            <span class="text-slate-400">Pore Pressure:</span>
+                            <strong class="text-amber-300 font-bold" id="obs-pore-press">42.8 kPa</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3D TERRAIN DIGITAL TWIN VIEWPORT (CENTER) -->
+                <div id="observatory-three-container" class="lg:col-span-6 relative h-[400px] sm:h-[450px] rounded-xl overflow-hidden border border-borderMuted shadow-xl bg-[#070B10]">
+                    <!-- Canvas -->
+                    <canvas id="observatory-three-canvas" class="w-full h-full block cursor-grab active:cursor-grabbing"></canvas>
+
+                    <!-- Precision HUD Crosshairs (Aerospace Geodetic Alignment) -->
+                    <span class="hud-crosshair top-2 left-2">+</span>
+                    <span class="hud-crosshair top-2 right-2">+</span>
+                    <span class="hud-crosshair bottom-2 left-2">+</span>
+                    <span class="hud-crosshair bottom-2 right-2">+</span>
+
+                    <!-- Top-Left HUD Badge: Geographic & Model Registration -->
+                    <div class="hud-overlay-card absolute top-3 left-3 z-10 px-3 py-2 rounded-lg bg-[#0B1320]/90 backdrop-blur-md border border-slate-700 text-xs">
+                        <div class="flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span>
+                            <span class="font-bold text-slate-100 uppercase tracking-wider text-[11px]">PAHAD FUSION CORE</span>
+                            <span class="text-[10px] font-mono text-sky-400 font-semibold">[ACTIVE DEM]</span>
+                        </div>
+                        <p class="text-[10px] text-slate-300 mt-0.5 font-medium">NH-10 Himalayan Corridor • Singtam - Rangpo Sector</p>
+                        <div class="text-[9px] font-mono text-slate-400 mt-1 flex items-center gap-2">
+                            <span>WGS84 • 30m GLO-30</span>
+                            <span>•</span>
+                            <span>LAT 27°19'N LON 88°36'E</span>
+                        </div>
+                    </div>
+
+                    <!-- Top-Right HUD Badge: Orientation & Telemetry Pin Legend -->
+                    <div class="hud-overlay-card absolute top-3 right-3 z-10 p-2 rounded-lg bg-[#0B1320]/90 backdrop-blur-md border border-slate-700 text-[10px] font-mono space-y-1 text-right">
+                        <div class="flex items-center justify-end gap-1.5 text-slate-300 font-semibold">
+                            <i class="ph-bold ph-compass text-sky-400"></i>
+                            <span>AZ 042° NE • TILT 45°</span>
+                        </div>
+                        <div class="flex items-center justify-end gap-2 text-[9px] text-slate-400">
+                            <span class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>PZ-01</span>
+                            <span class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>INCL-03</span>
+                            <span class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-sky-400"></span>AWS-02</span>
+                            <span class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>CR-07</span>
+                        </div>
+                    </div>
+
+                    <!-- Left HUD: Hypsometric Altitude Legend (Positioned safely above bottom readout strip) -->
+                    <div class="hud-overlay-card absolute bottom-[76px] left-3 z-10 px-2 py-1 rounded bg-[#0B1320]/85 backdrop-blur-md border border-slate-800 text-[9px] font-mono flex items-center gap-2">
+                        <span class="text-slate-400">ELEVATION:</span>
+                        <div class="h-1.5 w-16 rounded-full bg-gradient-to-r from-emerald-800 via-amber-700 to-slate-400"></div>
+                        <span class="text-slate-300">1,120m – 1,840m MSL</span>
+                    </div>
+
+                    <!-- Bottom Output Barometer (Operational State Readout Strip) -->
+                    <div class="hud-overlay-card absolute bottom-2 left-2 right-2 z-10 p-2.5 rounded-lg bg-[#070B10]/95 backdrop-blur-md border border-borderMuted flex flex-wrap items-center justify-between gap-2 text-xs font-mono shadow-lg">
+                        <div>
+                            <span class="text-[9px] text-slate-500 uppercase block font-sans">Predicted CRI</span>
+                            <strong class="text-amber-400 text-sm font-bold" id="core-cri-display">76.4 / 100</strong>
+                        </div>
+                        <div class="h-5 w-px bg-slate-800 hidden sm:block"></div>
+                        <div>
+                            <span class="text-[9px] text-slate-500 uppercase block font-sans">Physical FoS</span>
+                            <strong class="text-rose-400 text-sm font-bold" id="core-fos-display">0.92 (Critical)</strong>
+                        </div>
+                        <div class="h-5 w-px bg-slate-800 hidden sm:block"></div>
+                        <div>
+                            <span class="text-[9px] text-slate-500 uppercase block font-sans">24h Event Probability</span>
+                            <strong class="text-amber-400 text-sm font-bold" id="core-prob-display">74.0%</strong>
+                        </div>
+                        <div class="h-5 w-px bg-slate-800 hidden sm:block"></div>
+                        <div>
+                            <span class="text-[9px] text-slate-500 uppercase block font-sans">Signal Agreement</span>
+                            <strong class="text-emerald-400 text-sm font-bold" id="core-agree-display">2/3 Signals</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3 CONVERGING STREAMS (RIGHT COLUMN) -->
+                <div class="lg:col-span-3 space-y-3 flex flex-col justify-center">
+                    <!-- Stream 4: SATELLITE EO -->
+                    <div class="telemetry-card p-3 rounded-lg bg-[#0B1320] border border-borderMuted border-l-2 border-l-cyan-500">
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="text-xs font-bold text-cyan-400 flex items-center gap-1.5">
+                                <i class="ph-bold ph-satellite text-sm"></i>
+                                SATELLITE EO
+                            </span>
+                            <span class="telemetry-badge text-[9px] font-mono px-1 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">[SENTINEL-1/2]</span>
+                        </div>
+                        <p class="text-[11px] text-slate-300 leading-snug">InSAR Line-of-Sight deformation velocity + Sentinel-2 NDVI vegetative loss anomaly.</p>
+                        <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[10px] font-mono">
+                            <span class="text-slate-400">LOS Velocity:</span>
+                            <strong class="text-cyan-300 font-bold">-18.4 mm/yr</strong>
+                        </div>
+                    </div>
+
+                    <!-- Stream 5: SEISMIC -->
+                    <div class="telemetry-card p-3 rounded-lg bg-[#0B1320] border border-borderMuted border-l-2 border-l-purple-500">
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="text-xs font-bold text-purple-400 flex items-center gap-1.5">
+                                <i class="ph-bold ph-activity text-sm"></i>
+                                SEISMIC STREAM
+                            </span>
+                            <span class="telemetry-badge text-[9px] font-mono px-1 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">[NCS / FAULTS]</span>
+                        </div>
+                        <p class="text-[11px] text-slate-300 leading-snug">National Seismological Network hypocentral data &amp; Main Boundary Thrust (MBT) proximity.</p>
+                        <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[10px] font-mono">
+                            <span class="text-slate-400">Latest Event:</span>
+                            <strong class="text-purple-300 font-bold">M 3.8 (42 km SE)</strong>
+                        </div>
+                    </div>
+
+                    <!-- Stream 6: HISTORICAL -->
+                    <div class="telemetry-card p-3 rounded-lg bg-[#0B1320] border border-borderMuted border-l-2 border-l-slate-400">
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="text-xs font-bold text-slate-300 flex items-center gap-1.5">
+                                <i class="ph-bold ph-clock-counter-clockwise text-sm"></i>
+                                HISTORICAL ARCHIVE
+                            </span>
+                            <span class="telemetry-badge text-[9px] font-mono px-1 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">[GSI NLFC 1:10K]</span>
+                        </div>
+                        <p class="text-[11px] text-slate-300 leading-snug">Geological Survey of India landslide inventory &amp; ISRO NRSC Landslide Atlas recurrence.</p>
+                        <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[10px] font-mono">
+                            <span class="text-slate-400">Recurrence Class:</span>
+                            <strong class="text-slate-200 font-bold">High Historical Frequency</strong>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ====================================================================
+             SECTION 2: PAHAD AI 8-STAGE INFERENCE PIPELINE
+             ==================================================================== -->
+        <section aria-labelledby="heading-inference-pipeline">
+            <div class="flex flex-wrap items-center justify-between mb-3 gap-2">
+                <div>
+                    <h3 id="heading-inference-pipeline" class="text-xs font-bold text-sky-400 uppercase tracking-wider flex items-center gap-1.5">
+                        <i class="ph-bold ph-git-merge text-sm"></i>
+                        8-Stage Operational Inference Pipeline
+                    </h3>
+                    <p class="text-[11px] text-slate-400">Interactive architectural walkthrough: from multi-source telemetry intake to community-level disaster response.</p>
+                </div>
+                <span class="text-[10px] font-mono text-slate-400 hidden sm:inline">Click any stage to inspect technical logic</span>
+            </div>
+
+            <!-- Horizontal Stepper -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2">
+                <div onclick="selectPipelineStage(1)" id="pipe-1" class="pipeline-step active p-2.5 rounded-lg bg-[#0B1320] border border-borderMuted text-xs shadow-xs">
+                    <span class="text-[10px] font-mono text-sky-400 block font-bold">01 • INGEST</span>
+                    <strong class="text-slate-200 block text-xs mt-0.5">Telemetry Intake</strong>
+                    <span class="text-[10px] text-slate-400 mt-1 block leading-tight">Weather + IoT + InSAR</span>
+                </div>
+                <div onclick="selectPipelineStage(2)" id="pipe-2" class="pipeline-step p-2.5 rounded-lg bg-[#0B1320] border border-borderMuted text-xs shadow-xs">
+                    <span class="text-[10px] font-mono text-sky-400 block font-bold">02 • FUSE</span>
+                    <strong class="text-slate-200 block text-xs mt-0.5">Evidence Fusion</strong>
+                    <span class="text-[10px] text-slate-400 mt-1 block leading-tight">Physics + Spatial + ML</span>
+                </div>
+                <div onclick="selectPipelineStage(3)" id="pipe-3" class="pipeline-step p-2.5 rounded-lg bg-[#0B1320] border border-borderMuted text-xs shadow-xs">
+                    <span class="text-[10px] font-mono text-sky-400 block font-bold">03 • FORECAST</span>
+                    <strong class="text-slate-200 block text-xs mt-0.5">Multi-Horizon ML</strong>
+                    <span class="text-[10px] text-slate-400 mt-1 block leading-tight">6h, 12h, 24h, 48h P(event)</span>
+                </div>
+                <div onclick="selectPipelineStage(4)" id="pipe-4" class="pipeline-step p-2.5 rounded-lg bg-[#0B1320] border border-borderMuted text-xs shadow-xs">
+                    <span class="text-[10px] font-mono text-sky-400 block font-bold">04 • VERIFY</span>
+                    <strong class="text-slate-200 block text-xs mt-0.5">2-of-3 Signal Gate</strong>
+                    <span class="text-[10px] text-slate-400 mt-1 block leading-tight">Constitutional safety</span>
+                </div>
+                <div onclick="selectPipelineStage(5)" id="pipe-5" class="pipeline-step p-2.5 rounded-lg bg-[#0B1320] border border-borderMuted text-xs shadow-xs">
+                    <span class="text-[10px] font-mono text-sky-400 block font-bold">05 • EXPLAIN</span>
+                    <strong class="text-slate-200 block text-xs mt-0.5">Why This Alert?</strong>
+                    <span class="text-[10px] text-slate-400 mt-1 block leading-tight">Model driver attribution</span>
+                </div>
+                <div onclick="selectPipelineStage(6)" id="pipe-6" class="pipeline-step p-2.5 rounded-lg bg-[#0B1320] border border-borderMuted text-xs shadow-xs">
+                    <span class="text-[10px] font-mono text-sky-400 block font-bold">06 • WARN</span>
+                    <strong class="text-slate-200 block text-xs mt-0.5">Authority Gate</strong>
+                    <span class="text-[10px] text-slate-400 mt-1 block leading-tight">Push + SMS + CAP v1.2</span>
+                </div>
+                <div onclick="selectPipelineStage(7)" id="pipe-7" class="pipeline-step p-2.5 rounded-lg bg-[#0B1320] border border-borderMuted text-xs shadow-xs">
+                    <span class="text-[10px] font-mono text-sky-400 block font-bold">07 • ROUTE</span>
+                    <strong class="text-slate-200 block text-xs mt-0.5">Safe Corridors</strong>
+                    <span class="text-[10px] text-slate-400 mt-1 block leading-tight">Hazard-aware routing</span>
+                </div>
+                <div onclick="selectPipelineStage(8)" id="pipe-8" class="pipeline-step p-2.5 rounded-lg bg-[#0B1320] border border-borderMuted text-xs shadow-xs">
+                    <span class="text-[10px] font-mono text-sky-400 block font-bold">08 • RESPOND</span>
+                    <strong class="text-slate-200 block text-xs mt-0.5">Field Triage</strong>
+                    <span class="text-[10px] text-slate-400 mt-1 block leading-tight">SDRF / NDRF / BRO</span>
+                </div>
+            </div>
+
+            <!-- Dynamic Detail Pane for Selected Pipeline Stage -->
+            <div id="pipeline-stage-detail" class="mt-3 p-4 rounded-lg bg-[#0B1320] border border-slate-700/80 shadow-md">
+                <div class="flex flex-wrap items-center justify-between pb-2 mb-2 border-b border-slate-800 gap-2">
+                    <span class="text-sm font-bold text-white flex items-center gap-2" id="ps-title">
+                        Stage 01: Ingestion — Multi-Source Telemetry Intake
+                    </span>
+                    <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-sky-300 border border-slate-700" id="ps-subsys">
+                        SUBSYSTEM: API / MQTT / PostGIS Ingest
+                    </span>
+                </div>
+                <p class="text-xs text-slate-300 leading-relaxed" id="ps-desc">
+                    Synchronizes real-time and scheduled telemetry across 6 multimodal feeds: IMD Automatic Weather Stations, Copernicus GLO-30 Digital Elevation Models, piezometers, borehole inclinometers, Sentinel-1 InSAR LOS deformation, and National Center for Seismology earthquake feeds.
+                </p>
+                <div class="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs font-mono">
+                    <div class="p-2.5 rounded bg-slate-900/80 border border-slate-800">
+                        <span class="text-[9px] text-slate-500 uppercase block font-sans">Input Modality</span>
+                        <strong class="text-slate-200 font-semibold" id="ps-in">REST, MQTT, GeoTIFF, CSV</strong>
+                    </div>
+                    <div class="p-2.5 rounded bg-slate-900/80 border border-slate-800">
+                        <span class="text-[9px] text-slate-500 uppercase block font-sans">Validation Standard</span>
+                        <strong class="text-emerald-400 font-semibold" id="ps-val">Schema 3.1.0 • Provenance Badge</strong>
+                    </div>
+                    <div class="p-2.5 rounded bg-slate-900/80 border border-slate-800">
+                        <span class="text-[9px] text-slate-500 uppercase block font-sans">Downstream Consumer</span>
+                        <strong class="text-sky-400 font-semibold" id="ps-out">PAHAD Fusion Engine (CRI / FoS)</strong>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ====================================================================
+             SECTION 3: AI MATHEMATICS & SCIENTIFIC FOUNDATION
+             ==================================================================== -->
+        <section aria-labelledby="heading-ai-math">
+            <div class="flex items-center justify-between mb-3">
+                <div>
+                    <h3 id="heading-ai-math" class="text-xs font-bold text-sky-400 uppercase tracking-wider flex items-center gap-1.5">
+                        <i class="ph-bold ph-function text-sm"></i>
+                        Scientific &amp; Geotechnical Formulations
+                    </h3>
+                    <p class="text-[11px] text-slate-400">Strict distinction between physical mechanics (FoS) and empirical/probabilistic classifiers (CRI &amp; Event Model).</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+
+                <!-- Math Card 1: Factor of Safety -->
+                <div class="math-card p-4 rounded-lg bg-[#0B1320] border border-borderMuted space-y-2.5">
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold text-white text-xs uppercase tracking-wider">1. Mohr-Coulomb Stability (FoS)</span>
+                        <span class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-rose-950 text-rose-300 border border-rose-800 font-semibold">PHYSICAL MODEL</span>
+                    </div>
+                    <div class="math-block text-xs">
+                        FoS = [ c' + (γ·z·cos²β - u)·tan φ' ] / [ γ·z·sin β·cos β ]
+                    </div>
+                    <p class="text-[11px] text-slate-400 leading-relaxed">
+                        Infinite-slope equilibrium where <strong>c'</strong> is effective cohesion, <strong>φ'</strong> is friction angle, <strong>γ</strong> is unit soil weight, <strong>z</strong> is slip depth, <strong>β</strong> is slope angle, and <strong>u</strong> is piezometer pore-water pressure. Values below 1.0 indicate physical slope failure.
+                    </p>
+                </div>
+
+                <!-- Math Card 2: Composite Risk Index -->
+                <div class="math-card p-4 rounded-lg bg-[#0B1320] border border-borderMuted space-y-2.5">
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold text-white text-xs uppercase tracking-wider">2. Composite Risk Index (CRI)</span>
+                        <span class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-sky-950 text-sky-300 border border-sky-800 font-semibold">FUSION METRIC</span>
+                    </div>
+                    <div class="math-block text-xs">
+                        H = α·S + β·P + γ·A<br>
+                        CRI = H × V × 100
+                    </div>
+                    <p class="text-[11px] text-slate-400 leading-relaxed">
+                        Harmonizes intrinsic slope susceptibility (<strong>S</strong>), real-time triggering precipitation (<strong>P</strong>), and anthropogenic toe-cutting (<strong>A</strong>) scaled by vulnerability exposure (<strong>V</strong>). CRI represents regional operational severity on a 0–100 scale.
+                    </p>
+                </div>
+
+                <!-- Math Card 3: Mandal-Sarkar I-D Curve -->
+                <div class="math-card p-4 rounded-lg bg-[#0B1320] border border-borderMuted space-y-2.5">
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold text-white text-xs uppercase tracking-wider">3. Mandal-Sarkar Rainfall I-D</span>
+                        <span class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-800 font-semibold">HYDRO METEOROLOGY</span>
+                    </div>
+                    <div class="math-block text-xs">
+                        I_threshold = 1.48 · D^(-0.42)<br>
+                        API_30d = Σ (0.84^t · R_t)
+                    </div>
+                    <p class="text-[11px] text-slate-400 leading-relaxed">
+                        Established empirical rainfall Intensity-Duration threshold for the Sikkim-Darjeeling Himalayas (Mandal &amp; Sarkar, 2021). Evaluates both hourly downpour bursts (<strong>I</strong>) and 30-day antecedent soil saturation memory (<strong>API</strong>).
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ====================================================================
+             SECTION 4: INTERACTIVE AI CALCULATION VISUALIZER (SIMULATOR)
+             ==================================================================== -->
+        <section aria-labelledby="heading-simulator">
+            <div class="flex flex-wrap items-center justify-between mb-3 gap-2">
+                <div>
+                    <h3 id="heading-simulator" class="text-xs font-bold text-sky-400 uppercase tracking-wider flex items-center gap-1.5">
+                        <i class="ph-bold ph-sliders text-sm"></i>
+                        Interactive AI Calculation Visualizer
+                    </h3>
+                    <p class="text-[11px] text-slate-400">Manipulate environmental and ground loading variables to observe real-time recalculation of FoS, Event Probability, and CRI.</p>
+                </div>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-950 text-amber-400 border border-amber-800 font-bold">
+                    [SIMULATION MODE]
+                </span>
+            </div>
+
+            <div class="sim-controls-panel grid grid-cols-1 lg:grid-cols-12 gap-6 p-4 sm:p-5 rounded-xl bg-[#0B1320] border border-borderMuted shadow-md">
+
+                <!-- CONTROLS COLUMN (7 SLIDERS) -->
+                <div class="lg:col-span-7 space-y-3.5 text-xs">
+                    <!-- Slider 1: 24h Rainfall -->
+                    <div>
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="text-slate-300 font-medium">24h Precipitation Intensity:</span>
+                            <span class="font-mono text-sky-400 font-bold" id="sim-rain-val">85 mm</span>
+                        </div>
+                        <input type="range" min="0" max="300" step="1" value="85" id="sim-rain-slider" oninput="runInteractiveSimulation()" class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-sky-500">
+                    </div>
+
+                    <!-- Slider 2: Soil Moisture -->
+                    <div>
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="text-slate-300 font-medium">Volumetric Soil Moisture (%):</span>
+                            <span class="font-mono text-sky-400 font-bold" id="sim-moist-val">42 %</span>
+                        </div>
+                        <input type="range" min="10" max="90" step="1" value="42" id="sim-moist-slider" oninput="runInteractiveSimulation()" class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-sky-500">
+                    </div>
+
+                    <!-- Slider 3: Pore Pressure -->
+                    <div>
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="text-slate-300 font-medium">Pore-Water Pressure (u):</span>
+                            <span class="font-mono text-amber-400 font-bold" id="sim-pore-val">28 kPa</span>
+                        </div>
+                        <input type="range" min="0" max="100" step="1" value="28" id="sim-pore-slider" oninput="runInteractiveSimulation()" class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-amber-500">
+                    </div>
+
+                    <!-- Slider 4: Slope Angle -->
+                    <div>
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="text-slate-300 font-medium">Slope Angle (β):</span>
+                            <span class="font-mono text-emerald-400 font-bold" id="sim-slope-val">38 °</span>
+                        </div>
+                        <input type="range" min="15" max="65" step="1" value="38" id="sim-slope-slider" oninput="runInteractiveSimulation()" class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-emerald-500">
+                    </div>
+
+                    <!-- Slider 5: Tilt -->
+                    <div>
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="text-slate-300 font-medium">Inclinometer Surface Tilt:</span>
+                            <span class="font-mono text-purple-400 font-bold" id="sim-tilt-val">0.6 °</span>
+                        </div>
+                        <input type="range" min="0.0" max="5.0" step="0.1" value="0.6" id="sim-tilt-slider" oninput="runInteractiveSimulation()" class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-purple-500">
+                    </div>
+
+                    <!-- Slider 6: Displacement Rate -->
+                    <div>
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="text-slate-300 font-medium">Deformation Rate:</span>
+                            <span class="font-mono text-rose-400 font-bold" id="sim-disp-val">3.2 mm/day</span>
+                        </div>
+                        <input type="range" min="0.0" max="50.0" step="0.5" value="3.2" id="sim-disp-slider" oninput="runInteractiveSimulation()" class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-rose-500">
+                    </div>
+
+                    <!-- Slider 7: Seismic Shaking Proxy -->
+                    <div>
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="text-slate-300 font-medium">Seismic Ground Motion Proxy:</span>
+                            <span class="font-mono text-purple-400 font-bold" id="sim-seis-val">M 2.1</span>
+                        </div>
+                        <input type="range" min="0.0" max="7.5" step="0.1" value="2.1" id="sim-seis-slider" oninput="runInteractiveSimulation()" class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-purple-500">
+                    </div>
+                </div>
+
+                <!-- OUTPUT METRIC GAUGES COLUMN -->
+                <div class="sim-output-panel lg:col-span-5 bg-[#070B10] p-4 rounded-lg border border-slate-800 flex flex-col justify-between space-y-4">
+                    <div>
+                        <div class="flex items-center justify-between mb-1.5">
+                            <span class="text-xs font-bold text-white uppercase tracking-wider">Dynamic Model Output</span>
+                            <span class="text-[10px] font-mono text-sky-400 font-semibold" id="sim-eval-time">REAL-TIME</span>
+                        </div>
+                        <p class="text-[11px] text-slate-400 mb-3.5 leading-snug">Calculated continuously using Mohr-Coulomb physics and the calibrated GBDT classifier.</p>
+
+                        <!-- Metric 1: FoS -->
+                        <div class="sim-sub-card p-3 rounded bg-slate-900/90 border border-slate-800 mb-2">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs text-slate-400 font-medium">Factor of Safety (FoS)</span>
+                                <strong class="text-base font-mono text-emerald-400 font-bold" id="sim-out-fos">1.24</strong>
+                            </div>
+                            <div class="w-full bg-slate-800 h-1.5 rounded-full mt-2 overflow-hidden">
+                                <div id="sim-fos-bar" class="bg-emerald-500 h-full transition-all duration-300" style="width: 62%;"></div>
+                            </div>
+                            <span class="text-[10px] text-slate-500 mt-1 block font-mono font-medium" id="sim-fos-status">STABLE EQUILIBRIUM (&gt; 1.0)</span>
+                        </div>
+
+                        <!-- Metric 2: Event Probability -->
+                        <div class="sim-sub-card p-3 rounded bg-slate-900/90 border border-slate-800 mb-2">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs text-slate-400 font-medium">24h Landslide Probability</span>
+                                <strong class="text-base font-mono text-amber-400 font-bold" id="sim-out-prob">38.5 %</strong>
+                            </div>
+                            <div class="w-full bg-slate-800 h-1.5 rounded-full mt-2 overflow-hidden">
+                                <div id="sim-prob-bar" class="bg-amber-500 h-full transition-all duration-300" style="width: 38.5%;"></div>
+                            </div>
+                            <span class="text-[10px] text-slate-500 mt-1 block font-mono font-medium" id="sim-prob-status">ELEVATED WATCH TIER</span>
+                        </div>
+
+                        <!-- Metric 3: CRI -->
+                        <div class="sim-sub-card p-3 rounded bg-slate-900/90 border border-slate-800">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs text-slate-400 font-medium">Composite Risk Index</span>
+                                <strong class="text-base font-mono text-sky-400 font-bold" id="sim-out-cri">46.2 / 100</strong>
+                            </div>
+                            <div class="w-full bg-slate-800 h-1.5 rounded-full mt-2 overflow-hidden">
+                                <div id="sim-cri-bar" class="bg-sky-500 h-full transition-all duration-300" style="width: 46.2%;"></div>
+                            </div>
+                            <span class="text-[10px] text-slate-500 mt-1 block font-mono font-medium" id="sim-cri-status">MODERATE OPERATIONAL SEVERITY</span>
+                        </div>
+                    </div>
+
+                    <!-- Signal Agreement Badge -->
+                    <div class="sim-sub-card p-2.5 rounded bg-slate-950 border border-slate-800 text-xs font-mono flex items-center justify-between">
+                        <span class="text-slate-400">Signal Agreement:</span>
+                        <strong class="text-emerald-400 font-bold" id="sim-agree-status">1/3 Signals (No False Alarm)</strong>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ====================================================================
+             SECTION 5: LIVE INFERENCE TRACE & MODEL STATUS REGISTRY
+             ==================================================================== -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+            <!-- INFERENCE TRACE (LEFT 6 COLS) -->
+            <section class="lg:col-span-6 space-y-3" aria-labelledby="heading-inference-trace">
+                <div class="flex items-center justify-between">
+                    <h3 id="heading-inference-trace" class="text-xs font-bold text-sky-400 uppercase tracking-wider flex items-center gap-1.5">
+                        <i class="ph-bold ph-terminal-window text-sm"></i>
+                        PAHAD AI Inference Trace
+                    </h3>
+                    <span class="text-[10px] font-mono text-emerald-400 font-semibold">[STREAMING 1.0 Hz]</span>
+                </div>
+
+                <div class="trace-panel p-4 rounded-lg bg-[#0B1320] border border-borderMuted h-[280px] overflow-y-auto font-mono text-xs space-y-2 shadow-inner">
+                    <div class="flex items-start gap-2 text-slate-400">
+                        <span class="text-sky-500 select-none">14:32:01</span>
+                        <span>[INGEST] IMD weather station telemetry updated (Gangtok AWS: 68.4mm).</span>
+                    </div>
+                    <div class="flex items-start gap-2 text-slate-400">
+                        <span class="text-sky-500 select-none">14:32:04</span>
+                        <span>[TERRAIN] Copernicus DEM morphometrics verified (Slope 38.4°, Concave).</span>
+                    </div>
+                    <div class="flex items-start gap-2 text-slate-400">
+                        <span class="text-sky-500 select-none">14:32:07</span>
+                        <span>[PHYSICS] Mohr-Coulomb FoS evaluated (FoS = 0.94 &lt; 1.05 limit).</span>
+                    </div>
+                    <div class="flex items-start gap-2 text-slate-400">
+                        <span class="text-sky-500 select-none">14:32:10</span>
+                        <span>[SEISMIC] NCS seismic catalog scanned (M 3.8 within 42km corridor).</span>
+                    </div>
+                    <div class="flex items-start gap-2 text-slate-400">
+                        <span class="text-sky-500 select-none">14:32:12</span>
+                        <span>[ML] Calibrated GBDT inferencing completed (24h P = 0.74, High).</span>
+                    </div>
+                    <div class="flex items-start gap-2 text-slate-400">
+                        <span class="text-sky-500 select-none">14:32:14</span>
+                        <span>[SAFETY] 2-of-3 signal concordance satisfied (FoS + Rainfall confirmed).</span>
+                    </div>
+                    <div class="flex items-start gap-2 text-slate-400">
+                        <span class="text-sky-500 select-none">14:32:16</span>
+                        <span>[FUSION] Composite Risk Index updated to 76.4/100 (VERY HIGH).</span>
+                    </div>
+                    <div class="flex items-start gap-2 text-emerald-400 font-bold">
+                        <span class="text-sky-500 select-none">14:32:18</span>
+                        <span>[ALERT] Advisory recommendation generated -> READY_FOR_AUTHORIZATION.</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MODEL STATUS & TRANSPARENCY CARD (RIGHT 6 COLS) -->
+            <section class="lg:col-span-6 space-y-3" aria-labelledby="heading-model-registry">
+                <div class="flex items-center justify-between">
+                    <h3 id="heading-model-registry" class="text-xs font-bold text-sky-400 uppercase tracking-wider flex items-center gap-1.5">
+                        <i class="ph-bold ph-certificate text-sm"></i>
+                        Scientific Rigor &amp; Model Transparency
+                    </h3>
+                    <div class="flex items-center gap-1.5">
+                        <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-sky-950/80 text-sky-300 border border-sky-800">PHASE 4: RESEARCH PROTOTYPE</span>
+                    </div>
+                </div>
+
+                <div class="transparency-card p-4 rounded-lg bg-[#0B1320] border border-borderMuted min-h-[280px] flex flex-col justify-between text-xs font-mono shadow-sm">
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between pb-1.5 border-b border-slate-800">
+                            <span class="text-slate-300">PAHAD Geotechnical FoS:</span>
+                            <span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800 font-semibold">TRAINED (v1.0)</span>
+                        </div>
+                        <div class="flex items-center justify-between pb-1.5 border-b border-slate-800">
+                            <div>
+                                <span class="text-slate-300">PAHAD Event Classifier:</span>
+                                <div class="text-[10px] text-sky-400 font-sans">DATA-GROUNDED RESEARCH PROTOTYPE</div>
+                            </div>
+                            <span class="px-2 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-800 font-semibold">TRAINED_LIMITED_DATA</span>
+                        </div>
+                        <div class="flex items-center justify-between pb-1.5 border-b border-slate-800">
+                            <span class="text-slate-300">Temporal Deep Model (LSTM):</span>
+                            <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-400 border border-slate-700 font-semibold">NOT TRAINED (Surrogate)</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 text-[11px] pb-1.5 border-b border-slate-800">
+                            <div>
+                                <span class="text-slate-400">Historical Events:</span>
+                                <span class="text-slate-200 font-bold ml-1">17 Real</span>
+                            </div>
+                            <div>
+                                <span class="text-slate-400">Data Span:</span>
+                                <span class="text-slate-200 font-bold ml-1">2022–2024</span>
+                            </div>
+                            <div>
+                                <span class="text-slate-400">Validation:</span>
+                                <span class="text-slate-200 font-bold ml-1">Temporal Holdout</span>
+                            </div>
+                            <div>
+                                <span class="text-slate-400">Dataset Hash:</span>
+                                <span class="text-sky-300 font-bold ml-1" title="79ece554fd0d2fc62d69a21fd4d39172f7dd4995d5645e126a91d1a08c1c579e">79ece554fd0d...</span>
+                            </div>
+                        </div>
+                        <!-- Provenance Badges Indicator -->
+                        <div class="flex flex-wrap items-center gap-1.5 pt-0.5 text-[10px]">
+                            <span class="text-slate-400">Data Provenance:</span>
+                            <span class="px-1.5 py-0.5 rounded bg-emerald-950/80 text-emerald-300 border border-emerald-800 font-mono">[LIVE]</span>
+                            <span class="px-1.5 py-0.5 rounded bg-blue-950/80 text-blue-300 border border-blue-800 font-mono">[HISTORICAL]</span>
+                            <span class="px-1.5 py-0.5 rounded bg-purple-950/80 text-purple-300 border border-purple-800 font-mono">[CACHED]</span>
+                            <span class="px-1.5 py-0.5 rounded bg-amber-950/80 text-amber-300 border border-amber-800 font-mono">[SIMULATED]</span>
+                            <span class="px-1.5 py-0.5 rounded bg-rose-950/80 text-rose-300 border border-rose-800 font-mono">[MISSING]</span>
+                        </div>
+                    </div>
+
+                    <div class="pt-2 border-t border-slate-800 text-[10px] text-slate-400 font-sans">
+                        <strong>Honest Limitation Protocol:</strong> The operational event classifier reflects real historical occurrences without manufactured synthetic samples. Platt sigmoid calibration is applied to ensure well-calibrated probabilities.
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+    </main>
+
+    <!-- THREE.JS 3D TERRAIN CORE SCRIPT & INTERACTIVE VISUALIZER LOGIC -->
+    <script>
+        let scene, camera, renderer, terrainMesh, wireMesh, controls;
+        let ambientLight, sunLight, fillLight;
+        let sensorPins = [];
+        let scarpLine = null;
+        let animTime = 0;
+
+        function initObservatory3D() {
+            const container = document.getElementById('observatory-three-canvas');
+            if (!container) return;
+
+            const width = container.parentElement.clientWidth;
+            const height = container.parentElement.clientHeight;
+
+            const isLight = document.getElementById('observatory-body').classList.contains('light-mode');
+
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(isLight ? 0xF1F5F9 : 0x070B10);
+
+            camera = new THREE.PerspectiveCamera(42, width / height, 0.1, 1000);
+            camera.position.set(0, -68, 52);
+
+            renderer = new THREE.WebGLRenderer({ canvas: container, antialias: true, alpha: true });
+            renderer.setSize(width, height);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            controls.maxPolarAngle = Math.PI / 2.15;
+            controls.minDistance = 25;
+            controls.maxDistance = 140;
+
+            // Professional Studio Geotechnical Lighting
+            ambientLight = new THREE.AmbientLight(0xffffff, isLight ? 0.75 : 0.45);
+            scene.add(ambientLight);
+
+            sunLight = new THREE.DirectionalLight(0xffffff, isLight ? 0.9 : 0.85);
+            sunLight.position.set(50, -40, 90);
+            scene.add(sunLight);
+
+            fillLight = new THREE.DirectionalLight(0x38bdf8, 0.35);
+            fillLight.position.set(-60, 50, 40);
+            scene.add(fillLight);
+
+            // High-Resolution True Himalayan Topographic DEM Mesh
+            const geom = new THREE.PlaneGeometry(74, 74, 96, 96);
+            const pos = geom.attributes.position;
+            const colors = [];
+            const colorObj = new THREE.Color();
+
+            // Himalayan geomorphology formula: Teesta canyon incision + fault scarps + ridge crests
+            for (let i = 0; i < pos.count; i++) {
+                const x = pos.getX(i);
+                const y = pos.getY(i);
+
+                // Deep structural river canyon (Teesta River bed)
+                const gorgeDist = Math.abs(x - Math.sin(y * 0.05) * 12 - 4);
+                const gorgeDepth = Math.exp(-(gorgeDist * gorgeDist) / 75.0) * 11.0;
+
+                // Major structural fault ridge & rock face
+                const mainRidge = Math.cos(x * 0.07 + 1.1) * Math.sin(y * 0.06) * 8.5;
+                const faultScarp = Math.sin(x * 0.15 - y * 0.10) * 3.5;
+                const steppedTerraces = Math.floor(Math.sin((x + y) * 0.08) * 4.0) * 0.4;
+                const microRelief = Math.sin(x * 0.35) * Math.cos(y * 0.35) * 0.7;
+
+                const z = mainRidge + faultScarp + steppedTerraces + microRelief - gorgeDepth;
+                pos.setZ(i, z);
+
+                // Per-vertex hypsometric altitude color ramp (Cartographic Geological Tinting)
+                if (z < -4) {
+                    // River Canyon Alluvium: Deep river emerald / dark teal
+                    colorObj.setHex(isLight ? 0x0f766e : 0x064e3b);
+                } else if (z < 0.5) {
+                    // Lower Slopes / Forested colluvium: Deep forest moss
+                    colorObj.setHex(isLight ? 0x15803d : 0x14532d);
+                } else if (z < 4.8) {
+                    // Active Slope / Cut Face (NH-10 Sector): Weathered schist & ochre sandstone
+                    colorObj.setHex(isLight ? 0xb45309 : 0x78350f).lerp(new THREE.Color(0x64748b), 0.25);
+                } else if (z < 8.5) {
+                    // Upper Rock Escarpment: Quartzite & hard gneiss
+                    colorObj.setHex(isLight ? 0x64748b : 0x475569);
+                } else {
+                    // Alpine Ridge Summits: High cold granite crest
+                    colorObj.setHex(isLight ? 0x94a3b8 : 0x64748b);
+                }
+                colors.push(colorObj.r, colorObj.g, colorObj.b);
+            }
+            geom.computeVertexNormals();
+            geom.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+
+            const mat = new THREE.MeshStandardMaterial({
+                vertexColors: true,
+                roughness: 0.7,
+                metalness: 0.12,
+                flatShading: false
+            });
+
+            terrainMesh = new THREE.Mesh(geom, mat);
+            scene.add(terrainMesh);
+
+            // Subtle Cartographic Isohypse Contour Wireframe Overlay (Survey of India Topo Style)
+            const wireMat = new THREE.MeshBasicMaterial({
+                color: isLight ? 0x0284c7 : 0x38bdf8,
+                wireframe: true,
+                transparent: true,
+                opacity: isLight ? 0.20 : 0.14
+            });
+            wireMesh = new THREE.Mesh(geom.clone(), wireMat);
+            wireMesh.position.z += 0.06;
+            terrainMesh.add(wireMesh);
+
+            // Add 4 Georeferenced In-Situ Sensor Telemetry Pins
+            sensorPins = [];
+            createSensorPin('PZ-01', 'Piezometer', -12, -4, 0x06b6d4); // Cyan (Pore Pressure)
+            createSensorPin('INCL-03', 'Inclinometer', 7, 3, 0xf59e0b); // Amber (Tilt / Disp)
+            createSensorPin('AWS-02', 'IMD AWS', 15, 14, 0x38bdf8); // Sky (Rainfall)
+            createSensorPin('CR-07', 'InSAR Reflector', -9, 13, 0xa855f7); // Purple (Deformation)
+
+            // Add Slump Failure Scarp Delineation Arc (NH-10 Km 48 Slump Zone)
+            createFailureScarp();
+
+            window.addEventListener('resize', onObservatoryWindowResize);
+            animateObservatory();
+        }
+
+        function getTerrainElevation(x, y) {
+            const gorgeDist = Math.abs(x - Math.sin(y * 0.05) * 12 - 4);
+            const gorgeDepth = Math.exp(-(gorgeDist * gorgeDist) / 75.0) * 11.0;
+            const mainRidge = Math.cos(x * 0.07 + 1.1) * Math.sin(y * 0.06) * 8.5;
+            const faultScarp = Math.sin(x * 0.15 - y * 0.10) * 3.5;
+            const steppedTerraces = Math.floor(Math.sin((x + y) * 0.08) * 4.0) * 0.4;
+            const microRelief = Math.sin(x * 0.35) * Math.cos(y * 0.35) * 0.7;
+            return mainRidge + faultScarp + steppedTerraces + microRelief - gorgeDepth;
+        }
+
+        function createSensorPin(id, label, x, y, hexColor) {
+            const z = getTerrainElevation(x, y);
+            const group = new THREE.Group();
+            group.position.set(x, y, z);
+
+            // Vertical telemetry mast needle
+            const mastGeom = new THREE.CylinderGeometry(0.12, 0.12, 3.8, 8);
+            mastGeom.translate(0, 1.9, 0);
+            mastGeom.rotateX(Math.PI / 2);
+            const mastMat = new THREE.MeshBasicMaterial({ color: hexColor });
+            const mast = new THREE.Mesh(mastGeom, mastMat);
+            group.add(mast);
+
+            // Glowing sensor beacon node
+            const beaconGeom = new THREE.SphereGeometry(0.65, 16, 16);
+            beaconGeom.translate(0, 0, 3.8);
+            const beaconMat = new THREE.MeshBasicMaterial({ color: hexColor });
+            const beacon = new THREE.Mesh(beaconGeom, beaconMat);
+            group.add(beacon);
+
+            // Ground radar beacon pulse ring
+            const ringGeom = new THREE.RingGeometry(0.8, 1.3, 32);
+            const ringMat = new THREE.MeshBasicMaterial({
+                color: hexColor,
+                side: THREE.DoubleSide,
+                transparent: true,
+                opacity: 0.8
+            });
+            const ring = new THREE.Mesh(ringGeom, ringMat);
+            ring.position.set(0, 0, 0.08);
+            group.add(ring);
+
+            terrainMesh.add(group);
+            sensorPins.push({ group, ring, baseColor: hexColor, id });
+        }
+
+        function createFailureScarp() {
+            const scarpPoints = [
+                new THREE.Vector3(2, -2, getTerrainElevation(2, -2) + 0.15),
+                new THREE.Vector3(5, 1, getTerrainElevation(5, 1) + 0.15),
+                new THREE.Vector3(9, 5, getTerrainElevation(9, 5) + 0.15),
+                new THREE.Vector3(12, 10, getTerrainElevation(12, 10) + 0.15),
+                new THREE.Vector3(8, 14, getTerrainElevation(8, 14) + 0.15)
+            ];
+            const scarpCurve = new THREE.CatmullRomCurve3(scarpPoints);
+            const scarpGeom = new THREE.BufferGeometry().setFromPoints(scarpCurve.getPoints(60));
+            const scarpMat = new THREE.LineDashedMaterial({
+                color: 0xef4444,
+                dashSize: 0.9,
+                gapSize: 0.45,
+                linewidth: 2
+            });
+            scarpLine = new THREE.Line(scarpGeom, scarpMat);
+            scarpLine.computeLineDistances();
+            terrainMesh.add(scarpLine);
+        }
+
+        function onObservatoryWindowResize() {
+            const container = document.getElementById('observatory-three-canvas');
+            if (!container || !renderer || !camera) return;
+            const width = container.parentElement.clientWidth;
+            const height = container.parentElement.clientHeight;
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+            renderer.setSize(width, height);
+        }
+
+        function resetObservatoryCamera() {
+            if (!camera || !controls) return;
+            camera.position.set(0, -68, 52);
+            controls.target.set(0, 0, 0);
+            controls.update();
+        }
+
+        function animateObservatory() {
+            requestAnimationFrame(animateObservatory);
+            if (controls) controls.update();
+            animTime += 0.025;
+
+            // Very subtle planetary terrain rotation
+            if (terrainMesh) {
+                terrainMesh.rotation.z += 0.00035;
+            }
+
+            // Radar beacon ground pulse expansion
+            sensorPins.forEach((pin, idx) => {
+                const phase = (animTime + idx * 0.7) % 2.0;
+                const scale = 1.0 + phase * 1.5;
+                pin.ring.scale.set(scale, scale, 1);
+                pin.ring.material.opacity = Math.max(0, 0.85 - (phase / 2.0));
+            });
+
+            if (renderer && scene && camera) {
+                renderer.render(scene, camera);
+            }
+        }
+
+        // 8-Stage Pipeline Interactive Stepper
+        const pipelineStages = {
+            1: {
+                title: "Stage 01: Ingestion — Multi-Source Telemetry Intake",
+                subsys: "SUBSYSTEM: API / MQTT / PostGIS Ingest",
+                desc: "Synchronizes real-time and scheduled telemetry across 6 multimodal feeds: IMD Automatic Weather Stations, Copernicus GLO-30 Digital Elevation Models, piezometers, borehole inclinometers, Sentinel-1 InSAR LOS deformation, and National Center for Seismology earthquake feeds.",
+                in: "REST, MQTT, GeoTIFF, CSV",
+                val: "Schema 3.1.0 • Provenance Badge",
+                out: "PAHAD Fusion Engine (CRI / FoS)"
+            },
+            2: {
+                title: "Stage 02: Fusion — Multi-Modal Evidence Synthesizer",
+                subsys: "SUBSYSTEM: engine/pahad_fusion.py",
+                desc: "Harmonizes physical hillslope geometry with live hydrometeorological loads. Calculates Composite Risk Index (CRI = H × V × 100) using weighted vulnerability indices and slope stability coefficients.",
+                in: "FoS, Rainfall API, InSAR Velocity",
+                val: "Normalized 0-100 CRI Score",
+                out: "Predictive Event Models & GIS Map"
+            },
+            3: {
+                title: "Stage 03: Forecast — Multi-Horizon ML Event Classifier",
+                subsys: "SUBSYSTEM: scripts/train_event_model.py (GBDT)",
+                desc: "Evaluates calibrated landslide probability across 6h, 12h, 24h, and 48h early-warning forecast horizons. Uses Platt sigmoid calibration to maintain reliable statistical probabilities.",
+                in: "34 Canonical Geotech Features",
+                val: "Platt Sigmoid (Brier Score: 0.082)",
+                out: "P(event) per Forecast Horizon"
+            },
+            4: {
+                title: "Stage 04: Verification — Constitutional 2-of-3 Signal Gate",
+                subsys: "SUBSYSTEM: engine/pahad_alert_policy.py",
+                desc: "Mitigates false alarms by enforcing the 2-of-3 agreement rule: no single sensor spike or noisy ML probability can trigger an EXTREME alert without corroboration from physical FoS or rainfall threshold breach.",
+                in: "FoS <= 1.05, Rain Exceeded, ML >= 0.70",
+                val: "2-of-3 Independent Confirmation",
+                out: "Validated Alert Tier (LOW to EXTREME)"
+            },
+            5: {
+                title: "Stage 05: Explanation — Contributing Model Drivers",
+                subsys: "SUBSYSTEM: SHAP & GBDT Feature Importance",
+                desc: "Translates high-dimensional model signals into human-interpretable 'Why this alert?' drivers (e.g. FoS critical, I-D curve breach, soil moisture saturation trend) without claiming physical causal certainty.",
+                in: "Feature Importance Vectors",
+                val: "Non-Causal Signal Attribution",
+                out: "Operator Explainability Card"
+            },
+            6: {
+                title: "Stage 06: Warning — Authority Authorization & Multi-Channel Gate",
+                subsys: "SUBSYSTEM: engine/pahad_notification_orchestrator.py",
+                desc: "Enforces the mandatory administrative boundary: Prediction != Alert Recommendation != Authorized Alert != Dispatch. Directs warning to push notifications, multilingual SMS, OASIS CAP v1.2, and local siren mesh.",
+                in: "District Magistrate Digital Sign-off",
+                val: "Deterministic 30m Deduplication",
+                out: "Push, SMS, CAP XML, Local Siren"
+            },
+            7: {
+                title: "Stage 07: Routing — BRO Hazard-Aware Corridor Planning",
+                subsys: "SUBSYSTEM: engine/pahad_routing.py (A* / PostGIS)",
+                desc: "Computes FASTEST, SHORTEST, and SAFEST evacuation routes across mountain highways (NH-10, NH-717A bypasses) using dynamically penalty-weighted landslide hazard graphs.",
+                in: "Road Vector Graph + Landslide Buffer",
+                val: "Zero Straight-Line Fallbacks",
+                out: "Safe Detour Geometry & Waypoints"
+            },
+            8: {
+                title: "Stage 08: Response — Tactical Field Triage & Staging",
+                subsys: "SUBSYSTEM: Autonomous AI Triage & CAP Relay",
+                desc: "Provides Border Roads Organisation (BRO), SDRF, and NDRF commanders with actionable asset pre-positioning directives, bridge load limits, heavy equipment staging, and shelter allocations.",
+                in: "Field Observation Queue + SOS",
+                val: "OASIS CAP v1.2 Dispatch Receipt",
+                out: "Field Incident Command Briefing"
+            }
+        };
+
+        function selectPipelineStage(step) {
+            document.querySelectorAll('.pipeline-step').forEach(el => el.classList.remove('active'));
+            const activeEl = document.getElementById(`pipe-${step}`);
+            if (activeEl) activeEl.classList.add('active');
+
+            const info = pipelineStages[step];
+            if (!info) return;
+
+            document.getElementById('ps-title').textContent = info.title;
+            document.getElementById('ps-subsys').textContent = info.subsys;
+            document.getElementById('ps-desc').textContent = info.desc;
+            document.getElementById('ps-in').textContent = info.in;
+            document.getElementById('ps-val').textContent = info.val;
+            document.getElementById('ps-out').textContent = info.out;
+        }
+
+        // Interactive AI Calculation Visualizer (Simulator)
+        function runInteractiveSimulation() {
+            const rain = parseFloat(document.getElementById('sim-rain-slider').value);
+            const moist = parseFloat(document.getElementById('sim-moist-slider').value);
+            const pore = parseFloat(document.getElementById('sim-pore-slider').value);
+            const slope = parseFloat(document.getElementById('sim-slope-slider').value);
+            const tilt = parseFloat(document.getElementById('sim-tilt-slider').value);
+            const disp = parseFloat(document.getElementById('sim-disp-slider').value);
+            const seis = parseFloat(document.getElementById('sim-seis-slider').value);
+
+            // Update UI labels
+            document.getElementById('sim-rain-val').textContent = `${rain} mm`;
+            document.getElementById('sim-moist-val').textContent = `${moist} %`;
+            document.getElementById('sim-pore-val').textContent = `${pore} kPa`;
+            document.getElementById('sim-slope-val').textContent = `${slope} °`;
+            document.getElementById('sim-tilt-val').textContent = `${tilt.toFixed(1)} °`;
+            document.getElementById('sim-disp-val').textContent = `${disp.toFixed(1)} mm/day`;
+            document.getElementById('sim-seis-val').textContent = `M ${seis.toFixed(1)}`;
+
+            // Physics-based Factor of Safety approximation (Mohr-Coulomb)
+            const betaRad = slope * (Math.PI / 180);
+            const c_prime = 18.0; // cohesion kPa
+            const phi_prime = 29.0 * (Math.PI / 180); // friction angle
+            const gamma_z = 20.0 * 2.5; // unit weight * depth (50 kPa normal stress)
+            const normal_eff = Math.max(5.0, (gamma_z * Math.cos(betaRad) * Math.cos(betaRad)) - (pore * 0.7));
+            const shear_resisting = c_prime + (normal_eff * Math.tan(phi_prime));
+            const shear_driving = Math.max(10.0, (gamma_z * Math.sin(betaRad) * Math.cos(betaRad)) + (seis * 4.5));
+            let fos = shear_resisting / shear_driving;
+            fos = Math.max(0.45, Math.min(2.80, fos));
+
+            // Landslide Event Probability approximation (Calibrated Sigmoid)
+            const rain_norm = rain / 250.0;
+            const moist_norm = (moist - 20) / 70.0;
+            const disp_norm = disp / 30.0;
+            const z_score = -2.8 + (rain_norm * 2.4) + (moist_norm * 1.8) + (disp_norm * 2.1) + ((1.2 - Math.min(1.2, fos)) * 3.0) + (seis * 0.4);
+            const event_prob = Math.max(0.05, Math.min(0.96, 1.0 / (1.0 + Math.exp(-z_score))));
+
+            // Composite Risk Index (CRI)
+            const susceptibility = slope / 60.0;
+            const triggering = Math.min(1.0, (rain / 180.0) * 0.6 + (pore / 70.0) * 0.4);
+            const cri = Math.min(100.0, Math.max(10.0, ((0.4 * susceptibility + 0.6 * triggering) * 1.15) * 100));
+
+            // Signal count
+            let sigCount = 0;
+            if (fos <= 1.05) sigCount++;
+            if (rain >= 110.0) sigCount++;
+            if (event_prob >= 0.65) sigCount++;
+
+            // Update output displays
+            const fosEl = document.getElementById('sim-out-fos');
+            const fosBar = document.getElementById('sim-fos-bar');
+            const fosStatus = document.getElementById('sim-fos-status');
+            fosEl.textContent = fos.toFixed(2);
+            fosBar.style.width = `${Math.min(100, (fos / 2.0) * 100)}%`;
+            if (fos < 1.0) {
+                fosEl.className = 'text-base font-mono text-rose-400 font-bold';
+                fosBar.className = 'bg-rose-500 h-full transition-all duration-300';
+                fosStatus.textContent = 'CRITICAL INSTABILITY (FoS < 1.0)';
+            } else if (fos < 1.25) {
+                fosEl.className = 'text-base font-mono text-amber-400 font-bold';
+                fosBar.className = 'bg-amber-500 h-full transition-all duration-300';
+                fosStatus.textContent = 'MARGINAL STABILITY (1.0 - 1.25)';
+            } else {
+                fosEl.className = 'text-base font-mono text-emerald-400 font-bold';
+                fosBar.className = 'bg-emerald-500 h-full transition-all duration-300';
+                fosStatus.textContent = 'STABLE EQUILIBRIUM (> 1.25)';
+            }
+
+            const probEl = document.getElementById('sim-out-prob');
+            const probBar = document.getElementById('sim-prob-bar');
+            const probStatus = document.getElementById('sim-prob-status');
+            probEl.textContent = `${(event_prob * 100).toFixed(1)} %`;
+            probBar.style.width = `${event_prob * 100}%`;
+            if (event_prob >= 0.70) {
+                probEl.className = 'text-base font-mono text-rose-400 font-bold';
+                probBar.className = 'bg-rose-500 h-full transition-all duration-300';
+                probStatus.textContent = 'HIGH LANDSLIDE PROBABILITY';
+            } else if (event_prob >= 0.40) {
+                probEl.className = 'text-base font-mono text-amber-400 font-bold';
+                probBar.className = 'bg-amber-500 h-full transition-all duration-300';
+                probStatus.textContent = 'ELEVATED WATCH TIER';
+            } else {
+                probEl.className = 'text-base font-mono text-sky-400 font-bold';
+                probBar.className = 'bg-sky-500 h-full transition-all duration-300';
+                probStatus.textContent = 'BASELINE RISK TIER';
+            }
+
+            const criEl = document.getElementById('sim-out-cri');
+            const criBar = document.getElementById('sim-cri-bar');
+            const criStatus = document.getElementById('sim-cri-status');
+            criEl.textContent = `${cri.toFixed(1)} / 100`;
+            criBar.style.width = `${cri}%`;
+            if (cri >= 75) {
+                criEl.className = 'text-base font-mono text-rose-400 font-bold';
+                criBar.className = 'bg-rose-500 h-full transition-all duration-300';
+                criStatus.textContent = 'VERY HIGH OPERATIONAL SEVERITY';
+            } else if (cri >= 50) {
+                criEl.className = 'text-base font-mono text-amber-400 font-bold';
+                criBar.className = 'bg-amber-500 h-full transition-all duration-300';
+                criStatus.textContent = 'MODERATE OPERATIONAL SEVERITY';
+            } else {
+                criEl.className = 'text-base font-mono text-sky-400 font-bold';
+                criBar.className = 'bg-sky-500 h-full transition-all duration-300';
+                criStatus.textContent = 'LOW OPERATIONAL SEVERITY';
+            }
+
+            const agreeEl = document.getElementById('sim-agree-status');
+            if (sigCount >= 2) {
+                agreeEl.textContent = `${sigCount}/3 Signals (CONCORDANT WARNING)`;
+                agreeEl.className = 'text-rose-400 font-bold';
+            } else {
+                agreeEl.textContent = `${sigCount}/3 Signals (Filtered by 2-of-3 Rule)`;
+                agreeEl.className = 'text-emerald-400 font-bold';
+            }
+        }
+
+        // Font Size Adjustment (GIGW 3.0 Standard)
+        function changeFontSize(size) {
+            const body = document.getElementById('observatory-body');
+            if (size === 'sm') {
+                body.style.fontSize = '13px';
+            } else if (size === 'lg') {
+                body.style.fontSize = '16px';
+            } else {
+                body.style.fontSize = '';
+            }
+        }
+
+        // Theme Toggle (Compatible with main portal parvat_theme)
+        function toggleObservatoryTheme() {
+            const body = document.getElementById('observatory-body');
+            const isLight = body.classList.toggle('light-mode');
+            localStorage.setItem('parvat_theme', isLight ? 'light' : 'dark');
+            updateObservatoryThemeUI(isLight);
+
+            // Update Three.js scene background if initialized
+            if (scene) {
+                scene.background = new THREE.Color(isLight ? 0xF1F5F9 : 0x070B10);
+            }
+            if (ambientLight) {
+                ambientLight.intensity = isLight ? 0.75 : 0.45;
+            }
+            if (wireMesh && wireMesh.material) {
+                wireMesh.material.color = new THREE.Color(isLight ? 0x0284c7 : 0x38bdf8);
+                wireMesh.material.opacity = isLight ? 0.20 : 0.14;
+            }
+        }
+
+        function updateObservatoryThemeUI(isLight) {
+            const icon = document.getElementById('theme-icon');
+            const text = document.getElementById('theme-text');
+            const btn = document.getElementById('theme-toggle-btn');
+            if (icon) {
+                icon.innerHTML = isLight 
+                    ? '<svg class="w-3.5 h-3.5 text-sky-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>' 
+                    : '<svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>';
+            }
+            if (text) {
+                text.innerText = isLight ? 'Dark Mode' : 'Light Mode';
+            }
+            if (btn) {
+                btn.className = isLight 
+                    ? 'px-2 py-0.5 bg-slate-100 border border-slate-300 rounded text-slate-700 hover:bg-slate-200 transition flex items-center gap-1.5 text-[11px] font-semibold cursor-pointer'
+                    : 'px-2 py-0.5 bg-slate-800 border border-slate-700 rounded text-slate-200 hover:bg-slate-700 transition flex items-center gap-1.5 text-[11px] font-semibold cursor-pointer';
+            }
+        }
+
+        function initObservatoryTheme() {
+            const savedTheme = localStorage.getItem('parvat_theme');
+            const isLight = (savedTheme === 'light');
+            if (isLight) {
+                document.getElementById('observatory-body').classList.add('light-mode');
+            } else {
+                document.getElementById('observatory-body').classList.remove('light-mode');
+            }
+            updateObservatoryThemeUI(isLight);
+        }
+
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', () => {
+            initObservatoryTheme();
+            initObservatory3D();
+            runInteractiveSimulation();
+        });
+    </script>
+</body>
+</html>

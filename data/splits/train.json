@@ -1,0 +1,159 @@
+{
+  "split": "train",
+  "source_file": "data/features/real_train.csv",
+  "sha256_hash": "79ece554fd0d2fc62d69a21fd4d39172f7dd4995d5645e126a91d1a08c1c579e",
+  "total_samples": 16,
+  "positive_count": 8,
+  "negative_count": 8,
+  "date_range": {
+    "min_timestamp": "2022-05-16 09:00:00+00:00",
+    "max_timestamp": "2023-10-04 01:30:00+00:00"
+  },
+  "validation_strategy": "TEMPORAL_HOLDOUT",
+  "samples": [
+    {
+      "sample_id": "train_001",
+      "sector_id": "AS-DIMA-HASAO-01",
+      "timestamp": "2022-05-16T09:00:00Z",
+      "event_label": 1,
+      "geographic_group": "assam_barak_valley",
+      "FoS": 0.52,
+      "CRI": 93.0
+    },
+    {
+      "sample_id": "train_002",
+      "sector_id": "ML-MAWSYNRAM-01",
+      "timestamp": "2022-06-17T12:00:00Z",
+      "event_label": 1,
+      "geographic_group": "meghalaya_plateau_corridor",
+      "FoS": 0.45,
+      "CRI": 96.0
+    },
+    {
+      "sample_id": "train_003",
+      "sector_id": "MN-NONEY-01",
+      "timestamp": "2022-06-29T23:30:00Z",
+      "event_label": 1,
+      "geographic_group": "manipur_tupul_corridor",
+      "FoS": 0.68,
+      "CRI": 88.5
+    },
+    {
+      "sample_id": "train_004",
+      "sector_id": "CTRL-SK-DRY-01",
+      "timestamp": "2023-01-15T12:00:00Z",
+      "event_label": 0,
+      "geographic_group": "sikkim_dry",
+      "FoS": 1.78,
+      "CRI": 14.0
+    },
+    {
+      "sample_id": "train_005",
+      "sector_id": "CTRL-TR-DRY-01",
+      "timestamp": "2023-01-22T12:00:00Z",
+      "event_label": 0,
+      "geographic_group": "tripura_dry",
+      "FoS": 1.76,
+      "CRI": 15.0
+    },
+    {
+      "sample_id": "train_006",
+      "sector_id": "CTRL-ML-DRY-01",
+      "timestamp": "2023-01-28T12:00:00Z",
+      "event_label": 0,
+      "geographic_group": "meghalaya_dry",
+      "FoS": 1.85,
+      "CRI": 11.0
+    },
+    {
+      "sample_id": "train_007",
+      "sector_id": "CTRL-MZ-DRY-01",
+      "timestamp": "2023-02-10T12:00:00Z",
+      "event_label": 0,
+      "geographic_group": "mizoram_dry",
+      "FoS": 1.72,
+      "CRI": 16.0
+    },
+    {
+      "sample_id": "train_008",
+      "sector_id": "CTRL-AR-DRY-01",
+      "timestamp": "2023-02-18T12:00:00Z",
+      "event_label": 0,
+      "geographic_group": "arunachal_dry",
+      "FoS": 1.9,
+      "CRI": 10.0
+    },
+    {
+      "sample_id": "train_009",
+      "sector_id": "CTRL-AS-DRY-01",
+      "timestamp": "2023-02-20T12:00:00Z",
+      "event_label": 0,
+      "geographic_group": "assam_dry",
+      "FoS": 1.75,
+      "CRI": 15.0
+    },
+    {
+      "sample_id": "train_010",
+      "sector_id": "CTRL-MN-DRY-01",
+      "timestamp": "2023-03-05T12:00:00Z",
+      "event_label": 0,
+      "geographic_group": "manipur_dry",
+      "FoS": 1.82,
+      "CRI": 12.0
+    },
+    {
+      "sample_id": "train_011",
+      "sector_id": "CTRL-NL-DRY-01",
+      "timestamp": "2023-03-12T12:00:00Z",
+      "event_label": 0,
+      "geographic_group": "nagaland_dry",
+      "FoS": 1.7,
+      "CRI": 17.0
+    },
+    {
+      "sample_id": "train_012",
+      "sector_id": "AR-ITANAGAR-01",
+      "timestamp": "2023-06-20T09:30:00Z",
+      "event_label": 1,
+      "geographic_group": "arunachal_papum_corridor",
+      "FoS": 0.8,
+      "CRI": 77.0
+    },
+    {
+      "sample_id": "train_013",
+      "sector_id": "TR-DHARMAN-01",
+      "timestamp": "2023-07-14T06:00:00Z",
+      "event_label": 1,
+      "geographic_group": "tripura_jampui_hills",
+      "FoS": 0.85,
+      "CRI": 72.0
+    },
+    {
+      "sample_id": "train_014",
+      "sector_id": "NL-PHEK-01",
+      "timestamp": "2023-07-28T15:00:00Z",
+      "event_label": 1,
+      "geographic_group": "nagaland_kohima_corridor",
+      "FoS": 0.84,
+      "CRI": 75.0
+    },
+    {
+      "sample_id": "train_015",
+      "sector_id": "MZ-LUNGLEI-01",
+      "timestamp": "2023-08-22T11:00:00Z",
+      "event_label": 1,
+      "geographic_group": "mizoram_south_corridor",
+      "FoS": 0.81,
+      "CRI": 78.0
+    },
+    {
+      "sample_id": "train_016",
+      "sector_id": "SK-SINGTAM-01",
+      "timestamp": "2023-10-04T01:30:00Z",
+      "event_label": 1,
+      "geographic_group": "sikkim_teesta_corridor",
+      "FoS": 0.48,
+      "CRI": 94.0
+    }
+  ]
+}

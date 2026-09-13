@@ -1,0 +1,24 @@
+{
+  "data": {
+    "device_id": "SK-NH10-KM48-PIEZOMETER-01",
+    "sensor_type": "piezometer",
+    "latitude": 27.33,
+    "longitude": 88.61,
+    "timestamp": "2026-09-13T01:38:17.092162Z",
+    "value": 28.5,
+    "unit": "kPa",
+    "battery_pct": 95.0,
+    "signal_rssi_dbm": -72.0,
+    "source": "IoT Node (HTTP)",
+    "provenance": "[UNAUTHENTICATED]",
+    "quality": "GOOD"
+  },
+  "fetched_at": 1789263497.0926907,
+  "ttl": 1800,
+  "meta": {
+    "source": "IoT Node (HTTP)",
+    "provenance": "[UNAUTHENTICATED]",
+    "stored_at": "2026-09-13T01:38:17Z",
+    "ttl": 1800
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "mcpServers": {
+    "gis_cloud": {
+      "command": "python",
+      "args": ["-m", "mcp_servers.gis_cloud.server"],
+      "env": {
+        "GIS_CLOUD_API_KEY": "${GIS_CLOUD_API_KEY}"
+      }
+    },
+    "weather": {
+      "command": "python",
+      "args": ["-m", "mcp_servers.weather.server"],
+      "env": {
+        "OPENWEATHER_API_KEY": "${OPENWEATHER_API_KEY}"
+      }
+    },
+    "data_analytics": {
+      "command": "python",
+      "args": ["-m", "mcp_servers.data_analytics.server"],
+      "env": {
+        "ANALYTICS_DATABASE_URL": "${ANALYTICS_DATABASE_URL}"
+      }
+    },
+    "observability": {
+      "command": "python",
+      "args": ["-m", "mcp_servers.observability.server"],
+      "env": {
+        "PROMETHEUS_METRICS_PORT": "${PROMETHEUS_METRICS_PORT:-9090}"
+      }
+    },
+    "notifications": {
+      "command": "python",
+      "args": ["-m", "mcp_servers.notifications.server"],
+      "env": {
+        "SLACK_WEBHOOK_URL": "${SLACK_WEBHOOK_URL}"
+      }
+    }
+  }
+}

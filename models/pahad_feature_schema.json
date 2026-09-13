@@ -1,0 +1,340 @@
+{
+  "schema_version": "3.0.0-phase3",
+  "target_variable": {
+    "name": "landslide_event",
+    "type": "binary_integer",
+    "values": {
+      "0": "No documented slope failure within forecast window",
+      "1": "Documented mass movement failure event"
+    },
+    "horizons_hours": [6, 12, 24, 48]
+  },
+  "canonical_features": [
+    {
+      "name": "rainfall_1h",
+      "category": "hydrometeorology",
+      "unit": "mm",
+      "range": [0.0, 150.0],
+      "fallback": 0.0,
+      "source": "IMD Automatic Weather Station (AWS)",
+      "provenance": "[LIVE/HISTORICAL]"
+    },
+    {
+      "name": "rainfall_6h",
+      "category": "hydrometeorology",
+      "unit": "mm",
+      "range": [0.0, 300.0],
+      "fallback": 0.0,
+      "source": "IMD AWS 6-hour Accumulator",
+      "provenance": "[LIVE/HISTORICAL]"
+    },
+    {
+      "name": "rainfall_24h",
+      "category": "hydrometeorology",
+      "unit": "mm",
+      "range": [0.0, 500.0],
+      "fallback": 0.0,
+      "source": "IMD Regional Hydromet Network",
+      "provenance": "[LIVE/HISTORICAL]"
+    },
+    {
+      "name": "rainfall_72h",
+      "category": "hydrometeorology",
+      "unit": "mm",
+      "range": [0.0, 900.0],
+      "fallback": 0.0,
+      "source": "IMD 3-Day Gridded Rainfall",
+      "provenance": "[LIVE/HISTORICAL]"
+    },
+    {
+      "name": "API_3d",
+      "category": "hydrometeorology",
+      "unit": "mm",
+      "range": [0.0, 600.0],
+      "fallback": 0.0,
+      "source": "PAHAD Antecedent Precipitation Index Engine",
+      "provenance": "[LIVE/CALCULATED]"
+    },
+    {
+      "name": "API_7d",
+      "category": "hydrometeorology",
+      "unit": "mm",
+      "range": [0.0, 1000.0],
+      "fallback": 0.0,
+      "source": "PAHAD Antecedent Precipitation Index Engine",
+      "provenance": "[LIVE/CALCULATED]"
+    },
+    {
+      "name": "API_30d",
+      "category": "hydrometeorology",
+      "unit": "mm",
+      "range": [0.0, 2500.0],
+      "fallback": 0.0,
+      "source": "PAHAD Antecedent Precipitation Index Engine",
+      "provenance": "[LIVE/CALCULATED]"
+    },
+    {
+      "name": "rainfall_accumulation_3h",
+      "category": "hydrometeorology",
+      "unit": "mm",
+      "range": [0.0, 200.0],
+      "fallback": 0.0,
+      "source": "IMD Radar Telemetry",
+      "provenance": "[LIVE/HISTORICAL]"
+    },
+    {
+      "name": "rainfall_intensity_3h",
+      "category": "hydrometeorology",
+      "unit": "mm/h",
+      "range": [0.0, 75.0],
+      "fallback": 0.0,
+      "source": "IMD Radar Telemetry",
+      "provenance": "[LIVE/HISTORICAL]"
+    },
+    {
+      "name": "rainfall_acceleration",
+      "category": "hydrometeorology",
+      "unit": "mm/h^2",
+      "range": [-20.0, 30.0],
+      "fallback": 0.0,
+      "source": "PAHAD Hyetograph Differentiator",
+      "provenance": "[LIVE/CALCULATED]"
+    },
+    {
+      "name": "soil_moisture",
+      "category": "iot_geotechnical",
+      "unit": "m^3/m^3",
+      "range": [0.05, 0.65],
+      "fallback": 0.32,
+      "source": "In-situ TDR Soil Moisture Node",
+      "provenance": "[LIVE/SIMULATED]"
+    },
+    {
+      "name": "soil_moisture_trend_24h",
+      "category": "iot_geotechnical",
+      "unit": "delta_vwc/24h",
+      "range": [-0.30, 0.40],
+      "fallback": 0.0,
+      "source": "In-situ Soil Moisture Rate Tracker",
+      "provenance": "[LIVE/CALCULATED]"
+    },
+    {
+      "name": "pore_pressure",
+      "category": "iot_geotechnical",
+      "unit": "kPa",
+      "range": [0.0, 80.0],
+      "fallback": 5.0,
+      "source": "Borehole Vibrating-Wire Piezometer",
+      "provenance": "[LIVE/SIMULATED]"
+    },
+    {
+      "name": "pore_pressure_trend_24h",
+      "category": "iot_geotechnical",
+      "unit": "kPa/24h",
+      "range": [-20.0, 40.0],
+      "fallback": 0.0,
+      "source": "Borehole Piezometer Rate Tracker",
+      "provenance": "[LIVE/CALCULATED]"
+    },
+    {
+      "name": "tilt",
+      "category": "iot_geotechnical",
+      "unit": "degrees",
+      "range": [0.0, 15.0],
+      "fallback": 0.20,
+      "source": "Surface Biaxial Inclinometer",
+      "provenance": "[LIVE/SIMULATED]"
+    },
+    {
+      "name": "tilt_rate_24h",
+      "category": "iot_geotechnical",
+      "unit": "deg/24h",
+      "range": [-5.0, 10.0],
+      "fallback": 0.0,
+      "source": "Inclinometer Rate Differentiator",
+      "provenance": "[LIVE/CALCULATED]"
+    },
+    {
+      "name": "ground_displacement",
+      "category": "iot_geotechnical",
+      "unit": "mm",
+      "range": [0.0, 250.0],
+      "fallback": 1.0,
+      "source": "Borehole Extensometer / Inclinometer",
+      "provenance": "[LIVE/SIMULATED]"
+    },
+    {
+      "name": "displacement_velocity_24h",
+      "category": "iot_geotechnical",
+      "unit": "mm/day",
+      "range": [-10.0, 80.0],
+      "fallback": 0.1,
+      "source": "Borehole Creep Velocity Tracker",
+      "provenance": "[LIVE/CALCULATED]"
+    },
+    {
+      "name": "seismic_magnitude",
+      "category": "seismic",
+      "unit": "Richter",
+      "range": [0.0, 9.0],
+      "fallback": 0.0,
+      "source": "National Center for Seismology (NCS)",
+      "provenance": "[LIVE/HISTORICAL]"
+    },
+    {
+      "name": "seismic_distance",
+      "category": "seismic",
+      "unit": "km",
+      "range": [0.0, 1500.0],
+      "fallback": 999.0,
+      "source": "NCS Epicentral Distance Engine",
+      "provenance": "[LIVE/CALCULATED]"
+    },
+    {
+      "name": "seismic_trigger_score",
+      "category": "seismic",
+      "unit": "score_0_1",
+      "range": [0.0, 1.0],
+      "fallback": 0.0,
+      "source": "PAHAD Ground-Motion Attenuation Model",
+      "provenance": "[LIVE/CALCULATED]"
+    },
+    {
+      "name": "seismic_recency_hours",
+      "category": "seismic",
+      "unit": "hours",
+      "range": [0.0, 2000.0],
+      "fallback": 999.0,
+      "source": "NCS Regional Seismic Catalog",
+      "provenance": "[LIVE/HISTORICAL]"
+    },
+    {
+      "name": "elevation",
+      "category": "terrain",
+      "unit": "meters",
+      "range": [50.0, 5500.0],
+      "fallback": 800.0,
+      "source": "Copernicus GLO-30 / ISRO CartoDEM",
+      "provenance": "[HISTORICAL/GEOSPATIAL]"
+    },
+    {
+      "name": "slope",
+      "category": "terrain",
+      "unit": "degrees",
+      "range": [0.0, 85.0],
+      "fallback": 32.0,
+      "source": "Horn Finite-Difference DEM Terrain Kernel",
+      "provenance": "[HISTORICAL/GEOSPATIAL]"
+    },
+    {
+      "name": "aspect",
+      "category": "terrain",
+      "unit": "degrees",
+      "range": [0.0, 360.0],
+      "fallback": 180.0,
+      "source": "Zevenbergen-Thorne Aspect Algorithm",
+      "provenance": "[HISTORICAL/GEOSPATIAL]"
+    },
+    {
+      "name": "curvature",
+      "category": "terrain",
+      "unit": "1/m",
+      "range": [-0.5, 0.5],
+      "fallback": 0.0,
+      "source": "Zevenbergen-Thorne Curvature Algorithm",
+      "provenance": "[HISTORICAL/GEOSPATIAL]"
+    },
+    {
+      "name": "NDVI",
+      "category": "remote_sensing",
+      "unit": "index",
+      "range": [-1.0, 1.0],
+      "fallback": 0.65,
+      "source": "Copernicus Sentinel-2 MSI Level-2A BOA",
+      "provenance": "[LIVE/HISTORICAL]"
+    },
+    {
+      "name": "NDVI_change",
+      "category": "remote_sensing",
+      "unit": "delta_index",
+      "range": [-1.0, 1.0],
+      "fallback": 0.0,
+      "source": "Sentinel-2 Temporal Delta Engine",
+      "provenance": "[LIVE/CALCULATED]"
+    },
+    {
+      "name": "historical_landslide_density",
+      "category": "history_susceptibility",
+      "unit": "events/km^2",
+      "range": [0.0, 0.50],
+      "fallback": 0.01,
+      "source": "GSI National Landslide Susceptibility Mapping",
+      "provenance": "[HISTORICAL]"
+    },
+    {
+      "name": "static_susceptibility",
+      "category": "history_susceptibility",
+      "unit": "score_0_1",
+      "range": [0.0, 1.0],
+      "fallback": 0.50,
+      "source": "GSI 1:50,000 Susceptibility Micro-Zonation",
+      "provenance": "[HISTORICAL]"
+    },
+    {
+      "name": "road_criticality",
+      "category": "anthropogenic_exposure",
+      "unit": "score_0_1",
+      "range": [0.0, 1.0],
+      "fallback": 0.70,
+      "source": "Border Roads Organisation (BRO) Strategic Matrix",
+      "provenance": "[HISTORICAL]"
+    },
+    {
+      "name": "population_exposure",
+      "category": "anthropogenic_exposure",
+      "unit": "count",
+      "range": [0, 50000],
+      "fallback": 500,
+      "source": "Census & Settlement Geospatial Matrix",
+      "provenance": "[HISTORICAL]"
+    },
+    {
+      "name": "FoS",
+      "category": "geotechnical_physics",
+      "unit": "ratio",
+      "range": [0.1, 5.0],
+      "fallback": 1.25,
+      "source": "Physical Infinite Slope Mohr-Coulomb Engine",
+      "provenance": "[LIVE/CALCULATED]"
+    },
+    {
+      "name": "CRI",
+      "category": "composite_risk",
+      "unit": "score_0_100",
+      "range": [0.0, 100.0],
+      "fallback": 45.0,
+      "source": "PAHAD Multi-Modal Composite Risk Index",
+      "provenance": "[LIVE/CALCULATED]"
+    }
+  ],
+  "extended_supplementary_features": [
+    "relief",
+    "terrain_ruggedness",
+    "drainage_proximity_m",
+    "rainfall_3h",
+    "rainfall_12h",
+    "rainfall_48h",
+    "rainfall_threshold_exceeded",
+    "forecast_rainfall_24h",
+    "soil_cohesion_kpa",
+    "friction_angle_deg",
+    "wetting_front_depth_m",
+    "toe_scour_tau_b",
+    "vegetation_class",
+    "insar_deformation_mm",
+    "crack_aperture_mm",
+    "vibration_rms_g",
+    "sensor_freshness_min",
+    "sensor_confidence"
+  ]
+}

@@ -1,0 +1,30 @@
+name: parvat_netra_mobile
+description: "PARVAT NETRA — Offline-First Disaster Reporting Field App for MDoNER (Problem Statement ID: 26001)"
+publish_to: "none"
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+  flutter: ">=3.16.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_map: ^6.1.0
+  sqflite: ^2.3.0
+  path_provider: ^2.1.2
+  connectivity_plus: ^5.0.2
+  geolocator: ^11.0.0
+  http: ^1.2.0
+  cached_network_image: ^3.3.1
+  flutter_cache_manager: ^3.3.1
+  latlong2: ^0.9.0
+  path: ^1.9.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true

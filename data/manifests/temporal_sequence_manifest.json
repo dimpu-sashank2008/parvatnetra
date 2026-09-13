@@ -1,0 +1,230 @@
+{
+  "manifest_version": "10.0.0-phase10",
+  "created_at": "2026-09-12T01:05:37.756611+00:00",
+  "feature_schema": {
+    "canonical_features": [
+      "rain_1h",
+      "rain_3h",
+      "rain_6h",
+      "rain_12h",
+      "rain_24h",
+      "rain_48h",
+      "rain_72h",
+      "antecedent_rain_3d",
+      "antecedent_rain_7d",
+      "rain_intensity",
+      "rainfall_threshold_exceedance",
+      "fos",
+      "slope",
+      "aspect",
+      "elevation",
+      "curvature",
+      "soil_moisture",
+      "pore_pressure",
+      "tilt",
+      "ground_displacement",
+      "ndvi",
+      "ndvi_anomaly",
+      "seismic_count_24h",
+      "max_magnitude_24h",
+      "nearest_seismic_distance",
+      "historical_susceptibility"
+    ],
+    "feature_dim": 26,
+    "cri_target_leakage_prevented": true
+  },
+  "horizons": [
+    6,
+    12,
+    24,
+    48
+  ],
+  "input_dataset_hashes": {
+    "train_sha256": "8472cd134e99245bd22a040b8dbd0b25a4fa5e24abb02f03813816236d0f1be5",
+    "val_sha256": "74a771c3c825ca9d4de1c54b3333af951ffa21fd7b0ad87e793e6eed8669db7c",
+    "test_sha256": "9c7ab40b6ac733adba748c77b7e0b341520995bcdb4081e4dc280b9a9790519f"
+  },
+  "partitions": {
+    "train": {
+      "partition_name": "train",
+      "sample_count": 48,
+      "feature_count": 26,
+      "features": [
+        "rain_1h",
+        "rain_3h",
+        "rain_6h",
+        "rain_12h",
+        "rain_24h",
+        "rain_48h",
+        "rain_72h",
+        "antecedent_rain_3d",
+        "antecedent_rain_7d",
+        "rain_intensity",
+        "rainfall_threshold_exceedance",
+        "fos",
+        "slope",
+        "aspect",
+        "elevation",
+        "curvature",
+        "soil_moisture",
+        "pore_pressure",
+        "tilt",
+        "ground_displacement",
+        "ndvi",
+        "ndvi_anomaly",
+        "seismic_count_24h",
+        "max_magnitude_24h",
+        "nearest_seismic_distance",
+        "historical_susceptibility"
+      ],
+      "horizons": [
+        6,
+        12,
+        24,
+        48
+      ],
+      "positive_counts": {
+        "6h": 8,
+        "12h": 16,
+        "24h": 24,
+        "48h": 40
+      },
+      "missingness_rate_overall": 0.0,
+      "metadata": {
+        "partition_name": "train",
+        "created_at": "2026-09-12T01:05:37.741701+00:00",
+        "pipeline_fitted_at": "2026-09-12T01:05:37.731547+00:00",
+        "feature_dim": 26,
+        "imputation_strategy": "training_median"
+      }
+    },
+    "validation": {
+      "partition_name": "validation",
+      "sample_count": 33,
+      "feature_count": 26,
+      "features": [
+        "rain_1h",
+        "rain_3h",
+        "rain_6h",
+        "rain_12h",
+        "rain_24h",
+        "rain_48h",
+        "rain_72h",
+        "antecedent_rain_3d",
+        "antecedent_rain_7d",
+        "rain_intensity",
+        "rainfall_threshold_exceedance",
+        "fos",
+        "slope",
+        "aspect",
+        "elevation",
+        "curvature",
+        "soil_moisture",
+        "pore_pressure",
+        "tilt",
+        "ground_displacement",
+        "ndvi",
+        "ndvi_anomaly",
+        "seismic_count_24h",
+        "max_magnitude_24h",
+        "nearest_seismic_distance",
+        "historical_susceptibility"
+      ],
+      "horizons": [
+        6,
+        12,
+        24,
+        48
+      ],
+      "positive_counts": {
+        "6h": 5,
+        "12h": 10,
+        "24h": 15,
+        "48h": 25
+      },
+      "missingness_rate_overall": 0.0,
+      "metadata": {
+        "partition_name": "validation",
+        "created_at": "2026-09-12T01:05:37.747703+00:00",
+        "pipeline_fitted_at": "2026-09-12T01:05:37.731547+00:00",
+        "feature_dim": 26,
+        "imputation_strategy": "training_median"
+      }
+    },
+    "test": {
+      "partition_name": "test",
+      "sample_count": 24,
+      "feature_count": 26,
+      "features": [
+        "rain_1h",
+        "rain_3h",
+        "rain_6h",
+        "rain_12h",
+        "rain_24h",
+        "rain_48h",
+        "rain_72h",
+        "antecedent_rain_3d",
+        "antecedent_rain_7d",
+        "rain_intensity",
+        "rainfall_threshold_exceedance",
+        "fos",
+        "slope",
+        "aspect",
+        "elevation",
+        "curvature",
+        "soil_moisture",
+        "pore_pressure",
+        "tilt",
+        "ground_displacement",
+        "ndvi",
+        "ndvi_anomaly",
+        "seismic_count_24h",
+        "max_magnitude_24h",
+        "nearest_seismic_distance",
+        "historical_susceptibility"
+      ],
+      "horizons": [
+        6,
+        12,
+        24,
+        48
+      ],
+      "positive_counts": {
+        "6h": 4,
+        "12h": 8,
+        "24h": 12,
+        "48h": 20
+      },
+      "missingness_rate_overall": 0.0,
+      "metadata": {
+        "partition_name": "test",
+        "created_at": "2026-09-12T01:05:37.754186+00:00",
+        "pipeline_fitted_at": "2026-09-12T01:05:37.731547+00:00",
+        "feature_dim": 26,
+        "imputation_strategy": "training_median"
+      }
+    }
+  },
+  "sector_sequence_tensor_shapes": {
+    "train_sectors": 13,
+    "val_sectors": 10,
+    "test_sectors": 7
+  },
+  "normalization": {
+    "method": "StandardScaler",
+    "fitted_strictly_on": "train",
+    "val_test_fitted": false
+  },
+  "missingness_mask": {
+    "type": "binary_indicator",
+    "values": "1=observed, 0=imputed/missing",
+    "train_missing_rate": 0.0,
+    "test_missing_rate": 0.0
+  },
+  "deep_lstm_eligibility": {
+    "required_sequences": 500,
+    "actual_train_sequences": 48,
+    "status": "NOT_TRAINED_DATA_INSUFFICIENT",
+    "torch_available": false
+  }
+}

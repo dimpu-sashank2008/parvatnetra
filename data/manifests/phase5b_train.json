@@ -1,0 +1,50 @@
+{
+  "partition": "TRAIN",
+  "created_at": "2026-09-09T18:35:11.505902+00:00",
+  "sha256": "8472cd134e99245bd22a040b8dbd0b25a4fa5e24abb02f03813816236d0f1be5",
+  "total_samples": 48,
+  "event_count": 8,
+  "events": [
+    "EV-03",
+    "EV-04",
+    "EV-07",
+    "EV-08",
+    "EV-10",
+    "EV-13",
+    "EV-15",
+    "EV-17"
+  ],
+  "control_count": 8,
+  "controls": [
+    "CTRL-01",
+    "CTRL-02",
+    "CTRL-03",
+    "CTRL-04",
+    "CTRL-05",
+    "CTRL-06",
+    "CTRL-07",
+    "CTRL-08"
+  ],
+  "date_range": {
+    "min": "2022-05-14T09:00:00Z",
+    "max": "2023-10-03T19:30:00Z"
+  },
+  "target_distribution": {
+    "target_6h": {
+      "positive": 8,
+      "negative": 40
+    },
+    "target_12h": {
+      "positive": 16,
+      "negative": 32
+    },
+    "target_24h": {
+      "positive": 24,
+      "negative": 24
+    },
+    "target_48h": {
+      "positive": 40,
+      "negative": 8
+    }
+  }
+}

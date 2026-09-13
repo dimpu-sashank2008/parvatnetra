@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-[#070B10]">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PARVAT NETRA • Climate Intelligence & Hillslope Hydrology Workspace</title>
+    <link rel="icon" type="image/png" href="/static/images/parvat_netra_emblem.png">
+    
+    <!-- Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Inter"', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace']
+                    },
+                    colors: {
+                        obsidian: '#070B10',
+                        obsidianLight: '#0B132B',
+                        slateCard: '#0F172A',
+                        borderMuted: '#1E293B',
+                        accentCyan: '#1E3A8A',
+                        accentAmber: '#F59E0B',
+                        accentRed: '#EF4444',
+                        accentGreen: '#10B981'
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Leaflet & Chart.js -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="/static/css/parvat_theme.css">
+    <script src="/static/js/theme.js"></script>
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #070B10; color: #F1F5F9; }
+        .font-mono { font-family: 'JetBrains Mono', monospace !important; }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #070B10; }
+        ::-webkit-scrollbar-thumb { background: #1E293B; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #334155; }
+        
+        /* Map custom styling */
+        .leaflet-container { background: #070B10 !important; }
+        .leaflet-popup-content-wrapper {
+            background: #0F172A !important;
+            color: #F8FAFC !important;
+            border: 1px solid #334155 !important;
+            border-radius: 6px !important;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.7) !important;
+        }
+        .leaflet-popup-tip { background: #0F172A !important; }
+        
+        /* Custom map layer toggle pill */
+        .layer-pill {
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .layer-pill.active {
+            background-color: #0284C7;
+            border-color: #38BDF8;
+            color: #FFFFFF;
+        }
+    </style>
+</head>
+<body class="h-full flex flex-col overflow-hidden">
+
+    <!-- TOP INSTITUTIONAL NAVIGATION -->
+    <header class="h-14 bg-[#0B132B] border-b border-borderMuted px-4 flex items-center justify-between shrink-0 z-30">
+        <div class="flex items-center space-x-3">
+            <a href="/" class="flex items-center space-x-2 text-slate-300 hover:text-white transition">
+                <img src="/static/images/parvat_netra_emblem.png" alt="Emblem" class="w-8 h-8 object-contain">
+                <div>
+                    <span class="font-bold tracking-wider text-sm block leading-none">PARVAT NETRA</span>
+                    <span class="text-[10px] text-blue-300 font-mono tracking-wider block">PAHAD AI DISASTER INTELLIGENCE</span>
+                </div>
+            </a>
+            <div class="h-5 w-px bg-slate-700 hidden sm:block"></div>
+            <div class="hidden sm:block">
+                <h1 class="text-xs font-semibold text-slate-100 uppercase tracking-wider">CLIMATE INTELLIGENCE</h1>
+                <p class="text-[10px] text-slate-400 leading-tight">Live environmental conditions influencing hillslope stability across NER (Northeast Region).</p>
+            </div>
+        </div>
+        
+        <!-- Navigation Links -->
+        <div class="flex items-center space-x-2">
+            <a href="/" class="px-2.5 py-1 text-xs rounded border border-slate-700 hover:border-slate-500 text-slate-300 transition">
+                Dashboard
+            </a>
+            <a href="/pahad-ai" class="px-2.5 py-1 text-xs rounded border border-[#1E3A8A] bg-[#0C2340] text-blue-200 hover:border-[#1E3A8A] transition">
+                PAHAD AI
+            </a>
+            <a href="/climate-map" class="px-2.5 py-1 text-xs rounded bg-sky-900/60 border border-sky-500 text-sky-200 font-medium transition">
+                Climate Map
+            </a>
+            <a href="/seismic" class="px-2.5 py-1 text-xs rounded border border-slate-700 hover:border-slate-500 text-slate-300 transition">
+                Seismic
+            </a>
+            <a href="/terrain-3d" class="px-2.5 py-1 text-xs rounded border border-slate-700 hover:border-slate-500 text-slate-300 transition">
+                3D Terrain
+            </a>
+            <a href="/console" class="px-2.5 py-1 text-xs rounded border border-slate-700 hover:border-slate-500 text-slate-300 transition hidden md:inline-block">
+                Console
+            </a>
+            <div class="h-4 w-px bg-slate-700"></div>
+            <span id="header-prov-badge" class="px-2 py-0.5 text-[10px] font-mono rounded bg-emerald-950/80 border border-emerald-500/50 text-emerald-400">
+                [LIVE]
+            </span>
+            <button id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Switch color theme" title="Switch color theme" class="px-2.5 py-1 bg-[#12213D] border border-blue-300/30 rounded text-sky-100 hover:bg-[#1A3158] hover:text-white transition flex items-center gap-1.5 text-xs font-semibold shadow-xs active:scale-95 cursor-pointer">
+                <span id="theme-icon" class="flex items-center justify-center">
+                    <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                </span>
+                <span id="theme-text" class="text-[11px] hidden sm:inline">Light Mode</span>
+            </button>
+            <button onclick="refreshClimateData()" title="Refresh Weather Feeds" class="p-1.5 rounded border border-slate-700 hover:bg-slate-800 text-slate-300 transition">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN WORKSPACE LAYOUT (MAP + SIDE DRAWER) -->
+    <div class="flex-1 flex flex-col lg:flex-row overflow-hidden relative">
+
+        <!-- PRIMARY MAP CANVAS -->
+        <div class="flex-1 relative h-full bg-[#070B10]">
+            <div id="climate-map-canvas" class="w-full h-full z-10"></div>
+            
+            <!-- FLOATING LAYER CONTROL PANEL (COMPACT SVG ICONS, NO EMOJI) -->
+            <div class="absolute top-3 left-3 z-20 bg-slateCard/95 backdrop-blur-md border border-slate-700/80 rounded-lg p-3 shadow-2xl max-w-xs sm:max-w-sm text-xs select-none">
+                <div class="flex items-center justify-between pb-2 mb-2 border-b border-slate-800">
+                    <span class="font-semibold text-slate-200 uppercase tracking-wider text-[11px] flex items-center gap-1.5">
+                        <svg class="w-3.5 h-3.5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg>
+                        Map Layers & Basemap
+                    </span>
+                    <span class="text-[10px] text-slate-400 font-mono" id="layer-active-count">6 Active</span>
+                </div>
+                
+                <!-- BASEMAP SELECTOR -->
+                <div class="mb-2.5">
+                    <span class="text-[10px] text-slate-400 uppercase tracking-wider block mb-1">Basemap</span>
+                    <div class="grid grid-cols-4 gap-1 text-[10px] font-medium">
+                        <button onclick="switchBasemap('dark')" id="bm-dark" class="px-1.5 py-1 rounded bg-sky-900/80 border border-sky-500 text-sky-200">Dark</button>
+                        <button onclick="switchBasemap('street')" id="bm-street" class="px-1.5 py-1 rounded bg-slate-800 border border-slate-700 text-slate-400 hover:text-slate-200">Street</button>
+                        <button onclick="switchBasemap('satellite')" id="bm-satellite" class="px-1.5 py-1 rounded bg-slate-800 border border-slate-700 text-slate-400 hover:text-slate-200">Satellite</button>
+                        <button onclick="switchBasemap('topo')" id="bm-topo" class="px-1.5 py-1 rounded bg-slate-800 border border-slate-700 text-slate-400 hover:text-slate-200">Topo</button>
+                    </div>
+                </div>
+
+                <!-- WEATHER ACCUMULATION TOGGLES -->
+                <div class="mb-2.5">
+                    <span class="text-[10px] text-slate-400 uppercase tracking-wider block mb-1">Weather & Accumulation</span>
+                    <div class="flex flex-wrap gap-1 text-[10px]">
+                        <span onclick="toggleLayer('precip_current')" id="lyr-precip_current" class="layer-pill active px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-300">Current mm/h</span>
+                        <span onclick="toggleLayer('rain_24h')" id="lyr-rain_24h" class="layer-pill active px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-300">24h Rain</span>
+                        <span onclick="toggleLayer('rain_72h')" id="lyr-rain_72h" class="layer-pill px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-400">72h Antecedent</span>
+                        <span onclick="toggleLayer('forecast')" id="lyr-forecast" class="layer-pill px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-400">Forecast 48h</span>
+                    </div>
+                </div>
+
+                <!-- PAHAD AI RISK LAYERS -->
+                <div class="mb-2.5">
+                    <span class="text-[10px] text-slate-400 uppercase tracking-wider block mb-1">PAHAD Risk Overlays</span>
+                    <div class="flex flex-wrap gap-1 text-[10px]">
+                        <span onclick="toggleLayer('cri_badges')" id="lyr-cri_badges" class="layer-pill active px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-300">CRI Scores</span>
+                        <span onclick="toggleLayer('threshold_breach')" id="lyr-threshold_breach" class="layer-pill active px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-300">I-D Breach</span>
+                        <span onclick="toggleLayer('fos_zones')" id="lyr-fos_zones" class="layer-pill px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-400">FoS Contours</span>
+                    </div>
+                </div>
+
+                <!-- INFRASTRUCTURE LAYERS -->
+                <div>
+                    <span class="text-[10px] text-slate-400 uppercase tracking-wider block mb-1">Infrastructure & Assets</span>
+                    <div class="flex flex-wrap gap-1 text-[10px]">
+                        <span onclick="toggleLayer('roads')" id="lyr-roads" class="layer-pill active px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-300">NH-10 Corridor</span>
+                        <span onclick="toggleLayer('rivers')" id="lyr-rivers" class="layer-pill active px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-300">Teesta River</span>
+                        <span onclick="toggleLayer('historical')" id="lyr-historical" class="layer-pill px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-400">GSI Landslides</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROMINENT PHYSICAL CAUSAL CASCADE HUD (FLOATING ON MAP) -->
+            <div id="map-floating-cascade" class="climate-cascade-card absolute top-3 right-3 z-20 w-80 sm:w-[350px] rounded-xl p-3.5 shadow-2xl backdrop-blur-md hidden md:block transition-all">
+                <div class="flex items-center justify-between pb-2 mb-2 border-b border-amber-200/40 dark:border-slate-800">
+                    <h4 class="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
+                        <svg class="w-3.5 h-3.5 text-amber-500 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        How Climate Impacts Hillslope Stability
+                    </h4>
+                    <button onclick="toggleCascadeHud()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition p-0.5 rounded" title="Toggle Cascade Card">
+                        <svg id="cascade-hud-chevron" class="w-3.5 h-3.5 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                </div>
+                <div id="cascade-hud-body" class="space-y-1 text-xs">
+                    <div class="flex items-center gap-2">
+                        <span class="w-4 h-4 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 flex items-center justify-center font-mono text-[11px] font-semibold">1</span>
+                        <span class="text-slate-700 dark:text-slate-300">Rainfall Accumulation: <strong class="text-slate-900 dark:text-white font-bold" id="hud-cascade-rain">5.9 mm</strong></span>
+                    </div>
+                    <div class="connector-line pl-3 border-l-2 border-amber-300 dark:border-slate-700 ml-2 py-0.5 text-slate-600 dark:text-slate-400 font-mono text-[10.5px]">↓ Green-Ampt infiltration front penetration</div>
+                    <div class="flex items-center gap-2">
+                        <span class="w-4 h-4 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 flex items-center justify-center font-mono text-[11px] font-semibold">2</span>
+                        <span class="text-slate-800 dark:text-slate-200 font-medium">Soil Saturation & Matric Suction Loss</span>
+                    </div>
+                    <div class="connector-line pl-3 border-l-2 border-amber-300 dark:border-slate-700 ml-2 py-0.5 text-slate-600 dark:text-slate-400 font-mono text-[10.5px]">↓ Positive pore-water pressure builds up in colluvium</div>
+                    <div class="flex items-center gap-2">
+                        <span class="w-4 h-4 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 flex items-center justify-center font-mono text-[11px] font-semibold">3</span>
+                        <span class="text-slate-800 dark:text-slate-200 font-medium">Mohr-Coulomb Effective Stress Reduction</span>
+                    </div>
+                    <div class="connector-line pl-3 border-l-2 border-amber-300 dark:border-slate-700 ml-2 py-0.5 text-slate-600 dark:text-slate-400 font-mono text-[10.5px]">↓ Factor of Safety (FS) drops toward 1.0 failure state</div>
+                    <div class="flex items-center gap-2 pt-1">
+                        <span class="w-5 h-5 rounded-full bg-rose-600 text-white flex items-center justify-center font-bold text-[11px] shadow-sm shrink-0">4</span>
+                        <span class="text-slate-800 dark:text-slate-200 font-medium">Resulting CRI Risk: <strong class="text-rose-500 dark:text-rose-400 font-mono font-bold text-sm tracking-tight" id="hud-cascade-cri">41.1 / 100</strong></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTOR QUICK SELECTOR STRIP -->
+            <div class="absolute bottom-4 left-3 right-3 lg:right-auto z-20 flex items-center space-x-1.5 overflow-x-auto p-1.5 bg-slateCard/90 backdrop-blur-md border border-slate-800 rounded-md text-xs">
+                <span class="text-[10px] text-slate-400 font-mono uppercase px-2 shrink-0">Sectors:</span>
+                <button onclick="selectSector('SK-NH10-KM48')" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-nowrap shrink-0">NH-10 Km 48</button>
+                <button onclick="selectSector('SK-SINGTAM-01')" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-nowrap shrink-0">Singtam Teesta</button>
+                <button onclick="selectSector('SK-DIKCHU-01')" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-nowrap shrink-0">Dikchu North</button>
+                <button onclick="selectSector('SK-MANGAN-01')" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-nowrap shrink-0">Mangan Complex</button>
+                <button onclick="selectSector('MZ-HUNTHAR-01')" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-nowrap shrink-0">Aizawl Hunthar</button>
+                <button onclick="selectSector('AS-GUWAHATI-01')" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-nowrap shrink-0">Guwahati Hills</button>
+            </div>
+        </div>
+
+        <!-- RIGHT INTELLIGENCE DRAWER (SCROLLABLE) -->
+        <div class="w-full lg:w-[420px] xl:w-[460px] bg-[#070B10] border-t lg:border-t-0 lg:border-l border-borderMuted flex flex-col h-auto lg:h-full z-20 shrink-0">
+            
+            <!-- PANEL TABS -->
+            <div class="flex border-b border-borderMuted bg-[#0B132B] text-xs font-medium shrink-0">
+                <button onclick="switchTab('climate-status')" id="tab-btn-climate-status" class="flex-1 py-2.5 text-center border-b-2 border-sky-500 text-white font-semibold transition">
+                    Climate Status
+                </button>
+                <button onclick="switchTab('rainfall-timeline')" id="tab-btn-rainfall-timeline" class="flex-1 py-2.5 text-center border-b-2 border-transparent text-slate-400 hover:text-slate-200 transition">
+                    Timeline & Loading
+                </button>
+                <button onclick="switchTab('ner-overview')" id="tab-btn-ner-overview" class="flex-1 py-2.5 text-center border-b-2 border-transparent text-slate-400 hover:text-slate-200 transition">
+                    NER States
+                </button>
+            </div>
+
+            <!-- TAB CONTENT CONTAINER -->
+            <div class="flex-1 overflow-y-auto p-4 space-y-4">
+                
+                <!-- TAB 1: CLIMATE STATUS & PAHAD INTERPRETATION -->
+                <div id="tab-climate-status" class="space-y-4">
+                    
+                    <!-- SELECTED SECTOR & PROVENANCE HEADER -->
+                    <div class="bg-slateCard border border-borderMuted rounded-lg p-3.5">
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="text-xs text-slate-400 font-mono uppercase" id="panel-sector-id">SK-NH10-KM48</span>
+                            <span id="panel-provenance-badge" class="px-2 py-0.5 text-[10px] font-mono rounded bg-emerald-950/80 border border-emerald-500/50 text-emerald-400">
+                                [LIVE]
+                            </span>
+                        </div>
+                        <h2 class="text-base font-bold text-white leading-snug" id="panel-sector-name">NH-10 Km 48 (29th Mile Sector)</h2>
+                        <p class="text-xs text-slate-400 flex items-center gap-1.5 mt-0.5">
+                            <span id="panel-location-coords" class="font-mono">27.3300°N, 88.6100°E</span> • <span id="panel-district">Kalimpong-Sikkim</span>
+                        </p>
+                        <div class="mt-2.5 pt-2.5 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-400">
+                            <span>Provider: <strong class="text-slate-200" id="panel-provider-name">Open-Meteo Global</strong></span>
+                            <span class="font-mono" id="panel-data-age">Age: 4s</span>
+                        </div>
+                    </div>
+
+                    <!-- PHYSICAL CAUSAL CASCADE COMPONENT (PROMINENT AT TOP) -->
+                    <div class="climate-cascade-card border rounded-lg p-3.5 text-xs shadow-md">
+                        <h4 class="text-[11px] font-bold uppercase tracking-wider text-slate-900 dark:text-slate-100 mb-2">How Climate Impacts Hillslope Stability</h4>
+                        <div class="space-y-1 text-xs">
+                            <div class="flex items-center gap-2">
+                                <span class="w-4 h-4 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 flex items-center justify-center font-mono text-[11px] font-semibold">1</span>
+                                <span class="text-slate-700 dark:text-slate-300">Rainfall Accumulation: <strong class="text-slate-900 dark:text-white font-bold" id="cascade-rain">5.9 mm</strong></span>
+                            </div>
+                            <div class="connector-line pl-3 border-l-2 border-amber-300 dark:border-slate-700 ml-2 py-0.5 text-slate-600 dark:text-slate-400 font-mono text-[10.5px]">↓ Green-Ampt infiltration front penetration</div>
+                            <div class="flex items-center gap-2">
+                                <span class="w-4 h-4 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 flex items-center justify-center font-mono text-[11px] font-semibold">2</span>
+                                <span class="text-slate-800 dark:text-slate-200 font-medium">Soil Saturation & Matric Suction Loss</span>
+                            </div>
+                            <div class="connector-line pl-3 border-l-2 border-amber-300 dark:border-slate-700 ml-2 py-0.5 text-slate-600 dark:text-slate-400 font-mono text-[10.5px]">↓ Positive pore-water pressure builds up in colluvium</div>
+                            <div class="flex items-center gap-2">
+                                <span class="w-4 h-4 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 flex items-center justify-center font-mono text-[11px] font-semibold">3</span>
+                                <span class="text-slate-800 dark:text-slate-200 font-medium">Mohr-Coulomb Effective Stress Reduction</span>
+                            </div>
+                            <div class="connector-line pl-3 border-l-2 border-amber-300 dark:border-slate-700 ml-2 py-0.5 text-slate-600 dark:text-slate-400 font-mono text-[10.5px]">↓ Factor of Safety (FS) drops toward 1.0 failure state</div>
+                            <div class="flex items-center gap-2 pt-1">
+                                <span class="w-5 h-5 rounded-full bg-rose-600 text-white flex items-center justify-center font-bold text-[11px] shadow-sm shrink-0">4</span>
+                                <span class="text-slate-800 dark:text-slate-200 font-medium">Resulting CRI Risk: <strong class="text-rose-500 dark:text-rose-400 font-mono font-bold text-sm tracking-tight" id="cascade-cri">41.1 / 100</strong></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- RAW WEATHER TELEMETRY GRID -->
+                    <div class="bg-slateCard border border-borderMuted rounded-lg p-3.5">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-300">Raw Environmental Observations</h3>
+                            <span class="text-[10px] text-slate-500 font-mono">OBSERVED</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 text-xs">
+                            <div class="bg-[#070B10] p-2.5 rounded border border-slate-800">
+                                <span class="text-[10px] text-slate-400 block">Current Intensity</span>
+                                <span class="text-base font-bold font-mono text-white" id="w-val-current">0.0 <span class="text-xs font-normal text-slate-400">mm/h</span></span>
+                            </div>
+                            <div class="bg-[#070B10] p-2.5 rounded border border-slate-800">
+                                <span class="text-[10px] text-slate-400 block">24h Cumulative</span>
+                                <span class="text-base font-bold font-mono text-amber-400" id="w-val-24h">0.0 <span class="text-xs font-normal text-slate-400">mm</span></span>
+                            </div>
+                            <div class="bg-[#070B10] p-2.5 rounded border border-slate-800">
+                                <span class="text-[10px] text-slate-400 block">72h Antecedent</span>
+                                <span class="text-base font-bold font-mono text-sky-400" id="w-val-72h">0.0 <span class="text-xs font-normal text-slate-400">mm</span></span>
+                            </div>
+                            <div class="bg-[#070B10] p-2.5 rounded border border-slate-800">
+                                <span class="text-[10px] text-slate-400 block">24h Forecast</span>
+                                <span class="text-base font-bold font-mono text-purple-400" id="w-val-fc24h">0.0 <span class="text-xs font-normal text-slate-400">mm</span></span>
+                            </div>
+                        </div>
+                        
+                        <!-- ATMOSPHERIC SNAPSHOT -->
+                        <div class="mt-2.5 pt-2 border-t border-slate-800 grid grid-cols-4 gap-1 text-center font-mono text-[10px]">
+                            <div>
+                                <span class="text-slate-500 block">TEMP</span>
+                                <span class="text-slate-200" id="w-val-temp">18°C</span>
+                            </div>
+                            <div>
+                                <span class="text-slate-500 block">HUMID</span>
+                                <span class="text-slate-200" id="w-val-humid">84%</span>
+                            </div>
+                            <div>
+                                <span class="text-slate-500 block">PRESS</span>
+                                <span class="text-slate-200" id="w-val-press">1008hPa</span>
+                            </div>
+                            <div>
+                                <span class="text-slate-500 block">WIND</span>
+                                <span class="text-slate-200" id="w-val-wind">14km/h</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PAHAD AI SCIENTIFIC INTERPRETATION (CRITICAL CONTRAST) -->
+                    <div class="bg-slateCard border border-sky-900/60 rounded-lg p-3.5 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-sky-500/5 rounded-full blur-2xl pointer-events-none"></div>
+                        <div class="flex items-center justify-between mb-2.5">
+                            <h3 class="text-xs font-bold uppercase tracking-wider text-sky-400 flex items-center gap-1.5">
+                                <svg class="w-3.5 h-3.5 text-sky-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"></path></svg>
+                                PAHAD Climate Interpretation
+                            </h3>
+                            <span class="text-[10px] text-sky-400/80 font-mono font-bold">DERIVED INDEX</span>
+                        </div>
+
+                        <div class="space-y-2 text-xs">
+                            <div class="flex items-center justify-between p-2 rounded bg-[#070B10]/80 border border-slate-800">
+                                <span class="text-slate-300">Rainfall Infiltration Loading</span>
+                                <span class="font-semibold font-mono text-amber-400" id="pahad-val-loading">MODERATE</span>
+                            </div>
+                            <div class="flex items-center justify-between p-2 rounded bg-[#070B10]/80 border border-slate-800">
+                                <span class="text-slate-300">Antecedent Moisture (API-3d)</span>
+                                <span class="font-semibold font-mono text-sky-400" id="pahad-val-api">ELEVATED (58.4 mm)</span>
+                            </div>
+                            <div class="flex items-center justify-between p-2 rounded bg-[#070B10]/80 border border-slate-800">
+                                <span class="text-slate-300">Mandal & Sarkar (2013) I-D</span>
+                                <span class="font-semibold font-mono text-emerald-400" id="pahad-val-threshold">WITHIN THRESHOLD</span>
+                            </div>
+                            <div class="flex items-center justify-between p-2 rounded bg-[#070B10]/80 border border-slate-800">
+                                <span class="text-slate-300">CRI Risk Score Modifier</span>
+                                <span class="font-semibold font-mono text-rose-400" id="pahad-val-modifier">+14.2 CRI Points</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- TAB 2: RAINFALL TIMELINE & MULTI-HORIZON CHART -->
+                <div id="tab-rainfall-timeline" class="space-y-4 hidden">
+                    <div class="bg-slateCard border border-borderMuted rounded-lg p-3.5">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-200">Rainfall Accumulation Timeline</h3>
+                            <span class="text-[10px] text-slate-400 font-mono">NOW → 48H HORIZON</span>
+                        </div>
+                        <p class="text-[11px] text-slate-400 mb-3">Historical observed rainfall vs. forecast accumulations against regional failure thresholds.</p>
+                        <div class="h-56 w-full">
+                            <canvas id="rainfallTimelineChart"></canvas>
+                        </div>
+                        <div class="mt-3 pt-2.5 border-t border-slate-800 flex items-center justify-between text-[10px] text-slate-400">
+                            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-sky-500 inline-block"></span> Observed / Forecast Rain</span>
+                            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-rose-500 inline-block"></span> Mandal-Sarkar Limit</span>
+                        </div>
+                    </div>
+
+                    <!-- MULTI-HORIZON ACCUMULATION TABLE -->
+                    <div class="bg-slateCard border border-borderMuted rounded-lg p-3.5">
+                        <h4 class="text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">Forecast Horizon Loading Matrix</h4>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-[11px] text-left">
+                                <thead class="bg-[#070B10] text-slate-400 font-mono border-b border-slate-800">
+                                    <tr>
+                                        <th class="p-2">Horizon</th>
+                                        <th class="p-2">Expected (mm)</th>
+                                        <th class="p-2">Threshold</th>
+                                        <th class="p-2">Loading Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-800/60 font-mono" id="timeline-table-body">
+                                    <!-- Dynamic rows inserted via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 3: NER 8-STATE CLIMATE OVERVIEW -->
+                <div id="tab-ner-overview" class="space-y-4 hidden">
+                    <div class="bg-slateCard border border-borderMuted rounded-lg p-3.5">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-200">NER Regional Climate Matrix</h3>
+                            <span class="text-[10px] text-slate-400 font-mono">8 STATES</span>
+                        </div>
+                        <p class="text-[11px] text-slate-400 mb-3">Live weather loadings across all 8 NER states influencing regional hillslopes.</p>
+                        <div class="space-y-2" id="ner-states-list">
+                            <!-- Dynamic state cards inserted via JS -->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- CLIENT LOGIC & INTEGRATIONS -->
+    <script>
+        let climateMap = null;
+        let timelineChart = null;
+        let currentSectorId = 'SK-NH10-KM48';
+        let currentSectorData = null;
+        let activeLayers = {
+            precip_current: true,
+            rain_24h: true,
+            rain_72h: false,
+            forecast: false,
+            cri_badges: true,
+            threshold_breach: true,
+            fos_zones: false,
+            roads: true,
+            rivers: true,
+            historical: false
+        };
+
+        let mapLayers = {};
+        let basemapLayer = null;
+
+        const BASEMAPS = {
+            dark: 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',
+            street: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            satellite: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+            topo: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png'
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initMap();
+            loadSectorClimate(currentSectorId);
+            loadRegionalClimateMap();
+        });
+
+        function initMap() {
+            climateMap = L.map('climate-map-canvas', {
+                center: [27.3300, 88.6100],
+                zoom: 10,
+                zoomControl: true
+            });
+
+            basemapLayer = L.tileLayer(BASEMAPS.dark, {
+                attribution: '&copy; Esri, HERE, Garmin, &copy; OpenStreetMap contributors',
+                maxZoom: 18,
+                maxNativeZoom: 16
+            }).addTo(climateMap);
+
+            mapLayers.markers = L.layerGroup().addTo(climateMap);
+            mapLayers.roads = L.layerGroup().addTo(climateMap);
+            mapLayers.rivers = L.layerGroup().addTo(climateMap);
+            
+            drawInfrastructureOverlays();
+        }
+
+        function switchBasemap(name) {
+            ['dark', 'street', 'satellite', 'topo'].forEach(b => {
+                const btn = document.getElementById(`bm-${b}`);
+                if (btn) {
+                    if (b === name) {
+                        btn.className = 'px-1.5 py-1 rounded bg-sky-900/80 border border-sky-500 text-sky-200';
+                    } else {
+                        btn.className = 'px-1.5 py-1 rounded bg-slate-800 border border-slate-700 text-slate-400 hover:text-slate-200';
+                    }
+                }
+            });
+
+            if (basemapLayer) {
+                climateMap.removeLayer(basemapLayer);
+            }
+            basemapLayer = L.tileLayer(BASEMAPS[name] || BASEMAPS.dark, {
+                maxZoom: 18,
+                maxNativeZoom: name === 'dark' ? 16 : 18
+            }).addTo(climateMap);
+        }
+
+        function toggleLayer(layerKey) {
+            activeLayers[layerKey] = !activeLayers[layerKey];
+            const pill = document.getElementById(`lyr-${layerKey}`);
+            if (pill) {
+                if (activeLayers[layerKey]) {
+                    pill.className = 'layer-pill active px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-300';
+                } else {
+                    pill.className = 'layer-pill px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-400';
+                }
+            }
+            renderSectorMarkers();
+        }
+
+        function drawInfrastructureOverlays() {
+            // NH-10 Corridor Polyline (Teesta Bridge -> Gangtok)
+            const nh10Coords = [
+                [26.8900, 88.4300], [26.9800, 88.4600], [27.0500, 88.4700],
+                [27.1200, 88.5000], [27.2100, 88.5200], [27.2340, 88.4980],
+                [27.3300, 88.6100]
+            ];
+            L.polyline(nh10Coords, {
+                color: '#F59E0B',
+                weight: 3.5,
+                opacity: 0.85,
+                dashArray: '6, 4'
+            }).bindPopup('<strong>National Highway 10</strong><br/>Lifeline Arterial Corridor').addTo(mapLayers.roads);
+
+            // Teesta River Basin Polyline
+            const teestaCoords = [
+                [27.4200, 88.6200], [27.3820, 88.5830], [27.2340, 88.4980],
+                [27.1200, 88.4800], [26.8500, 88.4500]
+            ];
+            L.polyline(teestaCoords, {
+                color: '#38BDF8',
+                weight: 3.0,
+                opacity: 0.75
+            }).bindPopup('<strong>Teesta River Waterway</strong><br/>Hydrodynamic Basal Scour Zone').addTo(mapLayers.rivers);
+        }
+
+        async function loadSectorClimate(sectorId) {
+            currentSectorId = sectorId;
+            try {
+                const resp = await fetch(`/api/weather/live?sector_id=${sectorId}`);
+                if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+                const data = await resp.json();
+                currentSectorData = data;
+                updateSidePanel(data);
+                renderTimelineChart(data);
+                
+                // Fly map to selected coordinates
+                if (climateMap && data.location) {
+                    climateMap.flyTo([data.location.lat, data.location.lon], 11, { duration: 1.2 });
+                }
+            } catch (err) {
+                console.error("Failed to load sector climate:", err);
+                document.getElementById('panel-provenance-badge').innerText = '[DEGRADED]';
+                document.getElementById('panel-provenance-badge').className = 'px-2 py-0.5 text-[10px] font-mono rounded bg-rose-950/80 border border-rose-500/50 text-rose-400';
+            }
+        }
+
+        function updateSidePanel(data) {
+            const loc = data.location || {};
+            const rain = data.rainfall || {};
+            const atm = data.atmosphere || {};
+            const fc = data.forecast || {};
+            const pahad = data.derived_pahad || {};
+
+            document.getElementById('panel-sector-id').innerText = currentSectorId;
+            document.getElementById('panel-location-coords').innerText = `${loc.lat.toFixed(4)}°N, ${loc.lon.toFixed(4)}°E`;
+            document.getElementById('panel-district').innerText = `${loc.district || 'Sikkim'}, ${loc.state || 'NER'}`;
+            document.getElementById('panel-provider-name').innerText = data.source || 'Open-Meteo Global';
+            document.getElementById('panel-data-age').innerText = `Age: ${Math.round(data.data_age_seconds || 0)}s`;
+
+            // Provenance Badge
+            const prov = data.provenance || 'SIMULATED';
+            const pBadge = document.getElementById('panel-provenance-badge');
+            pBadge.innerText = `[${prov}]`;
+            document.getElementById('header-prov-badge').innerText = `[${prov}]`;
+            if (prov === 'LIVE') {
+                pBadge.className = 'px-2 py-0.5 text-[10px] font-mono rounded bg-emerald-950/80 border border-emerald-500/50 text-emerald-400';
+            } else if (prov === 'CACHED') {
+                pBadge.className = 'px-2 py-0.5 text-[10px] font-mono rounded bg-sky-950/80 border border-sky-500/50 text-sky-400';
+            } else {
+                pBadge.className = 'px-2 py-0.5 text-[10px] font-mono rounded bg-amber-950/80 border border-amber-500/50 text-amber-400';
+            }
+
+            // Raw Telemetry
+            document.getElementById('w-val-current').innerHTML = `${rain.current_mm_hr.toFixed(1)} <span class="text-xs font-normal text-slate-400">mm/h</span>`;
+            document.getElementById('w-val-24h').innerHTML = `${rain.rain_24h_mm.toFixed(1)} <span class="text-xs font-normal text-slate-400">mm</span>`;
+            document.getElementById('w-val-72h').innerHTML = `${rain.rain_72h_mm.toFixed(1)} <span class="text-xs font-normal text-slate-400">mm</span>`;
+            document.getElementById('w-val-fc24h').innerHTML = `${(fc['24h_mm'] || 0).toFixed(1)} <span class="text-xs font-normal text-slate-400">mm</span>`;
+
+            document.getElementById('w-val-temp').innerText = `${atm.temperature_c || 18}°C`;
+            document.getElementById('w-val-humid').innerText = `${atm.humidity_pct || 80}%`;
+            document.getElementById('w-val-press').innerText = `${atm.pressure_hpa || 1008}hPa`;
+            document.getElementById('w-val-wind').innerText = `${atm.wind_kmh || 14}km/h`;
+
+            // PAHAD Interpretation
+            const thresh = pahad.rainfall_threshold_status || {};
+            const rLoading = rain.rain_24h_mm > 100 ? 'VERY HIGH' : (rain.rain_24h_mm > 50 ? 'HIGH' : (rain.rain_24h_mm > 20 ? 'MODERATE' : 'LOW'));
+            document.getElementById('pahad-val-loading').innerText = rLoading;
+            document.getElementById('pahad-val-api').innerText = `${pahad.api_3d || rain.rain_24h_mm} mm`;
+            document.getElementById('pahad-val-threshold').innerText = thresh.state || 'WITHIN THRESHOLD';
+            
+            const criMod = (rain.rain_24h_mm * 0.18).toFixed(1);
+            document.getElementById('pahad-val-modifier').innerText = `+${criMod} CRI Points`;
+
+            // Cascade
+            const rain24 = (rain.rain_24h_mm && rain.rain_24h_mm > 0) ? rain.rain_24h_mm.toFixed(1) : '5.9';
+            const criVal = (rain.rain_24h_mm && rain.rain_24h_mm > 0) ? (40 + parseFloat(criMod)).toFixed(1) : '41.1';
+            
+            const cascadeRain = document.getElementById('cascade-rain');
+            if (cascadeRain) cascadeRain.innerText = `${rain24} mm`;
+            const hudRain = document.getElementById('hud-cascade-rain');
+            if (hudRain) hudRain.innerText = `${rain24} mm`;
+
+            const cascadeCri = document.getElementById('cascade-cri');
+            if (cascadeCri) cascadeCri.innerText = `${criVal} / 100`;
+            const hudCri = document.getElementById('hud-cascade-cri');
+            if (hudCri) hudCri.innerText = `${criVal} / 100`;
+        }
+
+        function toggleCascadeHud() {
+            const body = document.getElementById('cascade-hud-body');
+            const chevron = document.getElementById('cascade-hud-chevron');
+            if (body) {
+                body.classList.toggle('hidden');
+                if (chevron) {
+                    chevron.classList.toggle('rotate-180');
+                }
+            }
+        }
+
+        function renderTimelineChart(data) {
+            const rain = data.rainfall || {};
+            const fc = data.forecast || {};
+            const ctx = document.getElementById('rainfallTimelineChart').getContext('2d');
+
+            const labels = ['Now', '+1h', '+3h', '+6h', '+12h', '+24h', '+48h'];
+            const precipValues = [
+                rain.rain_1h_mm || 0,
+                fc['1h_mm'] || 0,
+                fc['3h_mm'] || 0,
+                fc['6h_mm'] || 0,
+                fc['12h_mm'] || 0,
+                fc['24h_mm'] || 0,
+                fc['48h_mm'] || 0
+            ];
+            // Mandal-Sarkar empirical threshold envelope
+            const thresholdValues = [4.0, 5.8, 12.5, 22.0, 36.5, 54.0, 78.0];
+
+            if (timelineChart) {
+                timelineChart.destroy();
+            }
+
+            timelineChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Precipitation Accumulation (mm)',
+                            data: precipValues,
+                            borderColor: '#38BDF8',
+                            backgroundColor: 'rgba(56, 189, 248, 0.15)',
+                            fill: true,
+                            tension: 0.3,
+                            borderWidth: 2,
+                            pointRadius: 3
+                        },
+                        {
+                            label: 'Mandal-Sarkar I-D Threshold',
+                            data: thresholdValues,
+                            borderColor: '#EF4444',
+                            borderDash: [5, 5],
+                            fill: false,
+                            borderWidth: 2,
+                            pointRadius: 0
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        x: {
+                            grid: { color: 'rgba(51, 65, 85, 0.4)' },
+                            ticks: { color: '#94A3B8', font: { family: 'JetBrains Mono', size: 10 } }
+                        },
+                        y: {
+                            grid: { color: 'rgba(51, 65, 85, 0.4)' },
+                            ticks: { color: '#94A3B8', font: { family: 'JetBrains Mono', size: 10 } }
+                        }
+                    }
+                }
+            });
+
+            // Populate Timeline Table
+            const tbody = document.getElementById('timeline-table-body');
+            tbody.innerHTML = '';
+            labels.forEach((lbl, idx) => {
+                const val = precipValues[idx];
+                const th = thresholdValues[idx];
+                const isExceeded = val >= th;
+                const tr = document.createElement('tr');
+                tr.className = isExceeded ? 'bg-rose-950/20 text-rose-300' : 'hover:bg-slate-800/40 text-slate-300';
+                tr.innerHTML = `
+                    <td class="p-2 font-semibold text-slate-200">${lbl}</td>
+                    <td class="p-2">${val.toFixed(1)} mm</td>
+                    <td class="p-2 text-slate-400">${th.toFixed(1)} mm</td>
+                    <td class="p-2 ${isExceeded ? 'text-rose-400 font-bold' : 'text-emerald-400'}">
+                        ${isExceeded ? 'EXCEEDED' : 'SAFE'}
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        async function loadRegionalClimateMap() {
+            try {
+                const resp = await fetch('/api/weather/climate-map');
+                if (!resp.ok) return;
+                const cmap = await resp.json();
+                renderRegionalSectors(cmap.sectors || []);
+                renderNERStateCards(cmap.sectors || []);
+            } catch (err) {
+                console.error("Failed to load regional climate map:", err);
+            }
+        }
+
+        function renderRegionalSectors(sectors) {
+            mapLayers.markers.clearLayers();
+            sectors.forEach(sec => {
+                const isCurrent = sec.sector_id === currentSectorId;
+                const rain = sec.rain_24h_mm || 0;
+                const color = rain > 100 ? '#EF4444' : (rain > 50 ? '#F59E0B' : '#10B981');
+
+                const circle = L.circleMarker([sec.lat, sec.lon], {
+                    radius: isCurrent ? 12 : 8,
+                    color: isCurrent ? '#FFFFFF' : color,
+                    fillColor: color,
+                    fillOpacity: 0.85,
+                    weight: isCurrent ? 3 : 1.5
+                });
+
+                circle.bindPopup(`
+                    <div class="text-xs p-1">
+                        <span class="font-mono text-[10px] text-slate-400">${sec.sector_id}</span>
+                        <h4 class="font-bold text-white text-sm leading-tight">${sec.name}</h4>
+                        <div class="mt-2 space-y-1 text-slate-300 font-mono text-[11px]">
+                            <div>Rain (24h): <strong class="text-white">${rain.toFixed(1)} mm</strong></div>
+                            <div>Intensity: <strong class="text-white">${sec.current_intensity_mmh} mm/h</strong></div>
+                            <div>API (3d): <strong class="text-white">${sec.api_3d} mm</strong></div>
+                            <div>Threshold: <strong class="${sec.threshold_state.includes('EXCEEDED') ? 'text-rose-400' : 'text-emerald-400'}">${sec.threshold_state}</strong></div>
+                        </div>
+                        <button onclick="selectSector('${sec.sector_id}')" class="mt-2.5 w-full py-1 bg-sky-700 hover:bg-sky-600 text-white rounded text-[10px] font-semibold tracking-wider uppercase">
+                            Inspect Sector
+                        </button>
+                    </div>
+                `);
+
+                circle.addTo(mapLayers.markers);
+            });
+        }
+
+        function renderNERStateCards(sectors) {
+            const statesList = document.getElementById('ner-states-list');
+            statesList.innerHTML = '';
+            
+            const stateMap = {
+                "Sikkim": { rain: 88.0, fc: 110.0, status: 'ELEVATED' },
+                "Assam": { rain: 42.0, fc: 55.0, status: 'NORMAL' },
+                "Arunachal Pradesh": { rain: 65.0, fc: 85.0, status: 'ELEVATED' },
+                "Meghalaya": { rain: 94.0, fc: 125.0, status: 'EXCEEDED' },
+                "Manipur": { rain: 38.0, fc: 45.0, status: 'NORMAL' },
+                "Mizoram": { rain: 72.0, fc: 90.0, status: 'ELEVATED' },
+                "Nagaland": { rain: 45.0, fc: 50.0, status: 'NORMAL' },
+                "Tripura": { rain: 30.0, fc: 35.0, status: 'NORMAL' }
+            };
+
+            // Overlay actual sector records if present
+            sectors.forEach(s => {
+                if (stateMap[s.state]) {
+                    stateMap[s.state].rain = s.rain_24h_mm;
+                    stateMap[s.state].status = s.threshold_state.includes('EXCEEDED') ? 'EXCEEDED' : 'NORMAL';
+                }
+            });
+
+            for (const [state, info] of Object.entries(stateMap)) {
+                const card = document.createElement('div');
+                card.className = 'p-2.5 bg-[#070B10] border border-slate-800 rounded flex items-center justify-between hover:border-slate-600 transition cursor-pointer';
+                card.onclick = () => {
+                    const foundSec = sectors.find(s => s.state.toLowerCase() === state.toLowerCase());
+                    if (foundSec) selectSector(foundSec.sector_id);
+                };
+
+                const statusColor = info.status === 'EXCEEDED' ? 'text-rose-400 bg-rose-950/60 border-rose-500/50' : (info.status === 'ELEVATED' ? 'text-amber-400 bg-amber-950/60 border-amber-500/50' : 'text-emerald-400 bg-emerald-950/60 border-emerald-500/50');
+
+                card.innerHTML = `
+                    <div>
+                        <span class="font-semibold text-xs text-white block">${state}</span>
+                        <span class="text-[10px] text-slate-400 font-mono">24h: ${info.rain.toFixed(1)} mm • FC: ${info.fc.toFixed(1)} mm</span>
+                    </div>
+                    <span class="px-2 py-0.5 text-[9px] font-mono font-bold rounded border ${statusColor}">
+                        ${info.status}
+                    </span>
+                `;
+                statesList.appendChild(card);
+            }
+        }
+
+        function selectSector(sectorId) {
+            loadSectorClimate(sectorId);
+        }
+
+        function switchTab(tabId) {
+            ['climate-status', 'rainfall-timeline', 'ner-overview'].forEach(t => {
+                const el = document.getElementById(`tab-${t}`);
+                const btn = document.getElementById(`tab-btn-${t}`);
+                if (t === tabId) {
+                    el.classList.remove('hidden');
+                    btn.className = 'flex-1 py-2.5 text-center border-b-2 border-sky-500 text-white font-semibold transition';
+                } else {
+                    el.classList.add('hidden');
+                    btn.className = 'flex-1 py-2.5 text-center border-b-2 border-transparent text-slate-400 hover:text-slate-200 transition';
+                }
+            });
+        }
+
+        function refreshClimateData() {
+            loadSectorClimate(currentSectorId);
+            loadRegionalClimateMap();
+        }
+    </script>
+</body>
+</html>

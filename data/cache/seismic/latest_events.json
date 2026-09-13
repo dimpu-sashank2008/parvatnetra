@@ -1,0 +1,24 @@
+{
+  "data": [
+    {
+      "event_id": "us7000tgq0",
+      "origin_time": "2026-09-11T17:56:20.821000+00:00",
+      "latitude": 26.3827,
+      "longitude": 96.6409,
+      "depth_km": 123.2,
+      "magnitude": 4.2,
+      "region": "25 km NW of Sarupathar, India",
+      "review_status": "REVIEWED",
+      "source": "USGS Earthquake Hazards Program",
+      "provenance": "LIVE"
+    }
+  ],
+  "fetched_at": 1789278227.3075154,
+  "ttl": 300,
+  "meta": {
+    "source": "USGS Earthquake Hazards Program",
+    "provenance": "[LIVE]",
+    "stored_at": "2026-09-13T05:43:47Z",
+    "ttl": 300
+  }
+}

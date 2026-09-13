@@ -1,0 +1,47 @@
+{
+  "partition": "VALIDATION",
+  "created_at": "2026-09-09T18:35:11.512422+00:00",
+  "sha256": "74a771c3c825ca9d4de1c54b3333af951ffa21fd7b0ad87e793e6eed8669db7c",
+  "total_samples": 33,
+  "event_count": 5,
+  "events": [
+    "EV-02",
+    "EV-05",
+    "EV-06",
+    "EV-09",
+    "EV-14"
+  ],
+  "control_count": 8,
+  "controls": [
+    "CTRL-09",
+    "CTRL-10",
+    "CTRL-11",
+    "CTRL-12",
+    "CTRL-13",
+    "CTRL-14",
+    "CTRL-19",
+    "CTRL-20"
+  ],
+  "date_range": {
+    "min": "2024-02-14T03:00:00Z",
+    "max": "2024-07-02T02:00:00Z"
+  },
+  "target_distribution": {
+    "target_6h": {
+      "positive": 5,
+      "negative": 28
+    },
+    "target_12h": {
+      "positive": 10,
+      "negative": 23
+    },
+    "target_24h": {
+      "positive": 15,
+      "negative": 18
+    },
+    "target_48h": {
+      "positive": 25,
+      "negative": 8
+    }
+  }
+}

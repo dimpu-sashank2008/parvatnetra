@@ -1,0 +1,817 @@
+{
+  "schema_version": "1.0.0",
+  "platform": "PARVAT NETRA / PAHAD Disaster Intelligence",
+  "offline_resilience_tier": "TIER_1_LOCAL_STORAGE_AND_EDGE",
+  "timestamp_cached": "2026-09-07T12:00:00Z",
+  "critical_sectors": [
+    {
+      "sector_id": "SK-NH10-KM48",
+      "name": "NH-10 Km 48 (29th Mile Sector)",
+      "state": "Sikkim",
+      "district": "Kalimpong-Sikkim Border",
+      "corridor": "National Highway 10",
+      "lat": 27.33,
+      "lon": 88.61,
+      "elevation_m": 485,
+      "geology": "Daling Group quartz-chlorite phyllites and schists",
+      "hazard_rating": "EXTREME",
+      "monitoring_tier": "TIER_1_REALTIME_IOT",
+      "instrumentation": [
+        "Piezometer",
+        "Inclinometer",
+        "CCTV",
+        "Rain Gauge"
+      ]
+    },
+    {
+      "sector_id": "SK-SINGTAM-01",
+      "name": "Singtam Teesta Basin Toe-Scour Zone",
+      "state": "Sikkim",
+      "district": "Gangtok",
+      "corridor": "NH-10 / Teesta River Gorge",
+      "lat": 27.234,
+      "lon": 88.498,
+      "elevation_m": 350,
+      "geology": "Daling quartzites and sheared fault gouge",
+      "hazard_rating": "VERY_HIGH",
+      "monitoring_tier": "TIER_1_REALTIME_IOT",
+      "instrumentation": [
+        "CWC Radar Gauge",
+        "Tiltmeter"
+      ]
+    },
+    {
+      "sector_id": "SK-DIKCHU-01",
+      "name": "Dikchu Hydro Sector Bluffs",
+      "state": "Sikkim",
+      "district": "North Sikkim",
+      "corridor": "North Sikkim Highway",
+      "lat": 27.382,
+      "lon": 88.583,
+      "elevation_m": 620,
+      "geology": "Biotite gneiss with steep dip slope",
+      "hazard_rating": "HIGH",
+      "monitoring_tier": "TIER_2_INSAR_PERIODIC",
+      "instrumentation": [
+        "InSAR Reflector",
+        "Rain Gauge"
+      ]
+    },
+    {
+      "sector_id": "SK-MANGAN-01",
+      "name": "Mangan Relict Landslide Complex",
+      "state": "Sikkim",
+      "district": "Mangan",
+      "corridor": "Mangan-Chungthang Road",
+      "lat": 27.502,
+      "lon": 88.528,
+      "elevation_m": 950,
+      "geology": "Chungthang Formation calc-silicates and marbles",
+      "hazard_rating": "VERY_HIGH",
+      "monitoring_tier": "TIER_1_REALTIME_IOT",
+      "instrumentation": [
+        "Extensometer",
+        "Inclinometer"
+      ]
+    },
+    {
+      "sector_id": "MZ-HUNTHAR-01",
+      "name": "Aizawl NH-6 Hunthar Veng Slump",
+      "state": "Mizoram",
+      "district": "Aizawl",
+      "corridor": "NH-06 / Western Arterial",
+      "lat": 23.742,
+      "lon": 92.708,
+      "elevation_m": 880,
+      "geology": "Surma Group interbedded siltstone and fissile clay",
+      "hazard_rating": "EXTREME",
+      "monitoring_tier": "TIER_1_REALTIME_IOT",
+      "instrumentation": [
+        "Borehole Piezometer",
+        "GNSS Station"
+      ]
+    },
+    {
+      "sector_id": "MZ-SAIRANG-01",
+      "name": "Sairang Railway Terminal Ridge",
+      "state": "Mizoram",
+      "district": "Aizawl",
+      "corridor": "Bairabi-Sairang Rail Spur",
+      "lat": 23.805,
+      "lon": 92.659,
+      "elevation_m": 420,
+      "geology": "Tipam sandstone with thick residual overburden",
+      "hazard_rating": "HIGH",
+      "monitoring_tier": "TIER_2_INSAR_PERIODIC",
+      "instrumentation": [
+        "Corner Reflectors",
+        "Tension Crack Gauges"
+      ]
+    },
+    {
+      "sector_id": "MZ-KOLASIB-01",
+      "name": "Kolasib Sinking Carriageway",
+      "state": "Mizoram",
+      "district": "Kolasib",
+      "corridor": "NH-306 Silchar-Aizawl Link",
+      "lat": 24.225,
+      "lon": 92.678,
+      "elevation_m": 590,
+      "geology": "Upper Bhuban sandstone and siltstone",
+      "hazard_rating": "VERY_HIGH",
+      "monitoring_tier": "TIER_2_INSAR_PERIODIC",
+      "instrumentation": [
+        "Rain Gauge",
+        "Tiltmeter"
+      ]
+    },
+    {
+      "sector_id": "NL-PAGALA-01",
+      "name": "Kohima NH-29 Pagala Pahar",
+      "state": "Nagaland",
+      "district": "Kohima",
+      "corridor": "NH-29 Dimapur-Kohima Lifeline",
+      "lat": 25.688,
+      "lon": 93.985,
+      "elevation_m": 1240,
+      "geology": "Disang Group intensely crushed splintery shale",
+      "hazard_rating": "EXTREME",
+      "monitoring_tier": "TIER_1_REALTIME_IOT",
+      "instrumentation": [
+        "InSAR Corner Reflectors",
+        "Inclinometer",
+        "CCTV"
+      ]
+    },
+    {
+      "sector_id": "NL-DZUDZA-01",
+      "name": "Dzüdza River Bridge Bluffs",
+      "state": "Nagaland",
+      "district": "Kohima",
+      "corridor": "NH-29 Km 15",
+      "lat": 25.67,
+      "lon": 94.02,
+      "elevation_m": 1100,
+      "geology": "Barail massive sandstone overlying weak Disang shales",
+      "hazard_rating": "VERY_HIGH",
+      "monitoring_tier": "TIER_1_REALTIME_IOT",
+      "instrumentation": [
+        "Tiltmeter",
+        "Crack Aperture Sensors"
+      ]
+    },
+    {
+      "sector_id": "NL-PIPHEMA-01",
+      "name": "Piphema Sinking Zone",
+      "state": "Nagaland",
+      "district": "Chümoukedima",
+      "corridor": "NH-29",
+      "lat": 25.756,
+      "lon": 93.912,
+      "elevation_m": 680,
+      "geology": "Disang shale colluvium with high clay fraction",
+      "hazard_rating": "HIGH",
+      "monitoring_tier": "TIER_2_INSAR_PERIODIC",
+      "instrumentation": [
+        "Rain Gauge",
+        "Pore Pressure Transducer"
+      ]
+    },
+    {
+      "sector_id": "AR-BHALUK-01",
+      "name": "Bhalukpong-Tawang Axis Km 32",
+      "state": "Arunachal Pradesh",
+      "district": "West Kameng",
+      "corridor": "Tawang Strategic Highway",
+      "lat": 27.012,
+      "lon": 92.645,
+      "elevation_m": 840,
+      "geology": "Siwalik sandstones and Main Boundary Thrust (MBT) shear",
+      "hazard_rating": "EXTREME",
+      "monitoring_tier": "TIER_1_REALTIME_IOT",
+      "instrumentation": [
+        "BRO Geo-Sensors",
+        "Automated Weather Station"
+      ]
+    },
+    {
+      "sector_id": "AR-PASIGHAT-01",
+      "name": "Pasighat Siang River Scour Escarpment",
+      "state": "Arunachal Pradesh",
+      "district": "East Siang",
+      "corridor": "NH-515 / Siang Valley",
+      "lat": 28.067,
+      "lon": 95.326,
+      "elevation_m": 155,
+      "geology": "Unconsolidated river terraces and boulder gravels",
+      "hazard_rating": "VERY_HIGH",
+      "monitoring_tier": "TIER_1_REALTIME_IOT",
+      "instrumentation": [
+        "Hydrometric Radar",
+        "Drone Survey Targets"
+      ]
+    },
+    {
+      "sector_id": "AR-SELA-01",
+      "name": "Sela Pass North Approach Km 8",
+      "state": "Arunachal Pradesh",
+      "district": "Tawang",
+      "corridor": "NH-13",
+      "lat": 27.505,
+      "lon": 92.102,
+      "elevation_m": 3950,
+      "geology": "Permafrost-degraded granitic gneiss and moraine scree",
+      "hazard_rating": "HIGH",
+      "monitoring_tier": "TIER_2_INSAR_PERIODIC",
+      "instrumentation": [
+        "Temperature Sensors",
+        "GNSS Rover"
+      ]
+    },
+    {
+      "sector_id": "MN-TUPUL-01",
+      "name": "Noney Tupul Railway Corridor",
+      "state": "Manipur",
+      "district": "Noney",
+      "corridor": "Jiribam-Imphal Railway",
+      "lat": 24.818,
+      "lon": 93.635,
+      "elevation_m": 540,
+      "geology": "Disang flysch formation sheared claystone and siltstone",
+      "hazard_rating": "EXTREME",
+      "monitoring_tier": "TIER_1_REALTIME_IOT",
+      "instrumentation": [
+        "InSAR In-situ Station",
+        "Piezometers",
+        "Tiltmeters"
+      ]
+    },
+    {
+      "sector_id": "MN-JIRIBAM-01",
+      "name": "Imphal-Jiribam NH-37 Km 78",
+      "state": "Manipur",
+      "district": "Tamenglong",
+      "corridor": "NH-37 Lifeline",
+      "lat": 24.802,
+      "lon": 93.421,
+      "elevation_m": 610,
+      "geology": "Barail Formation layered shale and sandstone",
+      "hazard_rating": "VERY_HIGH",
+      "monitoring_tier": "TIER_2_INSAR_PERIODIC",
+      "instrumentation": [
+        "Automated Rain Gauge",
+        "Crackmeter"
+      ]
+    },
+    {
+      "sector_id": "ML-SONAPUR-01",
+      "name": "Sonapur Tunnel NH-06",
+      "state": "Meghalaya",
+      "district": "East Jaintia Hills",
+      "corridor": "NH-06 Barak Valley Lifeline",
+      "lat": 25.105,
+      "lon": 92.362,
+      "elevation_m": 310,
+      "geology": "Barail sandstone with interbedded coal and shale seams",
+      "hazard_rating": "EXTREME",
+      "monitoring_tier": "TIER_1_REALTIME_IOT",
+      "instrumentation": [
+        "CCTV Camera",
+        "InSAR Reflector",
+        "Water Level Radar"
+      ]
+    },
+    {
+      "sector_id": "ML-CHERRA-01",
+      "name": "Cherrapunji South Escarpment",
+      "state": "Meghalaya",
+      "district": "East Khasi Hills",
+      "corridor": "Sohra-Shella Corridor",
+      "lat": 25.275,
+      "lon": 91.732,
+      "elevation_m": 1280,
+      "geology": "Karstified Sylhet limestone and Therria sandstone",
+      "hazard_rating": "HIGH",
+      "monitoring_tier": "TIER_2_INSAR_PERIODIC",
+      "instrumentation": [
+        "Pluviometer",
+        "Seismic Micro-tremor"
+      ]
+    },
+    {
+      "sector_id": "AS-DIMA-01",
+      "name": "Dima Hasao Hill Railway Corridor Km 42",
+      "state": "Assam",
+      "district": "Dima Hasao",
+      "corridor": "Lumding-Badarpur Hill Section",
+      "lat": 25.178,
+      "lon": 93.023,
+      "elevation_m": 480,
+      "geology": "Surma Group unconsolidated argillaceous sediments",
+      "hazard_rating": "EXTREME",
+      "monitoring_tier": "TIER_1_REALTIME_IOT",
+      "instrumentation": [
+        "Track Inclinometer",
+        "Borehole Piezometer"
+      ]
+    },
+    {
+      "sector_id": "AS-GUWAHATI-01",
+      "name": "Guwahati Narakasur Hills",
+      "state": "Assam",
+      "district": "Kamrup Metropolitan",
+      "corridor": "Guwahati Urban Rim",
+      "lat": 26.142,
+      "lon": 91.776,
+      "elevation_m": 190,
+      "geology": "Precambrian granite gneiss with deeply weathered saprolite",
+      "hazard_rating": "HIGH",
+      "monitoring_tier": "TIER_2_INSAR_PERIODIC",
+      "instrumentation": [
+        "Urban Rain Gauge",
+        "Tension Wire Sensor"
+      ]
+    },
+    {
+      "sector_id": "TR-BARAMURA-01",
+      "name": "Baramura Hill Range NH-08",
+      "state": "Tripura",
+      "district": "Khowai",
+      "corridor": "NH-08 National Corridor",
+      "lat": 23.882,
+      "lon": 91.564,
+      "elevation_m": 260,
+      "geology": "Bhuban Formation folded anticlinal shale-sandstone",
+      "hazard_rating": "HIGH",
+      "monitoring_tier": "TIER_2_INSAR_PERIODIC",
+      "instrumentation": [
+        "Rain Gauge",
+        "Tiltmeter"
+      ]
+    }
+  ],
+  "monitored_corridors": [
+    {
+      "corridor_id": "SK-NH10",
+      "name": "NH-10 (Siliguri – Gangtok Lifeline)",
+      "state": "Sikkim",
+      "status": "SEVERED_BLOCKED",
+      "blockage_point": "Km 48 (29th Mile Sector)",
+      "blockage_cause": "High precipitation pore pressure and Teesta River toe scour",
+      "affected_length_km": 4.2,
+      "traffic_impact": "CRITICAL_LIFELINE_ISOLATION",
+      "jurisdiction": "BRO Project Swastik / Sikkim PWD"
+    },
+    {
+      "corridor_id": "SK-NSH",
+      "name": "North Sikkim Highway (Mangan – Chungthang)",
+      "state": "Sikkim",
+      "status": "SEVERED_BLOCKED",
+      "blockage_point": "Dikchu-Sankalang Sector",
+      "blockage_cause": "Debris flow across multiple hairpin turns",
+      "affected_length_km": 6.8,
+      "traffic_impact": "DISTRICT_HQ_ISOLATION",
+      "jurisdiction": "BRO Project Swastik"
+    },
+    {
+      "corridor_id": "NL-NH29",
+      "name": "NH-29 (Dimapur – Kohima – Mao Gate)",
+      "state": "Nagaland",
+      "status": "SEVERED_BLOCKED",
+      "blockage_point": "Pagala Pahar / Dzüdza River Bridge Bluffs",
+      "blockage_cause": "Rotational slip in crushed Disang shales",
+      "affected_length_km": 3.5,
+      "traffic_impact": "STATE_CAPITAL_FREIGHT_DISRUPTION",
+      "jurisdiction": "BRO Project Sewak / Nagaland PWD"
+    },
+    {
+      "corridor_id": "ML-NH06",
+      "name": "NH-06 (Shillong – Silchar via Sonapur Tunnel)",
+      "state": "Meghalaya",
+      "status": "SEVERED_BLOCKED",
+      "blockage_point": "Sonapur Tunnel Portal Approach",
+      "blockage_cause": "Heavy mudflow blocking tunnel entrance portal",
+      "affected_length_km": 1.8,
+      "traffic_impact": "BARAK_VALLEY_SUPPLY_SEVERED",
+      "jurisdiction": "NHIDCL / Meghalaya PWD"
+    },
+    {
+      "corridor_id": "MZ-NH06",
+      "name": "NH-06 (Silchar – Aizawl via Hunthar)",
+      "state": "Mizoram",
+      "status": "SEVERED_BLOCKED",
+      "blockage_point": "Hunthar Veng Slump Zone",
+      "blockage_cause": "Deep translational creep in Surma siltstone",
+      "affected_length_km": 2.1,
+      "traffic_impact": "AIZAWL_WESTERN_ARTERIAL_CLOSURE",
+      "jurisdiction": "BRO Project Pushpak / Mizoram PWD"
+    },
+    {
+      "corridor_id": "AR-NH13",
+      "name": "NH-13 (Trans-Arunachal Highway / Balipara – Tawang Axis)",
+      "state": "Arunachal Pradesh",
+      "status": "SEVERED_BLOCKED",
+      "blockage_point": "Bhalukpong Km 32 & Sela Pass Approaches",
+      "blockage_cause": "Rockfall and scree avalanches",
+      "affected_length_km": 5.4,
+      "traffic_impact": "STRATEGIC_DEFENCE_LINE_DISRUPTED",
+      "jurisdiction": "BRO Project Vartak"
+    },
+    {
+      "corridor_id": "MN-NH37",
+      "name": "NH-37 (Imphal – Jiribam via Tupul Corridor)",
+      "state": "Manipur",
+      "status": "SEVERED_BLOCKED",
+      "blockage_point": "Noney Tupul Sector Km 78",
+      "blockage_cause": "Slope toe failure along railway cutting",
+      "affected_length_km": 3.0,
+      "traffic_impact": "INTERSTATE_ESSENTIALS_SUPPLY_HALTED",
+      "jurisdiction": "BRO Project Sewak / Manipur PWD"
+    }
+  ],
+  "bypass_routes": {
+    "SK-NH10": [
+      {
+        "route_id": "BYP-SK-01",
+        "name": "Lava - Gorubathan Axis",
+        "via": "Damdim - Gorubathan - Lava - Algarah - Rangpo",
+        "max_gvw_tons": 45.0,
+        "surface_type": "All-Weather Double-Lane Asphalt",
+        "status": "PASSABLE",
+        "delay_minutes": 140,
+        "distance_km": 112.0,
+        "allowed_vehicle_types": [
+          "Heavy Freight Multi-Axle Trucks",
+          "Buses",
+          "Emergency Vehicles",
+          "Light Vehicles"
+        ],
+        "patrol_unit": "BRO Project Swastik Heavy Traffic Escort"
+      },
+      {
+        "route_id": "BYP-SK-02",
+        "name": "Mungpoo - Jorebunglow Route",
+        "via": "Rambhi - Mungpoo - 3rd Mile - Jorebunglow - Teesta Valley",
+        "max_gvw_tons": 18.5,
+        "surface_type": "Single-Lane Intermediate Paved",
+        "status": "RESTRICTED",
+        "delay_minutes": 95,
+        "distance_km": 84.0,
+        "allowed_vehicle_types": [
+          "Medium Duty Trucks (<= 18.5T)",
+          "Mini Buses",
+          "Emergency Ambulances",
+          "Light Vehicles"
+        ],
+        "patrol_unit": "Kalimpong Traffic Police Station"
+      },
+      {
+        "route_id": "BYP-SK-03",
+        "name": "Teesta Bazar - Peshok",
+        "via": "Teesta Bazar - Peshok Tea Garden - Jorebunglow",
+        "max_gvw_tons": 3.5,
+        "surface_type": "Steep Hairpin Mountain Track",
+        "status": "CAUTION",
+        "delay_minutes": 60,
+        "distance_km": 62.0,
+        "allowed_vehicle_types": [
+          "Emergency Medical Services (EMS)",
+          "Light Civilian Cars (< 3.5T)"
+        ],
+        "patrol_unit": "Darjeeling Hill Disaster Cell"
+      }
+    ],
+    "SK-NSH": [
+      {
+        "route_id": "BYP-NSH-01",
+        "name": "Dikchu - Sankalang Bailey Bridge Link",
+        "via": "Dikchu - Lingdong - Sankalang",
+        "max_gvw_tons": 12.0,
+        "surface_type": "Single-Lane Bailey Bridge Corridor",
+        "status": "RESTRICTED",
+        "delay_minutes": 180,
+        "distance_km": 78.0,
+        "allowed_vehicle_types": [
+          "Light/Medium Supply Trucks (<= 12T)",
+          "Emergency Convoys"
+        ],
+        "patrol_unit": "BRO 86 RCC / ITBP"
+      }
+    ],
+    "NL-NH29": [
+      {
+        "route_id": "BYP-NL-01",
+        "name": "Niuland - Kohima Heavy Bypass Axis",
+        "via": "Niuland - Ghaspani - Zhadima - Kohima North",
+        "max_gvw_tons": 35.0,
+        "surface_type": "Double-Lane Upgraded Asphalt",
+        "status": "PASSABLE",
+        "delay_minutes": 110,
+        "distance_km": 96.0,
+        "allowed_vehicle_types": [
+          "Heavy Freight Trucks (<= 35T)",
+          "Buses",
+          "Emergency Vehicles"
+        ],
+        "patrol_unit": "BRO Project Sewak Patrol Unit"
+      },
+      {
+        "route_id": "BYP-NL-02",
+        "name": "Zhadima - Peducha Link Route",
+        "via": "Peducha - Tsiesema - Zhadima",
+        "max_gvw_tons": 15.0,
+        "surface_type": "Single-Lane Macadam",
+        "status": "RESTRICTED",
+        "delay_minutes": 75,
+        "distance_km": 68.0,
+        "allowed_vehicle_types": [
+          "Medium Trucks (<= 15T)",
+          "Light Motor Vehicles"
+        ],
+        "patrol_unit": "Kohima District Police"
+      }
+    ],
+    "ML-NH06": [
+      {
+        "route_id": "BYP-ML-01",
+        "name": "Umkiang - Rymbai Heavy Haul Bypass",
+        "via": "Rymbai - Sutnga - Saipung - Umkiang",
+        "max_gvw_tons": 42.0,
+        "surface_type": "Heavy Mineral Transport Corridor",
+        "status": "PASSABLE",
+        "delay_minutes": 130,
+        "distance_km": 118.0,
+        "allowed_vehicle_types": [
+          "Multi-Axle Petroleum & Food Tankers",
+          "Heavy Freight",
+          "Buses"
+        ],
+        "patrol_unit": "Meghalaya Police Highway Patrol"
+      },
+      {
+        "route_id": "BYP-ML-02",
+        "name": "Khliehriat - Sutnga Rural Arterial",
+        "via": "Khliehriat Bypass - Sutnga Ridge",
+        "max_gvw_tons": 16.0,
+        "surface_type": "Intermediate Single Lane",
+        "status": "RESTRICTED",
+        "delay_minutes": 85,
+        "distance_km": 74.0,
+        "allowed_vehicle_types": [
+          "Medium Freight (<= 16T)",
+          "Light Passenger Vehicles"
+        ],
+        "patrol_unit": "East Jaintia Hills SDRF Post"
+      }
+    ],
+    "MZ-NH06": [
+      {
+        "route_id": "BYP-MZ-01",
+        "name": "Bhairabi - Sairang Freight Route",
+        "via": "Bhairabi - Kolasib - Sairang",
+        "max_gvw_tons": 40.0,
+        "surface_type": "Railway Allied Heavy Corridor",
+        "status": "PASSABLE",
+        "delay_minutes": 120,
+        "distance_km": 104.0,
+        "allowed_vehicle_types": [
+          "Heavy Freight Goods Trucks",
+          "Supply Convoys"
+        ],
+        "patrol_unit": "BRO Project Pushpak Command"
+      },
+      {
+        "route_id": "BYP-MZ-02",
+        "name": "Durtlang - Zemabawk Inner Link",
+        "via": "Durtlang North - Zemabawk Arterial",
+        "max_gvw_tons": 7.5,
+        "surface_type": "Steep Urban Link",
+        "status": "RESTRICTED",
+        "delay_minutes": 50,
+        "distance_km": 42.0,
+        "allowed_vehicle_types": [
+          "Light Ambulances",
+          "Passenger Cars (< 7.5T)"
+        ],
+        "patrol_unit": "Aizawl City Police Control"
+      }
+    ],
+    "AR-NH13": [
+      {
+        "route_id": "BYP-AR-01",
+        "name": "OKSRT Axis (Orang - Kalaktang - Shergaon - Rupa - Tenga)",
+        "via": "Orang - Rowta - Kalaktang - Rupa - Tenga Valley",
+        "max_gvw_tons": 45.0,
+        "surface_type": "National Strategic Double-Lane Highway",
+        "status": "PASSABLE",
+        "delay_minutes": 150,
+        "distance_km": 135.0,
+        "allowed_vehicle_types": [
+          "Heavy Military & Freight Convoys",
+          "Buses",
+          "Emergency Vehicles"
+        ],
+        "patrol_unit": "BRO Project Vartak Heavy Regt"
+      }
+    ],
+    "MN-NH37": [
+      {
+        "route_id": "BYP-MN-01",
+        "name": "Old Cachar Road Axis",
+        "via": "Jiribam - Khongsang - Noney Old Axis",
+        "max_gvw_tons": 22.0,
+        "surface_type": "Upgraded Single Lane Bituminous",
+        "status": "RESTRICTED",
+        "delay_minutes": 160,
+        "distance_km": 128.0,
+        "allowed_vehicle_types": [
+          "Medium Trucks (<= 22T)",
+          "Emergency Convoys"
+        ],
+        "patrol_unit": "Manipur Highway Security Force"
+      }
+    ]
+  },
+  "emergency_shelters": [
+    {
+      "shelter_id": "SHL-SK-01",
+      "name": "Rangpo Indoor Mining Stadium Relief Hub",
+      "state": "Sikkim",
+      "district": "Pakyong",
+      "lat": 27.178,
+      "lon": 88.529,
+      "capacity_people": 1200,
+      "medical_readiness": "LEVEL_2_TRAUMA_STATION",
+      "has_helipad": true,
+      "satellite_phone": "+91-3592-240112",
+      "contact_officer": "SDRF Sub-Divisional Officer, Rangpo"
+    },
+    {
+      "shelter_id": "SHL-SK-02",
+      "name": "Melli Ground Central Evacuation Camp",
+      "state": "Sikkim",
+      "district": "Namchi",
+      "lat": 27.098,
+      "lon": 88.461,
+      "capacity_people": 850,
+      "medical_readiness": "FIRST_AID_TRIAGE",
+      "has_helipad": false,
+      "satellite_phone": "+91-3592-248901",
+      "contact_officer": "District Relief Commissioner"
+    },
+    {
+      "shelter_id": "SHL-SK-03",
+      "name": "Singtam Community Hall & Emergency Base",
+      "state": "Sikkim",
+      "district": "Gangtok",
+      "lat": 27.234,
+      "lon": 88.498,
+      "capacity_people": 650,
+      "medical_readiness": "MOBILE_MEDICAL_UNIT",
+      "has_helipad": false,
+      "satellite_phone": "+91-3592-234551",
+      "contact_officer": "Singtam Municipal Officer"
+    },
+    {
+      "shelter_id": "SHL-SK-04",
+      "name": "Gangtok Paljor Stadium Emergency Headquarters",
+      "state": "Sikkim",
+      "district": "Gangtok",
+      "lat": 27.332,
+      "lon": 88.614,
+      "capacity_people": 3500,
+      "medical_readiness": "FULL_SURGICAL_HOSPITAL",
+      "has_helipad": true,
+      "satellite_phone": "+91-3592-202244",
+      "contact_officer": "State Disaster Response Commissioner"
+    },
+    {
+      "shelter_id": "SHL-MZ-01",
+      "name": "Aizawl Hawla Indoor Stadium Relief Base",
+      "state": "Mizoram",
+      "district": "Aizawl",
+      "lat": 23.738,
+      "lon": 92.715,
+      "capacity_people": 2000,
+      "medical_readiness": "DISTRICT_TRAUMA_CENTRE",
+      "has_helipad": true,
+      "satellite_phone": "+91-389-2342111",
+      "contact_officer": "Mizoram Disaster Management Authority"
+    },
+    {
+      "shelter_id": "SHL-NL-01",
+      "name": "Kohima Local Ground Emergency Relief Staging Base",
+      "state": "Nagaland",
+      "district": "Kohima",
+      "lat": 25.669,
+      "lon": 94.108,
+      "capacity_people": 2500,
+      "medical_readiness": "ARMY_BASE_HOSPITAL",
+      "has_helipad": true,
+      "satellite_phone": "+91-3862-248102",
+      "contact_officer": "Nagaland State Emergency Operations Centre"
+    },
+    {
+      "shelter_id": "SHL-ML-01",
+      "name": "Shillong JN Stadium Evacuation Centre",
+      "state": "Meghalaya",
+      "district": "East Khasi Hills",
+      "lat": 25.578,
+      "lon": 91.892,
+      "capacity_people": 3000,
+      "medical_readiness": "NEIGRIHMS_TRIAGE",
+      "has_helipad": true,
+      "satellite_phone": "+91-364-2224010",
+      "contact_officer": "Meghalaya SDRF Battalion Commander"
+    },
+    {
+      "shelter_id": "SHL-MN-01",
+      "name": "Noney Tupul Railway Relief Complex",
+      "state": "Manipur",
+      "district": "Noney",
+      "lat": 24.815,
+      "lon": 93.632,
+      "capacity_people": 1500,
+      "medical_readiness": "MILITARY_FIELD_HOSPITAL",
+      "has_helipad": true,
+      "satellite_phone": "+91-385-2451101",
+      "contact_officer": "Assam Rifles / SDRF Field Officer"
+    },
+    {
+      "shelter_id": "SHL-AR-01",
+      "name": "Tawang High-Altitude Evacuation Compound",
+      "state": "Arunachal Pradesh",
+      "district": "Tawang",
+      "lat": 27.586,
+      "lon": 91.865,
+      "capacity_people": 1000,
+      "medical_readiness": "ARMY_CIVIL_JOINT_AID",
+      "has_helipad": true,
+      "satellite_phone": "+91-3794-222220",
+      "contact_officer": "District Disaster Management Officer"
+    },
+    {
+      "shelter_id": "SHL-AS-01",
+      "name": "Silchar District Sports Stadium Hub",
+      "state": "Assam",
+      "district": "Cachar",
+      "lat": 24.825,
+      "lon": 92.795,
+      "capacity_people": 4000,
+      "medical_readiness": "REGIONAL_DISASTER_HUB",
+      "has_helipad": true,
+      "satellite_phone": "+91-3842-230015",
+      "contact_officer": "Cachar District Emergency Officer"
+    }
+  ],
+  "emergency_contacts": {
+    "ndrf_control_room_24x7": {
+      "organization": "National Disaster Response Force (NDRF) HQ",
+      "toll_free": "1078",
+      "phone": "+91-11-24363260",
+      "satellite": "+870-772-NDRF-01",
+      "hq": "New Delhi / NER Bns (Guwahati, Aizawl, Kohima)"
+    },
+    "bro_swastik_dispatch": {
+      "organization": "Border Roads Organisation Project Swastik (Sikkim & Kalimpong)",
+      "phone": "+91-3592-202244",
+      "vhf_frequency": "142.850 MHz",
+      "duty_officer": "Superintending Engineer (Works), Gangtok"
+    },
+    "bro_sewak_dispatch": {
+      "organization": "Border Roads Organisation Project Sewak (Nagaland & Manipur)",
+      "phone": "+91-3862-248102",
+      "duty_officer": "Commander 15 BRTF, Dimapur"
+    },
+    "bro_pushpak_dispatch": {
+      "organization": "Border Roads Organisation Project Pushpak (Mizoram)",
+      "phone": "+91-389-2342111",
+      "duty_officer": "Commander 23 BRTF, Zemabawk Aizawl"
+    },
+    "bro_vartak_dispatch": {
+      "organization": "Border Roads Organisation Project Vartak (Arunachal Pradesh - Tawang Axis)",
+      "phone": "+91-3782-222240",
+      "duty_officer": "Commander 14 BRTF, Tezpur-Bhalukpong"
+    },
+    "sikkim_sdma_emergency_ops": {
+      "organization": "Sikkim State Disaster Management Authority (SSDMA)",
+      "helpline": "1070 / 1077",
+      "control_room": "+91-3592-201075"
+    },
+    "mizoram_disaster_management": {
+      "organization": "Disaster Management & Rehabilitation Department Mizoram",
+      "helpline": "1070",
+      "control_room": "+91-389-2319207"
+    },
+    "meghalaya_state_eoc": {
+      "organization": "Meghalaya State Emergency Operations Centre",
+      "helpline": "1070",
+      "control_room": "+91-364-2502098"
+    },
+    "nagaland_nsdma_helpline": {
+      "organization": "Nagaland State Disaster Management Authority",
+      "helpline": "1070",
+      "control_room": "+91-370-2270050"
+    }
+  }
+}

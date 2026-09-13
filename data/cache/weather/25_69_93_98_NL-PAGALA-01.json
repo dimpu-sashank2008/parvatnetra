@@ -1,0 +1,88 @@
+{
+  "data": {
+    "timestamp": "2026-09-13T05:21:06.326773+00:00",
+    "location": {
+      "lat": 25.688,
+      "lon": 93.985,
+      "district": "Kohima",
+      "state": "Nagaland"
+    },
+    "rainfall": {
+      "current_mm_hr": 1.5,
+      "rain_1h_mm": 3.1,
+      "rain_6h_mm": 6.2,
+      "rain_24h_mm": 24.1,
+      "rain_72h_mm": 32.4
+    },
+    "forecast": {
+      "1h_mm": 1.1,
+      "3h_mm": 2.3,
+      "6h_mm": 3.1,
+      "12h_mm": 13.9,
+      "24h_mm": 21.0,
+      "48h_mm": 23.1,
+      "hourly_trend": [
+        3.1,
+        1.1,
+        0.7,
+        0.5,
+        0.2,
+        0.6,
+        0.0,
+        0.1,
+        0.2,
+        0.6,
+        1.2,
+        6.1,
+        2.6,
+        3.4,
+        1.7,
+        1.5,
+        0.4,
+        0.1,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "atmosphere": {
+      "temperature_c": 19.1,
+      "humidity_pct": 88.0,
+      "pressure_hpa": 810.0,
+      "wind_kmh": 2.7,
+      "cloud_pct": 100.0
+    },
+    "derived_pahad": {
+      "antecedent_rainfall": 32.4,
+      "api_3d": 30.51,
+      "api_7d": 37.08,
+      "api_30d": 41.96,
+      "rainfall_intensity_duration_state": "APPROACHING_THRESHOLD",
+      "rainfall_threshold_status": {
+        "id_threshold_mm_hr": 1.828,
+        "ed_threshold_mm": 43.872,
+        "intensity_mm_hr": 1.5,
+        "duration_hours": 24.0,
+        "exceedance_ratio": 0.821,
+        "threshold_exceeded": false,
+        "state": "APPROACHING_THRESHOLD"
+      },
+      "forecast_rainfall_loading": 0.175
+    },
+    "source": "Open-Meteo Global Forecasting",
+    "provenance": "LIVE",
+    "last_successful_fetch": "2026-09-13T05:21:06.326773+00:00",
+    "data_age_seconds": 0.0
+  },
+  "fetched_at": 1789276867.2140799,
+  "ttl": 900,
+  "meta": {
+    "source": "Open-Meteo Global Forecasting",
+    "provenance": "[LIVE]",
+    "stored_at": "2026-09-13T05:21:07Z",
+    "ttl": 900
+  }
+}

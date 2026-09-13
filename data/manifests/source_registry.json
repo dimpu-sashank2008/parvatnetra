@@ -1,0 +1,110 @@
+{
+  "registry_version": "1.0.0",
+  "updated_at": "2026-09-09T16:45:00Z",
+  "sources": [
+    {
+      "source_id": "SRC-GSI-NLSM",
+      "source": "GSI NLSM Landslide Susceptibility & Inventory",
+      "provider": "Geological Survey of India (GSI), Ministry of Mines",
+      "dataset": "National Landslide Susceptibility Mapping (NLSM) 1:10,000 Scale",
+      "coverage": "North-Eastern Region (Sikkim, Manipur, Mizoram, Assam, Meghalaya, Nagaland, Arunachal Pradesh, Tripura)",
+      "resolution": "1:10,000 Vector Polygons & Points",
+      "retrieved_at": "2026-09-01T00:00:00Z",
+      "license": "Government of India Open Data / Official Disaster Inventory",
+      "url": "https://www.gsi.gov.in/webcenter/portal/OCBIS/pageNLFC",
+      "status": "historical",
+      "notes": "Primary ground truth for historical landslide occurrences, recurrence frequency, and intrinsic morphological predisposition."
+    },
+    {
+      "source_id": "SRC-ISRO-NRSC",
+      "source": "ISRO NRSC Landslide Atlas of India",
+      "provider": "National Remote Sensing Centre (NRSC) / ISRO, Department of Space",
+      "dataset": "Landslide Atlas of India & Bhoonidhi Remote Sensing Portal",
+      "coverage": "All 8 NER Himalayan States",
+      "resolution": "High-Resolution Satellite Damage Mapping (Cartosat, RISAT, Sentinel)",
+      "retrieved_at": "2026-08-28T00:00:00Z",
+      "license": "ISRO Open Access Scientific Data",
+      "url": "https://bhoonidhi.nrsc.gov.in",
+      "status": "historical",
+      "notes": "Co-registered satellite remote sensing optical and SAR damage extents following major monsoon triggers."
+    },
+    {
+      "source_id": "SRC-IMD-AWS",
+      "source": "IMD Automatic Weather Stations (AWS) & District Rainfall",
+      "provider": "India Meteorological Department (IMD), Ministry of Earth Sciences",
+      "dataset": "Real-time AWS Telemetry & District Cumulative Rainfall Nowcast",
+      "coverage": "NER District Synoptic & Mesonet Stations",
+      "resolution": "Hourly Point Telemetry & 0.25 deg Gridded Rainfall",
+      "retrieved_at": "2026-09-09T16:00:00Z",
+      "license": "IMD Open API / Public Meteorological Service",
+      "url": "https://api.imd.gov.in/api/v1/districtrainfall",
+      "status": "live",
+      "notes": "Hourly rainfall intensity, 24h/72h cumulative precipitation, and Mandal-Sarkar I-D threshold analysis."
+    },
+    {
+      "source_id": "SRC-NCS-SEISMIC",
+      "source": "NCS National Seismological Network",
+      "provider": "National Center for Seismology (NCS), Ministry of Earth Sciences",
+      "dataset": "Real-time Earthquake Catalog & Main Boundary Thrust (MBT) Monitoring",
+      "coverage": "NER Himalayan Collision Zone (Lat 20-30 N, Lon 87-98 E)",
+      "resolution": "Event-Based Hypocentral Coordinates, Depth & Magnitude",
+      "retrieved_at": "2026-09-09T16:00:00Z",
+      "license": "Government of India MoES Open Seismological Feed",
+      "url": "https://seismo.gov.in",
+      "status": "live",
+      "notes": "Dynamic ground-motion proxy for seismic destabilization and pseudostatic acceleration load modifier."
+    },
+    {
+      "source_id": "SRC-CWC-TEESTA",
+      "source": "CWC Teesta Basin Hydro-Telemetry",
+      "provider": "Central Water Commission (CWC), Ministry of Jal Shakti",
+      "dataset": "Teesta River Water Stage, Discharge, & Basal Scour Telemetry",
+      "coverage": "Teesta Basin Strategic Hydrometric Stations (Singtam, Melli, Dikchu, Teesta Bazar)",
+      "resolution": "15-Minute Hydrological Gauging",
+      "retrieved_at": "2026-09-09T16:00:00Z",
+      "license": "CWC National Hydrology Project Open Feed",
+      "url": "https://ffs.india-water.gov.in",
+      "status": "live",
+      "notes": "Calculates river stage elevation, basal shear stress (tau_b), and toe-erosion degradation factors."
+    },
+    {
+      "source_id": "SRC-NDMA-SACHET",
+      "source": "NDMA SACHET National Disaster Alert Platform",
+      "provider": "National Disaster Management Authority (NDMA) & C-DOT",
+      "dataset": "Common Alerting Protocol (OASIS CAP v1.2) Alert Gateway",
+      "coverage": "Pan-India National & Regional Disaster Zones",
+      "resolution": "District & Sub-Division Polygon Geofencing",
+      "retrieved_at": "2026-09-09T16:00:00Z",
+      "license": "NDMA / C-DOT Integrated Public Alert Engine",
+      "url": "https://sachet.ndma.gov.in",
+      "status": "live",
+      "notes": "Standardized multi-lingual XML alert dissemination for authority dispatch and citizen advisories."
+    },
+    {
+      "source_id": "SRC-BRO-HIGHWAY",
+      "source": "BRO Strategic Highway Breach & Staging SOPs",
+      "provider": "Border Roads Organisation (BRO), Ministry of Defence",
+      "dataset": "Project Swastik, Project Vartak, Project Sewak Highway Logs",
+      "coverage": "Strategic Himalayan Corridors (NH-10, NH-717A, NH-29, NH-13, NH-102)",
+      "resolution": "Highway Kilometer Markers & Heavy Equipment Staging Depots",
+      "retrieved_at": "2026-09-01T00:00:00Z",
+      "license": "BRO Operational Emergency Logistics Standard",
+      "url": "https://bro.gov.in",
+      "status": "historical",
+      "notes": "Informs Dijkstra/A* evacuation routing graphs and automated heavy machinery deployment protocols."
+    },
+    {
+      "source_id": "SRC-ESA-COPERNICUS",
+      "source": "Copernicus GLO-30 DEM & Sentinel-1/2 Constellation",
+      "provider": "European Space Agency (ESA) & Copernicus Programme",
+      "dataset": "Copernicus 30m Global DEM, Sentinel-1 InSAR LOS & Sentinel-2 MSI NDVI",
+      "coverage": "Himalayan Arc (Global 30m tiles)",
+      "resolution": "30m DEM, 10m Optical, 5x20m SAR IW Swath",
+      "retrieved_at": "2026-08-20T00:00:00Z",
+      "license": "Copernicus Open Access Hub / Free & Open License",
+      "url": "https://dataspace.copernicus.eu",
+      "status": "cached",
+      "notes": "Baseline terrain slope, curvature, aspect, and temporal InSAR Line-of-Sight deformation rates."
+    }
+  ]
+}

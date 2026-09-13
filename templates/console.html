@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-black">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PARVAT NETRA • Developer & Telemetry Console | GIGW 3.0</title>
+    
+    <!-- GIGW 3.0 Typography: Inter + Noto Sans + Noto Sans Devanagari + JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Noto+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Inter"', '"Noto Sans"', '"Noto Sans Devanagari"', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace']
+                    },
+                    colors: {
+                        oled: '#000000',
+                        oledPanel: '#080808',
+                        oledPanelAlt: '#0F0F0F',
+                        oledBorder: '#222222',
+                        govNavy: '#0C2340',
+                        govBlue: '#1E3A8A',
+                        govSaffron: '#C2410C',
+                        govGreen: '#15803D',
+                        govAmber: '#B45309',
+                        govRed: '#991B1B'
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="/static/css/parvat_theme.css">
+    <script src="/static/js/theme.js"></script>
+    
+    <style>
+        * { font-family: 'Inter', 'Noto Sans', 'Noto Sans Devanagari', sans-serif; }
+        code, pre, .font-mono, #terminal-buffer, .terminal-text { font-family: 'JetBrains Mono', monospace !important; }
+        
+        /* High-contrast accessibility focus (GIGW 3.0) */
+        input:focus, button:focus, select:focus, a:focus, textarea:focus {
+            outline: 2px solid #FF9933 !important;
+            outline-offset: 1px !important;
+        }
+
+        /* Precision scrollbar for OLED terminal buffer */
+        #terminal-buffer::-webkit-scrollbar {
+            width: 6px;
+        }
+        #terminal-buffer::-webkit-scrollbar-track {
+            background: #000000;
+        }
+        #terminal-buffer::-webkit-scrollbar-thumb {
+            background: #27272A;
+            border-radius: 0px;
+        }
+        #terminal-buffer::-webkit-scrollbar-thumb:hover {
+            background: #3F3F46;
+        }
+        
+        .tab-btn.active {
+            background-color: #121212;
+            color: #FFFFFF;
+            border-bottom: 2px solid #FF9933;
+        }
+    </style>
+</head>
+<body class="h-full bg-black text-neutral-200 flex flex-col antialiased selection:bg-neutral-800 selection:text-white">
+
+    <!-- NATIONAL TRICOLOR MICRO-STRIP -->
+    <div class="h-1 w-full flex shrink-0" aria-hidden="true">
+        <div class="h-full w-1/3 bg-[#FF9933]"></div>
+        <div class="h-full w-1/3 bg-[#FFFFFF]"></div>
+        <div class="h-full w-1/3 bg-[#138808]"></div>
+    </div>
+
+    <!-- TOP GOVERNMENT MASTHEAD (GIGW 3.0 BILINGUAL) -->
+    <header class="bg-[#050505] border-b border-[#222222] px-4 py-2 text-xs flex items-center justify-between z-30 shrink-0">
+        <div class="flex items-center gap-3 notranslate" translate="no">
+            <div class="flex items-center gap-2.5">
+                <img src="/static/images/parvat_netra_emblem.png" alt="Emblem of India" class="w-7 h-7 object-contain rounded-none border border-[#27272A] p-0.5 bg-black">
+                <div>
+                    <div class="font-mono font-bold text-white tracking-wider uppercase text-xs">
+                        PARVAT NETRA &bull; DEVELOPER TELEMETRY CONSOLE
+                    </div>
+                    <div class="text-[10px] text-neutral-400 font-mono flex items-center gap-1.5">
+                        <span>राष्ट्रीय भूस्खलन पूर्व चेतावनी प्रणाली</span>
+                        <span>&bull;</span>
+                        <span>MDoNER / NIC-CERT TELEMETRY GATEWAY</span>
+                    </div>
+                </div>
+            </div>
+            <span class="hidden md:inline-block text-neutral-700">|</span>
+            <a href="#main-content" class="hidden md:inline-block text-neutral-400 hover:text-white text-[11px] underline">Skip to main content</a>
+            <span class="bg-[#101923] border border-[#1E3A8A] text-blue-300 px-1.5 py-0.5 text-[10px] font-mono font-bold tracking-wider">
+                [LIVE TELEMETRY]
+            </span>
+        </div>
+
+        <div class="flex items-center gap-2.5 font-mono">
+            <div class="flex items-center gap-1.5 text-[11px] bg-[#0A0A0A] px-2.5 py-1 border border-[#27272A]">
+                <span id="sse-status-dot" class="w-2 h-2 rounded-none bg-amber-600"></span>
+                <span id="sse-status-label" class="text-amber-400 font-semibold text-[10px]">CONNECTING...</span>
+            </div>
+            <a href="/" class="text-neutral-300 hover:text-white text-xs font-semibold flex items-center gap-1 border border-[#27272A] px-2.5 py-1 bg-[#0A0A0A] hover:bg-[#18181B] transition">
+                <i class="ph-bold ph-arrow-left"></i>
+                <span>Operations Dashboard</span>
+            </a>
+            <button id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Switch color theme" title="Switch color theme" class="px-2.5 py-1 bg-[#12213D] border border-blue-300/30 rounded text-sky-100 hover:bg-[#1A3158] hover:text-white transition flex items-center gap-1.5 text-xs font-semibold shadow-xs active:scale-95 cursor-pointer font-sans">
+                <span id="theme-icon" class="flex items-center justify-center">
+                    <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                </span>
+                <span id="theme-text" class="text-[11px] hidden sm:inline">Light Mode</span>
+            </button>
+            <a href="/api/docs" class="text-blue-300 hover:text-white text-xs font-semibold border border-[#1E3A8A] px-2.5 py-1 bg-[#0B1528] hover:bg-[#1E3A8A]/40 transition">
+                API Docs
+            </a>
+        </div>
+    </header>
+
+    <!-- MAIN CONSOLE LAYOUT -->
+    <main id="main-content" class="flex-1 flex flex-col p-4 sm:p-5 max-w-7xl w-full mx-auto gap-3.5 overflow-hidden">
+        
+        <!-- KPI METRICS STRIP (GOVERNMENT TELEMETRY MATRIX) -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs">
+            <div class="bg-[#080808] border border-[#222222] p-3 flex flex-col justify-between">
+                <div class="text-neutral-500 text-[10px] font-mono font-bold uppercase tracking-wider">
+                    [BUS_CHANNEL] SSE EVENT BUS
+                </div>
+                <div class="mt-1.5 flex items-center justify-between">
+                    <span id="sse-bus-badge" class="font-mono text-emerald-500 font-bold text-xs">INITIALIZING</span>
+                    <span class="text-[10px] text-neutral-500 font-mono">/api/alerts/stream</span>
+                </div>
+            </div>
+
+            <div class="bg-[#080808] border border-[#222222] p-3 flex flex-col justify-between">
+                <div class="text-neutral-500 text-[10px] font-mono font-bold uppercase tracking-wider">
+                    [TARGET_NODE] PRIMARY EPICENTER
+                </div>
+                <div class="mt-1.5 text-neutral-200 font-mono font-semibold text-xs truncate">
+                    NH-10 Km 48 (27.2010°N, 88.5180°E)
+                </div>
+            </div>
+
+            <div class="bg-[#080808] border border-[#222222] p-3 flex flex-col justify-between">
+                <div class="text-neutral-500 text-[10px] font-mono font-bold uppercase tracking-wider">
+                    [GEOFENCE_LOCK] CRITICAL RADIUS
+                </div>
+                <div class="mt-1.5 flex items-center justify-between">
+                    <span class="text-rose-400 font-mono font-bold text-xs">15.0 km</span>
+                    <span class="text-[10px] text-neutral-400 font-mono">EAS Siren Lock</span>
+                </div>
+            </div>
+
+            <div class="bg-[#080808] border border-[#222222] p-3 flex flex-col justify-between">
+                <div class="text-neutral-500 text-[10px] font-mono font-bold uppercase tracking-wider">
+                    [INGESTION] PACKET COUNTER
+                </div>
+                <div class="mt-1.5 flex items-center justify-between">
+                    <span id="sse-event-counter" class="text-blue-400 font-mono font-bold text-xs">0</span>
+                    <span class="text-[10px] text-neutral-500 font-mono">frames</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB NAVIGATION & ACTION TOOLBAR -->
+        <div class="flex items-center justify-between border-b border-[#222222] pb-0">
+            <div class="flex items-center gap-1 font-mono">
+                <button onclick="switchConsoleTab('sse-stream')" id="tab-btn-sse-stream" class="tab-btn active px-4 py-2 text-xs font-bold text-neutral-300 hover:text-white border-b-2 border-transparent transition flex items-center gap-1.5">
+                    <i class="ph-bold ph-broadcast text-[#FF9933]"></i>
+                    <span>SSE EVENT STREAM</span>
+                    <span id="tab-sse-badge" class="ml-1 bg-emerald-950 border border-emerald-700 text-emerald-400 text-[10px] px-1.5 py-0.2 font-mono">LIVE</span>
+                </button>
+                <button onclick="switchConsoleTab('geofence-sim')" id="tab-btn-geofence-sim" class="tab-btn px-4 py-2 text-xs font-bold text-neutral-400 hover:text-white border-b-2 border-transparent transition flex items-center gap-1.5">
+                    <i class="ph-bold ph-compass"></i>
+                    <span>GEOFENCE SIMULATOR</span>
+                </button>
+                <button onclick="switchConsoleTab('payload-inspector')" id="tab-btn-payload-inspector" class="tab-btn px-4 py-2 text-xs font-bold text-neutral-400 hover:text-white border-b-2 border-transparent transition flex items-center gap-1.5">
+                    <i class="ph-bold ph-code"></i>
+                    <span>PAYLOAD INSPECTOR</span>
+                </button>
+            </div>
+
+            <!-- Terminal Actions -->
+            <div class="flex items-center gap-1.5 pb-1 font-mono">
+                <button onclick="clearTerminalBuffer()" class="text-[11px] px-2.5 py-1 border border-[#27272A] bg-[#0A0A0A] hover:bg-[#18181B] text-neutral-300 transition flex items-center gap-1">
+                    <i class="ph-bold ph-trash"></i> Clear
+                </button>
+                <button onclick="reconnectSSE()" class="text-[11px] px-2.5 py-1 border border-[#1E3A8A] bg-[#0A152A] hover:bg-[#1E3A8A]/40 text-blue-300 transition flex items-center gap-1">
+                    <i class="ph-bold ph-arrows-clockwise"></i> Reconnect
+                </button>
+                <button onclick="dispatchTestSiren()" class="text-[11px] px-2.5 py-1 bg-red-950/80 hover:bg-red-900 border border-red-800 text-red-300 transition flex items-center gap-1 font-bold">
+                    <i class="ph-bold ph-siren"></i> Dispatch Test Siren
+                </button>
+            </div>
+        </div>
+
+        <!-- TAB CONTENT 1: SSE EVENT STREAM TERMINAL -->
+        <div id="tab-content-sse-stream" class="flex-1 flex flex-col bg-black border border-[#222222] overflow-hidden">
+            <!-- Terminal Header Bar -->
+            <div class="bg-[#080808] px-3 py-1.5 border-b border-[#222222] flex items-center justify-between text-[11px] font-mono">
+                <div class="flex items-center gap-2">
+                    <span class="px-1.5 py-0.5 bg-[#141414] border border-[#27272A] text-neutral-300 font-bold text-[10px]">TTY-1</span>
+                    <span class="text-neutral-400 font-semibold">parvat-netra@ner-sentinel:~/telemetry/sse-stream</span>
+                </div>
+                <div class="text-neutral-500 flex items-center gap-2 text-[10px]">
+                    <span class="text-emerald-500 font-semibold">SYS: NOMINAL</span>
+                    <span>&bull;</span>
+                    <span>BUFFER: AUTO-SCROLL</span>
+                    <span>&bull;</span>
+                    <span>CHARSET: UTF-8</span>
+                </div>
+            </div>
+
+            <!-- Terminal Buffer -->
+            <div id="terminal-buffer" class="flex-1 p-3.5 font-mono text-xs overflow-y-auto space-y-1 text-neutral-200 select-text bg-black">
+                <!-- Initial banner -->
+                <div class="text-neutral-500 leading-relaxed">
+                    [SYSTEM_INIT] =========================================================================<br>
+                    [SYSTEM_INIT] PARVAT NETRA Real-Time SSE Telemetry Monitor v1.0.0<br>
+                    [SYSTEM_INIT] Gateway: /api/alerts/stream | PubSub Broker: AlertNotificationBus<br>
+                    [SYSTEM_INIT] GIGW 3.0 / MDoNER Certified Subsystem<br>
+                    [SYSTEM_INIT] Listening for real-time hazard triggers, siren broadcasts, and heartbeats...<br>
+                    [SYSTEM_INIT] Tag Filters: [SSE_BROADCAST] [GEOLOCATION_TRIGGER] [SSE_CONNECT] [SSE_HEARTBEAT]<br>
+                    [SYSTEM_INIT] =========================================================================
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB CONTENT 2: GEOFENCE SIMULATOR -->
+        <div id="tab-content-geofence-sim" class="hidden flex-1 bg-[#050505] border border-[#222222] p-4 sm:p-5 overflow-y-auto space-y-4">
+            <div>
+                <h2 class="text-xs font-bold text-white uppercase tracking-wider font-mono flex items-center gap-2">
+                    <i class="ph-bold ph-compass text-[#FF9933]"></i>
+                    Client-Side Haversine Geofence Proximity Tester
+                </h2>
+                <p class="text-xs text-neutral-400 mt-1">
+                    Evaluates the life-safety geofencing formula against target hazard epicenter NH-10 Km 48 (27.2010° N, 88.5180° E).
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Inputs & Presets -->
+                <div class="bg-[#0A0A0A] p-4 border border-[#222222] space-y-3 font-mono">
+                    <div class="text-xs font-bold text-neutral-300 uppercase tracking-wide">[INPUT] Target Coordinates</div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="text-[10px] text-neutral-400 block mb-1">Latitude (°N)</label>
+                            <input type="number" step="0.0001" id="sim-lat" value="27.2015" class="w-full bg-black border border-[#27272A] px-2.5 py-1.5 text-xs text-white">
+                        </div>
+                        <div>
+                            <label class="text-[10px] text-neutral-400 block mb-1">Longitude (°E)</label>
+                            <input type="number" step="0.0001" id="sim-lng" value="88.5182" class="w-full bg-black border border-[#27272A] px-2.5 py-1.5 text-xs text-white">
+                        </div>
+                    </div>
+
+                    <div class="text-xs font-bold text-neutral-400 pt-1 uppercase tracking-wide">Quick Corridor Presets:</div>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-1 text-[11px]">
+                        <button onclick="setSimCoords(27.2010, 88.5180, 'Km 48 Epicenter')" class="px-2 py-1.5 bg-[#121212] hover:bg-[#1C1C1C] text-red-400 border border-[#222222] text-left truncate">
+                            &bull; Km 48 Epicenter (0.0km)
+                        </button>
+                        <button onclick="setSimCoords(27.2015, 88.5182, 'Km 48 Near-field')" class="px-2 py-1.5 bg-[#121212] hover:bg-[#1C1C1C] text-red-400 border border-[#222222] text-left truncate">
+                            &bull; Km 48 Near (0.06km)
+                        </button>
+                        <button onclick="setSimCoords(27.1764, 88.5298, 'Rangpo Staging')" class="px-2 py-1.5 bg-[#121212] hover:bg-[#1C1C1C] text-amber-400 border border-[#222222] text-left truncate">
+                            &bull; Rangpo Staging (3.1km)
+                        </button>
+                        <button onclick="setSimCoords(27.2340, 88.4980, 'Singtam Bazaar')" class="px-2 py-1.5 bg-[#121212] hover:bg-[#1C1C1C] text-amber-400 border border-[#222222] text-left truncate">
+                            &bull; Singtam Bazaar (4.8km)
+                        </button>
+                        <button onclick="setSimCoords(27.3389, 88.6065, 'Gangtok DC')" class="px-2 py-1.5 bg-[#121212] hover:bg-[#1C1C1C] text-emerald-400 border border-[#222222] text-left truncate">
+                            &bull; Gangtok DC (17.5km)
+                        </button>
+                        <button onclick="setSimCoords(26.7271, 88.3953, 'Siliguri Jn')" class="px-2 py-1.5 bg-[#121212] hover:bg-[#1C1C1C] text-emerald-400 border border-[#222222] text-left truncate">
+                            &bull; Siliguri Jn (54.2km)
+                        </button>
+                    </div>
+
+                    <button onclick="runGeofenceSimulation()" class="w-full mt-2 py-2 bg-[#10243E] hover:bg-[#1A365D] border border-[#1E3A8A] font-bold text-blue-200 text-xs transition flex items-center justify-center gap-1.5">
+                        <i class="ph-bold ph-play"></i> Evaluate Haversine Proximity
+                    </button>
+                </div>
+
+                <!-- Simulation Output -->
+                <div class="bg-[#0A0A0A] p-4 border border-[#222222] flex flex-col justify-between space-y-3 font-mono">
+                    <div class="text-xs font-bold text-neutral-300 uppercase tracking-wide">[OUTPUT] Geofence Decision Logic</div>
+                    <div id="sim-result-box" class="p-3.5 border border-[#27272A] bg-black space-y-2 text-xs">
+                        <div class="text-neutral-400">Status: Awaiting simulation run...</div>
+                    </div>
+                    <div class="text-[11px] text-neutral-500 leading-relaxed">
+                        Rule Invariant: Distance &le; 15.0 km activates physical audible EAS siren (853Hz+960Hz) and full evacuation lock. Distance &gt; 15.0 km suppresses sirens and delivers passive advisory.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB CONTENT 3: PAYLOAD INSPECTOR -->
+        <div id="tab-content-payload-inspector" class="hidden flex-1 bg-[#050505] border border-[#222222] p-4 overflow-y-auto flex flex-col">
+            <div class="flex items-center justify-between pb-2 border-b border-[#222222] text-xs font-mono">
+                <span class="font-bold text-white uppercase tracking-wider">[JSON_STREAM] Latest SSE Event Payload</span>
+                <span id="payload-timestamp" class="text-neutral-500 text-[11px]">No events received yet</span>
+            </div>
+            <pre id="payload-viewer" class="flex-1 mt-3 p-3 bg-black border border-[#27272A] text-neutral-300 text-xs font-mono overflow-auto select-text">
+// Live parsed JSON packets from /api/alerts/stream will appear here...
+            </pre>
+        </div>
+
+    </main>
+
+    <!-- CLIENT LOGIC & SSE CONNECTION -->
+    <script>
+        const HAZARD_EPICENTER = { lat: 27.2010, lng: 88.5180 };
+        const CRITICAL_RADIUS_KM = 15.0;
+        let eventSource = null;
+        let totalEvents = 0;
+
+        function calculateHaversineKm(lat1, lon1, lat2, lon2) {
+            const R = 6371;
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                      Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            return R * c;
+        }
+
+        function formatTimestamp() {
+            const d = new Date();
+            return d.toISOString().replace('T', ' ').substring(0, 19);
+        }
+
+        function appendLog(tag, badgeClass, message, details = '') {
+            const buffer = document.getElementById('terminal-buffer');
+            if (!buffer) return;
+
+            const ts = formatTimestamp();
+            const logRow = document.createElement('div');
+            logRow.className = 'flex items-start gap-2 py-0.5 hover:bg-neutral-900/60 px-1 transition';
+
+            let detailHtml = '';
+            if (details) {
+                detailHtml = `<div class="text-[11px] text-neutral-400 font-mono mt-0.5 break-all pl-2 border-l border-neutral-700">${escapeHtml(details)}</div>`;
+            }
+
+            logRow.innerHTML = `
+                <span class="text-neutral-500 shrink-0 select-none font-mono">${ts}</span>
+                <span class="${badgeClass} font-bold shrink-0 font-mono">[${tag}]</span>
+                <div class="flex-1 text-neutral-200 font-mono">
+                    <span>${message}</span>
+                    ${detailHtml}
+                </div>
+            `;
+
+            buffer.appendChild(logRow);
+            buffer.scrollTop = buffer.scrollHeight;
+
+            totalEvents++;
+            const counter = document.getElementById('sse-event-counter');
+            if (counter) counter.innerText = totalEvents;
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
+        }
+
+        function updateStatus(state) {
+            const dot = document.getElementById('sse-status-dot');
+            const label = document.getElementById('sse-status-label');
+            const busBadge = document.getElementById('sse-bus-badge');
+
+            if (state === 'OPEN') {
+                if (dot) dot.className = 'w-2 h-2 rounded-none bg-emerald-500';
+                if (label) { label.className = 'text-emerald-400 font-bold'; label.innerText = 'STREAM ACTIVE'; }
+                if (busBadge) { busBadge.className = 'font-mono text-emerald-400 font-bold text-xs'; busBadge.innerText = 'ONLINE [LIVE]'; }
+            } else if (state === 'CONNECTING') {
+                if (dot) dot.className = 'w-2 h-2 rounded-none bg-amber-600';
+                if (label) { label.className = 'text-amber-400 font-semibold'; label.innerText = 'CONNECTING...'; }
+                if (busBadge) { busBadge.className = 'font-mono text-amber-400 font-bold text-xs'; busBadge.innerText = 'CONNECTING'; }
+            } else {
+                if (dot) dot.className = 'w-2 h-2 rounded-none bg-red-600';
+                if (label) { label.className = 'text-red-400 font-bold'; label.innerText = 'DISCONNECTED'; }
+                if (busBadge) { busBadge.className = 'font-mono text-red-400 font-bold text-xs'; busBadge.innerText = 'DISCONNECTED'; }
+            }
+        }
+
+        function updatePayloadViewer(data, eventType) {
+            const viewer = document.getElementById('payload-viewer');
+            const ts = document.getElementById('payload-timestamp');
+            if (viewer) {
+                viewer.innerText = `// Event Type: ${eventType}\n// Received At: ${formatTimestamp()}\n\n` + JSON.stringify(data, null, 2);
+            }
+            if (ts) ts.innerText = `Last Received: ${formatTimestamp()} (${eventType})`;
+        }
+
+        function initSSE() {
+            if (!('EventSource' in window)) {
+                appendLog('ERROR', 'text-red-400', 'EventSource not supported in this browser.');
+                updateStatus('ERROR');
+                return;
+            }
+
+            if (eventSource) {
+                try { eventSource.close(); } catch(e){}
+            }
+
+            updateStatus('CONNECTING');
+            appendLog('SYSTEM', 'text-neutral-400', 'Opening EventSource connection to /api/alerts/stream...');
+
+            try {
+                eventSource = new EventSource('/api/alerts/stream');
+                window.consoleEventSource = eventSource;
+
+                eventSource.onopen = function() {
+                    updateStatus('OPEN');
+                    appendLog('SSE_CONNECT', 'text-emerald-400', 'Handshake verified. Connected to notification bus [C-DOT CBS / Web Audio EAS].');
+                };
+
+                eventSource.addEventListener('ping', function(e) {
+                    try {
+                        const data = JSON.parse(e.data);
+                        appendLog('SSE_CONNECT', 'text-emerald-400', `Initial hazard baseline received for sector ${data.sector || 'NH-10'} (FS=${data.fos || '0.745'})`, JSON.stringify(data));
+                        updatePayloadViewer(data, 'ping');
+                    } catch(err) {
+                        appendLog('SSE_CONNECT', 'text-emerald-400', 'Baseline ping received: ' + e.data);
+                    }
+                });
+
+                eventSource.addEventListener('siren_dispatch', function(e) {
+                    try {
+                        const payload = JSON.parse(e.data);
+                        appendLog('SSE_BROADCAST', 'text-blue-400', `[SIREN DISPATCH RECEIVED] Sector ${payload.sector} (ID: ${payload.dispatch_id})`, JSON.stringify(payload));
+                        updatePayloadViewer(payload, 'siren_dispatch');
+
+                        // Evaluate simulated geolocation trigger
+                        const simLat = parseFloat(document.getElementById('sim-lat').value) || 27.2015;
+                        const simLng = parseFloat(document.getElementById('sim-lng').value) || 88.5182;
+                        const dist = calculateHaversineKm(simLat, simLng, HAZARD_EPICENTER.lat, HAZARD_EPICENTER.lng);
+                        const isInside = dist <= CRITICAL_RADIUS_KM;
+
+                        if (isInside) {
+                            appendLog('GEOLOCATION_TRIGGER', 'text-red-400', `[IN-ZONE ALERT] Simulated device at (${simLat}, ${simLng}) is ${dist.toFixed(2)} km from epicenter (<= ${CRITICAL_RADIUS_KM}km). EAS Siren + Lockdown triggered!`);
+                        } else {
+                            appendLog('GEOLOCATION_TRIGGER', 'text-amber-400', `[PASSIVE] OUT-OF-ZONE SUPPRESSION: Simulated device at (${simLat}, ${simLng}) is ${dist.toFixed(2)} km from epicenter (> ${CRITICAL_RADIUS_KM}km). Siren suppressed.`);
+                        }
+                    } catch(err) {
+                        appendLog('ERROR', 'text-red-400', 'Failed parsing siren_dispatch: ' + err.message);
+                    }
+                });
+
+                eventSource.addEventListener('cap_broadcast', function(e) {
+                    try {
+                        const payload = JSON.parse(e.data);
+                        appendLog('SSE_BROADCAST', 'text-blue-400', `[OFFICIAL CAP BROADCAST] ${payload.severity || 'CRITICAL'} alert for ${payload.headline || payload.sector}`, JSON.stringify(payload));
+                        updatePayloadViewer(payload, 'cap_broadcast');
+                    } catch(err) {
+                        appendLog('ERROR', 'text-red-400', 'Failed parsing cap_broadcast: ' + err.message);
+                    }
+                });
+
+                eventSource.addEventListener('heartbeat', function(e) {
+                    try {
+                        const data = JSON.parse(e.data);
+                        appendLog('SSE_HEARTBEAT', 'text-neutral-500', `Keep-alive pulse confirmed (${data.timestamp})`);
+                    } catch(err){}
+                });
+
+                eventSource.onerror = function(err) {
+                    updateStatus('CONNECTING');
+                    appendLog('SSE_RECONNECT', 'text-amber-400', 'Event stream disconnected. Auto-reconnecting in background...');
+                };
+
+            } catch(e) {
+                appendLog('ERROR', 'text-red-400', 'EventSource instantiation failed: ' + e.message);
+                updateStatus('ERROR');
+            }
+        }
+
+        function clearTerminalBuffer() {
+            const buffer = document.getElementById('terminal-buffer');
+            if (buffer) {
+                buffer.innerHTML = `<div class="text-neutral-500 font-mono">[BUFFER_CLEARED] Terminal history reset by operator.</div>`;
+            }
+        }
+
+        function reconnectSSE() {
+            appendLog('SYSTEM', 'text-neutral-400', 'Manual reconnect triggered by operator...');
+            initSSE();
+        }
+
+        async function dispatchTestSiren() {
+            appendLog('SYSTEM', 'text-amber-400', 'Dispatching tactical siren test via POST /api/alerts/dispatch-siren...');
+            try {
+                const res = await fetch('/api/alerts/dispatch-siren', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        sector: 'NH-10 Km 48',
+                        radius_km: 15.0,
+                        fs: 0.745
+                    })
+                });
+                const data = await res.json();
+                if (res.ok) {
+                    appendLog('SYSTEM', 'text-emerald-400', `Dispatch authorized: ${data.dispatch_id || 'OK'}. Broadcast pushed to notification bus.`);
+                } else {
+                    appendLog('ERROR', 'text-red-400', `Dispatch rejected: HTTP ${res.status} - ${data.message || 'Unauthorized'}`);
+                }
+            } catch(e) {
+                appendLog('ERROR', 'text-red-400', `Dispatch network error: ${e.message}`);
+            }
+        }
+
+        function switchConsoleTab(tabId) {
+            ['sse-stream', 'geofence-sim', 'payload-inspector'].forEach(id => {
+                const content = document.getElementById(`tab-content-${id}`);
+                const btn = document.getElementById(`tab-btn-${id}`);
+                if (content) content.classList.add('hidden');
+                if (btn) btn.classList.remove('active');
+            });
+
+            const activeContent = document.getElementById(`tab-content-${tabId}`);
+            const activeBtn = document.getElementById(`tab-btn-${tabId}`);
+            if (activeContent) activeContent.classList.remove('hidden');
+            if (activeBtn) activeBtn.classList.add('active');
+        }
+
+        function setSimCoords(lat, lng, label) {
+            document.getElementById('sim-lat').value = lat;
+            document.getElementById('sim-lng').value = lng;
+            runGeofenceSimulation(label);
+        }
+
+        function runGeofenceSimulation(presetLabel) {
+            const lat = parseFloat(document.getElementById('sim-lat').value);
+            const lng = parseFloat(document.getElementById('sim-lng').value);
+
+            if (isNaN(lat) || isNaN(lng)) {
+                alert('Please enter valid coordinates.');
+                return;
+            }
+
+            const dist = calculateHaversineKm(lat, lng, HAZARD_EPICENTER.lat, HAZARD_EPICENTER.lng);
+            const isInside = dist <= CRITICAL_RADIUS_KM;
+
+            const box = document.getElementById('sim-result-box');
+            if (box) {
+                if (isInside) {
+                    box.className = 'p-3.5 border border-red-800 bg-red-950/40 space-y-2 font-mono text-xs';
+                    box.innerHTML = `
+                        <div class="text-red-400 font-bold flex items-center gap-1.5 text-xs uppercase tracking-wide">
+                            <span>[ALERT] IN-ZONE CRITICAL HAZARD CORRIDOR</span>
+                        </div>
+                        <div class="text-neutral-300">
+                            Location: ${presetLabel || 'Custom Coordinates'} (${lat.toFixed(4)}°N, ${lng.toFixed(4)}°E)
+                        </div>
+                        <div class="text-white">
+                            Distance to Km 48 Epicenter: <span class="font-bold text-red-300 text-xs">${dist.toFixed(3)} km</span>
+                        </div>
+                        <div class="text-neutral-400 text-[11px]">
+                            Corridor Threshold: &le; ${CRITICAL_RADIUS_KM.toFixed(1)} km &bull; Status: <span class="text-red-400 font-bold">SIREN ACTIVE</span>
+                        </div>
+                        <div class="p-2 bg-red-900/40 border border-red-800 text-red-200 text-[11px]">
+                            [ACTION] Full-screen #landslide-lockdown-modal mounted. Dual-tone EAS Web Audio sirens sounding (853Hz+960Hz). Mobile vibration engaged.
+                        </div>
+                    `;
+                } else {
+                    box.className = 'p-3.5 border border-emerald-800 bg-emerald-950/40 space-y-2 font-mono text-xs';
+                    box.innerHTML = `
+                        <div class="text-emerald-400 font-bold flex items-center gap-1.5 text-xs uppercase tracking-wide">
+                            <span>[PASSIVE] OUT-OF-ZONE PASSIVE ADVISORY</span>
+                        </div>
+                        <div class="text-neutral-300">
+                            Location: ${presetLabel || 'Custom Coordinates'} (${lat.toFixed(4)}°N, ${lng.toFixed(4)}°E)
+                        </div>
+                        <div class="text-white">
+                            Distance to Km 48 Epicenter: <span class="font-bold text-emerald-300 text-xs">${dist.toFixed(3)} km</span>
+                        </div>
+                        <div class="text-neutral-400 text-[11px]">
+                            Corridor Threshold: &gt; ${CRITICAL_RADIUS_KM.toFixed(1)} km &bull; Status: <span class="text-emerald-400 font-bold">SIREN SUPPRESSED</span>
+                        </div>
+                        <div class="p-2 bg-emerald-900/40 border border-emerald-800 text-emerald-200 text-[11px]">
+                            [ACTION] Siren tone suppressed. Passive non-intrusive road advisory toast delivered.
+                        </div>
+                    `;
+                }
+            }
+
+            // Pipe trigger evaluation to terminal buffer
+            appendLog('GEOLOCATION_TRIGGER', isInside ? 'text-red-400' : 'text-amber-400', 
+                `Manual Haversine evaluation for (${lat.toFixed(4)}, ${lng.toFixed(4)}) -> Distance: ${dist.toFixed(2)} km. Inside <= 15km: ${isInside}. Result: ${isInside ? 'EAS_SIREN_DISPATCH' : 'PASSIVE_ADVISORY_ONLY'}`
+            );
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', () => {
+            initSSE();
+            runGeofenceSimulation('Km 48 Near-field');
+        });
+    </script>
+</body>
+</html>
