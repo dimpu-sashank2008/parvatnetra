@@ -1,6 +1,6 @@
 {
   "data": {
-    "timestamp": "2026-09-13T11:08:46.228048+00:00",
+    "timestamp": "2026-09-13T11:25:21.946826+00:00",
     "location": {
       "lat": 25.67,
       "lon": 94.02,
@@ -8,7 +8,7 @@
       "state": "Nagaland"
     },
     "rainfall": {
-      "current_mm_hr": 0.1,
+      "current_mm_hr": 0.0,
       "rain_1h_mm": 2.6,
       "rain_6h_mm": 3.5,
       "rain_24h_mm": 21.7,
@@ -49,10 +49,10 @@
       ]
     },
     "atmosphere": {
-      "temperature_c": 21.1,
+      "temperature_c": 21.0,
       "humidity_pct": 100.0,
       "pressure_hpa": 864.4,
-      "wind_kmh": 2.9,
+      "wind_kmh": 2.7,
       "cloud_pct": 99.0
     },
     "derived_pahad": {
@@ -64,9 +64,9 @@
       "rainfall_threshold_status": {
         "id_threshold_mm_hr": 1.828,
         "ed_threshold_mm": 43.872,
-        "intensity_mm_hr": 0.1,
+        "intensity_mm_hr": 0.9041666666666667,
         "duration_hours": 24.0,
-        "exceedance_ratio": 0.055,
+        "exceedance_ratio": 0.495,
         "threshold_exceeded": false,
         "state": "NORMAL_EQUILIBRIUM"
       },
@@ -74,15 +74,15 @@
     },
     "source": "Open-Meteo Global Forecasting",
     "provenance": "LIVE",
-    "last_successful_fetch": "2026-09-13T11:08:46.228048+00:00",
+    "last_successful_fetch": "2026-09-13T11:25:21.946826+00:00",
     "data_age_seconds": 0.0
   },
-  "fetched_at": 1789297728.0767484,
+  "fetched_at": 1789298722.751566,
   "ttl": 900,
   "meta": {
     "source": "Open-Meteo Global Forecasting",
     "provenance": "[LIVE]",
-    "stored_at": "2026-09-13T11:08:48Z",
+    "stored_at": "2026-09-13T11:25:22Z",
     "ttl": 900
   }
 }

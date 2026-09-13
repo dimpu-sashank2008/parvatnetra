@@ -1,6 +1,6 @@
 {
   "data": {
-    "timestamp": "2026-09-13T10:59:21.183922+00:00",
+    "timestamp": "2026-09-13T11:32:00.471286+00:00",
     "location": {
       "lat": 23.882,
       "lon": 91.564,
@@ -8,7 +8,7 @@
       "state": "Tripura"
     },
     "rainfall": {
-      "current_mm_hr": 0.1,
+      "current_mm_hr": 0.0,
       "rain_1h_mm": 0.0,
       "rain_6h_mm": 0.3,
       "rain_24h_mm": 2.8,
@@ -49,11 +49,11 @@
       ]
     },
     "atmosphere": {
-      "temperature_c": 29.4,
-      "humidity_pct": 85.0,
-      "pressure_hpa": 994.6,
-      "wind_kmh": 6.4,
-      "cloud_pct": 43.0
+      "temperature_c": 28.5,
+      "humidity_pct": 90.0,
+      "pressure_hpa": 995.2,
+      "wind_kmh": 4.0,
+      "cloud_pct": 54.0
     },
     "derived_pahad": {
       "antecedent_rainfall": 8.3,
@@ -64,9 +64,9 @@
       "rainfall_threshold_status": {
         "id_threshold_mm_hr": 1.828,
         "ed_threshold_mm": 43.872,
-        "intensity_mm_hr": 0.1,
+        "intensity_mm_hr": 0.11666666666666665,
         "duration_hours": 24.0,
-        "exceedance_ratio": 0.055,
+        "exceedance_ratio": 0.064,
         "threshold_exceeded": false,
         "state": "NORMAL_EQUILIBRIUM"
       },
@@ -74,15 +74,15 @@
     },
     "source": "Open-Meteo Global Forecasting",
     "provenance": "LIVE",
-    "last_successful_fetch": "2026-09-13T10:59:21.183922+00:00",
+    "last_successful_fetch": "2026-09-13T11:32:00.471286+00:00",
     "data_age_seconds": 0.0
   },
-  "fetched_at": 1789297165.2978272,
+  "fetched_at": 1789299121.523216,
   "ttl": 900,
   "meta": {
     "source": "Open-Meteo Global Forecasting",
     "provenance": "[LIVE]",
-    "stored_at": "2026-09-13T10:59:25Z",
+    "stored_at": "2026-09-13T11:32:01Z",
     "ttl": 900
   }
 }
