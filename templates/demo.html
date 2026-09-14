@@ -35,8 +35,11 @@
         }
     </script>
     <style>
+        html, body { max-width: 100vw; overflow-x: hidden; box-sizing: border-box; }
+        *, *::before, *::after { box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background: #070B10; color: #F1F5F9; }
         .font-mono { font-family: 'JetBrains Mono', monospace !important; }
+        header { padding-top: env(safe-area-inset-top, 0px); }
         @keyframes pulse-fast { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.85; transform: scale(1.02); } }
         .pulse-danger { animation: pulse-fast 1.5s infinite ease-in-out; }
     </style>
@@ -175,7 +178,7 @@
                 </div>
 
                 <!-- Physics Corroboration -->
-                <div class="grid grid-cols-3 gap-3 text-center font-mono text-xs">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3 text-center font-mono text-xs">
                     <div class="p-2.5 bg-slate-900 rounded border border-slate-800">
                         <div class="text-[10px] text-slate-400 uppercase">Slope Factor of Safety</div>
                         <div class="text-base font-bold text-red-400 mt-1">FoS 0.88</div>

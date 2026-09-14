@@ -3492,7 +3492,7 @@
 
                 <div class="flex items-center gap-1.5 flex-grow sm:flex-grow-0">
                   <label for="pahad-corridor-select" class="text-[10px] font-mono text-[#737373] uppercase">Corridor:</label>
-                  <select id="pahad-corridor-select" onchange="onCorridorSelectionChanged(this.value)" aria-label="Monitored NER Strategic Corridor" class="bg-[#111111] text-[#E5E5E5] border border-[#2D2D2D] rounded px-2.5 py-1 text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-[#525252] cursor-pointer w-full sm:w-auto max-w-[340px] truncate">
+                  <select id="pahad-corridor-select" onchange="onCorridorSelectionChanged(this.value)" aria-label="Monitored NER Strategic Corridor" class="bg-[#111111] text-[#E5E5E5] border border-[#2D2D2D] rounded px-2.5 py-1 text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-[#525252] cursor-pointer w-full sm:w-auto max-w-full sm:max-w-[340px] truncate">
                     <option value="ML-SONAPUR-01" selected>NH-06 Sonapur Tunnel &mdash; Meghalaya (East Jaintia Hills)</option>
                     <option value="SK-NH10-KM48">NH-10 Km 48 (29th Mile) &mdash; Sikkim (Pakyong)</option>
                     <option value="MN-TUPUL-RLY">NH-37 / Tupul &mdash; Manipur (Noney)</option>
@@ -3749,7 +3749,7 @@
         </div>
 
         <!-- KPI Ribbon -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-5">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-5">
 
             <div class="kpi-card bg-white border border-[#E2E8F0] rounded-md p-4 shadow-sm cursor-pointer transition-transform hover:scale-[1.01] hover:border-red-500" onclick="focusMapOnRedZones()" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')focusMapOnRedZones()" aria-label="Critical Red Zones - Click to zoom and center map">
                 <div class="flex items-center justify-between">
@@ -3909,9 +3909,9 @@
             <div class="dark-card bg-white border border-[#E2E8F0] rounded-md w-full shadow-sm">
             <div class="p-4 border-b border-slate-200 flex flex-wrap justify-between items-center gap-3">
                 <div class="flex items-center space-x-2"><i class="ph-bold ph-identification-badge text-[#0B2545] text-lg"></i><h2 class="font-bold text-sm text-[#0B2545]" id="lbl-queue-title" data-i18n="queue_title">Field Official &amp; Citizen Geo-Observation Queue</h2><span class="text-[10px] text-slate-500 mono">(DBSCAN 250m Clustering)</span></div>
-                <div class="flex flex-wrap items-center gap-2">
-                    <div class="relative"><input id="queue-search" type="text" aria-label="Search incident reports by reporter or location" placeholder="Search reporter / location..." data-i18n-placeholder="search_placeholder" oninput="filterQueueTable()" class="pl-7 pr-3 py-1.5 rounded text-xs border border-slate-300 text-slate-800 bg-white w-48 focus:outline-none focus:ring-1 focus:ring-blue-500"><i class="ph-bold ph-magnifying-glass absolute left-2 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i></div>
-                    <div class="flex items-center gap-1.5">
+                <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+                    <div class="relative w-full sm:w-48"><input id="queue-search" type="text" aria-label="Search incident reports by reporter or location" placeholder="Search reporter / location..." data-i18n-placeholder="search_placeholder" oninput="filterQueueTable()" class="pl-7 pr-3 py-1.5 rounded text-xs border border-slate-300 text-slate-800 bg-white w-full sm:w-48 focus:outline-none focus:ring-1 focus:ring-blue-500"><i class="ph-bold ph-magnifying-glass absolute left-2 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i></div>
+                    <div class="flex items-center gap-1.5 flex-wrap">
                         <span class="sev-pill ALL active" onclick="setSevFilter('ALL',this)" data-i18n="all_filter">All</span>
                         <span class="sev-pill CRITICAL" onclick="setSevFilter('CRITICAL',this)">&#x25CF; <span data-i18n="critical_filter">Critical</span></span>
                         <span class="sev-pill SEVERE" onclick="setSevFilter('SEVERE',this)">&#x25CF; <span data-i18n="severe_filter">Severe</span></span>
@@ -6498,6 +6498,17 @@ function initMap(){
     map.on('mousemove',function(e){var el=document.getElementById('coord-display');if(el)el.textContent=e.latlng.lat.toFixed(5)+', '+e.latlng.lng.toFixed(5);});
     loadSpatialRisk();loadIoTSensors();loadInSARPoints();loadAISatelliteScars();loadTeestaRiver();loadAnthropogenicCuts();loadEvacuationPlan();loadHabitationMatrix();loadClusteredReports();loadBROFleet();loadSARTargets();refreshTeestaHydro();loadGeospatialLayers();loadGeospatialOverviewCard();
     setTimeout(function() { if (window.map && typeof window.map.invalidateSize === 'function') window.map.invalidateSize(); }, 200);
+    window.addEventListener('resize', function() {
+        clearTimeout(window._pahadMapResizeTimer);
+        window._pahadMapResizeTimer = setTimeout(function() {
+            if (window.map && typeof window.map.invalidateSize === 'function') window.map.invalidateSize();
+        }, 150);
+    });
+    window.addEventListener('orientationchange', function() {
+        setTimeout(function() {
+            if (window.map && typeof window.map.invalidateSize === 'function') window.map.invalidateSize();
+        }, 200);
+    });
 }
 
 async function loadGeospatialLayers() {
@@ -13903,7 +13914,7 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
 
       <!-- Assistant Modal / Sliding Panel Overlay -->
-      <div id="pahad-assistant-panel" class="hidden fixed bottom-2 sm:bottom-5 left-2 right-2 sm:left-auto sm:right-5 sm:w-[440px] max-h-[85vh] h-[640px] flex flex-col bg-[#0B132B] text-slate-100 border border-slate-700/80 rounded-2xl shadow-2xl overflow-hidden backdrop-blur-md animate-fade-in" role="dialog" aria-modal="true" aria-labelledby="pahad-assistant-title" aria-hidden="true">
+      <div id="pahad-assistant-panel" class="hidden fixed bottom-2 sm:bottom-5 left-2 right-2 sm:left-auto sm:right-5 sm:w-[440px] max-w-[calc(100vw-16px)] max-h-[calc(100vh-20px)] h-[min(640px,calc(100vh-20px))] flex flex-col bg-[#0B132B] text-slate-100 border border-slate-700/80 rounded-2xl shadow-2xl overflow-hidden backdrop-blur-md animate-fade-in" role="dialog" aria-modal="true" aria-labelledby="pahad-assistant-title" aria-hidden="true">
 
 
         <!-- Panel Header -->
