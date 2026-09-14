@@ -2995,298 +2995,6 @@
     </section>
 <section id="pahad-ai-overview" class="max-w-7xl mx-auto px-4 py-4 space-y-4" aria-label="PAHAD AI live predictive overview">
       
-      <!-- =======================================================================
-           1. COMPOSITE RISK INDEX (CRI) COMMAND SHOWCASE — FRONT & CENTER HERO
-           Strictly positions CRI and primary hazard intelligence first on landing.
-           ======================================================================= -->
-      <div id="pahad-cri-hero" class="bg-[#111111] border border-[#222222] rounded-lg p-4 sm:p-5 shadow-lg space-y-4">
-        
-        <!-- Top Institutional Header & Interactive Tour Actions -->
-        <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-[#222222]">
-          <div class="flex items-center gap-3">
-            <div class="w-9 h-9 rounded bg-[#171717] border border-[#2D2D2D] flex items-center justify-center text-white text-lg shrink-0">
-              <i class="ph-bold ph-shield-check text-[#E5E5E5]"></i>
-            </div>
-            <div>
-              <div class="text-[10px] font-mono font-bold tracking-widest text-[#A3A3A3] uppercase">NATIONAL DISASTER MANAGEMENT AUTHORITY &bull; NER SENTINEL</div>
-              <h2 class="text-sm sm:text-base font-black text-white tracking-wide uppercase m-0">PAHAD AI &mdash; Landslide Risk Prediction Intelligence</h2>
-            </div>
-          </div>
-          <div class="flex items-center gap-2 flex-wrap">
-            <div id="pahad-ai-state" class="hidden items-center gap-1.5 text-[11px] font-mono px-2.5 py-1 rounded bg-[#171717] text-[#4ADE80] border border-[#262626]" style="display: none !important;">
-              <span class="w-2 h-2 rounded-full bg-[#16a34a] animate-pulse"></span>
-              <span>INFERENCE ENGINE ONLINE</span>
-            </div>
-            <!-- USER-FRIENDLY INTERACTIVE TOUR BUTTON -->
-            <button type="button" id="btn-start-interactive-tour" onclick="startInteractiveTour(1)" class="pahad-hero-action-link text-[11.5px] font-bold transition-colors flex items-center gap-1.5 cursor-pointer bg-transparent border-0 p-0 shadow-none" title="Interactive walkthrough of all platform functions">
-              <i class="ph-bold ph-compass"></i> <span>Platform Tour &amp; Functions</span>
-            </button>
-            <!-- USER-FRIENDLY LIVE SIMULATION BUTTON -->
-            <button type="button" id="btn-hero-launch-demo" onclick="launchLiveSimulationDemo()" class="pahad-hero-action-link text-[11.5px] font-bold transition-colors flex items-center gap-1.5 cursor-pointer bg-transparent border-0 p-0 shadow-none" title="Launch 13-stage Teesta failure simulation">
-              <i class="ph-bold ph-play"></i> <span>Run Simulation</span>
-            </button>
-            <a href="/pahad-ai" id="link-hero-explore-observatory" class="pahad-hero-action-link text-[11.5px] font-bold transition-colors flex items-center gap-1.5 cursor-pointer bg-transparent border-0 p-0 shadow-none" title="Explore Observatory">
-              <i class="ph-bold ph-telescope"></i> <span>Explore Observatory →</span>
-              <span class="pahad-hero-twin-tag font-mono text-[10px] font-bold">[3D TWIN]</span>
-            </a>
-          </div>
-        </div>
-
-        <!-- Hero Showcase: CRI Gauge (Left) + Current Location & Cascading Corridor Select (Right) -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
-          
-          <!-- LEFT: 3. CRI CENTERPIECE & 4. RISK LEVEL BADGE (Col 4) -->
-          <div class="lg:col-span-4 bg-[#171717] border border-[#262626] rounded-lg p-4 flex flex-col items-center justify-center text-center shadow-inner">
-            <div class="flex items-center gap-2 mb-2">
-              <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
-              <span class="text-[10px] font-mono uppercase tracking-widest text-[#A3A3A3] font-bold">COMPOSITE RISK INDEX (CRI)</span>
-            </div>
-            
-            <!-- 3. LARGE CRI PREDICTION CENTERPIECE -->
-            <div id="pahad-ai-ring" class="pahad-ai-ring my-1.5" style="--score:40.6; --ring-color:#ea580c;">
-              <div class="pahad-ai-ring-content">
-                <div id="pahad-ai-score" class="text-4xl font-black text-white font-mono tracking-tight">40.6</div>
-                <div class="text-[10px] font-mono text-[#A3A3A3] uppercase mt-0.5">Scale 0&ndash;100</div>
-              </div>
-            </div>
-
-            <!-- 4. RISK LEVEL BADGE -->
-            <div id="pahad-ai-band" class="pahad-band-high px-3 py-1 rounded text-xs font-black tracking-wider uppercase mb-1">
-              HIGH RISK
-            </div>
-            <div id="pahad-ai-prob" class="text-xs font-mono text-[#A3A3A3] font-bold mt-0.5">
-              P(event, 24h): 42.1%
-            </div>
-            <p class="text-[11px] text-[#737373] max-w-[260px] mt-2 leading-relaxed">
-              Multi-modal index fused from Mohr-Coulomb slope stability, rainfall I-D, and geotechnical ML.
-            </p>
-          </div>
-
-          <!-- RIGHT: CURRENT ASSESSMENT LOCATION & CASCADING SELECTION (Col 8) -->
-          <div class="lg:col-span-8 flex flex-col justify-between space-y-3.5">
-            <!-- Location Title & Live Telemetry Flags -->
-            <div class="bg-[#171717] border border-[#262626] rounded-lg p-4">
-              <div class="flex flex-wrap items-center justify-between gap-2 pb-2 mb-2 border-b border-[#262626]">
-                <span class="text-[10px] font-mono uppercase tracking-widest text-[#737373]">CURRENT ASSESSMENT LOCATION</span>
-                <div class="flex items-center gap-2 flex-wrap">
-                  <div class="hidden text-[10px] font-mono px-2 py-0.5 rounded bg-[#111111] border border-[#262626] text-[#A3A3A3]" style="display: none !important;">
-                    Trend: <strong id="pahad-ai-trend" class="text-white">EVALUATING</strong>
-                  </div>
-                  <div id="pahad-completeness-container" class="text-[10px] font-mono px-2 py-0.5 rounded bg-[#111111] border border-[#262626] text-[#A3A3A3]">
-                    Quality: <strong id="pahad-data-completeness-badge" class="text-[#4ADE80]">HIGH DATA COMPLETENESS</strong>
-                  </div>
-                  <div id="pahad-corridor-loading" class="hidden items-center gap-1.5 text-[10px] font-bold text-white bg-[#111111] border border-[#2D2D2D] px-2 py-0.5 rounded">
-                    <span class="w-2 h-2 rounded-full bg-white animate-ping"></span>
-                    <span>Updating Telemetry&hellip;</span>
-                  </div>
-                  <div id="pahad-corridor-timestamp" class="text-[10px] font-mono text-[#737373]">Updated: Live</div>
-                </div>
-              </div>
-
-              <div id="pahad-ai-location" class="text-lg sm:text-xl font-black text-white mt-0.5">Sonapur Tunnel NH-06 Portal Scarp</div>
-              <div id="pahad-ai-location-sub" class="text-xs text-[#A3A3A3] font-mono mt-0.5">Strategic Lifeline Corridor &bull; East Jaintia Hills, Meghalaya &bull; Lat 25.1850&deg;N, Lon 92.3650&deg;E</div>
-            </div>
-
-            <!-- Cascading Corridor Selection Strip -->
-            <div class="bg-[#171717] border border-[#262626] rounded-lg p-3.5">
-              <div class="text-[10px] font-mono uppercase tracking-wider text-[#A3A3A3] mb-2 font-bold flex items-center justify-between">
-                <span class="flex items-center gap-1.5"><i class="ph-bold ph-faders text-sky-400"></i> Select Monitored Strategic Corridor / Geographic Node:</span>
-                <span class="text-[9px] text-[#737373] font-normal">8 Himalayan Sectors Monitored</span>
-              </div>
-              
-              <div id="pahad-location-picker" class="flex items-center gap-2.5 flex-wrap">
-                <div class="flex items-center gap-1.5">
-                  <label for="pahad-state-filter" class="text-[10px] font-mono text-[#737373] uppercase">State:</label>
-                  <select id="pahad-state-filter" onchange="onStateFilterChanged(this.value)" aria-label="Filter Monitored State" class="bg-[#111111] text-[#E5E5E5] border border-[#2D2D2D] rounded px-2.5 py-1 text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-[#525252] cursor-pointer">
-                    <option value="ALL" selected>All NER States</option>
-                    <option value="Meghalaya">Meghalaya</option>
-                    <option value="Sikkim">Sikkim</option>
-                    <option value="Manipur">Manipur</option>
-                    <option value="Mizoram">Mizoram</option>
-                    <option value="Assam">Assam</option>
-                    <option value="Nagaland">Nagaland</option>
-                    <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-                    <option value="Tripura">Tripura</option>
-                    <option value="West Bengal">Strategic Border</option>
-                  </select>
-                </div>
-
-                <div class="flex items-center gap-1.5">
-                  <label for="pahad-district-filter" class="text-[10px] font-mono text-[#737373] uppercase">District:</label>
-                  <select id="pahad-district-filter" onchange="onDistrictFilterChanged(this.value)" aria-label="Filter Monitored District" class="bg-[#111111] text-[#E5E5E5] border border-[#2D2D2D] rounded px-2.5 py-1 text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-[#525252] cursor-pointer">
-                    <option value="ALL" selected>All Districts</option>
-                  </select>
-                </div>
-
-                <div class="flex items-center gap-1.5 flex-grow sm:flex-grow-0">
-                  <label for="pahad-corridor-select" class="text-[10px] font-mono text-[#737373] uppercase">Corridor:</label>
-                  <select id="pahad-corridor-select" onchange="onCorridorSelectionChanged(this.value)" aria-label="Monitored NER Strategic Corridor" class="bg-[#111111] text-[#E5E5E5] border border-[#2D2D2D] rounded px-2.5 py-1 text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-[#525252] cursor-pointer w-full sm:w-auto max-w-[340px] truncate">
-                    <option value="ML-SONAPUR-01" selected>NH-06 Sonapur Tunnel &mdash; Meghalaya (East Jaintia Hills)</option>
-                    <option value="SK-NH10-KM48">NH-10 Km 48 (29th Mile) &mdash; Sikkim (Pakyong)</option>
-                    <option value="MN-TUPUL-RLY">NH-37 / Tupul &mdash; Manipur (Noney)</option>
-                    <option value="MZ-MELTHUM-QRY">NH-6 / Melthum &mdash; Mizoram (Aizawl)</option>
-                    <option value="AS-HAFLONG-RLY">Haflong Rail &mdash; Assam (Dima Hasao)</option>
-                    <option value="ML-MAWSYNRAM">NH-206 / Mawsynram &mdash; Meghalaya</option>
-                    <option value="NL-DZUKOU-KOH">NH-29 / Dzukou &mdash; Nagaland (Kohima)</option>
-                    <option value="AR-TAWANG-SELA">NH-13 / Sela Pass &mdash; Arunachal Pradesh</option>
-                    <option value="TR-JAMPUI-HILLS">Jampui Hills &mdash; Tripura (North Tripura)</option>
-                  </select>
-                </div>
-
-                <div class="flex items-center gap-1.5 ml-auto">
-                  <button type="button" id="btn-pick-map-loc" onclick="toggleMapPointPicker()" class="px-2.5 py-1 bg-[#111111] hover:bg-[#1D1D1D] text-[#E5E5E5] border border-[#2D2D2D] rounded text-xs font-medium transition flex items-center gap-1" title="Pick point on GIS Map">
-                    <i class="ph-bold ph-crosshair"></i> <span>Use Map Location</span>
-                  </button>
-                  <button type="button" id="btn-custom-coords" onclick="openCustomCoordModal()" class="px-2.5 py-1 bg-[#111111] hover:bg-[#1D1D1D] text-[#E5E5E5] border border-[#2D2D2D] rounded text-xs font-medium transition flex items-center gap-1" title="Enter arbitrary coordinates">
-                    <i class="ph-bold ph-map-pin"></i> <span>Custom Coords</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- USER-FRIENDLY ONBOARDING & QUICKSTART FUNCTION GUIDE BANNER -->
-      <div id="pahad-onboarding-callout" class="bg-gradient-to-r from-sky-950/40 via-[#111111] to-emerald-950/40 border border-sky-900/50 rounded-lg p-3 sm:p-3.5 flex flex-wrap items-center justify-between gap-3 text-xs">
-        <div class="flex items-center gap-3">
-          <div class="w-8 h-8 rounded-full bg-sky-900/60 border border-sky-600/60 flex items-center justify-center text-sky-400 shrink-0">
-            <i class="ph-bold ph-info text-base"></i>
-          </div>
-          <div>
-            <div class="font-bold text-white flex items-center gap-2">
-              <span>How PARVAT NETRA / PAHAD AI Works</span>
-              <span class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-sky-900/60 text-sky-300 border border-sky-700">PLATFORM GUIDE &amp; DEMO</span>
-            </div>
-            <p class="text-[11px] text-slate-300 m-0 mt-0.5">
-              CRI is the primary composite hazard metric fusing geotechnical physics (Mohr-Coulomb FoS), IMD precipitation thresholds, and calibrated ML.
-            </p>
-          </div>
-        </div>
-        <div class="flex items-center gap-2">
-          <button type="button" onclick="startInteractiveTour(1)" class="px-3 py-1 bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold rounded flex items-center gap-1.5 transition active:scale-95 shadow-xs cursor-pointer">
-            <i class="ph-bold ph-compass"></i> <span>Interactive Tour (60s)</span>
-          </button>
-          <button type="button" onclick="launchLiveSimulationDemo()" class="px-3 py-1 bg-[#171717] hover:bg-[#222222] text-emerald-400 hover:text-emerald-300 border border-emerald-700/60 text-xs font-bold rounded flex items-center gap-1.5 transition active:scale-95 cursor-pointer">
-            <i class="ph-bold ph-play"></i> <span>Run Simulation</span>
-          </button>
-          <button type="button" onclick="dismissOnboardingCallout()" class="px-2 py-1 text-slate-400 hover:text-white text-xs cursor-pointer" title="Dismiss guide">
-            <i class="ph-bold ph-x"></i>
-          </button>
-        </div>
-      </div>
-
-      <!-- SECONDARY PREDICTION ANALYSIS GRID (WHY, EVIDENCE, ACTION) -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
-        
-        <!-- LEFT COLUMN: 5. WHY & RANKED DRIVERS (Col 6) -->
-        <div class="lg:col-span-6 bg-[#111111] border border-[#222222] rounded-lg p-4 space-y-3">
-          <div class="flex items-center justify-between pb-2 border-b border-[#222222]">
-            <div class="flex items-center gap-2">
-              <i class="ph-bold ph-lightbulb text-amber-400 text-sm"></i>
-              <span class="text-xs font-black uppercase tracking-wider text-white">Why PAHAD AI Is Raising Risk</span>
-            </div>
-            <span id="pahad-evidence-provenance" class="text-[9px] font-mono px-2 py-0.5 rounded bg-[#171717] border border-[#262626] text-[#A3A3A3]">[HYBRID FUSION]</span>
-          </div>
-
-          <!-- Plain Language Box -->
-          <div id="pahad-plain-explanation" class="p-3 rounded bg-[#171717] border border-[#262626] text-xs text-[#E5E5E5] leading-relaxed">
-            <span id="pahad-ai-explanation">Elevated risk is driven by antecedent precipitation loading (68.4 mm/24h) and reduced slope stability (physical FoS 0.926 &lt; 1.0). Geotechnical ML corroborates elevated failure likelihood within the 24h forecast window.</span>
-          </div>
-          
-          <div class="text-[10px] text-[#737373] italic scientific-disclaimer">
-            Contributing signals indicate statistical association and physical mechanism drivers; they do not constitute individual causal proof.
-          </div>
-
-          <!-- Primary Drivers List -->
-          <div class="space-y-1.5" id="pahad-driver-ranked-list">
-            <div class="pahad-driver flex items-center justify-between text-xs py-1 border-b border-[#1A1A1A]">
-              <span class="text-[#E5E5E5] font-medium">1. Physical Instability (Mohr-Coulomb FoS)</span>
-              <div class="w-28 bg-[#171717] h-1.5 rounded overflow-hidden mx-2"><span id="pahad-driver-fos-bar" class="block bg-orange-500 h-full" style="width:75%"></span></div>
-              <span id="pahad-driver-fos-val" class="text-[10px] font-mono text-orange-400 font-bold shrink-0">PRIMARY DRIVER</span>
-            </div>
-            <div class="pahad-driver flex items-center justify-between text-xs py-1 border-b border-[#1A1A1A]">
-              <span class="text-[#E5E5E5] font-medium">2. Rainfall Loading (IMD / Mandal-Sarkar I-D)</span>
-              <div class="w-28 bg-[#171717] h-1.5 rounded overflow-hidden mx-2"><span id="pahad-driver-rain" class="block bg-amber-500 h-full" style="width:65%"></span></div>
-              <span id="pahad-driver-rain-val" class="text-[10px] font-mono text-amber-400 font-bold shrink-0">SECONDARY DRIVER</span>
-            </div>
-            <div class="pahad-driver flex items-center justify-between text-xs py-1">
-              <span class="text-[#E5E5E5] font-medium">3. Ground Anomaly &amp; InSAR Creep</span>
-              <div class="w-28 bg-[#171717] h-1.5 rounded overflow-hidden mx-2"><span id="pahad-driver-ground" class="block bg-[#737373] h-full" style="width:40%"></span></div>
-              <span id="pahad-driver-ground-val" class="text-[10px] font-mono text-[#A3A3A3] font-bold shrink-0">SUPPORTING SIGNAL</span>
-            </div>
-            <div class="hidden"><span id="pahad-driver-seismic"></span><span id="pahad-driver-seismic-val"></span></div>
-          </div>
-
-          <!-- Scientific Ledger Expand Toggle -->
-          <div class="pt-2 border-t border-[#222222]">
-            <button type="button" id="btn-toggle-prediction-details" onclick="togglePredictionDetails()" class="w-full px-3 py-1.5 bg-[#171717] hover:bg-[#1D1D1D] text-[#A3A3A3] hover:text-white border border-[#262626] rounded flex items-center justify-between text-xs font-semibold transition">
-              <span class="flex items-center gap-1.5">
-                <i class="ph-bold ph-scales text-[#A3A3A3]"></i>
-                <span>View Comprehensive Scientific Ledger &amp; Physics Breakdown</span>
-              </span>
-              <span class="flex items-center gap-1 text-[11px] font-mono">
-                <span id="label-toggle-prediction-details">Expand</span>
-                <i id="icon-toggle-prediction-details" class="ph-bold ph-caret-down text-[#737373]"></i>
-              </span>
-            </button>
-          </div>
-        </div>
-
-        <!-- RIGHT COLUMN: 6. KEY EVIDENCE & 7. ACTION (Col 6) -->
-        <div class="lg:col-span-6 space-y-4">
-          
-          <!-- 6. KEY EVIDENCE: 4-CARD SIGNAL GRID -->
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-            <div class="bg-[#111111] border border-[#222222] rounded-lg p-3">
-              <div class="text-[10px] font-mono uppercase tracking-wider text-[#737373]">Physical FoS</div>
-              <div id="pahad-ai-fos" class="text-base font-black text-white font-mono mt-0.5">0.926</div>
-              <div id="pahad-ai-fos-agreement" class="text-[10px] font-mono text-rose-400 mt-0.5">FoS &lt; 1.0 (Unstable)</div>
-            </div>
-            <div class="bg-[#111111] border border-[#222222] rounded-lg p-3">
-              <div class="text-[10px] font-mono uppercase tracking-wider text-[#737373]">Rainfall Trigger</div>
-              <div id="pahad-ai-rain-status" class="text-base font-black text-white font-mono mt-0.5">68.4 mm</div>
-              <div id="pahad-ai-rain-agreement" class="text-[10px] font-mono text-rose-400 mt-0.5">I-D Exceeded</div>
-            </div>
-            <div class="bg-[#111111] border border-[#222222] rounded-lg p-3">
-              <div class="text-[10px] font-mono uppercase tracking-wider text-[#737373]">Geotech ML</div>
-              <div id="pahad-ai-ml-status" class="text-base font-black text-white font-mono mt-0.5">42.1% P(E)</div>
-              <div id="pahad-ai-ml-agreement" class="text-[10px] font-mono text-amber-400 mt-0.5">Elevated Risk</div>
-            </div>
-            <div class="bg-[#111111] border border-[#222222] rounded-lg p-3">
-              <div class="text-[10px] font-mono uppercase tracking-wider text-[#737373]">Seismic Modifier</div>
-              <div id="pahad-ai-seismic-status" class="text-base font-black text-white font-mono mt-0.5">+4 CRI pts</div>
-              <div id="pahad-ai-seismic-agreement" class="text-[10px] font-mono text-[#737373] mt-0.5">NCS Regional Arc</div>
-            </div>
-          </div>
-
-          <!-- 7. RECOMMENDED ACTION: PROTOCOL CARD -->
-          <div class="bg-[#111111] border border-[#222222] rounded-lg p-4 space-y-3">
-            <div class="flex items-center justify-between pb-2 border-b border-[#222222]">
-              <span class="text-xs font-black uppercase tracking-wider text-white">WHAT SHOULD THE AUTHORITY DO? (Recommended Operational Protocol)</span>
-              <span id="pahad-corroboration-badge" class="text-[9px] font-mono px-2 py-0.5 rounded bg-[#166534]/30 text-[#4ADE80] border border-[#166534]">2/3 CORROBORATED</span>
-            </div>
-
-            <div class="p-3 rounded bg-[#171717] border border-[#262626]">
-              <div class="text-[10px] font-mono uppercase tracking-wider text-amber-400 font-bold mb-1">[STAGE 2] AI Recommended Advisory</div>
-              <div id="pahad-ai-action" class="text-xs font-bold text-white"><span id="pahad-ai-action-text">Issue Heavy Transport Restriction + Dispatch Field Geotechnical Survey</span></div>
-              <div id="pahad-ai-action-reason" class="text-[11px] text-[#A3A3A3] mt-1">Corroborated by physical slope limit equilibrium and empirical rainfall thresholds.</div>
-            </div>
-
-            <div class="p-3 rounded bg-[#171717] border border-[#262626]">
-              <div class="flex items-center justify-between mb-1">
-                <span class="text-[10px] font-mono uppercase tracking-wider text-[#A3A3A3] font-bold">[STAGE 3] Statutory Human Authority Sign-Off</span>
-                <span class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-[#222222] text-[#E5E5E5] border border-[#2D2D2D]">DMA 2005 REQUIREMENT</span>
-              </div>
-              <p class="text-[11px] text-[#A3A3A3] leading-snug m-0 statutory-signoff-copy">
-                Public emergency alerts, siren dispatches, and highway closures require statutory authorization from District Collector / SEOC Magistrate (DDMA) under Disaster Management Act 2005. Safety Gate: ENABLE_PUBLIC_DISPATCH=0 (Simulated / Test Mode Only).
-              </p>
-            </div>
-          </div>
-
-        </div>
-      </div>
-      
       <!-- 8. OPERATIONAL GIS HAZARD MAP & FIELD TELEMETRY (PRIMARY DASHBOARD) -->
       <div id="dashboard-gis-map-container" class="space-y-3">
         <!-- Hidden minimap container and coordinate hooks for test & locator compatibility -->
@@ -4369,6 +4077,300 @@
     </main>
       </div>
 
+      
+      <!-- =======================================================================
+           1. COMPOSITE RISK INDEX (CRI) COMMAND SHOWCASE — FRONT & CENTER HERO
+           Strictly positions CRI and primary hazard intelligence first on landing.
+           ======================================================================= -->
+      <div id="pahad-cri-hero" class="bg-[#111111] border border-[#222222] rounded-lg p-4 sm:p-5 shadow-lg space-y-4">
+        
+        <!-- Top Institutional Header & Interactive Tour Actions -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-[#222222]">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded bg-[#171717] border border-[#2D2D2D] flex items-center justify-center text-white text-lg shrink-0">
+              <i class="ph-bold ph-shield-check text-[#E5E5E5]"></i>
+            </div>
+            <div>
+              <div class="text-[10px] font-mono font-bold tracking-widest text-[#A3A3A3] uppercase">NATIONAL DISASTER MANAGEMENT AUTHORITY &bull; NER SENTINEL</div>
+              <h2 class="text-sm sm:text-base font-black text-white tracking-wide uppercase m-0">PAHAD AI &mdash; Landslide Risk Prediction Intelligence</h2>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 flex-wrap">
+            <div id="pahad-ai-state" class="hidden items-center gap-1.5 text-[11px] font-mono px-2.5 py-1 rounded bg-[#171717] text-[#4ADE80] border border-[#262626]" style="display: none !important;">
+              <span class="w-2 h-2 rounded-full bg-[#16a34a] animate-pulse"></span>
+              <span>INFERENCE ENGINE ONLINE</span>
+            </div>
+            <!-- USER-FRIENDLY INTERACTIVE TOUR BUTTON -->
+            <button type="button" id="btn-start-interactive-tour" onclick="startInteractiveTour(1)" class="pahad-hero-action-link text-[11.5px] font-bold transition-colors flex items-center gap-1.5 cursor-pointer bg-transparent border-0 p-0 shadow-none" title="Interactive walkthrough of all platform functions">
+              <i class="ph-bold ph-compass"></i> <span>Platform Tour &amp; Functions</span>
+            </button>
+            <!-- USER-FRIENDLY LIVE SIMULATION BUTTON -->
+            <button type="button" id="btn-hero-launch-demo" onclick="launchLiveSimulationDemo()" class="pahad-hero-action-link text-[11.5px] font-bold transition-colors flex items-center gap-1.5 cursor-pointer bg-transparent border-0 p-0 shadow-none" title="Launch 13-stage Teesta failure simulation">
+              <i class="ph-bold ph-play"></i> <span>Run Simulation</span>
+            </button>
+            <a href="/pahad-ai" id="link-hero-explore-observatory" class="pahad-hero-action-link text-[11.5px] font-bold transition-colors flex items-center gap-1.5 cursor-pointer bg-transparent border-0 p-0 shadow-none" title="Explore Observatory">
+              <i class="ph-bold ph-telescope"></i> <span>Explore Observatory →</span>
+              <span class="pahad-hero-twin-tag font-mono text-[10px] font-bold">[3D TWIN]</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Hero Showcase: CRI Gauge (Left) + Current Location & Cascading Corridor Select (Right) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+          
+          <!-- LEFT: 3. CRI CENTERPIECE & 4. RISK LEVEL BADGE (Col 4) -->
+          <div class="lg:col-span-4 bg-[#171717] border border-[#262626] rounded-lg p-4 flex flex-col items-center justify-center text-center shadow-inner">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+              <span class="text-[10px] font-mono uppercase tracking-widest text-[#A3A3A3] font-bold">COMPOSITE RISK INDEX (CRI)</span>
+            </div>
+            
+            <!-- 3. LARGE CRI PREDICTION CENTERPIECE -->
+            <div id="pahad-ai-ring" class="pahad-ai-ring my-1.5" style="--score:40.6; --ring-color:#ea580c;">
+              <div class="pahad-ai-ring-content">
+                <div id="pahad-ai-score" class="text-4xl font-black text-white font-mono tracking-tight">40.6</div>
+                <div class="text-[10px] font-mono text-[#A3A3A3] uppercase mt-0.5">Scale 0&ndash;100</div>
+              </div>
+            </div>
+
+            <!-- 4. RISK LEVEL BADGE -->
+            <div id="pahad-ai-band" class="pahad-band-high px-3 py-1 rounded text-xs font-black tracking-wider uppercase mb-1">
+              HIGH RISK
+            </div>
+            <div id="pahad-ai-prob" class="text-xs font-mono text-[#A3A3A3] font-bold mt-0.5">
+              P(event, 24h): 42.1%
+            </div>
+            <p class="text-[11px] text-[#737373] max-w-[260px] mt-2 leading-relaxed">
+              Multi-modal index fused from Mohr-Coulomb slope stability, rainfall I-D, and geotechnical ML.
+            </p>
+          </div>
+
+          <!-- RIGHT: CURRENT ASSESSMENT LOCATION & CASCADING SELECTION (Col 8) -->
+          <div class="lg:col-span-8 flex flex-col justify-between space-y-3.5">
+            <!-- Location Title & Live Telemetry Flags -->
+            <div class="bg-[#171717] border border-[#262626] rounded-lg p-4">
+              <div class="flex flex-wrap items-center justify-between gap-2 pb-2 mb-2 border-b border-[#262626]">
+                <span class="text-[10px] font-mono uppercase tracking-widest text-[#737373]">CURRENT ASSESSMENT LOCATION</span>
+                <div class="flex items-center gap-2 flex-wrap">
+                  <div class="hidden text-[10px] font-mono px-2 py-0.5 rounded bg-[#111111] border border-[#262626] text-[#A3A3A3]" style="display: none !important;">
+                    Trend: <strong id="pahad-ai-trend" class="text-white">EVALUATING</strong>
+                  </div>
+                  <div id="pahad-completeness-container" class="text-[10px] font-mono px-2 py-0.5 rounded bg-[#111111] border border-[#262626] text-[#A3A3A3]">
+                    Quality: <strong id="pahad-data-completeness-badge" class="text-[#4ADE80]">HIGH DATA COMPLETENESS</strong>
+                  </div>
+                  <div id="pahad-corridor-loading" class="hidden items-center gap-1.5 text-[10px] font-bold text-white bg-[#111111] border border-[#2D2D2D] px-2 py-0.5 rounded">
+                    <span class="w-2 h-2 rounded-full bg-white animate-ping"></span>
+                    <span>Updating Telemetry&hellip;</span>
+                  </div>
+                  <div id="pahad-corridor-timestamp" class="text-[10px] font-mono text-[#737373]">Updated: Live</div>
+                </div>
+              </div>
+
+              <div id="pahad-ai-location" class="text-lg sm:text-xl font-black text-white mt-0.5">Sonapur Tunnel NH-06 Portal Scarp</div>
+              <div id="pahad-ai-location-sub" class="text-xs text-[#A3A3A3] font-mono mt-0.5">Strategic Lifeline Corridor &bull; East Jaintia Hills, Meghalaya &bull; Lat 25.1850&deg;N, Lon 92.3650&deg;E</div>
+            </div>
+
+            <!-- Cascading Corridor Selection Strip -->
+            <div class="bg-[#171717] border border-[#262626] rounded-lg p-3.5">
+              <div class="text-[10px] font-mono uppercase tracking-wider text-[#A3A3A3] mb-2 font-bold flex items-center justify-between">
+                <span class="flex items-center gap-1.5"><i class="ph-bold ph-faders text-sky-400"></i> Select Monitored Strategic Corridor / Geographic Node:</span>
+                <span class="text-[9px] text-[#737373] font-normal">8 Himalayan Sectors Monitored</span>
+              </div>
+              
+              <div id="pahad-location-picker" class="flex items-center gap-2.5 flex-wrap">
+                <div class="flex items-center gap-1.5">
+                  <label for="pahad-state-filter" class="text-[10px] font-mono text-[#737373] uppercase">State:</label>
+                  <select id="pahad-state-filter" onchange="onStateFilterChanged(this.value)" aria-label="Filter Monitored State" class="bg-[#111111] text-[#E5E5E5] border border-[#2D2D2D] rounded px-2.5 py-1 text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-[#525252] cursor-pointer">
+                    <option value="ALL" selected>All NER States</option>
+                    <option value="Meghalaya">Meghalaya</option>
+                    <option value="Sikkim">Sikkim</option>
+                    <option value="Manipur">Manipur</option>
+                    <option value="Mizoram">Mizoram</option>
+                    <option value="Assam">Assam</option>
+                    <option value="Nagaland">Nagaland</option>
+                    <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                    <option value="Tripura">Tripura</option>
+                    <option value="West Bengal">Strategic Border</option>
+                  </select>
+                </div>
+
+                <div class="flex items-center gap-1.5">
+                  <label for="pahad-district-filter" class="text-[10px] font-mono text-[#737373] uppercase">District:</label>
+                  <select id="pahad-district-filter" onchange="onDistrictFilterChanged(this.value)" aria-label="Filter Monitored District" class="bg-[#111111] text-[#E5E5E5] border border-[#2D2D2D] rounded px-2.5 py-1 text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-[#525252] cursor-pointer">
+                    <option value="ALL" selected>All Districts</option>
+                  </select>
+                </div>
+
+                <div class="flex items-center gap-1.5 flex-grow sm:flex-grow-0">
+                  <label for="pahad-corridor-select" class="text-[10px] font-mono text-[#737373] uppercase">Corridor:</label>
+                  <select id="pahad-corridor-select" onchange="onCorridorSelectionChanged(this.value)" aria-label="Monitored NER Strategic Corridor" class="bg-[#111111] text-[#E5E5E5] border border-[#2D2D2D] rounded px-2.5 py-1 text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-[#525252] cursor-pointer w-full sm:w-auto max-w-[340px] truncate">
+                    <option value="ML-SONAPUR-01" selected>NH-06 Sonapur Tunnel &mdash; Meghalaya (East Jaintia Hills)</option>
+                    <option value="SK-NH10-KM48">NH-10 Km 48 (29th Mile) &mdash; Sikkim (Pakyong)</option>
+                    <option value="MN-TUPUL-RLY">NH-37 / Tupul &mdash; Manipur (Noney)</option>
+                    <option value="MZ-MELTHUM-QRY">NH-6 / Melthum &mdash; Mizoram (Aizawl)</option>
+                    <option value="AS-HAFLONG-RLY">Haflong Rail &mdash; Assam (Dima Hasao)</option>
+                    <option value="ML-MAWSYNRAM">NH-206 / Mawsynram &mdash; Meghalaya</option>
+                    <option value="NL-DZUKOU-KOH">NH-29 / Dzukou &mdash; Nagaland (Kohima)</option>
+                    <option value="AR-TAWANG-SELA">NH-13 / Sela Pass &mdash; Arunachal Pradesh</option>
+                    <option value="TR-JAMPUI-HILLS">Jampui Hills &mdash; Tripura (North Tripura)</option>
+                  </select>
+                </div>
+
+                <div class="flex items-center gap-1.5 ml-auto">
+                  <button type="button" id="btn-pick-map-loc" onclick="toggleMapPointPicker()" class="px-2.5 py-1 bg-[#111111] hover:bg-[#1D1D1D] text-[#E5E5E5] border border-[#2D2D2D] rounded text-xs font-medium transition flex items-center gap-1" title="Pick point on GIS Map">
+                    <i class="ph-bold ph-crosshair"></i> <span>Use Map Location</span>
+                  </button>
+                  <button type="button" id="btn-custom-coords" onclick="openCustomCoordModal()" class="px-2.5 py-1 bg-[#111111] hover:bg-[#1D1D1D] text-[#E5E5E5] border border-[#2D2D2D] rounded text-xs font-medium transition flex items-center gap-1" title="Enter arbitrary coordinates">
+                    <i class="ph-bold ph-map-pin"></i> <span>Custom Coords</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- USER-FRIENDLY ONBOARDING & QUICKSTART FUNCTION GUIDE BANNER -->
+      <div id="pahad-onboarding-callout" class="bg-gradient-to-r from-sky-950/40 via-[#111111] to-emerald-950/40 border border-sky-900/50 rounded-lg p-3 sm:p-3.5 flex flex-wrap items-center justify-between gap-3 text-xs">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-full bg-sky-900/60 border border-sky-600/60 flex items-center justify-center text-sky-400 shrink-0">
+            <i class="ph-bold ph-info text-base"></i>
+          </div>
+          <div>
+            <div class="font-bold text-white flex items-center gap-2">
+              <span>How PARVAT NETRA / PAHAD AI Works</span>
+              <span class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-sky-900/60 text-sky-300 border border-sky-700">PLATFORM GUIDE &amp; DEMO</span>
+            </div>
+            <p class="text-[11px] text-slate-300 m-0 mt-0.5">
+              CRI is the primary composite hazard metric fusing geotechnical physics (Mohr-Coulomb FoS), IMD precipitation thresholds, and calibrated ML.
+            </p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="startInteractiveTour(1)" class="px-3 py-1 bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold rounded flex items-center gap-1.5 transition active:scale-95 shadow-xs cursor-pointer">
+            <i class="ph-bold ph-compass"></i> <span>Interactive Tour (60s)</span>
+          </button>
+          <button type="button" onclick="launchLiveSimulationDemo()" class="px-3 py-1 bg-[#171717] hover:bg-[#222222] text-emerald-400 hover:text-emerald-300 border border-emerald-700/60 text-xs font-bold rounded flex items-center gap-1.5 transition active:scale-95 cursor-pointer">
+            <i class="ph-bold ph-play"></i> <span>Run Simulation</span>
+          </button>
+          <button type="button" onclick="dismissOnboardingCallout()" class="px-2 py-1 text-slate-400 hover:text-white text-xs cursor-pointer" title="Dismiss guide">
+            <i class="ph-bold ph-x"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- SECONDARY PREDICTION ANALYSIS GRID (WHY, EVIDENCE, ACTION) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+        
+        <!-- LEFT COLUMN: 5. WHY & RANKED DRIVERS (Col 6) -->
+        <div class="lg:col-span-6 bg-[#111111] border border-[#222222] rounded-lg p-4 space-y-3">
+          <div class="flex items-center justify-between pb-2 border-b border-[#222222]">
+            <div class="flex items-center gap-2">
+              <i class="ph-bold ph-lightbulb text-amber-400 text-sm"></i>
+              <span class="text-xs font-black uppercase tracking-wider text-white">Why PAHAD AI Is Raising Risk</span>
+            </div>
+            <span id="pahad-evidence-provenance" class="text-[9px] font-mono px-2 py-0.5 rounded bg-[#171717] border border-[#262626] text-[#A3A3A3]">[HYBRID FUSION]</span>
+          </div>
+
+          <!-- Plain Language Box -->
+          <div id="pahad-plain-explanation" class="p-3 rounded bg-[#171717] border border-[#262626] text-xs text-[#E5E5E5] leading-relaxed">
+            <span id="pahad-ai-explanation">Elevated risk is driven by antecedent precipitation loading (68.4 mm/24h) and reduced slope stability (physical FoS 0.926 &lt; 1.0). Geotechnical ML corroborates elevated failure likelihood within the 24h forecast window.</span>
+          </div>
+          
+          <div class="text-[10px] text-[#737373] italic scientific-disclaimer">
+            Contributing signals indicate statistical association and physical mechanism drivers; they do not constitute individual causal proof.
+          </div>
+
+          <!-- Primary Drivers List -->
+          <div class="space-y-1.5" id="pahad-driver-ranked-list">
+            <div class="pahad-driver flex items-center justify-between text-xs py-1 border-b border-[#1A1A1A]">
+              <span class="text-[#E5E5E5] font-medium">1. Physical Instability (Mohr-Coulomb FoS)</span>
+              <div class="w-28 bg-[#171717] h-1.5 rounded overflow-hidden mx-2"><span id="pahad-driver-fos-bar" class="block bg-orange-500 h-full" style="width:75%"></span></div>
+              <span id="pahad-driver-fos-val" class="text-[10px] font-mono text-orange-400 font-bold shrink-0">PRIMARY DRIVER</span>
+            </div>
+            <div class="pahad-driver flex items-center justify-between text-xs py-1 border-b border-[#1A1A1A]">
+              <span class="text-[#E5E5E5] font-medium">2. Rainfall Loading (IMD / Mandal-Sarkar I-D)</span>
+              <div class="w-28 bg-[#171717] h-1.5 rounded overflow-hidden mx-2"><span id="pahad-driver-rain" class="block bg-amber-500 h-full" style="width:65%"></span></div>
+              <span id="pahad-driver-rain-val" class="text-[10px] font-mono text-amber-400 font-bold shrink-0">SECONDARY DRIVER</span>
+            </div>
+            <div class="pahad-driver flex items-center justify-between text-xs py-1">
+              <span class="text-[#E5E5E5] font-medium">3. Ground Anomaly &amp; InSAR Creep</span>
+              <div class="w-28 bg-[#171717] h-1.5 rounded overflow-hidden mx-2"><span id="pahad-driver-ground" class="block bg-[#737373] h-full" style="width:40%"></span></div>
+              <span id="pahad-driver-ground-val" class="text-[10px] font-mono text-[#A3A3A3] font-bold shrink-0">SUPPORTING SIGNAL</span>
+            </div>
+            <div class="hidden"><span id="pahad-driver-seismic"></span><span id="pahad-driver-seismic-val"></span></div>
+          </div>
+
+          <!-- Scientific Ledger Expand Toggle -->
+          <div class="pt-2 border-t border-[#222222]">
+            <button type="button" id="btn-toggle-prediction-details" onclick="togglePredictionDetails()" class="w-full px-3 py-1.5 bg-[#171717] hover:bg-[#1D1D1D] text-[#A3A3A3] hover:text-white border border-[#262626] rounded flex items-center justify-between text-xs font-semibold transition">
+              <span class="flex items-center gap-1.5">
+                <i class="ph-bold ph-scales text-[#A3A3A3]"></i>
+                <span>View Comprehensive Scientific Ledger &amp; Physics Breakdown</span>
+              </span>
+              <span class="flex items-center gap-1 text-[11px] font-mono">
+                <span id="label-toggle-prediction-details">Expand</span>
+                <i id="icon-toggle-prediction-details" class="ph-bold ph-caret-down text-[#737373]"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: 6. KEY EVIDENCE & 7. ACTION (Col 6) -->
+        <div class="lg:col-span-6 space-y-4">
+          
+          <!-- 6. KEY EVIDENCE: 4-CARD SIGNAL GRID -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+            <div class="bg-[#111111] border border-[#222222] rounded-lg p-3">
+              <div class="text-[10px] font-mono uppercase tracking-wider text-[#737373]">Physical FoS</div>
+              <div id="pahad-ai-fos" class="text-base font-black text-white font-mono mt-0.5">0.926</div>
+              <div id="pahad-ai-fos-agreement" class="text-[10px] font-mono text-rose-400 mt-0.5">FoS &lt; 1.0 (Unstable)</div>
+            </div>
+            <div class="bg-[#111111] border border-[#222222] rounded-lg p-3">
+              <div class="text-[10px] font-mono uppercase tracking-wider text-[#737373]">Rainfall Trigger</div>
+              <div id="pahad-ai-rain-status" class="text-base font-black text-white font-mono mt-0.5">68.4 mm</div>
+              <div id="pahad-ai-rain-agreement" class="text-[10px] font-mono text-rose-400 mt-0.5">I-D Exceeded</div>
+            </div>
+            <div class="bg-[#111111] border border-[#222222] rounded-lg p-3">
+              <div class="text-[10px] font-mono uppercase tracking-wider text-[#737373]">Geotech ML</div>
+              <div id="pahad-ai-ml-status" class="text-base font-black text-white font-mono mt-0.5">42.1% P(E)</div>
+              <div id="pahad-ai-ml-agreement" class="text-[10px] font-mono text-amber-400 mt-0.5">Elevated Risk</div>
+            </div>
+            <div class="bg-[#111111] border border-[#222222] rounded-lg p-3">
+              <div class="text-[10px] font-mono uppercase tracking-wider text-[#737373]">Seismic Modifier</div>
+              <div id="pahad-ai-seismic-status" class="text-base font-black text-white font-mono mt-0.5">+4 CRI pts</div>
+              <div id="pahad-ai-seismic-agreement" class="text-[10px] font-mono text-[#737373] mt-0.5">NCS Regional Arc</div>
+            </div>
+          </div>
+
+          <!-- 7. RECOMMENDED ACTION: PROTOCOL CARD -->
+          <div class="bg-[#111111] border border-[#222222] rounded-lg p-4 space-y-3">
+            <div class="flex items-center justify-between pb-2 border-b border-[#222222]">
+              <span class="text-xs font-black uppercase tracking-wider text-white">WHAT SHOULD THE AUTHORITY DO? (Recommended Operational Protocol)</span>
+              <span id="pahad-corroboration-badge" class="text-[9px] font-mono px-2 py-0.5 rounded bg-[#166534]/30 text-[#4ADE80] border border-[#166534]">2/3 CORROBORATED</span>
+            </div>
+
+            <div class="p-3 rounded bg-[#171717] border border-[#262626]">
+              <div class="text-[10px] font-mono uppercase tracking-wider text-amber-400 font-bold mb-1">[STAGE 2] AI Recommended Advisory</div>
+              <div id="pahad-ai-action" class="text-xs font-bold text-white"><span id="pahad-ai-action-text">Issue Heavy Transport Restriction + Dispatch Field Geotechnical Survey</span></div>
+              <div id="pahad-ai-action-reason" class="text-[11px] text-[#A3A3A3] mt-1">Corroborated by physical slope limit equilibrium and empirical rainfall thresholds.</div>
+            </div>
+
+            <div class="p-3 rounded bg-[#171717] border border-[#262626]">
+              <div class="flex items-center justify-between mb-1">
+                <span class="text-[10px] font-mono uppercase tracking-wider text-[#A3A3A3] font-bold">[STAGE 3] Statutory Human Authority Sign-Off</span>
+                <span class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-[#222222] text-[#E5E5E5] border border-[#2D2D2D]">DMA 2005 REQUIREMENT</span>
+              </div>
+              <p class="text-[11px] text-[#A3A3A3] leading-snug m-0 statutory-signoff-copy">
+                Public emergency alerts, siren dispatches, and highway closures require statutory authorization from District Collector / SEOC Magistrate (DDMA) under Disaster Management Act 2005. Safety Gate: ENABLE_PUBLIC_DISPATCH=0 (Simulated / Test Mode Only).
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      
       <!-- COLLAPSIBLE EXPANDED DETAILS PANEL (PHASE 9E CP03 LEDGER) -->
       <div id="pahad-prediction-details-panel" class="hidden p-4 rounded-lg bg-[#0A0A0A] border border-[#262626] space-y-3 text-xs text-[#E5E5E5]">
         <div class="flex items-center justify-between border-b border-[#222222] pb-2">
@@ -6409,6 +6411,7 @@ function initMap(){
     layerGroupMap={risk:roadLayerGroup,insar:insarLayerGroup,cuts:cutsLayerGroup,river:riverLayerGroup,detours:detoursLayerGroup,scars:scarsLayerGroup,sensors:sensorLayerGroup,habitations:habitationsLayerGroup,reports:reportsLayerGroup,bro_fleet:broFleetLayerGroup,sar:sarLayerGroup,contours:contoursLayerGroup,historical_landslides:historicalLandslidesLayerGroup,vegetation:vegetationLayerGroup,sat_footprint:satFootprintLayerGroup};
     map.on('mousemove',function(e){var el=document.getElementById('coord-display');if(el)el.textContent=e.latlng.lat.toFixed(5)+', '+e.latlng.lng.toFixed(5);});
     loadSpatialRisk();loadIoTSensors();loadInSARPoints();loadAISatelliteScars();loadTeestaRiver();loadAnthropogenicCuts();loadEvacuationPlan();loadHabitationMatrix();loadClusteredReports();loadBROFleet();loadSARTargets();refreshTeestaHydro();loadGeospatialLayers();loadGeospatialOverviewCard();
+    setTimeout(function() { if (window.map && typeof window.map.invalidateSize === 'function') window.map.invalidateSize(); }, 200);
 }
 
 async function loadGeospatialLayers() {
