@@ -15,7 +15,7 @@ const PARVAT_I18N = {
     en: {
         app_title: "PARVAT NETRA",
         subtitle: "Unified Landslide Decision Intelligence & Life-Safety System",
-        goi: "भारत सरकार | Government of India",
+        goi: "Smart India Hackathon 2026",
         ministry: "Ministry of Development of North Eastern Region (MDoNER)",
         sync: "Sync IMD",
         eoc_mode: "EOC Command Mode",
@@ -100,7 +100,7 @@ const PARVAT_I18N = {
     hi: {
         app_title: "पर्वत नेत्र",
         subtitle: "एकीकृत भूस्खलन निर्णय खुफिया और जीवन-सुरक्षा प्रणाली",
-        goi: "भारत सरकार | Government of India",
+        goi: "स्मार्ट इंडिया हैकथॉन 2026",
         ministry: "उत्तर पूर्वी क्षेत्र विकास मंत्रालय (MDoNER)",
         sync: "IMD डेटा सिंक करें",
         eoc_mode: "ईओसी कमांड मोड",
@@ -176,7 +176,7 @@ const PARVAT_I18N = {
     ne: {
         app_title: "पर्वत नेत्र",
         subtitle: "एकीकृत पहिरो निर्णय गुप्तचर र जीवन सुरक्षा प्रणाली",
-        goi: "भारत सरकार | Government of India",
+        goi: "स्मार्ट इन्डिया ह्याकाथन २०२६",
         ministry: "उत्तर पूर्वी क्षेत्र विकास मन्त्रालय (MDoNER)",
         sync: "IMD सिङ्क गर्नुहोस्",
         eoc_mode: "EOC कमाण्ड मोड",
@@ -252,7 +252,7 @@ const PARVAT_I18N = {
     bh: {
         app_title: "པར་བཱཏ་ནེ་ཏྲ།",
         subtitle: "ས་རུད་ཉེན་བརྡ་དང་སྲོག་སྐྱོབ་བཀོད་འདོམས་མ་ལག",
-        goi: "རྒྱ་གར་གཞུང་། | Government of India",
+        goi: "Smart India Hackathon 2026",
         ministry: "བྱང་ཤར་ས་ཁུལ་ཡར་རྒྱས་ལྷན་ཁང་། (MDoNER)",
         sync: "IMD མཉམ་འབྲེལ།",
         eoc_mode: "ཛ་དྲག་བཀོད་འདོམས་ལྟེ་གནས།",
@@ -328,7 +328,7 @@ const PARVAT_I18N = {
     lp: {
         app_title: "ᰛᰩᰵ ᰕᰤᰬᰳ (Parvat Netra)",
         subtitle: "ᰑᰳ ᰆᰤᰩᰳ ᰗᰩ ᰠᰩᰵ ᰠᰩᰵ ᰜᰤᰦᰵ (Landslide Decision System)",
-        goi: "Government of India | ᰓᰦᰛᰳ ᰠᰛᰀᰦᰛ",
+        goi: "Smart India Hackathon 2026",
         ministry: "Ministry of DoNER",
         sync: "IMD ᰠᰧᰵᰀ (Sync IMD)",
         eoc_mode: "ᰗᰩ ᰀᰩᰕᰦᰳ ᰕᰨᰳ (EOC Mode)",
@@ -404,7 +404,7 @@ const PARVAT_I18N = {
     as: {
         app_title: "পৰ্বত নেত্ৰ",
         subtitle: "একত্ৰিত ভূমিস্খলন সিদ্ধান্ত চোৰাংচোৱা আৰু জীৱন-সুৰক্ষা ব্যৱস্থা",
-        goi: "ভাৰত চৰকাৰ | Government of India",
+        goi: "স্মাৰ্ট ইণ্ডিয়া হেকাথন ২০২৬",
         ministry: "উত্তৰ-পূৰ্বাঞ্চল উন্নয়ন মন্ত্ৰালয় (MDoNER)",
         sync: "IMD সংমিশ্ৰণ কৰক",
         eoc_mode: "EOC কমাণ্ড ম'ড",
