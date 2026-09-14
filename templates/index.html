@@ -2808,12 +2808,7 @@
             <button id="btn-citizen-mode" onclick="switchPortalMode('citizen')" class="role-tab inactive text-xs px-2.5 py-1 rounded transition font-semibold" aria-pressed="false"><i class="ph-bold ph-users"></i> <span data-i18n="citizen_mode">Citizen Mode</span></button>
           </div>
 
-          <!-- Viewport Sizing Controls (Preserved in DOM for tests) -->
-          <div class="hidden">
-            <button onclick="setMapViewMode('compact')" id="btn-map-compact">COMPACT</button>
-            <button onclick="setMapViewMode('standard')" id="btn-map-standard">STD</button>
-            <button onclick="setMapViewMode('maximize')" id="btn-map-maximize">MAX</button>
-          </div>
+          
 
           <!-- Sync IMD Weather Observations Button (Neutral Government Style) -->
           <button onclick="syncIMD()" id="btn-sync-imd" class="px-2.5 py-1 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-slate-700 text-xs font-semibold rounded shadow-xs flex items-center gap-1.5 transition active:scale-95 cursor-pointer" title="Sync IMD Weather &amp; Nowcast">
@@ -3053,6 +3048,478 @@
 
     <!-- ===== AUTHORITY MODE ===== -->
     <div id="authority-view" class="max-w-7xl mx-auto px-4 py-5"><div id="authority-mode">
+
+        <!-- Map + Evidence Card -->
+        <div id="authority-map-slot" class="grid grid-cols-1 xl:grid-cols-12 gap-5 mb-5">
+            <!-- Map (8 cols) -->
+            <div id="gis-map-card" class="xl:col-span-8 dark-card flex flex-col">
+                <div class="dark-card-header bg-white border-b border-slate-200 px-3 sm:px-4 py-2 sm:py-2.5 flex flex-wrap justify-between items-center gap-2 rounded-t-md">
+                    <div class="flex items-center space-x-2 min-w-0">
+                        <i class="ph-bold ph-globe-hemisphere-east text-[#0B2545] text-base shrink-0"></i>
+                        <h2 class="font-bold text-xs sm:text-sm text-[#0B2545] truncate" id="lbl-gis-title"><span class="sm:hidden">GIS Hazard Map</span><span class="hidden sm:inline">Operational GIS Hazard Viewer (WGS84)</span></h2>
+                        <span class="text-xs text-slate-500 ml-1 hidden md:inline font-medium"><span class="inline-block w-2 h-2 rounded-full bg-red-600 mr-0.5"></span> RED &nbsp; <span class="inline-block w-2 h-2 rounded-full bg-amber-500 mr-0.5"></span> ORANGE &nbsp; <span class="inline-block w-2 h-2 rounded-full bg-yellow-400 mr-0.5"></span> YELLOW</span>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
+                        <span id="coord-display" class="font-mono text-[11px] sm:text-xs text-slate-500 hidden sm:inline">27.2500, 88.5500</span>
+                        <button id="btn-toggle-gsi-insar" onclick="toggleGsiInSarOverlay()" class="px-2 sm:px-2.5 py-1 bg-slate-900 hover:bg-slate-800 text-amber-300 border border-slate-700 rounded text-[10px] sm:text-xs font-bold transition flex items-center gap-1 shadow-sm shrink-0" aria-pressed="false" title="Toggle GSI Critical Sectors & InSAR Radar Overlays across NER">
+                            <i class="ph-bold ph-satellite"></i>
+                            <span id="lbl-toggle-gsi-insar"><span class="hidden sm:inline">SATELLITE INSAR &amp; SENSOR OVERLAY</span><span class="sm:hidden">INSAR &amp; SENSORS</span></span>
+                            <span id="lc-toggle-gsi-insar" class="hidden">Toggle GSI Critical Sectors & InSAR</span>
+                        </button>
+                        <button id="btn-reset-view" onclick="if(map) map.setView([27.25, 88.55], 10);" class="px-2 sm:px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-[#0B2545] border border-slate-300 rounded text-[10px] sm:text-xs font-bold transition shrink-0">Reset</button>
+                        <div class="inline-flex border border-slate-400 bg-slate-900 text-[9px] sm:text-[10px] font-bold uppercase tracking-wider rounded-none shrink-0">
+                          <button id="btn-map-compact" onclick="setMapViewMode('compact')" 
+                                  class="px-2 sm:px-2.5 py-1 text-slate-300 hover:text-white hover:bg-slate-800 transition" 
+                                  title="Collapse map height for smooth vertical scrolling">
+                            COMPACT
+                          </button>
+                          <span class="w-[1px] bg-slate-700"></span>
+                          <button id="btn-map-standard" onclick="setMapViewMode('standard')" 
+                                  class="px-2 sm:px-2.5 py-1 text-white bg-[#002147] transition font-bold" 
+                                  title="Standard operational height">
+                            <span class="hidden sm:inline">STANDARD</span><span class="sm:hidden">STD</span>
+                          </button>
+                          <span class="w-[1px] bg-slate-700"></span>
+                          <button id="btn-map-maximize" onclick="setMapViewMode('maximize')" 
+                                  class="px-2 sm:px-2.5 py-1 text-slate-300 hover:text-white hover:bg-slate-800 transition" 
+                                  title="Expand map to full inspection viewport">
+                            <span class="hidden sm:inline">MAXIMIZE</span><span class="sm:hidden">MAX</span>
+                          </button>
+                        </div>
+                        <button id="btn-exit-fullscreen-map" onclick="setMapViewMode('standard')" class="hidden px-2 py-1 bg-red-700 hover:bg-red-800 text-white font-bold text-[10px] sm:text-xs uppercase tracking-wider transition border border-red-500 flex items-center gap-1 rounded-none" title="Exit Fullscreen View">
+                            <span>[ EXIT (ESC) ]</span>
+                            <span class="hidden">EXIT FULLSCREEN</span>
+                        </button>
+                    </div>
+                </div>
+                <div id="gis-map" class="relative flex-grow">
+                    <div id="map"></div>
+                    <!-- Floating Layer Control Panel -->
+                    <div id="layer-control-panel">
+                        <div class="lcp-header" onclick="toggleLayerPanel()" title="Click to toggle Map & Layer Controls">
+                            <span style="font-size:11px;font-weight:700;color:#FFFFFF;letter-spacing:0.04em;">MAP &amp; LAYER CONTROL</span>
+                            <div class="flex items-center gap-1.5">
+                                <span id="lcp-close-hint" class="text-[9px] text-slate-400 hidden sm:inline">(Tap to toggle)</span>
+                                <i class="ph-bold ph-sliders" style="color:#38bdf8;font-size:13px;"></i>
+                                <i id="lcp-chevron" class="ph-bold ph-caret-down text-slate-400 text-xs transition-transform duration-200"></i>
+                            </div>
+                        </div>
+                        <div class="lcp-body" id="lcp-body" style="display: none;">
+                            <!-- BASEMAP SWITCHER (Section 8 & 9) -->
+                            <div class="p-2 mb-2 bg-[#070B10] border border-slate-800 rounded">
+                                <div class="flex items-center justify-between mb-1.5">
+                                    <span class="text-[10px] text-slate-300 font-bold uppercase tracking-wider">MAP STYLE</span>
+                                    <span id="basemap-mode-pill" class="text-[9px] font-mono px-1.5 py-0.2 rounded bg-emerald-950 text-emerald-400 border border-emerald-800">ONLINE</span>
+                                </div>
+                                <div class="grid grid-cols-5 gap-1 text-[10px] font-mono">
+                                    <button type="button" onclick="switchMainBasemap('dark')" id="mb-dark" class="px-1 py-1 rounded bg-slate-800 text-slate-300 hover:text-white border border-slate-700">Dark</button>
+                                    <button type="button" onclick="switchMainBasemap('terrain')" id="mb-terrain" class="px-1 py-1 rounded bg-slate-800 text-slate-300 hover:text-white border border-slate-700">Terrain</button>
+                                    <button type="button" onclick="switchMainBasemap('street')" id="mb-street" class="px-1 py-1 rounded bg-slate-800 text-slate-300 hover:text-white border border-slate-700">Street</button>
+                                    <button type="button" onclick="switchMainBasemap('satellite')" id="mb-satellite" class="px-1 py-1 rounded bg-sky-950 text-sky-300 border border-sky-600 font-bold">Satellite</button>
+                                    <button type="button" onclick="switchMainBasemap('topo')" id="mb-topo" class="px-1 py-1 rounded bg-slate-800 text-slate-300 hover:text-white border border-slate-700">Topo</button>
+                                </div>
+                                <div id="offline-basemap-badge" class="hidden mt-1 text-[9px] font-mono text-amber-300 bg-amber-950/80 p-1 rounded border border-amber-800">
+                                    <span>Offline Operational Map Active</span>
+                                </div>
+                            </div>
+
+                            <!-- PAHAD AI INTELLIGENCE LAYERS -->
+                            <div class="lcp-category flex items-center justify-between" style="color:#38bdf8;margin-top:4px;font-weight:bold;letter-spacing:0.04em;">
+                                <span>PAHAD AI LAYERS</span>
+                            </div>
+                            <div class="lcp-item"><span class="lcp-dot" style="background:#dc2626;"></span><span class="lcp-label">Predictive Risk (CRI)</span><button class="lcp-toggle on" id="lc-toggle-risk" onclick="toggleLayerById('risk',this)" aria-label="Toggle Predictive Risk"></button></div>
+                            <div class="lcp-item"><span class="lcp-dot" style="background:#f97316;"></span><span class="lcp-label">Event Probability</span><button class="lcp-toggle on" id="lc-toggle-event-prob" onclick="toggleLayerById('risk',this)" aria-label="Toggle Event Probability"></button></div>
+                            <div class="lcp-item"><span class="lcp-dot" style="background:#eab308;"></span><span class="lcp-label">Factor of Safety (FoS)</span><button class="lcp-toggle on" id="lc-toggle-fos" onclick="toggleLayerById('risk',this)" aria-label="Toggle Factor of Safety"></button></div>
+                            <div class="lcp-item"><span class="lcp-dot" style="background:#0284c7;"></span><span class="lcp-label">Rainfall (I-D Curve)</span><button class="lcp-toggle on" id="lc-toggle-rainfall" onclick="toggleLayerById('river',this)" aria-label="Toggle Rainfall"></button></div>
+                            <div class="lcp-item"><span class="lcp-dot" style="background:#a855f7;"></span><span class="lcp-label">Seismic (Faults/PGA)</span><button class="lcp-toggle on" id="lc-toggle-seismic" onclick="toggleLayerById('detours',this)" aria-label="Toggle Seismic"></button></div>
+                            <div class="lcp-item"><span class="lcp-dot" style="background:#10b981;"></span><span class="lcp-label">IoT Telemetry Sensors</span><button class="lcp-toggle on" id="toggle-sensors-btn" onclick="toggleSensorLayer(this)" aria-label="Toggle IoT Sensors"></button></div>
+                            <div class="lcp-item"><span class="lcp-dot" style="background:#6366f1;"></span><span class="lcp-label">Deformation (InSAR)</span><button class="lcp-toggle on" id="toggle-insar-btn" onclick="toggleInSARLayer(this)" aria-label="Toggle InSAR"></button></div>
+                            <div class="lcp-item"><span class="lcp-dot" style="background:#10b981;"></span><span class="lcp-label">Vegetation (NDVI)</span><button class="lcp-toggle on" id="lc-toggle-vegetation" onclick="toggleLayerById('vegetation',this)" aria-label="Toggle Vegetation"></button></div>
+                            <div class="lcp-item"><span class="lcp-dot" style="background:#f59e0b;"></span><span class="lcp-label">Historical Landslides</span><button class="lcp-toggle on" id="lc-toggle-hist-landslides" onclick="toggleLayerById('historical_landslides',this)" aria-label="Toggle Historical Landslides"></button></div>
+
+                            <!-- OPERATIONS & CRITICAL INFRASTRUCTURE LAYERS -->
+                            <div class="lcp-category flex items-center justify-between" style="color:#4ade80;margin-top:8px;font-weight:bold;letter-spacing:0.04em;">
+                                <span>OPERATIONS INFRASTRUCTURE</span>
+                            </div>
+                            <div class="lcp-item"><span class="lcp-dot" style="background:#3b82f6;"></span><span class="lcp-label">Roads (Lifeline Corridors)</span><button class="lcp-toggle on" id="lc-toggle-roads" onclick="toggleLayerById('risk',this)" aria-label="Toggle Roads"></button></div>
+                            <div class="lcp-item"><span class="lcp-dot" style="background:#10b981;"></span><span class="lcp-label">Shelters (NDMA Camps)</span><button class="lcp-toggle on" id="lc-toggle-shelters" onclick="toggleLayerById('habitations',this)" aria-label="Toggle Shelters"></button></div>
+                            <div class="lcp-item"><span class="lcp-dot" style="background:#ec4899;"></span><span class="lcp-label">Hospitals &amp; Medical Units</span><button class="lcp-toggle on" id="lc-toggle-hospitals" onclick="toggleLayerById('habitations',this)" aria-label="Toggle Hospitals"></button></div>
+                            <div class="lcp-item"><span class="lcp-dot" style="background:#8b5cf6;"></span><span class="lcp-label">Schools &amp; Staging Sites</span><button class="lcp-toggle on" id="lc-toggle-schools" onclick="toggleLayerById('habitations',this)" aria-label="Toggle Schools"></button></div>
+                            <div class="lcp-item" style="margin-bottom:6px;"><span class="lcp-dot" style="background:#d97706;"></span><span class="lcp-label">Bridges &amp; Crossings</span><button class="lcp-toggle on" id="lc-toggle-bridges" onclick="toggleLayerById('cuts',this)" aria-label="Toggle Bridges"></button></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="px-4 py-2.5 flex flex-wrap justify-between items-center gap-2 bg-[#F8FAFC] border-t border-slate-200 rounded-b-md">
+                    <span class="text-[11px] text-slate-600">Basemap: Google Hybrid Satellite | WGS84 | EPSG:4326</span>
+                    <div class="flex items-center gap-3 text-[11px]">
+                        <span class="flex items-center gap-1"><span class="inline-block w-2 h-2 rounded-full bg-red-600"></span>RED</span>
+                        <span class="flex items-center gap-1"><span class="inline-block w-2 h-2 rounded-full bg-amber-500"></span>ORANGE</span>
+                        <span class="flex items-center gap-1"><span class="inline-block w-2 h-2 rounded-full bg-yellow-400"></span>YELLOW</span>
+                        <span class="flex items-center gap-1"><span class="inline-block w-2 h-2 rounded-full bg-emerald-500"></span>SAFE</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Evidence Card + BRO SOP (4 cols) -->
+            <div class="xl:col-span-4 flex flex-col gap-4">
+                <div class="dark-card flex flex-col flex-1">
+                    <div class="dark-card-header">
+                        <div class="flex items-center space-x-2"><i class="ph-bold ph-tree-structure text-amber-400 text-base"></i><h2 class="font-bold text-sm text-white" id="lbl-evidence-title">Decision Intelligence Card</h2></div>
+                        <span id="card-risk-badge" class="px-2 py-0.5 rounded text-[11px] font-black uppercase" style="background:rgba(185,28,28,0.3);color:#f87171;border:1px solid rgba(239,68,68,0.5);">RED ALERT</span>
+                    </div>
+                    <div class="p-4 space-y-3 text-xs overflow-y-auto flex-1" style="max-height:540px;">
+                        <div>
+                            <span class="text-slate-500 uppercase font-bold text-[10px] tracking-wider block" id="lbl-inspected">Inspected Target Sector</span>
+                            <h3 id="card-zone-title" class="text-sm font-black text-white leading-tight mt-0.5">NH-10 Corridor (Rangpo - Singtam)</h3>
+                            <p id="card-zone-sub" class="text-slate-500 text-[11px]">District: Pakyong | State: Sikkim</p>
+                        </div>
+                        <div class="rounded border border-slate-200 bg-white p-3.5 space-y-2 mt-3 shadow-sm" id="card-telemetry">
+  <span class="text-[10px] font-black uppercase tracking-wider text-[#0B2545] block pb-1 border-b border-slate-200" id="lbl-evidence-breakdown">
+    MULTIMODAL SUPPORTING EVIDENCE
+  </span>
+  <div class="flex justify-between py-1 border-b border-slate-100 text-xs">
+    <span class="text-slate-600 font-medium">IMD Rainfall:</span>
+    <span id="ev-rain" class="font-bold text-[#B91C1C]">78.5 mm (Elevated)</span>
+  </div>
+  <div class="flex justify-between py-1 border-b border-slate-100 text-xs">
+    <span class="text-slate-600 font-medium">Static Susceptibility:</span>
+    <span id="ev-susc" class="font-bold text-[#B91C1C]">HIGH (Slope &gt; 35°)</span>
+  </div>
+  <div class="flex justify-between py-1 border-b border-slate-100 text-xs">
+    <span class="text-slate-600 font-medium">InSAR Deformation:</span>
+    <span id="ev-insar" class="font-bold text-[#D97706]">ANOMALY (Sentinel-1 / NISAR)</span>
+  </div>
+  <div class="flex justify-between py-1 border-b border-slate-100 text-xs">
+    <span class="text-slate-600 font-medium">Soil VWC Saturation:</span>
+    <span id="ev-vwc" class="font-bold text-[#1D4ED8]">56.4% (Tathangchen)</span>
+  </div>
+  <div class="flex justify-between py-1 text-xs">
+    <span class="text-slate-600 font-medium">Field Observation:</span>
+    <span id="ev-soil" class="font-bold text-[#B91C1C]">CONFIRMED (Tension Cracks)</span>
+  </div>
+  <div id="row-toe-scour" class="flex justify-between py-1 text-xs border-t border-slate-100 hidden">
+    <span class="text-slate-600 font-medium">Toe Scour Pp Loss:</span>
+    <span id="ev-toe-scour" class="font-bold text-[#B91C1C]">-96% (Critical)</span>
+  </div>
+  <div id="row-anthro-cut" class="flex justify-between py-1 text-xs border-t border-slate-100 hidden">
+    <span class="text-slate-600 font-medium">Anthropogenic Hill Cut:</span>
+    <span id="ev-anthro-cut" class="font-bold text-[#D97706]">1.15x Unreinforced</span>
+  </div>
+</div>
+                        <div>
+                            <span class="text-slate-500 uppercase font-bold text-[10px] tracking-wider block" id="lbl-trigger">Primary Trigger Driver</span>
+                            <p id="card-driver" class="text-[#92400E] font-medium mt-1 p-2 rounded text-[11px] bg-[#FFFBEB] border border-[#FCD34D]">48h Cumulative Rainfall Exceeded (104.2 mm vs 36.7 mm). Green-Ampt Lf=6.46m &gt; slip plane 4.0m.</p>
+                        </div>
+                        <div class="my-3">
+                            <span class="text-[10px] uppercase font-bold text-slate-600 tracking-wider block mb-1.5" id="lbl-exposed">
+                                Exposed Critical Infrastructure
+                            </span>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div class="infra-card p-2.5 rounded border border-slate-300 bg-white text-center shadow-sm">
+                                    <span class="text-[10px] text-slate-500 font-bold uppercase block">Pop. Vulnerable</span>
+                                    <strong id="card-pop" class="text-lg font-black text-[#002B49]">4,200</strong>
+                                </div>
+                                <div class="infra-card p-2.5 rounded border border-red-300 bg-red-50 text-center shadow-sm">
+                                    <span class="text-[10px] text-red-600 font-bold uppercase block">Lifeline Route</span>
+                                    <strong class="text-xs font-black text-[#B91C1C] uppercase block mt-1">NH-10 Restricted</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="rounded-md p-3 space-y-1.5 bg-[#EFF6FF] border border-[#BFDBFE]">
+                            <div class="flex items-center justify-between border-b pb-1.5 border-[#DBEAFE]"><span class="font-bold text-[#1E40AF] flex items-center text-[10px] uppercase tracking-wider"><i class="ph-bold ph-truck mr-1.5 text-[#1D4ED8]"></i>Emergency Logistics</span><span id="evac-primary-badge" class="px-1.5 py-0.5 rounded text-[10px] font-black uppercase bg-[#FEE2E2] text-[#B91C1C] border border-[#FCA5A5]">NH-10 BLOCKED</span></div>
+                            <div class="text-[11px] text-slate-700 space-y-1">
+                                <div class="flex justify-between"><span>Primary Highway:</span><span id="evac-primary-status" class="font-bold text-[#B91C1C]">Passage Denied</span></div>
+                                <div class="flex justify-between"><span>Active Detour:</span><span id="evac-detour-name" class="font-bold text-[#1D4ED8]">Lava - Gorubathan</span></div>
+                                <div class="flex justify-between"><span>Freight Clearance:</span><span id="evac-detour-tonnage" class="font-semibold text-slate-900">45T (BYPASS-LAVA)</span></div>
+                                <div class="flex justify-between border-t pt-1 border-[#DBEAFE]"><span>Habitation Threat:</span><span id="evac-settlement-count" class="font-bold text-[#B91C1C]">1 Air-Only | 2 Threatened</span></div>
+                            </div>
+                        </div>
+                        <div class="pt-2 border-t border-slate-200 space-y-2">
+                            <span class="text-slate-500 font-bold block text-[10px] uppercase tracking-wider" id="lbl-protocol" data-i18n="rec_protocol">Recommended Executive Protocol</span>
+                            <p id="card-action" class="text-slate-800 text-[11px] font-semibold mb-2">Impose immediate heavy vehicle restrictions and deploy BRO Plant Swastik SOP-ALPHA at 29th Mile.</p>
+                            <div class="grid grid-cols-2 gap-2">
+                                <button onclick="approveProtocol()" id="btn-auth" data-i18n="auth_protocol" class="w-full font-bold py-2 rounded-md text-xs transition shadow-sm active:scale-95 border bg-[#D1FAE5] text-[#065F46] border-[#A7F3D0] hover:bg-[#A7F3D0]">Authorize Protocol</button>
+                                <button onclick="dispatchAlert()" id="btn-issue-alert" data-i18n="issue_alert" class="w-full font-bold py-2 rounded-md text-xs transition shadow-sm active:scale-95 border bg-[#FEE2E2] text-[#B91C1C] border-[#FCA5A5] hover:bg-[#FCA5A5]">Issue Public Alert</button>
+                            </div>
+                            <div class="mt-2 space-y-2">
+                                <button onclick="open3DTerrainModel('NH-10 Km 48 (29th Mile Sector)', 0.745)" class="w-full py-2 bg-[#003366] hover:bg-[#002244] text-white font-bold text-xs rounded-md border border-[#004080] flex items-center justify-center gap-1.5 shadow-sm transition active:scale-95 focus:ring-2 focus:ring-[#38BDF8] focus:outline-none"><i class="ph-bold ph-cube"></i> <span data-i18n="dem_3d">Inspect 3D Digital Elevation Model (DEM)</span></button>
+                                <button onclick="openAuthoritySirenArmModal()" class="w-full py-1.5 bg-[#B91C1C] hover:bg-[#991B1B] text-white font-bold rounded-none text-xs border border-red-700 shadow-sm flex items-center justify-center gap-1.5 transition active:scale-95"><i class="ph-bold ph-warning-octagon"></i> <span data-i18n="arm_siren">CIVIL DEFENSE SIREN DISPATCH</span><span class="hidden">Arm Tactical Siren</span><span class="hidden">Test Phone Siren</span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- BRO SOP -->
+                <div class="dark-card bg-white border border-[#E2E8F0] rounded-md shadow-sm">
+                    <div class="dark-card-header bg-white border-b border-slate-200 px-4 py-3 flex justify-between items-center rounded-t-md">
+                        <div class="flex items-center space-x-2"><i class="ph-bold ph-crane text-[#1D4ED8] text-base"></i><h2 class="font-bold text-sm text-[#0B2545]" data-i18n="bro_sop">BRO Project Swastik SOP</h2></div>
+                        <span id="bro-sop-badge" class="px-2 py-0.5 rounded text-[10px] font-black uppercase bg-[#FEE2E2] text-[#B91C1C] border border-[#FCA5A5]">SOP-ALPHA</span>
+                    </div>
+                    <div class="p-4 text-xs space-y-2">
+                        <div class="bro-sop-card bg-[#F8FAFC] border border-[#CBD5E1] rounded-md p-3">
+                            <div class="flex justify-between items-start mb-1"><span class="font-bold text-[#0B2545] text-[11px] uppercase tracking-wide">Action</span><span class="text-[10px] text-slate-500 mono">758/764 BRTF</span></div>
+                            <p id="bro-action-text" class="text-[#0F172A] text-[11px] leading-relaxed font-bold">CLOSE CORRIDOR &amp; DEPLOY PLANT TO FIRST-RESPONSE STAGING</p>
+                            <div class="mt-2 text-[11px] space-y-1 text-slate-700">
+                                <div><span class="text-slate-500">Staging:</span> <span id="bro-staging" class="font-semibold text-slate-900">29th Mile (Km 48), Birik Dara, Dikchu-Sanklang-Toong</span></div>
+                                <div><span class="text-slate-500">Plant:</span> <span id="bro-plant" class="font-semibold text-slate-900">CAT 320D Excavators (2), Wheel Loaders (2), Bailey Bridge</span></div>
+                                <div><span class="text-slate-500">Bypass:</span> <span id="bro-bypass" class="font-bold text-[#4338CA]">BYPASS-LAVA (12T-45T) + BYPASS-MUNGPOO (light)</span></div>
+                            </div>
+                        </div>
+                        <button onclick="loadBROSOP()" class="w-full text-center text-[#1D4ED8] text-[11px] hover:underline font-semibold mt-1">Refresh BRO SOP Status &rarr;</button>
+                    </div>
+                </div>
+
+                <!-- Teesta River CWC Hydro-Telemetry Card -->
+                <div class="dark-card bg-white border border-[#E2E8F0] rounded-md shadow-sm authority-only-ctrl" id="teesta-hydro-widget">
+                    <div class="dark-card-header bg-white border-b border-slate-200 px-4 py-3 flex justify-between items-center rounded-t-md">
+                        <div class="flex items-center space-x-2">
+                            <i class="ph-bold ph-waves text-[#0284c7] text-base"></i>
+                            <h2 class="font-bold text-sm text-[#0B2545]" data-i18n="cwc_hydro">Teesta River CWC Hydro-Telemetry</h2>
+                        </div>
+                        <span id="teesta-stage-badge" class="px-2 py-0.5 rounded text-[10px] font-black uppercase bg-red-100 text-red-700 border border-red-300">DANGER STAGE</span>
+                    </div>
+                    <div class="p-4 text-xs space-y-3">
+                        <div class="flex justify-between items-center pb-2 border-b border-slate-100">
+                            <div>
+                                <span class="text-[10px] text-slate-500 font-bold uppercase block">Hydrometric Station</span>
+                                <span id="teesta-station-name" class="font-bold text-[#0B2545] text-xs">CWC-TEESTA-05 (Singtam Gorge)</span>
+                            </div>
+                            <span class="px-1.5 py-0.5 rounded text-[9px] font-bold bg-sky-50 text-sky-700 border border-sky-200">[LIVE] CWC-WIMS</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div class="p-2 bg-[#F8FAFC] border border-slate-200 rounded">
+                                <span class="text-[10px] text-slate-500 font-medium block">Water Stage</span>
+                                <div class="flex items-baseline gap-1 mt-0.5">
+                                    <span id="teesta-gauge-height" class="text-base font-black text-red-600">218.40</span>
+                                    <span class="text-[10px] text-slate-500 font-bold">m MSL</span>
+                                </div>
+                                <span class="text-[9px] text-slate-400">Danger: 220.00 m</span>
+                            </div>
+                            <div class="p-2 bg-[#F8FAFC] border border-slate-200 rounded">
+                                <span class="text-[10px] text-slate-500 font-medium block">River Discharge</span>
+                                <div class="flex items-baseline gap-1 mt-0.5">
+                                    <span id="teesta-discharge" class="text-base font-black text-[#0B2545]">2,480</span>
+                                    <span class="text-[10px] text-slate-500 font-bold">cumecs</span>
+                                </div>
+                                <span id="teesta-discharge-cusecs" class="text-[9px] text-slate-400">87,580 cusecs</span>
+                            </div>
+                        </div>
+                        <div class="p-2.5 bg-red-50 border border-red-200 rounded text-slate-800 space-y-1">
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-red-900 text-[10px] uppercase" data-i18n="basal_shear">Hydrodynamic Basal Shear (&tau;<sub>b</sub>)</span>
+                                <span id="teesta-basal-shear" class="font-extrabold text-red-700 text-xs">5,999.01 Pa</span>
+                            </div>
+                            <div class="flex justify-between items-center text-[10px]">
+                                <span class="text-slate-600">Critical Excess Scour Ratio:</span>
+                                <span id="teesta-excess-shear" class="font-bold text-red-700">132.3&times; (&tau;<sub>c</sub>=45 Pa)</span>
+                            </div>
+                            <div class="flex justify-between items-center text-[10px]">
+                                <span class="text-slate-600">Passive Toe Resistance Loss:</span>
+                                <span id="teesta-toe-loss" class="font-bold text-red-700">-96.0% (Critical Toe Scour)</span>
+                            </div>
+                            <div class="flex justify-between items-center pt-1 border-t border-red-200 text-[10px]">
+                                <span class="font-bold text-slate-800">Coupled Slope Factor of Safety:</span>
+                                <span id="teesta-coupled-fos" class="font-black text-red-700 text-xs">FoS = 0.928 (RED ZONE)</span>
+                            </div>
+                        </div>
+                        <button onclick="refreshTeestaHydro()" class="w-full text-center text-[#0284c7] text-[11px] hover:underline font-semibold flex items-center justify-center gap-1">
+                            <i class="ph-bold ph-arrows-clockwise"></i> Sync CWC Gauge Telemetry
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Emergency Mesh & Voice Broadcasts Institutional Panel -->
+                <div class="dark-card bg-white border border-[#E2E8F0] rounded-md shadow-sm authority-only-ctrl" id="offline-mesh-ivr-panel">
+                    <div class="dark-card-header bg-white border-b border-slate-200 px-4 py-3 flex justify-between items-center rounded-t-md">
+                        <div class="flex items-center space-x-2">
+                            <i class="ph-bold ph-broadcast text-[#1D4ED8] text-base"></i>
+                            <h2 class="font-bold text-sm text-[#0B2545]">Emergency Mesh &amp; Voice Broadcasts</h2>
+                        </div>
+                        <span id="mesh-relay-status-pill" class="px-2 py-0.5 rounded text-[10px] font-black uppercase bg-slate-100 text-slate-600 border border-slate-300">IP STANDBY</span>
+                    </div>
+                    <div class="p-4 text-xs space-y-3">
+                        <div>
+                            <span class="text-[10px] text-slate-500 font-bold uppercase block">Tactical Automated Telephony</span>
+                            <p class="text-[11px] text-slate-600 mt-0.5 leading-tight">Direct automated voice warning calls over cell-tower channels in regional dialects.</p>
+                        </div>
+                        <button onclick="dispatchIVRBroadcast()" id="btn-dispatch-ivr" class="w-full py-2 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white font-bold rounded-md text-xs border border-amber-800 shadow-sm flex items-center justify-center gap-1.5 transition active:scale-95">
+                            <i class="ph-bold ph-phone-call"></i>
+                            <span>Broadcast Multilingual IVR Voice Alert (Nepali/Hindi)</span>
+                        </button>
+
+                        <div class="pt-2 border-t border-slate-200">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <span class="font-bold text-[#0B2545] text-xs block">Local BLE Mesh Node Relay</span>
+                                    <span class="text-[10px] text-slate-500">Ad-hoc Bluetooth 5.3 &amp; LoRa offline P2P hops</span>
+                                </div>
+                                <button onclick="toggleBLEMeshRelay()" id="btn-toggle-ble-mesh" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded border border-slate-300 transition active:scale-95 flex items-center gap-1">
+                                    <span id="mesh-toggle-text">Enable Local BLE Mesh Node Relay Mode</span>
+                                </button>
+                            </div>
+                            <div id="mesh-node-details" class="mt-2 p-2 bg-slate-50 border border-slate-200 rounded text-[10px] text-slate-600 hidden">
+                                <div class="flex justify-between font-semibold text-emerald-800">
+                                    <span>Relay Active: 14 Nodes Online</span>
+                                    <span>Max 7 Radio Hops</span>
+                                </div>
+                                <div class="text-slate-500 mt-0.5">Protocol: BLE Coded PHY LR + LoRa 865-867MHz | 128 kbps mesh throughput</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. Composite Risk Index (CRI) Slot for Authority Mode (SECOND) -->
+        <div id="authority-cri-slot" class="mb-5">
+      <div id="pahad-cri-hero" class="bg-[#111111] border border-[#222222] rounded-lg p-4 sm:p-5 shadow-lg space-y-4">
+        
+        <!-- Top Institutional Header & Interactive Tour Actions -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-[#222222]">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded bg-[#171717] border border-[#2D2D2D] flex items-center justify-center text-white text-lg shrink-0">
+              <i class="ph-bold ph-shield-check text-[#E5E5E5]"></i>
+            </div>
+            <div>
+              <div class="text-[10px] font-mono font-bold tracking-widest text-[#A3A3A3] uppercase">NATIONAL DISASTER MANAGEMENT AUTHORITY &bull; NER SENTINEL</div>
+              <h2 class="text-sm sm:text-base font-black text-white tracking-wide uppercase m-0">PAHAD AI &mdash; Landslide Risk Prediction Intelligence</h2>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 flex-wrap">
+            <div id="pahad-ai-state" class="hidden items-center gap-1.5 text-[11px] font-mono px-2.5 py-1 rounded bg-[#171717] text-[#4ADE80] border border-[#262626]" style="display: none !important;">
+              <span class="w-2 h-2 rounded-full bg-[#16a34a] animate-pulse"></span>
+              <span>INFERENCE ENGINE ONLINE</span>
+            </div>
+            <!-- USER-FRIENDLY INTERACTIVE TOUR BUTTON -->
+            <button type="button" id="btn-start-interactive-tour" onclick="startInteractiveTour(1)" class="pahad-hero-action-link text-[11.5px] font-bold transition-colors flex items-center gap-1.5 cursor-pointer bg-transparent border-0 p-0 shadow-none" title="Interactive walkthrough of all platform functions">
+              <i class="ph-bold ph-compass"></i> <span>Platform Tour &amp; Functions</span>
+            </button>
+            <!-- USER-FRIENDLY LIVE SIMULATION BUTTON -->
+            <button type="button" id="btn-hero-launch-demo" onclick="launchLiveSimulationDemo()" class="pahad-hero-action-link text-[11.5px] font-bold transition-colors flex items-center gap-1.5 cursor-pointer bg-transparent border-0 p-0 shadow-none" title="Launch 13-stage Teesta failure simulation">
+              <i class="ph-bold ph-play"></i> <span>Run Simulation</span>
+            </button>
+            <a href="/pahad-ai" id="link-hero-explore-observatory" class="pahad-hero-action-link text-[11.5px] font-bold transition-colors flex items-center gap-1.5 cursor-pointer bg-transparent border-0 p-0 shadow-none" title="Explore Observatory">
+              <i class="ph-bold ph-telescope"></i> <span>Explore Observatory →</span>
+              <span class="pahad-hero-twin-tag font-mono text-[10px] font-bold">[3D TWIN]</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Hero Showcase: CRI Gauge (Left) + Current Location & Cascading Corridor Select (Right) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+          
+          <!-- LEFT: 3. CRI CENTERPIECE & 4. RISK LEVEL BADGE (Col 4) -->
+          <div class="lg:col-span-4 bg-[#171717] border border-[#262626] rounded-lg p-4 flex flex-col items-center justify-center text-center shadow-inner">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+              <span class="text-[10px] font-mono uppercase tracking-widest text-[#A3A3A3] font-bold">COMPOSITE RISK INDEX (CRI)</span>
+            </div>
+            
+            <!-- 3. LARGE CRI PREDICTION CENTERPIECE -->
+            <div id="pahad-ai-ring" class="pahad-ai-ring my-1.5" style="--score:40.6; --ring-color:#ea580c;">
+              <div class="pahad-ai-ring-content">
+                <div id="pahad-ai-score" class="text-4xl font-black text-white font-mono tracking-tight">40.6</div>
+                <div class="text-[10px] font-mono text-[#A3A3A3] uppercase mt-0.5">Scale 0&ndash;100</div>
+              </div>
+            </div>
+
+            <!-- 4. RISK LEVEL BADGE -->
+            <div id="pahad-ai-band" class="pahad-band-high px-3 py-1 rounded text-xs font-black tracking-wider uppercase mb-1">
+              HIGH RISK
+            </div>
+            <div id="pahad-ai-prob" class="text-xs font-mono text-[#A3A3A3] font-bold mt-0.5">
+              P(event, 24h): 42.1%
+            </div>
+            <p class="text-[11px] text-[#737373] max-w-[260px] mt-2 leading-relaxed">
+              Multi-modal index fused from Mohr-Coulomb slope stability, rainfall I-D, and geotechnical ML.
+            </p>
+          </div>
+
+          <!-- RIGHT: CURRENT ASSESSMENT LOCATION & CASCADING SELECTION (Col 8) -->
+          <div class="lg:col-span-8 flex flex-col justify-between space-y-3.5">
+            <!-- Location Title & Live Telemetry Flags -->
+            <div class="bg-[#171717] border border-[#262626] rounded-lg p-4">
+              <div class="flex flex-wrap items-center justify-between gap-2 pb-2 mb-2 border-b border-[#262626]">
+                <span class="text-[10px] font-mono uppercase tracking-widest text-[#737373]">CURRENT ASSESSMENT LOCATION</span>
+                <div class="flex items-center gap-2 flex-wrap">
+                  <div class="hidden text-[10px] font-mono px-2 py-0.5 rounded bg-[#111111] border border-[#262626] text-[#A3A3A3]" style="display: none !important;">
+                    Trend: <strong id="pahad-ai-trend" class="text-white">EVALUATING</strong>
+                  </div>
+                  <div id="pahad-completeness-container" class="text-[10px] font-mono px-2 py-0.5 rounded bg-[#111111] border border-[#262626] text-[#A3A3A3]">
+                    Quality: <strong id="pahad-data-completeness-badge" class="text-[#4ADE80]">HIGH DATA COMPLETENESS</strong>
+                  </div>
+                  <div id="pahad-corridor-loading" class="hidden items-center gap-1.5 text-[10px] font-bold text-white bg-[#111111] border border-[#2D2D2D] px-2 py-0.5 rounded">
+                    <span class="w-2 h-2 rounded-full bg-white animate-ping"></span>
+                    <span>Updating Telemetry&hellip;</span>
+                  </div>
+                  <div id="pahad-corridor-timestamp" class="text-[10px] font-mono text-[#737373]">Updated: Live</div>
+                </div>
+              </div>
+
+              <div id="pahad-ai-location" class="text-lg sm:text-xl font-black text-white mt-0.5">Sonapur Tunnel NH-06 Portal Scarp</div>
+              <div id="pahad-ai-location-sub" class="text-xs text-[#A3A3A3] font-mono mt-0.5">Strategic Lifeline Corridor &bull; East Jaintia Hills, Meghalaya &bull; Lat 25.1850&deg;N, Lon 92.3650&deg;E</div>
+            </div>
+
+            <!-- Cascading Corridor Selection Strip -->
+            <div class="bg-[#171717] border border-[#262626] rounded-lg p-3.5">
+              <div class="text-[10px] font-mono uppercase tracking-wider text-[#A3A3A3] mb-2 font-bold flex items-center justify-between">
+                <span class="flex items-center gap-1.5"><i class="ph-bold ph-faders text-sky-400"></i> Select Monitored Strategic Corridor / Geographic Node:</span>
+                <span class="text-[9px] text-[#737373] font-normal">8 Himalayan Sectors Monitored</span>
+              </div>
+              
+              <div id="pahad-location-picker" class="flex items-center gap-2.5 flex-wrap">
+                <div class="flex items-center gap-1.5">
+                  <label for="pahad-state-filter" class="text-[10px] font-mono text-[#737373] uppercase">State:</label>
+                  <select id="pahad-state-filter" onchange="onStateFilterChanged(this.value)" aria-label="Filter Monitored State" class="bg-[#111111] text-[#E5E5E5] border border-[#2D2D2D] rounded px-2.5 py-1 text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-[#525252] cursor-pointer">
+                    <option value="ALL" selected>All NER States</option>
+                    <option value="Meghalaya">Meghalaya</option>
+                    <option value="Sikkim">Sikkim</option>
+                    <option value="Manipur">Manipur</option>
+                    <option value="Mizoram">Mizoram</option>
+                    <option value="Assam">Assam</option>
+                    <option value="Nagaland">Nagaland</option>
+                    <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                    <option value="Tripura">Tripura</option>
+                    <option value="West Bengal">Strategic Border</option>
+                  </select>
+                </div>
+
+                <div class="flex items-center gap-1.5">
+                  <label for="pahad-district-filter" class="text-[10px] font-mono text-[#737373] uppercase">District:</label>
+                  <select id="pahad-district-filter" onchange="onDistrictFilterChanged(this.value)" aria-label="Filter Monitored District" class="bg-[#111111] text-[#E5E5E5] border border-[#2D2D2D] rounded px-2.5 py-1 text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-[#525252] cursor-pointer">
+                    <option value="ALL" selected>All Districts</option>
+                  </select>
+                </div>
+
+                <div class="flex items-center gap-1.5 flex-grow sm:flex-grow-0">
+                  <label for="pahad-corridor-select" class="text-[10px] font-mono text-[#737373] uppercase">Corridor:</label>
+                  <select id="pahad-corridor-select" onchange="onCorridorSelectionChanged(this.value)" aria-label="Monitored NER Strategic Corridor" class="bg-[#111111] text-[#E5E5E5] border border-[#2D2D2D] rounded px-2.5 py-1 text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-[#525252] cursor-pointer w-full sm:w-auto max-w-[340px] truncate">
+                    <option value="ML-SONAPUR-01" selected>NH-06 Sonapur Tunnel &mdash; Meghalaya (East Jaintia Hills)</option>
+                    <option value="SK-NH10-KM48">NH-10 Km 48 (29th Mile) &mdash; Sikkim (Pakyong)</option>
+                    <option value="MN-TUPUL-RLY">NH-37 / Tupul &mdash; Manipur (Noney)</option>
+                    <option value="MZ-MELTHUM-QRY">NH-6 / Melthum &mdash; Mizoram (Aizawl)</option>
+                    <option value="AS-HAFLONG-RLY">Haflong Rail &mdash; Assam (Dima Hasao)</option>
+                    <option value="ML-MAWSYNRAM">NH-206 / Mawsynram &mdash; Meghalaya</option>
+                    <option value="NL-DZUKOU-KOH">NH-29 / Dzukou &mdash; Nagaland (Kohima)</option>
+                    <option value="AR-TAWANG-SELA">NH-13 / Sela Pass &mdash; Arunachal Pradesh</option>
+                    <option value="TR-JAMPUI-HILLS">Jampui Hills &mdash; Tripura (North Tripura)</option>
+                  </select>
+                </div>
+
+                <div class="flex items-center gap-1.5 ml-auto">
+                  <button type="button" id="btn-pick-map-loc" onclick="toggleMapPointPicker()" class="px-2.5 py-1 bg-[#111111] hover:bg-[#1D1D1D] text-[#E5E5E5] border border-[#2D2D2D] rounded text-xs font-medium transition flex items-center gap-1" title="Pick point on GIS Map">
+                    <i class="ph-bold ph-crosshair"></i> <span>Use Map Location</span>
+                  </button>
+                  <button type="button" id="btn-custom-coords" onclick="openCustomCoordModal()" class="px-2.5 py-1 bg-[#111111] hover:bg-[#1D1D1D] text-[#E5E5E5] border border-[#2D2D2D] rounded text-xs font-medium transition flex items-center gap-1" title="Enter arbitrary coordinates">
+                    <i class="ph-bold ph-map-pin"></i> <span>Custom Coords</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+        </div>
+
 
         <!-- PAHAD Phase 5: Regional EOC Intelligence Command Drawer -->
         <div class="mb-4">
@@ -3382,324 +3849,6 @@
             </div>
         </div>
 
-        <!-- Map + Evidence Card -->
-        <div id="authority-map-slot" class="grid grid-cols-1 xl:grid-cols-12 gap-5 mb-5">
-            <!-- Map (8 cols) -->
-            <div id="gis-map-card" class="xl:col-span-8 dark-card flex flex-col">
-                <div class="dark-card-header bg-white border-b border-slate-200 px-3 sm:px-4 py-2 sm:py-2.5 flex flex-wrap justify-between items-center gap-2 rounded-t-md">
-                    <div class="flex items-center space-x-2 min-w-0">
-                        <i class="ph-bold ph-globe-hemisphere-east text-[#0B2545] text-base shrink-0"></i>
-                        <h2 class="font-bold text-xs sm:text-sm text-[#0B2545] truncate" id="lbl-gis-title"><span class="sm:hidden">GIS Hazard Map</span><span class="hidden sm:inline">Operational GIS Hazard Viewer (WGS84)</span></h2>
-                        <span class="text-xs text-slate-500 ml-1 hidden md:inline font-medium"><span class="inline-block w-2 h-2 rounded-full bg-red-600 mr-0.5"></span> RED &nbsp; <span class="inline-block w-2 h-2 rounded-full bg-amber-500 mr-0.5"></span> ORANGE &nbsp; <span class="inline-block w-2 h-2 rounded-full bg-yellow-400 mr-0.5"></span> YELLOW</span>
-                    </div>
-                    <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
-                        <span id="coord-display" class="font-mono text-[11px] sm:text-xs text-slate-500 hidden sm:inline">27.2500, 88.5500</span>
-                        <button id="btn-toggle-gsi-insar" onclick="toggleGsiInSarOverlay()" class="px-2 sm:px-2.5 py-1 bg-slate-900 hover:bg-slate-800 text-amber-300 border border-slate-700 rounded text-[10px] sm:text-xs font-bold transition flex items-center gap-1 shadow-sm shrink-0" aria-pressed="false" title="Toggle GSI Critical Sectors & InSAR Radar Overlays across NER">
-                            <i class="ph-bold ph-satellite"></i>
-                            <span id="lbl-toggle-gsi-insar"><span class="hidden sm:inline">SATELLITE INSAR &amp; SENSOR OVERLAY</span><span class="sm:hidden">INSAR &amp; SENSORS</span></span>
-                            <span id="lc-toggle-gsi-insar" class="hidden">Toggle GSI Critical Sectors & InSAR</span>
-                        </button>
-                        <button id="btn-reset-view" onclick="if(map) map.setView([27.25, 88.55], 10);" class="px-2 sm:px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-[#0B2545] border border-slate-300 rounded text-[10px] sm:text-xs font-bold transition shrink-0">Reset</button>
-                        <div class="inline-flex border border-slate-400 bg-slate-900 text-[9px] sm:text-[10px] font-bold uppercase tracking-wider rounded-none shrink-0">
-                          <button id="btn-map-compact" onclick="setMapViewMode('compact')" 
-                                  class="px-2 sm:px-2.5 py-1 text-slate-300 hover:text-white hover:bg-slate-800 transition" 
-                                  title="Collapse map height for smooth vertical scrolling">
-                            COMPACT
-                          </button>
-                          <span class="w-[1px] bg-slate-700"></span>
-                          <button id="btn-map-standard" onclick="setMapViewMode('standard')" 
-                                  class="px-2 sm:px-2.5 py-1 text-white bg-[#002147] transition" 
-                                  title="Standard operational height">
-                            STD
-                          </button>
-                          <span class="w-[1px] bg-slate-700"></span>
-                          <button id="btn-map-maximize" onclick="setMapViewMode('maximize')" 
-                                  class="px-2 sm:px-2.5 py-1 text-slate-300 hover:text-white hover:bg-slate-800 transition" 
-                                  title="Expand map to full inspection viewport">
-                            MAX
-                          </button>
-                        </div>
-                        <button id="btn-exit-fullscreen-map" onclick="setMapViewMode('standard')" class="hidden px-2 py-1 bg-red-700 hover:bg-red-800 text-white font-bold text-[10px] sm:text-xs uppercase tracking-wider transition border border-red-500 flex items-center gap-1 rounded-none" title="Exit Fullscreen View">
-                            <span>[ EXIT (ESC) ]</span>
-                        </button>
-                    </div>
-                </div>
-                <div id="gis-map" class="relative flex-grow">
-                    <div id="map"></div>
-                    <!-- Floating Layer Control Panel -->
-                    <div id="layer-control-panel">
-                        <div class="lcp-header" onclick="toggleLayerPanel()" title="Click to toggle Map & Layer Controls">
-                            <span style="font-size:11px;font-weight:700;color:#FFFFFF;letter-spacing:0.04em;">MAP &amp; LAYER CONTROL</span>
-                            <div class="flex items-center gap-1.5">
-                                <span id="lcp-close-hint" class="text-[9px] text-slate-400 hidden sm:inline">(Tap to toggle)</span>
-                                <i class="ph-bold ph-sliders" style="color:#38bdf8;font-size:13px;"></i>
-                                <i id="lcp-chevron" class="ph-bold ph-caret-down text-slate-400 text-xs transition-transform duration-200"></i>
-                            </div>
-                        </div>
-                        <div class="lcp-body" id="lcp-body" style="display: none;">
-                            <!-- BASEMAP SWITCHER (Section 8 & 9) -->
-                            <div class="p-2 mb-2 bg-[#070B10] border border-slate-800 rounded">
-                                <div class="flex items-center justify-between mb-1.5">
-                                    <span class="text-[10px] text-slate-300 font-bold uppercase tracking-wider">MAP STYLE</span>
-                                    <span id="basemap-mode-pill" class="text-[9px] font-mono px-1.5 py-0.2 rounded bg-emerald-950 text-emerald-400 border border-emerald-800">ONLINE</span>
-                                </div>
-                                <div class="grid grid-cols-5 gap-1 text-[10px] font-mono">
-                                    <button type="button" onclick="switchMainBasemap('dark')" id="mb-dark" class="px-1 py-1 rounded bg-slate-800 text-slate-300 hover:text-white border border-slate-700">Dark</button>
-                                    <button type="button" onclick="switchMainBasemap('terrain')" id="mb-terrain" class="px-1 py-1 rounded bg-slate-800 text-slate-300 hover:text-white border border-slate-700">Terrain</button>
-                                    <button type="button" onclick="switchMainBasemap('street')" id="mb-street" class="px-1 py-1 rounded bg-slate-800 text-slate-300 hover:text-white border border-slate-700">Street</button>
-                                    <button type="button" onclick="switchMainBasemap('satellite')" id="mb-satellite" class="px-1 py-1 rounded bg-sky-950 text-sky-300 border border-sky-600 font-bold">Satellite</button>
-                                    <button type="button" onclick="switchMainBasemap('topo')" id="mb-topo" class="px-1 py-1 rounded bg-slate-800 text-slate-300 hover:text-white border border-slate-700">Topo</button>
-                                </div>
-                                <div id="offline-basemap-badge" class="hidden mt-1 text-[9px] font-mono text-amber-300 bg-amber-950/80 p-1 rounded border border-amber-800">
-                                    <span>Offline Operational Map Active</span>
-                                </div>
-                            </div>
-
-                            <!-- PAHAD AI INTELLIGENCE LAYERS -->
-                            <div class="lcp-category flex items-center justify-between" style="color:#38bdf8;margin-top:4px;font-weight:bold;letter-spacing:0.04em;">
-                                <span>PAHAD AI LAYERS</span>
-                            </div>
-                            <div class="lcp-item"><span class="lcp-dot" style="background:#dc2626;"></span><span class="lcp-label">Predictive Risk (CRI)</span><button class="lcp-toggle on" id="lc-toggle-risk" onclick="toggleLayerById('risk',this)" aria-label="Toggle Predictive Risk"></button></div>
-                            <div class="lcp-item"><span class="lcp-dot" style="background:#f97316;"></span><span class="lcp-label">Event Probability</span><button class="lcp-toggle on" id="lc-toggle-event-prob" onclick="toggleLayerById('risk',this)" aria-label="Toggle Event Probability"></button></div>
-                            <div class="lcp-item"><span class="lcp-dot" style="background:#eab308;"></span><span class="lcp-label">Factor of Safety (FoS)</span><button class="lcp-toggle on" id="lc-toggle-fos" onclick="toggleLayerById('risk',this)" aria-label="Toggle Factor of Safety"></button></div>
-                            <div class="lcp-item"><span class="lcp-dot" style="background:#0284c7;"></span><span class="lcp-label">Rainfall (I-D Curve)</span><button class="lcp-toggle on" id="lc-toggle-rainfall" onclick="toggleLayerById('river',this)" aria-label="Toggle Rainfall"></button></div>
-                            <div class="lcp-item"><span class="lcp-dot" style="background:#a855f7;"></span><span class="lcp-label">Seismic (Faults/PGA)</span><button class="lcp-toggle on" id="lc-toggle-seismic" onclick="toggleLayerById('detours',this)" aria-label="Toggle Seismic"></button></div>
-                            <div class="lcp-item"><span class="lcp-dot" style="background:#10b981;"></span><span class="lcp-label">IoT Telemetry Sensors</span><button class="lcp-toggle on" id="toggle-sensors-btn" onclick="toggleSensorLayer(this)" aria-label="Toggle IoT Sensors"></button></div>
-                            <div class="lcp-item"><span class="lcp-dot" style="background:#6366f1;"></span><span class="lcp-label">Deformation (InSAR)</span><button class="lcp-toggle on" id="toggle-insar-btn" onclick="toggleInSARLayer(this)" aria-label="Toggle InSAR"></button></div>
-                            <div class="lcp-item"><span class="lcp-dot" style="background:#10b981;"></span><span class="lcp-label">Vegetation (NDVI)</span><button class="lcp-toggle on" id="lc-toggle-vegetation" onclick="toggleLayerById('vegetation',this)" aria-label="Toggle Vegetation"></button></div>
-                            <div class="lcp-item"><span class="lcp-dot" style="background:#f59e0b;"></span><span class="lcp-label">Historical Landslides</span><button class="lcp-toggle on" id="lc-toggle-hist-landslides" onclick="toggleLayerById('historical_landslides',this)" aria-label="Toggle Historical Landslides"></button></div>
-
-                            <!-- OPERATIONS & CRITICAL INFRASTRUCTURE LAYERS -->
-                            <div class="lcp-category flex items-center justify-between" style="color:#4ade80;margin-top:8px;font-weight:bold;letter-spacing:0.04em;">
-                                <span>OPERATIONS INFRASTRUCTURE</span>
-                            </div>
-                            <div class="lcp-item"><span class="lcp-dot" style="background:#3b82f6;"></span><span class="lcp-label">Roads (Lifeline Corridors)</span><button class="lcp-toggle on" id="lc-toggle-roads" onclick="toggleLayerById('risk',this)" aria-label="Toggle Roads"></button></div>
-                            <div class="lcp-item"><span class="lcp-dot" style="background:#10b981;"></span><span class="lcp-label">Shelters (NDMA Camps)</span><button class="lcp-toggle on" id="lc-toggle-shelters" onclick="toggleLayerById('habitations',this)" aria-label="Toggle Shelters"></button></div>
-                            <div class="lcp-item"><span class="lcp-dot" style="background:#ec4899;"></span><span class="lcp-label">Hospitals &amp; Medical Units</span><button class="lcp-toggle on" id="lc-toggle-hospitals" onclick="toggleLayerById('habitations',this)" aria-label="Toggle Hospitals"></button></div>
-                            <div class="lcp-item"><span class="lcp-dot" style="background:#8b5cf6;"></span><span class="lcp-label">Schools &amp; Staging Sites</span><button class="lcp-toggle on" id="lc-toggle-schools" onclick="toggleLayerById('habitations',this)" aria-label="Toggle Schools"></button></div>
-                            <div class="lcp-item" style="margin-bottom:6px;"><span class="lcp-dot" style="background:#d97706;"></span><span class="lcp-label">Bridges &amp; Crossings</span><button class="lcp-toggle on" id="lc-toggle-bridges" onclick="toggleLayerById('cuts',this)" aria-label="Toggle Bridges"></button></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="px-4 py-2.5 flex flex-wrap justify-between items-center gap-2 bg-[#F8FAFC] border-t border-slate-200 rounded-b-md">
-                    <span class="text-[11px] text-slate-600">Basemap: Google Hybrid Satellite | WGS84 | EPSG:4326</span>
-                    <div class="flex items-center gap-3 text-[11px]">
-                        <span class="flex items-center gap-1"><span class="inline-block w-2 h-2 rounded-full bg-red-600"></span>RED</span>
-                        <span class="flex items-center gap-1"><span class="inline-block w-2 h-2 rounded-full bg-amber-500"></span>ORANGE</span>
-                        <span class="flex items-center gap-1"><span class="inline-block w-2 h-2 rounded-full bg-yellow-400"></span>YELLOW</span>
-                        <span class="flex items-center gap-1"><span class="inline-block w-2 h-2 rounded-full bg-emerald-500"></span>SAFE</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Evidence Card + BRO SOP (4 cols) -->
-            <div class="xl:col-span-4 flex flex-col gap-4">
-                <div class="dark-card flex flex-col flex-1">
-                    <div class="dark-card-header">
-                        <div class="flex items-center space-x-2"><i class="ph-bold ph-tree-structure text-amber-400 text-base"></i><h2 class="font-bold text-sm text-white" id="lbl-evidence-title">Decision Intelligence Card</h2></div>
-                        <span id="card-risk-badge" class="px-2 py-0.5 rounded text-[11px] font-black uppercase" style="background:rgba(185,28,28,0.3);color:#f87171;border:1px solid rgba(239,68,68,0.5);">RED ALERT</span>
-                    </div>
-                    <div class="p-4 space-y-3 text-xs overflow-y-auto flex-1" style="max-height:540px;">
-                        <div>
-                            <span class="text-slate-500 uppercase font-bold text-[10px] tracking-wider block" id="lbl-inspected">Inspected Target Sector</span>
-                            <h3 id="card-zone-title" class="text-sm font-black text-white leading-tight mt-0.5">NH-10 Corridor (Rangpo - Singtam)</h3>
-                            <p id="card-zone-sub" class="text-slate-500 text-[11px]">District: Pakyong | State: Sikkim</p>
-                        </div>
-                        <div class="rounded border border-slate-200 bg-white p-3.5 space-y-2 mt-3 shadow-sm" id="card-telemetry">
-  <span class="text-[10px] font-black uppercase tracking-wider text-[#0B2545] block pb-1 border-b border-slate-200" id="lbl-evidence-breakdown">
-    MULTIMODAL SUPPORTING EVIDENCE
-  </span>
-  <div class="flex justify-between py-1 border-b border-slate-100 text-xs">
-    <span class="text-slate-600 font-medium">IMD Rainfall:</span>
-    <span id="ev-rain" class="font-bold text-[#B91C1C]">78.5 mm (Elevated)</span>
-  </div>
-  <div class="flex justify-between py-1 border-b border-slate-100 text-xs">
-    <span class="text-slate-600 font-medium">Static Susceptibility:</span>
-    <span id="ev-susc" class="font-bold text-[#B91C1C]">HIGH (Slope &gt; 35°)</span>
-  </div>
-  <div class="flex justify-between py-1 border-b border-slate-100 text-xs">
-    <span class="text-slate-600 font-medium">InSAR Deformation:</span>
-    <span id="ev-insar" class="font-bold text-[#D97706]">ANOMALY (Sentinel-1 / NISAR)</span>
-  </div>
-  <div class="flex justify-between py-1 border-b border-slate-100 text-xs">
-    <span class="text-slate-600 font-medium">Soil VWC Saturation:</span>
-    <span id="ev-vwc" class="font-bold text-[#1D4ED8]">56.4% (Tathangchen)</span>
-  </div>
-  <div class="flex justify-between py-1 text-xs">
-    <span class="text-slate-600 font-medium">Field Observation:</span>
-    <span id="ev-soil" class="font-bold text-[#B91C1C]">CONFIRMED (Tension Cracks)</span>
-  </div>
-  <div id="row-toe-scour" class="flex justify-between py-1 text-xs border-t border-slate-100 hidden">
-    <span class="text-slate-600 font-medium">Toe Scour Pp Loss:</span>
-    <span id="ev-toe-scour" class="font-bold text-[#B91C1C]">-96% (Critical)</span>
-  </div>
-  <div id="row-anthro-cut" class="flex justify-between py-1 text-xs border-t border-slate-100 hidden">
-    <span class="text-slate-600 font-medium">Anthropogenic Hill Cut:</span>
-    <span id="ev-anthro-cut" class="font-bold text-[#D97706]">1.15x Unreinforced</span>
-  </div>
-</div>
-                        <div>
-                            <span class="text-slate-500 uppercase font-bold text-[10px] tracking-wider block" id="lbl-trigger">Primary Trigger Driver</span>
-                            <p id="card-driver" class="text-[#92400E] font-medium mt-1 p-2 rounded text-[11px] bg-[#FFFBEB] border border-[#FCD34D]">48h Cumulative Rainfall Exceeded (104.2 mm vs 36.7 mm). Green-Ampt Lf=6.46m &gt; slip plane 4.0m.</p>
-                        </div>
-                        <div class="my-3">
-                            <span class="text-[10px] uppercase font-bold text-slate-600 tracking-wider block mb-1.5" id="lbl-exposed">
-                                Exposed Critical Infrastructure
-                            </span>
-                            <div class="grid grid-cols-2 gap-2">
-                                <div class="infra-card p-2.5 rounded border border-slate-300 bg-white text-center shadow-sm">
-                                    <span class="text-[10px] text-slate-500 font-bold uppercase block">Pop. Vulnerable</span>
-                                    <strong id="card-pop" class="text-lg font-black text-[#002B49]">4,200</strong>
-                                </div>
-                                <div class="infra-card p-2.5 rounded border border-red-300 bg-red-50 text-center shadow-sm">
-                                    <span class="text-[10px] text-red-600 font-bold uppercase block">Lifeline Route</span>
-                                    <strong class="text-xs font-black text-[#B91C1C] uppercase block mt-1">NH-10 Restricted</strong>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="rounded-md p-3 space-y-1.5 bg-[#EFF6FF] border border-[#BFDBFE]">
-                            <div class="flex items-center justify-between border-b pb-1.5 border-[#DBEAFE]"><span class="font-bold text-[#1E40AF] flex items-center text-[10px] uppercase tracking-wider"><i class="ph-bold ph-truck mr-1.5 text-[#1D4ED8]"></i>Emergency Logistics</span><span id="evac-primary-badge" class="px-1.5 py-0.5 rounded text-[10px] font-black uppercase bg-[#FEE2E2] text-[#B91C1C] border border-[#FCA5A5]">NH-10 BLOCKED</span></div>
-                            <div class="text-[11px] text-slate-700 space-y-1">
-                                <div class="flex justify-between"><span>Primary Highway:</span><span id="evac-primary-status" class="font-bold text-[#B91C1C]">Passage Denied</span></div>
-                                <div class="flex justify-between"><span>Active Detour:</span><span id="evac-detour-name" class="font-bold text-[#1D4ED8]">Lava - Gorubathan</span></div>
-                                <div class="flex justify-between"><span>Freight Clearance:</span><span id="evac-detour-tonnage" class="font-semibold text-slate-900">45T (BYPASS-LAVA)</span></div>
-                                <div class="flex justify-between border-t pt-1 border-[#DBEAFE]"><span>Habitation Threat:</span><span id="evac-settlement-count" class="font-bold text-[#B91C1C]">1 Air-Only | 2 Threatened</span></div>
-                            </div>
-                        </div>
-                        <div class="pt-2 border-t border-slate-200 space-y-2">
-                            <span class="text-slate-500 font-bold block text-[10px] uppercase tracking-wider" id="lbl-protocol" data-i18n="rec_protocol">Recommended Executive Protocol</span>
-                            <p id="card-action" class="text-slate-800 text-[11px] font-semibold mb-2">Impose immediate heavy vehicle restrictions and deploy BRO Plant Swastik SOP-ALPHA at 29th Mile.</p>
-                            <div class="grid grid-cols-2 gap-2">
-                                <button onclick="approveProtocol()" id="btn-auth" data-i18n="auth_protocol" class="w-full font-bold py-2 rounded-md text-xs transition shadow-sm active:scale-95 border bg-[#D1FAE5] text-[#065F46] border-[#A7F3D0] hover:bg-[#A7F3D0]">Authorize Protocol</button>
-                                <button onclick="dispatchAlert()" id="btn-issue-alert" data-i18n="issue_alert" class="w-full font-bold py-2 rounded-md text-xs transition shadow-sm active:scale-95 border bg-[#FEE2E2] text-[#B91C1C] border-[#FCA5A5] hover:bg-[#FCA5A5]">Issue Public Alert</button>
-                            </div>
-                            <div class="mt-2 space-y-2">
-                                <button onclick="open3DTerrainModel('NH-10 Km 48 (29th Mile Sector)', 0.745)" class="w-full py-2 bg-[#003366] hover:bg-[#002244] text-white font-bold text-xs rounded-md border border-[#004080] flex items-center justify-center gap-1.5 shadow-sm transition active:scale-95 focus:ring-2 focus:ring-[#38BDF8] focus:outline-none"><i class="ph-bold ph-cube"></i> <span data-i18n="dem_3d">Inspect 3D Digital Elevation Model (DEM)</span></button>
-                                <button onclick="openAuthoritySirenArmModal()" class="w-full py-1.5 bg-[#B91C1C] hover:bg-[#991B1B] text-white font-bold rounded-none text-xs border border-red-700 shadow-sm flex items-center justify-center gap-1.5 transition active:scale-95"><i class="ph-bold ph-warning-octagon"></i> <span data-i18n="arm_siren">CIVIL DEFENSE SIREN DISPATCH</span><span class="hidden">Arm Tactical Siren</span><span class="hidden">Test Phone Siren</span></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- BRO SOP -->
-                <div class="dark-card bg-white border border-[#E2E8F0] rounded-md shadow-sm">
-                    <div class="dark-card-header bg-white border-b border-slate-200 px-4 py-3 flex justify-between items-center rounded-t-md">
-                        <div class="flex items-center space-x-2"><i class="ph-bold ph-crane text-[#1D4ED8] text-base"></i><h2 class="font-bold text-sm text-[#0B2545]" data-i18n="bro_sop">BRO Project Swastik SOP</h2></div>
-                        <span id="bro-sop-badge" class="px-2 py-0.5 rounded text-[10px] font-black uppercase bg-[#FEE2E2] text-[#B91C1C] border border-[#FCA5A5]">SOP-ALPHA</span>
-                    </div>
-                    <div class="p-4 text-xs space-y-2">
-                        <div class="bro-sop-card bg-[#F8FAFC] border border-[#CBD5E1] rounded-md p-3">
-                            <div class="flex justify-between items-start mb-1"><span class="font-bold text-[#0B2545] text-[11px] uppercase tracking-wide">Action</span><span class="text-[10px] text-slate-500 mono">758/764 BRTF</span></div>
-                            <p id="bro-action-text" class="text-[#0F172A] text-[11px] leading-relaxed font-bold">CLOSE CORRIDOR &amp; DEPLOY PLANT TO FIRST-RESPONSE STAGING</p>
-                            <div class="mt-2 text-[11px] space-y-1 text-slate-700">
-                                <div><span class="text-slate-500">Staging:</span> <span id="bro-staging" class="font-semibold text-slate-900">29th Mile (Km 48), Birik Dara, Dikchu-Sanklang-Toong</span></div>
-                                <div><span class="text-slate-500">Plant:</span> <span id="bro-plant" class="font-semibold text-slate-900">CAT 320D Excavators (2), Wheel Loaders (2), Bailey Bridge</span></div>
-                                <div><span class="text-slate-500">Bypass:</span> <span id="bro-bypass" class="font-bold text-[#4338CA]">BYPASS-LAVA (12T-45T) + BYPASS-MUNGPOO (light)</span></div>
-                            </div>
-                        </div>
-                        <button onclick="loadBROSOP()" class="w-full text-center text-[#1D4ED8] text-[11px] hover:underline font-semibold mt-1">Refresh BRO SOP Status &rarr;</button>
-                    </div>
-                </div>
-
-                <!-- Teesta River CWC Hydro-Telemetry Card -->
-                <div class="dark-card bg-white border border-[#E2E8F0] rounded-md shadow-sm authority-only-ctrl" id="teesta-hydro-widget">
-                    <div class="dark-card-header bg-white border-b border-slate-200 px-4 py-3 flex justify-between items-center rounded-t-md">
-                        <div class="flex items-center space-x-2">
-                            <i class="ph-bold ph-waves text-[#0284c7] text-base"></i>
-                            <h2 class="font-bold text-sm text-[#0B2545]" data-i18n="cwc_hydro">Teesta River CWC Hydro-Telemetry</h2>
-                        </div>
-                        <span id="teesta-stage-badge" class="px-2 py-0.5 rounded text-[10px] font-black uppercase bg-red-100 text-red-700 border border-red-300">DANGER STAGE</span>
-                    </div>
-                    <div class="p-4 text-xs space-y-3">
-                        <div class="flex justify-between items-center pb-2 border-b border-slate-100">
-                            <div>
-                                <span class="text-[10px] text-slate-500 font-bold uppercase block">Hydrometric Station</span>
-                                <span id="teesta-station-name" class="font-bold text-[#0B2545] text-xs">CWC-TEESTA-05 (Singtam Gorge)</span>
-                            </div>
-                            <span class="px-1.5 py-0.5 rounded text-[9px] font-bold bg-sky-50 text-sky-700 border border-sky-200">[LIVE] CWC-WIMS</span>
-                        </div>
-                        <div class="grid grid-cols-2 gap-2">
-                            <div class="p-2 bg-[#F8FAFC] border border-slate-200 rounded">
-                                <span class="text-[10px] text-slate-500 font-medium block">Water Stage</span>
-                                <div class="flex items-baseline gap-1 mt-0.5">
-                                    <span id="teesta-gauge-height" class="text-base font-black text-red-600">218.40</span>
-                                    <span class="text-[10px] text-slate-500 font-bold">m MSL</span>
-                                </div>
-                                <span class="text-[9px] text-slate-400">Danger: 220.00 m</span>
-                            </div>
-                            <div class="p-2 bg-[#F8FAFC] border border-slate-200 rounded">
-                                <span class="text-[10px] text-slate-500 font-medium block">River Discharge</span>
-                                <div class="flex items-baseline gap-1 mt-0.5">
-                                    <span id="teesta-discharge" class="text-base font-black text-[#0B2545]">2,480</span>
-                                    <span class="text-[10px] text-slate-500 font-bold">cumecs</span>
-                                </div>
-                                <span id="teesta-discharge-cusecs" class="text-[9px] text-slate-400">87,580 cusecs</span>
-                            </div>
-                        </div>
-                        <div class="p-2.5 bg-red-50 border border-red-200 rounded text-slate-800 space-y-1">
-                            <div class="flex justify-between items-center">
-                                <span class="font-bold text-red-900 text-[10px] uppercase" data-i18n="basal_shear">Hydrodynamic Basal Shear (&tau;<sub>b</sub>)</span>
-                                <span id="teesta-basal-shear" class="font-extrabold text-red-700 text-xs">5,999.01 Pa</span>
-                            </div>
-                            <div class="flex justify-between items-center text-[10px]">
-                                <span class="text-slate-600">Critical Excess Scour Ratio:</span>
-                                <span id="teesta-excess-shear" class="font-bold text-red-700">132.3&times; (&tau;<sub>c</sub>=45 Pa)</span>
-                            </div>
-                            <div class="flex justify-between items-center text-[10px]">
-                                <span class="text-slate-600">Passive Toe Resistance Loss:</span>
-                                <span id="teesta-toe-loss" class="font-bold text-red-700">-96.0% (Critical Toe Scour)</span>
-                            </div>
-                            <div class="flex justify-between items-center pt-1 border-t border-red-200 text-[10px]">
-                                <span class="font-bold text-slate-800">Coupled Slope Factor of Safety:</span>
-                                <span id="teesta-coupled-fos" class="font-black text-red-700 text-xs">FoS = 0.928 (RED ZONE)</span>
-                            </div>
-                        </div>
-                        <button onclick="refreshTeestaHydro()" class="w-full text-center text-[#0284c7] text-[11px] hover:underline font-semibold flex items-center justify-center gap-1">
-                            <i class="ph-bold ph-arrows-clockwise"></i> Sync CWC Gauge Telemetry
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Emergency Mesh & Voice Broadcasts Institutional Panel -->
-                <div class="dark-card bg-white border border-[#E2E8F0] rounded-md shadow-sm authority-only-ctrl" id="offline-mesh-ivr-panel">
-                    <div class="dark-card-header bg-white border-b border-slate-200 px-4 py-3 flex justify-between items-center rounded-t-md">
-                        <div class="flex items-center space-x-2">
-                            <i class="ph-bold ph-broadcast text-[#1D4ED8] text-base"></i>
-                            <h2 class="font-bold text-sm text-[#0B2545]">Emergency Mesh &amp; Voice Broadcasts</h2>
-                        </div>
-                        <span id="mesh-relay-status-pill" class="px-2 py-0.5 rounded text-[10px] font-black uppercase bg-slate-100 text-slate-600 border border-slate-300">IP STANDBY</span>
-                    </div>
-                    <div class="p-4 text-xs space-y-3">
-                        <div>
-                            <span class="text-[10px] text-slate-500 font-bold uppercase block">Tactical Automated Telephony</span>
-                            <p class="text-[11px] text-slate-600 mt-0.5 leading-tight">Direct automated voice warning calls over cell-tower channels in regional dialects.</p>
-                        </div>
-                        <button onclick="dispatchIVRBroadcast()" id="btn-dispatch-ivr" class="w-full py-2 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white font-bold rounded-md text-xs border border-amber-800 shadow-sm flex items-center justify-center gap-1.5 transition active:scale-95">
-                            <i class="ph-bold ph-phone-call"></i>
-                            <span>Broadcast Multilingual IVR Voice Alert (Nepali/Hindi)</span>
-                        </button>
-
-                        <div class="pt-2 border-t border-slate-200">
-                            <div class="flex items-center justify-between">
-                                <div>
-                                    <span class="font-bold text-[#0B2545] text-xs block">Local BLE Mesh Node Relay</span>
-                                    <span class="text-[10px] text-slate-500">Ad-hoc Bluetooth 5.3 &amp; LoRa offline P2P hops</span>
-                                </div>
-                                <button onclick="toggleBLEMeshRelay()" id="btn-toggle-ble-mesh" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded border border-slate-300 transition active:scale-95 flex items-center gap-1">
-                                    <span id="mesh-toggle-text">Enable Local BLE Mesh Node Relay Mode</span>
-                                </button>
-                            </div>
-                            <div id="mesh-node-details" class="mt-2 p-2 bg-slate-50 border border-slate-200 rounded text-[10px] text-slate-600 hidden">
-                                <div class="flex justify-between font-semibold text-emerald-800">
-                                    <span>Relay Active: 14 Nodes Online</span>
-                                    <span>Max 7 Radio Hops</span>
-                                </div>
-                                <div class="text-slate-500 mt-0.5">Protocol: BLE Coded PHY LR + LoRa 865-867MHz | 128 kbps mesh throughput</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <!-- Active SAR & Disconnected Devices (Offline Last-Known GPS Cache) -->
         <div class="dark-card bg-white border border-[#E2E8F0] rounded-md mb-5 shadow-sm authority-only-ctrl" id="sar-tracking-panel">
@@ -3796,6 +3945,11 @@
 
     <!-- ===== CITIZEN ADVISORY MODE ===== -->
     <div id="citizen-view" class="hidden max-w-7xl mx-auto px-4 py-5"><div id="citizen-mode">
+
+        <!-- 1. Live GIS Map Slot for Citizen Advisory Mode (FIRST) -->
+        <div id="citizen-map-slot" class="mb-5"></div>
+        <!-- 2. Composite Risk Index (CRI) Slot for Citizen Advisory Mode (SECOND) -->
+        <div id="citizen-cri-slot" class="mb-5"></div>
         <!-- NH-10 Arterial Banner -->
         <div class="bg-[#7F1D1D] border-y border-red-900 rounded-none mb-6 p-6 text-white shadow-md">
             <div class="flex flex-wrap items-center justify-between gap-4">
@@ -3842,7 +3996,6 @@
         </div>
 
         <!-- Live GIS Map Slot for Citizen Advisory Mode -->
-        <div id="citizen-map-slot" class="mb-5"></div>
 
         <!-- ACTIVE CORRIDOR BYPASS & SAFE SHELTER FINDER WIDGET -->
         <div id="citizen-bypass-calculator-card" class="border border-slate-300 bg-white p-4 rounded-none shadow-none mb-5">
@@ -4127,159 +4280,6 @@
         </aside>
     </div></div><!-- /citizen-view -->
     </main>
-      </div>
-
-      
-      <!-- =======================================================================
-           1. COMPOSITE RISK INDEX (CRI) COMMAND SHOWCASE — FRONT & CENTER HERO
-           Strictly positions CRI and primary hazard intelligence first on landing.
-           ======================================================================= -->
-      <div id="pahad-cri-hero" class="bg-[#111111] border border-[#222222] rounded-lg p-4 sm:p-5 shadow-lg space-y-4">
-        
-        <!-- Top Institutional Header & Interactive Tour Actions -->
-        <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-[#222222]">
-          <div class="flex items-center gap-3">
-            <div class="w-9 h-9 rounded bg-[#171717] border border-[#2D2D2D] flex items-center justify-center text-white text-lg shrink-0">
-              <i class="ph-bold ph-shield-check text-[#E5E5E5]"></i>
-            </div>
-            <div>
-              <div class="text-[10px] font-mono font-bold tracking-widest text-[#A3A3A3] uppercase">NATIONAL DISASTER MANAGEMENT AUTHORITY &bull; NER SENTINEL</div>
-              <h2 class="text-sm sm:text-base font-black text-white tracking-wide uppercase m-0">PAHAD AI &mdash; Landslide Risk Prediction Intelligence</h2>
-            </div>
-          </div>
-          <div class="flex items-center gap-2 flex-wrap">
-            <div id="pahad-ai-state" class="hidden items-center gap-1.5 text-[11px] font-mono px-2.5 py-1 rounded bg-[#171717] text-[#4ADE80] border border-[#262626]" style="display: none !important;">
-              <span class="w-2 h-2 rounded-full bg-[#16a34a] animate-pulse"></span>
-              <span>INFERENCE ENGINE ONLINE</span>
-            </div>
-            <!-- USER-FRIENDLY INTERACTIVE TOUR BUTTON -->
-            <button type="button" id="btn-start-interactive-tour" onclick="startInteractiveTour(1)" class="pahad-hero-action-link text-[11.5px] font-bold transition-colors flex items-center gap-1.5 cursor-pointer bg-transparent border-0 p-0 shadow-none" title="Interactive walkthrough of all platform functions">
-              <i class="ph-bold ph-compass"></i> <span>Platform Tour &amp; Functions</span>
-            </button>
-            <!-- USER-FRIENDLY LIVE SIMULATION BUTTON -->
-            <button type="button" id="btn-hero-launch-demo" onclick="launchLiveSimulationDemo()" class="pahad-hero-action-link text-[11.5px] font-bold transition-colors flex items-center gap-1.5 cursor-pointer bg-transparent border-0 p-0 shadow-none" title="Launch 13-stage Teesta failure simulation">
-              <i class="ph-bold ph-play"></i> <span>Run Simulation</span>
-            </button>
-            <a href="/pahad-ai" id="link-hero-explore-observatory" class="pahad-hero-action-link text-[11.5px] font-bold transition-colors flex items-center gap-1.5 cursor-pointer bg-transparent border-0 p-0 shadow-none" title="Explore Observatory">
-              <i class="ph-bold ph-telescope"></i> <span>Explore Observatory →</span>
-              <span class="pahad-hero-twin-tag font-mono text-[10px] font-bold">[3D TWIN]</span>
-            </a>
-          </div>
-        </div>
-
-        <!-- Hero Showcase: CRI Gauge (Left) + Current Location & Cascading Corridor Select (Right) -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
-          
-          <!-- LEFT: 3. CRI CENTERPIECE & 4. RISK LEVEL BADGE (Col 4) -->
-          <div class="lg:col-span-4 bg-[#171717] border border-[#262626] rounded-lg p-4 flex flex-col items-center justify-center text-center shadow-inner">
-            <div class="flex items-center gap-2 mb-2">
-              <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
-              <span class="text-[10px] font-mono uppercase tracking-widest text-[#A3A3A3] font-bold">COMPOSITE RISK INDEX (CRI)</span>
-            </div>
-            
-            <!-- 3. LARGE CRI PREDICTION CENTERPIECE -->
-            <div id="pahad-ai-ring" class="pahad-ai-ring my-1.5" style="--score:40.6; --ring-color:#ea580c;">
-              <div class="pahad-ai-ring-content">
-                <div id="pahad-ai-score" class="text-4xl font-black text-white font-mono tracking-tight">40.6</div>
-                <div class="text-[10px] font-mono text-[#A3A3A3] uppercase mt-0.5">Scale 0&ndash;100</div>
-              </div>
-            </div>
-
-            <!-- 4. RISK LEVEL BADGE -->
-            <div id="pahad-ai-band" class="pahad-band-high px-3 py-1 rounded text-xs font-black tracking-wider uppercase mb-1">
-              HIGH RISK
-            </div>
-            <div id="pahad-ai-prob" class="text-xs font-mono text-[#A3A3A3] font-bold mt-0.5">
-              P(event, 24h): 42.1%
-            </div>
-            <p class="text-[11px] text-[#737373] max-w-[260px] mt-2 leading-relaxed">
-              Multi-modal index fused from Mohr-Coulomb slope stability, rainfall I-D, and geotechnical ML.
-            </p>
-          </div>
-
-          <!-- RIGHT: CURRENT ASSESSMENT LOCATION & CASCADING SELECTION (Col 8) -->
-          <div class="lg:col-span-8 flex flex-col justify-between space-y-3.5">
-            <!-- Location Title & Live Telemetry Flags -->
-            <div class="bg-[#171717] border border-[#262626] rounded-lg p-4">
-              <div class="flex flex-wrap items-center justify-between gap-2 pb-2 mb-2 border-b border-[#262626]">
-                <span class="text-[10px] font-mono uppercase tracking-widest text-[#737373]">CURRENT ASSESSMENT LOCATION</span>
-                <div class="flex items-center gap-2 flex-wrap">
-                  <div class="hidden text-[10px] font-mono px-2 py-0.5 rounded bg-[#111111] border border-[#262626] text-[#A3A3A3]" style="display: none !important;">
-                    Trend: <strong id="pahad-ai-trend" class="text-white">EVALUATING</strong>
-                  </div>
-                  <div id="pahad-completeness-container" class="text-[10px] font-mono px-2 py-0.5 rounded bg-[#111111] border border-[#262626] text-[#A3A3A3]">
-                    Quality: <strong id="pahad-data-completeness-badge" class="text-[#4ADE80]">HIGH DATA COMPLETENESS</strong>
-                  </div>
-                  <div id="pahad-corridor-loading" class="hidden items-center gap-1.5 text-[10px] font-bold text-white bg-[#111111] border border-[#2D2D2D] px-2 py-0.5 rounded">
-                    <span class="w-2 h-2 rounded-full bg-white animate-ping"></span>
-                    <span>Updating Telemetry&hellip;</span>
-                  </div>
-                  <div id="pahad-corridor-timestamp" class="text-[10px] font-mono text-[#737373]">Updated: Live</div>
-                </div>
-              </div>
-
-              <div id="pahad-ai-location" class="text-lg sm:text-xl font-black text-white mt-0.5">Sonapur Tunnel NH-06 Portal Scarp</div>
-              <div id="pahad-ai-location-sub" class="text-xs text-[#A3A3A3] font-mono mt-0.5">Strategic Lifeline Corridor &bull; East Jaintia Hills, Meghalaya &bull; Lat 25.1850&deg;N, Lon 92.3650&deg;E</div>
-            </div>
-
-            <!-- Cascading Corridor Selection Strip -->
-            <div class="bg-[#171717] border border-[#262626] rounded-lg p-3.5">
-              <div class="text-[10px] font-mono uppercase tracking-wider text-[#A3A3A3] mb-2 font-bold flex items-center justify-between">
-                <span class="flex items-center gap-1.5"><i class="ph-bold ph-faders text-sky-400"></i> Select Monitored Strategic Corridor / Geographic Node:</span>
-                <span class="text-[9px] text-[#737373] font-normal">8 Himalayan Sectors Monitored</span>
-              </div>
-              
-              <div id="pahad-location-picker" class="flex items-center gap-2.5 flex-wrap">
-                <div class="flex items-center gap-1.5">
-                  <label for="pahad-state-filter" class="text-[10px] font-mono text-[#737373] uppercase">State:</label>
-                  <select id="pahad-state-filter" onchange="onStateFilterChanged(this.value)" aria-label="Filter Monitored State" class="bg-[#111111] text-[#E5E5E5] border border-[#2D2D2D] rounded px-2.5 py-1 text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-[#525252] cursor-pointer">
-                    <option value="ALL" selected>All NER States</option>
-                    <option value="Meghalaya">Meghalaya</option>
-                    <option value="Sikkim">Sikkim</option>
-                    <option value="Manipur">Manipur</option>
-                    <option value="Mizoram">Mizoram</option>
-                    <option value="Assam">Assam</option>
-                    <option value="Nagaland">Nagaland</option>
-                    <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-                    <option value="Tripura">Tripura</option>
-                    <option value="West Bengal">Strategic Border</option>
-                  </select>
-                </div>
-
-                <div class="flex items-center gap-1.5">
-                  <label for="pahad-district-filter" class="text-[10px] font-mono text-[#737373] uppercase">District:</label>
-                  <select id="pahad-district-filter" onchange="onDistrictFilterChanged(this.value)" aria-label="Filter Monitored District" class="bg-[#111111] text-[#E5E5E5] border border-[#2D2D2D] rounded px-2.5 py-1 text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-[#525252] cursor-pointer">
-                    <option value="ALL" selected>All Districts</option>
-                  </select>
-                </div>
-
-                <div class="flex items-center gap-1.5 flex-grow sm:flex-grow-0">
-                  <label for="pahad-corridor-select" class="text-[10px] font-mono text-[#737373] uppercase">Corridor:</label>
-                  <select id="pahad-corridor-select" onchange="onCorridorSelectionChanged(this.value)" aria-label="Monitored NER Strategic Corridor" class="bg-[#111111] text-[#E5E5E5] border border-[#2D2D2D] rounded px-2.5 py-1 text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-[#525252] cursor-pointer w-full sm:w-auto max-w-[340px] truncate">
-                    <option value="ML-SONAPUR-01" selected>NH-06 Sonapur Tunnel &mdash; Meghalaya (East Jaintia Hills)</option>
-                    <option value="SK-NH10-KM48">NH-10 Km 48 (29th Mile) &mdash; Sikkim (Pakyong)</option>
-                    <option value="MN-TUPUL-RLY">NH-37 / Tupul &mdash; Manipur (Noney)</option>
-                    <option value="MZ-MELTHUM-QRY">NH-6 / Melthum &mdash; Mizoram (Aizawl)</option>
-                    <option value="AS-HAFLONG-RLY">Haflong Rail &mdash; Assam (Dima Hasao)</option>
-                    <option value="ML-MAWSYNRAM">NH-206 / Mawsynram &mdash; Meghalaya</option>
-                    <option value="NL-DZUKOU-KOH">NH-29 / Dzukou &mdash; Nagaland (Kohima)</option>
-                    <option value="AR-TAWANG-SELA">NH-13 / Sela Pass &mdash; Arunachal Pradesh</option>
-                    <option value="TR-JAMPUI-HILLS">Jampui Hills &mdash; Tripura (North Tripura)</option>
-                  </select>
-                </div>
-
-                <div class="flex items-center gap-1.5 ml-auto">
-                  <button type="button" id="btn-pick-map-loc" onclick="toggleMapPointPicker()" class="px-2.5 py-1 bg-[#111111] hover:bg-[#1D1D1D] text-[#E5E5E5] border border-[#2D2D2D] rounded text-xs font-medium transition flex items-center gap-1" title="Pick point on GIS Map">
-                    <i class="ph-bold ph-crosshair"></i> <span>Use Map Location</span>
-                  </button>
-                  <button type="button" id="btn-custom-coords" onclick="openCustomCoordModal()" class="px-2.5 py-1 bg-[#111111] hover:bg-[#1D1D1D] text-[#E5E5E5] border border-[#2D2D2D] rounded text-xs font-medium transition flex items-center gap-1" title="Enter arbitrary coordinates">
-                    <i class="ph-bold ph-map-pin"></i> <span>Custom Coords</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
 
       <!-- USER-FRIENDLY ONBOARDING & QUICKSTART FUNCTION GUIDE BANNER -->
@@ -6278,20 +6278,29 @@ function switchPortalMode(mode){
     var mapCard = document.getElementById('gis-map-card');
     var authSlot = document.getElementById('authority-map-slot');
     var citSlot = document.getElementById('citizen-map-slot');
+    var criHero = document.getElementById('pahad-cri-hero');
+    var authCriSlot = document.getElementById('authority-cri-slot');
+    var citCriSlot = document.getElementById('citizen-cri-slot');
 
     if(mode === 'authority'){
         if(mapCard && authSlot && !authSlot.contains(mapCard)) {
             authSlot.insertBefore(mapCard, authSlot.firstChild);
+        }
+        if(criHero && authCriSlot && !authCriSlot.contains(criHero)) {
+            authCriSlot.appendChild(criHero);
         }
         if(authEl) authEl.classList.remove('hidden');
         if(qEl) qEl.classList.remove('hidden');
         if(citEl) citEl.classList.add('hidden');
         if(btnA) { btnA.className = 'role-tab active-authority authority-only-ctrl'; btnA.setAttribute('aria-pressed','true'); }
         if(btnC) { btnC.className = 'role-tab inactive'; btnC.setAttribute('aria-pressed','false'); }
-        setTimeout(function(){ if(map) map.invalidateSize(); }, 100);
+        setTimeout(function(){ if(window.map) window.map.invalidateSize(); }, 150);
     } else {
         if(mapCard && citSlot && !citSlot.contains(mapCard)) {
             citSlot.appendChild(mapCard);
+        }
+        if(criHero && citCriSlot && !citCriSlot.contains(criHero)) {
+            citCriSlot.appendChild(criHero);
         }
         if(authEl) authEl.classList.add('hidden');
         if(qEl) qEl.classList.add('hidden');
@@ -6300,7 +6309,7 @@ function switchPortalMode(mode){
         if(citEl) citEl.classList.remove('hidden');
         if(btnA) { btnA.className = 'role-tab inactive authority-only-ctrl'; btnA.setAttribute('aria-pressed','false'); }
         if(btnC) { btnC.className = 'role-tab active-citizen'; btnC.setAttribute('aria-pressed','true'); }
-        setTimeout(function(){ if(map) map.invalidateSize(); }, 100);
+        setTimeout(function(){ if(window.map) window.map.invalidateSize(); }, 150);
     }
 }
 window.switchPortalMode = switchPortalMode;
