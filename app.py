@@ -10,11 +10,6 @@ from psycopg2.extras import RealDictCursor
 import requests
 import numpy as np
 from flask import Flask, render_template, request, jsonify, send_from_directory, redirect, url_for, session, Response, stream_with_context
-from services.cwc_sync import CWC_TEESTA_SERVICE
-from services.ai_triage import AI_TRIAGE_ENGINE
-from services.sar_tracking import SAR_TRACKING_SERVICE
-from services.ai_sitrep import AI_SITREP_SERVICE
-
 # Load local .env if present (checks both silly-fermi and root directory)
 def load_env():
     env_path = os.path.join(os.path.dirname(__file__), ".env")
@@ -29,6 +24,26 @@ def load_env():
                         os.environ[k.strip()] = v.strip()
 
 load_env()
+
+# Serverless / Read-Only Environment Safeguards:
+# On Vercel and AWS Lambda, the application bundle is mounted read-only (/var/task).
+# Force all SQLite persistence and notification audit stores to writable /tmp scratchpad.
+if os.getenv("VERCEL") or os.getenv("AWS_LAMBDA_FUNCTION_NAME") or not os.access(".", os.W_OK):
+    _TMP_DB = "/tmp/pahad_observations.db"
+    for _env_key in [
+        "OBSERVATION_DB_PATH",
+        "NOTIFICATION_AUDIT_DB_PATH",
+        "EOC_DB_PATH",
+        "EMAIL_DB_PATH",
+        "PHASE6A_DB_PATH",
+        "CRI_DB_PATH"
+    ]:
+        os.environ[_env_key] = _TMP_DB
+
+from services.cwc_sync import CWC_TEESTA_SERVICE
+from services.ai_triage import AI_TRIAGE_ENGINE
+from services.sar_tracking import SAR_TRACKING_SERVICE
+from services.ai_sitrep import AI_SITREP_SERVICE
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger("PARVAT_NETRA")
