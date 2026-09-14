@@ -41,9 +41,14 @@ from typing import Dict, Any, List, Optional
 
 logger = logging.getLogger("PAHAD_OBSERVATION_STORE")
 
+def _resolve_default_db_path() -> str:
+    if os.getenv("VERCEL") or os.getenv("AWS_LAMBDA_FUNCTION_NAME"):
+        return "/tmp/pahad_observations.db"
+    return "data/observations/pahad_observations.db"
+
 OBSERVATION_DB_PATH = os.getenv(
     "OBSERVATION_DB_PATH",
-    "data/observations/pahad_observations.db"
+    _resolve_default_db_path()
 )
 
 _CREATE_TABLE_SQL = """
@@ -141,7 +146,14 @@ class ObservationStore:
         self._lock = threading.Lock()
         self._conn: Optional[sqlite3.Connection] = None
         # Create parent directory eagerly
-        os.makedirs(os.path.dirname(db_path), exist_ok=True)
+        try:
+            os.makedirs(os.path.dirname(os.path.abspath(self.db_path)), exist_ok=True)
+        except OSError:
+            self.db_path = os.path.join("/tmp", os.path.basename(self.db_path))
+            try:
+                os.makedirs("/tmp", exist_ok=True)
+            except Exception:
+                pass
         # Initialize schema on first construction
         conn = self._connect()
         conn.execute(_CREATE_TABLE_SQL)

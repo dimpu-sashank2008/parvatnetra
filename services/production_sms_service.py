@@ -137,11 +137,15 @@ DLT_TEMPLATE_IDS = {
     TEMPLATE_TEST_ALERT: os.getenv("DLT_TE_TEST_ALERT", "DLT-TE-TST-006")
 }
 
-# Database path for EOC and delivery persistence
-SQLITE_DB_PATH = os.environ.get(
-    "EOC_DB_PATH",
-    os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "observations", "pahad_observations.db")
-)
+def _resolve_default_db_path(env_var: str, default_name: str = "pahad_observations.db") -> str:
+    if os.getenv("VERCEL") or os.getenv("AWS_LAMBDA_FUNCTION_NAME"):
+        return os.environ.get(env_var, os.path.join("/tmp", default_name))
+    return os.environ.get(
+        env_var,
+        os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "observations", default_name)
+    )
+
+SQLITE_DB_PATH = _resolve_default_db_path("EOC_DB_PATH")
 
 # Shared Secret for Webhook DLR signature verification
 SMS_DLR_SECRET = os.environ.get("SMS_DLR_WEBHOOK_SECRET", "PARVAT_NETRA_SMS_DLR_HMAC_SECRET_2026").encode("utf-8")
@@ -393,8 +397,16 @@ class DeliveryReceiptTracker:
         self._init_db()
 
     def _get_conn(self) -> sqlite3.Connection:
-        os.makedirs(os.path.dirname(os.path.abspath(self.db_path)), exist_ok=True)
-        return sqlite3.connect(self.db_path, check_same_thread=False)
+        try:
+            os.makedirs(os.path.dirname(os.path.abspath(self.db_path)), exist_ok=True)
+            return sqlite3.connect(self.db_path, check_same_thread=False)
+        except OSError:
+            self.db_path = os.path.join("/tmp", os.path.basename(self.db_path))
+            try:
+                os.makedirs("/tmp", exist_ok=True)
+            except Exception:
+                pass
+            return sqlite3.connect(self.db_path, check_same_thread=False)
 
     def _init_db(self) -> None:
         with self._lock:
