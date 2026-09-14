@@ -1,6 +1,6 @@
 {
   "data": {
-    "timestamp": "2026-09-13T17:59:57.281990+00:00",
+    "timestamp": "2026-09-14T13:58:35.926688+00:00",
     "location": {
       "lat": 23.805,
       "lon": 92.659,
@@ -8,44 +8,44 @@
       "state": "Mizoram"
     },
     "rainfall": {
-      "current_mm_hr": 3.72,
-      "rain_1h_mm": 3.72,
-      "rain_6h_mm": 25.46,
-      "rain_24h_mm": 67.0,
-      "rain_72h_mm": 140.7
+      "current_mm_hr": 3.54,
+      "rain_1h_mm": 3.54,
+      "rain_6h_mm": 24.24,
+      "rain_24h_mm": 63.8,
+      "rain_72h_mm": 133.98
     },
     "forecast": {
-      "1h_mm": 4.09,
-      "3h_mm": 11.9,
-      "6h_mm": 30.55,
-      "12h_mm": 36.85,
-      "24h_mm": 63.65,
-      "48h_mm": 113.9,
+      "1h_mm": 3.89,
+      "3h_mm": 11.33,
+      "6h_mm": 29.09,
+      "12h_mm": 35.09,
+      "24h_mm": 60.61,
+      "48h_mm": 108.46,
       "hourly_trend": [
-        2.23,
-        2.51,
-        2.79,
-        3.07,
-        3.35,
-        3.63,
-        2.23,
-        2.51,
-        2.79,
-        3.07,
-        3.35,
-        3.63,
-        2.23,
-        2.51,
-        2.79,
-        3.07,
-        3.35,
-        3.63,
-        2.23,
-        2.51,
-        2.79,
-        3.07,
-        3.35,
-        3.63
+        2.13,
+        2.39,
+        2.66,
+        2.92,
+        3.19,
+        3.46,
+        2.13,
+        2.39,
+        2.66,
+        2.92,
+        3.19,
+        3.46,
+        2.13,
+        2.39,
+        2.66,
+        2.92,
+        3.19,
+        3.46,
+        2.13,
+        2.39,
+        2.66,
+        2.92,
+        3.19,
+        3.46
       ]
     },
     "atmosphere": {
@@ -56,33 +56,33 @@
       "cloud_pct": 95.0
     },
     "derived_pahad": {
-      "antecedent_rainfall": 140.7,
-      "api_3d": 123.96,
-      "api_7d": 182.22,
-      "api_30d": 225.59,
-      "rainfall_intensity_duration_state": "CRITICAL_EXCEEDED",
+      "antecedent_rainfall": 133.98,
+      "api_3d": 118.04,
+      "api_7d": 173.51,
+      "api_30d": 214.82,
+      "rainfall_intensity_duration_state": "ELEVATED_BREACH",
       "rainfall_threshold_status": {
         "id_threshold_mm_hr": 1.828,
         "ed_threshold_mm": 43.872,
-        "intensity_mm_hr": 3.72,
+        "intensity_mm_hr": 3.54,
         "duration_hours": 24.0,
-        "exceedance_ratio": 2.035,
+        "exceedance_ratio": 1.937,
         "threshold_exceeded": true,
-        "state": "CRITICAL_EXCEEDED"
+        "state": "ELEVATED_BREACH"
       },
-      "forecast_rainfall_loading": 0.53
+      "forecast_rainfall_loading": 0.505
     },
     "source": "PAHAD Eastern Himalayan Climate Simulator",
     "provenance": "DEMO",
-    "last_successful_fetch": "2026-09-13T17:59:57.281990+00:00",
+    "last_successful_fetch": "2026-09-14T13:58:35.926688+00:00",
     "data_age_seconds": 0.0
   },
-  "fetched_at": 1789322397.281991,
+  "fetched_at": 1789394315.9266887,
   "ttl": 900,
   "meta": {
     "source": "PAHAD Eastern Himalayan Climate Simulator",
     "provenance": "[LIVE]",
-    "stored_at": "2026-09-13T17:59:57Z",
+    "stored_at": "2026-09-14T13:58:35Z",
     "ttl": 900
   }
 }
