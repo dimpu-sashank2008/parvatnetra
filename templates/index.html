@@ -2637,7 +2637,7 @@
                     PAHAD AI — Predictive AI for Hillslope Analysis &amp; Disaster-response
                 </div>
                 <div class="text-[11px] text-slate-400 font-medium tracking-normal mt-0.5" style="color: #94A3B8 !important;">
-                    पूर्वोत्तर क्षेत्र विकास मंत्रालय (MDoNER) • Government of India
+                    पूर्वोत्तर क्षेत्र विकास मंत्रालय (MDoNER) • Smart India Hackathon 2026 Prototype
                 </div>
             </div>
         </div>
@@ -2649,7 +2649,7 @@
     <div id="top-accessibility-bar" class="bg-[#0B192C] text-white text-xs py-1.5 px-4 border-b border-slate-800">
       <div class="max-w-7xl mx-auto flex justify-between items-center">
         <div class="flex items-center space-x-3 text-[11px]">
-          <span class="font-semibold" id="lbl-goi" data-i18n="goi">भारत सरकार | Government of India</span>
+          <span class="font-semibold" id="lbl-goi" data-i18n="goi">स्मार्ट इंडिया हैकथॉन | Smart India Hackathon 2026</span>
           <span class="text-slate-500">|</span>
           <span id="lbl-ministry" data-i18n="ministry">उत्तर पूर्वी क्षेत्र विकास मंत्रालय (MDoNER)</span>
           <!-- Skip to main content (hidden visually from UI, preserved in DOM for accessibility/tests) -->
@@ -2688,32 +2688,35 @@
             <option value="as">অসমীয়া</option>
           </select>
           <span class="text-slate-500">|</span>
-          {% if session.get('user_role') %}
-            <div class="flex items-center gap-1.5">
-              <span class="sih-logged-in-pill inline-flex items-center gap-2 pl-3 pr-1 py-0.5 bg-white text-slate-800 border border-emerald-600 rounded-full text-xs font-semibold shadow-xs" title="Logged in as {{ session.get('user_role')|upper }}">
-                <span class="text-[11px] font-bold text-emerald-800 tracking-tight">{{ session.get('user_role')|upper }}</span>
-                <span class="w-[22px] h-[22px] rounded-full bg-emerald-600 flex items-center justify-center text-white shrink-0 shadow-xs">
+          <div class="flex flex-col items-center justify-center">
+            {% if session.get('user_role') %}
+              <div class="flex items-center gap-1.5">
+                <span class="sih-logged-in-pill inline-flex items-center gap-2 pl-3 pr-1 py-0.5 bg-white text-slate-800 border border-emerald-600 rounded-full text-xs font-semibold shadow-xs" title="Logged in as {{ session.get('user_role')|upper }}">
+                  <span class="text-[11px] font-bold text-emerald-800 tracking-tight">{{ session.get('user_role')|upper }}</span>
+                  <span class="w-[22px] h-[22px] rounded-full bg-emerald-600 flex items-center justify-center text-white shrink-0 shadow-xs">
+                    <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                      <circle cx="12" cy="7.5" r="3.5"></circle>
+                      <path d="M5.5 19a6.5 6.5 0 0 1 13 0" stroke-linecap="round"></path>
+                    </svg>
+                  </span>
+                </span>
+                <a href="/logout" class="px-2.5 py-0.5 bg-red-700 hover:bg-red-600 text-white text-[10px] font-bold rounded-full border border-red-600 transition shadow-xs">
+                  Logout
+                </a>
+              </div>
+            {% else %}
+              <a href="/login" class="sih-login-pill group inline-flex items-center gap-2 pl-3.5 pr-1 py-0.5 bg-white hover:bg-[#FFF9F5] text-slate-800 border border-[#FF5E00] hover:border-[#E65100] rounded-full text-xs font-semibold transition-all duration-200 shadow-xs hover:shadow-md cursor-pointer" id="btn-portal-login" title="Portal Login">
+                <span class="text-[12px] font-bold tracking-tight sih-login-text" style="color: #1E293B !important;">Portal Login</span>
+                <span class="sih-avatar-circle w-[22px] h-[22px] rounded-full bg-[#FF5E00] group-hover:bg-[#E65100] flex items-center justify-center text-white shrink-0 transition-all duration-200 shadow-xs">
                   <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
                     <circle cx="12" cy="7.5" r="3.5"></circle>
                     <path d="M5.5 19a6.5 6.5 0 0 1 13 0" stroke-linecap="round"></path>
                   </svg>
                 </span>
-              </span>
-              <a href="/logout" class="px-2.5 py-0.5 bg-red-700 hover:bg-red-600 text-white text-[10px] font-bold rounded-full border border-red-600 transition shadow-xs">
-                Logout
               </a>
-            </div>
-          {% else %}
-            <a href="/login" class="sih-login-pill group inline-flex items-center gap-2 pl-3.5 pr-1 py-0.5 bg-white hover:bg-[#FFF9F5] text-slate-800 border border-[#FF5E00] hover:border-[#E65100] rounded-full text-xs font-semibold transition-all duration-200 shadow-xs hover:shadow-md cursor-pointer" id="btn-portal-login" title="Portal Login">
-              <span class="text-[12px] font-bold tracking-tight sih-login-text" style="color: #1E293B !important;">Portal Login</span>
-              <span class="sih-avatar-circle w-[22px] h-[22px] rounded-full bg-[#FF5E00] group-hover:bg-[#E65100] flex items-center justify-center text-white shrink-0 transition-all duration-200 shadow-xs">
-                <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
-                  <circle cx="12" cy="7.5" r="3.5"></circle>
-                  <path d="M5.5 19a6.5 6.5 0 0 1 13 0" stroke-linecap="round"></path>
-                </svg>
-              </span>
-            </a>
-          {% endif %}
+            {% endif %}
+            <span class="text-[9px] font-mono font-bold text-amber-300/90 tracking-wider mt-0.5 uppercase" title="Smart India Hackathon Problem Statement">PS: SIH26001</span>
+          </div>
         </div>
       </div>
     </div>
@@ -2730,13 +2733,13 @@
           </button>
 
           <!-- Official Sentinel Mountain-Eye Emblem & Title Link -->
-          <a href="/" class="flex items-center gap-2 sm:gap-3 group cursor-pointer" title="Government of India • Ministry of Development of North Eastern Region — Return to Overview">
+          <a href="/" class="flex items-center gap-2 sm:gap-3 group cursor-pointer" title="Smart India Hackathon 2026 • Ministry of Development of North Eastern Region — Return to Overview">
             <div class="relative flex-shrink-0 w-11 h-11 rounded-full p-[2px] bg-gradient-to-tr from-amber-400 via-amber-200 to-amber-500 shadow-sm flex items-center justify-center group-hover:scale-105 transition-transform duration-150">
               <img src="/static/images/parvat_netra_emblem_circle.png" 
-                   alt="Government of India Emblem" 
+                   alt="PARVAT NETRA Sentinel Emblem" 
                    class="w-full h-full object-contain rounded-full bg-slate-900"
                    onerror="this.onerror=null; this.src='/static/images/parvat_netra_emblem.png';">
-              <img src="/static/images/parvat_netra_emblem.png" alt="Government of India Emblem" class="hidden" aria-hidden="true">
+              <img src="/static/images/parvat_netra_emblem.png" alt="Government of India Emblem" class="hidden" style="display:none !important;" aria-hidden="true">
             </div>
 
             <!-- Title & Subtitle Stack -->
@@ -5838,8 +5841,19 @@
             <span>Visitor Count: <strong class="text-amber-400 font-mono">1,482,904</strong> (NIC Traffic Node)</span>
           </div>
         </div>
-        <div class="max-w-7xl mx-auto px-4 text-center text-[10px] text-slate-500 mt-3">
-          &copy; 2026 Government of India. All Rights Reserved. Content Owned &amp; Maintained by Ministry of Development of North Eastern Region (MDoNER).
+        <!-- SIH PROTOTYPE ATTRIBUTION & TEAM BRANDING -->
+        <div class="max-w-7xl mx-auto px-4 mt-4 pt-3 border-t border-slate-800/80 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-slate-400">
+          <div class="flex flex-wrap items-center justify-center md:justify-start gap-2.5">
+            <span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[10px] font-mono font-bold uppercase tracking-wider">[PROTOTYPE]</span>
+            <span class="font-semibold text-slate-200">PARVAT NETRA Sentinel AI</span>
+            <span class="text-slate-600">|</span>
+            <span class="font-mono text-slate-300">Team ID: <strong class="text-amber-400 font-bold">viit/sih/065</strong></span>
+            <span class="text-slate-600">|</span>
+            <span class="font-mono text-slate-300">Problem Statement: <strong class="text-amber-400 font-bold">SIH26001</strong></span>
+          </div>
+          <div class="text-[10.5px] text-slate-500 text-center md:text-right">
+            &copy; 2026 PARVAT NETRA. Smart India Hackathon (SIH 2026) Prototype. All Rights Reserved.
+          </div>
         </div>
       </div>
     </footer>
@@ -9218,25 +9232,25 @@ function toggleLanguage(lang){
     }
     var translations={
         en:{
-            goi:'भारत सरकार | Government of India',
+            goi:'Smart India Hackathon 2026',
             ministry:'उत्तर पूर्वी क्षेत्र विकास मंत्रालय (MDoNER)',
             sync:'Sync IMD',
             queue_title:'Field Official & Citizen Geo-Observation Queue'
         },
         hi:{
-            goi:'भारत सरकार | Government of India',
+            goi:'स्मार्ट इंडिया हैकथॉन 2026',
             ministry:'उत्तर पूर्वी क्षेत्र विकास मंत्रालय (एमडीओएनईआर)',
             sync:'IMD डेटा सिंक करें',
             queue_title:'क्षेत्रीय अधिकारी एवं नागरिक भू-अवलोकन कतार'
         },
         ne:{
-            goi:'भारत सरकार | Government of India',
+            goi:'स्मार्ट इन्डिया ह्याकाथन २०२६',
             ministry:'उत्तर पूर्वी क्षेत्र विकास मन्त्रालय (MDoNER)',
             sync:'IMD सिङ्क गर्नुहोस्',
             queue_title:'क्षेत्रीय अधिकारी र नागरिक भू-अवलोकन लाम'
         },
         as:{
-            goi:'ভাৰত চৰকাৰ | Government of India',
+            goi:'স্মাৰ্ট ইণ্ডিয়া হেকাথন ২০২৬',
             ministry:'উত্তৰ-পূৰ্বাঞ্চল উন্নয়ন মন্ত্ৰালয় (MDoNER)',
             sync:'IMD সংমিশ্ৰণ কৰক',
             queue_title:'ক্ষেত্ৰীয় বিষয়া আৰু নাগৰিক ভূ-পৰ্যবেক্ষণ শাৰী'
@@ -12722,7 +12736,7 @@ function renderHistoricalCatalog(catalog) {
                                 ${ev.verification_status || 'VERIFIED'}
                             </span>
                             <span class="text-[9px] font-mono text-slate-500 dark:text-slate-400 font-bold">
-                                ${ev.provenance || '[OFFICIAL_GOI]'}
+                                ${ev.provenance || '[OFFICIAL_RECORD]'}
                             </span>
                         </div>
                         ${isNotAvailable ? `
