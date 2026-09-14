@@ -41,6 +41,16 @@ class TestEventValidation(unittest.TestCase):
         self.assertTrue(train_max < val_min, f"Train max ({train_max}) not < Val min ({val_min})")
         self.assertTrue(val_max < test_min, f"Val max ({val_max}) not < Test min ({test_min})")
 
+    def test_validation_strategy_report_exists(self):
+        """Verify reports/pahad_validation_strategy.md exists and documents temporal & spatial strategy."""
+        rep_path = os.path.join(self.base_dir, "reports", "pahad_validation_strategy.md")
+        self.assertTrue(os.path.exists(rep_path), f"Missing {rep_path}")
+        with open(rep_path, "r", encoding="utf-8") as f:
+            content = f.read()
+        self.assertIn("Strict Temporal Holdout", content)
+        self.assertIn("Grouped Spatial Validation", content)
+        self.assertIn("TRAINED_LIMITED_DATA", content)
+
 
 if __name__ == "__main__":
     unittest.main()

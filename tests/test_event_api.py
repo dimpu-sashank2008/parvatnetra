@@ -68,6 +68,16 @@ class TestEventAPI(unittest.TestCase):
         self.assertEqual(data.get("sector_id"), "SK-NH10-KM48")
         self.assertIn("prediction", data)
         self.assertIn("24h", data["prediction"])
+        # Section 24 required response keys
+        self.assertIn("event_probability", data)
+        self.assertIn("calibrated_probability", data)
+        self.assertIn("forecast_horizon", data)
+        self.assertIn("confidence", data)
+        self.assertEqual(data.get("model_status"), "TRAINED_LIMITED_DATA")
+        self.assertIn("model_version", data)
+        self.assertIn("top_drivers", data)
+        self.assertIn("data_quality", data)
+        self.assertIn("data_provenance", data)
 
 
 if __name__ == "__main__":

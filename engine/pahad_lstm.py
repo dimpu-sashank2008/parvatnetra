@@ -1,12 +1,16 @@
-﻿"""
+"""
 engine/pahad_lstm.py
 ====================
 PAHAD Phase 2 — Dynamic Rolling Forecast Engine
 ------------------------------------------------
-Physics-informed LSTM surrogate for multi-horizon failure
+Physics-informed mathematical surrogate for multi-horizon failure
 probability estimation on the NH-10 Sikkim corridor.
 
-Data   : [SIMULATED] NE Himalaya calibration constants
+Model Status   : NOT_TRAINED (MATHEMATICAL SURROGATE)
+Data Provenance: [SIMULATED] NE Himalaya calibration constants
+Note           : No synthetic sequence training is claimed. Preserved
+                 as a deterministic mathematical surrogate until real
+                 high-frequency sensor telemetry sequences are archived.
 """
 
 from __future__ import annotations
@@ -52,6 +56,8 @@ class ForecastResult:
                 "rainfall_velocity": round(self.rainfall_velocity, 4),
             },
             "provenance": "[SIMULATED] NE Himalaya LSTM surrogate v2",
+            "model_status": "NOT_TRAINED",
+            "surrogate_type": "MATHEMATICAL_SURROGATE",
             "metadata": self.metadata,
         }
 
