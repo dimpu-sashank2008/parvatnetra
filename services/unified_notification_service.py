@@ -364,9 +364,23 @@ class UnifiedNotificationService:
                 failure_reason=res.get("error")
             )
 
+            eml_payload = {
+                "success": res.get("success", False),
+                "status": res["status"],
+                "provider": res["provider"],
+                "provider_reference": res.get("provider_reference"),
+                "recipient_masked": self.email_service.tracker.mask_email(norm_email),
+                "message_id": res["message_id"],
+                "error": res.get("error"),
+                "note": res.get("note")
+            }
             return {
                 "success": res.get("success", False),
                 "channel": CHANNEL_EMAIL,
+                "channels": {
+                    CHANNEL_EMAIL: eml_payload
+                },
+                "status_summary": f"EMAIL {res['status']}",
                 "message_id": res["message_id"],
                 "incident_id": inc_id,
                 "status": res["status"],
@@ -436,9 +450,22 @@ class UnifiedNotificationService:
                 failure_reason=failure_reason
             )
 
+            sms_payload = {
+                "success": success_flag,
+                "status": sms_status,
+                "provider": prov_name,
+                "provider_reference": ref_id,
+                "recipient_masked": masked_phone,
+                "message_id": msg_id,
+                "error": failure_reason
+            }
             return {
                 "success": success_flag,
                 "channel": CHANNEL_SMS,
+                "channels": {
+                    CHANNEL_SMS: sms_payload
+                },
+                "status_summary": f"SMS {sms_status}",
                 "message_id": msg_id,
                 "incident_id": inc_id,
                 "status": sms_status,

@@ -485,7 +485,7 @@ class SMTPEmailProvider(BaseEmailProvider):
         ref_id = f"SMTP-TX-{int(time.time())}-{uuid.uuid4().hex[:6].upper()}"
 
         try:
-            with smtplib.SMTP(self.host, self.port, timeout=10) as server:
+            with smtplib.SMTP(self.host, self.port, timeout=4) as server:
                 if self.use_tls:
                     server.starttls()
                 if self.user and self.password:
@@ -607,6 +607,9 @@ class ProductionEmailService:
     def get_active_provider(self, force_demo: bool = False) -> BaseEmailProvider:
         """Selects operational provider with safe fallback."""
         if force_demo or os.getenv("EMAIL_DEMO_MODE", "0") == "1":
+            return self.demo_provider
+        # Vercel serverless environment restricts raw outbound TCP ports (25, 465, 587)
+        if os.getenv("VERCEL") and not (self.api_provider.is_configured() or os.getenv("FORCE_REAL_SMTP", "0") == "1"):
             return self.demo_provider
         if self.smtp_provider.is_configured():
             return self.smtp_provider
@@ -824,6 +827,21 @@ class ProductionEmailService:
             body_html=html_body
         )
 
+        # Resilient Automatic Fallback: If primary external provider failed, gracefully fall back to DemoEmailProvider
+        fallback_note = None
+        if not res.get("success") and provider != self.demo_provider and os.getenv("STRICT_EMAIL_PROD", "0") != "1":
+            fail_reason = res.get("error") or "Primary connection failed"
+            logger.warning(f"[EMAIL_SERVICE] Primary provider {provider.name} failed ({fail_reason}). Gracefully failing over to DemoEmailProvider.")
+            fallback_res = self.demo_provider.send_email(
+                to_email=norm_email,
+                subject=subject,
+                body_text=text_body,
+                body_html=html_body
+            )
+            fallback_note = f"Primary {provider.name} unavailable ({fail_reason}); safely dispatched via DEMO_EMAIL_GATEWAY."
+            res = fallback_res
+            provider = self.demo_provider
+
         final_status = res.get("status", STATUS_FAILED)
         ref_id = res.get("provider_reference")
         err = res.get("error")
@@ -847,6 +865,7 @@ class ProductionEmailService:
             "subject": subject,
             "message_preview": text_body[:250] + ("..." if len(text_body) > 250 else ""),
             "error": err,
+            "note": fallback_note,
             "is_demo": is_test,
             "timestamp": now_iso
         }

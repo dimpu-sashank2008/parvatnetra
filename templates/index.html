@@ -211,14 +211,30 @@
         @keyframes pulse-green{0%{box-shadow:0 0 0 0 rgba(16,185,129,0.7);}70%{box-shadow:0 0 0 10px rgba(16,185,129,0);}100%{box-shadow:0 0 0 0 rgba(16,185,129,0);}}
         @keyframes pulse-red{0%{box-shadow:0 0 0 0 rgba(239,68,68,0.8);}70%{box-shadow:0 0 0 12px rgba(239,68,68,0);}100%{box-shadow:0 0 0 0 rgba(239,68,68,0);}}
         @keyframes pulse-orange{0%{box-shadow:0 0 0 0 rgba(249,115,22,0.8);}70%{box-shadow:0 0 0 10px rgba(249,115,22,0);}100%{box-shadow:0 0 0 0 rgba(249,115,22,0);}}
-        /* Prevent Leaflet controls and floating panels from overlapping modals */
+        /* Maintain Leaflet controls and floating layer panel above map tiles & vectors (which use z-index 200..700), but below modals (z-index > 9999) */
         .leaflet-top, .leaflet-bottom, .leaflet-control {
-            z-index: 10 !important;
+            z-index: 800 !important;
         }
-        #layer-control-panel{position:absolute;top:10px;right:10px;z-index:10;width:245px;background:#0B192C;border:1px solid #334155;border-radius:6px;box-shadow:0 8px 24px rgba(0,0,0,0.3);overflow:hidden;}
-        #layer-control-panel .lcp-header{background:#071220;padding:9px 12px;border-bottom:1px solid #334155;display:flex;align-items:center;justify-content:space-between;cursor:pointer;}
+        #layer-control-panel{position:absolute;top:10px;right:10px;z-index:850 !important;width:245px;background:#0B192C;border:1px solid #334155;border-radius:6px;box-shadow:0 8px 24px rgba(0,0,0,0.3);overflow:hidden;}
+        #layer-control-panel .lcp-header{background:#071220;padding:9px 12px;border-bottom:1px solid #334155;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;}
         #layer-control-panel .lcp-header span{font-size:11px;font-weight:700;color:#FFFFFF;letter-spacing:0.04em;}
-        #layer-control-panel .lcp-body{padding:6px 0;background:#0B192C;}
+        #layer-control-panel .lcp-body{padding:6px 0;background:#0B192C;max-height:55vh;overflow-y:auto;}
+        #layer-control-panel .lcp-body::-webkit-scrollbar{width:4px;}
+        #layer-control-panel .lcp-body::-webkit-scrollbar-thumb{background:#334155;border-radius:2px;}
+        @media (max-width: 640px) {
+            #map, #gis-map {
+                height: 380px !important;
+            }
+            #layer-control-panel {
+                top: 8px !important;
+                right: 8px !important;
+                width: 220px !important;
+                max-width: calc(100% - 16px) !important;
+            }
+            #layer-control-panel .lcp-body {
+                max-height: 45vh;
+            }
+        }
         #layer-control-panel .lcp-category{padding:4px 12px 2px;font-size:9px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:#94A3B8;}
         #layer-control-panel .lcp-item{display:flex;align-items:center;gap:8px;padding:5px 12px;cursor:pointer;transition:background 0.15s;}
         #layer-control-panel .lcp-item:hover{background:#1E293B;}
@@ -2594,6 +2610,10 @@
 
     <!-- MINIMALIST OLED SYMBOL GLOW INTRO -->
     <div id="intro-splash-screen" class="fixed inset-0 z-[9999999] flex flex-col items-center justify-center bg-black transition-opacity duration-700 ease-out select-none" style="background-color: #000000 !important;">
+        <!-- Direct Skip Intro button -->
+        <button type="button" id="btn-skip-intro" onclick="event.stopPropagation(); if (typeof dismissIntroAndLaunchTour === 'function') dismissIntroAndLaunchTour(true);" class="absolute top-5 right-5 px-3.5 py-1.5 rounded-full bg-slate-900/90 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-700 text-xs font-mono font-bold transition flex items-center gap-1.5 cursor-pointer z-[99999999] shadow-lg active:scale-95">
+            <span>Skip Intro</span> <i class="ph-bold ph-arrow-right"></i>
+        </button>
         <div class="relative flex flex-col items-center justify-center">
             <!-- Subtle National Emblem Halo -->
             <div class="absolute w-36 h-36 sm:w-44 sm:h-44 rounded-full bg-gradient-to-tr from-amber-600 via-amber-200 to-amber-500 opacity-40 blur-xl oled-halo-pulse pointer-events-none"></div>
@@ -3338,41 +3358,41 @@
         <div id="authority-map-slot" class="grid grid-cols-1 xl:grid-cols-12 gap-5 mb-5">
             <!-- Map (8 cols) -->
             <div id="gis-map-card" class="xl:col-span-8 dark-card flex flex-col">
-                <div class="dark-card-header bg-white border-b border-slate-200 px-4 py-3 flex justify-between items-center rounded-t-md">
-                    <div class="flex items-center space-x-2">
-                        <i class="ph-bold ph-globe-hemisphere-east text-[#0B2545] text-base"></i>
-                        <h2 class="font-bold text-sm text-[#0B2545]" id="lbl-gis-title">Operational GIS Hazard Viewer (WGS84)</h2>
-                        <span class="text-xs text-slate-500 ml-2 hidden sm:inline font-medium"><span class="inline-block w-2 h-2 rounded-full bg-red-600 mr-0.5"></span> RED &nbsp; <span class="inline-block w-2 h-2 rounded-full bg-amber-500 mr-0.5"></span> ORANGE &nbsp; <span class="inline-block w-2 h-2 rounded-full bg-yellow-400 mr-0.5"></span> YELLOW</span>
+                <div class="dark-card-header bg-white border-b border-slate-200 px-3 sm:px-4 py-2.5 sm:py-3 flex flex-wrap justify-between items-center gap-2 rounded-t-md">
+                    <div class="flex items-center space-x-2 min-w-0">
+                        <i class="ph-bold ph-globe-hemisphere-east text-[#0B2545] text-base shrink-0"></i>
+                        <h2 class="font-bold text-xs sm:text-sm text-[#0B2545] truncate" id="lbl-gis-title">Operational GIS Hazard Viewer (WGS84)</h2>
+                        <span class="text-xs text-slate-500 ml-1 hidden md:inline font-medium"><span class="inline-block w-2 h-2 rounded-full bg-red-600 mr-0.5"></span> RED &nbsp; <span class="inline-block w-2 h-2 rounded-full bg-amber-500 mr-0.5"></span> ORANGE &nbsp; <span class="inline-block w-2 h-2 rounded-full bg-yellow-400 mr-0.5"></span> YELLOW</span>
                     </div>
-                    <div class="flex items-center gap-2">
-                        <span id="coord-display" class="font-medium text-xs text-slate-500">27.2500, 88.5500</span>
-                        <button id="btn-toggle-gsi-insar" onclick="toggleGsiInSarOverlay()" class="px-2.5 py-1 bg-slate-900 hover:bg-slate-800 text-amber-300 border border-slate-700 rounded text-xs font-bold transition flex items-center gap-1 shadow-sm" aria-pressed="false" title="Toggle GSI Critical Sectors & InSAR Radar Overlays across NER">
+                    <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
+                        <span id="coord-display" class="font-mono text-[11px] sm:text-xs text-slate-500 hidden sm:inline">27.2500, 88.5500</span>
+                        <button id="btn-toggle-gsi-insar" onclick="toggleGsiInSarOverlay()" class="px-2 sm:px-2.5 py-1 bg-slate-900 hover:bg-slate-800 text-amber-300 border border-slate-700 rounded text-[10px] sm:text-xs font-bold transition flex items-center gap-1 shadow-sm" aria-pressed="false" title="Toggle GSI Critical Sectors & InSAR Radar Overlays across NER">
                             <i class="ph-bold ph-satellite"></i>
-                            <span id="lbl-toggle-gsi-insar">SATELLITE INSAR &amp; SENSOR OVERLAY</span>
+                            <span id="lbl-toggle-gsi-insar"><span class="hidden sm:inline">SATELLITE INSAR &amp; SENSOR OVERLAY</span><span class="sm:hidden">INSAR &amp; SENSORS</span></span>
                             <span id="lc-toggle-gsi-insar" class="hidden">Toggle GSI Critical Sectors & InSAR</span>
                         </button>
-                        <button id="btn-reset-view" onclick="if(map) map.setView([27.25, 88.55], 10);" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-[#0B2545] border border-slate-300 rounded text-xs font-bold transition">Reset View</button>
-                        <div class="inline-flex border border-slate-400 bg-slate-900 text-[10px] font-bold uppercase tracking-wider rounded-none">
+                        <button id="btn-reset-view" onclick="if(map) map.setView([27.25, 88.55], 10);" class="px-2 sm:px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-[#0B2545] border border-slate-300 rounded text-[10px] sm:text-xs font-bold transition">Reset</button>
+                        <div class="inline-flex border border-slate-400 bg-slate-900 text-[9px] sm:text-[10px] font-bold uppercase tracking-wider rounded-none">
                           <button id="btn-map-compact" onclick="setMapViewMode('compact')" 
-                                  class="px-2.5 py-1 text-slate-300 hover:text-white hover:bg-slate-800 transition" 
+                                  class="px-2 sm:px-2.5 py-1 text-slate-300 hover:text-white hover:bg-slate-800 transition" 
                                   title="Collapse map height for smooth vertical scrolling">
                             COMPACT
                           </button>
                           <span class="w-[1px] bg-slate-700"></span>
                           <button id="btn-map-standard" onclick="setMapViewMode('standard')" 
-                                  class="px-2.5 py-1 text-white bg-[#002147] transition" 
+                                  class="px-2 sm:px-2.5 py-1 text-white bg-[#002147] transition" 
                                   title="Standard operational height">
-                            STANDARD
+                            STD
                           </button>
                           <span class="w-[1px] bg-slate-700"></span>
                           <button id="btn-map-maximize" onclick="setMapViewMode('maximize')" 
-                                  class="px-2.5 py-1 text-slate-300 hover:text-white hover:bg-slate-800 transition" 
+                                  class="px-2 sm:px-2.5 py-1 text-slate-300 hover:text-white hover:bg-slate-800 transition" 
                                   title="Expand map to full inspection viewport">
-                            MAXIMIZE
+                            MAX
                           </button>
                         </div>
-                        <button id="btn-exit-fullscreen-map" onclick="setMapViewMode('standard')" class="hidden px-2.5 py-1 bg-red-700 hover:bg-red-800 text-white font-bold text-xs uppercase tracking-wider transition border border-red-500 flex items-center gap-1 rounded-none" title="Exit Fullscreen View">
-                            <span>[ EXIT FULLSCREEN (ESC) ]</span>
+                        <button id="btn-exit-fullscreen-map" onclick="setMapViewMode('standard')" class="hidden px-2 py-1 bg-red-700 hover:bg-red-800 text-white font-bold text-[10px] sm:text-xs uppercase tracking-wider transition border border-red-500 flex items-center gap-1 rounded-none" title="Exit Fullscreen View">
+                            <span>[ EXIT (ESC) ]</span>
                         </button>
                     </div>
                 </div>
@@ -3380,11 +3400,14 @@
                     <div id="map"></div>
                     <!-- Floating Layer Control Panel -->
                     <div id="layer-control-panel">
-                        <div class="lcp-header" onclick="toggleLayerPanel()">
+                        <div class="lcp-header" onclick="toggleLayerPanel()" title="Click to toggle Map & Layer Controls">
                             <span style="font-size:11px;font-weight:700;color:#FFFFFF;letter-spacing:0.04em;">MAP &amp; LAYER CONTROL</span>
-                            <i class="ph-bold ph-sliders" style="color:#38bdf8;font-size:13px;"></i>
+                            <div class="flex items-center gap-1.5">
+                                <i class="ph-bold ph-sliders" style="color:#38bdf8;font-size:13px;"></i>
+                                <i id="lcp-chevron" class="ph-bold ph-caret-down text-slate-400 text-xs transition-transform duration-200"></i>
+                            </div>
                         </div>
-                        <div class="lcp-body" id="lcp-body">
+                        <div class="lcp-body" id="lcp-body" style="display: none;">
                             <!-- BASEMAP SWITCHER (Section 8 & 9) -->
                             <div class="p-2 mb-2 bg-[#070B10] border border-slate-800 rounded">
                                 <div class="flex items-center justify-between mb-1.5">
@@ -6275,12 +6298,13 @@ function setMapViewMode(mode) {
         }
         if (btnExitFs) btnExitFs.classList.add('hidden');
 
+        var cmpHeight = (window.innerWidth < 640) ? '220px' : '260px';
         if (gisMapEl) {
-            gisMapEl.style.height = '260px';
+            gisMapEl.style.height = cmpHeight;
             gisMapEl.classList.remove('flex-1', 'w-full', 'h-full');
         }
         if (mapEl) {
-            mapEl.style.height = '260px';
+            mapEl.style.height = cmpHeight;
             mapEl.classList.remove('flex-1', 'w-full', 'h-full');
         }
         if (window.map) {
@@ -6311,12 +6335,13 @@ function setMapViewMode(mode) {
         }
         if (btnExitFs) btnExitFs.classList.add('hidden');
 
+        var stdHeight = (window.innerWidth < 640) ? '380px' : '520px';
         if (gisMapEl) {
-            gisMapEl.style.height = '520px';
+            gisMapEl.style.height = stdHeight;
             gisMapEl.classList.remove('flex-1', 'w-full', 'h-full');
         }
         if (mapEl) {
-            mapEl.style.height = '520px';
+            mapEl.style.height = stdHeight;
             mapEl.classList.remove('flex-1', 'w-full', 'h-full');
         }
         if (window.map) {
@@ -6770,9 +6795,13 @@ function focusMapOnRedZones() {
 window.focusMapOnRedZones = focusMapOnRedZones;
 
 function toggleLayerPanel(){
-    layerPanelOpen=!layerPanelOpen;
-    var body=document.getElementById('lcp-body');
-    if(body)body.style.display=layerPanelOpen?'block':'none';
+    layerPanelOpen = !layerPanelOpen;
+    var body = document.getElementById('lcp-body');
+    if (body) body.style.display = layerPanelOpen ? 'block' : 'none';
+    var chevron = document.getElementById('lcp-chevron');
+    if (chevron) {
+        chevron.style.transform = layerPanelOpen ? 'rotate(180deg)' : 'rotate(0deg)';
+    }
 }
 function toggleLayerById(layerKey,btn){
     if(!layerGroupMap[layerKey]||!map)return;
@@ -11850,29 +11879,42 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     let introDismissed = false;
-    function dismissIntroAndLaunchTour() {
+    function dismissIntroAndLaunchTour(skipTour = false) {
         if (introDismissed) return;
         introDismissed = true;
         splash.classList.add('opacity-0', 'pointer-events-none');
         sessionStorage.setItem('parvat_intro_seen', 'true');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         setTimeout(() => {
             splash.style.display = 'none';
-            triggerTourAfterIntro();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            const gisEl = document.getElementById('dashboard-gis-map-container') || document.getElementById('gis-map-card');
+            if (gisEl) gisEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            if (window.map && typeof window.map.invalidateSize === 'function') {
+                window.map.invalidateSize();
+            }
+            if (!skipTour) {
+                triggerTourAfterIntro();
+            }
         }, 500);
     }
+    window.dismissIntroAndLaunchTour = dismissIntroAndLaunchTour;
 
     // Allow user to click anywhere or tap key to dismiss intro immediately and start tour
     splash.style.cursor = 'pointer';
-    splash.addEventListener('click', dismissIntroAndLaunchTour);
+    splash.addEventListener('click', (e) => {
+        if (e.target && e.target.closest('#btn-skip-intro')) return;
+        dismissIntroAndLaunchTour(false);
+    });
     document.addEventListener('keydown', (e) => {
         if (!introDismissed && (e.key === 'Escape' || e.key === ' ' || e.key === 'Enter')) {
-            dismissIntroAndLaunchTour();
+            dismissIntroAndLaunchTour(true);
         }
     }, { once: true });
 
     // Auto-dismiss smoothly after 1.8 seconds and launch interactive tour confirmly
     setTimeout(() => {
-        dismissIntroAndLaunchTour();
+        dismissIntroAndLaunchTour(false);
     }, 1800);
 });
 
@@ -13442,12 +13484,12 @@ const PARVAT_TOUR = {
     steps: [
         {
             num: 1,
-            targetId: 'pahad-ai-ring',
-            category: 'PRIMARY RISK METRIC',
-            title: 'Composite Risk Index (CRI)',
-            icon: 'ph-gauge',
-            description: 'The Composite Risk Index (CRI) is the central headline metric of PARVAT NETRA. On a scale of 0 to 100, it quantifies the immediate and forward-looking hazard of hillslope failure. Rather than relying on single sensors, CRI fuses: (1) Mohr-Coulomb physical slope stability (FoS), (2) IMD precipitation thresholds, and (3) calibrated geotechnical ML.',
-            actionHtml: '<div class="flex items-center justify-between w-full"><span class="text-slate-400">Risk Bins:</span><div class="flex items-center gap-1 font-mono text-[10px]"><span class="px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-300">0-20 Low</span><span class="px-1.5 py-0.5 rounded bg-amber-950 text-amber-300">20-40 Mod</span><span class="px-1.5 py-0.5 rounded bg-orange-950 text-orange-300">40-60 High</span><span class="px-1.5 py-0.5 rounded bg-red-950 text-red-300">60-80 V.High</span><span class="px-1.5 py-0.5 rounded bg-purple-950 text-purple-300">80-100 Ext</span></div></div>'
+            targetId: 'gis-map-card',
+            category: 'OPERATIONAL GIS HAZARD MAP',
+            title: 'Operational GIS Hazard Viewer (WGS84)',
+            icon: 'ph-globe-hemisphere-east',
+            description: 'The primary geospatial surveillance viewport of PARVAT NETRA. Live-correlates multi-modal hazard telemetry across the 8 North Eastern Region states: real-time precipitation, in-situ borehole piezometer sensors, Sentinel-1 InSAR surface deformation, historical failure scars, and dynamic BRO evacuation detours.',
+            actionHtml: '<div class="flex items-center justify-between w-full"><span class="text-slate-400">Layers:</span><span class="text-sky-400 font-mono text-[10px]">InSAR &bull; IoT Piezometers &bull; CWC Teesta &bull; BRO Detours</span></div>'
         },
         {
             num: 2,
@@ -13524,6 +13566,14 @@ function closeInteractiveTour() {
     try {
         localStorage.setItem('parvat_netra_tour_completed', '1');
     } catch(e) {}
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const gisEl = document.getElementById('dashboard-gis-map-container') || document.getElementById('gis-map-card');
+    if (gisEl) {
+        gisEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    if (window.map && typeof window.map.invalidateSize === 'function') {
+        setTimeout(() => window.map.invalidateSize(), 250);
+    }
 }
 
 function nextTourStep() {
