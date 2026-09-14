@@ -774,7 +774,7 @@ class UnifiedNotificationService:
                         "recipient_masked": masked_phone,
                         "error": "SMS PROVIDER NOT CONFIGURED: CDAC Mobile Seva credentials not configured in environment."
                     }
-                elif is_test and not cdac_ok and not force_real_sms:
+                elif is_test and not force_real_sms:
                     mock_p = MockSMSProvider()
                     m_res = mock_p.send_sms(recipient_phone=phone_clean, message=rendered_msg["body_text"])
                     sms_result = {
