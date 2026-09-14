@@ -1,0 +1,29 @@
+{
+  "name": "PARVAT NETRA — Landslide Decision Intelligence",
+  "short_name": "ParvatNetra",
+  "description": "Smart India Hackathon (SIH) Grade National Disaster-Intelligence Platform for North Eastern Region",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#070B10",
+  "theme_color": "#070B10",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/static/images/parvat_netra_emblem.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/static/images/parvat_netra_emblem.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": [
+    "disaster-response",
+    "government",
+    "intelligence"
+  ]
+}

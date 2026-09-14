@@ -33,9 +33,14 @@ load_env()
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger("PARVAT_NETRA")
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static', static_url_path='/static')
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.secret_key = os.environ.get("SECRET_KEY", "parvat-netra-secret-key-2026")
+
+@app.route('/static/<path:filename>')
+def serve_static(filename):
+    static_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')
+    return send_from_directory(static_dir, filename)
 
 # Register Edge Network (Phase 3.4) Blueprint
 try:
