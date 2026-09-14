@@ -441,6 +441,9 @@ class SMTPEmailProvider(BaseEmailProvider):
 
     def __init__(self):
         super().__init__(name="SMTP_GATEWAY")
+        self._load_config()
+
+    def _load_config(self) -> None:
         self.host = os.getenv("SMTP_HOST", "")
         self.port = int(os.getenv("SMTP_PORT", "587"))
         self.user = os.getenv("SMTP_USER", "")
@@ -498,12 +501,19 @@ class SMTPEmailProvider(BaseEmailProvider):
         ref_id = f"SMTP-TX-{int(time.time())}-{uuid.uuid4().hex[:6].upper()}"
 
         try:
-            with smtplib.SMTP(self.host, self.port, timeout=4) as server:
-                if self.use_tls:
-                    server.starttls()
-                if self.user and self.password:
-                    server.login(self.user, self.password)
-                server.sendmail(sender, [norm_email], msg.as_string())
+            is_ssl = (self.port == 465) or (os.getenv("SMTP_SSL", "0").lower() in ("1", "true", "yes"))
+            if is_ssl:
+                with smtplib.SMTP_SSL(self.host, self.port, timeout=8) as server:
+                    if self.user and self.password:
+                        server.login(self.user, self.password)
+                    server.sendmail(sender, [norm_email], msg.as_string())
+            else:
+                with smtplib.SMTP(self.host, self.port, timeout=8) as server:
+                    if self.use_tls:
+                        server.starttls()
+                    if self.user and self.password:
+                        server.login(self.user, self.password)
+                    server.sendmail(sender, [norm_email], msg.as_string())
 
             return {
                 "success": True,
@@ -620,9 +630,6 @@ class ProductionEmailService:
     def get_active_provider(self, force_demo: bool = False) -> BaseEmailProvider:
         """Selects operational provider with safe fallback."""
         if force_demo or os.getenv("EMAIL_DEMO_MODE", "0") == "1":
-            return self.demo_provider
-        # Vercel serverless environment restricts raw outbound TCP ports (25, 465, 587)
-        if os.getenv("VERCEL") and not (self.api_provider.is_configured() or os.getenv("FORCE_REAL_SMTP", "0") == "1"):
             return self.demo_provider
         if self.smtp_provider.is_configured():
             return self.smtp_provider

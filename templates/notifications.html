@@ -531,15 +531,19 @@
             // EMAIL Channel Box (CP08, CP09, CP10)
             if (eml) {
                 const isEmlOk = eml.success || eml.status === 'SENT' || eml.status === 'SIMULATED';
+                const isRealSent = eml.status === 'SENT';
                 html += `
                     <div class="p-2 rounded border ${isEmlOk ? 'bg-slate-900/80 border-emerald-800/80' : 'bg-rose-950/40 border-rose-800/80'} space-y-1">
                         <div class="flex items-center justify-between">
                             <span class="font-bold text-slate-200">EMAIL</span>
-                            <span class="px-1.5 py-0.2 rounded text-[10px] font-bold ${isEmlOk ? 'bg-emerald-900 text-emerald-300' : 'bg-rose-900 text-rose-300'}">${eml.status}</span>
+                            <span class="px-1.5 py-0.2 rounded text-[10px] font-bold ${isRealSent ? 'bg-emerald-900 text-emerald-300' : (eml.status === 'SIMULATED' ? 'bg-amber-900 text-amber-300' : 'bg-rose-900 text-rose-300')}">${eml.status}</span>
                         </div>
                         <div class="text-[10px] text-slate-400">Provider: <strong class="text-sky-300">${eml.provider}</strong></div>
                         ${eml.provider_reference ? `<div class="text-[10px] text-slate-400 truncate">Ref: ${eml.provider_reference}</div>` : ''}
                         ${eml.recipient_masked ? `<div class="text-[10px] text-slate-400">To: ${eml.recipient_masked}</div>` : ''}
+                        ${isRealSent ? `<div class="text-[10px] text-emerald-300 font-sans mt-0.5">✓ Real alert dispatched to recipient email inbox! Check inbox/spam.</div>` : ''}
+                        ${eml.status === 'SIMULATED' && !eml.note ? `<div class="text-[9px] text-amber-300/90 font-sans mt-0.5">ℹ️ Simulation mode (DEMO_EMAIL_GATEWAY). Real SMTP credentials are used when configured.</div>` : ''}
+                        ${eml.note ? `<div class="text-[9px] text-amber-300/90 font-sans mt-0.5">ℹ️ ${eml.note}</div>` : ''}
                         ${eml.error ? `<div class="text-[10px] text-rose-300 font-sans mt-1">Reason: ${eml.error}</div>` : ''}
                     </div>
                 `;

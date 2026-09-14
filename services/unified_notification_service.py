@@ -729,7 +729,7 @@ class UnifiedNotificationService:
             else:
                 smtp_ok = self.email_service.smtp_provider.is_configured()
                 api_ok = self.email_service.api_provider.is_configured()
-                use_real_email = (smtp_ok or api_ok) and (os.getenv("EMAIL_DEMO_MODE", "0") != "1" or force_real_email)
+                use_real_email = (smtp_ok or api_ok) and (os.getenv("EMAIL_DEMO_MODE", "0") != "1" or force_real_email) and not is_testing_environment()
                 force_demo_flag = not use_real_email
 
                 active_email_provider = self.email_service.get_active_provider(force_demo=force_demo_flag)
@@ -765,7 +765,8 @@ class UnifiedNotificationService:
                         "message_id": eml_disp.get("message_id"),
                         "recipient": norm_email,
                         "recipient_masked": self.email_service.tracker.mask_email(norm_email),
-                        "error": eml_disp.get("error")
+                        "error": eml_disp.get("error"),
+                        "note": eml_disp.get("note")
                     }
 
                 # Journal email dispatch
