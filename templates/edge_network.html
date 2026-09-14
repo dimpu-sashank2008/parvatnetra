@@ -95,24 +95,26 @@
 
     <!-- 3. INSTITUTIONAL NAVIGATION HEADER -->
     <header class="h-16 bg-[#0B132B] border-b border-borderMuted px-4 flex items-center justify-between shrink-0 z-30 sticky top-0">
-        <div class="flex items-center space-x-3 shrink-0">
-            <a href="/" class="flex items-center space-x-3 text-slate-300 hover:text-white transition shrink-0 brand-link">
-                <img src="/static/images/parvat_netra_emblem.png" alt="Emblem of India" class="w-10 h-10 object-contain shrink-0">
-                <div class="shrink-0">
-                    <div class="flex items-center gap-2">
-                        <span class="font-bold tracking-wide text-sm block leading-none font-serif text-white whitespace-nowrap">PARVAT NETRA</span>
-                        <span class="text-xs text-amber-400 font-medium whitespace-nowrap">पर्वत नेत्र</span>
+        <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+            <a href="/" class="flex items-center gap-2 sm:gap-2.5 transition shrink-0 brand-link group" title="Return to National Overview">
+                <div class="relative flex-shrink-0 w-9 h-9 sm:w-10 sm:h-10 rounded-full p-[1.5px] bg-gradient-to-tr from-amber-400 via-amber-200 to-amber-500 shadow-sm flex items-center justify-center group-hover:scale-105 transition-transform duration-150">
+                    <img src="/static/images/parvat_netra_emblem_circle.png" 
+                         alt="PARVAT NETRA Emblem" 
+                         class="w-full h-full object-contain rounded-full bg-slate-900"
+                         onerror="this.onerror=null; this.src='/static/images/parvat_netra_emblem.png';">
+                </div>
+                <div class="flex flex-col justify-center leading-tight shrink-0">
+                    <div class="flex items-baseline gap-1.5">
+                        <span class="text-sm sm:text-base font-serif font-black tracking-wider uppercase whitespace-nowrap text-slate-900 dark:text-white">PARVAT NETRA</span>
+                        <span class="text-xs sm:text-sm font-serif font-bold text-slate-700 dark:text-slate-300 whitespace-nowrap">पर्वत नेत्र</span>
                     </div>
-                    <span class="text-[9.5px] text-sky-300 block leading-tight mt-1 font-medium tracking-tight whitespace-nowrap">
-                        PAHAD AI — Predictive AI for Hillslope Analysis &amp; Disaster-response
-                    </span>
+                    <span class="text-[10px] sm:text-[10.5px] font-medium text-slate-600 dark:text-slate-300 whitespace-nowrap font-mono tracking-tight">PAHAD AI • Edge Mesh Network</span>
                 </div>
             </a>
-            <div class="h-7 w-px bg-slate-700 hidden xl:block"></div>
-            <div class="hidden xl:block">
-                <h1 class="text-xs font-bold text-slate-100 uppercase tracking-wider">स्थानीय उप-गीगाहर्ट्ज़ एज नेटवर्क • LOCAL EDGE NETWORK &amp; LORA MESH</h1>
-                <p class="text-[10px] text-slate-400 leading-tight">National Disaster Management Framework • Autonomous Last-Mile Hillslope Telemetry</p>
-            </div>
+            <div class="h-6 w-px bg-slate-300 dark:bg-slate-700 hidden lg:block"></div>
+            <span class="hidden lg:inline-flex items-center px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700/60 text-[10.5px] font-mono font-semibold uppercase tracking-wider whitespace-nowrap">
+                EDGE IoT &amp; LoRa MESH
+            </span>
         </div>
 
         <!-- Navigation Links (SIH Standard Pure Text, Zero Modules/Outlines, Navy Blue Font) -->

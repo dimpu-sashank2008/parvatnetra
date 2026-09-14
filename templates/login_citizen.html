@@ -103,15 +103,23 @@
     <header class="bg-white border-b border-slate-200 py-3.5 px-4 shadow-sm">
         <div class="max-w-6xl mx-auto flex items-center justify-between">
             <div class="flex items-center space-x-3">
-                <!-- Official Emblem -->
-                <img src="/static/images/parvat_netra_emblem_circle.png" alt="Government of India Emblem" class="w-10 h-10 object-contain" onerror="this.src='/static/images/parvat_netra_emblem.png'">
+                <!-- Official Emblem with Gold Ring -->
+                <div class="relative flex-shrink-0 w-10 h-10 rounded-full p-[1.5px] bg-gradient-to-tr from-amber-400 via-amber-200 to-amber-500 shadow-sm flex items-center justify-center">
+                    <img src="/static/images/parvat_netra_emblem_circle.png" 
+                         alt="Government of India Emblem" 
+                         class="w-full h-full object-contain rounded-full bg-slate-900" 
+                         onerror="this.onerror=null; this.src='/static/images/parvat_netra_emblem.png';">
+                </div>
                 
                 <!-- Title matching the formal institutional style -->
-                <div>
-                    <h1 class="parvat-brand-title text-xl text-slate-900 m-0 leading-tight">
-                        PARVAT NETRA <span class="text-sm font-normal lowercase tracking-normal text-slate-600">पर्वत नेत्र</span>
-                    </h1>
-                    <p class="text-[11px] text-slate-500 font-sans tracking-tight m-0">
+                <div class="leading-tight">
+                    <div class="flex items-baseline gap-2">
+                        <h1 class="parvat-brand-title text-lg font-serif font-bold text-slate-900 m-0 whitespace-nowrap">
+                            PARVAT NETRA
+                        </h1>
+                        <span class="text-sm font-serif font-bold text-slate-700 whitespace-nowrap">पर्वत नेत्र</span>
+                    </div>
+                    <p class="text-[11px] text-slate-500 font-sans tracking-tight m-0 whitespace-nowrap">
                         Unified Landslide Decision Intelligence &amp; Early Warning System
                     </p>
                 </div>

@@ -46,6 +46,20 @@ body.light-mode nav a:not(.portal-nav-link):not(.brand-link):hover {
     color: #9A3412 !important;
 }
 
+.brand-link {
+    text-decoration: none !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    background: transparent !important;
+    border: none !important;
+}
+.brand-link:hover {
+    text-decoration: none !important;
+    background: transparent !important;
+}
+
 /* ========================================================================= */
 /* SIH STANDARD PORTAL NAV LINKS — ZERO MODULES / PURE NAVY BLUE TEXT       */
 /* ========================================================================= */
