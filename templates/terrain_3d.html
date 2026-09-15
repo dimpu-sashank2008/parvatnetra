@@ -57,12 +57,22 @@
             border-color: #38BDF8;
             color: #FFFFFF;
         }
+
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .scrollbar-none::-webkit-scrollbar {
+            display: none;
+        }
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .scrollbar-none {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
     </style>
 </head>
 <body class="h-full flex flex-col overflow-hidden select-none">
 
     <!-- TOP INSTITUTIONAL NAVIGATION -->
-    <header class="h-14 bg-[#0B132B] border-b border-borderMuted px-4 flex items-center justify-between shrink-0 z-30">
+    <header class="h-14 bg-[#0B132B] border-b border-borderMuted px-3 sm:px-4 flex items-center justify-between shrink-0 z-30">
         <div class="flex items-center gap-2 sm:gap-3 shrink-0">
             <a href="/" class="flex items-center gap-2 sm:gap-2.5 transition shrink-0 brand-link group" title="Return to National Overview">
                 <div class="relative flex-shrink-0 w-9 h-9 sm:w-10 sm:h-10 rounded-full p-[1.5px] bg-gradient-to-tr from-amber-400 via-amber-200 to-amber-500 shadow-sm flex items-center justify-center group-hover:scale-105 transition-transform duration-150">
@@ -76,7 +86,7 @@
                         <span class="text-sm sm:text-base font-serif font-black tracking-wider uppercase whitespace-nowrap text-slate-900 dark:text-white">PARVAT NETRA</span>
                         <span class="text-xs sm:text-sm font-serif font-bold text-slate-700 dark:text-slate-300 whitespace-nowrap">पर्वत नेत्र</span>
                     </div>
-                    <span class="text-[10px] sm:text-[10.5px] font-medium text-slate-600 dark:text-slate-300 whitespace-nowrap font-mono tracking-tight">PAHAD AI • 3D Terrain Intelligence</span>
+                    <span class="text-[10px] sm:text-[10.5px] font-medium text-slate-600 dark:text-slate-300 whitespace-nowrap font-mono tracking-tight hidden md:inline">PAHAD AI • 3D Terrain Intelligence</span>
                 </div>
             </a>
             <div class="h-6 w-px bg-slate-300 dark:bg-slate-700 hidden lg:block"></div>
@@ -86,43 +96,57 @@
         </div>
 
         <!-- Navigation Links (SIH Standard Pure Text, Zero Modules/Outlines, Navy Blue Font) -->
-        <nav class="flex items-center space-x-2 sm:space-x-4" aria-label="Portal Primary Navigation">
-            <a href="/" class="portal-nav-link text-xs sm:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors cursor-pointer" title="National Landslide Risk Dashboard">
+        <nav class="flex items-center space-x-2 sm:space-x-3 overflow-x-auto whitespace-nowrap scrollbar-none py-1 pl-2" aria-label="Portal Primary Navigation">
+            <a href="/" class="portal-nav-link shrink-0 text-xs sm:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors cursor-pointer" title="National Landslide Risk Dashboard">
                 Dashboard
             </a>
-            <a href="/pahad-ai" class="portal-nav-link text-xs sm:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors cursor-pointer" title="PAHAD AI Observatory">
+            <a href="/pahad-ai" class="portal-nav-link shrink-0 text-xs sm:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors cursor-pointer" title="PAHAD AI Observatory">
                 PAHAD AI
             </a>
-            <a href="/climate-map" class="portal-nav-link text-xs sm:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors cursor-pointer hidden md:inline-block" title="NER Real-Time Weather & Radar">
+            <a href="/climate-map" class="portal-nav-link shrink-0 text-xs sm:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors cursor-pointer" title="NER Real-Time Weather & Radar">
                 Climate Map
             </a>
-            <a href="/seismic" class="portal-nav-link text-xs sm:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors cursor-pointer hidden md:inline-block" title="NCS & USGS Seismological Sentinel">
+            <a href="/seismic" class="portal-nav-link shrink-0 text-xs sm:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors cursor-pointer" title="NCS & USGS Seismological Sentinel">
                 Seismic
             </a>
-            <a href="/terrain-3d" class="portal-nav-link active text-xs sm:text-[13px] font-bold text-[#1A2972] dark:text-sky-300 transition-colors cursor-pointer" title="3D Digital Twin & Terrain Intelligence">
+            <a href="/terrain-3d" class="portal-nav-link active shrink-0 text-xs sm:text-[13px] font-bold text-[#1A2972] dark:text-sky-300 transition-colors cursor-pointer" title="3D Digital Twin & Terrain Intelligence">
                 3D Terrain
             </a>
-            <a href="/edge-network" class="portal-nav-link text-xs sm:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors cursor-pointer hidden md:inline-block" title="Edge IoT Node Mesh">
+            <a href="/edge-network" class="portal-nav-link shrink-0 text-xs sm:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors cursor-pointer hidden md:inline-block" title="Edge IoT Node Mesh">
                 Edge Network
             </a>
-            <a href="/notifications" class="portal-nav-link text-xs sm:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors cursor-pointer hidden md:inline-block" title="Notification Center & Alerts">
+            <a href="/notifications" class="portal-nav-link shrink-0 text-xs sm:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors cursor-pointer" title="Notification Center & Alerts">
                 Notifications
             </a>
-            <div class="h-4 w-px bg-slate-700 hidden sm:block"></div>
-            <span class="px-2 py-0.5 text-[10px] font-mono rounded bg-amber-950/80 border border-amber-500/50 text-amber-400" id="terrain-prov-badge">
+            <div class="h-4 w-px bg-slate-700 shrink-0"></div>
+            <span class="shrink-0 px-2 py-0.5 text-[10px] font-mono rounded bg-amber-950/80 border border-amber-500/50 text-amber-400" id="terrain-prov-badge">
                 [HISTORICAL]
             </span>
-            <button id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Switch color theme" title="Switch color theme" class="px-2.5 py-1 bg-[#12213D] border border-blue-300/30 rounded text-sky-100 hover:bg-[#1A3158] hover:text-white transition flex items-center gap-1.5 text-xs font-semibold shadow-xs active:scale-95 cursor-pointer font-sans">
+            <button id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Switch color theme" title="Switch color theme" class="portal-nav-link shrink-0 text-xs sm:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors cursor-pointer flex items-center gap-1 bg-transparent border-0 p-0">
                 <span id="theme-icon" class="flex items-center justify-center">
                     <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
                 </span>
                 <span id="theme-text" class="text-[11px] hidden sm:inline">Light Mode</span>
             </button>
-            <button onclick="resetCameraView()" title="Reset 3D Camera Orientation" class="p-1.5 rounded border border-slate-700 hover:bg-slate-800 text-slate-300 transition">
+            <button onclick="resetCameraView()" title="Reset 3D Camera Orientation" class="shrink-0 p-1.5 rounded border border-slate-700 hover:bg-slate-800 text-slate-300 transition">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
             </button>
         </nav>
     </header>
+
+    <!-- MOBILE VIEW SWITCHER (3D VIEWPORT vs ANALYSIS DRAWER) -->
+    <div class="lg:hidden bg-[#0B132B] border-b border-borderMuted px-3 py-1.5 flex items-center justify-center z-30 shrink-0 select-none">
+        <div class="flex rounded-lg bg-slate-900 p-0.5 border border-slate-700/80 text-xs w-full max-w-sm">
+            <button id="mobile-tab-map" onclick="setMobileWorkspaceTab('map')" class="flex-1 py-1 px-3 text-center font-bold rounded-md bg-cyan-600 text-white shadow-xs transition flex items-center justify-center gap-1.5 cursor-pointer">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"></path></svg>
+                <span>3D Viewport</span>
+            </button>
+            <button id="mobile-tab-drawer" onclick="setMobileWorkspaceTab('drawer')" class="flex-1 py-1 px-3 text-center font-medium rounded-md text-slate-400 hover:text-white transition flex items-center justify-center gap-1.5 cursor-pointer">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                <span>Terrain Analysis</span>
+            </button>
+        </div>
+    </div>
 
     <!-- OFFLINE TERRAIN STATUS BANNER -->
     <div id="terrain-offline-banner" class="hidden px-4 py-1.5 bg-amber-950/90 border-b border-amber-600/70 text-amber-200 text-xs flex flex-wrap items-center justify-between shrink-0 z-20">
@@ -144,66 +168,73 @@
     <div class="flex-1 flex flex-col lg:flex-row overflow-hidden relative">
 
         <!-- 3D CANVAS SURFACE -->
-        <div class="flex-1 relative h-full bg-[#070B10]" id="canvas-container">
-            <canvas id="three-canvas" class="w-full h-full block"></canvas>
+        <div id="workspace-map-pane" class="flex-1 relative h-full bg-[#070B10]">
+            <div id="canvas-container" class="w-full h-full relative">
+                <canvas id="three-canvas" class="w-full h-full block"></canvas>
+            </div>
 
             <!-- FLOATING 3D LAYER CONTROL PANEL -->
-            <div class="absolute top-3 left-3 z-20 bg-slateCard/95 backdrop-blur-md border border-slate-700/80 rounded-lg p-3 shadow-2xl max-w-xs sm:max-w-sm text-xs">
-                <div class="flex items-center justify-between pb-2 mb-2 border-b border-slate-800">
+            <div id="floating-layer-panel" class="absolute top-3 left-3 z-20 bg-slateCard/95 backdrop-blur-md border border-slate-700/80 rounded-lg p-2.5 sm:p-3 shadow-2xl max-w-[280px] sm:max-w-sm text-xs select-none">
+                <div onclick="toggleMobileLayerPanel()" class="flex items-center justify-between pb-1.5 sm:pb-2 mb-1 sm:mb-2 border-b border-slate-800 cursor-pointer sm:cursor-default">
                     <span class="font-semibold text-slate-200 uppercase tracking-wider text-[11px] flex items-center gap-1.5">
                         <svg class="w-3.5 h-3.5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
-                        3D Layers & Shading
+                        <span>3D Layers</span>
                     </span>
-                    <span class="text-[10px] text-slate-400 font-mono" id="active-surface-name">Physical DEM</span>
-                </div>
-
-                <!-- TERRAIN DRAPING MODES -->
-                <div class="mb-2.5">
-                    <span class="text-[10px] text-slate-400 uppercase tracking-wider block mb-1">Surface Mode</span>
-                    <div class="grid grid-cols-4 gap-1 text-[10px] font-medium">
-                        <button onclick="setSurfaceMode('dem')" id="sm-dem" class="px-1.5 py-1 rounded bg-sky-900/80 border border-sky-500 text-sky-200">Terrain</button>
-                        <button onclick="setSurfaceMode('slope')" id="sm-slope" class="px-1.5 py-1 rounded bg-slate-800 border border-slate-700 text-slate-400 hover:text-slate-200">Slope</button>
-                        <button onclick="setSurfaceMode('risk')" id="sm-risk" class="px-1.5 py-1 rounded bg-slate-800 border border-slate-700 text-slate-400 hover:text-slate-200">PAHAD Risk</button>
-                        <button onclick="setSurfaceMode('veg')" id="sm-veg" class="px-1.5 py-1 rounded bg-slate-800 border border-slate-700 text-slate-400 hover:text-slate-200">NDVI</button>
+                    <div class="flex items-center gap-1.5">
+                        <span class="text-[10px] text-slate-400 font-mono" id="active-surface-name">Physical DEM</span>
+                        <svg id="floating-layer-chevron" class="w-3.5 h-3.5 text-slate-400 transition-transform sm:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </div>
                 </div>
 
-                <!-- 3D FEATURE OVERLAYS -->
-                <div class="mb-2.5">
-                    <span class="text-[10px] text-slate-400 uppercase tracking-wider block mb-1">3D Feature Overlays</span>
-                    <div class="flex flex-wrap gap-1 text-[10px]">
-                        <span onclick="toggle3DLayer('contours')" id="lyr-contours" class="layer-pill active px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-300">Contours</span>
-                        <span onclick="toggle3DLayer('landslides')" id="lyr-landslides" class="layer-pill active px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-300">GSI Landslides</span>
-                        <span onclick="toggle3DLayer('roads')" id="lyr-roads" class="layer-pill active px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-300">NH-10 Road</span>
-                        <span onclick="toggle3DLayer('rivers')" id="lyr-rivers" class="layer-pill active px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-300">Teesta River</span>
-                        <span onclick="toggle3DLayer('sensors')" id="lyr-sensors" class="layer-pill px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-400">IoT Sensors</span>
-                        <span onclick="toggle3DLayer('deformation')" id="lyr-deformation" class="layer-pill px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-400">InSAR LOS</span>
+                <div id="floating-layer-body" class="hidden sm:block">
+                    <!-- TERRAIN DRAPING MODES -->
+                    <div class="mb-2.5">
+                        <span class="text-[10px] text-slate-400 uppercase tracking-wider block mb-1">Surface Mode</span>
+                        <div class="grid grid-cols-4 gap-1 text-[10px] font-medium">
+                            <button onclick="setSurfaceMode('dem')" id="sm-dem" class="px-1.5 py-1 rounded bg-sky-900/80 border border-sky-500 text-sky-200">Terrain</button>
+                            <button onclick="setSurfaceMode('slope')" id="sm-slope" class="px-1.5 py-1 rounded bg-slate-800 border border-slate-700 text-slate-400 hover:text-slate-200">Slope</button>
+                            <button onclick="setSurfaceMode('risk')" id="sm-risk" class="px-1.5 py-1 rounded bg-slate-800 border border-slate-700 text-slate-400 hover:text-slate-200">PAHAD Risk</button>
+                            <button onclick="setSurfaceMode('veg')" id="sm-veg" class="px-1.5 py-1 rounded bg-slate-800 border border-slate-700 text-slate-400 hover:text-slate-200">NDVI</button>
+                        </div>
                     </div>
-                </div>
 
-                <!-- CONTOUR INTERVAL SELECTOR -->
-                <div class="mb-2.5">
-                    <div class="flex items-center justify-between mb-1">
-                        <span class="text-[10px] text-slate-400 uppercase tracking-wider">Contour Interval</span>
-                        <span class="text-[10px] font-mono text-cyan-400" id="contour-interval-label">20m</span>
+                    <!-- 3D FEATURE OVERLAYS -->
+                    <div class="mb-2.5">
+                        <span class="text-[10px] text-slate-400 uppercase tracking-wider block mb-1">3D Feature Overlays</span>
+                        <div class="flex flex-wrap gap-1 text-[10px]">
+                            <span onclick="toggle3DLayer('contours')" id="lyr-contours" class="layer-pill active px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-300">Contours</span>
+                            <span onclick="toggle3DLayer('landslides')" id="lyr-landslides" class="layer-pill active px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-300">GSI Landslides</span>
+                            <span onclick="toggle3DLayer('roads')" id="lyr-roads" class="layer-pill active px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-300">NH-10 Road</span>
+                            <span onclick="toggle3DLayer('rivers')" id="lyr-rivers" class="layer-pill active px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-300">Teesta River</span>
+                            <span onclick="toggle3DLayer('sensors')" id="lyr-sensors" class="layer-pill px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-400">IoT Sensors</span>
+                            <span onclick="toggle3DLayer('deformation')" id="lyr-deformation" class="layer-pill px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-400">InSAR LOS</span>
+                        </div>
                     </div>
-                    <div class="grid grid-cols-4 gap-1 text-[10px] font-mono">
-                        <button onclick="setContourInterval(5)" class="px-1 py-0.5 rounded border border-slate-800 hover:border-slate-600">5m</button>
-                        <button onclick="setContourInterval(10)" class="px-1 py-0.5 rounded border border-slate-800 hover:border-slate-600">10m</button>
-                        <button onclick="setContourInterval(20)" class="px-1 py-0.5 rounded border border-sky-500 bg-sky-950/60 text-sky-300">20m</button>
-                        <button onclick="setContourInterval(50)" class="px-1 py-0.5 rounded border border-slate-800 hover:border-slate-600">50m</button>
-                    </div>
-                </div>
 
-                <!-- TERRAIN VERTICAL EXAGGERATION SLIDER -->
-                <div>
-                    <div class="flex items-center justify-between mb-1">
-                        <span class="text-[10px] text-slate-400 uppercase tracking-wider">Vertical Exaggeration</span>
-                        <span class="text-[10px] font-mono text-amber-400" id="exaggeration-val">1.8x</span>
+                    <!-- CONTOUR INTERVAL SELECTOR -->
+                    <div class="mb-2.5">
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="text-[10px] text-slate-400 uppercase tracking-wider">Contour Interval</span>
+                            <span class="text-[10px] font-mono text-cyan-400" id="contour-interval-label">20m</span>
+                        </div>
+                        <div class="grid grid-cols-4 gap-1 text-[10px] font-mono">
+                            <button onclick="setContourInterval(5)" class="px-1 py-0.5 rounded border border-slate-800 hover:border-slate-600">5m</button>
+                            <button onclick="setContourInterval(10)" class="px-1 py-0.5 rounded border border-slate-800 hover:border-slate-600">10m</button>
+                            <button onclick="setContourInterval(20)" class="px-1 py-0.5 rounded border border-sky-500 bg-sky-950/60 text-sky-300">20m</button>
+                            <button onclick="setContourInterval(50)" class="px-1 py-0.5 rounded border border-slate-800 hover:border-slate-600">50m</button>
+                        </div>
                     </div>
-                    <input type="range" min="1.0" max="3.5" step="0.1" value="1.8" id="exaggeration-slider"
-                           oninput="updateExaggeration(this.value)"
-                           class="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-amber-500">
+
+                    <!-- TERRAIN VERTICAL EXAGGERATION SLIDER -->
+                    <div>
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="text-[10px] text-slate-400 uppercase tracking-wider">Vertical Exaggeration</span>
+                            <span class="text-[10px] font-mono text-amber-400" id="exaggeration-val">1.8x</span>
+                        </div>
+                        <input type="range" min="1.0" max="3.5" step="0.1" value="1.8" id="exaggeration-slider"
+                               oninput="updateExaggeration(this.value)"
+                               class="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-amber-500">
+                    </div>
                 </div>
             </div>
 
@@ -224,7 +255,7 @@
         </div>
 
         <!-- RIGHT INTELLIGENCE DRAWER (PAHAD AI TERRAIN ANALYSIS) -->
-        <div class="w-full lg:w-[420px] xl:w-[460px] bg-[#070B10] border-t lg:border-t-0 lg:border-l border-borderMuted flex flex-col h-auto lg:h-full z-20 shrink-0 overflow-y-auto p-4 space-y-4">
+        <div id="workspace-drawer-pane" class="w-full lg:w-[420px] xl:w-[460px] bg-[#070B10] border-t lg:border-t-0 lg:border-l border-borderMuted hidden lg:flex flex-col h-full z-20 shrink-0 overflow-y-auto p-4 space-y-4">
 
             <!-- SECTOR IDENTITY & ASSESSMENT HEADER -->
             <div class="bg-slateCard border border-borderMuted rounded-lg p-3.5">
@@ -759,6 +790,76 @@
             controls.target.set(0, 2.5, 0);
             controls.update();
         }
+
+        function setMobileWorkspaceTab(tab) {
+            const mapPane = document.getElementById('workspace-map-pane');
+            const drawerPane = document.getElementById('workspace-drawer-pane');
+            const tabMapBtn = document.getElementById('mobile-tab-map');
+            const tabDrawerBtn = document.getElementById('mobile-tab-drawer');
+
+            if (tab === 'map') {
+                if (mapPane) {
+                    mapPane.classList.remove('hidden');
+                    mapPane.classList.add('flex-1', 'relative', 'h-full');
+                }
+                if (drawerPane) {
+                    drawerPane.classList.add('hidden');
+                    drawerPane.classList.remove('flex', 'h-full');
+                }
+                if (tabMapBtn) {
+                    tabMapBtn.className = 'flex-1 py-1 px-3 text-center font-bold rounded-md bg-cyan-600 text-white shadow-xs transition flex items-center justify-center gap-1.5 cursor-pointer';
+                }
+                if (tabDrawerBtn) {
+                    tabDrawerBtn.className = 'flex-1 py-1 px-3 text-center font-medium rounded-md text-slate-400 hover:text-white transition flex items-center justify-center gap-1.5 cursor-pointer';
+                }
+                setTimeout(() => { onWindowResize(); }, 150);
+            } else {
+                if (mapPane) {
+                    mapPane.classList.add('hidden');
+                    mapPane.classList.remove('flex-1');
+                }
+                if (drawerPane) {
+                    drawerPane.classList.remove('hidden');
+                    drawerPane.classList.add('flex', 'h-full', 'w-full');
+                }
+                if (tabDrawerBtn) {
+                    tabDrawerBtn.className = 'flex-1 py-1 px-3 text-center font-bold rounded-md bg-cyan-600 text-white shadow-xs transition flex items-center justify-center gap-1.5 cursor-pointer';
+                }
+                if (tabMapBtn) {
+                    tabMapBtn.className = 'flex-1 py-1 px-3 text-center font-medium rounded-md text-slate-400 hover:text-white transition flex items-center justify-center gap-1.5 cursor-pointer';
+                }
+            }
+        }
+
+        function toggleMobileLayerPanel() {
+            if (window.innerWidth >= 640) return;
+            const body = document.getElementById('floating-layer-body');
+            const chevron = document.getElementById('floating-layer-chevron');
+            if (!body) return;
+            if (body.classList.contains('hidden')) {
+                body.classList.remove('hidden');
+                if (chevron) chevron.style.transform = 'rotate(180deg)';
+            } else {
+                body.classList.add('hidden');
+                if (chevron) chevron.style.transform = '';
+            }
+        }
+
+        window.addEventListener('resize', () => {
+            const mapPane = document.getElementById('workspace-map-pane');
+            const drawerPane = document.getElementById('workspace-drawer-pane');
+            if (window.innerWidth >= 1024) {
+                if (mapPane) {
+                    mapPane.classList.remove('hidden');
+                    mapPane.classList.add('flex-1', 'relative', 'h-full');
+                }
+                if (drawerPane) {
+                    drawerPane.classList.remove('hidden');
+                    drawerPane.classList.add('lg:flex');
+                }
+                onWindowResize();
+            }
+        });
     </script>
 </body>
 </html>

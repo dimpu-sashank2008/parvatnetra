@@ -104,9 +104,20 @@
         .workspace-view.hidden {
             display: none !important;
         }
+        #eoc-sidebar-backdrop {
+            z-index: 90000 !important;
+        }
         #eoc-sidebar-drawer {
+            z-index: 90001 !important;
             scrollbar-width: thin;
             scrollbar-color: #334155 #070B10;
+        }
+        #pahad-assistant-panel {
+            z-index: 99995 !important;
+        }
+        #pahad-assistant-wrapper {
+            position: relative;
+            z-index: 99995;
         }
         #eoc-sidebar-drawer::-webkit-scrollbar {
             width: 6px;
@@ -2455,9 +2466,9 @@
 </head>
 <body id="page-body" class="min-h-screen flex flex-col font-size-base dark-mode">
     <!-- PHASE 9C: EOC LEFT SIDEBAR BACKDROP & DRAWER -->
-    <div id="eoc-sidebar-backdrop" onclick="toggleSidebarMenu(false)" class="fixed inset-0 z-[100] bg-black/70 backdrop-blur-xs hidden transition-opacity duration-200" aria-hidden="true"></div>
+    <div id="eoc-sidebar-backdrop" onclick="toggleSidebarMenu(false)" class="fixed inset-0 z-[90000] bg-black/70 backdrop-blur-xs hidden transition-opacity duration-200" aria-hidden="true"></div>
 
-    <nav id="eoc-sidebar-drawer" class="fixed top-0 left-0 bottom-0 w-84 max-w-[85vw] z-[101] bg-[#070B10] border-r border-slate-800 text-slate-200 shadow-2xl flex flex-col transform -translate-x-full transition-transform duration-200 overflow-y-auto hidden" aria-label="EOC Navigation Drawer">
+    <nav id="eoc-sidebar-drawer" class="fixed top-0 left-0 bottom-0 w-84 max-w-[85vw] z-[90001] bg-[#070B10] border-r border-slate-800 text-slate-200 shadow-2xl flex flex-col transform -translate-x-full transition-transform duration-200 overflow-y-auto hidden" aria-label="EOC Navigation Drawer">
       <!-- Drawer Header -->
       <div class="p-4 bg-[#0B1320] border-b border-slate-800 flex items-center justify-between">
         <div class="flex items-center gap-3">
@@ -2669,6 +2680,11 @@
     </div>
     <!-- 4PX INDIAN TRICOLOR BORDER (GIGW 3.0) -->
     <div class="h-1 w-full bg-gradient-to-r from-[#FF9933] via-white to-[#138808]"></div>
+
+    <!-- RESEARCH PROTOTYPE DISCLAIMER BANNER (SIH 2026 / CP15 / CLM-12) -->
+    <div id="prototype-disclaimer-banner" class="bg-[#120B02] text-amber-300 border-b border-amber-900/60 text-[11px] py-1 px-4 text-center font-mono">
+      <span class="font-bold text-amber-400">[RESEARCH PROTOTYPE]</span> PARVAT NETRA is an SIH 2026 AI-assisted research and decision-support prototype. Not an official Government of India emergency broadcast service.
+    </div>
 
     <!-- TOP ACCESSIBILITY BAR (GIGW 3.0) -->
     <div id="top-accessibility-bar" class="bg-[#0B192C] text-white text-xs py-1.5 px-4 border-b border-slate-800">
@@ -4610,7 +4626,7 @@
           <div class="space-y-1.5 text-[10px] font-mono border-t border-[#1E1E1E] pt-2 text-slate-400">
             <div class="flex justify-between"><span>Raw (Uncalibrated):</span><strong id="hf-raw-6h" class="text-slate-200">0.3%</strong></div>
             <div class="flex justify-between"><span>Opt Threshold:</span><strong id="hf-th-6h" class="text-slate-200">&ge; 0.30</strong></div>
-            <div class="flex justify-between"><span>Lead Time Estimate:</span><strong id="hf-lead-6h" class="text-slate-200">6.0h</strong></div>
+            <div class="flex justify-between"><span>Forecast Horizon:</span><strong id="hf-lead-6h" class="text-slate-200">6.0h</strong></div>
           </div>
         </div>
 
@@ -4634,7 +4650,7 @@
           <div class="space-y-1.5 text-[10px] font-mono border-t border-[#1E1E1E] pt-2 text-slate-400">
             <div class="flex justify-between"><span>Raw (Uncalibrated):</span><strong id="hf-raw-12h" class="text-slate-200">0.4%</strong></div>
             <div class="flex justify-between"><span>Opt Threshold:</span><strong id="hf-th-12h" class="text-slate-200">&ge; 0.30</strong></div>
-            <div class="flex justify-between"><span>Lead Time Estimate:</span><strong id="hf-lead-12h" class="text-slate-200">12.0h</strong></div>
+            <div class="flex justify-between"><span>Forecast Horizon:</span><strong id="hf-lead-12h" class="text-slate-200">12.0h</strong></div>
           </div>
         </div>
 
@@ -4661,7 +4677,7 @@
           <div class="space-y-1.5 text-[10px] font-mono border-t border-[#1E1E1E] pt-2 text-slate-400">
             <div class="flex justify-between"><span>Raw (Uncalibrated):</span><strong id="hf-raw-24h" class="text-slate-200">0.5%</strong></div>
             <div class="flex justify-between"><span>Opt Threshold:</span><strong id="hf-th-24h" class="text-slate-200">&ge; 0.30</strong></div>
-            <div class="flex justify-between"><span>Lead Time Estimate:</span><strong id="hf-lead-24h" class="text-blue-200">24.0h (Median)</strong></div>
+            <div class="flex justify-between"><span>Forecast Horizon:</span><strong id="hf-lead-24h" class="text-blue-200">24.0h (Primary)</strong></div>
           </div>
         </div>
 
@@ -4685,7 +4701,7 @@
           <div class="space-y-1.5 text-[10px] font-mono border-t border-[#1E1E1E] pt-2 text-slate-400">
             <div class="flex justify-between"><span>Raw (Uncalibrated):</span><strong id="hf-raw-48h" class="text-slate-200">0.01%</strong></div>
             <div class="flex justify-between"><span>Opt Threshold:</span><strong id="hf-th-48h" class="text-slate-200">&ge; 0.30</strong></div>
-            <div class="flex justify-between"><span>Lead Time Estimate:</span><strong id="hf-lead-48h" class="text-slate-200">48.0h</strong></div>
+            <div class="flex justify-between"><span>Forecast Horizon:</span><strong id="hf-lead-48h" class="text-slate-200">48.0h</strong></div>
           </div>
         </div>
 
@@ -13914,7 +13930,7 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
 
       <!-- Assistant Modal / Sliding Panel Overlay -->
-      <div id="pahad-assistant-panel" class="hidden fixed bottom-2 sm:bottom-5 left-2 right-2 sm:left-auto sm:right-5 sm:w-[440px] max-w-[calc(100vw-16px)] max-h-[calc(100vh-20px)] h-[min(640px,calc(100vh-20px))] flex flex-col bg-[#0B132B] text-slate-100 border border-slate-700/80 rounded-2xl shadow-2xl overflow-hidden backdrop-blur-md animate-fade-in" role="dialog" aria-modal="true" aria-labelledby="pahad-assistant-title" aria-hidden="true">
+      <div id="pahad-assistant-panel" class="hidden fixed bottom-2 sm:bottom-5 left-2 right-2 sm:left-auto sm:right-5 sm:w-[440px] max-w-[calc(100vw-16px)] max-h-[calc(100vh-20px)] h-[min(640px,calc(100vh-20px))] flex flex-col bg-[#0B132B] text-slate-100 border border-slate-700/80 rounded-2xl shadow-2xl overflow-hidden backdrop-blur-md animate-fade-in z-[99995]" role="dialog" aria-modal="true" aria-labelledby="pahad-assistant-title" aria-hidden="true">
 
 
         <!-- Panel Header -->

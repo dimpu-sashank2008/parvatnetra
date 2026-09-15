@@ -87,6 +87,7 @@ Thumbs.db
 
 # Observability, Logs & Temp
 *.log
+*.bak
 logs/
 temp/
 tmp/
@@ -95,6 +96,8 @@ coverage/
 .nyc_output/
 ~$*
 static/uploads/
+data/cache/
+
 
 # Mobile / Android build artifacts
 .gradle/

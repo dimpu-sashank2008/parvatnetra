@@ -252,6 +252,7 @@
       if (this.panelEl) {
         this.panelEl.classList.remove('hidden');
         this.panelEl.setAttribute('aria-hidden', 'false');
+        this.panelEl.style.zIndex = '99995';
       }
       if (this.launcherBtn) {
         this.launcherBtn.setAttribute('aria-expanded', 'true');

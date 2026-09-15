@@ -113,7 +113,7 @@ class TestPhase10dVoiceHardening:
         assert "```" not in data["spoken_response"]
 
     def test_05_dom_elements_presence_in_template(self):
-        """Verify all required assistant DOM elements exist in templates/index.html."""
+        """Verify all required assistant DOM elements exist in templates/index.html with top z-index priority."""
         tmpl_path = os.path.join(REPO_ROOT, "templates", "index.html")
         with open(tmpl_path, "r", encoding="utf-8") as f:
             html = f.read()
@@ -131,6 +131,10 @@ class TestPhase10dVoiceHardening:
         assert 'id="pahad-assistant-live-announcer"' in html
         assert 'src="/static/js/pahad_voice_assistant.js"' in html
 
+        # Verify Assistant panel has high z-index priority above GIS maps and Leaflet layers (z-index > 9999)
+        assert 'z-[99995]' in html
+        assert '#pahad-assistant-panel' in html
+
     def test_06_js_controller_contract(self):
         """Verify required client-side methods and listeners exist in pahad_voice_assistant.js."""
         js_path = os.path.join(REPO_ROOT, "static", "js", "pahad_voice_assistant.js")
@@ -146,3 +150,4 @@ class TestPhase10dVoiceHardening:
         assert "bindCorridorWatcher" in js
         assert "pahad-corridor-select" in js
         assert "Alt+A" in js or "altKey" in js
+        assert "style.zIndex = '99995'" in js

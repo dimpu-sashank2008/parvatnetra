@@ -1,0 +1,50 @@
+[
+  {
+    "endpoint": "/health",
+    "method": "GET",
+    "status_code": 200,
+    "avg_ms": 3008.09,
+    "min_ms": 3003.58,
+    "max_ms": 3015.77
+  },
+  {
+    "endpoint": "/api/pahad/data-status",
+    "method": "GET",
+    "status_code": 200,
+    "avg_ms": 5.59,
+    "min_ms": 0.64,
+    "max_ms": 15.17
+  },
+  {
+    "endpoint": "/api/pahad/highest-risk-corridor",
+    "method": "GET",
+    "status_code": 200,
+    "avg_ms": 82.06,
+    "min_ms": 1.21,
+    "max_ms": 243.55
+  },
+  {
+    "endpoint": "/api/pahad/live-inference",
+    "method": "POST",
+    "status_code": 200,
+    "avg_ms": 8.69,
+    "min_ms": 7.77,
+    "max_ms": 9.26
+  },
+  {
+    "endpoint": "/api/eoc/incidents",
+    "method": "GET",
+    "status_code": 200,
+    "avg_ms": 69.78,
+    "min_ms": 69.05,
+    "max_ms": 70.51
+  },
+  {
+    "endpoint": "/api/eoc/command-brief",
+    "method": "GET",
+    "status_code": 200,
+    "avg_ms": 77.81,
+    "min_ms": 77.68,
+    "max_ms": 78.0
+  }
+]

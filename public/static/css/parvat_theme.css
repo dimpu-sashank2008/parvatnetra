@@ -867,6 +867,11 @@ body.light-mode .statutory-signoff-copy {
     color: #1E3A5F !important;
 }
 
+#pahad-assistant-panel {
+    bottom: calc(0.5rem + var(--safe-bottom));
+    z-index: 99995 !important;
+}
+
 
 
 

@@ -75,12 +75,22 @@
             border-color: #A78BFA;
             color: #FFFFFF;
         }
+
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .scrollbar-none::-webkit-scrollbar {
+            display: none;
+        }
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .scrollbar-none {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
     </style>
 </head>
 <body class="h-full flex flex-col overflow-hidden">
 
     <!-- TOP INSTITUTIONAL NAVIGATION -->
-    <header class="h-14 bg-[#0B132B] border-b border-borderMuted px-4 flex items-center justify-between shrink-0 z-30">
+    <header class="h-14 bg-[#0B132B] border-b border-borderMuted px-3 sm:px-4 flex items-center justify-between shrink-0 z-30">
         <div class="flex items-center gap-2 sm:gap-3 shrink-0">
             <a href="/" class="flex items-center gap-2 sm:gap-2.5 transition shrink-0 brand-link group" title="Return to National Overview">
                 <div class="relative flex-shrink-0 w-9 h-9 sm:w-10 sm:h-10 rounded-full p-[1.5px] bg-gradient-to-tr from-amber-400 via-amber-200 to-amber-500 shadow-sm flex items-center justify-center group-hover:scale-105 transition-transform duration-150">
@@ -94,7 +104,7 @@
                         <span class="text-sm sm:text-base font-serif font-black tracking-wider uppercase whitespace-nowrap text-slate-900 dark:text-white">PARVAT NETRA</span>
                         <span class="text-xs sm:text-sm font-serif font-bold text-slate-700 dark:text-slate-300 whitespace-nowrap">पर्वत नेत्र</span>
                     </div>
-                    <span class="text-[10px] sm:text-[10.5px] font-medium text-slate-600 dark:text-slate-300 whitespace-nowrap font-mono tracking-tight">PAHAD AI • Seismic Intelligence</span>
+                    <span class="text-[10px] sm:text-[10.5px] font-medium text-slate-600 dark:text-slate-300 whitespace-nowrap font-mono tracking-tight hidden md:inline">PAHAD AI • Seismic Intelligence</span>
                 </div>
             </a>
             <div class="h-6 w-px bg-slate-300 dark:bg-slate-700 hidden lg:block"></div>
@@ -104,89 +114,108 @@
         </div>
         
         <!-- Navigation Links (SIH Standard Pure Text, Zero Modules/Outlines, Navy Blue Font) -->
-        <nav class="flex items-center space-x-2 sm:space-x-4" aria-label="Portal Primary Navigation">
-            <a href="/" class="portal-nav-link text-xs sm:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors cursor-pointer" title="National Landslide Risk Dashboard">
+        <nav class="flex items-center space-x-2 sm:space-x-3 overflow-x-auto whitespace-nowrap scrollbar-none py-1 pl-2" aria-label="Portal Primary Navigation">
+            <a href="/" class="portal-nav-link shrink-0 text-xs sm:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors cursor-pointer" title="National Landslide Risk Dashboard">
                 Dashboard
             </a>
-            <a href="/pahad-ai" class="portal-nav-link text-xs sm:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors cursor-pointer" title="PAHAD AI Observatory">
+            <a href="/pahad-ai" class="portal-nav-link shrink-0 text-xs sm:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors cursor-pointer" title="PAHAD AI Observatory">
                 PAHAD AI
             </a>
-            <a href="/climate-map" class="portal-nav-link text-xs sm:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors cursor-pointer" title="NER Real-Time Weather, Precipitation & Radar">
+            <a href="/climate-map" class="portal-nav-link shrink-0 text-xs sm:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors cursor-pointer" title="NER Real-Time Weather, Precipitation & Radar">
                 Climate Map
             </a>
-            <a href="/seismic" class="portal-nav-link active text-xs sm:text-[13px] font-bold text-[#1A2972] dark:text-white hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors cursor-pointer" title="NCS & USGS Seismological Sentinel">
+            <a href="/seismic" class="portal-nav-link active shrink-0 text-xs sm:text-[13px] font-bold text-[#1A2972] dark:text-white hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors cursor-pointer" title="NCS & USGS Seismological Sentinel">
                 Seismic
             </a>
-            <a href="/terrain-3d" class="portal-nav-link text-xs sm:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors cursor-pointer" title="ISRO CartoDEM & GLO-30 3D Digital Twin">
+            <a href="/terrain-3d" class="portal-nav-link shrink-0 text-xs sm:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors cursor-pointer" title="ISRO CartoDEM & GLO-30 3D Digital Twin">
                 3D Terrain
             </a>
-            <a href="/edge-network" class="portal-nav-link text-xs sm:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors cursor-pointer hidden md:inline-block" title="Edge Network">
+            <a href="/edge-network" class="portal-nav-link shrink-0 text-xs sm:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors cursor-pointer hidden md:inline-block" title="Edge Network">
                 Edge Network
             </a>
-            <a href="/notifications" class="portal-nav-link text-xs sm:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors cursor-pointer" title="Notifications">
+            <a href="/notifications" class="portal-nav-link shrink-0 text-xs sm:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors cursor-pointer" title="Notifications">
                 Notifications
             </a>
-            <div class="h-4 w-px bg-slate-400/40"></div>
-            <span id="header-prov-badge" class="px-2 py-0.5 text-[10px] font-mono rounded bg-purple-950/80 border border-purple-500/50 text-purple-300">
+            <div class="h-4 w-px bg-slate-400/40 shrink-0"></div>
+            <span id="header-prov-badge" class="shrink-0 px-2 py-0.5 text-[10px] font-mono rounded bg-purple-950/80 border border-purple-500/50 text-purple-300">
                 [LIVE]
             </span>
-            <button id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Switch color theme" title="Switch color theme" class="portal-nav-link text-xs sm:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors cursor-pointer flex items-center gap-1 bg-transparent border-0 p-0">
+            <button id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Switch color theme" title="Switch color theme" class="portal-nav-link shrink-0 text-xs sm:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors cursor-pointer flex items-center gap-1 bg-transparent border-0 p-0">
                 <span id="theme-icon" class="flex items-center justify-center">
                     <svg class="w-3.5 h-3.5 text-amber-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
                 </span>
                 <span id="theme-text" class="text-[11px] hidden sm:inline">Light Mode</span>
             </button>
-            <button onclick="refreshSeismicData()" title="Refresh Seismic Feeds" class="p-1.5 rounded border border-slate-700 hover:bg-slate-800 text-slate-300 transition">
+            <button onclick="refreshSeismicData()" title="Refresh Seismic Feeds" class="shrink-0 p-1.5 rounded border border-slate-700 hover:bg-slate-800 text-slate-300 transition">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
             </button>
         </nav>
     </header>
 
+    <!-- MOBILE VIEW SWITCHER (MAP vs SEISMIC INTELLIGENCE DRAWER) -->
+    <div class="lg:hidden bg-[#0B132B] border-b border-borderMuted px-3 py-1.5 flex items-center justify-center z-30 shrink-0 select-none">
+        <div class="flex rounded-lg bg-slate-900 p-0.5 border border-slate-700/80 text-xs w-full max-w-sm">
+            <button id="mobile-tab-map" onclick="setMobileWorkspaceTab('map')" class="flex-1 py-1 px-3 text-center font-bold rounded-md bg-purple-700 text-white shadow-xs transition flex items-center justify-center gap-1.5 cursor-pointer">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg>
+                <span>Map View</span>
+            </button>
+            <button id="mobile-tab-drawer" onclick="setMobileWorkspaceTab('drawer')" class="flex-1 py-1 px-3 text-center font-medium rounded-md text-slate-400 hover:text-white transition flex items-center justify-center gap-1.5 cursor-pointer">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                <span>Seismic Intelligence</span>
+            </button>
+        </div>
+    </div>
+
     <!-- MAIN WORKSPACE LAYOUT (MAP + SIDE DRAWER) -->
     <div class="flex-1 flex flex-col lg:flex-row overflow-hidden relative">
 
         <!-- PRIMARY MAP CANVAS -->
-        <div class="flex-1 relative h-full bg-[#070B10]">
+        <div id="workspace-map-pane" class="flex-1 relative h-full bg-[#070B10]">
             <div id="seismic-map-canvas" class="w-full h-full z-10"></div>
             
             <!-- FLOATING LAYER & BASEMAP CONTROL PANEL -->
-            <div class="absolute top-3 left-3 z-20 bg-slateCard/95 backdrop-blur-md border border-slate-700/80 rounded-lg p-3 shadow-2xl max-w-xs sm:max-w-sm text-xs select-none">
-                <div class="flex items-center justify-between pb-2 mb-2 border-b border-slate-800">
+            <div id="floating-layer-panel" class="absolute top-3 left-3 z-20 bg-slateCard/95 backdrop-blur-md border border-slate-700/80 rounded-lg p-2.5 sm:p-3 shadow-2xl max-w-[280px] sm:max-w-sm text-xs select-none">
+                <div onclick="toggleMobileLayerPanel()" class="flex items-center justify-between pb-1.5 sm:pb-2 mb-1 sm:mb-2 border-b border-slate-800 cursor-pointer sm:cursor-default">
                     <span class="font-semibold text-slate-200 uppercase tracking-wider text-[11px] flex items-center gap-1.5">
                         <svg class="w-3.5 h-3.5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                        Seismic Layers & Basemap
+                        <span>Seismic Layers</span>
                     </span>
-                    <span class="text-[10px] text-slate-400 font-mono" id="layer-active-count">5 Active</span>
+                    <div class="flex items-center gap-1.5">
+                        <span class="text-[10px] text-slate-400 font-mono" id="layer-active-count">5 Active</span>
+                        <svg id="floating-layer-chevron" class="w-3.5 h-3.5 text-slate-400 transition-transform sm:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
                 </div>
                 
-                <!-- BASEMAP SELECTOR -->
-                <div class="mb-2.5">
-                    <span class="text-[10px] text-slate-400 uppercase tracking-wider block mb-1">Basemap</span>
-                    <div class="grid grid-cols-4 gap-1 text-[10px] font-medium">
-                        <button onclick="switchBasemap('dark')" id="bm-dark" class="px-1.5 py-1 rounded bg-purple-950/80 border border-purple-500 text-purple-200">Dark</button>
-                        <button onclick="switchBasemap('street')" id="bm-street" class="px-1.5 py-1 rounded bg-slate-800 border border-slate-700 text-slate-400 hover:text-slate-200">Street</button>
-                        <button onclick="switchBasemap('satellite')" id="bm-satellite" class="px-1.5 py-1 rounded bg-slate-800 border border-slate-700 text-slate-400 hover:text-slate-200">Satellite</button>
-                        <button onclick="switchBasemap('topo')" id="bm-topo" class="px-1.5 py-1 rounded bg-slate-800 border border-slate-700 text-slate-400 hover:text-slate-200">Topo</button>
+                <div id="floating-layer-body" class="hidden sm:block">
+                    <!-- BASEMAP SELECTOR -->
+                    <div class="mb-2.5">
+                        <span class="text-[10px] text-slate-400 uppercase tracking-wider block mb-1">Basemap</span>
+                        <div class="grid grid-cols-4 gap-1 text-[10px] font-medium">
+                            <button onclick="switchBasemap('dark')" id="bm-dark" class="px-1.5 py-1 rounded bg-purple-950/80 border border-purple-500 text-purple-200">Dark</button>
+                            <button onclick="switchBasemap('street')" id="bm-street" class="px-1.5 py-1 rounded bg-slate-800 border border-slate-700 text-slate-400 hover:text-slate-200">Street</button>
+                            <button onclick="switchBasemap('satellite')" id="bm-satellite" class="px-1.5 py-1 rounded bg-slate-800 border border-slate-700 text-slate-400 hover:text-slate-200">Satellite</button>
+                            <button onclick="switchBasemap('topo')" id="bm-topo" class="px-1.5 py-1 rounded bg-slate-800 border border-slate-700 text-slate-400 hover:text-slate-200">Topo</button>
+                        </div>
                     </div>
-                </div>
 
-                <!-- SEISMIC OVERLAYS -->
-                <div class="mb-2.5">
-                    <span class="text-[10px] text-slate-400 uppercase tracking-wider block mb-1">Seismic Overlays</span>
-                    <div class="flex flex-wrap gap-1 text-[10px]">
-                        <span onclick="toggleLayer('epicenters')" id="lyr-epicenters" class="layer-pill active px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-300">Epicenters</span>
-                        <span onclick="toggleLayer('influence_buffers')" id="lyr-influence_buffers" class="layer-pill active px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-300">Affected Zones</span>
-                        <span onclick="toggleLayer('vulnerable_sectors')" id="lyr-vulnerable_sectors" class="layer-pill active px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-300">Corridor Sectors</span>
+                    <!-- SEISMIC OVERLAYS -->
+                    <div class="mb-2.5">
+                        <span class="text-[10px] text-slate-400 uppercase tracking-wider block mb-1">Seismic Overlays</span>
+                        <div class="flex flex-wrap gap-1 text-[10px]">
+                            <span onclick="toggleLayer('epicenters')" id="lyr-epicenters" class="layer-pill active px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-300">Epicenters</span>
+                            <span onclick="toggleLayer('influence_buffers')" id="lyr-influence_buffers" class="layer-pill active px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-300">Affected Zones</span>
+                            <span onclick="toggleLayer('vulnerable_sectors')" id="lyr-vulnerable_sectors" class="layer-pill active px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-300">Corridor Sectors</span>
+                        </div>
                     </div>
-                </div>
 
-                <!-- INFRASTRUCTURE & FAULTS -->
-                <div>
-                    <span class="text-[10px] text-slate-400 uppercase tracking-wider block mb-1">Infrastructure & Faults</span>
-                    <div class="flex flex-wrap gap-1 text-[10px]">
-                        <span onclick="toggleLayer('major_faults')" id="lyr-major_faults" class="layer-pill active px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-300">MCT / MBT Faults</span>
-                        <span onclick="toggleLayer('roads')" id="lyr-roads" class="layer-pill active px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-300">Strategic Roads</span>
-                        <span onclick="toggleLayer('settlements')" id="lyr-settlements" class="layer-pill px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-400">Settlements</span>
+                    <!-- INFRASTRUCTURE & FAULTS -->
+                    <div>
+                        <span class="text-[10px] text-slate-400 uppercase tracking-wider block mb-1">Infrastructure & Faults</span>
+                        <div class="flex flex-wrap gap-1 text-[10px]">
+                            <span onclick="toggleLayer('major_faults')" id="lyr-major_faults" class="layer-pill active px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-300">MCT / MBT Faults</span>
+                            <span onclick="toggleLayer('roads')" id="lyr-roads" class="layer-pill active px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-300">Strategic Roads</span>
+                            <span onclick="toggleLayer('settlements')" id="lyr-settlements" class="layer-pill px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-400">Settlements</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -200,7 +229,7 @@
         </div>
 
         <!-- RIGHT INTELLIGENCE DRAWER (SCROLLABLE) -->
-        <div class="w-full lg:w-[420px] xl:w-[460px] bg-[#070B10] border-t lg:border-t-0 lg:border-l border-borderMuted flex flex-col h-auto lg:h-full z-20 shrink-0">
+        <div id="workspace-drawer-pane" class="w-full lg:w-[420px] xl:w-[460px] bg-[#070B10] border-t lg:border-t-0 lg:border-l border-borderMuted hidden lg:flex flex-col h-full z-20 shrink-0">
             
             <!-- PANEL TABS -->
             <div class="flex border-b border-borderMuted bg-[#0B132B] text-xs font-medium shrink-0">
@@ -961,6 +990,80 @@
                 reasonEl.textContent = `SEISMIC DATA DEGRADED: ${msg} Ground-shaking modifiers falling back to conservative geotechnical baseline.`;
             }
         }
+
+        function setMobileWorkspaceTab(tab) {
+            const mapPane = document.getElementById('workspace-map-pane');
+            const drawerPane = document.getElementById('workspace-drawer-pane');
+            const tabMapBtn = document.getElementById('mobile-tab-map');
+            const tabDrawerBtn = document.getElementById('mobile-tab-drawer');
+
+            if (tab === 'map') {
+                if (mapPane) {
+                    mapPane.classList.remove('hidden');
+                    mapPane.classList.add('flex-1', 'relative', 'h-full');
+                }
+                if (drawerPane) {
+                    drawerPane.classList.add('hidden');
+                    drawerPane.classList.remove('flex', 'h-full');
+                }
+                if (tabMapBtn) {
+                    tabMapBtn.className = 'flex-1 py-1 px-3 text-center font-bold rounded-md bg-purple-700 text-white shadow-xs transition flex items-center justify-center gap-1.5 cursor-pointer';
+                }
+                if (tabDrawerBtn) {
+                    tabDrawerBtn.className = 'flex-1 py-1 px-3 text-center font-medium rounded-md text-slate-400 hover:text-white transition flex items-center justify-center gap-1.5 cursor-pointer';
+                }
+                if (window.seismicMap) {
+                    setTimeout(() => { window.seismicMap.invalidateSize(); }, 150);
+                }
+            } else {
+                if (mapPane) {
+                    mapPane.classList.add('hidden');
+                    mapPane.classList.remove('flex-1');
+                }
+                if (drawerPane) {
+                    drawerPane.classList.remove('hidden');
+                    drawerPane.classList.add('flex', 'h-full', 'w-full');
+                }
+                if (tabDrawerBtn) {
+                    tabDrawerBtn.className = 'flex-1 py-1 px-3 text-center font-bold rounded-md bg-purple-700 text-white shadow-xs transition flex items-center justify-center gap-1.5 cursor-pointer';
+                }
+                if (tabMapBtn) {
+                    tabMapBtn.className = 'flex-1 py-1 px-3 text-center font-medium rounded-md text-slate-400 hover:text-white transition flex items-center justify-center gap-1.5 cursor-pointer';
+                }
+            }
+        }
+
+        function toggleMobileLayerPanel() {
+            if (window.innerWidth >= 640) return;
+            const body = document.getElementById('floating-layer-body');
+            const chevron = document.getElementById('floating-layer-chevron');
+            if (!body) return;
+            if (body.classList.contains('hidden')) {
+                body.classList.remove('hidden');
+                if (chevron) chevron.style.transform = 'rotate(180deg)';
+            } else {
+                body.classList.add('hidden');
+                if (chevron) chevron.style.transform = '';
+            }
+        }
+
+        window.addEventListener('resize', () => {
+            const mapPane = document.getElementById('workspace-map-pane');
+            const drawerPane = document.getElementById('workspace-drawer-pane');
+            if (window.innerWidth >= 1024) {
+                if (mapPane) {
+                    mapPane.classList.remove('hidden');
+                    mapPane.classList.add('flex-1', 'relative', 'h-full');
+                }
+                if (drawerPane) {
+                    drawerPane.classList.remove('hidden');
+                    drawerPane.classList.add('lg:flex');
+                }
+                if (window.seismicMap) {
+                    window.seismicMap.invalidateSize();
+                }
+            }
+        });
     </script>
 </body>
 </html>

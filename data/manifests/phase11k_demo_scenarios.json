@@ -1,0 +1,97 @@
+{
+  "metadata": {
+    "phase": "PHASE 11K",
+    "standard": "Smart India Hackathon (SIH) 2026 Top-500 -> Top-5 Evaluation",
+    "classification": "AUTHORITATIVE JUDGE DEMONSTRATION SCENARIO MANIFEST",
+    "baseline_commit": "4c439afa16e7158b1657ea892e14d99d42285156",
+    "generated_at_utc": "2026-09-15T05:00:00+00:00",
+    "model_status": "TRAINED_LIMITED_DATA",
+    "lstm_status": "NOT_TRAINED_MATHEMATICAL_SURROGATE",
+    "freeze_status": "DEMO_FROZEN"
+  },
+  "safety_invariants": {
+    "ENABLE_PUBLIC_DISPATCH": 0,
+    "SIREN_DRY_RUN": 1,
+    "CAP_PRODUCTION_DISPATCH": 0,
+    "SACHET_PRODUCTION_DISPATCH": 0,
+    "CELL_BROADCAST_PRODUCTION": 0,
+    "relay_driver": "DRY_RUN_EMULATOR"
+  },
+  "scenarios": [
+    {
+      "scenario_id": "SCENARIO-01-NH10-KM48-PRIMARY",
+      "name": "High-Risk Primary Corridor Demonstration",
+      "corridor_id": "SK-NH10-KM48",
+      "corridor_name": "NH-10 Km 48 (29th Mile Sector)",
+      "state": "Sikkim",
+      "district": "Pakyong",
+      "highway": "National Highway 10",
+      "coordinates": {
+        "lat": 27.33,
+        "lon": 88.61
+      },
+      "source_state": {
+        "weather_source": "Open-Meteo live API / Local cached within TTL",
+        "seismic_source": "USGS live global feed",
+        "terrain_source": "SRTM 30m DEM (Slope 42.0°)",
+        "geotechnical_source": "Mohr-Coulomb limit equilibrium equation",
+        "provenance_badge": "[LIVE / MODELLED]",
+        "data_quality_level": "PARTIAL DATA"
+      },
+      "expected_runtime_values": {
+        "cri": 45.5,
+        "risk_band": "HIGH",
+        "fos": 0.971,
+        "fos_status": "CRITICAL",
+        "event_probability": 0.0497,
+        "rainfall_24h_mm": 33.3,
+        "corroboration_status": "2-of-3 Corroborated",
+        "primary_driver": "Physical Slope Instability (Mohr-Coulomb FoS 0.971 < 1.0 limit equilibrium)",
+        "secondary_driver": "Rainfall Infiltration (33.3 mm/24h)"
+      },
+      "authority_recommendation": {
+        "stage": "[STAGE 4] PREPARE RESPONSE",
+        "code": "PREPARE_RESPONSE",
+        "action": "Pre-position emergency SDRF/NDRF rescue units and BRO heavy earthmoving machinery. Stage community evacuation shelters.",
+        "statutory_gate": "Public alerts, acoustic sirens, and OASIS CAP cell broadcasts require statutory authorization from the District Magistrate under DMA 2005."
+      },
+      "geofence": {
+        "radius_km": 15.0,
+        "affected_villages": ["29th Mile Settlement", "Singtam Bazaar"],
+        "affected_population": 7350,
+        "alternative_bypass": "NH-717A (Strategic BRO Bypass via Pedong/Rorathang)"
+      }
+    },
+    {
+      "scenario_id": "SCENARIO-02-WEATHER-FAILOVER",
+      "name": "Controlled Meteorological Provider Fallback",
+      "trigger": "Live weather API timeout / disconnection",
+      "expected_behavior": {
+        "failover_order": ["IMD", "Open-Meteo", "Disk Cache", "Himalayan Climatology"],
+        "provenance_transition": "[LIVE] -> [CACHED] / [FALLBACK]",
+        "confidence_level": "DEGRADED",
+        "operational_impact": "Zero downtime; continues calculating deterministic FoS using cached antecedent rainfall",
+        "display_badge": "[SIMULATED FAILURE]"
+      }
+    },
+    {
+      "scenario_id": "SCENARIO-03-STATUTORY-AUTHORITY-WORKFLOW",
+      "name": "Human-in-the-Loop Emergency Authorization Flow",
+      "state_transitions": [
+        "STATE_NEW",
+        "STATE_TRIAGED",
+        "STATE_AUTHORITY_REVIEW",
+        "STATE_AUTHORIZED",
+        "STATE_DISPATCH_LOCKED"
+      ],
+      "statutory_role": "DISTRICT_MAGISTRATE_PAKYONG",
+      "governing_law": "Disaster Management Act, 2005 (Section 30)",
+      "safety_verification": {
+        "ai_autonomy_level": "Decision Support & Recommendation Only",
+        "public_broadcast_allowed": false,
+        "siren_hardware_energized": false,
+        "sms_transmission_type": "DRY_RUN / TEST_RECIPIENTS_ONLY"
+      }
+    }
+  ]
+}

@@ -32,14 +32,14 @@ logger = logging.getLogger("PAHAD_VOICE_ASSISTANT")
 
 # Safety Keywords & Patterns (Strictly Forbidden Actuation Commands)
 FORBIDDEN_ACTUATION_PATTERNS = [
-    r"\b(?:turn|switch|sound|trigger|activate|start|play)\s+(?:on\s+)?(?:the\s+)?siren\b",
-    r"\b(?:authorize|issue|approve|grant)\s+(?:the\s+)?(?:warning|alert|notice)\b",
-    r"\b(?:send|broadcast|dispatch|issue|order)\s+(?:an?\s+)?evacuation\s+(?:alert|order|notice)\b",
+    r"\b(?:turn|switch|sound|trigger|activate|start|play)\s+(?:on\s+)?(?:the\s+)?(?:emergency\s+|evacuation\s+)?siren\b",
+    r"\b(?:authorize|issue|approve|grant)\s+(?:the\s+)?(?:emergency\s+|evacuation\s+)?(?:warning|alert|notice)\b",
+    r"\b(?:send|broadcast|dispatch|issue|order)\s+(?:an?\s+)?(?:emergency\s+)?evacuation\s+(?:alert|order|notice)\b",
     r"\b(?:declare|issue|broadcast|give)\s+(?:an?\s+)?all[\s-]clear\b",
     r"\b(?:dispatch|send|trigger|broadcast)\s+(?:emergency\s+)?(?:notification|cap|broadcast|sms)\b",
     r"\b(?:override|change|modify|set|alter)\s+(?:the\s+)?(?:fos|factor\s+of\s+safety|cri|risk\s+score)\b",
     r"\b(?:calculate|invent|generate)\s+(?:a\s+)?new\s+(?:cri|fos|risk)\b",
-    r"\bdisarm\s+(?:the\s+)?siren\b",
+    r"\bdisarm\s+(?:the\s+)?(?:emergency\s+)?siren\b",
 ]
 
 # Canonical Corridors Fallback Dictionary
@@ -482,7 +482,7 @@ class PahadVoiceAssistantService:
                 f"- **24-Hour Horizon:** `{p24:.1f}%` likelihood\n"
                 f"- **48-Hour Horizon:** `{p48:.1f}%` likelihood\n"
                 f"- **Calibration:** Platt Sigmoid (`v5.2.0-phase5b`)\n"
-                f"*Estimated Early Warning Lead Time: 24.0 hours*"
+                f"*Prototype evaluates multiple forecast horizons (6h / 12h / 24h / 48h outlooks)*"
             )
             spoken = (
                 f"PAHAD multi-horizon forecast for {cname}: six hour probability is {p6:.1f} percent, "

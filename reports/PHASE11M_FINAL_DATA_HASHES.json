@@ -1,0 +1,75 @@
+{
+  "metadata": {
+    "phase": "PHASE 11M",
+    "standard": "SIH 2026 Pre-Submission Freeze",
+    "audit_type": "FINAL DATASET ARTIFACT RELEASE INTEGRITY",
+    "timestamp_utc": "2026-09-15T05:42:49.924892+00:00",
+    "all_datasets_match": true,
+    "total_artifacts_verified": 7
+  },
+  "datasets": {
+    "data/features/real_train.csv": {
+      "exists": true,
+      "size_bytes": 4172,
+      "row_count": 16,
+      "sha256": "79ece554fd0d2fc62d69a21fd4d39172f7dd4995d5645e126a91d1a08c1c579e",
+      "expected_sha256": "79ece554fd0d2fc62d69a21fd4d39172f7dd4995d5645e126a91d1a08c1c579e",
+      "match": true,
+      "status": "VERIFIED_BIT_FOR_BIT_PARITY"
+    },
+    "data/features/real_val.csv": {
+      "exists": true,
+      "size_bytes": 3290,
+      "row_count": 12,
+      "sha256": "ed732e2054f1b028cab9380a35ad31affbbb5e93a3cb207fda1582665aa0bd81",
+      "expected_sha256": "ed732e2054f1b028cab9380a35ad31affbbb5e93a3cb207fda1582665aa0bd81",
+      "match": true,
+      "status": "VERIFIED_BIT_FOR_BIT_PARITY"
+    },
+    "data/features/real_test.csv": {
+      "exists": true,
+      "size_bytes": 2468,
+      "row_count": 8,
+      "sha256": "29f84cf974241844a16086736e1cab833484a9587519946dd24ee09ae09d28da",
+      "expected_sha256": "29f84cf974241844a16086736e1cab833484a9587519946dd24ee09ae09d28da",
+      "match": true,
+      "status": "VERIFIED_BIT_FOR_BIT_PARITY"
+    },
+    "data/labels/event_labels.csv": {
+      "exists": true,
+      "size_bytes": 4442,
+      "row_count": 36,
+      "sha256": "edcdb95b13a87208deb3aa20cf29f381bad8c9312c8879131bce38ad00455a4c",
+      "expected_sha256": "edcdb95b13a87208deb3aa20cf29f381bad8c9312c8879131bce38ad00455a4c",
+      "match": true,
+      "status": "VERIFIED_BIT_FOR_BIT_PARITY"
+    },
+    "data/features/features_all.csv": {
+      "exists": true,
+      "size_bytes": 8816,
+      "row_count": 36,
+      "sha256": "28688c13aba6b03b83d55a41f3f4028f910c16069eea12396a4695d579a56c2a",
+      "expected_sha256": "28688c13aba6b03b83d55a41f3f4028f910c16069eea12396a4695d579a56c2a",
+      "match": true,
+      "status": "VERIFIED_BIT_FOR_BIT_PARITY"
+    },
+    "data/features/demo_train.csv": {
+      "exists": true,
+      "size_bytes": 6942,
+      "row_count": 25,
+      "sha256": "a5453fa55bc6cc330d92236f5c82444444f1034c3969de4eff0b3b5deb6c9cad",
+      "expected_sha256": "a5453fa55bc6cc330d92236f5c82444444f1034c3969de4eff0b3b5deb6c9cad",
+      "match": true,
+      "status": "VERIFIED_BIT_FOR_BIT_PARITY"
+    },
+    "data/manifests/phase11k_demo_scenarios.json": {
+      "exists": true,
+      "size_bytes": 3915,
+      "row_count": null,
+      "sha256": "4e9025f3b0fddf86d5403ccc88afd8fff7e3b9718d152a4b050e7e9ae842a614",
+      "expected_sha256": null,
+      "match": true,
+      "status": "VERIFIED_BIT_FOR_BIT_PARITY"
+    }
+  }
+}

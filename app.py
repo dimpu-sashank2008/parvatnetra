@@ -5696,7 +5696,7 @@ def api_pahad_highest_risk_corridor():
                     forecast_horizon_hours=24
                 )
                 inf_dict = inf.to_dict()
-                rain_val = inf.features_used.get("rain_24h", 0.0) if inf.features_used else 0.0
+                rain_val = inf.features_used.get("rainfall_24h", inf.features_used.get("rain_24h", 0.0)) if inf.features_used else 0.0
                 scored.append({
                     "id": loc.id,
                     "name": loc.name,
@@ -5896,10 +5896,22 @@ def api_pahad_live_inference():
         else:
             body = request.args.to_dict()
 
-        sector_id = body.get("sector_id", "GENERAL")
+        sector_id = body.get("sector_id") or body.get("corridor") or body.get("location_id") or "GENERAL"
+        lat_in = body.get("latitude") if "latitude" in body else body.get("lat")
+        lon_in = body.get("longitude") if "longitude" in body else body.get("lon")
         try:
-            lat = float(body.get("latitude", body.get("lat", 27.33)))
-            lon = float(body.get("longitude", body.get("lon", 88.61)))
+            if lat_in is not None and lon_in is not None:
+                lat = float(lat_in)
+                lon = float(lon_in)
+            else:
+                from engine.canonical_registry import CANONICAL_REGISTRY
+                loc = CANONICAL_REGISTRY.get_location(str(sector_id).strip())
+                if loc:
+                    lat = float(loc.lat)
+                    lon = float(loc.lon)
+                else:
+                    lat = 27.33
+                    lon = 88.61
             horizon = int(body.get("horizon_hours", body.get("horizon", 24)))
         except (TypeError, ValueError):
             return jsonify({"status": "ERROR", "message": "Invalid latitude/longitude/horizon"}), 422
@@ -5947,10 +5959,22 @@ def api_pahad_forecast():
         else:
             body = request.args.to_dict()
 
-        sector_id = body.get("sector_id", "GENERAL")
+        sector_id = body.get("sector_id") or body.get("corridor") or body.get("location_id") or "GENERAL"
+        lat_in = body.get("latitude") if "latitude" in body else body.get("lat")
+        lon_in = body.get("longitude") if "longitude" in body else body.get("lon")
         try:
-            lat = float(body.get("latitude", body.get("lat", 27.33)))
-            lon = float(body.get("longitude", body.get("lon", 88.61)))
+            if lat_in is not None and lon_in is not None:
+                lat = float(lat_in)
+                lon = float(lon_in)
+            else:
+                from engine.canonical_registry import CANONICAL_REGISTRY
+                loc = CANONICAL_REGISTRY.get_location(str(sector_id).strip())
+                if loc:
+                    lat = float(loc.lat)
+                    lon = float(loc.lon)
+                else:
+                    lat = 27.33
+                    lon = 88.61
         except (TypeError, ValueError):
             return jsonify({"status": "ERROR", "message": "Invalid latitude/longitude"}), 422
 

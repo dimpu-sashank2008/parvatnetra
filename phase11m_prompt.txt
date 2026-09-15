@@ -1,0 +1,854 @@
+<USER_REQUEST>
+============================================================
+PARVAT NETRA / PAHAD AI — PHASE 11M
+FINAL SUBMISSION FREEZE, RELEASE CANDIDATE & SIH EVIDENCE PACK
+SIH 2026 — TOP-500 → TOP-5 SUBMISSION READINESS
+============================================================
+
+You are continuing PARVAT NETRA / PAHAD AI after:
+
+Phase 11H — Scientific Forensic Audit
+Phase 11I — Code Cleanup, Claim Remediation & Cross-Phase Consistency
+Phase 11J — Deployment Hardening
+Phase 11K — Judge Demonstration & Evidence Verification
+Phase 11L — SIH Judge Defense & Technical Defensibility
+
+THIS IS PHASE 11M.
+
+This is the FINAL PRE-SUBMISSION FREEZE.
+
+The objective is to produce a reproducible, evidence-backed release candidate
+for SIH 2026 evaluation.
+
+THIS IS NOT A FEATURE-DEVELOPMENT PHASE.
+
+============================================================
+ABSOLUTE FREEZE RULES
+============================================================
+
+DO NOT:
+
+- redesign the UI
+- add new features
+- retrain any model
+- modify model weights
+- modify datasets
+- change CRI formula
+- change CRI weights
+- change risk bands
+- change thresholds
+- change labels
+- change corroboration logic
+- weaken RBAC
+- weaken authority approval
+- enable public dispatch
+- enable physical sirens
+- enable production CAP dispatch
+- enable SACHET production dispatch
+- enable cell broadcast production dispatch
+- fabricate data
+- fabricate deployment
+- fabricate institutional partnerships
+- fabricate notification delivery
+- fabricate accuracy
+- fabricate warning lead time
+
+DO NOT make cosmetic changes merely to make the submission look more complete.
+
+ONLY perform:
+
+- final consistency fixes
+- proven release blockers
+- metadata corrections
+- documentation corrections
+- packaging
+- evidence indexing
+- reproducibility verification
+
+Every change must be justified.
+
+============================================================
+CP01 — FINAL BASELINE
+============================================================
+
+Run:
+
+git branch
+git status
+git log -1 --oneline
+git diff --stat
+git diff --check
+
+Record:
+
+CURRENT_COMMIT
+CURRENT_BRANCH
+WORKTREE_STATE
+
+Create:
+
+docs/PHASE11M_FINAL_FREEZE_BASELINE.md
+
+============================================================
+CP02 — READ ALL FINAL PHASE REPORTS
+============================================================
+
+Read:
+
+docs/PHASE11H_SCIENTIFIC_INTEGRITY_AUDIT.md
+docs/PHASE11H_CLAIM_AUDIT.md
+
+docs/PHASE11I_CODE_CLAIM_REMEDIATION.md
+docs/PHASE11I_CLAIM_MATRIX.md
+
+docs/PHASE11J_DEPLOYMENT_HARDENING_REPORT.md
+docs/PHASE11J_DEPLOYMENT_CHECKLIST.md
+
+docs/PHASE11K_JUDGE_DEMO_REPORT.md
+docs/PHASE11K_JUDGE_QA_EVIDENCE.md
+docs/PHASE11K_JUDGE_DEMO_SCRIPT.md
+
+docs/PHASE11L_SIH_JUDGE_DEFENSE.md
+docs/PHASE11L_EVIDENCE_INDEX.md
+docs/PHASE11L_DEFENSE_READINESS_REPORT.md
+
+Build one final understanding of:
+
+- what is implemented
+- what is live
+- what is simulated
+- what is blocked
+- what is safe
+- what is scientifically supported
+
+============================================================
+CP03 — FINAL CLAIM CONSISTENCY
+============================================================
+
+Search the entire repository and submission-facing documents for:
+
+100% accuracy
+guaranteed accuracy
+guaranteed detection
+guaranteed warning
+official Government of India
+official government service
+deployed sensors
+live sensors
+production model
+trained LSTM
+independent signals
+real emergency broadcast
+real siren
+24-hour guaranteed warning
+nationwide deployment
+field proven
+
+Every occurrence must be classified:
+
+SUPPORTED
+PARTIALLY_SUPPORTED
+UNSUPPORTED
+MISLEADING
+
+There must be ZERO unsupported/misleading claims in final
+judge-facing material.
+
+============================================================
+CP04 — DATASET LANGUAGE FINALIZATION
+============================================================
+
+Ensure all judge-facing documentation clearly distinguishes:
+
+TOTAL VERIFIED EVENTS
+TOTAL LABELED WINDOWS/ROWS
+TRAINING SPLIT
+VALIDATION SPLIT
+TEST SPLIT
+
+Do NOT say:
+
+"model trained on 36 independent historical events"
+
+unless that is actually true.
+
+Use exact repository-supported terminology.
+
+Current model status must remain:
+
+TRAINED_LIMITED_DATA
+
+Do not inflate the dataset.
+
+============================================================
+CP05 — MODEL STATUS FINALIZATION
+============================================================
+
+Verify the final documented status of:
+
+event model
+FoS model
+LSTM
+calibration
+OOD analysis
+temporal model
+
+Ensure:
+
+LSTM = NOT TRAINED / MATHEMATICAL SURROGATE
+
+The final release must not imply production-grade neural temporal forecasting.
+
+============================================================
+CP06 — LIVE DATA STATUS FREEZE
+============================================================
+
+Produce one authoritative source matrix.
+
+For:
+
+IMD
+Open-Meteo
+NCS
+USGS
+NRSC/Bhoonidhi
+Copernicus
+IoT
+PostGIS/database
+SMS
+Email
+CAP
+SACHET
+Cell Broadcast
+Siren
+
+Record:
+
+STATUS
+EVIDENCE
+LIMITATION
+
+Allowed states:
+
+LIVE
+CACHED
+AUTH_REQUIRED
+UNAVAILABLE
+DEGRADED
+SIMULATED
+DRY_RUN
+UNCONFIGURED
+
+No source may be upgraded merely for presentation.
+
+============================================================
+CP07 — FINAL RUNTIME SNAPSHOT
+============================================================
+
+Run the authoritative runtime:
+
+/api/pahad/highest-risk-corridor?force_refresh=1
+
+Enumerate all canonical corridors.
+
+Save:
+
+reports/PHASE11M_FINAL_RUNTIME_SNAPSHOT.json
+
+For every corridor include:
+
+ID
+NAME
+STATE
+DISTRICT
+CRI
+RISK_BAND
+FoS
+EVENT_PROBABILITY
+RAINFALL
+DATA_QUALITY
+PROVENANCE
+TIMESTAMP
+
+Record the highest-risk corridor.
+
+Do not hard-code the result.
+
+============================================================
+CP08 — FINAL MODEL HASH SNAPSHOT
+============================================================
+
+Recalculate SHA-256 for all release model artifacts.
+
+Save:
+
+reports/PHASE11M_FINAL_MODEL_HASHES.json
+
+Compare against the validated 11I/11J baseline.
+
+Any mismatch is a STOP condition.
+
+============================================================
+CP09 — FINAL DATA HASH SNAPSHOT
+============================================================
+
+Hash the release-critical datasets/manifests.
+
+At minimum:
+
+data/features/real_train.csv
+data/features/real_val.csv
+data/features/real_test.csv
+data/features/temporal_train.csv if present
+data/features/temporal_val.csv if present
+data/features/temporal_test.csv if present
+data/manifests/canonical_event_inventory.json
+data/manifests/phase11k_demo_scenarios.json
+
+Save:
+
+reports/PHASE11M_FINAL_DATA_HASHES.json
+
+Any unexplained mismatch is a STOP condition.
+
+============================================================
+CP10 — FINAL SAFETY FREEZE
+============================================================
+
+Verify:
+
+ENABLE_PUBLIC_DISPATCH=0
+SIREN_DRY_RUN=1
+CAP_PRODUCTION_DISPATCH=0
+SACHET_PRODUCTION_DISPATCH=0
+CELL_BROADCAST_PRODUCTION=0
+
+Also verify:
+
+AI cannot independently dispatch
+AI cannot independently activate siren
+public users cannot perform authority actions
+
+Record exact evidence.
+
+============================================================
+CP11 — FINAL DEMO REHEARSAL
+============================================================
+
+Run the approved 5–7 minute judge demo.
+
+Use:
+
+docs/PHASE11K_JUDGE_DEMO_SCRIPT.md
+
+Do not change code during the rehearsal.
+
+Record:
+
+START
+END
+DURATION
+FAILURES
+CONFUSING STEPS
+BROWSER ERRORS
+API ERRORS
+
+Expected goal:
+
+< 7 minutes
+
+If demo fails:
+
+DO NOT improvise code changes.
+
+Document the blocker.
+
+============================================================
+CP12 — FINAL JUDGE Q&A REHEARSAL
+============================================================
+
+Run the hardest questions from:
+
+docs/PHASE11L_SIH_JUDGE_DEFENSE.md
+
+At minimum rehearse:
+
+1. What exactly is AI?
+2. Why not rainfall only?
+3. Why FoS?
+4. Why CRI?
+5. How much data?
+6. Why are the metrics perfect?
+7. Are the 2-of-3 signals independent?
+8. What is live?
+9. Are sensors real?
+10. Is satellite processing real?
+11. Can AI trigger a siren?
+12. What happens when APIs fail?
+13. What happens when sensors fail?
+14. What is your biggest limitation?
+15. Why should government use this?
+16. What differentiates you?
+
+Ensure answers match the repository exactly.
+
+============================================================
+CP13 — FINAL EVIDENCE INDEX
+============================================================
+
+Create:
+
+docs/PHASE11M_FINAL_EVIDENCE_INDEX.md
+
+Map every major judge claim to:
+
+SOURCE FILE
+TEST
+REPORT
+RUNTIME ENDPOINT
+ARTIFACT
+
+Example:
+
+Claim:
+"AI cannot independently trigger public dispatch."
+
+Evidence:
+authority workflow code
+safety environment flags
+Phase 8 tests
+Phase 11K verification
+
+============================================================
+CP14 — FINAL SECURITY CHECK
+============================================================
+
+Run existing security audit.
+
+Verify:
+
+- no secrets
+- no tokens
+- no passwords
+- no private credentials
+- no accidental personal phone/email data
+- no debug secrets
+- no unsafe production flags
+
+Do not expose secret values.
+
+============================================================
+CP15 — FINAL BUILD REPRODUCIBILITY
+============================================================
+
+Verify the release can be reconstructed from:
+
+source
++
+declared dependencies
++
+documented environment configuration
++
+tracked artifacts
+
+Check for:
+
+untracked dependencies
+developer-specific paths
+temporary files
+hidden scripts
+scratch files
+machine-local configuration
+
+============================================================
+CP16 — FINAL FILE INVENTORY
+============================================================
+
+Create:
+
+docs/PHASE11M_RELEASE_MANIFEST.md
+
+Include:
+
+SOURCE
+DOCUMENTATION
+MODELS
+DATA
+TESTS
+CONFIG
+DEPLOYMENT
+DEMO
+REPORTS
+
+Mark each:
+
+REQUIRED
+OPTIONAL
+DEMO ONLY
+NOT FOR RELEASE
+
+============================================================
+CP17 — SUBMISSION PACKAGE AUDIT
+============================================================
+
+Determine what should be included in a SIH submission package.
+
+Do NOT alter the repository unnecessarily.
+
+Prepare a recommended package containing:
+
+- source repository reference
+- README
+- architecture
+- problem statement alignment
+- technical approach
+- model/data explanation
+- validation evidence
+- safety architecture
+- deployment state
+- limitations
+- demo script
+- judge Q&A
+- screenshots
+- PPT/PDF if present
+
+Do not claim an external submission has occurred.
+
+============================================================
+CP18 — PPT / PRESENTATION CONSISTENCY
+============================================================
+
+If presentation artifacts exist:
+
+inspect all numbers and claims.
+
+Check:
+
+CRI
+FoS
+dataset size
+model status
+live sources
+sensor status
+deployment status
+safety status
+
+Remove or flag any outdated claim.
+
+Do not redesign the presentation unless a factual error is present.
+
+============================================================
+CP19 — PUBLIC DEPLOYMENT STATUS
+============================================================
+
+The known deployment URL is:
+
+https://silly-fermi.vercel.app/
+
+DO NOT deploy.
+
+DO NOT modify the public deployment.
+
+Only verify that the final documentation clearly says:
+
+DEPLOYMENT STATUS:
+Manual deployment pending / current deployment state must be verified separately.
+
+Never claim that the local release candidate is automatically reflected
+on the public URL.
+
+============================================================
+CP20 — FINAL REGRESSION
+============================================================
+
+Run all critical available regression suites.
+
+At minimum:
+
+python -m pytest \
+tests/test_pahad_engine.py \
+tests/test_pahad_phase2.py \
+tests/test_pahad_phase3.py \
+tests/test_pahad_data_fusion.py \
+tests/test_weather_service.py \
+tests/test_seismic_service.py \
+tests/test_terrain_api.py \
+tests/test_i18n_localization.py \
+tests/test_model_regression.py \
+tests/test_phase11j_smoke.py
+
+Also run applicable:
+
+Phase 8
+Phase 9
+Phase 10
+Phase 11
+
+test suites.
+
+Report:
+
+CORE
+SUPPLEMENTAL
+PASSED
+FAILED
+ERRORS
+SKIPPED
+INFRASTRUCTURE FAILURES
+
+Never hide infrastructure failures.
+
+============================================================
+CP21 — FINAL DIFF REVIEW
+============================================================
+
+Run:
+
+git status
+git diff --stat
+git diff --check
+git diff
+
+Verify:
+
+- no model change
+- no dataset change
+- no scientific formula change
+- no threshold change
+- no safety weakening
+- no accidental feature addition
+- no temporary files
+- no secret leakage
+
+============================================================
+CP22 — RELEASE CANDIDATE TAG DATA
+============================================================
+
+Do NOT create or push a Git tag.
+
+Instead create:
+
+reports/PHASE11M_RELEASE_CANDIDATE.json
+
+Include:
+
+project
+phase
+commit
+branch
+timestamp
+model_hashes
+dataset_hashes
+safety_flags
+test_summary
+runtime_snapshot_reference
+deployment_status
+overall_status
+
+============================================================
+CP23 — FINAL FREEZE REPORT
+============================================================
+
+Create:
+
+docs/PHASE11M_FINAL_SUBMISSION_FREEZE.md
+
+Include:
+
+1. release identity
+2. software status
+3. model status
+4. dataset status
+5. live source status
+6. safety status
+7. demo status
+8. judge-defense status
+9. security status
+10. regression
+11. known limitations
+12. blockers
+13. submission checklist
+14. release manifest
+15. runtime snapshot
+16. model hashes
+17. data hashes
+
+============================================================
+FINAL VERDICT
+============================================================
+
+Choose exactly ONE:
+
+SUBMISSION_READY
+
+SUBMISSION_READY_WITH_LIMITATIONS
+
+SUBMISSION_REQUIRES_CORRECTION
+
+SUBMISSION_BLOCKED
+
+Definitions:
+
+SUBMISSION_READY:
+All critical release and evidence checks pass.
+
+SUBMISSION_READY_WITH_LIMITATIONS:
+The project is suitable for submission but documented limitations remain.
+
+SUBMISSION_REQUIRES_CORRECTION:
+A material factual, safety, release, or evidence issue remains.
+
+SUBMISSION_BLOCKED:
+A critical issue prevents safe submission.
+
+============================================================
+FINAL OUTPUT
+============================================================
+
+Print exactly:
+
+============================================================
+PARVAT NETRA / PAHAD AI — PHASE 11M FINAL STATUS
+============================================================
+
+RELEASE COMMIT:
+<hash>
+
+BRANCH:
+<branch>
+
+WORKTREE:
+<CLEAN/MODIFIED>
+
+MODEL STATUS:
+<actual>
+
+DATASET:
+<actual>
+
+TOTAL VERIFIED EVENTS:
+<actual>
+
+TOTAL LABELED WINDOWS:
+<actual>
+
+TRAINING SPLIT:
+<actual>
+
+VALIDATION SPLIT:
+<actual>
+
+TEST SPLIT:
+<actual>
+
+MODEL HASH PARITY:
+<PASS/FAIL>
+
+DATA HASH PARITY:
+<PASS/FAIL>
+
+CURRENT HIGHEST-RISK CORRIDOR:
+<actual>
+
+CURRENT CRI:
+<actual>
+
+CURRENT RISK BAND:
+<actual>
+
+CURRENT FoS:
+<actual>
+
+EVENT PROBABILITY:
+<actual>
+
+WEATHER:
+<actual>
+
+SEISMIC:
+<actual>
+
+EO/SATELLITE:
+<actual>
+
+IOT:
+<actual>
+
+IMD:
+<actual>
+
+NCS:
+<actual>
+
+PUBLIC DISPATCH:
+DISABLED
+
+SIREN:
+DRY_RUN
+
+CAP PRODUCTION:
+DISABLED
+
+SACHET PRODUCTION:
+DISABLED
+
+CELL BROADCAST:
+DISABLED
+
+JUDGE DEMO:
+<PASS/FAIL>
+
+DEMO DURATION:
+<actual>
+
+JUDGE DEFENSE:
+<PASS/FAIL>
+
+SECURITY:
+<PASS/FAIL>
+
+REGRESSION:
+<actual result>
+
+INFRASTRUCTURE FAILURES:
+<actual>
+
+MODEL CHANGED:
+NO
+
+DATASET CHANGED:
+NO
+
+TRAINING:
+NO
+
+DEPLOYMENT:
+NOT PERFORMED
+
+COMMIT:
+NOT PERFORMED
+
+PUSH:
+NOT PERFORMED
+
+FINAL VERDICT:
+<exact verdict>
+
+============================================================
+
+STOP.
+
+DO NOT COMMIT.
+
+DO NOT PUSH.
+
+DO NOT DEPLOY.
+
+DO NOT START ANY NEW PHASE.
+
+WAIT FOR HUMAN REVIEW.
+============================================================
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-09-15T11:00:04+05:30.
+</ADDITIONAL_METADATA>

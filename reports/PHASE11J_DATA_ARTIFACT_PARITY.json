@@ -1,0 +1,38 @@
+{
+  "data/features/real_train.csv": {
+    "exists": true,
+    "sha256": "79ece554fd0d2fc62d69a21fd4d39172f7dd4995d5645e126a91d1a08c1c579e",
+    "size_bytes": 4172,
+    "row_count": 16
+  },
+  "data/features/real_val.csv": {
+    "exists": true,
+    "sha256": "ed732e2054f1b028cab9380a35ad31affbbb5e93a3cb207fda1582665aa0bd81",
+    "size_bytes": 3290,
+    "row_count": 12
+  },
+  "data/features/real_test.csv": {
+    "exists": true,
+    "sha256": "29f84cf974241844a16086736e1cab833484a9587519946dd24ee09ae09d28da",
+    "size_bytes": 2468,
+    "row_count": 8
+  },
+  "data/features/demo_train.csv": {
+    "exists": true,
+    "sha256": "a5453fa55bc6cc330d92236f5c82444444f1034c3969de4eff0b3b5deb6c9cad",
+    "size_bytes": 6942,
+    "row_count": 25
+  },
+  "data/labels/event_labels.csv": {
+    "exists": true,
+    "sha256": "edcdb95b13a87208deb3aa20cf29f381bad8c9312c8879131bce38ad00455a4c",
+    "size_bytes": 4442,
+    "row_count": 36
+  },
+  "data/features/features_all.csv": {
+    "exists": true,
+    "sha256": "28688c13aba6b03b83d55a41f3f4028f910c16069eea12396a4695d579a56c2a",
+    "size_bytes": 8816,
+    "row_count": 36
+  }
+}

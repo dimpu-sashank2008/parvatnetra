@@ -915,6 +915,7 @@ img, svg, video, canvas, audio, iframe, embed, object {
 
 #pahad-assistant-panel {
     bottom: calc(0.5rem + var(--safe-bottom));
+    z-index: 99995 !important;
 }
 
 /* Container Defensiveness across Mobile Viewports */

@@ -1,11 +1,11 @@
-﻿services:
+services:
   - type: web
     name: parvatnetra-app
     runtime: docker
     dockerfilePath: Dockerfile
     plan: free
     region: oregon
-    healthCheckPath: /api/health
+    healthCheckPath: /health
     envVars:
       - key: PORT
         value: 8080
