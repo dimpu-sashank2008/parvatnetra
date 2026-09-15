@@ -211,11 +211,14 @@ class LiveInferenceResult:
 # ─────────────────────────────────────────────────────────────────────────────
 
 _PROVENANCE_WEIGHTS = {
-    "LIVE":      1.00,
-    "CACHED":    0.75,
-    "MODELLED":  0.60,
-    "MISSING":   0.20,
-    "SIMULATED": 0.40,
+    "LIVE":            1.00,
+    "BENCH_VALIDATED": 0.85,
+    "CACHED":          0.75,
+    "MODELLED":        0.60,
+    "SIMULATED":       0.40,
+    "MISSING":         0.20,
+    "AUTH_REQUIRED":   0.20,
+    "UNAVAILABLE":     0.10,
 }
 
 
@@ -503,10 +506,19 @@ def _assemble_features(
 
     for feat in required:
         val = raw.get(feat)
+        is_invalid_num = False
         if val is not None:
             try:
-                features[feat] = float(val)
+                import math
+                fval = float(val)
+                if not math.isfinite(fval):
+                    is_invalid_num = True
+                    val = None
+                else:
+                    val = fval
+                    features[feat] = fval
             except (TypeError, ValueError):
+                is_invalid_num = True
                 val = None
 
         if val is None:
@@ -515,10 +527,12 @@ def _assemble_features(
             if median_val is not None:
                 features[feat] = median_val
                 imputed.append(feat)
+                prov_tag = "UNAVAILABLE" if is_invalid_num else "MISSING"
+                src_tag = f"training_median (n=16 real events - invalid/non-finite input)" if is_invalid_num else f"training_median (n=16 real events)"
                 prov_list.append(FeatureProvenance(
                     feature=feat, value=median_val,
-                    provenance="MISSING",
-                    source=f"training_median (n=16 real events)",
+                    provenance=prov_tag,
+                    source=src_tag,
                     age_seconds=9999, imputed=True, imputed_value=median_val
                 ))
             else:
@@ -949,9 +963,14 @@ def run_live_inference(
                         val = features["rainfall_24h"]
                     elif col == "rainfall_24h" and "rain_24h" in features:
                         val = features["rain_24h"]
-                    else:
-                        val = TRAINING_MEDIANS.get(col, 0.0)
-                X_vec.append(float(val))
+                try:
+                    import math
+                    fval = float(val)
+                    if not math.isfinite(fval):
+                        fval = float(TRAINING_MEDIANS.get(col, 0.0))
+                except (TypeError, ValueError):
+                    fval = float(TRAINING_MEDIANS.get(col, 0.0))
+                X_vec.append(fval)
 
             X_mat = np.array([X_vec], dtype=np.float32)
             prob_pair = calibrator.predict_proba(X_mat)[0]
@@ -1051,9 +1070,21 @@ def run_live_inference(
             conf_num = round(max(0.10, conf_num * (1.0 - f_penalty * 0.3)), 3)
             if f_penalty >= 0.5 and conf_tier != "INSUFFICIENT_DATA":
                 conf_tier = "LOW_CONFIDENCE"
-                conf_why += f" [Stale data penalty: {round(f_penalty, 2)}]"
     except Exception:
         pass
+
+    has_unavailable_input = any(
+        getattr(fp, "provenance", "") == "UNAVAILABLE"
+        or (isinstance(fp, dict) and fp.get("provenance") == "UNAVAILABLE")
+        for fp in prov_list
+    )
+    if has_unavailable_input:
+        conf_tier = "LOW_CONFIDENCE"
+        conf_num = min(conf_num, 0.35)
+        conf_why = f"Degraded due to non-finite or corrupted telemetry inputs; {conf_why}"
+        if alert_eligible:
+            alert_eligible = False
+            alert_reason = "Alert suppressed: non-finite/corrupted input telemetry detected (fail-closed)"
 
     try:
         from engine.observation_store import GLOBAL_OBSERVATION_STORE, ObservationRecord

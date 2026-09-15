@@ -379,6 +379,25 @@
           const responseText = data.response || 'Telemetry briefing unavailable.';
           const spokenText = data.spoken_response || responseText;
 
+          // Synchronize corridor selection if a target corridor was identified
+          if (data.target_corridor_id && data.target_corridor_id !== this.activeCorridor) {
+            this.activeCorridor = data.target_corridor_id;
+            if (data.corridor_name) {
+              this.activeCorridorName = data.corridor_name;
+            }
+            const selEl = document.getElementById('pahad-corridor-select');
+            if (selEl && selEl.value !== data.target_corridor_id) {
+              selEl.value = data.target_corridor_id;
+              selEl.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+            if (typeof window.onCorridorSelectionChanged === 'function') {
+              window.onCorridorSelectionChanged(data.target_corridor_id);
+            }
+            if (this.corridorBadge) {
+              this.corridorBadge.textContent = this.activeCorridorName;
+            }
+          }
+
           // Append assistant message to transcript
           this.addMessage('assistant', responseText, prov, data.is_safety_rejection);
 

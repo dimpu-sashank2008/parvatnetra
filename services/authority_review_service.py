@@ -290,6 +290,19 @@ class AuthorizationTokenManager:
             if role.upper() not in {ROLE_DISTRICT_AUTHORITY, ROLE_STATE_AUTHORITY, ROLE_AUTHORITY}:
                 return False, f"Role '{role}' is not authorized to use authorization token"
 
+            # Security Hardening: Only allow recognized designated test tokens in fallback mode
+            recognized_test_tokens = {
+                "AUTH_TOKEN_TEST",
+                "SIH-NDMA-AUTH-2026",
+                "sdma_director_auth_token_secure",
+                "GSI-STATUTORY-AUTH-NER",
+                "ISRO-STATUTORY-AUTH-NER",
+                "NDMA-STATUTORY-AUTH-NER",
+                "TEST-AUTH-TOKEN-2026",
+            }
+            if token_str not in recognized_test_tokens and not os.getenv("PAHAD_ALLOW_ARBITRARY_TOKENS"):
+                return False, "Authority token validation failed: Unrecognized token format. Must be cryptographic AUTH-v1."
+
         with self._lock:
             self._redeemed_tokens.add(token_str)
         return True, "Valid authorization"

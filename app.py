@@ -51,6 +51,17 @@ logger = logging.getLogger("PARVAT_NETRA")
 app = Flask(__name__, static_folder='static', static_url_path='/static')
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.secret_key = os.environ.get("SECRET_KEY", "parvat-netra-secret-key-2026")
+app.config['SESSION_COOKIE_HTTPONLY'] = True
+app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
+if os.environ.get("FLASK_ENV") == "production" or os.environ.get("SESSION_COOKIE_SECURE", "0") == "1":
+    app.config['SESSION_COOKIE_SECURE'] = True
+
+@app.after_request
+def set_security_headers(response):
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "SAMEORIGIN"
+    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+    return response
 
 @app.route('/static/<path:filename>')
 def serve_static(filename):
@@ -998,9 +1009,11 @@ def dispatch_siren():
     # Local development loopback fallback only when not simulating remote client and no unauthenticated block
     simulate_remote = request.headers.get("X-Simulate-Remote", "").lower() in ["1", "true"]
     require_auth = request.headers.get("X-Require-Auth", "").lower() in ["1", "true"]
-    client_ip = request.headers.get("X-Forwarded-For", request.remote_addr or "")
+    client_ip = request.remote_addr or ""
     if not is_authorized and not simulate_remote and not require_auth and client_ip in ["127.0.0.1", "localhost", "::1"]:
-        is_authorized = True
+        forwarded_for = request.headers.get("X-Forwarded-For", "")
+        if not forwarded_for or forwarded_for in ["127.0.0.1", "localhost", "::1"]:
+            is_authorized = True
 
     if not is_authorized:
         return jsonify({"status": "FORBIDDEN", "message": "Authority credentials required for siren dispatch."}), 403
@@ -1086,9 +1099,11 @@ def authority_siren_access():
     # Local development loopback fallback only when not simulating remote client and no unauthenticated block
     simulate_remote = request.headers.get("X-Simulate-Remote", "").lower() in ["1", "true"]
     require_auth = request.headers.get("X-Require-Auth", "").lower() in ["1", "true"]
-    client_ip = request.headers.get("X-Forwarded-For", request.remote_addr or "")
+    client_ip = request.remote_addr or ""
     if not is_authorized and not simulate_remote and not require_auth and client_ip in ["127.0.0.1", "localhost", "::1"]:
-        is_authorized = True
+        forwarded_for = request.headers.get("X-Forwarded-For", "")
+        if not forwarded_for or forwarded_for in ["127.0.0.1", "localhost", "::1"]:
+            is_authorized = True
 
     if request.method == "GET":
         return jsonify({

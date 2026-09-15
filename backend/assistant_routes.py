@@ -94,3 +94,13 @@ def get_status():
             "cross_corridor_triage": True
         }
     }), 200
+
+
+@assistant_bp.route("/api/pahad/assistant/live-sources", methods=["GET"])
+def get_live_sources():
+    """Returns live data sources operational summary with provenance and limitations."""
+    summary = PAHAD_VOICE_ASSISTANT.get_live_sources_summary()
+    return jsonify({
+        "status": "SUCCESS",
+        "data": summary
+    }), 200
