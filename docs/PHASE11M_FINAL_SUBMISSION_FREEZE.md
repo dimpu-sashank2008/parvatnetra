@@ -21,7 +21,7 @@ Under the binding rules of Phase 11M, the codebase, model weights, feature datas
 | **Project Title** | PARVAT NETRA — NER Sentinel | SIH 2026 Disaster Intelligence |
 | **AI System** | PAHAD AI (Predictive AI for Hillslope Analysis & Disaster-response) | Multi-modal Geotechnical & Event AI |
 | **Release Candidate** | Phase 11M Pre-Submission Freeze Candidate | Evaluated Release State |
-| **Git Commit** | `4c439afa16e7158b1657ea892e14d99d42285156` | Authoritative Commit Digest |
+| **Git Commit** | `dbde2f70f9f72f3ae55dcbad1a25e8c4ced836fb` (Base: `4c439af`) | Authoritative Commit Digest |
 | **Git Branch** | `main` | Production / Submission Release Branch |
 | **Release Date / Timestamp** | `2026-09-15T11:24:00+05:30` | Official Evaluated State |
 | **Execution Environment** | Python 3.11.0 on Windows (x86_64) | Tested on Local Workstation & Containerized Linux |

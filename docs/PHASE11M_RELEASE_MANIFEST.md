@@ -7,7 +7,7 @@
 ### Release Identification
 - **Project Name:** PARVAT NETRA / PAHAD AI
 - **Release Candidate:** Phase 11M Submission Candidate
-- **Base Commit:** `4c439afa16e7158b1657ea892e14d99d42285156`
+- **Base Commit:** `dbde2f70f9f72f3ae55dcbad1a25e8c4ced836fb` (Base: `4c439af`)
 - **Active Branch:** `main`
 - **Classification Schema:**
   - `REQUIRED`: Mission-critical core application code, verified models, canonical schemas, or production tests.

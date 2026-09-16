@@ -41,6 +41,9 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <!-- Phosphor Vector Icons -->
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css"/>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
     <link rel="stylesheet" href="/static/css/parvat_theme.css">
     <script src="/static/js/theme.js"></script>
     
@@ -142,7 +145,7 @@
             </span>
             <button id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Switch color theme" title="Switch color theme" class="portal-nav-link shrink-0 text-xs sm:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors cursor-pointer flex items-center gap-1 bg-transparent border-0 p-0">
                 <span id="theme-icon" class="flex items-center justify-center">
-                    <svg class="w-3.5 h-3.5 text-amber-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                    <i class="ph-bold ph-sun text-amber-500 text-xs" aria-hidden="true"></i>
                 </span>
                 <span id="theme-text" class="text-[11px] hidden sm:inline">Light Mode</span>
             </button>

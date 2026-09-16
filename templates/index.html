@@ -2712,10 +2712,7 @@
           <span class="text-slate-500 hidden sm:inline">|</span>
           <button id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Switch to light mode" title="Switch color theme" class="px-2.5 py-0.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded font-semibold flex items-center gap-1.5 transition text-[11px] shadow-xs active:scale-95 cursor-pointer">
             <span id="theme-icon" class="flex items-center justify-center">
-              <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-              </svg>
-              <i class="ph-bold ph-sun text-amber-400 text-xs hidden" aria-hidden="true"></i>
+              <i class="ph-bold ph-sun text-amber-400 text-xs" aria-hidden="true"></i>
             </span>
             <span id="theme-text" class="text-[11px] font-semibold">Light Mode</span>
           </button>
@@ -3076,13 +3073,13 @@
                         <span class="text-xs text-slate-500 ml-1 hidden md:inline font-medium"><span class="inline-block w-2 h-2 rounded-full bg-red-600 mr-0.5"></span> RED &nbsp; <span class="inline-block w-2 h-2 rounded-full bg-amber-500 mr-0.5"></span> ORANGE &nbsp; <span class="inline-block w-2 h-2 rounded-full bg-yellow-400 mr-0.5"></span> YELLOW</span>
                     </div>
                     <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
-                        <span id="coord-display" class="font-mono text-[11px] sm:text-xs text-slate-500 hidden sm:inline">27.2500, 88.5500</span>
+                        <span id="coord-display" class="font-mono text-[11px] sm:text-xs text-slate-500 hidden sm:inline">25.7000, 92.8000</span>
                         <button id="btn-toggle-gsi-insar" onclick="toggleGsiInSarOverlay()" class="px-2 sm:px-2.5 py-1 bg-slate-900 hover:bg-slate-800 text-amber-300 border border-slate-700 rounded text-[10px] sm:text-xs font-bold transition flex items-center gap-1 shadow-sm shrink-0" aria-pressed="false" title="Toggle GSI Critical Sectors & InSAR Radar Overlays across NER">
                             <i class="ph-bold ph-satellite"></i>
                             <span id="lbl-toggle-gsi-insar"><span class="hidden sm:inline">SATELLITE INSAR &amp; SENSOR OVERLAY</span><span class="sm:hidden">INSAR &amp; SENSORS</span></span>
                             <span id="lc-toggle-gsi-insar" class="hidden">Toggle GSI Critical Sectors & InSAR</span>
                         </button>
-                        <button id="btn-reset-view" onclick="if(map) map.setView([27.25, 88.55], 10);" class="px-2 sm:px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-[#0B2545] border border-slate-300 rounded text-[10px] sm:text-xs font-bold transition shrink-0">Reset</button>
+                        <button id="btn-reset-view" onclick="if(typeof resetMapToNerBounds==='function'){resetMapToNerBounds();}else if(window.map&&window.NER_BOUNDS){window.map.fitBounds(window.NER_BOUNDS,{padding:[20,20]});}else if(map){map.setView([25.7,92.8],7);}" class="px-2 sm:px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-[#0B2545] border border-slate-300 rounded text-[10px] sm:text-xs font-bold transition shrink-0" title="Reset view to all 8 Northeast states">Reset</button>
                         <div class="inline-flex border border-slate-400 bg-slate-900 text-[9px] sm:text-[10px] font-bold uppercase tracking-wider rounded-none shrink-0">
                           <button id="btn-map-compact" onclick="setMapViewMode('compact')" 
                                   class="px-2 sm:px-2.5 py-1 text-slate-300 hover:text-white hover:bg-slate-800 transition" 
@@ -3152,6 +3149,7 @@
                             <div class="lcp-item"><span class="lcp-dot" style="background:#6366f1;"></span><span class="lcp-label">Deformation (InSAR)</span><button class="lcp-toggle on" id="toggle-insar-btn" onclick="toggleInSARLayer(this)" aria-label="Toggle InSAR"></button></div>
                             <div class="lcp-item"><span class="lcp-dot" style="background:#10b981;"></span><span class="lcp-label">Vegetation (NDVI)</span><button class="lcp-toggle on" id="lc-toggle-vegetation" onclick="toggleLayerById('vegetation',this)" aria-label="Toggle Vegetation"></button></div>
                             <div class="lcp-item"><span class="lcp-dot" style="background:#f59e0b;"></span><span class="lcp-label">Historical Landslides</span><button class="lcp-toggle on" id="lc-toggle-hist-landslides" onclick="toggleLayerById('historical_landslides',this)" aria-label="Toggle Historical Landslides"></button></div>
+                            <div class="lcp-item"><span class="lcp-dot" style="background:#38bdf8;"></span><span class="lcp-label">NER State Outlines</span><button class="lcp-toggle on" id="lc-toggle-state-boundaries" onclick="toggleLayerById('state_boundaries',this)" aria-label="Toggle NER State Outlines"></button></div>
 
                             <!-- OPERATIONS & CRITICAL INFRASTRUCTURE LAYERS -->
                             <div class="lcp-category flex items-center justify-between" style="color:#4ade80;margin-top:8px;font-weight:bold;letter-spacing:0.04em;">
@@ -3650,13 +3648,13 @@
         <!-- PHASE 2C: COMPACT INTELLIGENCE SIGNALS RIBBON (CLIMATE + SEISMIC + GEOSPATIAL INPUTS TO PAHAD AI) -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-5">
             <!-- CLIMATE SIGNAL CARD -->
-            <div class="kpi-card bg-white border border-[#E2E8F0] rounded-md p-4 shadow-sm flex flex-col justify-between">
+            <div class="kpi-card kpi-stagger-1 bg-white border border-[#E2E8F0] rounded-md p-4 shadow-sm flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between mb-1.5">
                         <span class="text-[11px] font-bold uppercase tracking-wider text-sky-800 flex items-center gap-1.5">
                             <i class="ph-bold ph-cloud-rain text-sky-600"></i> CLIMATE SIGNAL
                         </span>
-                        <span id="home-climate-prov" class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-300">
+                        <span id="home-climate-prov" class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-300 status-indicator-live">
                             [LIVE]
                         </span>
                     </div>
@@ -3685,13 +3683,13 @@
             </div>
 
             <!-- SEISMIC SIGNAL CARD -->
-            <div class="kpi-card bg-white border border-[#E2E8F0] rounded-md p-4 shadow-sm flex flex-col justify-between">
+            <div class="kpi-card kpi-stagger-2 bg-white border border-[#E2E8F0] rounded-md p-4 shadow-sm flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between mb-1.5">
                         <span class="text-[11px] font-bold uppercase tracking-wider text-purple-800 flex items-center gap-1.5">
                             <i class="ph-bold ph-activity text-purple-600"></i> SEISMIC SIGNAL
                         </span>
-                        <span id="home-seismic-prov" class="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-100 text-purple-800 border border-purple-300">
+                        <span id="home-seismic-prov" class="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-100 text-purple-800 border border-purple-300 status-indicator-live">
                             [LIVE]
                         </span>
                     </div>
@@ -3720,13 +3718,13 @@
             </div>
 
             <!-- PHASE 2C: GEO-SPATIAL INTELLIGENCE CARD -->
-            <div class="kpi-card bg-white border border-[#E2E8F0] rounded-md p-4 shadow-sm flex flex-col justify-between">
+            <div class="kpi-card kpi-stagger-3 bg-white border border-[#E2E8F0] rounded-md p-4 shadow-sm flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between mb-1.5">
                         <span class="text-[11px] font-bold uppercase tracking-wider text-emerald-800 flex items-center gap-1.5">
                             <i class="ph-bold ph-globe-hemisphere-east text-emerald-600"></i> GEO-SPATIAL INTELLIGENCE
                         </span>
-                        <span id="home-geo-prov" class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-300">
+                        <span id="home-geo-prov" class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-300 status-indicator-live">
                             [LIVE]
                         </span>
                     </div>
@@ -5754,7 +5752,7 @@
     <div id="toast-container"></div>
 
     <!-- GIGW 3.0 MANDATORY 4-COLUMN NIC FOOTER -->
-    <footer style="background:#0B1120;border-top:3px solid #d97706;" class="text-slate-400 text-xs py-10 mt-12 transition-colors">
+    <footer id="main-footer" class="main-portal-footer text-slate-400 text-xs py-10 mt-12 transition-colors bg-[#0B1120] border-t-[3px] border-[#d97706]">
       <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
         <!-- Column 1: Institutional Hierarchy -->
         <div>
@@ -5862,38 +5860,38 @@
       </div>
 
       <!-- Legal & Compliance Strip (Deep Navy #06121E) -->
-      <div style="background:#06121E;border-top:1px solid #1E293B;" class="mt-8 pt-5 pb-16 md:pb-12">
-        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-3 text-[10.5px] text-slate-400">
-          <div class="flex flex-wrap items-center gap-x-4 gap-y-1">
-            <a href="#policies" class="hover:text-amber-400 transition">Website Policies</a>
-            <span>|</span>
-            <a href="#terms" class="hover:text-amber-400 transition">Terms of Service</a>
-            <span>|</span>
-            <a href="#privacy" class="hover:text-amber-400 transition">Privacy Policy</a>
-            <span>|</span>
-            <a href="#hyperlink" class="hover:text-amber-400 transition">Hyperlinking Policy</a>
-            <span>|</span>
-            <a href="#copyright" class="hover:text-amber-400 transition">Copyright Policy</a>
-            <span>|</span>
-            <a href="#feedback" class="hover:text-amber-400 transition">Help &amp; Feedback</a>
+      <div id="footer-legal-strip" class="footer-legal-strip mt-8 pt-5 pb-16 md:pb-12 bg-[#06121E] border-t border-[#1E293B]">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-3 text-[10.5px] footer-legal-links-row">
+          <div class="flex flex-wrap items-center gap-x-4 gap-y-1 footer-policy-anchors">
+            <a href="#policies" class="hover:text-amber-400 transition footer-link">Website Policies</a>
+            <span class="footer-link-divider">|</span>
+            <a href="#terms" class="hover:text-amber-400 transition footer-link">Terms of Service</a>
+            <span class="footer-link-divider">|</span>
+            <a href="#privacy" class="hover:text-amber-400 transition footer-link">Privacy Policy</a>
+            <span class="footer-link-divider">|</span>
+            <a href="#hyperlink" class="hover:text-amber-400 transition footer-link">Hyperlinking Policy</a>
+            <span class="footer-link-divider">|</span>
+            <a href="#copyright" class="hover:text-amber-400 transition footer-link">Copyright Policy</a>
+            <span class="footer-link-divider">|</span>
+            <a href="#feedback" class="hover:text-amber-400 transition footer-link">Help &amp; Feedback</a>
           </div>
-          <div class="flex items-center gap-4 text-[10px]">
-            <span>Last Updated: <strong class="text-slate-300">07-Sep-2026</strong></span>
-            <span>|</span>
-            <span>Visitor Count: <strong class="text-amber-400 font-mono">1,482,904</strong> (NIC Traffic Node)</span>
+          <div class="flex items-center gap-4 text-[10px] footer-meta-stats">
+            <span>Last Updated: <strong class="text-slate-200 font-medium footer-last-updated-date">07-Sep-2026</strong></span>
+            <span class="footer-link-divider">|</span>
+            <span>Visitor Count: <strong class="text-amber-400 font-mono footer-visitor-counter">1,482,904</strong> (NIC Traffic Node)</span>
           </div>
         </div>
         <!-- SIH PROTOTYPE ATTRIBUTION & TEAM BRANDING -->
-        <div class="max-w-7xl mx-auto px-4 mt-4 pt-3 border-t border-slate-800/80 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-slate-400">
-          <div class="flex flex-wrap items-center justify-center md:justify-start gap-2.5">
-            <span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[10px] font-mono font-bold uppercase tracking-wider">[PROTOTYPE]</span>
-            <span class="font-semibold text-slate-200">PARVAT NETRA Sentinel AI</span>
-            <span class="text-slate-600">|</span>
-            <span class="font-mono text-slate-300">Team ID: <strong class="text-amber-400 font-bold">viit/sih/065</strong></span>
-            <span class="text-slate-600">|</span>
-            <span class="font-mono text-slate-300">Problem Statement: <strong class="text-amber-400 font-bold">SIH26001</strong></span>
+        <div class="max-w-7xl mx-auto px-4 mt-4 pt-3 border-t border-slate-800/80 flex flex-col md:flex-row items-center justify-between gap-3 text-xs footer-branding-row">
+          <div class="flex flex-wrap items-center justify-center md:justify-start gap-2.5 sih-attribution-pill-group">
+            <span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[10px] font-mono font-bold uppercase tracking-wider sih-prototype-tag">[PROTOTYPE]</span>
+            <span class="font-semibold text-slate-100 sih-prototype-brand">PARVAT NETRA Sentinel AI</span>
+            <span class="text-slate-500 sih-divider">|</span>
+            <span class="font-mono text-slate-200 sih-meta-segment">Team ID: <strong class="text-amber-400 font-bold sih-team-id">viit/sih/065</strong></span>
+            <span class="text-slate-500 sih-divider">|</span>
+            <span class="font-mono text-slate-200 sih-meta-segment">Problem Statement: <strong class="text-amber-400 font-bold sih-ps-id">SIH26001</strong></span>
           </div>
-          <div class="text-[10.5px] text-slate-500 text-center md:text-right pr-0 md:pr-32">
+          <div class="text-[10.5px] text-slate-400 text-center md:text-right pr-0 md:pr-32 sih-copyright-notice">
             &copy; 2026 PARVAT NETRA. Smart India Hackathon (SIH 2026) Prototype. All Rights Reserved.
           </div>
         </div>
@@ -5994,14 +5992,22 @@ function toggleSidebarMenu(open) {
             anime({
                 targets: drawer,
                 translateX: ['-100%', '0%'],
-                duration: 250,
-                easing: 'easeOutQuad'
+                duration: 280,
+                easing: 'easeOutCubic'
             });
             anime({
                 targets: backdrop,
                 opacity: [0, 1],
-                duration: 250,
+                duration: 280,
                 easing: 'linear'
+            });
+            anime({
+                targets: '#eoc-sidebar-drawer .eoc-nav-item',
+                opacity: [0, 1],
+                translateX: [-6, 0],
+                delay: anime.stagger(20, { start: 50 }),
+                duration: 200,
+                easing: 'easeOutCubic'
             });
         } else {
             drawer.style.transform = 'translateX(0%)';
@@ -6277,9 +6283,19 @@ window.toggleAutonomousSirenAccessState = toggleAutonomousSirenAccessState;
 window.testSirenGridTelemetry = testSirenGridTelemetry;
 window.triggerManualEmergencySiren = triggerManualEmergencySiren;
 
-var map,geojsonLayer,markerLayerGroup,roadLayerGroup,sensorLayerGroup,insarLayerGroup,scarsLayerGroup,riverLayerGroup,cutsLayerGroup,detoursLayerGroup,habitationsLayerGroup,reportsLayerGroup,broFleetLayerGroup,sarLayerGroup,contoursLayerGroup,historicalLandslidesLayerGroup,vegetationLayerGroup,satFootprintLayerGroup;
-var layerVisibility={risk:true,insar:true,cuts:true,river:true,detours:true,scars:true,sensors:true,habitations:true,reports:true,bro_fleet:true,sar:true,contours:true,historical_landslides:true,vegetation:true,sat_footprint:true};
+var map,geojsonLayer,markerLayerGroup,roadLayerGroup,sensorLayerGroup,insarLayerGroup,scarsLayerGroup,riverLayerGroup,cutsLayerGroup,detoursLayerGroup,habitationsLayerGroup,reportsLayerGroup,broFleetLayerGroup,sarLayerGroup,contoursLayerGroup,historicalLandslidesLayerGroup,vegetationLayerGroup,satFootprintLayerGroup,nerStateBoundariesLayerGroup;
+var layerVisibility={risk:true,insar:true,cuts:true,river:true,detours:true,scars:true,sensors:true,habitations:true,reports:true,bro_fleet:true,sar:true,contours:true,historical_landslides:true,vegetation:true,sat_footprint:true,state_boundaries:true};
 var layerGroupMap={};
+window.NER_BOUNDS = null;
+
+function resetMapToNerBounds() {
+    if (window.map && window.NER_BOUNDS) {
+        window.map.fitBounds(window.NER_BOUNDS, { padding: [20, 20] });
+    } else if (window.map) {
+        window.map.setView([25.7, 92.8], 7);
+    }
+}
+window.resetMapToNerBounds = resetMapToNerBounds;
 var currentSelectedZoneId=1,currentSelectedRegion='Gangtok Corridor',currentSelectedSeverity='ORANGE';
 var currentMode='authority',currentSevFilter='ALL',allReports=[],sortConfig={col:'report_id',dir:'desc'},layerPanelOpen=false;
 var activeUtterance=null;
@@ -6429,7 +6445,7 @@ document.addEventListener('keydown', function(e) {
 });
 
 function initMap(){
-    map=L.map('map',{center:[27.25,88.55],zoom:10,zoomControl:true,scrollWheelZoom:false});
+    map=L.map('map',{center:[25.7,92.8],zoom:7,zoomControl:true,scrollWheelZoom:false});
     window.map=map;
     map.scrollWheelZoom.disable();
 
@@ -6493,6 +6509,10 @@ function initMap(){
         if (mapStatusEl) mapStatusEl.textContent = '[ONLINE MAP] Basemap: Google Hybrid Satellite | WGS84 | EPSG:4326';
     }
 
+    // Create dedicated pane for NER State Boundaries so it stays underneath operational layers
+    map.createPane('nerStateBoundariesPane');
+    map.getPane('nerStateBoundariesPane').style.zIndex = 350;
+
     L.control.layers({'Dark Obsidian':cartoDark,'Google Hybrid Satellite':googleHybrid,'Google Terrain (Topo)':googleTerrain,'ESRI World Imagery':esriWorld,'Carto Voyager (Road Network)':cartoVoyager},null,{position:'bottomleft'}).addTo(map);
     markerLayerGroup=L.layerGroup().addTo(map);
     roadLayerGroup=L.layerGroup().addTo(map);
@@ -6510,8 +6530,29 @@ function initMap(){
     historicalLandslidesLayerGroup=L.layerGroup().addTo(map);
     vegetationLayerGroup=L.layerGroup().addTo(map);
     satFootprintLayerGroup=L.layerGroup().addTo(map);
-    layerGroupMap={risk:roadLayerGroup,insar:insarLayerGroup,cuts:cutsLayerGroup,river:riverLayerGroup,detours:detoursLayerGroup,scars:scarsLayerGroup,sensors:sensorLayerGroup,habitations:habitationsLayerGroup,reports:reportsLayerGroup,bro_fleet:broFleetLayerGroup,sar:sarLayerGroup,contours:contoursLayerGroup,historical_landslides:historicalLandslidesLayerGroup,vegetation:vegetationLayerGroup,sat_footprint:satFootprintLayerGroup};
+    nerStateBoundariesLayerGroup=L.layerGroup().addTo(map);
+    window.nerStateBoundariesLayerGroup=nerStateBoundariesLayerGroup;
+
+    layerGroupMap={risk:roadLayerGroup,insar:insarLayerGroup,cuts:cutsLayerGroup,river:riverLayerGroup,detours:detoursLayerGroup,scars:scarsLayerGroup,sensors:sensorLayerGroup,habitations:habitationsLayerGroup,reports:reportsLayerGroup,bro_fleet:broFleetLayerGroup,sar:sarLayerGroup,contours:contoursLayerGroup,historical_landslides:historicalLandslidesLayerGroup,vegetation:vegetationLayerGroup,sat_footprint:satFootprintLayerGroup,state_boundaries:nerStateBoundariesLayerGroup};
+    
+    // Fit NER Regional Extent (all 8 Northeastern states)
+    window.NER_BOUNDS = L.latLngBounds([[21.8, 88.0], [29.5, 97.5]]);
+    map.fitBounds(window.NER_BOUNDS, { padding: [20, 20] });
+
     map.on('mousemove',function(e){var el=document.getElementById('coord-display');if(el)el.textContent=e.latlng.lat.toFixed(5)+', '+e.latlng.lng.toFixed(5);});
+    map.on('zoomend', function() {
+        var curZoom = map.getZoom();
+        var mapContainer = document.getElementById('map');
+        if (mapContainer) {
+            if (curZoom < 6) {
+                mapContainer.classList.add('ner-map-zoom-low');
+            } else {
+                mapContainer.classList.remove('ner-map-zoom-low');
+            }
+        }
+    });
+
+    loadNerStateBoundaries();
     loadSpatialRisk();loadIoTSensors();loadInSARPoints();loadAISatelliteScars();loadTeestaRiver();loadAnthropogenicCuts();loadEvacuationPlan();loadHabitationMatrix();loadClusteredReports();loadBROFleet();loadSARTargets();refreshTeestaHydro();loadGeospatialLayers();loadGeospatialOverviewCard();
     setTimeout(function() { if (window.map && typeof window.map.invalidateSize === 'function') window.map.invalidateSize(); }, 200);
     window.addEventListener('resize', function() {
@@ -6526,6 +6567,92 @@ function initMap(){
         }, 200);
     });
 }
+
+window.NER_STATE_BOUNDARIES = null;
+
+async function loadNerStateBoundaries() {
+    if (!nerStateBoundariesLayerGroup && window.map) {
+        nerStateBoundariesLayerGroup = L.layerGroup().addTo(window.map);
+        window.nerStateBoundariesLayerGroup = nerStateBoundariesLayerGroup;
+    }
+    if (!nerStateBoundariesLayerGroup) return;
+
+    try {
+        const res = await fetch('/static/data/ner_state_boundaries.geojson');
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const geojson = await res.json();
+        window.NER_STATE_BOUNDARIES = geojson;
+
+        nerStateBoundariesLayerGroup.clearLayers();
+
+        const stateLayer = L.geoJSON(geojson, {
+            pane: 'nerStateBoundariesPane',
+            style: function(feature) {
+                return {
+                    color: '#38bdf8',
+                    weight: 1.5,
+                    opacity: 0.8,
+                    dashArray: '4, 4',
+                    fillColor: '#0284c7',
+                    fillOpacity: 0.03
+                };
+            },
+            onEachFeature: function(feature, layer) {
+                const p = feature.properties || {};
+                const name = p.name || 'NER State';
+
+                layer.bindTooltip(`<b>${name}</b> • Northeast Region`, {
+                    sticky: true,
+                    className: 'ner-state-tooltip'
+                });
+
+                layer.on({
+                    mouseover: function(e) {
+                        const l = e.target;
+                        l.setStyle({
+                            weight: 2.2,
+                            opacity: 1.0,
+                            fillOpacity: 0.08
+                        });
+                        if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+                            l.bringToFront();
+                        }
+                    },
+                    mouseout: function(e) {
+                        stateLayer.resetStyle(e.target);
+                    }
+                });
+
+                const centroid = p.centroid;
+                if (centroid && Array.isArray(centroid) && centroid.length === 2) {
+                    const c0 = Number(centroid[0]);
+                    const c1 = Number(centroid[1]);
+                    // NER latitude is ~21-30°N, longitude is ~88-98°E
+                    const lat = (c0 >= 18 && c0 <= 32) ? c0 : c1;
+                    const lon = (c1 >= 85 && c1 <= 100) ? c1 : c0;
+                    const labelIcon = L.divIcon({
+                        className: 'ner-state-label-marker',
+                        html: `<div class="ner-state-center-label">${name.toUpperCase()}</div>`,
+                        iconSize: [120, 24],
+                        iconAnchor: [60, 12]
+                    });
+                    const labelMarker = L.marker([lat, lon], {
+                        icon: labelIcon,
+                        interactive: false,
+                        pane: 'nerStateBoundariesPane'
+                    });
+                    nerStateBoundariesLayerGroup.addLayer(labelMarker);
+                }
+            }
+        });
+
+        nerStateBoundariesLayerGroup.addLayer(stateLayer);
+        console.log('[GIS] NER 8 State Boundaries loaded successfully into dedicated pane.');
+    } catch (err) {
+        console.warn('[GIS] Failed to load NER state boundaries:', err);
+    }
+}
+window.loadNerStateBoundaries = loadNerStateBoundaries;
 
 async function loadGeospatialLayers() {
     loadContoursLayer();
@@ -9245,8 +9372,8 @@ function updateThemeUI(isLight) {
     var btn = document.getElementById('theme-toggle-btn');
     if (icon) {
         icon.innerHTML = isLight 
-            ? '<svg class="w-3.5 h-3.5 text-sky-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg><i class="ph-bold ph-moon text-sky-400 text-xs hidden"></i>' 
-            : '<svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg><i class="ph-bold ph-sun text-amber-400 text-xs hidden"></i>';
+            ? '<i class="ph-bold ph-moon text-sky-400 text-xs" aria-hidden="true"></i>' 
+            : '<i class="ph-bold ph-sun text-amber-400 text-xs" aria-hidden="true"></i>';
     }
     if (text) {
         text.innerText = isLight ? 'Dark Mode' : 'Light Mode';
@@ -9283,8 +9410,8 @@ function initTheme() {
     }
     if (icon) {
         icon.innerHTML = isLight 
-            ? '<svg class="w-3.5 h-3.5 text-sky-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg><i class="ph-bold ph-moon text-sky-400 text-xs hidden"></i>' 
-            : '<svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg><i class="ph-bold ph-sun text-amber-400 text-xs hidden"></i>';
+            ? '<i class="ph-bold ph-moon text-sky-400 text-xs" aria-hidden="true"></i>' 
+            : '<i class="ph-bold ph-sun text-amber-400 text-xs" aria-hidden="true"></i>';
     }
     if (text) {
         text.innerText = isLight ? 'Dark Mode' : 'Light Mode';
@@ -10646,6 +10773,18 @@ function updateCriRiskBand(score, bandText) {
         } else {
             bandEl.classList.add('pahad-band-low');
         }
+
+        // Restrained single state-change pulse (never infinite strobe)
+        const prevBand = bandEl.dataset.currentBand;
+        if (prevBand && prevBand !== band) {
+            const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (!prefersReducedMotion) {
+                bandEl.style.animation = 'none';
+                void bandEl.offsetHeight; // trigger reflow
+                bandEl.style.animation = 'microRiskStatePulse 450ms ease-out 1';
+            }
+        }
+        bandEl.dataset.currentBand = band;
     }
     if (ringEl) {
         ringEl.style.setProperty('--score', String(validScore));
@@ -10659,19 +10798,40 @@ function updateCriRiskBand(score, bandText) {
 }
 window.updateCriRiskBand = updateCriRiskBand;
 
-/* Phase 9E: Prediction Details Panel Toggle (CP03) */
+/* Phase 9E / 11K.1: Prediction Details Panel Toggle with Subtle Motion */
 function togglePredictionDetails() {
     const panel = document.getElementById('pahad-prediction-details-panel');
     const label = document.getElementById('label-toggle-prediction-details');
     const icon = document.getElementById('icon-toggle-prediction-details');
     if (!panel) return;
     const isHidden = panel.classList.contains('hidden');
+    const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (isHidden) {
         panel.classList.remove('hidden');
         if (label) label.textContent = 'Collapse';
         if (icon) {
             icon.classList.remove('ph-caret-down');
             icon.classList.add('ph-caret-up');
+        }
+        if (window.anime && !prefersReducedMotion) {
+            anime({
+                targets: panel,
+                opacity: [0, 1],
+                translateY: [4, 0],
+                duration: 250,
+                easing: 'easeOutCubic'
+            });
+            const subItems = panel.querySelectorAll('.dtl-ledger-item, .pahad-driver, .scientific-disclaimer');
+            if (subItems && subItems.length) {
+                anime({
+                    targets: subItems,
+                    opacity: [0, 1],
+                    translateY: [3, 0],
+                    delay: anime.stagger(30, { start: 40 }),
+                    duration: 200,
+                    easing: 'easeOutCubic'
+                });
+            }
         }
     } else {
         panel.classList.add('hidden');
@@ -10896,7 +11056,7 @@ window.updatePahadPredictionUI = updatePahadPredictionUI;
 
 let activeSectorMarker = null;
 
-async function onCorridorSelectionChanged(sectorId) {
+async function onCorridorSelectionChanged(sectorId, shouldZoom = true) {
     window.currentSelectedSectorId = sectorId;
     const sec = PAHAD_SECTOR_REGISTRY[sectorId] || PAHAD_SECTOR_REGISTRY['SK-NH10-KM48'];
     window.currentActiveLat = sec.lat;
@@ -10947,16 +11107,18 @@ async function onCorridorSelectionChanged(sectorId) {
         updatePredictionMiniMap(sec.lat, sec.lon, sec.name);
     }
 
-    // Leaflet map synchronization: fly to corridor, drop marker, and reload scoped DEM/landslides
+    // Leaflet map synchronization: fly to corridor (if shouldZoom is true), drop marker, and reload scoped DEM/landslides
     if (window.map) {
-        try {
-            if (typeof window.map.flyTo === 'function' && window.map._loaded && window.map.getCenter && Number.isFinite(window.map.getCenter().lat)) {
-                window.map.flyTo([sec.lat, sec.lon], 12, { animate: true, duration: 1.2 });
-            } else if (typeof window.map.setView === 'function') {
-                window.map.setView([sec.lat, sec.lon], 12);
+        if (shouldZoom) {
+            try {
+                if (typeof window.map.flyTo === 'function' && window.map._loaded && window.map.getCenter && Number.isFinite(window.map.getCenter().lat)) {
+                    window.map.flyTo([sec.lat, sec.lon], 12, { animate: true, duration: 1.2 });
+                } else if (typeof window.map.setView === 'function') {
+                    window.map.setView([sec.lat, sec.lon], 12);
+                }
+            } catch (e) {
+                try { window.map.setView([sec.lat, sec.lon], 12); } catch (_) {}
             }
-        } catch (e) {
-            try { window.map.setView([sec.lat, sec.lon], 12); } catch (_) {}
         }
         if (window.L) {
             try {
@@ -10971,7 +11133,10 @@ async function onCorridorSelectionChanged(sectorId) {
                     opacity: 1,
                     fillOpacity: 0.85
                 }).addTo(window.map);
-                activeSectorMarker.bindPopup(`<b>${sec.name}</b><br><span style="font-size:11px">${sec.state} • ${sec.district}</span><br><span style="font-size:10px;color:#38bdf8;font-family:monospace">[ACTIVE MONITORED SECTOR]</span>`).openPopup();
+                activeSectorMarker.bindPopup(`<b>${sec.name}</b><br><span style="font-size:11px">${sec.state} • ${sec.district}</span><br><span style="font-size:10px;color:#38bdf8;font-family:monospace">[ACTIVE MONITORED SECTOR]</span>`);
+                if (shouldZoom) {
+                    activeSectorMarker.openPopup();
+                }
             } catch (me) {
                 console.warn('Marker placement warning:', me);
             }
@@ -13351,8 +13516,8 @@ function animateCriScore(targetScore) {
         window.anime({
             targets: obj,
             val: targetScore,
-            duration: 600,
-            easing: 'easeOutQuad',
+            duration: 350,
+            easing: 'easeOutCubic',
             update: function() {
                 scoreEl.textContent = obj.val.toFixed(1);
             },
@@ -13385,7 +13550,7 @@ function animateRingProgress(targetScore, band) {
         window.anime({
             targets: obj,
             score: targetScore,
-            duration: 700,
+            duration: 350,
             easing: 'easeOutCubic',
             update: function() {
                 ringEl.style.setProperty('--score', obj.score.toFixed(1));
@@ -13436,9 +13601,9 @@ async function initHighestRiskCorridor() {
                 // Ensure state is selected or kept on ALL
             }
             
-            // Execute selection change to populate all values and animate
+            // Execute selection change to populate all values and marker without auto-zooming away from NER regional view
             if (typeof onCorridorSelectionChanged === 'function') {
-                onCorridorSelectionChanged(top.id);
+                onCorridorSelectionChanged(top.id, false);
             }
         }
     } catch (err) {

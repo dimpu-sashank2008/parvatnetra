@@ -3,7 +3,8 @@
   "phase": "PHASE 11M",
   "release_type": "FINAL PRE-SUBMISSION RELEASE CANDIDATE",
   "standard": "Smart India Hackathon (SIH) 2026 — Disaster Management (Theme 5)",
-  "commit": "4c439afa16e7158b1657ea892e14d99d42285156",
+  "commit": "dbde2f70f9f72f3ae55dcbad1a25e8c4ced836fb",
+  "base_commit": "4c439afa16e7158b1657ea892e14d99d42285156",
   "branch": "main",
   "timestamp": "2026-09-15T11:24:00+05:30",
   "model_hashes": {

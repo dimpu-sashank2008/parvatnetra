@@ -36,6 +36,9 @@
             }
         }
     </script>
+    <!-- Phosphor Vector Icons -->
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css"/>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
     <link rel="stylesheet" href="/static/css/parvat_theme.css">
     <script src="/static/js/theme.js"></script>
 
@@ -541,9 +544,9 @@
                         <div class="text-[10px] text-slate-400">Provider: <strong class="text-sky-300">${eml.provider}</strong></div>
                         ${eml.provider_reference ? `<div class="text-[10px] text-slate-400 truncate">Ref: ${eml.provider_reference}</div>` : ''}
                         ${eml.recipient_masked ? `<div class="text-[10px] text-slate-400">To: ${eml.recipient_masked}</div>` : ''}
-                        ${isRealSent ? `<div class="text-[10px] text-emerald-300 font-sans mt-0.5">✓ Real alert dispatched to recipient email inbox! Check inbox/spam.</div>` : ''}
-                        ${eml.status === 'SIMULATED' && !eml.note ? `<div class="text-[9px] text-amber-300/90 font-sans mt-0.5">ℹ️ Simulation mode (DEMO_EMAIL_GATEWAY). Real SMTP credentials are used when configured.</div>` : ''}
-                        ${eml.note ? `<div class="text-[9px] text-amber-300/90 font-sans mt-0.5">ℹ️ ${eml.note}</div>` : ''}
+                        ${isRealSent ? `<div class="text-[10px] text-emerald-300 font-sans mt-0.5 flex items-center gap-1"><i class="ph-bold ph-check text-emerald-400" aria-hidden="true"></i><span>Real alert dispatched to recipient email inbox! Check inbox/spam.</span></div>` : ''}
+                        ${eml.status === 'SIMULATED' && !eml.note ? `<div class="text-[9px] text-amber-300/90 font-sans mt-0.5 flex items-center gap-1"><i class="ph-bold ph-info text-amber-400" aria-hidden="true"></i><span>Simulation mode (DEMO_EMAIL_GATEWAY). Real SMTP credentials are used when configured.</span></div>` : ''}
+                        ${eml.note ? `<div class="text-[9px] text-amber-300/90 font-sans mt-0.5 flex items-center gap-1"><i class="ph-bold ph-info text-amber-400" aria-hidden="true"></i><span>${eml.note}</span></div>` : ''}
                         ${eml.error ? `<div class="text-[10px] text-rose-300 font-sans mt-1">Reason: ${eml.error}</div>` : ''}
                     </div>
                 `;
@@ -561,7 +564,7 @@
                         <div class="text-[10px] text-slate-400">Provider: <strong class="text-sky-300">${sms.provider}</strong></div>
                         ${sms.provider_reference ? `<div class="text-[10px] text-slate-400 truncate">Ref: ${sms.provider_reference}</div>` : ''}
                         ${sms.recipient_masked ? `<div class="text-[10px] text-slate-400">To: ${sms.recipient_masked}</div>` : ''}
-                        ${sms.status === 'SIMULATED' ? `<div class="text-[9px] text-amber-300/90 font-sans mt-0.5">ℹ️ Simulation mode (DEMO_SMS_GATEWAY). Add FAST2SMS_API_KEY in .env to deliver real SMS to your phone.</div>` : ''}
+                        ${sms.status === 'SIMULATED' ? `<div class="text-[9px] text-amber-300/90 font-sans mt-0.5 flex items-center gap-1"><i class="ph-bold ph-info text-amber-400" aria-hidden="true"></i><span>Simulation mode (DEMO_SMS_GATEWAY). Add FAST2SMS_API_KEY in .env to deliver real SMS to your phone.</span></div>` : ''}
                         ${sms.error ? `<div class="text-[10px] text-rose-300 font-sans mt-1">Reason: ${sms.error}</div>` : ''}
                     </div>
                 `;

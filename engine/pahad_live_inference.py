@@ -198,6 +198,10 @@ class LiveInferenceResult:
             "ood_reasons": self.ood_reasons,
             "warning_lead_time_estimate": self.warning_lead_time_estimate,
             "explanation": self.explanation,
+            "why_risk_changed": self.explanation.get("why_risk_changed", ""),
+            "top_risk_factors": self.explanation.get("top_risk_factors", self.top_drivers),
+            "supporting_evidence": self.explanation.get("supporting_evidence", []),
+            "contradicting_evidence": self.explanation.get("contradicting_evidence", []),
             "data_quality_level": self.data_quality_level,
             "risk_trend": self.risk_trend,
             "authority_action": self.authority_action,
@@ -617,18 +621,22 @@ def _check_alert_eligibility(
     Modality 2: Rainfall > 150mm/24h (Mandal-Sarkar NER threshold)
     Modality 3: Calibrated event probability > 0.70
     """
+    fos_val = float(fos if fos is not None else 1.5)
+    rain_val = float(rainfall_24h if rainfall_24h is not None else 0.0)
+    prob_val = float(event_probability if event_probability is not None else 0.0)
+
     signals_met = 0
     reasons = []
 
-    if fos < 1.10:
+    if fos_val < 1.10:
         signals_met += 1
-        reasons.append(f"FoS={fos:.2f}<1.10")
-    if rainfall_24h > 150.0:
+        reasons.append(f"FoS={fos_val:.2f}<1.10")
+    if rain_val > 150.0:
         signals_met += 1
-        reasons.append(f"Rainfall={rainfall_24h:.0f}mm>150mm")
-    if event_probability > 0.70:
+        reasons.append(f"Rainfall={rain_val:.0f}mm>150mm")
+    if prob_val > 0.70:
         signals_met += 1
-        reasons.append(f"P(event)={event_probability:.0%}>0.70")
+        reasons.append(f"P(event)={prob_val:.0%}>0.70")
 
     eligible = signals_met >= 2
     reason = f"2-of-3 corroboration: {'; '.join(reasons)} [{signals_met}/3]" if eligible else None
@@ -805,6 +813,23 @@ def _generate_plain_language_explanation(
         prov_counts[p] = prov_counts.get(p, 0) + 1
     prov_summary_str = ", ".join(f"{k}: {v}" for k, v in sorted(prov_counts.items()))
 
+    # Contradicting / mitigating stability evidence
+    contradicting_evidence: List[str] = []
+    if fos_physical >= 1.30:
+        contradicting_evidence.append(f"Geotechnical Factor of Safety ({fos_physical:.2f}) indicates stable limit equilibrium.")
+    if rain_24h < 15.0:
+        contradicting_evidence.append(f"24-hour antecedent rainfall ({rain_24h:.1f} mm) is well below triggering thresholds.")
+    disp_val = float(features.get("ground_displacement_mm", features.get("displacement_velocity_24h", 0.0)))
+    if disp_val <= 0.5:
+        contradicting_evidence.append("No significant ground deformation detected by inclinometer / InSAR.")
+    if not contradicting_evidence:
+        contradicting_evidence.append("No mitigating stability factors observed under current hydrometeorological loading.")
+
+    why_risk_changed = (
+        f"Risk state reflects hydrometeorological precipitation loading ({rain_24h:.1f} mm/24h) "
+        f"and geotechnical limit equilibrium (FoS {fos_physical:.3f}) for sector."
+    )
+
     anomalous_explanation = None
     if fos_physical > 10.0:
         anomalous_explanation = (
@@ -817,6 +842,9 @@ def _generate_plain_language_explanation(
         "primary_driver": primary_driver,
         "secondary_driver": secondary_driver,
         "supporting_evidence": evidence,
+        "contradicting_evidence": contradicting_evidence,
+        "why_risk_changed": why_risk_changed,
+        "top_risk_factors": [primary_driver, secondary_driver],
         "data_freshness": freshness_map,
         "provenance_summary": prov_summary_str,
         "disclaimer": "Contributing signals indicate statistical association and physical mechanism drivers; they do not constitute individual causal proof.",
@@ -904,22 +932,29 @@ def run_live_inference(
     features, missing_feats, imputed_feats = _assemble_features(
         weather_data, seismic_data, terrain_data, iot_data, prov_list
     )
+    if override_features:
+        for k, v in ov.items():
+            if v is not None:
+                features[k] = v
 
     # ── 3. Geotechnical FoS ──────────────────────────────────────────────────
     fos_physical = 1.5   # safe default
     try:
-        from engine.pahad_models import calculate_infinite_slope_fs
-        pore_kpa = features.get("pore_pressure_kpa", TRAINING_MEDIANS["pore_pressure_kpa"])
-        slope = features.get("slope_deg", TRAINING_MEDIANS["slope_deg"])
-        fos_result = calculate_infinite_slope_fs(
-            cohesion_kpa=15.0,         # regional conservative average (kPa)
-            friction_deg=28.0,         # regional conservative average (degrees)
-            slope_deg=slope,
-            soil_depth_m=3.0,          # conservative average depth
-            water_table_ratio=min(pore_kpa / 50.0, 1.0),  # normalised from pore pressure
-            soil_sat_weight=18.5       # kN/m³ saturated unit weight
-        )
-        fos_physical = float(fos_result.factor_of_safety)
+        if "fos_physical" in features or "fos" in features:
+            fos_physical = float(features.get("fos_physical", features.get("fos")))
+        else:
+            from engine.pahad_models import calculate_infinite_slope_fs
+            pore_kpa = features.get("pore_pressure_kpa", TRAINING_MEDIANS["pore_pressure_kpa"])
+            slope = features.get("slope_deg", TRAINING_MEDIANS["slope_deg"])
+            fos_result = calculate_infinite_slope_fs(
+                cohesion_kpa=15.0,         # regional conservative average (kPa)
+                friction_deg=28.0,         # regional conservative average (degrees)
+                slope_deg=slope,
+                soil_depth_m=3.0,          # conservative average depth
+                water_table_ratio=min(pore_kpa / 50.0, 1.0),  # normalised from pore pressure
+                soil_sat_weight=18.5       # kN/m³ saturated unit weight
+            )
+            fos_physical = float(fos_result.factor_of_safety)
         prov_list.append(FeatureProvenance(
             feature="fos", value=fos_physical,
             provenance="MODELLED", source="Infinite Slope / Mohr-Coulomb FoS",

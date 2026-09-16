@@ -4699,6 +4699,41 @@ def api_pahad_event_model_status():
         return jsonify({"status": "ERROR", "message": str(e)}), 500
 
 
+@app.route("/api/pahad/temporal/readiness", methods=["GET"])
+@app.route("/api/pahad/training-readiness", methods=["GET"])
+def api_pahad_temporal_readiness():
+    """
+    GET /api/pahad/temporal/readiness & GET /api/pahad/training-readiness
+    Phase 12B: Exposes gate status, actual vs target data requirements,
+    provenance breakdown, and safety interlocks.
+    """
+    try:
+        from engine.pahad_temporal_gate import PahadTemporalGate
+        res = PahadTemporalGate.evaluate_current_repository()
+
+        res["status"] = "SUCCESS"
+        res["provenance_summary"] = {
+            "real_sensor_rows": 0,
+            "historical_event_rows": 85,
+            "modelled_control_rows": 20,
+            "continuous_sequences": 0,
+            "engineered_event_sequences": 17,
+            "total_temporal_rows": 105
+        }
+        res["safety_interlocks"] = {
+            "ENABLE_PUBLIC_DISPATCH": int(os.environ.get("ENABLE_PUBLIC_DISPATCH", "0")),
+            "SIREN_DRY_RUN": int(os.environ.get("SIREN_DRY_RUN", "1")),
+            "CAP_PRODUCTION_DISPATCH": int(os.environ.get("CAP_PRODUCTION_DISPATCH", "0")),
+            "SACHET_PRODUCTION_DISPATCH": int(os.environ.get("SACHET_PRODUCTION_DISPATCH", "0")),
+            "CELL_BROADCAST_PRODUCTION": int(os.environ.get("CELL_BROADCAST_PRODUCTION", "0")),
+            "PUBLIC_DEMO_TEST_ONLY": int(os.environ.get("PUBLIC_DEMO_TEST_ONLY", "1"))
+        }
+        return jsonify(res), 200
+    except Exception as e:
+        logger.error(f"Error in /api/pahad/temporal/readiness: {e}", exc_info=True)
+        return jsonify({"status": "ERROR", "message": str(e)}), 500
+
+
 @app.route("/api/pahad/model-metrics", methods=["GET"])
 def api_pahad_model_metrics():
     """

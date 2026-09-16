@@ -1,0 +1,678 @@
+{
+  "manifest_version": "12.0.0-phase12b",
+  "title": "PARVAT NETRA \u2022 PAHAD AI \u2014 Phase 12B Real Temporal Infrastructure Manifest",
+  "created_at": "2026-09-15T17:01:26.625637+00:00",
+  "crs": "WGS84 / EPSG:4326",
+  "dataset_hashes": {
+    "phase5b_temporal_full_sha256": "6d82a820fc33daebd05d600aa8907a4f3b3389b3a4563525cc69c53b75303047",
+    "phase5b_temporal_train_sha256": "8472cd134e99245bd22a040b8dbd0b25a4fa5e24abb02f03813816236d0f1be5",
+    "phase5b_temporal_val_sha256": "74a771c3c825ca9d4de1c54b3333af951ffa21fd7b0ad87e793e6eed8669db7c",
+    "phase5b_temporal_test_sha256": "9c7ab40b6ac733adba748c77b7e0b341520995bcdb4081e4dc280b9a9790519f"
+  },
+  "schema_specification": {
+    "canonical_features": [
+      "rain_1h",
+      "rain_3h",
+      "rain_6h",
+      "rain_12h",
+      "rain_24h",
+      "rain_48h",
+      "rain_72h",
+      "antecedent_rain_3d",
+      "antecedent_rain_7d",
+      "rain_intensity",
+      "rainfall_threshold_exceedance",
+      "fos",
+      "slope",
+      "aspect",
+      "elevation",
+      "curvature",
+      "soil_moisture",
+      "pore_pressure",
+      "tilt",
+      "ground_displacement",
+      "ndvi",
+      "ndvi_anomaly",
+      "seismic_count_24h",
+      "max_magnitude_24h",
+      "nearest_seismic_distance",
+      "historical_susceptibility"
+    ],
+    "feature_dim": 26,
+    "target_leakage_prevented": true,
+    "target_features_excluded": [
+      "composite_risk_index_cri",
+      "event_label",
+      "is_event_sample",
+      "target_6h",
+      "target_12h",
+      "target_24h",
+      "target_48h"
+    ]
+  },
+  "empirical_audit_summary": {
+    "temporal_rows_total": 105,
+    "unique_timestamps": 105,
+    "unique_corridors": 17,
+    "continuous_real_sequences": 0,
+    "engineered_event_sequences": 17,
+    "real_sensor_rows": 0,
+    "simulated_or_modelled_rows": 20,
+    "missingness_rate_overall": 0.0,
+    "temporal_span": {
+      "start": "2022-05-14T09:00:00Z",
+      "end": "2024-10-04T00:00:00Z",
+      "coverage_mode": "EPISODIC_DISASTER_ANTECEDENT_SNAPSHOTS"
+    }
+  },
+  "partitions": {
+    "train": {
+      "sample_count": 48,
+      "date_range": [
+        "2022-05-14T09:00:00Z",
+        "2023-10-03T19:30:00Z"
+      ],
+      "positives_by_horizon": {
+        "6h": 8,
+        "12h": 16,
+        "24h": 24,
+        "48h": 40
+      }
+    },
+    "validation": {
+      "sample_count": 33,
+      "date_range": [
+        "2024-02-14T03:00:00Z",
+        "2024-07-02T02:00:00Z"
+      ],
+      "positives_by_horizon": {
+        "6h": 5,
+        "12h": 10,
+        "24h": 15,
+        "48h": 25
+      }
+    },
+    "test": {
+      "sample_count": 24,
+      "date_range": [
+        "2024-07-08T10:00:00Z",
+        "2024-10-04T00:00:00Z"
+      ],
+      "positives_by_horizon": {
+        "6h": 4,
+        "12h": 8,
+        "24h": 12,
+        "48h": 20
+      }
+    }
+  },
+  "leakage_audit": {
+    "zero_leakage_verified": true,
+    "temporal_holdout_respected": true,
+    "sample_id_overlap_count": 0,
+    "target_cri_leakage_detected": false,
+    "train_time_bounds": [
+      "2022-05-14T09:00:00Z",
+      "2023-10-03T19:30:00Z"
+    ],
+    "val_time_bounds": [
+      "2024-02-14T03:00:00Z",
+      "2024-07-02T02:00:00Z"
+    ],
+    "test_time_bounds": [
+      "2024-07-08T10:00:00Z",
+      "2024-10-04T00:00:00Z"
+    ]
+  },
+  "sequence_quality": {
+    "mean_quality_score": 0.4195,
+    "sectors_audited": 17,
+    "sector_details": {
+      "AR-ITANAGAR-01": {
+        "valid": true,
+        "row_count": 5,
+        "unique_timestamps": 5,
+        "out_of_order_count": 0,
+        "exact_duplicates": 0,
+        "gap_classification": {
+          "NO_GAP": 0,
+          "MINOR_GAP": 0,
+          "MODERATE_GAP": 1,
+          "CRITICAL_GAP": 3,
+          "DISCONNECTED": 0
+        },
+        "missing_feature_rate": 0.0,
+        "provenance_breakdown": {
+          "[HISTORICAL]": 5
+        },
+        "provenance_purity": 0.0,
+        "continuity_score": 0.25,
+        "cadence_regularity": 0.8763,
+        "quality_score": 0.5878,
+        "span_hours": 42.0,
+        "start_time": "2023-06-18T09:30:00+00:00",
+        "end_time": "2023-06-20T03:30:00+00:00"
+      },
+      "AR-TAWANG-01": {
+        "valid": true,
+        "row_count": 7,
+        "unique_timestamps": 7,
+        "out_of_order_count": 0,
+        "exact_duplicates": 0,
+        "gap_classification": {
+          "NO_GAP": 0,
+          "MINOR_GAP": 0,
+          "MODERATE_GAP": 1,
+          "CRITICAL_GAP": 3,
+          "DISCONNECTED": 2
+        },
+        "missing_feature_rate": 0.0,
+        "provenance_breakdown": {
+          "[HISTORICAL]": 5,
+          "[MODELLED]": 2
+        },
+        "provenance_purity": 0.0,
+        "continuity_score": 0.0,
+        "cadence_regularity": 0.0,
+        "quality_score": 0.35,
+        "span_hours": 12792.0,
+        "start_time": "2023-02-18T12:00:00+00:00",
+        "end_time": "2024-08-04T12:00:00+00:00"
+      },
+      "AS-CACHAR-01": {
+        "valid": true,
+        "row_count": 6,
+        "unique_timestamps": 6,
+        "out_of_order_count": 0,
+        "exact_duplicates": 0,
+        "gap_classification": {
+          "NO_GAP": 0,
+          "MINOR_GAP": 0,
+          "MODERATE_GAP": 1,
+          "CRITICAL_GAP": 3,
+          "DISCONNECTED": 1
+        },
+        "missing_feature_rate": 0.0,
+        "provenance_breakdown": {
+          "[HISTORICAL]": 5,
+          "[MODELLED]": 1
+        },
+        "provenance_purity": 0.0,
+        "continuity_score": 0.0,
+        "cadence_regularity": 0.1373,
+        "quality_score": 0.3775,
+        "span_hours": 382.0,
+        "start_time": "2024-06-02T12:00:00+00:00",
+        "end_time": "2024-06-18T10:00:00+00:00"
+      },
+      "AS-DIMA-HASAO-01": {
+        "valid": true,
+        "row_count": 8,
+        "unique_timestamps": 8,
+        "out_of_order_count": 0,
+        "exact_duplicates": 0,
+        "gap_classification": {
+          "NO_GAP": 0,
+          "MINOR_GAP": 0,
+          "MODERATE_GAP": 1,
+          "CRITICAL_GAP": 3,
+          "DISCONNECTED": 3
+        },
+        "missing_feature_rate": 0.0,
+        "provenance_breakdown": {
+          "[HISTORICAL]": 5,
+          "[MODELLED]": 3
+        },
+        "provenance_purity": 0.0,
+        "continuity_score": 0.0,
+        "cadence_regularity": 0.3436,
+        "quality_score": 0.4187,
+        "span_hours": 19203.0,
+        "start_time": "2022-05-14T09:00:00+00:00",
+        "end_time": "2024-07-22T12:00:00+00:00"
+      },
+      "ML-MAWSYNRAM-01": {
+        "valid": true,
+        "row_count": 7,
+        "unique_timestamps": 7,
+        "out_of_order_count": 0,
+        "exact_duplicates": 0,
+        "gap_classification": {
+          "NO_GAP": 0,
+          "MINOR_GAP": 0,
+          "MODERATE_GAP": 1,
+          "CRITICAL_GAP": 3,
+          "DISCONNECTED": 2
+        },
+        "missing_feature_rate": 0.0,
+        "provenance_breakdown": {
+          "[HISTORICAL]": 5,
+          "[MODELLED]": 2
+        },
+        "provenance_purity": 0.0,
+        "continuity_score": 0.0,
+        "cadence_regularity": 0.2096,
+        "quality_score": 0.3919,
+        "span_hours": 18504.0,
+        "start_time": "2022-06-15T12:00:00+00:00",
+        "end_time": "2024-07-25T12:00:00+00:00"
+      },
+      "ML-SHILLONG-01": {
+        "valid": true,
+        "row_count": 6,
+        "unique_timestamps": 6,
+        "out_of_order_count": 0,
+        "exact_duplicates": 0,
+        "gap_classification": {
+          "NO_GAP": 0,
+          "MINOR_GAP": 0,
+          "MODERATE_GAP": 1,
+          "CRITICAL_GAP": 3,
+          "DISCONNECTED": 1
+        },
+        "missing_feature_rate": 0.0,
+        "provenance_breakdown": {
+          "[HISTORICAL]": 5,
+          "[MODELLED]": 1
+        },
+        "provenance_purity": 0.0,
+        "continuity_score": 0.0,
+        "cadence_regularity": 0.0631,
+        "quality_score": 0.3626,
+        "span_hours": 832.0,
+        "start_time": "2024-06-05T12:00:00+00:00",
+        "end_time": "2024-07-10T04:00:00+00:00"
+      },
+      "MN-NONEY-01": {
+        "valid": true,
+        "row_count": 6,
+        "unique_timestamps": 6,
+        "out_of_order_count": 0,
+        "exact_duplicates": 0,
+        "gap_classification": {
+          "NO_GAP": 0,
+          "MINOR_GAP": 0,
+          "MODERATE_GAP": 1,
+          "CRITICAL_GAP": 3,
+          "DISCONNECTED": 1
+        },
+        "missing_feature_rate": 0.0,
+        "provenance_breakdown": {
+          "[HISTORICAL]": 5,
+          "[MODELLED]": 1
+        },
+        "provenance_purity": 0.0,
+        "continuity_score": 0.0,
+        "cadence_regularity": 0.0087,
+        "quality_score": 0.3517,
+        "span_hours": 6012.5,
+        "start_time": "2022-06-27T23:30:00+00:00",
+        "end_time": "2023-03-05T12:00:00+00:00"
+      },
+      "MN-TAMENG-01": {
+        "valid": true,
+        "row_count": 6,
+        "unique_timestamps": 6,
+        "out_of_order_count": 0,
+        "exact_duplicates": 0,
+        "gap_classification": {
+          "NO_GAP": 0,
+          "MINOR_GAP": 0,
+          "MODERATE_GAP": 1,
+          "CRITICAL_GAP": 3,
+          "DISCONNECTED": 1
+        },
+        "missing_feature_rate": 0.0,
+        "provenance_breakdown": {
+          "[HISTORICAL]": 5,
+          "[MODELLED]": 1
+        },
+        "provenance_purity": 0.0,
+        "continuity_score": 0.0,
+        "cadence_regularity": 0.0514,
+        "quality_score": 0.3603,
+        "span_hours": 1022.0,
+        "start_time": "2024-05-20T12:00:00+00:00",
+        "end_time": "2024-07-02T02:00:00+00:00"
+      },
+      "MZ-AIZAWL-MELTHUM": {
+        "valid": true,
+        "row_count": 7,
+        "unique_timestamps": 7,
+        "out_of_order_count": 0,
+        "exact_duplicates": 0,
+        "gap_classification": {
+          "NO_GAP": 0,
+          "MINOR_GAP": 0,
+          "MODERATE_GAP": 1,
+          "CRITICAL_GAP": 3,
+          "DISCONNECTED": 2
+        },
+        "missing_feature_rate": 0.0,
+        "provenance_breakdown": {
+          "[HISTORICAL]": 5,
+          "[MODELLED]": 2
+        },
+        "provenance_purity": 0.0,
+        "continuity_score": 0.0,
+        "cadence_regularity": 0.0,
+        "quality_score": 0.35,
+        "span_hours": 11843.5,
+        "start_time": "2023-01-20T12:00:00+00:00",
+        "end_time": "2024-05-27T23:30:00+00:00"
+      },
+      "MZ-LUNGLEI-01": {
+        "valid": true,
+        "row_count": 5,
+        "unique_timestamps": 5,
+        "out_of_order_count": 0,
+        "exact_duplicates": 0,
+        "gap_classification": {
+          "NO_GAP": 0,
+          "MINOR_GAP": 0,
+          "MODERATE_GAP": 1,
+          "CRITICAL_GAP": 3,
+          "DISCONNECTED": 0
+        },
+        "missing_feature_rate": 0.0,
+        "provenance_breakdown": {
+          "[HISTORICAL]": 5
+        },
+        "provenance_purity": 0.0,
+        "continuity_score": 0.25,
+        "cadence_regularity": 0.8763,
+        "quality_score": 0.5878,
+        "span_hours": 42.0,
+        "start_time": "2023-08-20T11:00:00+00:00",
+        "end_time": "2023-08-22T05:00:00+00:00"
+      },
+      "NL-KOHIMA-01": {
+        "valid": true,
+        "row_count": 7,
+        "unique_timestamps": 7,
+        "out_of_order_count": 0,
+        "exact_duplicates": 0,
+        "gap_classification": {
+          "NO_GAP": 0,
+          "MINOR_GAP": 0,
+          "MODERATE_GAP": 1,
+          "CRITICAL_GAP": 3,
+          "DISCONNECTED": 2
+        },
+        "missing_feature_rate": 0.0,
+        "provenance_breakdown": {
+          "[HISTORICAL]": 5,
+          "[MODELLED]": 2
+        },
+        "provenance_purity": 0.0,
+        "continuity_score": 0.0,
+        "cadence_regularity": 0.0807,
+        "quality_score": 0.3661,
+        "span_hours": 12973.0,
+        "start_time": "2023-03-12T12:00:00+00:00",
+        "end_time": "2024-09-03T01:00:00+00:00"
+      },
+      "NL-PHEK-01": {
+        "valid": true,
+        "row_count": 5,
+        "unique_timestamps": 5,
+        "out_of_order_count": 0,
+        "exact_duplicates": 0,
+        "gap_classification": {
+          "NO_GAP": 0,
+          "MINOR_GAP": 0,
+          "MODERATE_GAP": 1,
+          "CRITICAL_GAP": 3,
+          "DISCONNECTED": 0
+        },
+        "missing_feature_rate": 0.0,
+        "provenance_breakdown": {
+          "[HISTORICAL]": 5
+        },
+        "provenance_purity": 0.0,
+        "continuity_score": 0.25,
+        "cadence_regularity": 0.8763,
+        "quality_score": 0.5878,
+        "span_hours": 42.0,
+        "start_time": "2023-07-26T15:00:00+00:00",
+        "end_time": "2023-07-28T09:00:00+00:00"
+      },
+      "SK-MANGAN-01": {
+        "valid": true,
+        "row_count": 6,
+        "unique_timestamps": 6,
+        "out_of_order_count": 0,
+        "exact_duplicates": 0,
+        "gap_classification": {
+          "NO_GAP": 0,
+          "MINOR_GAP": 0,
+          "MODERATE_GAP": 1,
+          "CRITICAL_GAP": 3,
+          "DISCONNECTED": 1
+        },
+        "missing_feature_rate": 0.0,
+        "provenance_breakdown": {
+          "[HISTORICAL]": 5,
+          "[MODELLED]": 1
+        },
+        "provenance_purity": 0.0,
+        "continuity_score": 0.0,
+        "cadence_regularity": 0.0045,
+        "quality_score": 0.3509,
+        "span_hours": 11708.0,
+        "start_time": "2023-02-10T12:00:00+00:00",
+        "end_time": "2024-06-12T08:00:00+00:00"
+      },
+      "SK-NH10-KM48": {
+        "valid": true,
+        "row_count": 7,
+        "unique_timestamps": 7,
+        "out_of_order_count": 0,
+        "exact_duplicates": 0,
+        "gap_classification": {
+          "NO_GAP": 0,
+          "MINOR_GAP": 0,
+          "MODERATE_GAP": 1,
+          "CRITICAL_GAP": 3,
+          "DISCONNECTED": 2
+        },
+        "missing_feature_rate": 0.0,
+        "provenance_breakdown": {
+          "[HISTORICAL]": 5,
+          "[MODELLED]": 2
+        },
+        "provenance_purity": 0.0,
+        "continuity_score": 0.0,
+        "cadence_regularity": 0.1567,
+        "quality_score": 0.3813,
+        "span_hours": 15060.0,
+        "start_time": "2023-01-15T12:00:00+00:00",
+        "end_time": "2024-10-04T00:00:00+00:00"
+      },
+      "SK-SINGTAM-01": {
+        "valid": true,
+        "row_count": 6,
+        "unique_timestamps": 6,
+        "out_of_order_count": 0,
+        "exact_duplicates": 0,
+        "gap_classification": {
+          "NO_GAP": 0,
+          "MINOR_GAP": 0,
+          "MODERATE_GAP": 1,
+          "CRITICAL_GAP": 3,
+          "DISCONNECTED": 1
+        },
+        "missing_feature_rate": 0.0,
+        "provenance_breakdown": {
+          "[HISTORICAL]": 5,
+          "[MODELLED]": 1
+        },
+        "provenance_purity": 0.0,
+        "continuity_score": 0.0,
+        "cadence_regularity": 0.0162,
+        "quality_score": 0.3532,
+        "span_hours": 3241.5,
+        "start_time": "2023-10-02T01:30:00+00:00",
+        "end_time": "2024-02-14T03:00:00+00:00"
+      },
+      "TR-DHARMAN-01": {
+        "valid": true,
+        "row_count": 5,
+        "unique_timestamps": 5,
+        "out_of_order_count": 0,
+        "exact_duplicates": 0,
+        "gap_classification": {
+          "NO_GAP": 0,
+          "MINOR_GAP": 0,
+          "MODERATE_GAP": 1,
+          "CRITICAL_GAP": 3,
+          "DISCONNECTED": 0
+        },
+        "missing_feature_rate": 0.0,
+        "provenance_breakdown": {
+          "[HISTORICAL]": 5
+        },
+        "provenance_purity": 0.0,
+        "continuity_score": 0.25,
+        "cadence_regularity": 0.8763,
+        "quality_score": 0.5878,
+        "span_hours": 42.0,
+        "start_time": "2023-07-12T06:00:00+00:00",
+        "end_time": "2023-07-14T00:00:00+00:00"
+      },
+      "TR-JAMPUI-01": {
+        "valid": true,
+        "row_count": 6,
+        "unique_timestamps": 6,
+        "out_of_order_count": 0,
+        "exact_duplicates": 0,
+        "gap_classification": {
+          "NO_GAP": 0,
+          "MINOR_GAP": 0,
+          "MODERATE_GAP": 1,
+          "CRITICAL_GAP": 3,
+          "DISCONNECTED": 1
+        },
+        "missing_feature_rate": 0.0,
+        "provenance_breakdown": {
+          "[HISTORICAL]": 5,
+          "[MODELLED]": 1
+        },
+        "provenance_purity": 0.0,
+        "continuity_score": 0.0,
+        "cadence_regularity": 0.078,
+        "quality_score": 0.3656,
+        "span_hours": 673.0,
+        "start_time": "2024-08-18T11:00:00+00:00",
+        "end_time": "2024-09-15T12:00:00+00:00"
+      }
+    }
+  },
+  "training_eligibility_gate": {
+    "gate_status": "DATA_COLLECTION_REQUIRED",
+    "training_authorized": false,
+    "recommended_action": "KEEP_SURROGATE_CONTINUE_TELEMETRY_DEPLOYMENT",
+    "active_temporal_model": "PAHAD LSTM (Physics-Informed Surrogate v2)",
+    "model_status": "NOT_TRAINED",
+    "checks": {
+      "event_volume_satisfied": false,
+      "control_volume_satisfied": false,
+      "duration_satisfied": false,
+      "cadence_satisfied": false,
+      "seasonal_coverage_satisfied": false,
+      "completeness_satisfied": false,
+      "real_telemetry_present": false
+    },
+    "actual_vs_target": {
+      "event_sequences": {
+        "actual": 0,
+        "target": 500,
+        "status": "FAIL"
+      },
+      "control_sequences": {
+        "actual": 0,
+        "target": 2000,
+        "status": "FAIL"
+      },
+      "min_duration_hours": {
+        "actual": 0.0,
+        "target": 48.0,
+        "status": "FAIL"
+      },
+      "cadence_minutes": {
+        "actual": 720.0,
+        "target": 15.0,
+        "status": "FAIL"
+      },
+      "seasonal_monsoons": {
+        "actual": 0,
+        "target": 2,
+        "status": "FAIL"
+      },
+      "completeness_pct": {
+        "actual": 0.0,
+        "target": 95.0,
+        "status": "FAIL"
+      },
+      "real_telemetry": {
+        "actual": "ABSENT (Modelled Historical)",
+        "target": "PRESENT",
+        "status": "FAIL"
+      }
+    },
+    "project_targets_specification": {
+      "event_sequence_volume": {
+        "target": 500,
+        "unit": "independent failure sequences",
+        "rationale": "A standard 2-layer Bidirectional LSTM network with 26 physical features contains ~25,000 trainable parameters. Optimizing this parameter space without severe over-parameterization requires at least 500 distinct failure events across the 8 NER states."
+      },
+      "control_sequence_volume": {
+        "target": 2000,
+        "unit": "independent non-event control sequences",
+        "rationale": "Mountain slopes in Northeast India are stable during 99%+ of rain hours. Training on balanced data produces false-alarm rates > 80%. A 1:4 event-to-control ratio is the minimum required for defensible early-warning discrimination."
+      },
+      "minimum_sequence_duration_hours": {
+        "target": 48.0,
+        "unit": "contiguous hours per sequence",
+        "rationale": "Himalayan regolith saturation and basal pore-water pressure respond to antecedent rainfall on a 24h to 72h lag. Sequences shorter than 48h truncate the hydrological accumulation phase."
+      },
+      "cadence_in_situ_minutes": {
+        "target": 15.0,
+        "unit": "minutes between consecutive readings",
+        "rationale": "Tertiary creep shear acceleration and sudden pore-pressure dissipation leading to slope failure occur rapidly within 15-30 minutes. Coarser 24h snapshots fail to capture precursor velocity spikes."
+      },
+      "cadence_rainfall_hours": {
+        "target": 1.0,
+        "unit": "hour per rainfall accumulation step",
+        "rationale": "Cloudburst and high-intensity convective rainfall pulses trigger shallow mudflows within 1 to 3 hours. Hourly accumulation is required to resolve intensity thresholds."
+      },
+      "seasonal_coverage_monsoons": {
+        "target": 2,
+        "unit": "complete monsoon cycles (min 24 contiguous months)",
+        "rationale": "Captures inter-annual Southwest monsoon variability (El Nino / La Nina modulation) and prevents catastrophic distribution shift when deployed across varying dry and wet seasons."
+      },
+      "data_completeness_pct": {
+        "target": 95.0,
+        "unit": "percentage observed without imputation",
+        "rationale": "Synthetic or spline imputation of missing sensor packets in temporal sequences distorts higher-order derivatives (acceleration, tilt rates) that serve as critical failure predictors."
+      },
+      "timestamp_confidence_seconds": {
+        "target": 15.0,
+        "unit": "maximum allowable timestamp uncertainty",
+        "rationale": "Required to accurately synchronize high-frequency seismic P-wave / S-wave rumble with piezometric and displacement spikes during co-seismic or rain-induced mass wasting."
+      }
+    }
+  },
+  "operational_invariants": {
+    "pahad_lstm_status": "NOT_TRAINED (PHYSICS-INFORMED SURROGATE)",
+    "operational_event_classifier": "CALIBRATED_GRADIENT_BOOSTING",
+    "safety_flags": {
+      "ENABLE_PUBLIC_DISPATCH": 0,
+      "SIREN_DRY_RUN": 1,
+      "CAP_PRODUCTION_DISPATCH": 0,
+      "SACHET_PRODUCTION_DISPATCH": 0,
+      "CELL_BROADCAST_PRODUCTION": 0,
+      "PUBLIC_DEMO_TEST_ONLY": 1
+    }
+  }
+}

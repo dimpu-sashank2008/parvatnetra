@@ -1,0 +1,73 @@
+{
+  "schema_version": "1.0.0",
+  "manifest_name": "PHASE12A_SCIENTIFIC_CORE_SNAPSHOT",
+  "timestamp": "2026-09-15T22:38:00+05:30",
+  "git_commit": "dbde2f70f9f72f3ae55dcbad1a25e8c4ced836fb",
+  "scientific_formula_version": "PAHAD-SCI-v12.1",
+  "model_artifact": {
+    "file": "models/pahad_event_model.pkl",
+    "sha256": "0041fcaf0010fff4c45c3f7bb5a3ca36348b0672677f2a4d0c7cca3ef180a23e",
+    "metadata_sha256": "8f97d326c10c90a7f82c024bd12e6eb72ce2747275c4d69fc931316ad0d6af1b",
+    "model_status": "TRAINED_LIMITED_DATA",
+    "algorithm": "GradientBoostingClassifier + Platt Calibrator"
+  },
+  "dataset_hashes": {
+    "data/features/real_train.csv": "79ece554fd0d2fc62d69a21fd4d39172f7dd4995d5645e126a91d1a08c1c579e",
+    "data/features/real_val.csv": "ed732e2054f1b028cab9380a35ad31affbbb5e93a3cb207fda1582665aa0bd81",
+    "data/features/real_test.csv": "29f84cf974241844a16086736e1cab833484a9587519946dd24ee09ae09d28da",
+    "data/labels/event_labels.csv": "edcdb95b13a87208deb3aa20cf29f381bad8c9312c8879131bce38ad00455a4c",
+    "data/raw/historical_landslides_ner.csv": "910e9b2c5ccdb52af36f5f6dfb3a615884fa46c16c0dabaf8866471f0bd24baf"
+  },
+  "configuration_hash": {
+    "ENABLE_PUBLIC_DISPATCH": "0",
+    "SIREN_DRY_RUN": "1",
+    "CAP_PRODUCTION_DISPATCH": "0",
+    "SACHET_PRODUCTION_DISPATCH": "0",
+    "CELL_BROADCAST_PRODUCTION": "0",
+    "PUBLIC_DEMO_TEST_ONLY": "1",
+    "config_sha256": "c8f2b7a44f80164c8d5b12da61e93bb8d2ef07c805a5a1f0a2024b3b194dbec8"
+  },
+  "corridor_registry": {
+    "canonical_count": 26,
+    "corridor_ids": [
+      "AR-BHALUK-01", "AR-PASIGHAT-01", "AR-SELA-01", "AR-TAWANG-SELA",
+      "AS-CACHAR-01", "AS-GUWAHATI-01", "AS-HAFLONG-RLY",
+      "CORR-NH717A-PEDONG-RISSI",
+      "ML-CHERRA-01", "ML-MAWSYNRAM", "ML-SONAPUR-01",
+      "MN-JIRIBAM-01", "MN-TUPUL-RLY",
+      "MZ-HUNTHAR-01", "MZ-KOLASIB-01", "MZ-MELTHUM-QRY", "MZ-SAIRANG-01",
+      "NL-DZUDZA-01", "NL-DZUKOU-KOH", "NL-PAGALA-01", "NL-PIPHEMA-01",
+      "SK-DIKCHU-01", "SK-MANGAN-01", "SK-NH10-KM48", "SK-SINGTAM-01",
+      "TR-BARAMURA-01", "TR-JAMPUI-HILLS"
+    ]
+  },
+  "risk_band_definition": {
+    "LOW": {"min": 0.0, "max": 20.0, "inclusive_left": true, "inclusive_right": false, "level": "Routine Monitoring"},
+    "MODERATE": {"min": 20.0, "max": 40.0, "inclusive_left": true, "inclusive_right": false, "level": "Elevated Observation"},
+    "HIGH": {"min": 40.0, "max": 60.0, "inclusive_left": true, "inclusive_right": false, "level": "Advisory Watch"},
+    "VERY_HIGH": {"min": 60.0, "max": 80.0, "inclusive_left": true, "inclusive_right": false, "level": "Severe Warning"},
+    "EXTREME": {"min": 80.0, "max": 100.0, "inclusive_left": true, "inclusive_right": true, "level": "Emergency Evacuation & Closure"}
+  },
+  "corroboration_heuristic": {
+    "name": "2-of-3 MULTI-SIGNAL CORROBORATION HEURISTIC",
+    "signals": {
+      "Signal_A": "Geotechnical Limit Equilibrium (Infinite-Slope FoS <= 1.0)",
+      "Signal_B": "Hydrometeorological Forcing (Mandal-Sarkar I-D Threshold Exceeded or Rain_24h >= 100mm)",
+      "Signal_C": "Active Event Likelihood / Ground Deformation (Calibrated P(event) > 0.80 or Telemetry Anomaly)"
+    },
+    "rule": "At least 2 concurring signals required to confirm EXTREME alert; single sensor or single-modality spikes auto-downgraded to VERY_HIGH (capped at CRI 79.9)"
+  },
+  "test_summary": {
+    "total_tests": 24,
+    "passed": 24,
+    "failed": 0,
+    "skipped": 0,
+    "errors": 0,
+    "test_suite": "tests/test_phase12a_scientific_core.py"
+  },
+  "blocking_items": [
+    "Held-out test set size N=8 (5 positives, 3 negatives) is too small for deployment-grade generalization claims (honestly designated TRAINED_LIMITED_DATA research prototype)",
+    "In-situ borehole inclinometer and piezometer sensors simulated pending state PWD hardware rollouts across secondary corridors"
+  ],
+  "verdict": "PHASE12A_SCIENTIFIC_CORE_PASS_WITH_LIMITATIONS"
+}

@@ -1,3 +1,6 @@
+@import url("https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css");
+@import url("https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css");
+
 /* ========================================================================= */
 /* PARVAT NETRA / PAHAD AI — UNIFIED GIGW 3.0 THEME SYSTEM                   */
 /* Light Mode: Faded Saffron (#FFF5E9) & Soft Warm Amber (#FED7AA)           */
@@ -451,10 +454,113 @@ body.light-mode .border-amber-500\/40 p,
 body.light-mode .border-amber-500\/40 span {
     color: #92400E !important;
 }
-body.light-mode footer {
+/* --- GIGW 3.0 FOOTER & SIH PROTOTYPE BAR IN LIGHT MODE --- */
+body.light-mode footer,
+body.light-mode footer#main-footer,
+body.light-mode .main-portal-footer {
     background-color: #FFF5E9 !important;
+    background: #FFF5E9 !important;
+    border-top: 2px solid #FED7AA !important;
+    color: #475569 !important;
+}
+
+body.light-mode footer h4,
+body.light-mode #main-footer h4 {
+    color: #0B2545 !important;
+}
+
+body.light-mode footer ul,
+body.light-mode footer li,
+body.light-mode #main-footer ul,
+body.light-mode #main-footer li {
+    color: #1E3A5F !important;
+}
+
+body.light-mode footer strong,
+body.light-mode #main-footer strong {
+    color: #0B2545 !important;
+}
+
+body.light-mode footer .border-slate-800,
+body.light-mode #main-footer .border-slate-800 {
+    border-color: #FED7AA !important;
+}
+
+/* Light Mode: Legal & SIH Attribution Strip */
+body.light-mode #footer-legal-strip,
+body.light-mode .footer-legal-strip {
+    background-color: #FFEDD5 !important;
+    background: #FFEDD5 !important;
     border-top: 1px solid #FED7AA !important;
     color: #475569 !important;
+}
+
+body.light-mode #footer-legal-strip .footer-branding-row {
+    border-top-color: #FED7AA !important;
+}
+
+body.light-mode #footer-legal-strip a.footer-link,
+body.light-mode #footer-legal-strip .footer-policy-anchors a {
+    color: #1E3A5F !important;
+}
+
+body.light-mode #footer-legal-strip a.footer-link:hover,
+body.light-mode #footer-legal-strip .footer-policy-anchors a:hover {
+    color: #D9531E !important;
+}
+
+body.light-mode #footer-legal-strip .footer-link-divider,
+body.light-mode #footer-legal-strip .sih-divider {
+    color: #CBD5E1 !important;
+}
+
+body.light-mode #footer-legal-strip .footer-last-updated-date {
+    color: #0B2545 !important;
+}
+
+body.light-mode #footer-legal-strip .footer-visitor-counter {
+    color: #B45309 !important;
+}
+
+body.light-mode #footer-legal-strip .sih-prototype-tag {
+    background-color: #FEF3C7 !important;
+    color: #92400E !important;
+    border: 1px solid #FCD34D !important;
+}
+
+body.light-mode #footer-legal-strip .sih-prototype-brand {
+    color: #0B2545 !important;
+    font-weight: 700 !important;
+}
+
+body.light-mode #footer-legal-strip .sih-meta-segment {
+    color: #1E293B !important;
+}
+
+body.light-mode #footer-legal-strip .sih-team-id,
+body.light-mode #footer-legal-strip .sih-ps-id {
+    color: #C2410C !important;
+    font-weight: 800 !important;
+}
+
+body.light-mode #footer-legal-strip .sih-copyright-notice {
+    color: #64748B !important;
+}
+
+/* Light Mode: Scoped fallback overrides inside #footer-legal-strip */
+body.light-mode #footer-legal-strip .text-slate-100,
+body.light-mode #footer-legal-strip .text-slate-200,
+body.light-mode #footer-legal-strip .text-slate-300 {
+    color: #1E293B !important;
+}
+
+body.light-mode #footer-legal-strip .text-slate-400,
+body.light-mode #footer-legal-strip .text-slate-500 {
+    color: #475569 !important;
+}
+
+body.light-mode #footer-legal-strip .text-slate-600 {
+    color: #CBD5E1 !important;
 }
 
 /* ========================================================================= */
@@ -660,9 +766,196 @@ body.dark-mode .bg-\[\#0B192C\] {
     border-bottom: 1px solid rgba(147, 197, 253, 0.2) !important;
     color: #BAE6FD !important;
 }
-body:not(.light-mode) .bg-\[\#0B192C\] a,
-body.dark-mode .bg-\[\#0B192C\] a {
+body:not(.light-mode) .bg-[#0B192C] a,
+body.dark-mode .bg-[#0B192C] a {
     color: #BAE6FD !important;
+}
+
+/* --- GIGW 3.0 FOOTER & SIH PROTOTYPE BAR IN DARK MODE --- */
+footer#main-footer,
+footer.main-portal-footer,
+body.dark-mode footer#main-footer,
+body.dark-mode footer.main-portal-footer,
+body:not(.light-mode) footer#main-footer,
+body:not(.light-mode) footer.main-portal-footer,
+body:not(.light-mode) footer,
+body.dark-mode footer {
+    background-color: #0B1120 !important;
+    background: #0B1120 !important;
+    border-top: 3px solid #d97706 !important;
+    color: #94A3B8 !important;
+}
+
+body:not(.light-mode) footer h4,
+body.dark-mode footer h4,
+body:not(.light-mode) #main-footer h4,
+body.dark-mode #main-footer h4 {
+    color: #F8FAFC !important;
+}
+
+body:not(.light-mode) footer ul,
+body.dark-mode footer ul,
+body:not(.light-mode) footer li,
+body.dark-mode footer li,
+body:not(.light-mode) #main-footer ul,
+body.dark-mode #main-footer ul,
+body:not(.light-mode) #main-footer li,
+body.dark-mode #main-footer li {
+    color: #CBD5E1 !important;
+}
+
+body:not(.light-mode) footer strong,
+body.dark-mode footer strong,
+body:not(.light-mode) #main-footer strong,
+body.dark-mode #main-footer strong {
+    color: #F8FAFC !important;
+}
+
+body:not(.light-mode) footer .border-slate-800,
+body.dark-mode footer .border-slate-800,
+body:not(.light-mode) #main-footer .border-slate-800,
+body.dark-mode #main-footer .border-slate-800 {
+    border-color: #1E293B !important;
+}
+
+/* Dark Mode: Legal & SIH Attribution Strip */
+#footer-legal-strip,
+.footer-legal-strip,
+body.dark-mode #footer-legal-strip,
+body.dark-mode .footer-legal-strip,
+body:not(.light-mode) #footer-legal-strip,
+body:not(.light-mode) .footer-legal-strip {
+    background-color: #06121E !important;
+    background: #06121E !important;
+    border-top: 1px solid #1E293B !important;
+    color: #94A3B8 !important;
+}
+
+body:not(.light-mode) #footer-legal-strip .footer-branding-row,
+body.dark-mode #footer-legal-strip .footer-branding-row {
+    border-top-color: rgba(30, 41, 59, 0.8) !important;
+}
+
+body:not(.light-mode) #footer-legal-strip a.footer-link,
+body.dark-mode #footer-legal-strip a.footer-link,
+body:not(.light-mode) #footer-legal-strip .footer-policy-anchors a,
+body.dark-mode #footer-legal-strip .footer-policy-anchors a {
+    color: #94A3B8 !important;
+}
+
+body:not(.light-mode) #footer-legal-strip a.footer-link:hover,
+body.dark-mode #footer-legal-strip a.footer-link:hover,
+body:not(.light-mode) #footer-legal-strip .footer-policy-anchors a:hover,
+body.dark-mode #footer-legal-strip .footer-policy-anchors a:hover {
+    color: #FBBF24 !important;
+}
+
+body:not(.light-mode) #footer-legal-strip .footer-link-divider,
+body.dark-mode #footer-legal-strip .footer-link-divider,
+body:not(.light-mode) #footer-legal-strip .sih-divider,
+body.dark-mode #footer-legal-strip .sih-divider {
+    color: #64748B !important;
+}
+
+body:not(.light-mode) #footer-legal-strip .footer-last-updated-date,
+body.dark-mode #footer-legal-strip .footer-last-updated-date {
+    color: #F1F5F9 !important;
+}
+
+body:not(.light-mode) #footer-legal-strip .footer-visitor-counter,
+body.dark-mode #footer-legal-strip .footer-visitor-counter {
+    color: #FBBF24 !important;
+}
+
+body:not(.light-mode) #footer-legal-strip .sih-prototype-tag,
+body.dark-mode #footer-legal-strip .sih-prototype-tag {
+    background-color: rgba(245, 158, 11, 0.2) !important;
+    color: #FCD34D !important;
+    border: 1px solid rgba(245, 158, 11, 0.45) !important;
+}
+
+body:not(.light-mode) #footer-legal-strip .sih-prototype-brand,
+body.dark-mode #footer-legal-strip .sih-prototype-brand {
+    color: #F8FAFC !important;
+    font-weight: 700 !important;
+}
+
+body:not(.light-mode) #footer-legal-strip .sih-meta-segment,
+body.dark-mode #footer-legal-strip .sih-meta-segment {
+    color: #E2E8F0 !important;
+}
+
+body:not(.light-mode) #footer-legal-strip .sih-team-id,
+body.dark-mode #footer-legal-strip .sih-team-id,
+body:not(.light-mode) #footer-legal-strip .sih-ps-id,
+body.dark-mode #footer-legal-strip .sih-ps-id {
+    color: #FBBF24 !important;
+    font-weight: 800 !important;
+}
+
+body:not(.light-mode) #footer-legal-strip .sih-copyright-notice,
+body.dark-mode #footer-legal-strip .sih-copyright-notice {
+    color: #94A3B8 !important;
+}
+
+/* Dark Mode: Scoped fallback overrides inside #footer-legal-strip */
+body:not(.light-mode) #footer-legal-strip .text-slate-100,
+body.dark-mode #footer-legal-strip .text-slate-100,
+body:not(.light-mode) #footer-legal-strip .text-slate-200,
+body.dark-mode #footer-legal-strip .text-slate-200 {
+    color: #F8FAFC !important;
+}
+
+body:not(.light-mode) #footer-legal-strip .text-slate-300,
+body.dark-mode #footer-legal-strip .text-slate-300 {
+    color: #E2E8F0 !important;
+}
+
+body:not(.light-mode) #footer-legal-strip .text-slate-400,
+body.dark-mode #footer-legal-strip .text-slate-400,
+body:not(.light-mode) #footer-legal-strip .text-slate-500,
+body.dark-mode #footer-legal-strip .text-slate-500 {
+    color: #94A3B8 !important;
+}
+
+body:not(.light-mode) #footer-legal-strip .text-slate-600,
+body.dark-mode #footer-legal-strip .text-slate-600 {
+    color: #64748B !important;
+}
+
+/* --- PROTECT DARK MODALS & 3D HUD FROM LIGHT MODE INVERSION --- */
+body.light-mode #submit-modal .text-slate-200,
+body.light-mode #submit-modal .text-slate-300,
+body.light-mode #cap-modal .text-slate-200,
+body.light-mode #cap-modal .text-slate-300,
+body.light-mode #landslide-lockdown-modal .text-slate-200,
+body.light-mode #landslide-lockdown-modal .text-slate-300,
+body.light-mode #canvas-3d-container .text-slate-200,
+body.light-mode #canvas-3d-container .text-slate-300 {
+    color: #E2E8F0 !important;
+}
+
+body.light-mode #submit-modal .text-slate-400,
+body.light-mode #submit-modal .text-slate-500,
+body.light-mode #cap-modal .text-slate-400,
+body.light-mode #cap-modal .text-slate-500,
+body.light-mode #landslide-lockdown-modal .text-slate-400,
+body.light-mode #landslide-lockdown-modal .text-slate-500,
+body.light-mode #canvas-3d-container .text-slate-400,
+body.light-mode #canvas-3d-container .text-slate-500 {
+    color: #94A3B8 !important;
+}
+
+body.light-mode #submit-modal .text-white,
+body.light-mode #cap-modal .text-white,
+body.light-mode #landslide-lockdown-modal .text-white,
+body.light-mode #canvas-3d-container .text-white,
+body.light-mode #canvas-3d-container strong.text-white {
+    color: #FFFFFF !important;
+}
+
+body.light-mode #canvas-3d-container .text-blue-300 {
+    color: #93C5FD !important;
 }
 
 /* ========================================================================= */
@@ -867,11 +1160,451 @@ body.light-mode .statutory-signoff-copy {
     color: #1E3A5F !important;
 }
 
+/* ========================================================================= */
+/* PHASE 11B: UNIVERSAL RESPONSIVE & DEVICE-ADAPTIVE DESIGN SYSTEM           */
+/* Breakpoints: 320px, 360px, 375px, 390px, 412px, 480px, 600px, 768px,     */
+/*              820px, 1024px, 1200px, 1440px, 1920px, 2560px                */
+/* ========================================================================= */
+
+:root {
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+    --safe-left: env(safe-area-inset-left, 0px);
+    --safe-right: env(safe-area-inset-right, 0px);
+}
+
+/* Global Zero-Horizontal-Overflow Guard */
+html, body {
+    max-width: 100vw;
+    overflow-x: hidden;
+    box-sizing: border-box;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* Fluid Media Invariants */
+img, svg, video, canvas, audio, iframe, embed, object {
+    max-width: 100%;
+}
+
+/* Safe Area Insets for Mobile Devices */
+#system-header-bar {
+    padding-top: calc(0.375rem + var(--safe-top));
+    padding-left: calc(0.75rem + var(--safe-left));
+    padding-right: calc(0.75rem + var(--safe-right));
+}
+
+#top-accessibility-bar {
+    padding-top: var(--safe-top);
+    padding-left: calc(1rem + var(--safe-left));
+    padding-right: calc(1rem + var(--safe-right));
+}
+
+#citizen-floating-action-bar {
+    padding-bottom: calc(0.75rem + var(--safe-bottom));
+}
+
 #pahad-assistant-panel {
     bottom: calc(0.5rem + var(--safe-bottom));
     z-index: 99995 !important;
 }
 
+/* Container Defensiveness across Mobile Viewports */
+.dark-card,
+.kpi-card,
+#authority-view,
+#citizen-view,
+#authority-mode,
+#citizen-mode {
+    min-width: 0 !important;
+    max-width: 100% !important;
+}
 
+/* Mobile Touch Target Standards (WCAG 2.1 AA >= 40-44px) */
+@media (max-width: 767px) {
+    button:not(.btn-compact):not(.table-btn),
+    .role-tab,
+    .sev-pill,
+    select,
+    input[type="button"],
+    input[type="submit"] {
+        min-height: 40px;
+    }
 
+    /* Full Width Inputs and iOS Safari 16px Anti-Auto-Zoom */
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="number"],
+    input[type="password"],
+    input[type="search"],
+    select,
+    textarea {
+        font-size: 16px !important;
+        max-width: 100%;
+    }
+
+    /* Responsive Corridor Titles & Long Headings */
+    #pahad-ai-location,
+    .corridor-title,
+    #lbl-gis-title {
+        font-size: clamp(0.95rem, 4vw, 1.25rem) !important;
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
+
+    /* Table Container Responsiveness */
+    .overflow-x-auto {
+        max-width: 100% !important;
+        min-width: 0 !important;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior-x: contain;
+    }
+}
+
+/* Tablet (768px to 1199px) Optimization */
+@media (min-width: 768px) and (max-width: 1199px) {
+    .kpi-val {
+        font-size: clamp(1.75rem, 3.5vw, 2.25rem) !important;
+    }
+}
+
+/* Ultra-Wide Large Displays (1920px+) Invariant: Prevent Content Stretching */
+@media (min-width: 1920px) {
+    .max-w-7xl {
+        max-width: 1680px !important;
+    }
+    .kpi-card {
+        padding: 1.25rem !important;
+    }
+}
+
+@media (min-width: 2560px) {
+    .max-w-7xl {
+        max-width: 1920px !important;
+    }
+}
+
+/* Prefers-Reduced-Motion Invariant */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* NER State Boundaries & GIS Map Administrative Layer Typography */
+.ner-state-label-marker {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    pointer-events: none !important;
+}
+
+.ner-state-center-label {
+    display: inline-block;
+    color: #cbd5e1;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.95), 0 0 2px rgba(0, 0, 0, 0.9);
+    text-transform: uppercase;
+    white-space: nowrap;
+    opacity: 0.85;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+
+body.light-mode .ner-state-center-label {
+    color: #0f172a !important;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.9), 0 0 4px rgba(255, 255, 255, 0.85) !important;
+}
+
+/* On zoom out (< zoom 6), hide state centroid labels to prevent clutter */
+.ner-map-zoom-low .ner-state-center-label {
+    display: none !important;
+}
+
+.ner-state-tooltip {
+    background-color: #0f172a !important;
+    border: 1px solid #38bdf8 !important;
+    color: #f8fafc !important;
+    border-radius: 4px !important;
+    padding: 2px 6px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5) !important;
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 10px !important;
+}
+
+/* ========================================================================= */
+/* PHASE 11K1: MINIMAL LINE ICONS & SUBTLE ANIMATION POLISH                   */
+/* Restrained budget: 150ms-450ms, transform & opacity only, 0-layout shift  */
+/* ========================================================================= */
+
+/* Phosphor Webfont Definition & Alignment Standard */
+i[class*="ph-"],
+.ph,
+.ph-bold,
+.ph-regular {
+    font-family: 'Phosphor', 'Phosphor-Bold' !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    line-height: 1;
+    font-style: normal;
+    flex-shrink: 0;
+    speak: never;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Restrained Standard Icon Sizing */
+.icon-xs { font-size: 11px !important; }
+.icon-sm { font-size: 13px !important; }
+.icon-base { font-size: 15px !important; }
+.icon-lg { font-size: 18px !important; }
+.icon-xl { font-size: 22px !important; }
+
+/* Micro-Animation Keyframes: strictly 150-450ms, transform & opacity only */
+@keyframes microFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes microFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes microScaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Gentle, calm live-indicator breath (never frantic or neon flashing) */
+@keyframes calmLiveBreath {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.65;
+        transform: scale(1.04);
+    }
+}
+
+/* Single restrained risk-change pulse (applied on state change, not infinite loop) */
+@keyframes microRiskStatePulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 6px rgba(245, 158, 11, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(245, 158, 11, 0);
+    }
+}
+
+/* Graceful skeleton shimmer for async loading states */
+@keyframes microSkeletonFade {
+    0%, 100% { opacity: 0.35; }
+    50% { opacity: 0.75; }
+}
+
+.animate-micro-fade-in {
+    animation: microFadeIn 250ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-micro-fade-up {
+    animation: microFadeUp 300ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-micro-scale-in {
+    animation: microScaleIn 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Sequential KPI Entrance Staggers (< 500ms total) */
+.kpi-stagger-1 { animation: microFadeUp 280ms cubic-bezier(0.16, 1, 0.3, 1) 40ms backwards; }
+.kpi-stagger-2 { animation: microFadeUp 280ms cubic-bezier(0.16, 1, 0.3, 1) 90ms backwards; }
+.kpi-stagger-3 { animation: microFadeUp 280ms cubic-bezier(0.16, 1, 0.3, 1) 140ms backwards; }
+.kpi-stagger-4 { animation: microFadeUp 280ms cubic-bezier(0.16, 1, 0.3, 1) 190ms backwards; }
+
+/* Data Source Semantic Provenance Indicators */
+.micro-indicator-live,
+.status-indicator-live {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+.micro-indicator-live::before,
+.status-indicator-live::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #22C55E;
+    box-shadow: 0 0 4px rgba(34, 197, 94, 0.4);
+    animation: calmLiveBreath 2.4s ease-in-out infinite;
+}
+
+.micro-indicator-cached,
+.status-indicator-cached {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    opacity: 0.88;
+}
+.micro-indicator-cached::before,
+.status-indicator-cached::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #38BDF8;
+}
+
+.micro-indicator-demo,
+.micro-indicator-simulated,
+.status-indicator-demo,
+.status-indicator-simulated {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    letter-spacing: 0.05em;
+    font-weight: 700;
+}
+.micro-indicator-demo::before,
+.micro-indicator-simulated::before,
+.status-indicator-demo::before,
+.status-indicator-simulated::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 1px;
+    background-color: #F59E0B;
+}
+
+.micro-indicator-unavailable,
+.status-indicator-unavailable {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    opacity: 0.5;
+    filter: grayscale(1);
+}
+.micro-indicator-unavailable::before,
+.status-indicator-unavailable::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #64748B;
+}
+
+/* Button & Interactive Element Micro-Interactions */
+button:not(:disabled),
+.btn-micro,
+a.portal-choice-card,
+.eoc-nav-item,
+.portal-nav-link {
+    transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 180ms ease,
+                background-color 180ms ease,
+                border-color 180ms ease,
+                box-shadow 180ms ease !important;
+}
+
+button:not(:disabled):hover,
+.btn-micro:hover {
+    transform: translateY(-1px);
+}
+
+button:not(:disabled):active,
+.btn-micro:active {
+    transform: translateY(0) scale(0.99);
+}
+
+/* Restrained 1-2px icon micro-motion on hover */
+button:not(:disabled):hover i[class*="ph-"],
+.btn-micro:hover i[class*="ph-"],
+a.portal-nav-link:hover i[class*="ph-"],
+.eoc-nav-item:hover i[class*="ph-"] {
+    transform: translateY(-0.5px);
+    transition: transform 150ms ease;
+}
+
+button:not(:disabled):hover i.ph-arrow-right,
+button:not(:disabled):hover i.ph-bold.ph-arrow-right,
+a:hover i.ph-arrow-right,
+a:hover i.ph-bold.ph-arrow-right {
+    transform: translateX(2px) !important;
+    transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+button:not(:disabled):hover i.ph-arrows-clockwise,
+button:not(:disabled):hover i.ph-bold.ph-arrows-clockwise {
+    transform: rotate(45deg);
+    transition: transform 250ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Graceful Skeleton Loading */
+.micro-skeleton {
+    animation: microSkeletonFade 1.6s ease-in-out infinite;
+    background-color: rgba(148, 163, 184, 0.15);
+    border-radius: 4px;
+}
+body.light-mode .micro-skeleton {
+    background-color: rgba(15, 23, 42, 0.08);
+}
+
+/* Prefers-Reduced-Motion Invariant */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+        transform: none !important;
+    }
+    .micro-indicator-live,
+    .status-indicator-live,
+    .micro-indicator-live::before,
+    .status-indicator-live::before,
+    .micro-skeleton,
+    .animate-micro-fade-in,
+    .animate-micro-fade-up,
+    .animate-micro-scale-in,
+    .kpi-stagger-1,
+    .kpi-stagger-2,
+    .kpi-stagger-3,
+    .kpi-stagger-4 {
+        animation: none !important;
+        transition: none !important;
+        transform: none !important;
+        opacity: 1 !important;
+    }
+}
 

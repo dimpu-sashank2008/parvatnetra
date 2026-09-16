@@ -1,0 +1,486 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "title": "PARVAT NETRA \u2014 North Eastern Region 8 States Administrative Boundaries",
+    "source": "Survey of India / Census of India",
+    "provenance": "[HISTORICAL]",
+    "states_count": 8,
+    "crs": "EPSG:4326",
+    "bounds": [
+      88.01,
+      22.0,
+      97.4,
+      29.0
+    ]
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "IN-AR",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              91.6,
+              27.3
+            ],
+            [
+              92.1,
+              27.9
+            ],
+            [
+              93.5,
+              28.6
+            ],
+            [
+              95.0,
+              29.0
+            ],
+            [
+              96.8,
+              28.3
+            ],
+            [
+              97.4,
+              28.0
+            ],
+            [
+              96.0,
+              27.0
+            ],
+            [
+              94.0,
+              27.2
+            ],
+            [
+              92.0,
+              26.9
+            ],
+            [
+              91.6,
+              27.3
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Arunachal Pradesh",
+        "state_code": "IN-AR",
+        "capital": "Itanagar",
+        "centroid": [
+          27.75,
+          94.0
+        ],
+        "layer_group": "NER_STATE_BOUNDARIES",
+        "provenance": "[HISTORICAL]",
+        "source": "Survey of India / Census of India"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "IN-AS",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              89.7,
+              26.0
+            ],
+            [
+              90.5,
+              26.3
+            ],
+            [
+              92.0,
+              26.7
+            ],
+            [
+              93.5,
+              26.8
+            ],
+            [
+              95.5,
+              27.5
+            ],
+            [
+              95.9,
+              27.2
+            ],
+            [
+              94.5,
+              26.2
+            ],
+            [
+              93.0,
+              24.8
+            ],
+            [
+              92.5,
+              24.5
+            ],
+            [
+              92.0,
+              25.0
+            ],
+            [
+              90.5,
+              25.5
+            ],
+            [
+              89.7,
+              26.0
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Assam",
+        "state_code": "IN-AS",
+        "capital": "Dispur",
+        "centroid": [
+          26.0417,
+          92.4417
+        ],
+        "layer_group": "NER_STATE_BOUNDARIES",
+        "provenance": "[HISTORICAL]",
+        "source": "Survey of India / Census of India"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "IN-MN",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              93.05,
+              24.0
+            ],
+            [
+              93.4,
+              24.2
+            ],
+            [
+              93.7,
+              25.4
+            ],
+            [
+              94.5,
+              25.6
+            ],
+            [
+              94.6,
+              24.8
+            ],
+            [
+              94.3,
+              23.8
+            ],
+            [
+              93.2,
+              23.9
+            ],
+            [
+              93.05,
+              24.0
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Manipur",
+        "state_code": "IN-MN",
+        "capital": "Imphal",
+        "centroid": [
+          24.4625,
+          93.725
+        ],
+        "layer_group": "NER_STATE_BOUNDARIES",
+        "provenance": "[HISTORICAL]",
+        "source": "Survey of India / Census of India"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "IN-ML",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              89.85,
+              25.1
+            ],
+            [
+              91.8,
+              25.1
+            ],
+            [
+              92.8,
+              25.15
+            ],
+            [
+              92.75,
+              25.75
+            ],
+            [
+              91.85,
+              26.05
+            ],
+            [
+              90.5,
+              25.95
+            ],
+            [
+              89.85,
+              25.5
+            ],
+            [
+              89.85,
+              25.1
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Meghalaya",
+        "state_code": "IN-ML",
+        "capital": "Shillong",
+        "centroid": [
+          25.4625,
+          91.1562
+        ],
+        "layer_group": "NER_STATE_BOUNDARIES",
+        "provenance": "[HISTORICAL]",
+        "source": "Survey of India / Census of India"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "IN-MZ",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              92.25,
+              22.0
+            ],
+            [
+              92.6,
+              22.1
+            ],
+            [
+              93.3,
+              22.4
+            ],
+            [
+              93.4,
+              23.8
+            ],
+            [
+              93.0,
+              24.4
+            ],
+            [
+              92.5,
+              24.2
+            ],
+            [
+              92.3,
+              23.2
+            ],
+            [
+              92.25,
+              22.0
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Mizoram",
+        "state_code": "IN-MZ",
+        "capital": "Aizawl",
+        "centroid": [
+          23.0125,
+          92.7
+        ],
+        "layer_group": "NER_STATE_BOUNDARIES",
+        "provenance": "[HISTORICAL]",
+        "source": "Survey of India / Census of India"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "IN-NL",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              93.3,
+              25.5
+            ],
+            [
+              93.7,
+              25.6
+            ],
+            [
+              94.5,
+              26.2
+            ],
+            [
+              95.2,
+              26.9
+            ],
+            [
+              95.3,
+              26.5
+            ],
+            [
+              94.8,
+              25.7
+            ],
+            [
+              94.2,
+              25.2
+            ],
+            [
+              93.3,
+              25.5
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Nagaland",
+        "state_code": "IN-NL",
+        "capital": "Kohima",
+        "centroid": [
+          25.8875,
+          94.2875
+        ],
+        "layer_group": "NER_STATE_BOUNDARIES",
+        "provenance": "[HISTORICAL]",
+        "source": "Survey of India / Census of India"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "IN-SK",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              88.01,
+              27.08
+            ],
+            [
+              88.2,
+              27.15
+            ],
+            [
+              88.55,
+              27.1
+            ],
+            [
+              88.85,
+              27.2
+            ],
+            [
+              88.92,
+              27.45
+            ],
+            [
+              88.75,
+              27.85
+            ],
+            [
+              88.6,
+              28.12
+            ],
+            [
+              88.4,
+              28.0
+            ],
+            [
+              88.05,
+              27.75
+            ],
+            [
+              88.01,
+              27.08
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Sikkim",
+        "state_code": "IN-SK",
+        "capital": "Gangtok",
+        "centroid": [
+          27.478,
+          88.434
+        ],
+        "layer_group": "NER_STATE_BOUNDARIES",
+        "provenance": "[HISTORICAL]",
+        "source": "Survey of India / Census of India"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "IN-TR",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              91.15,
+              23.0
+            ],
+            [
+              91.5,
+              23.2
+            ],
+            [
+              92.2,
+              24.0
+            ],
+            [
+              92.3,
+              24.5
+            ],
+            [
+              92.0,
+              24.4
+            ],
+            [
+              91.3,
+              23.8
+            ],
+            [
+              91.15,
+              23.0
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Tripura",
+        "state_code": "IN-TR",
+        "capital": "Agartala",
+        "centroid": [
+          23.7,
+          91.6571
+        ],
+        "layer_group": "NER_STATE_BOUNDARIES",
+        "provenance": "[HISTORICAL]",
+        "source": "Survey of India / Census of India"
+      }
+    }
+  ]
+}
