@@ -1,7 +1,7 @@
 # PARVAT NETRA • REAL-TIME MULTIMODAL CRI DATASET REPORT
 **Evaluation Engine:** PAHAD AI Multimodal Fusion Engine v3.1  
-**Generated UTC:** 2026-09-16T08:26:57.581647+00:00  
-**Dataset SHA-256:** `b82884021744327f81f2fb2fd4ea8b79b1bad659b76dab661b96c946ca91d235`  
+**Generated UTC:** 2026-09-16T08:29:59.958074+00:00  
+**Dataset SHA-256:** `10acdd1fac95bd6d3243b2e6aa5dcc63f8f0b4e417184e33ff931c3ee7115b48`  
 **Filed Files:** `data/realtime/realtime_cri_dataset.csv`, `data/realtime/realtime_cri_dataset.json`  
 
 ---
