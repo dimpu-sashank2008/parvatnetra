@@ -3163,13 +3163,28 @@
                         </div>
                     </div>
                 </div>
-                <div class="px-4 py-2.5 flex flex-wrap justify-between items-center gap-2 bg-[#F8FAFC] border-t border-slate-200 rounded-b-md">
-                    <span class="text-[11px] text-slate-600">Basemap: Google Hybrid Satellite | WGS84 | EPSG:4326</span>
-                    <div class="flex items-center gap-3 text-[11px]">
-                        <span class="flex items-center gap-1"><span class="inline-block w-2 h-2 rounded-full bg-red-600"></span>RED</span>
-                        <span class="flex items-center gap-1"><span class="inline-block w-2 h-2 rounded-full bg-amber-500"></span>ORANGE</span>
-                        <span class="flex items-center gap-1"><span class="inline-block w-2 h-2 rounded-full bg-yellow-400"></span>YELLOW</span>
-                        <span class="flex items-center gap-1"><span class="inline-block w-2 h-2 rounded-full bg-emerald-500"></span>SAFE</span>
+                <div class="px-3 sm:px-4 py-2 sm:py-2.5 flex flex-wrap justify-between items-center gap-2 bg-[#F8FAFC] dark:bg-[#070B10] border-t border-slate-200 dark:border-slate-800 rounded-b-md text-[10px] sm:text-[11px]">
+                    <div class="flex items-center gap-2 text-slate-600 dark:text-slate-400">
+                        <span id="map-basemap-name" class="font-mono">Google Hybrid Satellite | WGS84 | EPSG:4326</span>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-3 sm:gap-4 font-mono">
+                        <!-- 5-Tier Risk Level Legend -->
+                        <div class="flex items-center gap-2">
+                            <span class="text-slate-400 uppercase font-bold text-[9px]">RISK:</span>
+                            <span class="flex items-center gap-1 text-slate-700 dark:text-slate-200"><span class="inline-block w-2 h-2 rounded-full bg-[#dc2626]"></span>EXTREME</span>
+                            <span class="flex items-center gap-1 text-slate-700 dark:text-slate-200"><span class="inline-block w-2 h-2 rounded-full bg-[#ea580c]"></span>VERY HIGH</span>
+                            <span class="flex items-center gap-1 text-slate-700 dark:text-slate-200"><span class="inline-block w-2 h-2 rounded-full bg-[#f97316]"></span>HIGH</span>
+                            <span class="flex items-center gap-1 text-slate-700 dark:text-slate-200"><span class="inline-block w-2 h-2 rounded-full bg-[#eab308]"></span>MODERATE</span>
+                            <span class="flex items-center gap-1 text-slate-700 dark:text-slate-200"><span class="inline-block w-2 h-2 rounded-full bg-[#10b981]"></span>LOW</span>
+                        </div>
+                        <!-- Provenance Ontology Legend -->
+                        <div class="flex items-center gap-1.5 border-l border-slate-300 dark:border-slate-700 pl-2 hidden md:flex text-[9px]">
+                            <span class="text-slate-400 uppercase font-bold">STATE:</span>
+                            <span class="px-1 py-0.2 rounded bg-emerald-950 text-emerald-300 border border-emerald-800">[LIVE]</span>
+                            <span class="px-1 py-0.2 rounded bg-rose-950 text-rose-300 border border-rose-800">[HISTORICAL]</span>
+                            <span class="px-1 py-0.2 rounded bg-sky-950 text-sky-300 border border-sky-800">[MODELLED]</span>
+                            <span class="px-1 py-0.2 rounded bg-amber-950 text-amber-300 border border-amber-800">[SIMULATED]</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -14186,6 +14201,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     <!-- Voice Assistant Client Controller Script -->
     <script src="/static/js/pahad_voice_assistant.js"></script>
+
+    <!-- Phase 12: GIS Hazard Map Temporal Animation & Dynamic Risk Halo -->
+    <script src="/static/js/pahad_gis_animation.js"></script>
 
 </body>
 </html>

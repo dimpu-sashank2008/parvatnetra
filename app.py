@@ -5920,6 +5920,29 @@ def api_pahad_location_risk():
     except Exception as e:
         logger.error(f"[LOCATION-RISK] Error in /api/pahad/location-risk: {e}", exc_info=True)
         return jsonify({"status": "ERROR", "message": str(e)}), 500
+@app.route("/api/pahad/temporal-risk", methods=["GET"])
+def api_pahad_temporal_risk():
+    """
+    GET /api/pahad/temporal-risk
+    Phase 12 GIS Hazard Animation & Temporal Evolution Endpoint.
+    Returns multi-step temporal risk states, dynamic halo geometry, and calibrated
+    scenarios for Leaflet map animation.
+    
+    Query params:
+      corridor_id / sector_id: Canonical corridor identifier (default: SK-NH10-KM48)
+      mode: 'live' (default), 'scenario' (physics drill), or 'historical' (archival event)
+    """
+    try:
+        corridor_id = request.args.get("corridor_id") or request.args.get("sector_id") or "SK-NH10-KM48"
+        mode = request.args.get("mode", "live")
+        from engine.pahad_gis_animation import get_corridor_temporal_risk
+        data = get_corridor_temporal_risk(corridor_id=corridor_id, mode=mode)
+        return jsonify(data), 200
+    except KeyError as ke:
+        return jsonify({"status": "ERROR", "message": str(ke)}), 404
+    except Exception as exc:
+        logger.error(f"[TEMPORAL-RISK] Error in /api/pahad/temporal-risk: {exc}", exc_info=True)
+        return jsonify({"status": "ERROR", "message": str(exc)}), 500
 
 
 # =============================================================================
