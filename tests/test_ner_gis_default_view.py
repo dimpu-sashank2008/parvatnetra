@@ -116,3 +116,35 @@ def test_css_styling_for_ner_labels():
     assert ".ner-state-center-label" in css
     assert ".ner-state-label-marker" in css
     assert ".ner-map-zoom-low" in css
+
+def test_view_state_and_polling_stability():
+    """Verify map view state tracking and polling isolation."""
+    idx_path = os.path.join(os.path.dirname(__file__), "..", "templates", "index.html")
+    with open(idx_path, "r", encoding="utf-8") as f:
+        html = f.read()
+
+    assert "window.pahadMapViewState = 'INITIAL_VIEW';" in html
+    assert "window.pahadMapViewState = 'NER_OVERVIEW';" in html
+    assert "window.pahadMapViewState = 'CORRIDOR_VIEW';" in html
+    # Background polling MUST pass false to onCorridorSelectionChanged
+    assert "await onCorridorSelectionChanged(window.currentSelectedSectorId, false);" in html
+
+def test_animation_zoom_suppression():
+    """Verify GIS animation controller respects shouldZoom and does not auto-pan."""
+    js_path = os.path.join(os.path.dirname(__file__), "..", "static", "js", "pahad_gis_animation.js")
+    with open(js_path, "r", encoding="utf-8") as f:
+        js = f.read()
+
+    assert "self.onCorridorChanged(sectorId, shouldZoom);" in js
+    assert "onCorridorChanged(sectorId, shouldZoom = false)" in js
+    assert "this.loadCorridorData(sectorId, 'live', shouldZoom === true);" in js
+
+def test_reset_view_closes_popups_and_fits_ner():
+    """Verify reset control closes popups and applies regional bounding box."""
+    idx_path = os.path.join(os.path.dirname(__file__), "..", "templates", "index.html")
+    with open(idx_path, "r", encoding="utf-8") as f:
+        html = f.read()
+
+    assert "window.map.closePopup()" in html
+    assert "maxZoom: 7" in html
+

@@ -1,48 +1,24 @@
 {
   "data": [
     {
-      "event_id": "SIM-EQ-NER-01",
-      "origin_time": "2026-09-16T01:06:35.131103+00:00",
-      "latitude": 27.42,
-      "longitude": 88.58,
-      "depth_km": 12.5,
-      "magnitude": 5.2,
-      "region": "North Sikkim - Chungthang Fault Zone",
-      "review_status": "CALIBRATED_SIMULATION",
-      "source": "PAHAD Himalayan Seismic Simulator",
-      "provenance": "DEMO"
-    },
-    {
-      "event_id": "SIM-EQ-NER-02",
-      "origin_time": "2026-09-16T01:06:35.131103+00:00",
-      "latitude": 26.85,
-      "longitude": 89.12,
-      "depth_km": 18.0,
-      "magnitude": 3.8,
-      "region": "Bhutan-Assam Foothills (Main Boundary Thrust)",
-      "review_status": "CALIBRATED_SIMULATION",
-      "source": "PAHAD Himalayan Seismic Simulator",
-      "provenance": "DEMO"
-    },
-    {
-      "event_id": "SIM-EQ-NER-03",
-      "origin_time": "2026-09-16T01:06:35.131103+00:00",
-      "latitude": 25.68,
-      "longitude": 91.85,
-      "depth_km": 25.0,
-      "magnitude": 3.4,
-      "region": "Shillong Plateau Microseismic Swarm",
-      "review_status": "CALIBRATED_SIMULATION",
-      "source": "PAHAD Himalayan Seismic Simulator",
-      "provenance": "DEMO"
+      "event_id": "us7000tgq0",
+      "origin_time": "2026-09-11T17:56:20.821000+00:00",
+      "latitude": 26.3827,
+      "longitude": 96.6409,
+      "depth_km": 123.2,
+      "magnitude": 4.2,
+      "region": "25 km NW of Sarupathar, India",
+      "review_status": "REVIEWED",
+      "source": "USGS Earthquake Hazards Program",
+      "provenance": "LIVE"
     }
   ],
-  "fetched_at": 1789520795.1311033,
+  "fetched_at": 1789547100.6532552,
   "ttl": 300,
   "meta": {
-    "source": "PAHAD Himalayan Seismic Simulator",
+    "source": "USGS Earthquake Hazards Program",
     "provenance": "[LIVE]",
-    "stored_at": "2026-09-16T01:06:35Z",
+    "stored_at": "2026-09-16T08:25:00Z",
     "ttl": 300
   }
 }

@@ -1,0 +1,39 @@
+{
+  "manifest_version": "1.0.0",
+  "phase": "PHASE_12D",
+  "timestamp_utc": "2026-09-16T07:42:12.013979+00:00",
+  "git_commit": "dd9e57dc6452e0a70ad98731de0c536af8e50cb0",
+  "verdict": "PHASE12D_PASS_WITH_LIMITATIONS",
+  "temporal_model_policy": {
+    "recurrent_lstm_gru": "NOT_TRAINED / PHYSICS-INFORMED TEMPORAL SURROGATE",
+    "training_gate": "DATA_COLLECTION_REQUIRED",
+    "operational_classifier": "TRAINED_LIMITED_DATA / RESEARCH PROTOTYPE"
+  },
+  "safety_invariants": {
+    "ENABLE_PUBLIC_DISPATCH": 0,
+    "SIREN_DRY_RUN": 1,
+    "CAP_PRODUCTION_DISPATCH": 0,
+    "SACHET_PRODUCTION_DISPATCH": 0,
+    "CELL_BROADCAST_PRODUCTION": 0,
+    "PUBLIC_DEMO_TEST_ONLY": 1,
+    "VOICE_ASSISTANT_ACTUATION": "STRICTLY_REJECTED (DMA 2005)"
+  },
+  "test_suite_results": {
+    "phase_12d_judge_matrix": "7 / 7 PASSED (40 questions validated)",
+    "phase_12d_scientific_attacks": "9 / 9 PASSED (13 scenarios validated)",
+    "phase_12d_security_attacks": "8 / 8 PASSED (RBAC & injection defense validated)",
+    "phase_12d_failure_drills": "5 / 5 PASSED (7 outage stages validated)",
+    "total_phase12d_tests": "29 / 29 PASSED"
+  },
+  "artifact_checksums": {
+    "PHASE12D_BASELINE_AUDIT.md": "27b3d64d8d5762b3942037338e139f4dd7a27bd3e24eb23f6e7fa79ee8ca8200",
+    "PHASE12D_ADVERSARIAL_JUDGE_REPORT.md": "6cdbb407f0b6804ad55447a78b6fbc6c77850dc3773af9cc23e1af0c6f45e495",
+    "PHASE12D_SCIENTIFIC_ATTACK_MATRIX.md": "f1565216af19709d7cc0f0f0303f3697817f08103e4aad55091a339cc8f79a61",
+    "PHASE12D_SECURITY_ATTACK_MATRIX.md": "51b4dc51e23561e0593103c946656bfa222b07f49aafe962bbd82da2694f8b5b",
+    "PHASE12D_FAILURE_DRILL_REPORT.md": "f035dadc6c3d628a24718811e0a08ed13cfc2e868424ba52a47e3921b0757b2b",
+    "PHASE12D_ROLE_SEPARATION_REPORT.md": "279b8b0625fa6a2edc5f168d7b94a1a0b920ef7b1f9f4c57f9c7df6bb1e11555",
+    "PHASE12D_GIS_DEMO_REPORT.md": "5dd36e0aad85285cdbb5def8df73096567a5e4768e92cceda6bf477963e66c6e",
+    "PHASE12D_MASTER_DEMO_RUNBOOK.md": "10a1763d9cf73dda273586fae99983745458d166785e3877d3e05cfa99c999bc",
+    "engine/pahad_adversarial_defense.py": "eff716fcafe39820a28b26c149c3de0667463121a4c4c5883777f3275baee00b"
+  }
+}

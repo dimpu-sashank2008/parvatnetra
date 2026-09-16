@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """
 tests/test_gis_hazard_animation.py
 ===================================
@@ -241,8 +241,34 @@ class TestGisHazardAnimationFrontendContracts:
         assert "anim-telemetry-bar" in content
         assert "showExplanationModal" in content
 
+    def test_collapsible_timeline_widget_contracts(self):
+        """Verify timeline widget is collapsible, avoids Leaflet layers button overlap, and persists state."""
+        for rel_path in [os.path.join("static", "js", "pahad_gis_animation.js"),
+                         os.path.join("public", "static", "js", "pahad_gis_animation.js")]:
+            assert os.path.exists(rel_path)
+            with open(rel_path, "r", encoding="utf-8") as f:
+                content = f.read()
+
+            # Collapsible structural elements
+            assert "anim-widget-body" in content
+            assert "btn-anim-collapse" in content
+            assert "anim-collapse-icon" in content
+            assert "anim-collapsed-summary" in content
+
+            # Controller methods for collapsing
+            assert "toggleCollapse" in content
+            assert "updateCollapseUI" in content
+            assert "updateCollapsedSummary" in content
+
+            # State persistence
+            assert "pahad_gis_anim_collapsed" in content
+
+            # Offset positioning avoiding Leaflet bottom-left layer control overlap (36px width + 10px margin)
+            assert "left-[54px]" in content
+
     def test_safety_invariants_preserved(self):
         """Verify safety environment variables remain strictly fail-closed."""
         assert os.environ.get("ENABLE_PUBLIC_DISPATCH", "0") == "0"
         assert os.environ.get("SIREN_DRY_RUN", "1") == "1"
         assert os.environ.get("CAP_PRODUCTION_DISPATCH", "0") == "0"
+

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * static/js/pahad_gis_animation.js
  * ================================
  * PARVAT NETRA • PAHAD AI — Temporal GIS Hazard Map Animation & Dynamic Risk Halo
@@ -36,7 +36,7 @@
 
             // State
             this.prefersReducedMotion = false;
-            this._boundOnCorridorChanged = this.onCorridorChanged.bind(this);
+            this.isCollapsed = false;
         }
 
         init(leafletMap) {
@@ -65,6 +65,11 @@
             this.injectStyles();
             this.createTimelineWidget();
             this.hookCorridorSelection();
+
+            try {
+                this.isCollapsed = localStorage.getItem('pahad_gis_anim_collapsed') === '1';
+                this.updateCollapseUI();
+            } catch (_) {}
 
             // Initial load for active corridor
             const activeId = window.currentSelectedSectorId || 'SK-NH10-KM48';
@@ -114,12 +119,14 @@
                     box-shadow: 0 4px 20px rgba(0,0,0,0.45);
                     backdrop-filter: blur(8px);
                 }
+                #anim-widget-header:hover #anim-widget-title {
+                    color: #38bdf8;
+                }
             `;
             document.head.appendChild(style);
         }
 
         hookCorridorSelection() {
-            // Wrap existing window.onCorridorSelectionChanged if defined
             const existingHandler = window.onCorridorSelectionChanged;
             const self = this;
             window.onCorridorSelectionChanged = async function(sectorId, shouldZoom = true) {
@@ -130,16 +137,18 @@
                         console.warn('[GIS-ANIM] Wrapped handler error:', err);
                     }
                 }
-                self.onCorridorChanged(sectorId);
+                self.onCorridorChanged(sectorId, shouldZoom);
             };
         }
 
-        onCorridorChanged(sectorId) {
+        onCorridorChanged(sectorId, shouldZoom = false) {
             if (!sectorId) return;
-            this.pause();
-            this.currentCorridorId = sectorId;
-            // Always return to live mode when changing corridor to preserve authoritative current risk
-            this.loadCorridorData(sectorId, 'live', true);
+            const isDifferent = sectorId !== this.currentCorridorId;
+            if (isDifferent) {
+                this.pause();
+                this.currentCorridorId = sectorId;
+                this.loadCorridorData(sectorId, 'live', shouldZoom === true);
+            }
         }
 
         async loadCorridorData(corridorId, mode = 'live', flyTo = false) {
@@ -171,9 +180,11 @@
                         }
                     } catch (_) {}
                 }
+                return data;
             } catch (err) {
                 console.error('[GIS-ANIM] Failed to load temporal risk data:', err);
                 this.renderErrorState(err.message);
+                throw err;
             } finally {
                 this.updateLoadingState(false);
             }
@@ -187,77 +198,165 @@
 
             const widget = document.createElement('div');
             widget.id = 'pahad-gis-timeline-control';
-            widget.className = 'absolute bottom-3 left-3 sm:left-4 z-[450] bg-[#070B10]/95 border border-[#1E293B] rounded-md p-2.5 sm:p-3 text-white max-w-[340px] sm:max-w-[380px] w-[calc(100%-24px)] transition-all select-none';
+            widget.className = 'absolute bottom-3 left-[54px] sm:left-[58px] z-[450] bg-[#070B10]/95 border border-[#1E293B] rounded-md p-2 sm:p-2.5 text-white max-w-[340px] sm:max-w-[380px] w-[calc(100%-70px)] transition-all select-none shadow-2xl';
             widget.innerHTML = `
-                <div class="flex items-center justify-between gap-2 border-b border-slate-800/80 pb-1.5 mb-2">
+                <!-- Header (Clickable to toggle collapse) -->
+                <div id="anim-widget-header" class="flex items-center justify-between gap-2 cursor-pointer pb-1.5 border-b border-slate-800/80 transition-colors" title="Click to collapse/expand timeline">
                     <div class="flex items-center gap-1.5 min-w-0">
-                        <i class="ph-bold ph-chart-polar text-sky-400 text-xs"></i>
-                        <span class="text-[10px] sm:text-[11px] font-black tracking-wider uppercase text-slate-200 truncate" id="anim-widget-title">RISK EVOLUTION</span>
+                        <i class="ph-bold ph-chart-polar text-sky-400 text-xs shrink-0"></i>
+                        <span class="text-[10px] sm:text-[11px] font-black tracking-wider uppercase text-slate-200 shrink-0" id="anim-widget-title">RISK EVOLUTION</span>
+                        <span id="anim-collapsed-summary" class="hidden text-[9px] font-mono font-bold text-slate-300 truncate max-w-[200px]"></span>
                     </div>
-                    <div class="flex items-center gap-1.5">
+                    <div class="flex items-center gap-1.5 shrink-0">
                         <span id="anim-provenance-badge" class="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800">[LIVE]</span>
+                        <button type="button" id="btn-anim-collapse" class="p-0.5 sm:p-1 rounded text-slate-400 hover:text-white hover:bg-slate-800/70 transition flex items-center justify-center focus:outline-none focus:ring-1 focus:ring-sky-500" title="Collapse timeline" aria-label="Collapse timeline control" aria-expanded="true">
+                            <i id="anim-collapse-icon" class="ph-bold ph-caret-down text-xs"></i>
+                        </button>
                     </div>
                 </div>
 
-                <!-- Mode Switcher (Live vs Scenario vs Historical) -->
-                <div class="flex items-center gap-1 mb-2">
-                    <button type="button" id="btn-anim-mode-live" onclick="window.PahadGisAnimation.switchMode('live')" class="flex-1 py-1 px-2 text-[10px] font-bold rounded bg-sky-950 text-sky-200 border border-sky-600 transition" title="Inspect Authoritative Live Runtime State">
-                        LIVE NOW
-                    </button>
-                    <button type="button" id="btn-anim-mode-scen" onclick="window.PahadGisAnimation.switchMode('scenario')" class="flex-1 py-1 px-2 text-[10px] font-bold rounded bg-slate-900 text-slate-400 border border-slate-700 hover:text-white transition" title="Play Physics-Calibrated Monsoon Failure Drill">
-                        SCENARIO DRILL
-                    </button>
-                    <button type="button" id="btn-anim-mode-hist" onclick="window.PahadGisAnimation.switchMode('historical')" class="py-1 px-2 text-[10px] font-bold rounded bg-slate-900 text-slate-400 border border-slate-700 hover:text-white transition hidden" title="Inspect Documented Historical Event">
-                        HISTORICAL
-                    </button>
-                </div>
+                <!-- Collapsible Body -->
+                <div id="anim-widget-body" class="mt-2 space-y-2 transition-all">
+                    <!-- Mode Switcher (Live vs Scenario vs Historical) -->
+                    <div class="flex items-center gap-1">
+                        <button type="button" id="btn-anim-mode-live" onclick="window.PahadGisAnimation.switchMode('live')" class="flex-1 py-1 px-2 text-[10px] font-bold rounded bg-sky-950 text-sky-200 border border-sky-600 transition" title="Inspect Authoritative Live Runtime State">
+                            LIVE NOW
+                        </button>
+                        <button type="button" id="btn-anim-mode-scen" onclick="window.PahadGisAnimation.switchMode('scenario')" class="flex-1 py-1 px-2 text-[10px] font-bold rounded bg-slate-900 text-slate-400 border border-slate-700 hover:text-white transition" title="Play Physics-Calibrated Monsoon Failure Drill">
+                            SCENARIO DRILL
+                        </button>
+                        <button type="button" id="btn-anim-mode-hist" onclick="window.PahadGisAnimation.switchMode('historical')" class="py-1 px-2 text-[10px] font-bold rounded bg-slate-900 text-slate-400 border border-slate-700 hover:text-white transition hidden" title="Inspect Documented Historical Event">
+                            HISTORICAL
+                        </button>
+                    </div>
 
-                <!-- Telemetry Readout Bar -->
-                <div id="anim-telemetry-bar" class="grid grid-cols-4 gap-1.5 p-1.5 bg-[#0A101D] border border-slate-800 rounded mb-2 font-mono text-center">
-                    <div>
-                        <span class="text-[8px] uppercase text-slate-500 block">TIME</span>
-                        <strong id="anim-val-time" class="text-[10px] text-slate-200 font-bold">NOW</strong>
+                    <!-- Telemetry Readout Bar -->
+                    <div id="anim-telemetry-bar" class="grid grid-cols-4 gap-1.5 p-1.5 bg-[#0A101D] border border-slate-800 rounded font-mono text-center">
+                        <div>
+                            <span class="text-[8px] uppercase text-slate-500 block">TIME</span>
+                            <strong id="anim-val-time" class="text-[10px] text-slate-200 font-bold">NOW</strong>
+                        </div>
+                        <div>
+                            <span class="text-[8px] uppercase text-slate-500 block">CRI</span>
+                            <strong id="anim-val-cri" class="text-[10px] text-sky-400 font-bold">--</strong>
+                        </div>
+                        <div>
+                            <span class="text-[8px] uppercase text-slate-500 block">FoS</span>
+                            <strong id="anim-val-fos" class="text-[10px] text-amber-400 font-bold">--</strong>
+                        </div>
+                        <div>
+                            <span class="text-[8px] uppercase text-slate-500 block">BAND</span>
+                            <strong id="anim-val-band" class="text-[9px] text-emerald-400 font-bold">--</strong>
+                        </div>
                     </div>
-                    <div>
-                        <span class="text-[8px] uppercase text-slate-500 block">CRI</span>
-                        <strong id="anim-val-cri" class="text-[10px] text-sky-400 font-bold">--</strong>
-                    </div>
-                    <div>
-                        <span class="text-[8px] uppercase text-slate-500 block">FoS</span>
-                        <strong id="anim-val-fos" class="text-[10px] text-amber-400 font-bold">--</strong>
-                    </div>
-                    <div>
-                        <span class="text-[8px] uppercase text-slate-500 block">BAND</span>
-                        <strong id="anim-val-band" class="text-[9px] text-emerald-400 font-bold">--</strong>
-                    </div>
-                </div>
 
-                <!-- Step Buttons & Play/Pause -->
-                <div class="flex items-center gap-1.5">
-                    <button type="button" id="btn-anim-play" onclick="window.PahadGisAnimation.togglePlay()" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-white rounded text-[10px] font-bold border border-slate-600 flex items-center gap-1 shrink-0" aria-label="Play or pause hazard evolution">
-                        <i id="anim-play-icon" class="ph-bold ph-play"></i>
-                        <span id="anim-play-label">Play</span>
-                    </button>
-                    <div id="anim-steps-container" class="flex items-center gap-1 flex-grow overflow-x-auto">
-                        <!-- Rendered dynamically -->
+                    <!-- Step Buttons & Play/Pause -->
+                    <div class="flex items-center gap-1.5">
+                        <button type="button" id="btn-anim-play" onclick="window.PahadGisAnimation.togglePlay()" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-white rounded text-[10px] font-bold border border-slate-600 flex items-center gap-1 shrink-0" aria-label="Play or pause hazard evolution">
+                            <i id="anim-play-icon" class="ph-bold ph-play"></i>
+                            <span id="anim-play-label">Play</span>
+                        </button>
+                        <div id="anim-steps-container" class="flex items-center gap-1 flex-grow overflow-x-auto">
+                            <!-- Rendered dynamically -->
+                        </div>
                     </div>
                 </div>
             `;
 
-            // Prevent map dragging / zooming when clicking widget
+            const header = widget.querySelector('#anim-widget-header');
+            if (header) {
+                header.addEventListener('click', (e) => {
+                    this.toggleCollapse(e);
+                });
+            }
+
             if (window.L && window.L.DomEvent) {
                 window.L.DomEvent.disableClickPropagation(widget);
                 window.L.DomEvent.disableScrollPropagation(widget);
             }
 
             mapContainer.appendChild(widget);
+            this.updateCollapseUI();
+        }
+
+        toggleCollapse(e) {
+            if (e && typeof e.stopPropagation === 'function') {
+                e.stopPropagation();
+            }
+            this.isCollapsed = !this.isCollapsed;
+            try {
+                localStorage.setItem('pahad_gis_anim_collapsed', this.isCollapsed ? '1' : '0');
+            } catch (_) {}
+            this.updateCollapseUI();
+        }
+
+        updateCollapseUI() {
+            const widget = document.getElementById('pahad-gis-timeline-control');
+            const header = document.getElementById('anim-widget-header');
+            const body = document.getElementById('anim-widget-body');
+            const icon = document.getElementById('anim-collapse-icon');
+            const btn = document.getElementById('btn-anim-collapse');
+            const summary = document.getElementById('anim-collapsed-summary');
+
+            if (!widget || !body) return;
+
+            if (this.isCollapsed) {
+                body.classList.add('hidden');
+                if (header) {
+                    header.classList.remove('border-b', 'border-slate-800/80', 'pb-1.5');
+                    header.setAttribute('title', 'Click to expand timeline');
+                }
+                widget.classList.remove('w-[calc(100%-70px)]');
+                widget.classList.add('w-auto', 'max-w-[440px]');
+                if (icon) icon.className = 'ph-bold ph-caret-up text-xs';
+                if (btn) {
+                    btn.title = 'Expand timeline';
+                    btn.setAttribute('aria-label', 'Expand timeline control');
+                    btn.setAttribute('aria-expanded', 'false');
+                }
+                if (summary) {
+                    summary.classList.remove('hidden');
+                }
+                this.updateCollapsedSummary();
+            } else {
+                body.classList.remove('hidden');
+                if (header) {
+                    header.classList.add('border-b', 'border-slate-800/80', 'pb-1.5');
+                    header.setAttribute('title', 'Click to collapse timeline');
+                }
+                widget.classList.remove('w-auto', 'max-w-[440px]');
+                widget.classList.add('w-[calc(100%-70px)]');
+                if (icon) icon.className = 'ph-bold ph-caret-down text-xs';
+                if (btn) {
+                    btn.title = 'Collapse timeline';
+                    btn.setAttribute('aria-label', 'Collapse timeline control');
+                    btn.setAttribute('aria-expanded', 'true');
+                }
+                if (summary) {
+                    summary.classList.add('hidden');
+                }
+            }
+        }
+
+        updateCollapsedSummary() {
+            const summary = document.getElementById('anim-collapsed-summary');
+            if (!summary) return;
+            if (this.temporalData && Array.isArray(this.temporalData.timeline) && this.temporalData.timeline.length > 0) {
+                const step = this.temporalData.timeline[this.currentStepIndex] || this.temporalData.timeline[0];
+                if (step) {
+                    const criStr = Number.isFinite(step.cri) ? step.cri.toFixed(1) : '--';
+                    const band = step.risk_band || 'LOW';
+                    summary.innerHTML = `<span class="text-slate-500 font-normal">|</span> <span style="color:${step.color || '#38bdf8'}">${step.label}: CRI ${criStr} [${band}]</span>`;
+                    return;
+                }
+            }
+            summary.innerHTML = '';
         }
 
         renderWidgetContent() {
             if (!this.temporalData) return;
             const data = this.temporalData;
 
-            // Mode indicator and buttons
             const liveBtn = document.getElementById('btn-anim-mode-live');
             const scenBtn = document.getElementById('btn-anim-mode-scen');
             const histBtn = document.getElementById('btn-anim-mode-hist');
@@ -294,7 +393,6 @@
                 }
             }
 
-            // Steps buttons
             const stepsContainer = document.getElementById('anim-steps-container');
             if (stepsContainer && Array.isArray(data.timeline)) {
                 stepsContainer.innerHTML = data.timeline.map((step, idx) => {
@@ -310,7 +408,6 @@
                 }).join('');
             }
 
-            // Play button availability (only for multi-step timelines)
             if (playBtn) {
                 if (!data.timeline || data.timeline.length <= 1) {
                     playBtn.disabled = true;
@@ -320,6 +417,7 @@
                     playBtn.classList.remove('opacity-50', 'cursor-not-allowed');
                 }
             }
+            this.updateCollapsedSummary();
         }
 
         applyCurrentStepVisuals() {
@@ -331,7 +429,6 @@
             const step = timeline[this.currentStepIndex];
             if (!step) return;
 
-            // 1. Update Telemetry Readout Bar
             const timeEl = document.getElementById('anim-val-time');
             const criEl = document.getElementById('anim-val-cri');
             const fosEl = document.getElementById('anim-val-fos');
@@ -350,8 +447,8 @@
                 bandEl.textContent = step.risk_band || 'LOW';
                 bandEl.style.color = step.color || '#34d399';
             }
+            this.updateCollapsedSummary();
 
-            // 2. Update active step button styling
             const stepsContainer = document.getElementById('anim-steps-container');
             if (stepsContainer) {
                 const buttons = stepsContainer.querySelectorAll('button');
@@ -364,7 +461,6 @@
                 });
             }
 
-            // 3. Render / Update Leaflet Hazard-Field Halo & Core
             const lat = this.temporalData.latitude;
             const lon = this.temporalData.longitude;
             if (!lat || !lon || !window.L) return;
@@ -374,7 +470,6 @@
             const opacity = step.halo_opacity || 0.35;
             const band = step.risk_band || 'LOW';
 
-            // Determine CSS pulse class
             let pulseClass = 'pahad-anim-halo-low';
             if (!this.prefersReducedMotion) {
                 if (band === 'EXTREME') pulseClass = 'pahad-anim-halo-extreme';
@@ -382,7 +477,6 @@
                 else if (band === 'MODERATE') pulseClass = 'pahad-anim-halo-moderate';
             }
 
-            // Outer Diffuse Halo Layer
             if (!this.haloCircle) {
                 this.haloCircle = window.L.circle([lat, lon], {
                     radius: radiusM,
@@ -412,7 +506,6 @@
                 this.haloCircle.setTooltipContent(`<b>${this.temporalData.corridor_name}</b><br>State: ${step.label}<br>CRI: ${step.cri} [${step.risk_band}]<br><span style="font-size:9px;color:#38bdf8">Click to inspect causal breakdown</span>`);
             }
 
-            // Inner Critical Core Zone Layer
             const coreRadius = Math.max(80, Math.round(radiusM * 0.35));
             if (!this.coreCircle) {
                 this.coreCircle = window.L.circle([lat, lon], {
@@ -440,7 +533,6 @@
         }
 
         showExplanationModal(step) {
-            // Links directly to Section 13: Answers "WHY IS THIS ZONE CHANGING?"
             const name = this.temporalData.corridor_name;
             const cri = step.cri;
             const fos = step.fos;
@@ -448,27 +540,10 @@
             const band = step.risk_band;
             const prov = step.provenance || '[LIVE]';
 
-            let msg = `<b>${name}</b><br>` +
-                      `<b>Status:</b> ${step.label} (${prov})<br>` +
-                      `<b>Composite Risk Index (CRI):</b> ${cri} / 100 [${band}]<br>` +
-                      `<b>Physical Factor of Safety (FoS):</b> ${fos}<br>` +
-                      `<b>Rainfall Stress:</b> ${rain} mm/24h<br><br>` +
-                      `<b>PRIMARY CONTRIBUTING SIGNALS:</b><br>`;
-
-            if (Array.isArray(step.drivers)) {
-                step.drivers.forEach((d) => {
-                    msg += `• ${d.feature} &rarr; <i>${d.direction}</i><br>`;
-                });
-            } else {
-                msg += `• Dynamic pore water infiltration<br>• Colluvium shear plane stress<br>`;
-            }
-
-            // If toast or notification system exists, display it; also focus Decision Card
             if (typeof window.showToast === 'function') {
                 window.showToast(`Inspecting Hazard Zone: ${name} (CRI: ${cri}, FoS: ${fos})`, 'info');
             }
 
-            // Update Decision Intelligence Card with this step's evidence
             const cardZone = document.getElementById('card-zone-title');
             const cardSub = document.getElementById('card-zone-sub');
             const cardBadge = document.getElementById('card-risk-badge');
@@ -486,7 +561,6 @@
                 cardDriver.textContent = `${step.drivers[0].feature} [${step.drivers[0].direction}]`;
             }
 
-            // Also open Leaflet popup
             if (this.haloCircle) {
                 this.haloCircle.bindPopup(`
                     <div style="font-size:11px;font-family:Inter,sans-serif;line-height:1.4;min-width:210px;">
@@ -510,9 +584,9 @@
         }
 
         switchMode(mode) {
-            if (this.currentMode === mode) return;
+            if (this.currentMode === mode) return Promise.resolve(this.temporalData);
             this.pause();
-            this.loadCorridorData(this.currentCorridorId, mode, false);
+            return this.loadCorridorData(this.currentCorridorId, mode, false);
         }
 
         goToStep(stepIndex) {
@@ -593,7 +667,6 @@
         if (window.map && typeof window.map.getCenter === 'function') {
             window.PahadGisAnimation.init(window.map);
         } else {
-            // Retry briefly if Leaflet map is still mounting
             let retries = 0;
             const timer = setInterval(() => {
                 retries++;

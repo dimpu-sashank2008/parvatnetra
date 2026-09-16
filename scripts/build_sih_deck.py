@@ -132,7 +132,7 @@ def create_deck():
     p1.font.color.rgb = COLOR_DEEP_BLUE
 
     p2 = tf_hero.add_paragraph()
-    p2.text = "Autonomous national disaster-intelligence platform correlating physical Mohr-Coulomb geotechnical mechanics, satellite InSAR, real-time IoT vadose infiltration, and dynamic emergency bypass logistics along the vital NH-10 corridor."
+    p2.text = "Autonomous national disaster-intelligence platform correlating physical Mohr-Coulomb geotechnical mechanics, satellite InSAR, physics-informed vadose infiltration, live IMD precipitation, and dynamic emergency bypass logistics along the vital NH-10 corridor."
     p2.font.size = Pt(9.5)
     p2.font.color.rgb = COLOR_DARK_TEXT
 
@@ -188,12 +188,12 @@ def create_deck():
     pb.font.color.rgb = COLOR_DEEP_BLUE
 
     invariants = [
-        "• 5-Modality AI Fusion",
+        "• 5-Modality Physics Fusion",
         "• Sub-50ms PostGIS 3.6",
-        "• 36h Predictive Lead",
+        "• 24-48h Predictive Lead",
         "• Automated Bypass Routing",
         "• 4-Language Voice CAP",
-        "• GIGW 3.0 Accessible"
+        "• GIGW 3.0 & Zero-Trust RBAC"
     ]
     for inv in invariants:
         p = tf_b.add_paragraph()
@@ -348,12 +348,12 @@ def create_deck():
     p_st.font.color.rgb = COLOR_DEEP_BLUE
 
     stack_cards = [
-        ("Python 3.11", "van Genuchten SWCC & Green-Ampt Core"),
-        ("Neon PostGIS 3.6", "Serverless Spatial GiST & DBSCAN"),
-        ("GSI NLFC Sync", "Node LEWS-REGIONAL-EAST-01"),
-        ("Sentinel & NISAR", "InSAR PS Creep & L-Band Penetration"),
-        ("NDMA & C-DOT", "OASIS CAP v1.2 XML & CBS CH-4370"),
-        ("BRO Swastik SOP", "758/764 BRTF Tactical Staging")
+        ("Python 3.11", "van Genuchten SWCC & Mohr-Coulomb Core"),
+        ("PAHAD AI Engine", "GBDT [TRAINED_LIMITED_DATA] + LSTM [SURROGATE]"),
+        ("Telemetry Truth", "IMD NWP [LIVE] | In-Situ Sensors [SIMULATED]"),
+        ("Neon PostGIS 3.6", "Serverless Spatial GiST & DBSCAN Clusters"),
+        ("GSI NLFC Sync", "LEWS-REGIONAL-EAST-01 Archival [HISTORICAL]"),
+        ("NDMA & C-DOT", "OASIS CAP v1.2 XML & Safety Interlock [DRY_RUN]")
     ]
     for name, desc in stack_cards:
         p1 = tf_st.add_paragraph()
@@ -388,27 +388,27 @@ def create_deck():
 
     pillars = [
         {
-            "title": "PILLAR 1: FEASIBILITY ANALYSIS",
-            "subtitle": "Zero Sat Cost | Solar IoT | NISAR L-Band",
+            "title": "PILLAR 1: SCIENTIFIC FEASIBILITY",
+            "subtitle": "Physics Core | In-Situ Telemetry | InSAR Vectors",
             "color": COLOR_SKY_BLUE,
             "bg": RGBColor(240, 249, 255),
             "points": [
-                "• Zero New Satellite Expenditure: Harnesses existing ESA Copernicus Sentinel-1 SAR dry-season passes with NISAR L-band (24cm) canopy penetration roadmap.",
-                "• Solar 12V Low-Power Geotechnical Nodes: Piezometers, VWC probes and MEMS inclinometers running on 10W solar panels with 14-day battery buffers.",
-                "• Offline SQLite Field Cache: Mobile disaster apps operate in zero-connectivity gorge shadows, syncing automatically on connectivity return.",
-                "• Elastic Neon PostGIS: Sub-50ms spatial queries across highway nodes without costly fixed on-prem infrastructure."
+                "• Physics-First Grounding: Mohr-Coulomb limit equilibrium coupled with Green-Ampt infiltration and van Genuchten SWCC matric suction.",
+                "• Provenance Architecture: Transparent separation of [LIVE] IMD weather, [HISTORICAL] GSI inventories, and [SIMULATED] in-situ sensors.",
+                "• Model Honesty: GBDT Event Classifier [TRAINED_LIMITED_DATA] and physics-informed temporal surrogate [NOT_TRAINED LSTM].",
+                "• Spaceborne Geodesy Roadmap: Copernicus Sentinel-1 PS InSAR creep with upcoming NISAR L-band (24cm) sub-canopy penetration."
             ]
         },
         {
             "title": "PILLAR 2: OPERATIONAL VIABILITY",
-            "subtitle": "GSI NLFC | Sachet CAP (ne-IN) | C-DOT CBS",
+            "subtitle": "GSI NLFC | Sachet CAP (ne-IN) | Dual-Key EOC",
             "color": COLOR_EMERALD,
             "bg": RGBColor(240, 253, 244),
             "points": [
                 "• GSI NLFC Bhusanket Node Synchronization: Fully compliant with Regional Node LEWS-REGIONAL-EAST-01 and NLRMS guidelines.",
-                "• NDMA Sachet CAP v1.2 XML with Nepali Gap-Fill: Generates 4-language XML (en-IN, hi-IN, ne-IN, as-IN) resolving official language omission in Sikkim.",
-                "• C-DOT Cell Broadcast System (CBS): CH-4370 hardware vibration and siren override for RED alerts (bypasses DND).",
-                "• Explainable Physics Attribution: Transparent FoS, SWCC matric suction, and rainfall threshold breakdown prevents black-box hesitation."
+                "• Dual-Key Human Authorization: Strict EOC human-in-the-loop review prevents automated sirens (ENABLE_PUBLIC_DISPATCH=0).",
+                "• NDMA Sachet CAP v1.2 XML with Nepali Gap-Fill: Generates 4-language XML (en-IN, hi-IN, ne-IN, as-IN) resolving language gaps in Sikkim.",
+                "• C-DOT Cell Broadcast System (CBS): CH-4370 hardware vibration and siren override ready for verified RED emergencies."
             ]
         },
         {
@@ -646,7 +646,7 @@ def create_deck():
     p.font.size = Pt(9.5)
     p.font.color.rgb = COLOR_CYAN
     p2 = tf_c1.add_paragraph()
-    p2.text = "Badges: [GIGW 3.0 Standard] [Live IMD Weather Sync] [Real-Time Incident Marquee]. Bilingual accessible console engineered to national governance standards."
+    p2.text = "Badges: [GIGW 3.0 Standard] [Live IMD Weather Sync] [In-Situ Geotech: SIMULATED] [Dual-Key Safety Review]. Bilingual accessible console engineered to national governance standards."
     p2.font.size = Pt(8.2)
     p2.font.color.rgb = RGBColor(226, 232, 240)
 
@@ -662,7 +662,7 @@ def create_deck():
     p.font.size = Pt(9.5)
     p.font.color.rgb = COLOR_EMERALD
     p2 = tf_c2.add_paragraph()
-    p2.text = "Badges: [500m PostGIS Road Buffer] [Pulsating IoT Telemetry Nodes] [InSAR Radar Vectors]. High-contrast interactive Leaflet GIS with dynamic detour routing."
+    p2.text = "Badges: [500m PostGIS Road Buffer] [In-Situ Nodes: SIMULATED] [InSAR Radar Vectors]. High-contrast interactive Leaflet GIS with dynamic detour routing."
     p2.font.size = Pt(8.2)
     p2.font.color.rgb = RGBColor(226, 232, 240)
 

@@ -1,0 +1,52 @@
+{
+  "manifest_version": "12C.1.0",
+  "timestamp_utc": "2026-09-16T01:46:07.252142+00:00",
+  "phase": "PHASE_12C",
+  "status": "PHASE12C_EXPLAINABILITY_VERIFIED",
+  "invariants": {
+    "temporal_deep_learning_status": "PHYSICS-INFORMED TEMPORAL SURROGATE / NOT TRAINED",
+    "temporal_training_eligibility": "DATA_COLLECTION_REQUIRED",
+    "zero_manufactured_deltas": true,
+    "non_causal_grammar_enforced": true,
+    "corroboration_heuristic": "2-of-3 MULTI-SIGNAL",
+    "safety_interlock_dispatch": "ENABLE_PUBLIC_DISPATCH=0",
+    "siren_dry_run": "SIREN_DRY_RUN=1"
+  },
+  "file_hashes": {
+    "pahad_explanation_engine.py": {
+      "path": "c:\\Users\\dimpu\\Downloads\\PARVAT_NETRA_PAHAD_AI_FIRST\\silly-fermi\\engine\\pahad_explanation_engine.py",
+      "sha256": "bc33a2dc52aa7ba584cd6fb9a645e4f5a442863dee13ae266a5f4df858214919",
+      "size_bytes": 42008
+    },
+    "pahad_voice_assistant.py": {
+      "path": "c:\\Users\\dimpu\\Downloads\\PARVAT_NETRA_PAHAD_AI_FIRST\\silly-fermi\\services\\pahad_voice_assistant.py",
+      "sha256": "404880fa5eaf0c8b622651dcf8e4c93102284ff62fef02d72ebf86d1fd670aa0",
+      "size_bytes": 92387
+    },
+    "index.html": {
+      "path": "c:\\Users\\dimpu\\Downloads\\PARVAT_NETRA_PAHAD_AI_FIRST\\silly-fermi\\templates\\index.html",
+      "sha256": "17014a1c846418e1f86fefcf9c85dd022acc2db177524a23595e4601c161863e",
+      "size_bytes": 863044
+    },
+    "PHASE12C_PAHAD_EXPLAINABILITY_REPORT.md": {
+      "path": "c:\\Users\\dimpu\\Downloads\\PARVAT_NETRA_PAHAD_AI_FIRST\\silly-fermi\\docs\\PHASE12C_PAHAD_EXPLAINABILITY_REPORT.md",
+      "sha256": "4baf016572c44bd3ec97aba93cc92a62c7907d4835f96b05ccc2826af8f71a70",
+      "size_bytes": 7491
+    },
+    "PHASE12C_LIVE_DATA_TRUTH_REPORT.md": {
+      "path": "c:\\Users\\dimpu\\Downloads\\PARVAT_NETRA_PAHAD_AI_FIRST\\silly-fermi\\docs\\PHASE12C_LIVE_DATA_TRUTH_REPORT.md",
+      "sha256": "22f798b51139b9767be91df4fea4c680ebb82a473eff50c5a45c330c8af56656",
+      "size_bytes": 3138
+    },
+    "PHASE12C_VOICE_GROUNDING_REPORT.md": {
+      "path": "c:\\Users\\dimpu\\Downloads\\PARVAT_NETRA_PAHAD_AI_FIRST\\silly-fermi\\docs\\PHASE12C_VOICE_GROUNDING_REPORT.md",
+      "sha256": "3d3f6c2377a10637cf6752605aa44664bfac8f25dbf9a12379893e40b8e3f5c8",
+      "size_bytes": 3417
+    },
+    "PHASE12C_JUDGE_QUESTION_MATRIX.md": {
+      "path": "c:\\Users\\dimpu\\Downloads\\PARVAT_NETRA_PAHAD_AI_FIRST\\silly-fermi\\docs\\PHASE12C_JUDGE_QUESTION_MATRIX.md",
+      "sha256": "e27843e5453803661f3c99d1e8388d5c203a28001cf54e40467e70b5d8860c64",
+      "size_bytes": 5108
+    }
+  }
+}

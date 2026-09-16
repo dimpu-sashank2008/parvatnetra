@@ -1,0 +1,117 @@
+{
+  "manifest_version": "1.0.0",
+  "phase": "PHASE_12F",
+  "release_title": "PARVAT NETRA \u2022 PAHAD AI \u2014 SIH 2026 Release & Submission Manifest",
+  "timestamp_utc": "2026-09-16T08:12:18.618046+00:00",
+  "git_branch": "main",
+  "git_commit": "dd9e57dc6452e0a70ad98731de0c536af8e50cb0",
+  "model_hash": "65f0d6d78b59f79e1f6b50ce271db95398ad3dcd75303b38fdcfec41405192f8",
+  "dataset_hashes": {
+    "realtime_cri_dataset.csv": "d980938adaa72324441bdd408bcd7f6247a40ed63d1590b0a66722bae14b317e"
+  },
+  "config_hash": "1cd366a317d04050e608b1b3dcc7cbad8be624cd624f9537432bd773ddd8a0b4",
+  "test_summary": {
+    "total": 220,
+    "passed": 220,
+    "failed": 0,
+    "skipped": 0,
+    "errors": 0,
+    "phase11_e2e_passed": 29
+  },
+  "provider_status": {
+    "open_meteo": {
+      "status": "LIVE",
+      "badge": "[LIVE]",
+      "stream": "Hourly Precipitation, Temp, Wind"
+    },
+    "usgs_earthquake": {
+      "status": "LIVE",
+      "badge": "[LIVE]",
+      "stream": "Realtime M2.5+ Seismic Events"
+    },
+    "ncs_india": {
+      "status": "LIVE",
+      "badge": "[LIVE]",
+      "stream": "Himalayan Regional Seismicity"
+    },
+    "postgis_routing": {
+      "status": "LIVE",
+      "badge": "[LIVE]",
+      "stream": "Mountain Road Network Graph"
+    },
+    "sqlite_observations": {
+      "status": "LIVE",
+      "badge": "[LIVE]",
+      "stream": "Persistent Observation Store"
+    },
+    "imd_radar": {
+      "status": "AUTH_REQUIRED",
+      "badge": "[AUTH_REQUIRED]",
+      "stream": "Doppler Radar Reflectivity"
+    },
+    "sentinel1_insar": {
+      "status": "HISTORICAL",
+      "badge": "[HISTORICAL/PROCESSED]",
+      "stream": "LOS Deformation Velocity"
+    },
+    "nrsc_bhoonidhi": {
+      "status": "HISTORICAL",
+      "badge": "[HISTORICAL/CATALOG]",
+      "stream": "Optical Satellite Imagery"
+    },
+    "insitu_iot": {
+      "status": "SIMULATED",
+      "badge": "[SIMULATED]",
+      "stream": "Piezometers & Inclinometers"
+    }
+  },
+  "role_status": {
+    "PUBLIC": "SAFE_READ_ONLY",
+    "CITIZEN": "ADVISORY_SAFE_ROUTES",
+    "FIELD_OPERATOR": "GROUND_TRUTH_VERIFICATION",
+    "DISTRICT_AUTHORITY": "EOC_COMMAND_AND_AUTHORIZE",
+    "STATE_AUTHORITY": "STRATEGIC_OVERVIEW_AND_ESCALATION",
+    "ADMIN": "CONSOLE_TELEMETRY_AUDIT"
+  },
+  "GIS_status": {
+    "default_view": "NER_8_STATES",
+    "bounding_box": [
+      [
+        21.8,
+        88.0
+      ],
+      [
+        29.5,
+        97.5
+      ]
+    ],
+    "auto_zoom_on_load": false,
+    "risk_evolution": "ON_MAP_COMPACT",
+    "risk_evaluation": "SEPARATE_ANALYTICAL_DRAWER",
+    "polling_viewport_drift": false
+  },
+  "voice_status": {
+    "service": "PahadVoiceAssistantService",
+    "mode": "READ_ONLY_GROUNDED",
+    "grounding_source": "ExplanationContract",
+    "actuation_policy": "REJECTED_SAFETY (DMA 2005)"
+  },
+  "safety_status": {
+    "statutory_act": "Disaster Management Act 2005 (Sections 30 & 34)",
+    "ENABLE_PUBLIC_DISPATCH": 0,
+    "SIREN_DRY_RUN": 1,
+    "PUBLIC_DEMO_TEST_ONLY": 1,
+    "CAP_PRODUCTION_DISPATCH": 0,
+    "SACHET_PRODUCTION_DISPATCH": 0,
+    "CELL_BROADCAST_PRODUCTION": 0
+  },
+  "blocking_items": {
+    "P0": [],
+    "P1": [],
+    "P2": [
+      "Physical in-situ borehole sensor installation by BRO/NDMA",
+      "12+ months continuous telemetry collection for recurrent deep learning"
+    ]
+  },
+  "final_readiness": "SUBMISSION_READY_WITH_LIMITATIONS"
+}
