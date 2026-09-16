@@ -14,6 +14,14 @@
     "realtime_cri_dataset.csv": "e39592794ff9caba681da8ca3b7589b22bbb4eca12f9537ef61af3c4f61b08df",
     "canonical_event_inventory.json": "29f6958367fe20a17b463ad6b8caae871f2bf665e078218ddf048aae7f6d9956"
   },
+  "test_summary": {
+    "scope": "Phase 12A-F, Phase 13, Phase 14, GIS, RBAC, Voice, Model, Weather, Seismic, Terrain, Localization",
+    "total": 230,
+    "passed": 230,
+    "failed": 0,
+    "skipped": 0,
+    "errors": 0
+  },
   "presentation_deck_hash": "5c638020caf5091bb7278739eb1b460351524a515ee8e1e67e6cb2fddd85ccc9",
   "provider_status": {
     "open_meteo": {
