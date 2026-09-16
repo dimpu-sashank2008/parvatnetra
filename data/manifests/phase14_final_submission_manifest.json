@@ -1,0 +1,122 @@
+{
+  "manifest_version": "1.0.0",
+  "phase": "PHASE_14",
+  "release_title": "PARVAT NETRA • PAHAD AI — SIH 2026 Top-1 Final Submission Freeze Manifest",
+  "timestamp_utc": "2026-09-16T08:40:00Z",
+  "git_branch": "main",
+  "git_commit": "72f75f3e253a0ff80e83d8021c8136191d51b981",
+  "model_hash": "46c1f2f8106074d1c8c9ef19880533fd0faa3ece3f2296fe47785a8ee7ffff35",
+  "model_metadata_hash": "7a4e59830b5f37c61795ebe32c8139470fa6d443697bdfb2213053a4727ea0ab",
+  "dataset_hashes": {
+    "real_train.csv": "79ece554fd0d2fc62d69a21fd4d39172f7dd4995d5645e126a91d1a08c1c579e",
+    "real_val.csv": "ed732e2054f1b028cab9380a35ad31affbbb5e93a3cb207fda1582665aa0bd81",
+    "real_test.csv": "29f84cf974241844a16086736e1cab833484a9587519946dd24ee09ae09d28da",
+    "realtime_cri_dataset.csv": "e39592794ff9caba681da8ca3b7589b22bbb4eca12f9537ef61af3c4f61b08df",
+    "canonical_event_inventory.json": "29f6958367fe20a17b463ad6b8caae871f2bf665e078218ddf048aae7f6d9956"
+  },
+  "presentation_deck_hash": "5c638020caf5091bb7278739eb1b460351524a515ee8e1e67e6cb2fddd85ccc9",
+  "provider_status": {
+    "open_meteo": {
+      "status": "LIVE",
+      "badge": "[LIVE]",
+      "stream": "Hourly Precipitation, Temp, Wind"
+    },
+    "usgs_earthquake": {
+      "status": "LIVE",
+      "badge": "[LIVE]",
+      "stream": "Realtime M2.5+ Seismic Events"
+    },
+    "ncs_india": {
+      "status": "LIVE",
+      "badge": "[LIVE]",
+      "stream": "Himalayan Regional Seismicity"
+    },
+    "postgis_routing": {
+      "status": "LIVE",
+      "badge": "[LIVE]",
+      "stream": "Mountain Road Network Graph"
+    },
+    "sqlite_observations": {
+      "status": "LIVE",
+      "badge": "[LIVE]",
+      "stream": "Persistent Observation Store"
+    },
+    "cartodem_30m": {
+      "status": "MODELLED",
+      "badge": "[MODELLED]",
+      "stream": "ISRO 30m Digital Elevation Model"
+    },
+    "gsi_inventory": {
+      "status": "HISTORICAL",
+      "badge": "[HISTORICAL]",
+      "stream": "17 Documented NER Landslides (2022-2024)"
+    },
+    "imd_radar": {
+      "status": "AUTH_REQUIRED",
+      "badge": "[AUTH_REQUIRED]",
+      "stream": "Doppler Radar Reflectivity"
+    },
+    "sentinel1_insar": {
+      "status": "HISTORICAL",
+      "badge": "[HISTORICAL/PROCESSED]",
+      "stream": "LOS Deformation Velocity"
+    },
+    "insitu_iot": {
+      "status": "SIMULATED",
+      "badge": "[SIMULATED]",
+      "stream": "Piezometers & Inclinometers (Deployment Not Verified)"
+    }
+  },
+  "model_status": {
+    "fos_model": "EXISTING_PHYSICS_GROUNDED",
+    "event_classifier": "TRAINED_LIMITED_DATA",
+    "lstm_temporal": "NOT_TRAINED / PHYSICS-INFORMED SURROGATE",
+    "training_rows": 16,
+    "validation_rows": 12,
+    "test_rows": 8,
+    "verified_historical_events": 17,
+    "labeled_windows": 36,
+    "calibration": "Platt Sigmoid (CalibratedClassifierCV)"
+  },
+  "iot_status": {
+    "overall": "SIMULATED",
+    "physical_deployment": "NOT_VERIFIED",
+    "bench_rig": "BENCH VALIDATED (18/20 Bench Nodes)",
+    "unmonitored_corridors": "MISSING / UNAVAILABLE"
+  },
+  "role_status": {
+    "PUBLIC": "SAFE_READ_ONLY",
+    "CITIZEN": "ADVISORY_SAFE_ROUTES",
+    "FIELD_OPERATOR": "GROUND_TRUTH_VERIFICATION",
+    "DISTRICT_AUTHORITY": "EOC_COMMAND_AND_AUTHORIZE",
+    "STATE_AUTHORITY": "STRATEGIC_OVERVIEW_AND_ESCALATION",
+    "ADMIN": "CONSOLE_TELEMETRY_AUDIT"
+  },
+  "gis_status": {
+    "default_view": "NER_8_STATES",
+    "bounding_box": [
+      [21.8, 88.0],
+      [29.5, 97.5]
+    ],
+    "auto_zoom_on_load": false,
+    "risk_evolution": "ON_MAP_COMPACT",
+    "risk_evaluation": "SEPARATE_ANALYTICAL_DRAWER",
+    "polling_viewport_drift": false
+  },
+  "safety_state": {
+    "statutory_act": "Disaster Management Act 2005 (Sections 30 & 34)",
+    "ENABLE_PUBLIC_DISPATCH": 0,
+    "SIREN_DRY_RUN": 1,
+    "CAP_PRODUCTION_DISPATCH": 0,
+    "SACHET_PRODUCTION_DISPATCH": 0,
+    "CELL_BROADCAST_PRODUCTION": 0,
+    "PUBLIC_DEMO_TEST_ONLY": 1
+  },
+  "remaining_limitations": [
+    "Physical in-situ borehole sensor installation on hillslopes has not been verified/deployed by field agencies yet (bench tested on ESP32/SX1262 LoRa hardware only)",
+    "Historical documented landslide event dataset in NER is currently constrained to 17 verified events (36 temporal windows, N=8 held-out test set)",
+    "Temporal deep-learning LSTM training gate remains closed awaiting continuous multi-season streaming telemetry (operates as physics-informed surrogate)",
+    "Institutional access to IMD Doppler Weather Radar and NDMA Sachet CAP production SMS gateways requires official government authorization keys"
+  ],
+  "verdict": "SUBMISSION_FREEZE_READY"
+}

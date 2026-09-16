@@ -349,8 +349,8 @@ def create_deck():
 
     stack_cards = [
         ("Python 3.11", "van Genuchten SWCC & Mohr-Coulomb Core"),
-        ("PAHAD AI Engine", "GBDT [TRAINED_LIMITED_DATA] + LSTM [SURROGATE]"),
-        ("Telemetry Truth", "IMD NWP [LIVE] | In-Situ Sensors [SIMULATED]"),
+        ("PAHAD AI Engine", "GBDT [17 Events / N=8 Test] + LSTM [SURROGATE]"),
+        ("Telemetry Truth", "IMD NWP [LIVE] | Geotech [SIMULATED (UNVERIFIED)]"),
         ("Neon PostGIS 3.6", "Serverless Spatial GiST & DBSCAN Clusters"),
         ("GSI NLFC Sync", "LEWS-REGIONAL-EAST-01 Archival [HISTORICAL]"),
         ("NDMA & C-DOT", "OASIS CAP v1.2 XML & Safety Interlock [DRY_RUN]")
@@ -394,9 +394,9 @@ def create_deck():
             "bg": RGBColor(240, 249, 255),
             "points": [
                 "• Physics-First Grounding: Mohr-Coulomb limit equilibrium coupled with Green-Ampt infiltration and van Genuchten SWCC matric suction.",
-                "• Provenance Architecture: Transparent separation of [LIVE] IMD weather, [HISTORICAL] GSI inventories, and [SIMULATED] in-situ sensors.",
-                "• Model Honesty: GBDT Event Classifier [TRAINED_LIMITED_DATA] and physics-informed temporal surrogate [NOT_TRAINED LSTM].",
-                "• Spaceborne Geodesy Roadmap: Copernicus Sentinel-1 PS InSAR creep with upcoming NISAR L-band (24cm) sub-canopy penetration."
+                "• Dataset Honesty: 17 verified historical landslides, 36 labeled windows, N=8 held-out test set (TRAINED_LIMITED_DATA; non-overfitted).",
+                "• Telemetry Truth: In-situ piezometers/tilt strictly SIMULATED via Mohr-Coulomb mechanics (Physical hillside deployment not verified).",
+                "• Sequence Modeling: Deep learning LSTM temporal surrogate (NOT_TRAINED LSTM); training gate closed until continuous deployment."
             ]
         },
         {

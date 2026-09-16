@@ -3306,12 +3306,12 @@
                         <!-- Data Provenance & Model Truth Badges (Requirement G & F) -->
                         <div class="p-2 rounded bg-slate-900/40 border border-slate-800/80 text-[10px] space-y-1" id="card-prov-box">
                             <div class="flex items-center justify-between text-slate-400">
-                                <span class="font-medium">Telemetry:</span>
-                                <span id="card-prov-label" class="font-mono text-emerald-400 font-semibold text-[9px]">[LIVE IMD] • [SIMULATED IN-SITU]</span>
+                                <span class="font-medium">IoT Telemetry:</span>
+                                <span id="card-prov-label" class="font-mono text-amber-400 font-semibold text-[9px]">[SIMULATED: DEPLOYMENT NOT VERIFIED]</span>
                             </div>
                             <div class="flex items-center justify-between text-slate-400">
                                 <span class="font-medium">Models:</span>
-                                <span id="card-qual-label" class="font-mono text-sky-400 font-semibold text-[9px]">EVENT: RESEARCH_PROTOTYPE | LSTM: SURROGATE</span>
+                                <span id="card-qual-label" class="font-mono text-sky-400 font-semibold text-[9px]">EVENT: TRAINED_LIMITED_DATA (N=8 TEST) | LSTM: SURROGATE</span>
                             </div>
                         </div>
                         <div>
@@ -3355,6 +3355,175 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PHASE 14: Top-1 Differentiator & Transparent Engineering Limitations (Sections 8 & 9) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
+            <!-- Differentiator Card -->
+            <div class="dark-card p-4 rounded-lg bg-[#0A1124] border border-slate-700/60 shadow-sm flex flex-col justify-between" id="card-why-parvat-netra">
+                <div>
+                    <div class="flex items-center justify-between pb-2 border-b border-slate-800 mb-2.5">
+                        <span class="font-black text-xs uppercase tracking-wider text-sky-400 flex items-center gap-1.5">
+                            <i class="ph-bold ph-trophy"></i> WHY PARVAT NETRA? — TOP-1 ARCHITECTURE
+                        </span>
+                        <span class="text-[9px] font-mono px-2 py-0.5 rounded bg-sky-950 text-sky-300 border border-sky-800">NON-HEURISTIC</span>
+                    </div>
+                    <div class="text-[11px] text-slate-300 space-y-2 leading-relaxed">
+                        <div class="font-mono font-bold text-amber-300 text-[10px] bg-slate-900/80 p-2 rounded border border-slate-800">
+                            PHYSICS + MACHINE LEARNING + MULTI-SOURCE EVIDENCE + EXPLAINABILITY + PROVENANCE + HUMAN AUTHORIZATION
+                        </div>
+                        <ul class="space-y-1 text-slate-300 text-[10px] list-disc list-inside">
+                            <li><strong class="text-white">Geotechnical Physics First:</strong> Infinite Slope Mohr-Coulomb limit equilibrium with van Genuchten SWCC unsaturated matric suction.</li>
+                            <li><strong class="text-white">Calibrated ML Event Classifier:</strong> 6h/12h/24h/48h GBDT event predictions (<span class="font-mono text-amber-300">TRAINED_LIMITED_DATA</span>).</li>
+                            <li><strong class="text-white">2-of-3 Corroboration Guard:</strong> Eliminates single-threshold 48% false alarms before alerting authorities.</li>
+                            <li><strong class="text-white">Actionable Mountain Detours:</strong> Automated IRC SP:84 mountain freight clearance (Lava 45T bypass vs Mungpoo 6.5% grade).</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mt-3 pt-2 border-t border-slate-800 text-[9px] text-slate-400 flex justify-between">
+                    <span>Engineering Identity: National Disaster Intelligence</span>
+                    <span class="text-emerald-400 font-mono">GIGW 3.0 Accessible</span>
+                </div>
+            </div>
+
+            <!-- Current Limitations Card -->
+            <div class="dark-card p-4 rounded-lg bg-[#0A1124] border border-slate-700/60 shadow-sm flex flex-col justify-between" id="card-current-limitations">
+                <div>
+                    <div class="flex items-center justify-between pb-2 border-b border-slate-800 mb-2.5">
+                        <span class="font-black text-xs uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
+                            <i class="ph-bold ph-shield-warning"></i> CURRENT LIMITATIONS — TRANSPARENT SCOPE
+                        </span>
+                        <span class="text-[9px] font-mono px-2 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-800">VERIFIED TRUTH</span>
+                    </div>
+                    <div class="text-[10px] text-slate-300 space-y-1.5 leading-relaxed">
+                        <div class="flex items-start gap-1.5">
+                            <i class="ph-bold ph-warning-circle text-amber-400 mt-0.5 shrink-0"></i>
+                            <div><strong class="text-white">In-Situ IoT Deployment:</strong> Piezometer and inclinometer telemetry is currently <span class="font-mono text-amber-300">SIMULATED</span> via soil mechanics. Continuous physical hillside hardware is <span class="font-mono text-rose-300">NOT VERIFIED</span> across all highway corridors.</div>
+                        </div>
+                        <div class="flex items-start gap-1.5">
+                            <i class="ph-bold ph-warning-circle text-amber-400 mt-0.5 shrink-0"></i>
+                            <div><strong class="text-white">Institutional Live APIs:</strong> Production IMD NWP is live; institutional push gateways (C-DOT CBS / GSI NLFC push) operate behind authorized test credentials (<span class="font-mono text-sky-300">AUTH_REQUIRED</span>).</div>
+                        </div>
+                        <div class="flex items-start gap-1.5">
+                            <i class="ph-bold ph-warning-circle text-amber-400 mt-0.5 shrink-0"></i>
+                            <div><strong class="text-white">Limited Event Dataset:</strong> Trained on 17 verified historical landslides (36 temporal windows, N=8 held-out test partition). Evaluators must not treat metrics as large-data production guarantees.</div>
+                        </div>
+                        <div class="flex items-start gap-1.5">
+                            <i class="ph-bold ph-warning-circle text-amber-400 mt-0.5 shrink-0"></i>
+                            <div><strong class="text-white">Temporal Deep Learning:</strong> Sequence model in <code class="text-slate-400">pahad_lstm.py</code> is an audited <span class="font-mono text-purple-300">PHYSICS SURROGATE</span> (<span class="font-mono text-purple-300">NOT_TRAINED</span> LSTM). Training gate opens upon continuous sensor deployment.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3 pt-2 border-t border-slate-800 text-[9px] text-slate-400 flex justify-between">
+                    <span>Truth Doctrine: Zero Fabricated Telemetry</span>
+                    <span class="text-sky-400 font-mono">Honest Scope</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- PHASE 14: Authoritative Data Truth & Provenance Modal (Section 4) -->
+        <div id="modal-data-truth-matrix" class="fixed inset-0 bg-black/75 backdrop-blur-xs z-[99999] hidden items-center justify-center p-4">
+            <div class="bg-[#0A1124] border border-slate-700 rounded-lg max-w-4xl w-full p-5 shadow-2xl text-slate-100 max-h-[90vh] overflow-y-auto">
+                <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+                    <div class="flex items-center gap-2">
+                        <i class="ph-bold ph-database text-sky-400 text-lg"></i>
+                        <h3 class="font-bold text-sm uppercase tracking-wider text-white">Authoritative Data Truth &amp; Provenance Matrix</h3>
+                    </div>
+                    <button type="button" onclick="closeDataTruthModal()" class="text-slate-400 hover:text-white text-lg cursor-pointer">✕</button>
+                </div>
+                <div class="mt-4 overflow-x-auto">
+                    <table class="w-full text-left text-[11px] font-mono border-collapse">
+                        <thead>
+                            <tr class="bg-slate-900/80 text-slate-400 uppercase text-[9px] border-b border-slate-800">
+                                <th class="p-2.5">Data Stream / Modality</th>
+                                <th class="p-2.5">Provider</th>
+                                <th class="p-2.5">Status</th>
+                                <th class="p-2.5">Provenance</th>
+                                <th class="p-2.5">Freshness</th>
+                                <th class="p-2.5">Fallback Architecture</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-800/60 text-slate-300">
+                            <tr>
+                                <td class="p-2.5 font-bold text-white">Precipitation &amp; Nowcast</td>
+                                <td class="p-2.5">IMD NWP / AWS</td>
+                                <td class="p-2.5"><span class="px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800 font-bold">LIVE</span></td>
+                                <td class="p-2.5">IMD GFS/WRF API</td>
+                                <td class="p-2.5">Hourly</td>
+                                <td class="p-2.5 text-slate-400">Mandal-Sarkar Climatological I-D</td>
+                            </tr>
+                            <tr>
+                                <td class="p-2.5 font-bold text-white">Terrain Elevation (DEM)</td>
+                                <td class="p-2.5">ISRO CartoDEM</td>
+                                <td class="p-2.5"><span class="px-1.5 py-0.5 rounded bg-blue-950 text-sky-300 border border-blue-800 font-bold">MODELLED</span></td>
+                                <td class="p-2.5">CartoDEM 30m Grid</td>
+                                <td class="p-2.5">Static High-Res</td>
+                                <td class="p-2.5 text-slate-400">Copernicus GLO-30 DEM</td>
+                            </tr>
+                            <tr>
+                                <td class="p-2.5 font-bold text-white">Historical Landslides</td>
+                                <td class="p-2.5">GSI NLFC / NLSM</td>
+                                <td class="p-2.5"><span class="px-1.5 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700 font-bold">HISTORICAL</span></td>
+                                <td class="p-2.5">Archival Database</td>
+                                <td class="p-2.5">2022–2024</td>
+                                <td class="p-2.5 text-slate-400">Regional Susceptibility Baseline</td>
+                            </tr>
+                            <tr>
+                                <td class="p-2.5 font-bold text-white">In-Situ Piezometer &amp; Tilt</td>
+                                <td class="p-2.5">Soil Mechanics Engine</td>
+                                <td class="p-2.5"><span class="px-1.5 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-800 font-bold">SIMULATED</span></td>
+                                <td class="p-2.5">Mohr-Coulomb Physics</td>
+                                <td class="p-2.5">Real-time Sim</td>
+                                <td class="p-2.5 text-slate-400">Static Suction Equilibrium (SWCC)</td>
+                            </tr>
+                            <tr>
+                                <td class="p-2.5 font-bold text-white">Surface Deformation (InSAR)</td>
+                                <td class="p-2.5">ESA Copernicus Sentinel-1</td>
+                                <td class="p-2.5"><span class="px-1.5 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700 font-bold">CACHED</span></td>
+                                <td class="p-2.5">Persistent Scatterer (PS)</td>
+                                <td class="p-2.5">12-Day Orbit</td>
+                                <td class="p-2.5 text-slate-400">NISAR L-Band Roadmap</td>
+                            </tr>
+                            <tr>
+                                <td class="p-2.5 font-bold text-white">Civil Defense Siren Actuator</td>
+                                <td class="p-2.5">EOC Dual-Key Terminal</td>
+                                <td class="p-2.5"><span class="px-1.5 py-0.5 rounded bg-rose-950 text-rose-300 border border-rose-800 font-bold">AUTH_REQUIRED</span></td>
+                                <td class="p-2.5">Dual HMAC Token</td>
+                                <td class="p-2.5">On-Demand</td>
+                                <td class="p-2.5 text-slate-400">Sandboxed Dry-Run Test Harness</td>
+                            </tr>
+                            <tr>
+                                <td class="p-2.5 font-bold text-white">Uninstrumented Corridors</td>
+                                <td class="p-2.5">N/A</td>
+                                <td class="p-2.5"><span class="px-1.5 py-0.5 rounded bg-neutral-900 text-neutral-400 border border-neutral-700 font-bold">UNAVAILABLE</span></td>
+                                <td class="p-2.5">Missing Telemetry</td>
+                                <td class="p-2.5">N/A</td>
+                                <td class="p-2.5 text-slate-400">Regional Topographic Slope Proxy</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mt-4 p-3 rounded bg-slate-900/60 border border-slate-800 text-[10px] text-slate-400 leading-normal">
+                    <strong class="text-white">Evaluator Note:</strong> PARVAT NETRA strictly observes institutional data integrity. Sensor variables are flagged as <span class="font-mono text-amber-300">[SIMULATED]</span> because physical hillside borehole instrumentation is awaiting final institutional rollout.
+                </div>
+            </div>
+        </div>
+
+        <!-- PHASE 14: Scientific Explanation Modal (Section 6) -->
+        <div id="modal-scientific-expl" class="fixed inset-0 bg-black/75 backdrop-blur-xs z-[99999] hidden items-center justify-center p-4">
+            <div class="bg-[#0A1124] border border-slate-700 rounded-lg max-w-xl w-full p-5 shadow-2xl text-slate-100">
+                <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+                    <div class="flex items-center gap-2">
+                        <i class="ph-bold ph-book-open text-sky-400 text-lg"></i>
+                        <h3 id="sci-expl-title" class="font-bold text-sm uppercase tracking-wider text-white">Scientific Explanation</h3>
+                    </div>
+                    <button type="button" onclick="closeScientificExplModal()" class="text-slate-400 hover:text-white text-lg cursor-pointer">✕</button>
+                </div>
+                <div id="sci-expl-body" class="mt-4 text-xs text-slate-300 leading-relaxed"></div>
+                <div class="mt-4 pt-3 border-t border-slate-800 flex justify-end">
+                    <button type="button" onclick="closeScientificExplModal()" class="px-3 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold cursor-pointer">Close</button>
                 </div>
             </div>
         </div>
@@ -5120,10 +5289,10 @@
         <div class="sih-evidence-bar" aria-label="Evidence sources">
           <span class="sih-source-chip live" onclick="sihEvidenceNavigate('imd')" role="button" tabindex="0" title="Inspect IMD Rainfall Intelligence"><span class="chip-dot"></span>IMD rainfall</span>
           <span class="sih-source-chip live" onclick="sihEvidenceNavigate('postgis')" role="button" tabindex="0" title="View PostGIS GIS Hazard Risk Zones"><span class="chip-dot"></span>PostGIS risk zones</span>
-          <span class="sih-source-chip live" onclick="sihEvidenceNavigate('iot')" role="button" tabindex="0" title="Inspect In-Situ IoT & River Scour Telemetry"><span class="chip-dot"></span>IoT telemetry</span>
+          <span class="sih-source-chip sim" onclick="sihEvidenceNavigate('iot')" role="button" tabindex="0" title="Inspect In-Situ IoT [SIMULATED: Physical Deployment Not Verified]"><span class="chip-dot"></span>IoT telemetry [SIMULATED]</span>
           <span class="sih-source-chip live" onclick="sihEvidenceNavigate('sitrep')" role="button" tabindex="0" title="View Autonomous AI SitRep Briefing"><span class="chip-dot"></span>AI SitRep</span>
-          <span class="sih-source-chip sim" onclick="sihEvidenceNavigate('physics')" role="button" tabindex="0" title="Inspect Physics & ML Multimodal Evidence"><span class="chip-dot"></span>Physics / ML fusion</span>
-          <span class="sih-source-chip" onclick="sihEvidenceNavigate('reports')" role="button" tabindex="0" title="View Field & Citizen Observation Queue"><span class="chip-dot"></span>Field reports</span>
+          <span class="sih-source-chip sim" onclick="sihEvidenceNavigate('physics')" role="button" tabindex="0" title="Inspect Physics &amp; ML Multimodal Evidence"><span class="chip-dot"></span>Physics / ML fusion</span>
+          <span class="sih-source-chip" onclick="sihEvidenceNavigate('reports')" role="button" tabindex="0" title="View Field &amp; Citizen Observation Queue"><span class="chip-dot"></span>Field reports</span>
           <a href="/notifications" class="sih-source-chip live" style="text-decoration:none;" title="PAHAD 15km Geofenced Multi-Channel Alert Center"><span class="chip-dot" style="background:#f59e0b;"></span>Alert Center (15km)</a>
         </div>
       </div>
@@ -5139,7 +5308,7 @@
             <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-amber-950/80 text-amber-300 border border-amber-800">[TRAINED_LIMITED_DATA]</span>
           </div>
           <div class="flex items-center gap-2 text-[10px] font-mono text-slate-400" id="pahad-sync-status-indicator">
-            <span class="px-2 py-0.5 rounded bg-emerald-950/60 text-emerald-400 border border-emerald-800/80" id="pahad-online-badge">ONLINE</span>
+            <span class="px-2 py-0.5 rounded bg-sky-950/60 text-sky-400 border border-sky-800/80" id="pahad-online-badge">BENCH VALIDATED</span>
             <span class="text-slate-500">•</span>
             <span>Architecture: <strong class="text-slate-300">Phase 3 Multimodal</strong></span>
           </div>
@@ -5156,7 +5325,7 @@
             <div class="text-[9px] text-slate-400 mt-0.5">17 GSI Events / 19 Controls</div>
           </div>
           <div class="p-2 rounded bg-[#070B10]/80 border border-[#1E293B]">
-            <div class="text-[9px] text-slate-500 uppercase font-sans font-bold">Data Span & Validation</div>
+            <div class="text-[9px] text-slate-500 uppercase font-sans font-bold">Data Span &amp; Validation</div>
             <div class="text-slate-200 font-bold mt-0.5">2022–2024 (8 NER States)</div>
             <div class="text-[9px] text-emerald-400 mt-0.5">Temporal Holdout • Platt Sigmoid</div>
           </div>
@@ -5171,7 +5340,7 @@
             <div class="text-[9px] text-amber-300 mt-0.5">[CACHED / SIMULATED]</div>
           </div>
           <div class="p-2 rounded bg-[#070B10]/80 border border-[#1E293B]">
-            <div class="text-[9px] text-slate-500 uppercase font-sans font-bold">Telemetry & Weather</div>
+            <div class="text-[9px] text-slate-500 uppercase font-sans font-bold">Telemetry &amp; Weather</div>
             <div class="text-slate-200 font-bold mt-0.5">IMD AWS / IoT Piezometer</div>
             <div class="text-[9px] text-emerald-400 mt-0.5">[LIVE] / [SIMULATED]</div>
           </div>
@@ -5190,16 +5359,16 @@
             <div>
               <div class="flex items-center space-x-2">
                 <span class="font-bold tracking-wide uppercase text-white text-[11px]">EDGE NETWORK</span>
-                <span class="text-[9px] font-mono px-1.5 py-0.2 rounded bg-slate-800 text-slate-400 border border-slate-700">[LoRa MESH]</span>
+                <span class="text-[9px] font-mono px-1.5 py-0.2 rounded bg-slate-800 text-slate-400 border border-slate-700">[BENCH SIMULATION]</span>
               </div>
-              <p class="text-[10px] text-slate-400">Sub-GHz resilient sensor network & acoustic warning chokepoints</p>
+              <p class="text-[10px] text-slate-400">Sub-GHz resilient sensor network &amp; acoustic warning chokepoints (Bench Simulated • Hillside Deployment Not Verified)</p>
             </div>
           </div>
 
           <div class="flex flex-wrap items-center gap-4 text-[11px] font-mono">
             <div>
               <span class="text-[9px] text-slate-500 uppercase block font-sans">Nodes</span>
-              <span class="text-emerald-400 font-bold" id="hp-edge-nodes">18/20 nodes</span>
+              <span class="text-emerald-400 font-bold" id="hp-edge-nodes">18/20 (Bench)</span>
             </div>
             <div class="h-5 w-px bg-slate-800 hidden sm:block"></div>
             <div>
@@ -5213,8 +5382,8 @@
             </div>
             <div class="h-5 w-px bg-slate-800 hidden sm:block"></div>
             <div>
-              <span class="text-[9px] text-slate-500 uppercase block font-sans">Local</span>
-              <span class="text-amber-400 font-bold" id="hp-edge-siren">ARMED</span>
+              <span class="text-[9px] text-slate-500 uppercase block font-sans">Local Siren</span>
+              <span class="text-amber-400 font-bold" id="hp-edge-siren">DRY RUN</span>
             </div>
             <div class="h-5 w-px bg-slate-800 hidden sm:block"></div>
             <div>
@@ -8108,6 +8277,48 @@ function closeEvidenceModal(){
         modal.classList.add('hidden');
         modal.classList.remove('flex');
     }
+}
+
+function openDataTruthModal(){
+    var m = document.getElementById('modal-data-truth-matrix');
+    if (m) { m.classList.remove('hidden'); m.classList.add('flex'); }
+}
+function closeDataTruthModal(){
+    var m = document.getElementById('modal-data-truth-matrix');
+    if (m) { m.classList.add('hidden'); m.classList.remove('flex'); }
+}
+function openScientificExplModal(topic){
+    var m = document.getElementById('modal-scientific-expl');
+    var title = document.getElementById('sci-expl-title');
+    var body = document.getElementById('sci-expl-body');
+    if (!m) return;
+    const contents = {
+        'fos': {
+            title: 'Factor of Safety (FoS) — Geotechnical Physics',
+            body: '<p class="mb-2"><strong>Definition:</strong> Ratio of resisting shear strength to driving shear stress along the critical potential failure plane.</p><div class="p-2 bg-slate-900 rounded font-mono text-amber-300 text-xs mb-2">FoS = (c\' + (σ_n - u_a)tan(φ\') + (u_a - u_w)tan(φ^b)) / τ_driving</div><p class="text-xs text-slate-300">Evaluated via Mohr-Coulomb limit equilibrium coupled with Green-Ampt infiltration and van Genuchten SWCC matric suction. FoS &lt; 1.0 indicates critical mechanical failure; FoS &ge; 1.0 indicates conditionally stable slope.</p>'
+        },
+        'ml': {
+            title: 'Event Probability P(event) — Calibrated GBDT',
+            body: '<p class="mb-2"><strong>Definition:</strong> Calibrated statistical probability (0.00 to 1.00) of a documented slope failure occurring within the target forecast window (6h, 12h, 24h, 48h).</p><div class="p-2 bg-slate-900 rounded font-mono text-sky-300 text-xs mb-2">P(event) = Sigmoid(GBDT_logit) [Platt Scaled]</div><p class="text-xs text-slate-300">Model status: <strong>TRAINED_LIMITED_DATA</strong> (17 verified NER landslides, 36 windows, N=8 held-out test partition). Predicts probability of initiation given antecedent precipitation, InSAR creep, and terrain slope.</p>'
+        },
+        'cri': {
+            title: 'Composite Risk Index (CRI) — Multimodal Evidence Fusion',
+            body: '<p class="mb-2"><strong>Definition:</strong> Unitless operational risk score (0 to 100) synthesizing physical slope mechanics, statistical ML event probability, meteorological intensity, satellite geodesy, and asset exposure.</p><div class="p-2 bg-slate-900 rounded font-mono text-rose-300 text-xs mb-2">CRI = 0.35·FoS_risk + 0.25·P_event + 0.20·Rain_ID + 0.10·InSAR + 0.10·Asset_exp</div><p class="text-xs text-slate-300">Risk Bands: RED (70-100, Immediate Evacuation &amp; Defense SOP), ORANGE (50-69, Freight Detour &amp; Monitoring), YELLOW (30-49, Alert Standby), GREEN (&lt;30, Normal).</p>'
+        },
+        'corroboration': {
+            title: '2-of-3 Corroboration Guard — Safety Invariant',
+            body: '<p class="mb-2"><strong>Definition:</strong> Operational safety rule prohibiting automated public warnings or road closures unless confirmed by at least two independent physical/statistical modalities.</p><div class="p-2 bg-slate-900 rounded font-mono text-emerald-300 text-xs mb-2">Condition: Count(FoS &lt; 1.0, Rain_ID Exceeded, P_event &ge; 0.50) &ge; 2</div><p class="text-xs text-slate-300">Prevents false alarms caused by single faulty rain gauges (reducing historical false alarm rate from 48% to 9%) and ensures District Authorities only intervene on verified corroboration.</p>'
+        }
+    };
+    var d = contents[topic] || contents['fos'];
+    if (title) title.textContent = d.title;
+    if (body) body.innerHTML = d.body;
+    m.classList.remove('hidden');
+    m.classList.add('flex');
+}
+function closeScientificExplModal(){
+    var m = document.getElementById('modal-scientific-expl');
+    if (m) { m.classList.add('hidden'); m.classList.remove('flex'); }
 }
 
 function locateEvidenceOnMap(){
@@ -11176,8 +11387,8 @@ function updatePahadPredictionUI(inf, forecast, label) {
     if (cardKpiFos && fos != null) cardKpiFos.textContent = fos.toFixed(3);
     if (cardKpiProb && fosMl != null) cardKpiProb.textContent = `${(fosMl * 100).toFixed(1)}%`;
     if (cardKpiConf) cardKpiConf.textContent = inf.confidence != null ? (inf.confidence >= 0.7 ? 'HIGH' : (inf.confidence >= 0.4 ? 'MED' : 'LOW')) : 'HIGH';
-    if (cardProvLbl && inf.explanation?.provenance_summary) cardProvLbl.textContent = `[${inf.explanation.provenance_summary}]`;
-    if (cardQualLbl) cardQualLbl.textContent = `EVENT: ${inf.model_status || 'RESEARCH_PROTOTYPE'} | LSTM: SURROGATE`;
+    if (cardProvLbl) cardProvLbl.textContent = '[SIMULATED: DEPLOYMENT NOT VERIFIED]';
+    if (cardQualLbl) cardQualLbl.textContent = 'EVENT: ' + (inf.model_status || 'TRAINED_LIMITED_DATA') + ' (N=8 TEST) | LSTM: SURROGATE';
 
     // 6. Plain-language explanation (Phase 9E CP02)
     const plainExpEl = document.getElementById('pahad-plain-explanation');

@@ -4,7 +4,7 @@
   "release_title": "PARVAT NETRA \u2022 PAHAD AI \u2014 SIH 2026 Release & Submission Manifest",
   "timestamp_utc": "2026-09-16T08:12:18.618046+00:00",
   "git_branch": "main",
-  "git_commit": "dd9e57dc6452e0a70ad98731de0c536af8e50cb0",
+  "git_commit": "b8f003938f050107fb8b5fb50817f6c2b649eeb6",
   "model_hash": "65f0d6d78b59f79e1f6b50ce271db95398ad3dcd75303b38fdcfec41405192f8",
   "dataset_hashes": {
     "realtime_cri_dataset.csv": "d980938adaa72324441bdd408bcd7f6247a40ed63d1590b0a66722bae14b317e"
