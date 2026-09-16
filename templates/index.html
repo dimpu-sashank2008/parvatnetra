@@ -11071,6 +11071,7 @@ window.updatePahadPredictionUI = updatePahadPredictionUI;
 
 let activeSectorMarker = null;
 
+// async function onCorridorSelectionChanged(sectorId)
 async function onCorridorSelectionChanged(sectorId, shouldZoom = true) {
     window.currentSelectedSectorId = sectorId;
     const sec = PAHAD_SECTOR_REGISTRY[sectorId] || PAHAD_SECTOR_REGISTRY['SK-NH10-KM48'];
