@@ -3071,6 +3071,39 @@
     <!-- ===== AUTHORITY MODE ===== -->
     <div id="authority-view" class="max-w-7xl mx-auto px-4 py-5"><div id="authority-mode">
 
+        <!-- PHASE 14: PAHAD AI One-Glance Decision Pipeline Ribbon (Section 5) -->
+        <div id="pahad-pipeline-ribbon" class="mb-4 p-2.5 rounded-lg bg-[#070D1A] border border-slate-700/60 shadow-md">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+                <div class="flex items-center gap-2">
+                    <span class="text-[10px] font-black uppercase tracking-wider text-sky-400 flex items-center gap-1">
+                        <i class="ph-bold ph-git-commit"></i> PAHAD AI Pipeline:
+                    </span>
+                    <div class="flex items-center gap-1.5 text-[10px] font-mono text-slate-300 flex-wrap">
+                        <span class="px-1.5 py-0.5 rounded bg-slate-800 text-slate-200">DATA</span>
+                        <span class="text-slate-500">→</span>
+                        <span class="px-1.5 py-0.5 rounded bg-blue-950 text-sky-300 font-semibold cursor-pointer hover:underline" onclick="openScientificExplModal('fos')">PHYSICS (FoS)</span>
+                        <span class="text-slate-500">→</span>
+                        <span class="px-1.5 py-0.5 rounded bg-purple-950 text-purple-300 font-semibold cursor-pointer hover:underline" onclick="openScientificExplModal('ml')">ML (P_event)</span>
+                        <span class="text-slate-500">→</span>
+                        <span class="px-1.5 py-0.5 rounded bg-slate-800 text-slate-200">EVIDENCE</span>
+                        <span class="text-slate-500">→</span>
+                        <span class="px-1.5 py-0.5 rounded bg-indigo-950 text-indigo-300 font-semibold">PAHAD AI</span>
+                        <span class="text-slate-500">→</span>
+                        <span class="px-1.5 py-0.5 rounded bg-rose-950 text-rose-300 font-bold cursor-pointer hover:underline" onclick="openScientificExplModal('cri')">CRI</span>
+                        <span class="text-slate-500">→</span>
+                        <span class="px-1.5 py-0.5 rounded bg-amber-950 text-amber-300 font-bold cursor-pointer hover:underline" onclick="openScientificExplModal('corroboration')">2-of-3 CORROBORATION</span>
+                        <span class="text-slate-500">→</span>
+                        <span class="px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-300 font-bold">AUTHORITY DECISION</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button type="button" onclick="openDataTruthModal()" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-sky-300 border border-slate-600 text-[10px] font-mono font-bold flex items-center gap-1 transition cursor-pointer">
+                        <i class="ph-bold ph-table"></i> <span>DATA TRUTH MATRIX</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <!-- Map + Evidence Card -->
         <div id="authority-map-slot" class="grid grid-cols-1 xl:grid-cols-12 gap-5 mb-5">
             <!-- Map (8 cols) -->
