@@ -40,10 +40,13 @@ from engine.observation_store import (
 
 logger = logging.getLogger("EDGE_GATEWAY_SERVICE")
 
-BUFFER_DB_PATH = os.environ.get(
-    "EDGE_BUFFER_DB_PATH",
-    os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "edge", "edge_buffer.db")
-)
+if os.getenv("VERCEL") or os.getenv("AWS_LAMBDA_FUNCTION_NAME") or not os.access(".", os.W_OK):
+    BUFFER_DB_PATH = os.environ.get("EDGE_BUFFER_DB_PATH", "/tmp/edge_buffer.db")
+else:
+    BUFFER_DB_PATH = os.environ.get(
+        "EDGE_BUFFER_DB_PATH",
+        os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "edge", "edge_buffer.db")
+    )
 
 
 class EdgeBuffer:
@@ -54,7 +57,10 @@ class EdgeBuffer:
         self._init_db()
 
     def _get_conn(self) -> sqlite3.Connection:
-        os.makedirs(os.path.dirname(os.path.abspath(self.db_path)), exist_ok=True)
+        try:
+            os.makedirs(os.path.dirname(os.path.abspath(self.db_path)), exist_ok=True)
+        except OSError:
+            pass
         return sqlite3.connect(self.db_path)
 
     def _init_db(self) -> None:

@@ -161,7 +161,10 @@ DATABASE_URL = os.environ.get(
     os.environ.get("DATABASE_URL", "postgresql://neondb_owner:npg_F5zDJVmHyRB2@ep-wild-wave-awpqskzf-pooler.c-12.us-east-1.aws.neon.tech/neondb?sslmode=require")
 )
 IMD_DISTRICT_RAINFALL_URL = "https://api.imd.gov.in/api/v1/districtrainfall"
-os.makedirs(os.path.join(os.path.dirname(__file__), "static", "uploads", "field_reports"), exist_ok=True)
+try:
+    os.makedirs(os.path.join(os.path.dirname(__file__), "static", "uploads", "field_reports"), exist_ok=True)
+except OSError:
+    pass
 
 def get_db(max_retries=None):
     default_timeout = int(os.environ.get("DB_CONNECT_TIMEOUT", "1" if os.environ.get("PARVAT_TESTING") == "1" else "3"))
@@ -634,7 +637,14 @@ def submit_report():
         raw_photo = payload.get("photo") or payload.get("image_base64")
 
         upload_dir = os.path.join(os.path.dirname(__file__), "static", "uploads", "field_reports")
-        os.makedirs(upload_dir, exist_ok=True)
+        try:
+            os.makedirs(upload_dir, exist_ok=True)
+        except OSError:
+            upload_dir = "/tmp/uploads/field_reports"
+            try:
+                os.makedirs(upload_dir, exist_ok=True)
+            except OSError:
+                pass
 
         file_obj = None
         if "photo" in request.files and request.files["photo"].filename:

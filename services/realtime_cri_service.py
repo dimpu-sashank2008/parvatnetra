@@ -49,8 +49,12 @@ from engine.pahad_fusion import PAHAD_FUSION_ENGINE
 logger = logging.getLogger("REALTIME_CRI_SERVICE")
 
 DEFAULT_DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "realtime")
-DEFAULT_DB_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "observations", "pahad_observations.db")
-DEFAULT_REPORT_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "reports", "pahad_realtime_cri_report.md")
+if os.getenv("VERCEL") or os.getenv("AWS_LAMBDA_FUNCTION_NAME") or not os.access(".", os.W_OK):
+    DEFAULT_DB_PATH = "/tmp/pahad_observations.db"
+    DEFAULT_REPORT_PATH = "/tmp/pahad_realtime_cri_report.md"
+else:
+    DEFAULT_DB_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "observations", "pahad_observations.db")
+    DEFAULT_REPORT_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "reports", "pahad_realtime_cri_report.md")
 
 
 class RealtimeCRIService:

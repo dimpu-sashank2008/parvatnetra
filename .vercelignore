@@ -31,6 +31,5 @@ data/raw/
 data/features/
 data/labels/
 data/processed/
-scripts/
 reports/
 public/
