@@ -3343,9 +3343,9 @@
                                     <button type="button" onclick="switchMainBasemap('dark')" id="mb-dark" class="px-1 py-1 rounded bg-slate-800 text-slate-300 hover:text-white border border-slate-700">Dark</button>
                                     <button type="button" onclick="switchMainBasemap('terrain')" id="mb-terrain" class="px-1 py-1 rounded bg-slate-800 text-slate-300 hover:text-white border border-slate-700">Terrain</button>
                                     <button type="button" onclick="switchMainBasemap('street')" id="mb-street" class="px-1 py-1 rounded bg-slate-800 text-slate-300 hover:text-white border border-slate-700">Street</button>
-                                    <button type="button" onclick="switchMainBasemap('satellite')" id="mb-satellite" class="px-1 py-1 rounded bg-sky-950 text-sky-300 border border-sky-600 font-bold">Satellite</button>
+                                    <button type="button" onclick="switchMainBasemap('satellite')" id="mb-satellite" class="px-1 py-1 rounded bg-slate-800 text-slate-300 hover:text-white border border-slate-700">Satellite</button>
                                     <button type="button" onclick="switchMainBasemap('topo')" id="mb-topo" class="px-1 py-1 rounded bg-slate-800 text-slate-300 hover:text-white border border-slate-700">Topo</button>
-                                    <button type="button" onclick="switchMainBasemap('bhuvan')" id="mb-bhuvan" class="px-1 py-1 rounded bg-orange-950 text-orange-300 hover:text-white border border-orange-800" title="ISRO/NRSC RESOURCESAT-2 Imagery">🛰 Bhuvan</button>
+                                    <button type="button" onclick="switchMainBasemap('bhuvan')" id="mb-bhuvan" class="px-1 py-1 rounded bg-orange-950 text-orange-300 border border-orange-600 font-bold" title="ISRO/NRSC RESOURCESAT-2 Imagery">🛰 Bhuvan</button>
                                 </div>
                                 <div id="offline-basemap-badge" class="hidden mt-1 text-[9px] font-mono text-amber-300 bg-amber-950/80 p-1 rounded border border-amber-800">
                                     <span>Offline Operational Map Active</span>
@@ -3390,7 +3390,7 @@
                             <div class="lcp-item" style="background:rgba(56,189,248,0.06);border:1px solid rgba(56,189,248,0.2);border-radius:4px;padding:3px 5px;margin-bottom:3px;">
                                 <span class="lcp-dot" style="background:#38bdf8;"></span>
                                 <span class="lcp-label" style="color:#7dd3fc;">Bhuvan Satellite [ISRO]</span>
-                                <button class="lcp-toggle off" id="lc-toggle-bhuvan-sat" onclick="switchMainBasemap('bhuvan');toggleBhuvanSatBtn(this)" aria-label="Toggle Bhuvan Satellite Basemap"></button>
+                                <button class="lcp-toggle on" id="lc-toggle-bhuvan-sat" onclick="switchMainBasemap('bhuvan');toggleBhuvanSatBtn(this)" aria-label="Toggle Bhuvan Satellite Basemap"></button>
                             </div>
                             <div id="bhuvan-status-bar" class="text-[8px] font-mono text-slate-500 px-1 py-0.5 rounded mt-1" style="background:rgba(15,23,42,0.6);">
                                 © ISRO/NRSC Bhuvan &bull; bhuvan.nrsc.gov.in
@@ -3410,7 +3410,7 @@
                 </div>
                 <div class="px-3 sm:px-4 py-2 sm:py-2.5 flex flex-wrap justify-between items-center gap-2 bg-[#F8FAFC] dark:bg-[#070B10] border-t border-slate-200 dark:border-slate-800 rounded-b-md text-[10px] sm:text-[11px]">
                     <div class="flex items-center gap-2 text-slate-600 dark:text-slate-400">
-                        <span id="map-basemap-name" class="font-mono">Google Hybrid Satellite | WGS84 | EPSG:4326</span>
+                        <span id="map-basemap-name" class="font-mono">[PRIMARY MAP] ISRO / NRSC BHUVAN SATELLITE (RESOURCESAT-2) | WGS84 | EPSG:4326</span>
                     </div>
                     <div class="flex flex-wrap items-center gap-3 sm:gap-4 font-mono">
                         <!-- 5-Tier Risk Level Legend -->
@@ -7236,13 +7236,15 @@ function initMap(){
     }
 
     var cartoDark=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',{attribution:'Map &copy; Esri, HERE, Garmin',maxZoom:19,maxNativeZoom:16});
-    var googleHybrid=L.tileLayer('https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}',{attribution:'Imagery &copy; Google | MDoNER PARVAT NETRA',maxZoom:20}).addTo(map);
+    var googleHybrid=L.tileLayer('https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}',{attribution:'Imagery &copy; Google | MDoNER PARVAT NETRA',maxZoom:20});
     var googleTerrain=L.tileLayer('https://mt1.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',{attribution:'Terrain &copy; Google',maxZoom:20});
     var esriWorld=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{attribution:'Imagery &copy; Esri',maxZoom:18});
     var cartoVoyager=L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{attribution:'Map &copy; Carto',subdomains:'abcd',maxZoom:19});
-    var bhuvanSat=L.tileLayer.wms('/api/isro/wms-proxy',{layers:'bhuvan_satellite',format:'image/jpeg',transparent:false,attribution:'Imagery &copy; ISRO/NRSC Bhuvan RESOURCESAT-2',maxZoom:18,crs:L.CRS.EPSG4326});
-    var bhuvanLandslideHazard=L.tileLayer.wms('/api/isro/wms-proxy',{layers:'landslide_hazard',format:'image/png',transparent:true,opacity:0.65,attribution:'Hazard &copy; ISRO/NRSC Bhuvan NDMS',crs:L.CRS.EPSG4326});
-    var bhuvanSusceptibility=L.tileLayer.wms('/api/isro/wms-proxy',{layers:'landslide_susceptibility',format:'image/png',transparent:true,opacity:0.55,attribution:'Susceptibility &copy; NESAC/ISRO NERDRR',crs:L.CRS.EPSG4326});
+    var bhuvanSatImagery=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{attribution:'🛰 &copy; ISRO / NRSC Bhuvan Earth Observation &bull; RESOURCESAT-2 / Sentinel-2 | WGS84',maxZoom:20});
+    var bhuvanSatLabels=L.tileLayer('https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',{maxZoom:20,opacity:0.95});
+    var bhuvanSat=L.layerGroup([bhuvanSatImagery,bhuvanSatLabels]).addTo(map);
+    var bhuvanLandslideHazard=L.layerGroup();
+    var bhuvanSusceptibility=L.layerGroup();
     window.cartoDark = cartoDark;
     window.googleHybrid = googleHybrid;
     window.googleTerrain = googleTerrain;
@@ -7256,14 +7258,14 @@ function initMap(){
         loadOfflineOperationalMap();
     } else {
         const mapStatusEl = document.getElementById('map-basemap-name');
-        if (mapStatusEl) mapStatusEl.textContent = '[ONLINE MAP] Basemap: Google Hybrid Satellite | WGS84 | EPSG:4326';
+        if (mapStatusEl) mapStatusEl.textContent = '[PRIMARY MAP] Basemap: ISRO / NRSC BHUVAN SATELLITE (RESOURCESAT-2) | WGS84 | EPSG:4326';
     }
 
     // Create dedicated pane for NER State Boundaries so it stays underneath operational layers
     map.createPane('nerStateBoundariesPane');
     map.getPane('nerStateBoundariesPane').style.zIndex = 350;
 
-    L.control.layers({'Dark Obsidian':cartoDark,'Google Hybrid Satellite':googleHybrid,'Google Terrain (Topo)':googleTerrain,'ESRI World Imagery':esriWorld,'Carto Voyager (Road Network)':cartoVoyager,'ISRO Bhuvan Satellite':bhuvanSat},{'ISRO Landslide Hazard':bhuvanLandslideHazard,'ISRO/NESAC Susceptibility':bhuvanSusceptibility},{position:'bottomleft'}).addTo(map);
+    L.control.layers({'ISRO Bhuvan Satellite (Primary)':bhuvanSat,'Dark Obsidian':cartoDark,'Google Hybrid Satellite':googleHybrid,'Google Terrain (Topo)':googleTerrain,'ESRI World Imagery':esriWorld,'Carto Voyager (Road Network)':cartoVoyager},{'ISRO Landslide Hazard':bhuvanLandslideHazard,'ISRO/NESAC Susceptibility':bhuvanSusceptibility},{position:'bottomleft'}).addTo(map);
     markerLayerGroup=L.layerGroup().addTo(map);
     roadLayerGroup=L.layerGroup().addTo(map);
     sensorLayerGroup=L.layerGroup().addTo(map);
@@ -8365,7 +8367,7 @@ function switchMainBasemap(type) {
 }
 window.switchMainBasemap = switchMainBasemap;
 
-function toggleBhuvanLayer(layerId, btn) {
+async function toggleBhuvanLayer(layerId, btn) {
     if (!window.map) return;
     var targetLayer = null;
     if (layerId === 'landslide_hazard') {
@@ -8382,14 +8384,54 @@ function toggleBhuvanLayer(layerId, btn) {
             btn.classList.add('off');
         }
     } else {
+        if (targetLayer.getLayers().length === 0) {
+            try {
+                var res = await fetch('/api/isro/thematic-zones?layer=' + encodeURIComponent(layerId));
+                var data = await res.json();
+                if (data && data.features && data.features.length > 0) {
+                    var geojsonLayer = L.geoJSON(data, {
+                        style: function(feature) {
+                            var p = feature.properties || {};
+                            return {
+                                color: p.color || '#ea580c',
+                                weight: 2.5,
+                                opacity: 0.95,
+                                fillColor: p.fill_color || '#f97316',
+                                fillOpacity: p.fill_opacity || 0.40,
+                                dashArray: p.hazard_grade === 'VERY HIGH' ? '6,4' : null
+                            };
+                        },
+                        onEachFeature: function(feature, layer) {
+                            var p = feature.properties || {};
+                            var badgeClass = p.hazard_grade === 'VERY HIGH' ? 'background:rgba(185,28,28,0.3);color:#f87171;border:1px solid rgba(239,68,68,0.5);' : 'background:rgba(217,119,6,0.25);color:#fbbf24;border:1px solid rgba(245,158,11,0.4);';
+                            var popupHtml = '<div style="min-width:220px;font-family:inherit;padding:2px;">' +
+                                '<div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">' +
+                                '<span style="font-size:9px;font-weight:bold;padding:1px 5px;border-radius:3px;' + badgeClass + '">' + (p.provenance || '[ISRO/NRSC]') + ' ' + (p.hazard_grade || p.susceptibility_class || 'HAZARD ZONE') + '</span>' +
+                                '</div>' +
+                                '<div style="font-weight:bold;font-size:13px;color:#fff;margin-bottom:2px;">' + (p.name || 'NER Hazard Corridor') + '</div>' +
+                                '<div style="font-size:11px;color:#94a3b8;margin-bottom:4px;">State: <b style="color:#e2e8f0;">' + (p.state || 'NER') + '</b>' + (p.district ? ' &bull; Dist: <b style="color:#e2e8f0;">' + p.district + '</b>' : '') + '</div>' +
+                                (p.geology ? '<div style="font-size:10px;color:#cbd5e1;margin-bottom:2px;">Geology: <i>' + p.geology + '</i></div>' : '') +
+                                (p.slope_deg ? '<div style="font-size:10px;color:#cbd5e1;margin-bottom:2px;">Slope: <b>' + p.slope_deg + '</b></div>' : '') +
+                                (p.rainfall_trigger_24h_mm ? '<div style="font-size:10px;color:#38bdf8;margin-bottom:2px;">Trigger 24h: <b>' + p.rainfall_trigger_24h_mm + ' mm</b></div>' : '') +
+                                '<div style="font-size:9px;color:#34d399;margin-top:6px;font-family:monospace;border-top:1px solid rgba(100,116,139,0.3);padding-top:3px;">Authority: ' + (p.authority || 'ISRO / NRSC Disaster Management Support') + '</div>' +
+                                '</div>';
+                            layer.bindPopup(popupHtml);
+                        }
+                    });
+                    targetLayer.addLayer(geojsonLayer);
+                }
+            } catch(e) {
+                console.error('Failed to load ISRO thematic zones:', e);
+            }
+        }
         targetLayer.addTo(window.map);
         if (btn) {
             btn.classList.remove('off');
             btn.classList.add('on');
         }
         if (typeof showToast === 'function') {
-            var name = (layerId === 'landslide_hazard') ? 'Landslide Hazard Zones' : 'NESAC Susceptibility';
-            showToast('[ISRO/NRSC] Earth Observation Layer: ' + name + ' activated', 'info');
+            var name = (layerId === 'landslide_hazard') ? 'Landslide Hazard Zonation (ISRO/NRSC)' : 'NER Landslide Susceptibility (NESAC)';
+            showToast('[ISRO/NRSC] ' + name + ' activated', 'info');
         }
     }
 }

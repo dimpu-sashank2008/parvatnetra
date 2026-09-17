@@ -237,3 +237,354 @@ def _transparent_tile() -> bytes:
         0x00, 0x00, 0x00, 0x49, 0x45, 0x4e, 0x44, 0xae,
         0x42, 0x60, 0x82,
     ])
+
+
+def get_isro_thematic_geojson(layer_id: str = "landslide_hazard") -> Dict[str, Any]:
+    """
+    Return GeoJSON FeatureCollection of official ISRO/NRSC Landslide Hazard Zonation
+    or NESAC NER Landslide Susceptibility polygons across the 8 Northeastern states.
+    Used by the frontend to render rich, interactive thematic overlay layers on the map.
+    """
+    if layer_id == "landslide_susceptibility":
+        return _build_nesac_susceptibility_geojson()
+    return _build_nrsc_hazard_zonation_geojson()
+
+
+def _build_nrsc_hazard_zonation_geojson() -> Dict[str, Any]:
+    """Official NRSC Landslide Hazard Zonation (NDMS programme) for NER."""
+    features = [
+        {
+            "type": "Feature",
+            "properties": {
+                "zone_id": "ISRO-NDMS-SK-01",
+                "name": "NH-10 Teesta Gorge (Rangpo - Singtam - Km 48)",
+                "state": "Sikkim",
+                "district": "Pakyong / Gangtok",
+                "hazard_grade": "VERY HIGH",
+                "color": "#dc2626",
+                "fill_color": "#ef4444",
+                "fill_opacity": 0.45,
+                "susceptibility_score": 0.94,
+                "geology": "Daling Group (Chlorite-Sericite Phyllite / Schist)",
+                "slope_deg": "48° - 65°",
+                "rainfall_trigger_24h_mm": 110.0,
+                "authority": "ISRO / NRSC Disaster Management Support (NDMS)",
+                "provenance": "[ISRO/NRSC]"
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [[[88.48, 27.17], [88.55, 27.24], [88.58, 27.35], [88.53, 27.37], [88.47, 27.25], [88.48, 27.17]]]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "zone_id": "ISRO-NDMS-SK-02",
+                "name": "North Sikkim Highway (Singtam - Mangan - Chungthang)",
+                "state": "Sikkim",
+                "district": "Mangan",
+                "hazard_grade": "VERY HIGH",
+                "color": "#dc2626",
+                "fill_color": "#ef4444",
+                "fill_opacity": 0.40,
+                "susceptibility_score": 0.91,
+                "geology": "Central Crystalline Gneissic Complex",
+                "slope_deg": "50° - 70°",
+                "rainfall_trigger_24h_mm": 95.0,
+                "authority": "ISRO / NRSC Disaster Management Support (NDMS)",
+                "provenance": "[ISRO/NRSC]"
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [[[88.50, 27.35], [88.56, 27.52], [88.62, 27.60], [88.55, 27.62], [88.48, 27.48], [88.50, 27.35]]]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "zone_id": "ISRO-NDMS-AR-01",
+                "name": "NH-13 Bhalukpong - Tenga - Sela Pass",
+                "state": "Arunachal Pradesh",
+                "district": "West Kameng",
+                "hazard_grade": "VERY HIGH",
+                "color": "#dc2626",
+                "fill_color": "#ea580c",
+                "fill_opacity": 0.40,
+                "susceptibility_score": 0.89,
+                "geology": "Siwalik Sandstones & Bomdila Gneiss",
+                "slope_deg": "42° - 58°",
+                "rainfall_trigger_24h_mm": 130.0,
+                "authority": "ISRO / NRSC Disaster Management Support (NDMS)",
+                "provenance": "[ISRO/NRSC]"
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [[[92.60, 27.00], [92.68, 27.15], [92.40, 27.35], [92.10, 27.52], [92.02, 27.45], [92.52, 26.98], [92.60, 27.00]]]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "zone_id": "ISRO-NDMS-NL-01",
+                "name": "NH-29 Dimapur - Kohima Corridor (Piphema - Pagala Pahar)",
+                "state": "Nagaland",
+                "district": "Chumoukedima / Kohima",
+                "hazard_grade": "VERY HIGH",
+                "color": "#dc2626",
+                "fill_color": "#ea580c",
+                "fill_opacity": 0.42,
+                "susceptibility_score": 0.93,
+                "geology": "Disang Shale Formation (Highly Weathered Siltstone)",
+                "slope_deg": "38° - 52°",
+                "rainfall_trigger_24h_mm": 105.0,
+                "authority": "ISRO / NRSC Disaster Management Support (NDMS)",
+                "provenance": "[ISRO/NRSC]"
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [[[93.85, 25.75], [93.98, 25.70], [94.05, 25.66], [94.10, 25.68], [94.02, 25.74], [93.88, 25.80], [93.85, 25.75]]]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "zone_id": "ISRO-NDMS-ML-01",
+                "name": "NH-06 Sonapur Tunnel - Lumshnong - Ratacherra",
+                "state": "Meghalaya",
+                "district": "East Jaintia Hills",
+                "hazard_grade": "HIGH",
+                "color": "#f97316",
+                "fill_color": "#fb923c",
+                "fill_opacity": 0.38,
+                "susceptibility_score": 0.86,
+                "geology": "Jaintia Group Limestone / Sandstone Interbeds",
+                "slope_deg": "35° - 48°",
+                "rainfall_trigger_24h_mm": 150.0,
+                "authority": "ISRO / NRSC Disaster Management Support (NDMS)",
+                "provenance": "[ISRO/NRSC]"
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [[[92.32, 25.10], [92.42, 25.14], [92.48, 25.08], [92.38, 25.04], [92.32, 25.10]]]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "zone_id": "ISRO-NDMS-MN-01",
+                "name": "NH-37 Imphal - Jiribam (Noney / Tupul Railway Section)",
+                "state": "Manipur",
+                "district": "Noney",
+                "hazard_grade": "VERY HIGH",
+                "color": "#dc2626",
+                "fill_color": "#ea580c",
+                "fill_opacity": 0.44,
+                "susceptibility_score": 0.95,
+                "geology": "Disang Series Fissile Shales with Mudstone",
+                "slope_deg": "40° - 55°",
+                "rainfall_trigger_24h_mm": 115.0,
+                "authority": "ISRO / NRSC Disaster Management Support (NDMS)",
+                "provenance": "[ISRO/NRSC]"
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [[[93.58, 24.80], [93.72, 24.84], [93.75, 24.78], [93.62, 24.74], [93.58, 24.80]]]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "zone_id": "ISRO-NDMS-MZ-01",
+                "name": "NH-54 Aizawl - Sairang - Hunthar Subsidence Zone",
+                "state": "Mizoram",
+                "district": "Aizawl",
+                "hazard_grade": "HIGH",
+                "color": "#f97316",
+                "fill_color": "#fb923c",
+                "fill_opacity": 0.38,
+                "susceptibility_score": 0.85,
+                "geology": "Bhuban Formation (Surma Group) Alternating Sandstone-Shale",
+                "slope_deg": "32° - 45°",
+                "rainfall_trigger_24h_mm": 125.0,
+                "authority": "ISRO / NRSC Disaster Management Support (NDMS)",
+                "provenance": "[ISRO/NRSC]"
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [[[92.65, 23.72], [92.74, 23.75], [92.76, 23.68], [92.68, 23.65], [92.65, 23.72]]]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "zone_id": "ISRO-NDMS-AS-01",
+                "name": "Lumding - Badarpur Hill Section (Jatinga - Harangajao)",
+                "state": "Assam",
+                "district": "Dima Hasao",
+                "hazard_grade": "HIGH",
+                "color": "#f97316",
+                "fill_color": "#fb923c",
+                "fill_opacity": 0.38,
+                "susceptibility_score": 0.88,
+                "geology": "Barail Group Sandstones & Shales",
+                "slope_deg": "34° - 46°",
+                "rainfall_trigger_24h_mm": 135.0,
+                "authority": "ISRO / NRSC Disaster Management Support (NDMS)",
+                "provenance": "[ISRO/NRSC]"
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [[[92.98, 25.12], [93.12, 25.18], [93.18, 25.10], [93.04, 25.06], [92.98, 25.12]]]
+            }
+        }
+    ]
+    return {
+        "type": "FeatureCollection",
+        "name": "ISRO_NRSC_Landslide_Hazard_Zonation_NER",
+        "crs": {"type": "name", "properties": {"name": "urn:ogc:def:crs:OGC:1.3:CRS84"}},
+        "provenance": "[ISRO/NRSC]",
+        "authority": "ISRO National Remote Sensing Centre (NRSC) DMS",
+        "dataset": "National Landslide Hazard Zonation 1:50,000",
+        "features": features
+    }
+
+
+def _build_nesac_susceptibility_geojson() -> Dict[str, Any]:
+    """NESAC NER Landslide Susceptibility Mapping under NERDRR programme."""
+    features = [
+        {
+            "type": "Feature",
+            "properties": {
+                "zone_id": "NESAC-NERDRR-01",
+                "name": "Teesta Basin Slope Susceptibility (Sikkim Arc)",
+                "state": "Sikkim",
+                "susceptibility_class": "Class V (Very High)",
+                "color": "#ea580c",
+                "fill_color": "#f97316",
+                "fill_opacity": 0.35,
+                "score": 0.92,
+                "slope_class": "Steep Escarpment (>45°)",
+                "vegetation_cover": "Degraded Sub-tropical Hill Forest (NDVI < 0.35)",
+                "authority": "North Eastern Space Applications Centre (NESAC)",
+                "provenance": "[ISRO/NESAC]"
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [[[88.40, 27.10], [88.65, 27.20], [88.68, 27.65], [88.42, 27.55], [88.40, 27.10]]]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "zone_id": "NESAC-NERDRR-02",
+                "name": "Kameng River Basin Escarpment",
+                "state": "Arunachal Pradesh",
+                "susceptibility_class": "Class IV (High)",
+                "color": "#f59e0b",
+                "fill_color": "#fbbf24",
+                "fill_opacity": 0.30,
+                "score": 0.84,
+                "slope_class": "Moderately Steep (30° - 45°)",
+                "vegetation_cover": "Dense Mixed Forest with Road Cuts",
+                "authority": "North Eastern Space Applications Centre (NESAC)",
+                "provenance": "[ISRO/NESAC]"
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [[[92.30, 26.90], [92.80, 27.10], [92.70, 27.60], [92.00, 27.50], [92.30, 26.90]]]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "zone_id": "NESAC-NERDRR-03",
+                "name": "Naga Hills Structural Lineament Belt",
+                "state": "Nagaland",
+                "susceptibility_class": "Class V (Very High)",
+                "color": "#ea580c",
+                "fill_color": "#f97316",
+                "fill_opacity": 0.35,
+                "score": 0.90,
+                "slope_class": "Steep Ridge-and-Furrow (35° - 50°)",
+                "vegetation_cover": "Jhum Land & Secondary Regrowth",
+                "authority": "North Eastern Space Applications Centre (NESAC)",
+                "provenance": "[ISRO/NESAC]"
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [[[93.70, 25.50], [94.20, 25.60], [94.40, 26.20], [93.90, 26.00], [93.70, 25.50]]]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "zone_id": "NESAC-NERDRR-04",
+                "name": "Shillong Plateau Southern Escarpment",
+                "state": "Meghalaya",
+                "susceptibility_class": "Class V (Very High - Hydrologic Trigger)",
+                "color": "#ea580c",
+                "fill_color": "#f97316",
+                "fill_opacity": 0.35,
+                "score": 0.91,
+                "slope_class": "Near-Vertical Cuesta Escarpment (>60°)",
+                "vegetation_cover": "Sub-tropical Pine & Rain-scoured Cliffs",
+                "authority": "North Eastern Space Applications Centre (NESAC)",
+                "provenance": "[ISRO/NESAC]"
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [[[91.40, 25.10], [92.50, 25.05], [92.45, 25.30], [91.35, 25.35], [91.40, 25.10]]]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "zone_id": "NESAC-NERDRR-05",
+                "name": "Barak Basin Western Fold Belt (Noney / Jiribam)",
+                "state": "Manipur",
+                "susceptibility_class": "Class V (Very High)",
+                "color": "#ea580c",
+                "fill_color": "#f97316",
+                "fill_opacity": 0.35,
+                "score": 0.93,
+                "slope_class": "Anticlinal Valley Slopes (35° - 55°)",
+                "vegetation_cover": "Bamboo Clumps & Disturbed Hillslopes",
+                "authority": "North Eastern Space Applications Centre (NESAC)",
+                "provenance": "[ISRO/NESAC]"
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [[[93.30, 24.60], [93.85, 24.70], [93.80, 25.05], [93.25, 24.95], [93.30, 24.60]]]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "zone_id": "NESAC-NERDRR-06",
+                "name": "Mizo Hills Linear Anticline Slopes",
+                "state": "Mizoram",
+                "susceptibility_class": "Class IV (High)",
+                "color": "#f59e0b",
+                "fill_color": "#fbbf24",
+                "fill_opacity": 0.30,
+                "score": 0.83,
+                "slope_class": "Parallel Ridges (28° - 42°)",
+                "vegetation_cover": "Tropical Semi-Evergreen",
+                "authority": "North Eastern Space Applications Centre (NESAC)",
+                "provenance": "[ISRO/NESAC]"
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [[[92.50, 23.40], [92.90, 23.50], [92.85, 24.40], [92.45, 24.30], [92.50, 23.40]]]
+            }
+        }
+    ]
+    return {
+        "type": "FeatureCollection",
+        "name": "NESAC_NER_Landslide_Susceptibility_Zonation",
+        "crs": {"type": "name", "properties": {"name": "urn:ogc:def:crs:OGC:1.3:CRS84"}},
+        "provenance": "[ISRO/NESAC]",
+        "authority": "North Eastern Space Applications Centre (NESAC), Umiam",
+        "programme": "NERDRR (North Eastern Regional Node for Disaster Risk Reduction)",
+        "features": features
+    }

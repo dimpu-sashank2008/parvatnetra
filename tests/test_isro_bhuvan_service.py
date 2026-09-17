@@ -158,6 +158,24 @@ class TestISROBhuvanService(unittest.TestCase):
         self.assertIn('id="mb-bhuvan"', html)
         self.assertIn("Bhuvan", html)
 
+    def test_api_isro_thematic_zones(self):
+        """Test GET /api/isro/thematic-zones returns valid GeoJSON for hazard and susceptibility."""
+        # Hazard
+        resp = self.client.get("/api/isro/thematic-zones?layer=landslide_hazard")
+        self.assertEqual(resp.status_code, 200)
+        data = resp.get_json()
+        self.assertEqual(data["type"], "FeatureCollection")
+        self.assertEqual(data["provenance"], "[ISRO/NRSC]")
+        self.assertGreaterEqual(len(data["features"]), 5)
+
+        # Susceptibility
+        resp2 = self.client.get("/api/isro/thematic-zones?layer=landslide_susceptibility")
+        self.assertEqual(resp2.status_code, 200)
+        data2 = resp2.get_json()
+        self.assertEqual(data2["type"], "FeatureCollection")
+        self.assertEqual(data2["provenance"], "[ISRO/NESAC]")
+        self.assertGreaterEqual(len(data2["features"]), 5)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -5471,6 +5471,24 @@ def api_isro_wms_proxy():
                                  "Access-Control-Allow-Origin": "*"})
 
 
+@app.route("/api/isro/thematic-zones", methods=["GET"])
+def api_isro_thematic_zones():
+    """
+    GET /api/isro/thematic-zones?layer=<landslide_hazard|landslide_susceptibility>
+    Return GeoJSON FeatureCollection of official ISRO/NRSC Landslide Hazard Zonation
+    or NESAC NER Landslide Susceptibility polygons across the 8 Northeastern states.
+    Provenance: [ISRO/NRSC] or [ISRO/NESAC]
+    """
+    try:
+        from services.isro_bhuvan_service import get_isro_thematic_geojson
+        layer = request.args.get("layer", "landslide_hazard")
+        geojson_data = get_isro_thematic_geojson(layer)
+        return jsonify(geojson_data), 200
+    except Exception as e:
+        logger.error(f"Error in /api/isro/thematic-zones: {e}", exc_info=True)
+        return jsonify({"type": "FeatureCollection", "features": [], "error": str(e)}), 500
+
+
 @app.route("/api/geospatial/offline-manifest", methods=["GET"])
 def api_geospatial_offline_manifest():
     """
