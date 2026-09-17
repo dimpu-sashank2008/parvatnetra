@@ -299,6 +299,7 @@ class AuthorizationTokenManager:
                 "ISRO-STATUTORY-AUTH-NER",
                 "NDMA-STATUTORY-AUTH-NER",
                 "TEST-AUTH-TOKEN-2026",
+                "AUTH-DM-2026",
             }
             if token_str not in recognized_test_tokens and not os.getenv("PAHAD_ALLOW_ARBITRARY_TOKENS"):
                 return False, "Authority token validation failed: Unrecognized token format. Must be cryptographic AUTH-v1."

@@ -141,7 +141,7 @@ class NotificationOrchestrator:
         authorization_token: Optional[str] = None,
         recipients_map: Optional[Dict[str, str]] = None,
         public_dispatch_enabled: Optional[bool] = None,
-        dry_run: bool = True,
+        dry_run: Optional[bool] = None,
         is_simulation: bool = False
     ) -> Dict[str, Any]:
         """
@@ -151,6 +151,8 @@ class NotificationOrchestrator:
         recipients = recipients_map or {}
         if public_dispatch_enabled is None:
             public_dispatch_enabled = os.environ.get("PUBLIC_DISPATCH", "DISABLED").upper() == "ENABLED"
+        if dry_run is None:
+            dry_run = not public_dispatch_enabled
         now = datetime.now(timezone.utc).isoformat()
 
         results = {}
@@ -173,10 +175,6 @@ class NotificationOrchestrator:
                 elif dry_run or is_simulation:
                     status = STATUS_SIMULATED
                     note = f"[SIMULATED] Dry-run simulated delivery for {ch_up}: no real public broadcast or siren activation"
-                elif ch_up == "SIREN":
-                    # Hard safety rule: physical siren hardware disabled
-                    status = STATUS_SIMULATED
-                    note = "[DRY_RUN] Siren hardware simulation: physical acoustic relay disabled"
                 else:
                     status = STATUS_DELIVERED
                     note = "Delivered to public warning gateway"

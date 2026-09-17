@@ -117,10 +117,16 @@ class VegetationService:
     """
 
     def __init__(self, data_dir: Optional[str] = None) -> None:
-        self.data_dir = data_dir or os.path.join(
-            os.path.dirname(os.path.dirname(__file__)), "data", "geospatial", "vegetation"
-        )
-        os.makedirs(self.data_dir, exist_ok=True)
+        if os.getenv("VERCEL") or os.getenv("AWS_LAMBDA_FUNCTION_NAME") or not os.access(".", os.W_OK):
+            self.data_dir = data_dir or "/tmp/data/geospatial/vegetation"
+        else:
+            self.data_dir = data_dir or os.path.join(
+                os.path.dirname(os.path.dirname(__file__)), "data", "geospatial", "vegetation"
+            )
+        try:
+            os.makedirs(self.data_dir, exist_ok=True)
+        except OSError:
+            pass
         self.source = "Copernicus Sentinel-2 MSI (Level-2A BOA)"
         self.resolution = "10m"
 

@@ -5136,37 +5136,37 @@ def api_geospatial_terrain():
       resolution: cell size in meters (default 30.0)
       product: elevation, slope, aspect, curvature, hillshade, contours
     """
-    import numpy as np
-    from services.dem_service import DEM_SERVICE, SIKKIM_BOUNDS
-    from engine.terrain_analysis import (
-        calculate_slope, calculate_aspect, calculate_curvature,
-        generate_hillshade, generate_contours
-    )
-
-    bbox_str = request.args.get("bbox")
-    product = request.args.get("product", "elevation").lower()
-    interval_m = float(request.args.get("interval", 20.0))
-    grid_size = int(request.args.get("grid_size", 32))
-    grid_size = max(8, min(64, grid_size))
-
-    if bbox_str:
-        try:
-            parts = [float(x.strip()) for x in bbox_str.split(",")]
-            if len(parts) == 4:
-                bounds = {
-                    "min_lon": parts[0],
-                    "min_lat": parts[1],
-                    "max_lon": parts[2],
-                    "max_lat": parts[3]
-                }
-            else:
-                bounds = SIKKIM_BOUNDS
-        except Exception:
-            bounds = SIKKIM_BOUNDS
-    else:
-        bounds = SIKKIM_BOUNDS
-
     try:
+        import numpy as np
+        from services.dem_service import DEM_SERVICE, SIKKIM_BOUNDS
+        from engine.terrain_analysis import (
+            calculate_slope, calculate_aspect, calculate_curvature,
+            generate_hillshade, generate_contours
+        )
+
+        bbox_str = request.args.get("bbox")
+        product = request.args.get("product", "elevation").lower()
+        interval_m = float(request.args.get("interval", 20.0))
+        grid_size = int(request.args.get("grid_size", 32))
+        grid_size = max(8, min(64, grid_size))
+
+        if bbox_str:
+            try:
+                parts = [float(x.strip()) for x in bbox_str.split(",")]
+                if len(parts) == 4:
+                    bounds = {
+                        "min_lon": parts[0],
+                        "min_lat": parts[1],
+                        "max_lon": parts[2],
+                        "max_lat": parts[3]
+                    }
+                else:
+                    bounds = SIKKIM_BOUNDS
+            except Exception:
+                bounds = SIKKIM_BOUNDS
+        else:
+            bounds = SIKKIM_BOUNDS
+
         elev_grid, lats, lons = DEM_SERVICE.get_elevation_grid(
             min_lat=bounds["min_lat"],
             max_lat=bounds["max_lat"],

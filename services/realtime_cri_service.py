@@ -77,14 +77,23 @@ class RealtimeCRIService:
         self._last_updated: Optional[str] = None
         self._dataset_hash: Optional[str] = None
 
-        os.makedirs(self.data_dir, exist_ok=True)
-        os.makedirs(os.path.dirname(self.report_path), exist_ok=True)
+        try:
+            os.makedirs(self.data_dir, exist_ok=True)
+        except OSError:
+            pass
+        try:
+            os.makedirs(os.path.dirname(self.report_path), exist_ok=True)
+        except OSError:
+            pass
         self._init_sqlite()
 
     def _init_sqlite(self) -> None:
         """Ensures the SQLite table realtime_cri_evaluations exists."""
         try:
-            os.makedirs(os.path.dirname(self.db_path), exist_ok=True)
+            try:
+                os.makedirs(os.path.dirname(self.db_path), exist_ok=True)
+            except OSError:
+                pass
             with sqlite3.connect(self.db_path) as conn:
                 cur = conn.cursor()
                 cur.execute("""

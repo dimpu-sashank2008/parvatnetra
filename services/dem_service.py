@@ -84,10 +84,16 @@ class DEMService:
     """
 
     def __init__(self, dem_dir: Optional[str] = None) -> None:
-        self.dem_dir = dem_dir or os.path.join(
-            os.path.dirname(os.path.dirname(__file__)), "data", "geospatial", "dem"
-        )
-        os.makedirs(self.dem_dir, exist_ok=True)
+        if os.getenv("VERCEL") or os.getenv("AWS_LAMBDA_FUNCTION_NAME") or not os.access(".", os.W_OK):
+            self.dem_dir = dem_dir or "/tmp/data/geospatial/dem"
+        else:
+            self.dem_dir = dem_dir or os.path.join(
+                os.path.dirname(os.path.dirname(__file__)), "data", "geospatial", "dem"
+            )
+        try:
+            os.makedirs(self.dem_dir, exist_ok=True)
+        except OSError:
+            pass
         self.local_raster_path = os.path.join(self.dem_dir, "ner_elevation_30m.tif")
         self.resolution_m = 30.0
         self.crs = "EPSG:4326"

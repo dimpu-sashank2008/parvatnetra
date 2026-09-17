@@ -171,11 +171,25 @@ class TestEdgeAPI(unittest.TestCase):
         self.assertIn("[SQLITE STORE]", html)
         self.assertNotIn('badge-live font-semibold" id="sync-mode-tag">[SQLITE STORE]', html)
 
-        # 5. Safety protocol banner and siren buttons have no enclosing box/border
-        self.assertNotIn('border border-amber-800/60 rounded-lg text-[11px] text-amber-300', html)
-        self.assertNotIn('border border-amber-600 transition flex items-center justify-center space-x-1', html)
+        # 6. Check buffered queue, synced to cloud, and backhaul state cards have no boxes
+        self.assertNotIn('bg-slate-900 border border-slate-800 rounded-lg p-3 text-center">\n                            <span class="text-[10px] uppercase text-slate-400 block font-semibold">बफ़र कतार', html)
+        self.assertIn('p-2 text-center bg-transparent border-0', html)
+
+        # 7. Check Severed Backhaul and Force Sync Flush buttons have no box/border
+        self.assertNotIn('rounded bg-slate-800 hover:bg-slate-700 text-amber-300 transition flex items-center space-x-1 border-0">\n                            <span id="btn-toggle-cloud-text">', html)
+
+        # 8. Check demo scenario presets have no box/pill styling
+        self.assertNotIn('bg-emerald-950 hover:bg-emerald-900 text-emerald-300 transition border-0', html)
+        self.assertNotIn('bg-slate-900 rounded-lg border border-slate-800 text-[11px] text-slate-400 font-medium" id="inject-result-log"', html)
+
+        # 9. Badges have no box/border styling
+        self.assertIn('[DRY-RUN SAFE]', html)
+        self.assertIn('[LIVE / CACHED]', html)
+        self.assertIn('[HARDWARE ADAPTER]', html)
+        self.assertIn('[DEMO]', html)
 
 
 if __name__ == "__main__":
     unittest.main()
+
 

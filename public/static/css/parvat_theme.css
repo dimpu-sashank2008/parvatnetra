@@ -14,12 +14,50 @@ body.light-mode {
 }
 
 body.light-mode header,
-body.light-mode nav,
 body.light-mode .masthead-container {
     background-color: #FFF5E9 !important;
     border-bottom: 2px solid #FED7AA !important;
     color: #1E293B !important;
 }
+
+body.light-mode header#system-header-bar {
+    background-color: #FFFFFF !important;
+    border-bottom: 1px solid #E2E8F0 !important;
+    color: #0F172A !important;
+}
+
+/* SIH Portal Primary Navigation Container — Zero background, zero outline, pure text */
+#portal-primary-nav,
+nav#portal-primary-nav,
+#system-header-bar nav,
+body.light-mode #portal-primary-nav,
+body.light-mode nav#portal-primary-nav,
+body.light-mode #system-header-bar nav,
+body.dark-mode #portal-primary-nav,
+body.dark-mode nav#portal-primary-nav,
+body.dark-mode #system-header-bar nav {
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
+}
+
+body.light-mode #btn-top-mdoner-tour {
+    background-color: #FFFFFF !important;
+    border: 1px solid #CBD5E1 !important;
+    color: #1E293B !important;
+}
+
+body.light-mode #btn-top-mdoner-tour:hover {
+    border-color: #94A3B8 !important;
+    color: #0F172A !important;
+}
+
+body.light-mode #btn-top-mdoner-tour i {
+    color: #0284C7 !important;
+}
+
 
 body.light-mode header h1,
 body.light-mode header h2,
@@ -263,14 +301,32 @@ body.light-mode .secondary-context {
     font-size: 14.5px;
 }
 
-body.light-mode .text-white,
-body.light-mode .text-slate-100,
-body.light-mode .text-slate-200,
-body.light-mode .text-slate-300,
-body.light-mode .text-neutral-100,
-body.light-mode .text-neutral-200,
-body.light-mode .text-neutral-300 {
+body.light-mode .text-white:not(button):not(button *):not(a.bg-\[\#003366\]):not(a.bg-\[\#003366\] *):not(a.bg-\[\#D97706\]):not(a.bg-\[\#D97706\] *):not([style*="color: #ffffff"]):not([style*="color: #ffffff"] *):not([class*="bg-[#003366]"] *):not([class*="bg-[#D97706]"] *),
+body.light-mode .text-slate-100:not(button):not(button *):not([style*="color: #ffffff"] *),
+body.light-mode .text-slate-200:not(button):not(button *):not([style*="color: #ffffff"] *),
+body.light-mode .text-slate-300:not(button):not(button *):not([style*="color: #ffffff"] *),
+body.light-mode .text-neutral-100:not(button):not(button *):not([style*="color: #ffffff"] *),
+body.light-mode .text-neutral-200:not(button):not(button *):not([style*="color: #ffffff"] *),
+body.light-mode .text-neutral-300:not(button):not(button *):not([style*="color: #ffffff"] *) {
     color: #0B2545 !important;
+}
+
+/* Solid background action buttons must maintain pure white text across all themes */
+a.bg-\[\#003366\], a.bg-\[\#003366\] *,
+button.bg-\[\#003366\], button.bg-\[\#003366\] *,
+a.bg-\[\#D97706\], a.bg-\[\#D97706\] *,
+button.bg-\[\#D97706\], button.bg-\[\#D97706\] *,
+#btn-submit-authority, #btn-submit-authority *,
+#btn-submit-citizen, #btn-submit-citizen *,
+body.light-mode a.bg-\[\#003366\], body.light-mode a.bg-\[\#003366\] *,
+body.light-mode button.bg-\[\#003366\], body.light-mode button.bg-\[\#003366\] *,
+body.light-mode a.bg-\[\#D97706\], body.light-mode a.bg-\[\#D97706\] *,
+body.light-mode button.bg-\[\#D97706\], body.light-mode button.bg-\[\#D97706\] *,
+body.light-mode a[href*="/login/authority"], body.light-mode a[href*="/login/authority"] *,
+body.light-mode a[href*="/login/citizen"], body.light-mode a[href*="/login/citizen"] *,
+body.light-mode #btn-submit-authority, body.light-mode #btn-submit-authority *,
+body.light-mode #btn-submit-citizen, body.light-mode #btn-submit-citizen * {
+    color: #FFFFFF !important;
 }
 
 body.light-mode .text-slate-400,
@@ -402,9 +458,24 @@ body.light-mode main .bg-white {
 
 body.light-mode .portal-choice-card h3,
 body.light-mode .portal-choice-card p,
-body.light-mode .portal-choice-card span,
+body.light-mode .portal-choice-card span:not(a *):not(button *),
 body.light-mode .portal-choice-card li {
     color: #1E293B !important;
+}
+
+body.light-mode .portal-choice-card a.bg-\[\#003366\],
+body.light-mode .portal-choice-card a.bg-\[\#003366\] *,
+body.light-mode .portal-choice-card a.bg-\[\#D97706\],
+body.light-mode .portal-choice-card a.bg-\[\#D97706\] *,
+body.light-mode a[href*="/login/authority"],
+body.light-mode a[href*="/login/authority"] *,
+body.light-mode a[href*="/login/citizen"],
+body.light-mode a[href*="/login/citizen"] *,
+body.light-mode button#btn-submit-authority,
+body.light-mode button#btn-submit-authority *,
+body.light-mode button#btn-submit-citizen,
+body.light-mode button#btn-submit-citizen * {
+    color: #FFFFFF !important;
 }
 
 body.light-mode .portal-choice-card .text-slate-500,
@@ -573,9 +644,7 @@ body.dark-mode {
 }
 
 body:not(.light-mode) header,
-body.dark-mode header,
-body:not(.light-mode) nav,
-body.dark-mode nav {
+body.dark-mode header {
     background-color: #080E1C !important;
     border-bottom: 1px solid rgba(147, 197, 253, 0.22) !important;
     color: #F8FAFC !important;
@@ -1607,4 +1676,95 @@ body.light-mode .micro-skeleton {
         opacity: 1 !important;
     }
 }
+
+/* ========================================================================= */
+/* PHASE 14: AUTHORITATIVE DATA TRUTH MODAL — FADED SAFFRON PALETTE          */
+/* High-contrast dark typography (#0B2545 / #1E293B) on Faded Saffron        */
+/* ========================================================================= */
+#modal-data-truth-matrix .data-truth-modal-card,
+#modal-data-truth-matrix > div {
+    background-color: #FFF7ED !important;
+    background: #FFF7ED !important;
+    border: 2px solid #FED7AA !important;
+    color: #0F172A !important;
+    box-shadow: 0 25px 50px -12px rgba(217, 83, 30, 0.15), 0 10px 25px -5px rgba(0, 0, 0, 0.25) !important;
+}
+
+#modal-data-truth-matrix h3 {
+    color: #0B2545 !important;
+}
+
+#modal-data-truth-matrix table {
+    background-color: #FFFDF9 !important;
+    background: #FFFDF9 !important;
+    color: #1E293B !important;
+}
+
+#modal-data-truth-matrix thead,
+#modal-data-truth-matrix thead tr {
+    background-color: #FED7AA !important;
+    background: #FED7AA !important;
+    border-bottom: 2px solid #FDBA74 !important;
+}
+
+#modal-data-truth-matrix thead th {
+    color: #7C2D12 !important;
+    font-weight: 700 !important;
+    font-size: 10px !important;
+}
+
+#modal-data-truth-matrix tbody tr {
+    background-color: #FFFDF9 !important;
+    background: #FFFDF9 !important;
+    border-bottom: 1px solid #FED7AA !important;
+}
+
+#modal-data-truth-matrix tbody tr:nth-child(even) {
+    background-color: #FFF7ED !important;
+    background: #FFF7ED !important;
+}
+
+#modal-data-truth-matrix tbody tr:hover {
+    background-color: #FFEDD5 !important;
+    background: #FFEDD5 !important;
+}
+
+#modal-data-truth-matrix tbody td {
+    color: #1E293B !important;
+}
+
+#modal-data-truth-matrix tbody td:first-child,
+#modal-data-truth-matrix tbody td.font-bold {
+    color: #0B2545 !important;
+    font-weight: 700 !important;
+}
+
+#modal-data-truth-matrix .evaluator-note-box {
+    background-color: #FFEDD5 !important;
+    background: #FFEDD5 !important;
+    border: 2px solid #FED7AA !important;
+    color: #7C2D12 !important;
+}
+
+#modal-data-truth-matrix .evaluator-note-box strong {
+    color: #0B2545 !important;
+}
+
+/* Also protect modal-scientific-expl in light mode */
+body.light-mode #modal-scientific-expl > div {
+    background-color: #FFF7ED !important;
+    border: 2px solid #FED7AA !important;
+    color: #0F172A !important;
+}
+
+body.light-mode #modal-scientific-expl h3 {
+    color: #0B2545 !important;
+}
+
+body.light-mode #modal-scientific-expl #sci-expl-body,
+body.light-mode #modal-scientific-expl #sci-expl-body p,
+body.light-mode #modal-scientific-expl #sci-expl-body span {
+    color: #1E293B !important;
+}
+
 

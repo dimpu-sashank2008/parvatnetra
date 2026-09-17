@@ -301,14 +301,32 @@ body.light-mode .secondary-context {
     font-size: 14.5px;
 }
 
-body.light-mode .text-white,
-body.light-mode .text-slate-100,
-body.light-mode .text-slate-200,
-body.light-mode .text-slate-300,
-body.light-mode .text-neutral-100,
-body.light-mode .text-neutral-200,
-body.light-mode .text-neutral-300 {
+body.light-mode .text-white:not(button):not(button *):not(a.bg-\[\#003366\]):not(a.bg-\[\#003366\] *):not(a.bg-\[\#D97706\]):not(a.bg-\[\#D97706\] *):not([style*="color: #ffffff"]):not([style*="color: #ffffff"] *):not([class*="bg-[#003366]"] *):not([class*="bg-[#D97706]"] *),
+body.light-mode .text-slate-100:not(button):not(button *):not([style*="color: #ffffff"] *),
+body.light-mode .text-slate-200:not(button):not(button *):not([style*="color: #ffffff"] *),
+body.light-mode .text-slate-300:not(button):not(button *):not([style*="color: #ffffff"] *),
+body.light-mode .text-neutral-100:not(button):not(button *):not([style*="color: #ffffff"] *),
+body.light-mode .text-neutral-200:not(button):not(button *):not([style*="color: #ffffff"] *),
+body.light-mode .text-neutral-300:not(button):not(button *):not([style*="color: #ffffff"] *) {
     color: #0B2545 !important;
+}
+
+/* Solid background action buttons must maintain pure white text across all themes */
+a.bg-\[\#003366\], a.bg-\[\#003366\] *,
+button.bg-\[\#003366\], button.bg-\[\#003366\] *,
+a.bg-\[\#D97706\], a.bg-\[\#D97706\] *,
+button.bg-\[\#D97706\], button.bg-\[\#D97706\] *,
+#btn-submit-authority, #btn-submit-authority *,
+#btn-submit-citizen, #btn-submit-citizen *,
+body.light-mode a.bg-\[\#003366\], body.light-mode a.bg-\[\#003366\] *,
+body.light-mode button.bg-\[\#003366\], body.light-mode button.bg-\[\#003366\] *,
+body.light-mode a.bg-\[\#D97706\], body.light-mode a.bg-\[\#D97706\] *,
+body.light-mode button.bg-\[\#D97706\], body.light-mode button.bg-\[\#D97706\] *,
+body.light-mode a[href*="/login/authority"], body.light-mode a[href*="/login/authority"] *,
+body.light-mode a[href*="/login/citizen"], body.light-mode a[href*="/login/citizen"] *,
+body.light-mode #btn-submit-authority, body.light-mode #btn-submit-authority *,
+body.light-mode #btn-submit-citizen, body.light-mode #btn-submit-citizen * {
+    color: #FFFFFF !important;
 }
 
 body.light-mode .text-slate-400,

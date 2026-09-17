@@ -152,3 +152,35 @@ class TestLiveInferenceEndpoint:
         assert res.status_code == 422
         data = res.get_json()
         assert data["status"] == "ERROR"
+
+
+class TestPipelineRibbonCleanUI:
+    """Verifies that the PAHAD AI Pipeline Ribbon uses clean, simple text without boxed badges or rainbow colors."""
+
+    def test_pipeline_ribbon_structure(self, index_html):
+        """Pipeline ribbon container exists with faded saffron styling."""
+        assert 'id="pahad-pipeline-ribbon"' in index_html
+        assert "PAHAD AI Pipeline:" in index_html
+
+    def test_pipeline_steps_have_no_boxes_or_bg_colors(self, index_html):
+        """Step spans must be clean text without background pill boxes or multiple background colors."""
+        # Find the pipeline ribbon inner HTML
+        match = re.search(r'id="pahad-pipeline-ribbon".*?<\/div>\s*<\/div>\s*<\/div>', index_html, re.DOTALL)
+        assert match is not None, "Could not locate pahad-pipeline-ribbon markup"
+        ribbon_html = match.group(0)
+
+        # All 8 canonical steps must exist as clean pipeline-step elements
+        steps = ["DATA", "PHYSICS (FoS)", "ML (P_event)", "EVIDENCE", "PAHAD AI", "CRI", "2-of-3 CORROBORATION", "AUTHORITY DECISION"]
+        for step in steps:
+            assert step in ribbon_html, f"Step '{step}' missing from ribbon"
+
+        # Assert no pill box classes on step spans
+        assert 'bg-blue-950' not in ribbon_html
+        assert 'bg-purple-950' not in ribbon_html
+        assert 'bg-rose-950' not in ribbon_html
+        assert 'bg-indigo-950' not in ribbon_html
+        assert 'bg-amber-950' not in ribbon_html
+        assert 'bg-emerald-950' not in ribbon_html
+        assert 'pipeline-step' in ribbon_html
+        assert 'pipeline-arrow' in ribbon_html
+

@@ -31,7 +31,10 @@ from typing import Dict, Any, Optional, Tuple
 logger = logging.getLogger("CACHE_MANAGER")
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DEFAULT_CACHE_DIR = os.path.join(REPO_ROOT, "data", "cache")
+if os.getenv("VERCEL") or os.getenv("AWS_LAMBDA_FUNCTION_NAME") or not os.access(".", os.W_OK):
+    DEFAULT_CACHE_DIR = "/tmp/data/cache"
+else:
+    DEFAULT_CACHE_DIR = os.path.join(REPO_ROOT, "data", "cache")
 
 
 class CacheManager:
@@ -41,7 +44,10 @@ class CacheManager:
 
     def __init__(self, cache_dir: Optional[str] = None):
         self.cache_dir = cache_dir or DEFAULT_CACHE_DIR
-        os.makedirs(self.cache_dir, exist_ok=True)
+        try:
+            os.makedirs(self.cache_dir, exist_ok=True)
+        except OSError:
+            pass
         self._memory_cache: Dict[str, Dict[str, Any]] = {}
         self._lock = threading.Lock()
 
@@ -49,7 +55,10 @@ class CacheManager:
         safe_ns = "".join(c if c.isalnum() or c in ("-", "_") else "_" for c in namespace)
         safe_key = "".join(c if c.isalnum() or c in ("-", "_") else "_" for c in key)
         ns_dir = os.path.join(self.cache_dir, safe_ns)
-        os.makedirs(ns_dir, exist_ok=True)
+        try:
+            os.makedirs(ns_dir, exist_ok=True)
+        except OSError:
+            pass
         return os.path.join(ns_dir, f"{safe_key}.json")
 
     def get(

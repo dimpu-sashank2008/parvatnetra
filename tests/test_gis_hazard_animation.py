@@ -266,9 +266,28 @@ class TestGisHazardAnimationFrontendContracts:
             # Offset positioning avoiding Leaflet bottom-left layer control overlap (36px width + 10px margin)
             assert "left-[54px]" in content
 
+            # Default collapsed state contracts
+            assert "this.isCollapsed = true;" in content
+            assert 'id="anim-widget-body" class="mt-2 space-y-2 transition-all hidden"' in content
+
+    def test_default_collapsed_bars_in_html(self, client):
+        """Verify Risk Evolution bar and Data Status bar are collapsed by default on GIS map load."""
+        res = client.get("/")
+        assert res.status_code == 200
+        html = res.data.decode("utf-8")
+
+        # 1. Data Status Panel must have hidden content and right-facing caret by default
+        assert 'id="gis-data-status-panel"' in html
+        assert 'id="data-status-content" class="space-y-1" style="display: none;"' in html
+        assert 'id="data-status-chevron" class="ph-bold ph-caret-right' in html
+
+        # 2. Risk Evolution bar script must be present and set to collapsed default
+        assert "pahad_gis_animation.js" in html
+
     def test_safety_invariants_preserved(self):
         """Verify safety environment variables remain strictly fail-closed."""
         assert os.environ.get("ENABLE_PUBLIC_DISPATCH", "0") == "0"
         assert os.environ.get("SIREN_DRY_RUN", "1") == "1"
         assert os.environ.get("CAP_PRODUCTION_DISPATCH", "0") == "0"
+
 

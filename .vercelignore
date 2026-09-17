@@ -22,5 +22,15 @@ temp_fail.txt
 *.log
 *.lock
 *.bin
+*.zip
+*.tar*
+*.gz
 data/observations/
-
+data/cache/
+data/raw/
+data/features/
+data/labels/
+data/processed/
+scripts/
+reports/
+public/

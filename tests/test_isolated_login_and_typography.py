@@ -112,8 +112,39 @@ class TestIsolatedLoginAndTypography(unittest.TestCase):
             self.assertIn('"Noto Sans Devanagari"', content, f"{tpl} missing Tailwind Noto Sans Devanagari config")
             self.assertIn("font-family: 'Noto Sans', 'Noto Sans Devanagari'", content, f"{tpl} missing CSS font-family override")
             self.assertNotIn("'JetBrains Mono'", content, f"{tpl} contains deprecated JetBrains Mono")
-        print("[PASS] Test 5: Strict GIGW 3.0 'Noto Sans' & 'Noto Sans Devanagari' verified across all templates.")
+    def test_06_login_buttons_high_contrast_accessibility(self):
+        """Verify login buttons maintain high contrast white text to prevent invisible dark-on-dark text."""
+        # 1. Check login.html
+        path_login = os.path.join(REPO_ROOT, 'templates', 'login.html')
+        with open(path_login, 'r', encoding='utf-8') as f:
+            login_html = f.read()
+        self.assertIn('color: #ffffff !important', login_html)
+        self.assertIn('background-color: #003366 !important', login_html)
+        self.assertIn('background-color: #D97706 !important', login_html)
+
+        # 2. Check login_authority.html
+        path_auth = os.path.join(REPO_ROOT, 'templates', 'login_authority.html')
+        with open(path_auth, 'r', encoding='utf-8') as f:
+            auth_html = f.read()
+        self.assertIn('id="btn-submit-authority"', auth_html)
+        self.assertIn('color: #ffffff !important', auth_html)
+
+        # 3. Check login_citizen.html
+        path_cit = os.path.join(REPO_ROOT, 'templates', 'login_citizen.html')
+        with open(path_cit, 'r', encoding='utf-8') as f:
+            cit_html = f.read()
+        self.assertIn('id="btn-submit-citizen"', cit_html)
+        self.assertIn('color: #ffffff !important', cit_html)
+
+        # 4. Check CSS rules
+        path_css = os.path.join(REPO_ROOT, 'static', 'css', 'parvat_theme.css')
+        with open(path_css, 'r', encoding='utf-8') as f:
+            css_content = f.read()
+        self.assertIn('#btn-submit-authority', css_content)
+        self.assertIn('#btn-submit-citizen', css_content)
+        print("[PASS] Test 6: High-contrast white text guaranteed on all login portal action buttons.")
 
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)
+

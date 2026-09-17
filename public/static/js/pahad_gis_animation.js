@@ -36,7 +36,7 @@
 
             // State
             this.prefersReducedMotion = false;
-            this.isCollapsed = false;
+            this.isCollapsed = true;
         }
 
         init(leafletMap) {
@@ -67,9 +67,14 @@
             this.hookCorridorSelection();
 
             try {
-                this.isCollapsed = localStorage.getItem('pahad_gis_anim_collapsed') === '1';
+                const stored = localStorage.getItem('pahad_gis_anim_collapsed');
+                // Default to collapsed (true) unless explicitly set to '0' (expanded)
+                this.isCollapsed = stored !== '0';
                 this.updateCollapseUI();
-            } catch (_) {}
+            } catch (_) {
+                this.isCollapsed = true;
+                this.updateCollapseUI();
+            }
 
             // Initial load for active corridor
             const activeId = window.currentSelectedSectorId || 'SK-NH10-KM48';
@@ -198,25 +203,25 @@
 
             const widget = document.createElement('div');
             widget.id = 'pahad-gis-timeline-control';
-            widget.className = 'absolute bottom-3 left-[54px] sm:left-[58px] z-[450] bg-[#070B10]/95 border border-[#1E293B] rounded-md p-2 sm:p-2.5 text-white max-w-[340px] sm:max-w-[380px] w-[calc(100%-70px)] transition-all select-none shadow-2xl';
+            widget.className = 'absolute bottom-3 left-[54px] sm:left-[58px] z-[450] bg-[#070B10]/95 border border-[#1E293B] rounded-md p-2 sm:p-2.5 text-white w-auto max-w-[440px] transition-all select-none shadow-2xl';
             widget.innerHTML = `
                 <!-- Header (Clickable to toggle collapse) -->
-                <div id="anim-widget-header" class="flex items-center justify-between gap-2 cursor-pointer pb-1.5 border-b border-slate-800/80 transition-colors" title="Click to collapse/expand timeline">
+                <div id="anim-widget-header" class="flex items-center justify-between gap-2 cursor-pointer transition-colors" title="Click to expand timeline">
                     <div class="flex items-center gap-1.5 min-w-0">
                         <i class="ph-bold ph-chart-polar text-sky-400 text-xs shrink-0"></i>
                         <span class="text-[10px] sm:text-[11px] font-black tracking-wider uppercase text-slate-200 shrink-0" id="anim-widget-title">RISK EVOLUTION</span>
-                        <span id="anim-collapsed-summary" class="hidden text-[9px] font-mono font-bold text-slate-300 truncate max-w-[200px]"></span>
+                        <span id="anim-collapsed-summary" class="text-[9px] font-mono font-bold text-slate-300 truncate max-w-[200px]"></span>
                     </div>
                     <div class="flex items-center gap-1.5 shrink-0">
                         <span id="anim-provenance-badge" class="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800">[LIVE]</span>
-                        <button type="button" id="btn-anim-collapse" class="p-0.5 sm:p-1 rounded text-slate-400 hover:text-white hover:bg-slate-800/70 transition flex items-center justify-center focus:outline-none focus:ring-1 focus:ring-sky-500" title="Collapse timeline" aria-label="Collapse timeline control" aria-expanded="true">
-                            <i id="anim-collapse-icon" class="ph-bold ph-caret-down text-xs"></i>
+                        <button type="button" id="btn-anim-collapse" class="p-0.5 sm:p-1 rounded text-slate-400 hover:text-white hover:bg-slate-800/70 transition flex items-center justify-center focus:outline-none focus:ring-1 focus:ring-sky-500" title="Expand timeline" aria-label="Expand timeline control" aria-expanded="false">
+                            <i id="anim-collapse-icon" class="ph-bold ph-caret-up text-xs"></i>
                         </button>
                     </div>
                 </div>
 
                 <!-- Collapsible Body -->
-                <div id="anim-widget-body" class="mt-2 space-y-2 transition-all">
+                <div id="anim-widget-body" class="mt-2 space-y-2 transition-all hidden">
                     <!-- Mode Switcher (Live vs Scenario vs Historical) -->
                     <div class="flex items-center gap-1">
                         <button type="button" id="btn-anim-mode-live" onclick="window.PahadGisAnimation.switchMode('live')" class="flex-1 py-1 px-2 text-[10px] font-bold rounded bg-sky-950 text-sky-200 border border-sky-600 transition" title="Inspect Authoritative Live Runtime State">
