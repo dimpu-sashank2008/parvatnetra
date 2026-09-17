@@ -5385,6 +5385,92 @@ def api_geospatial_satellite_footprints():
         return jsonify({"status": "ERROR", "message": str(e)}), 500
 
 
+# ─────────────────────────────────────────────────────────────────────────────
+# ISRO / NRSC BHUVAN EARTH OBSERVATION ROUTES
+# ─────────────────────────────────────────────────────────────────────────────
+
+@app.route("/api/isro/bhuvan-status", methods=["GET"])
+def api_isro_bhuvan_status():
+    """
+    GET /api/isro/bhuvan-status
+    Probe ISRO Bhuvan WMS server reachability and return latency.
+    Used by the frontend to show ONLINE / OFFLINE badge in the layer control panel.
+    Provenance: [ISRO/NRSC]
+    """
+    try:
+        from services.isro_bhuvan_service import get_service_status
+        force = request.args.get("force", "false").lower() == "true"
+        from services.isro_bhuvan_service import probe_bhuvan_wms
+        if force:
+            probe_bhuvan_wms(force=True)
+        status = get_service_status()
+        return jsonify(status), 200
+    except Exception as e:
+        logger.error(f"Error in /api/isro/bhuvan-status: {e}", exc_info=True)
+        return jsonify({"service": "ISRO/NRSC Bhuvan WMS", "online": False,
+                        "error": str(e), "provenance": "[ISRO/NRSC]"}), 200
+
+
+@app.route("/api/isro/layers", methods=["GET"])
+def api_isro_layers():
+    """
+    GET /api/isro/layers
+    Return metadata for all registered ISRO/NRSC Bhuvan overlay layers.
+    Frontend uses this to dynamically populate the Layer Control Panel.
+    Provenance: [ISRO/NRSC]
+    """
+    try:
+        from services.isro_bhuvan_service import get_layers_metadata
+        layers = get_layers_metadata()
+        return jsonify({"layers": layers, "count": len(layers),
+                        "source": "ISRO/NRSC Bhuvan", "provenance": "[ISRO/NRSC]"}), 200
+    except Exception as e:
+        logger.error(f"Error in /api/isro/layers: {e}", exc_info=True)
+        return jsonify({"status": "ERROR", "message": str(e)}), 500
+
+
+@app.route("/api/isro/wms-proxy", methods=["GET"])
+def api_isro_wms_proxy():
+    """
+    GET /api/isro/wms-proxy?layer=<layer_id>&BBOX=...&WIDTH=...&HEIGHT=...&SRS=...
+    Proxy tile/image requests to ISRO Bhuvan WMS, bypassing browser CORS restrictions.
+    Returns transparent 1x1 PNG if Bhuvan is offline — never fails the page.
+    Provenance: [ISRO/NRSC] if fetched live, [CACHED] if served from disk cache.
+    """
+    try:
+        from services.isro_bhuvan_service import fetch_wms_tile, _transparent_tile
+        layer_id = request.args.get("layer", "")
+        if not layer_id:
+            return Response(_transparent_tile(), status=400, mimetype="image/png",
+                            headers={"X-PAHAD-ISRO-Error": "missing layer param"})
+
+        params = {
+            "BBOX": request.args.get("BBOX", request.args.get("bbox", "")),
+            "WIDTH": request.args.get("WIDTH", request.args.get("width", "256")),
+            "HEIGHT": request.args.get("HEIGHT", request.args.get("height", "256")),
+            "SRS": request.args.get("SRS", request.args.get("srs", "EPSG:4326")),
+            "FORMAT": request.args.get("FORMAT", request.args.get("format", "image/png")),
+        }
+
+        tile_bytes, content_type, from_cache = fetch_wms_tile(layer_id, params)
+
+        headers = {
+            "X-PAHAD-ISRO-Layer": layer_id,
+            "X-PAHAD-Provenance": "[CACHED]" if from_cache else "[ISRO/NRSC]",
+            "X-PAHAD-Source": "bhuvan.nrsc.gov.in",
+            "Cache-Control": "public, max-age=21600",  # 6h cache
+            "Access-Control-Allow-Origin": "*",
+        }
+        return Response(tile_bytes, status=200, mimetype=content_type, headers=headers)
+
+    except Exception as e:
+        logger.error(f"Error in /api/isro/wms-proxy: {e}", exc_info=True)
+        from services.isro_bhuvan_service import _transparent_tile
+        return Response(_transparent_tile(), status=200, mimetype="image/png",
+                        headers={"X-PAHAD-ISRO-Error": str(e)[:100],
+                                 "Access-Control-Allow-Origin": "*"})
+
+
 @app.route("/api/geospatial/offline-manifest", methods=["GET"])
 def api_geospatial_offline_manifest():
     """
