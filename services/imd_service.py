@@ -173,8 +173,8 @@ class IMDConnector:
         the environment. Sets self.status = 'AUTH_REQUIRED' immediately if
         either is absent or a placeholder.
         """
-        self.base_url: Optional[str] = os.environ.get("IMD_API_BASE_URL", "").strip() or None
-        self._token: Optional[str]   = os.environ.get("IMD_API_TOKEN",    "").strip() or None
+        self.base_url: Optional[str] = (os.environ.get("IMD_API_BASE_URL") or os.environ.get("IMD_API_ENDPOINT") or "https://api.imd.gov.in/api/v1").strip()
+        self._token: Optional[str]   = (os.environ.get("IMD_API_TOKEN") or os.environ.get("IMD_AUTH_KEY") or os.environ.get("IMD_API_KEY") or "").strip() or None
         self._lock   = threading.Lock()
         self.last_success: Optional[str] = None
         self.last_error: Optional[str] = None

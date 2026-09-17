@@ -148,8 +148,8 @@ class IMDWeatherProvider(WeatherProvider):
     """
 
     def __init__(self) -> None:
-        self.base_url = os.environ.get("IMD_API_BASE_URL") or os.environ.get("IMD_API_ENDPOINT")
-        self.token = os.environ.get("IMD_API_TOKEN")
+        self.base_url = (os.environ.get("IMD_API_BASE_URL") or os.environ.get("IMD_API_ENDPOINT") or "https://api.imd.gov.in/api/v1").strip()
+        self.token = (os.environ.get("IMD_API_TOKEN") or os.environ.get("IMD_AUTH_KEY") or os.environ.get("IMD_API_KEY") or "").strip() or None
         self._last_status = "UNCONFIGURED" if not self._is_configured() else "READY"
         self._last_error: Optional[str] = None
 

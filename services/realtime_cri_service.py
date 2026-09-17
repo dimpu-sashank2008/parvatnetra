@@ -166,6 +166,14 @@ class RealtimeCRIService:
         terrain_data = raw_contract.get("terrain", {})
         satellite_data = raw_contract.get("satellite", {})
 
+        # Multi-Model Climate Consensus
+        models_consensus = climate_data.get("models_consensus", {})
+        models_dict = models_consensus.get("models", {}) if isinstance(models_consensus, dict) else {}
+        ecmwf_mm = round(float(models_dict.get("ecmwf_ifs_24h_mm", 0.0)), 2)
+        gfs_mm = round(float(models_dict.get("gfs_seamless_24h_mm", 0.0)), 2)
+        icon_mm = round(float(models_dict.get("icon_seamless_24h_mm", 0.0)), 2)
+        ens_mean = round(float(models_consensus.get("ensemble_mean_24h_mm", climate_data.get("rain_24h_mm", 0.0))), 2) if isinstance(models_consensus, dict) else 0.0
+
         # Record Identifier
         sec_clean = sector_id.replace("-", "_")
         time_tag = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
@@ -205,6 +213,10 @@ class RealtimeCRIService:
             "rainfall_threshold_status": "EXCEEDED" if fused.get("rainfall_trigger") else "NORMAL",
             "weather_source": weather_source,
             "weather_provenance": weather_provenance,
+            "ecmwf_24h_mm": ecmwf_mm,
+            "gfs_24h_mm": gfs_mm,
+            "icon_24h_mm": icon_mm,
+            "ensemble_mean_24h_mm": ens_mean,
 
             # Seismic Features (Real-Time)
             "recent_earthquake_id": str(seismic_data.get("recent_event_id", "NONE")),

@@ -26,7 +26,13 @@ import json
 # Ensure project root is on sys.path
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from services.ncs_service import NCS_CONNECTOR, NER_BBOX
+try:
+    from dotenv import load_dotenv
+    load_dotenv(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ".env"))
+except ImportError:
+    pass
+
+from services.ncs_service import NCSConnector, NER_BBOX
 
 
 def main():
@@ -40,10 +46,17 @@ def main():
 
     print("=" * 70)
     print("PARVAT NETRA / PAHAD AI — NCS INSTITUTIONAL CONNECTOR AUDIT")
-    print("=" * 70)
+    # 0. Ensure staging gateway is active if enabled in environment
+    if os.environ.get("NCS_MOCK_GATEWAY") == "1" or os.environ.get("NCS_STAGING_GATEWAY") == "1":
+        try:
+            from scripts.ncs_staging_gateway import start_gateway_background
+            start_gateway_background()
+        except Exception:
+            pass
 
     # 1. Run connection verification
-    diag = NCS_CONNECTOR.verify_connection()
+    connector = NCSConnector()
+    diag = connector.verify_connection()
     status = diag.get("status")
     ncs_status = diag.get("ncs_status")
     auth_state = diag.get("auth_state")
@@ -57,7 +70,7 @@ def main():
     print(f"NER Bounding Box  : Lat {NER_BBOX['min_lat']}-{NER_BBOX['max_lat']}N, Lon {NER_BBOX['min_lon']}-{NER_BBOX['max_lon']}E")
 
     # 2. Fetch events
-    events = NCS_CONNECTOR.fetch_recent_events(min_mag=args.min_mag, hours_back=args.hours)
+    events = connector.fetch_recent_events(min_mag=args.min_mag, hours_back=args.hours)
     print(f"Events Retrieved  : {len(events)} (last {args.hours}h, M >= {args.min_mag})")
 
     if events:

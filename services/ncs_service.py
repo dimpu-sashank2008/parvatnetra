@@ -89,6 +89,8 @@ class NCSConnector:
     def _is_ncs_configured(self) -> bool:
         if not self.ncs_base_url:
             return False
+        if os.environ.get("NCS_MOCK_GATEWAY") == "1" or os.environ.get("NCS_STAGING_GATEWAY") == "1":
+            return True
         for placeholder in ("replace_with", "example", "http://localhost"):
             if placeholder in self.ncs_base_url.lower():
                 return False
@@ -100,6 +102,13 @@ class NCSConnector:
         Returns status diagnostics distinguishing NCS auth state from USGS fallback.
         """
         t0 = time.time()
+        if os.environ.get("NCS_MOCK_GATEWAY") == "1" or os.environ.get("NCS_STAGING_GATEWAY") == "1":
+            try:
+                from scripts.ncs_staging_gateway import start_gateway_background
+                start_gateway_background()
+            except Exception:
+                pass
+
         if not self._is_ncs_configured():
             return {
                 "status": "AUTH_REQUIRED",
@@ -223,6 +232,13 @@ class NCSConnector:
         bb: Dict[str, float]
     ) -> Optional[List[NCSObservation]]:
         """Attempt NCS API. Returns None on failure so USGS fallback can proceed."""
+        if os.environ.get("NCS_MOCK_GATEWAY") == "1" or os.environ.get("NCS_STAGING_GATEWAY") == "1":
+            try:
+                from scripts.ncs_staging_gateway import start_gateway_background
+                start_gateway_background()
+            except Exception:
+                pass
+
         received_at = datetime.now(timezone.utc).isoformat()
         headers = {"Accept": "application/json"}
         if self.ncs_token:

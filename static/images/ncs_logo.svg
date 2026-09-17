@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <defs>
+    <radialGradient id="ncsGlobeGrad" cx="40%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#FEF08A"/>
+      <stop offset="60%" stop-color="#EAB308"/>
+      <stop offset="100%" stop-color="#CA8A04"/>
+    </radialGradient>
+  </defs>
+  <!-- Outer Ring -->
+  <circle cx="100" cy="100" r="94" fill="#FFFFFF" stroke="#0052CC" stroke-width="4"/>
+  <!-- Earth / Globe circular base -->
+  <circle cx="100" cy="100" r="88" fill="url(#ncsGlobeGrad)"/>
+  <!-- Lat/Lon grid lines -->
+  <circle cx="100" cy="100" r="65" fill="none" stroke="#A16207" stroke-width="1.2" stroke-dasharray="3,3" opacity="0.6"/>
+  <ellipse cx="100" cy="100" rx="40" ry="88" fill="none" stroke="#A16207" stroke-width="1.2" opacity="0.6"/>
+  <line x1="12" y1="100" x2="188" y2="100" stroke="#A16207" stroke-width="1.2" opacity="0.6"/>
+  <!-- Focal Mechanism / Seismic Wave Pulse in Red -->
+  <path d="M 20,100 L 50,100 L 65,85 L 75,115 L 85,70 L 95,140 L 105,45 L 115,135 L 125,78 L 135,112 L 150,100 L 180,100" fill="none" stroke="#DC2626" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Center epicenter burst -->
+  <circle cx="100" cy="100" r="7" fill="#EF4444" stroke="#FFFFFF" stroke-width="2"/>
+  <circle cx="100" cy="100" r="14" fill="none" stroke="#DC2626" stroke-width="1.5" opacity="0.7"/>
+</svg>

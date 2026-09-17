@@ -98,6 +98,15 @@ try:
 except Exception as inst_err:
     logging.getLogger("PARVAT_NETRA").warning(f"Could not register Institutional routes blueprint: {inst_err}")
 
+# Option B: Launch NCS Staging Gateway if enabled in environment
+if os.environ.get("NCS_MOCK_GATEWAY") == "1" or os.environ.get("NCS_STAGING_GATEWAY") == "1":
+    try:
+        from scripts.ncs_staging_gateway import start_gateway_background
+        start_gateway_background()
+    except Exception as gw_err:
+        logging.getLogger("PARVAT_NETRA").warning(f"Could not start NCS staging gateway: {gw_err}")
+
+
 # Register Phase 6D Field Deployment & Corridor Validation Blueprint
 try:
     from backend.field_routes import field_bp
@@ -4664,12 +4673,31 @@ def api_seismic_recent():
     """
     GET /api/seismic/recent
     Returns deduplicated list of recent seismic events within the NER geographic bounding box.
-    Query params: limit (default 10), min_mag (default 2.5).
+    Supports optional ?scope=india or ?scope=all for national view.
+    Query params: limit (default 10), min_mag (default 2.5), scope (default 'ner').
     """
     from services.seismic_service import SEISMIC_SERVICE
     try:
         limit = int(request.args.get("limit", 10))
         min_mag = float(request.args.get("min_mag", 2.5))
+        scope = request.args.get("scope", "ner").lower()
+
+        if scope in ("india", "all", "national"):
+            import requests
+            ncs_url = os.environ.get("NCS_API_BASE_URL", "http://127.0.0.1:20888").rstrip("/")
+            try:
+                r = requests.get(f"{ncs_url}/recent", params={"scope": "india", "min_mag": min_mag}, timeout=3.5)
+                if r.status_code == 200:
+                    evs = r.json().get("earthquakes", [])
+                    return jsonify({
+                        "status": "SUCCESS",
+                        "count": len(evs[:limit]),
+                        "scope": "national",
+                        "events": evs[:limit]
+                    }), 200
+            except Exception:
+                pass
+
         events = SEISMIC_SERVICE.get_recent_events(limit=limit, min_magnitude=min_mag)
         return jsonify({
             "status": "SUCCESS",
@@ -5272,6 +5300,42 @@ def api_geospatial_terrain():
                 "bounds": bounds,
                 "matrix": hillshade_grid.tolist(),
                 "provenance": "[HISTORICAL]"
+            }), 200
+
+        elif product in ("difference", "diff"):
+            src_a = request.args.get("source_a", "isro_cartodem").lower()
+            src_b = request.args.get("source_b", "copernicus_glo30").lower()
+            grid_a, _, _ = DEM_SERVICE.get_elevation_grid(
+                min_lat=bounds["min_lat"], max_lat=bounds["max_lat"],
+                min_lon=bounds["min_lon"], max_lon=bounds["max_lon"],
+                grid_rows=grid_size, grid_cols=grid_size, source=src_a
+            )
+            grid_b, _, _ = DEM_SERVICE.get_elevation_grid(
+                min_lat=bounds["min_lat"], max_lat=bounds["max_lat"],
+                min_lon=bounds["min_lon"], max_lon=bounds["max_lon"],
+                grid_rows=grid_size, grid_cols=grid_size, source=src_b
+            )
+            diff_grid = np.round(grid_a - grid_b, 2)
+            abs_diff = np.abs(diff_grid)
+            mae = float(np.mean(abs_diff))
+            max_dev = float(np.max(abs_diff))
+            within_2m_pct = float(np.sum(abs_diff <= 2.0) / abs_diff.size * 100.0)
+
+            return jsonify({
+                "status": "SUCCESS",
+                "product": "difference",
+                "source_a": src_a,
+                "source_b": src_b,
+                "units": "meters",
+                "bounds": bounds,
+                "grid_shape": list(diff_grid.shape),
+                "mae_m": round(mae, 2),
+                "max_deviation_m": round(max_dev, 2),
+                "agreement_within_2m_pct": round(within_2m_pct, 1),
+                "matrix": diff_grid.tolist(),
+                "lats": np.round(lats, 5).tolist(),
+                "lons": np.round(lons, 5).tolist(),
+                "provenance": "[HISTORICAL/MULTI_SOURCE]"
             }), 200
 
         else:

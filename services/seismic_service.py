@@ -152,9 +152,10 @@ class NCSSeismicProvider(SeismicProvider):
         self._last_error: Optional[str] = None
 
     def _is_configured(self) -> bool:
-        if not self.base_url:
+        base_url = os.environ.get("NCS_API_BASE_URL", self.base_url)
+        if not base_url:
             return False
-        if "replace_with" in self.base_url.lower() or "example" in self.base_url.lower():
+        if "replace_with" in base_url.lower() or "example" in base_url.lower():
             return False
         return True
 
@@ -172,6 +173,13 @@ class NCSSeismicProvider(SeismicProvider):
         }
 
     def fetch_events(self, min_mag: float = 2.5) -> List[Dict[str, Any]]:
+        if os.environ.get("NCS_MOCK_GATEWAY") == "1" or os.environ.get("NCS_STAGING_GATEWAY") == "1":
+            try:
+                from scripts.ncs_staging_gateway import start_gateway_background
+                start_gateway_background()
+            except Exception:
+                pass
+
         if not self._is_configured():
             self._last_status = "UNCONFIGURED"
             logger.debug("[NCS] Base URL not configured; skipping provider.")

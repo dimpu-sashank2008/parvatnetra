@@ -55,6 +55,7 @@ class ClimateDimension:
     threshold_state: str
     source: str
     provenance: str
+    models_consensus: Dict[str, Any] = field(default_factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         return asdict(self)
@@ -375,7 +376,8 @@ def build_pahad_feature_vector(sector_id: str) -> Dict[str, Any]:
         humidity_pct=float(w_atm.get("humidity_pct", 80.0)),
         threshold_state=str(w_der.get("rainfall_intensity_duration_state", "NORMAL")),
         source=weather.get("source", "WeatherService"),
-        provenance=weather.get("provenance", "LIVE")
+        provenance=weather.get("provenance", "LIVE"),
+        models_consensus=weather.get("models_consensus", {})
     )
     feature_sources["climate"] = climate_dim.source
     provenances.append(climate_dim.provenance)

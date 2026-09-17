@@ -1051,9 +1051,54 @@
         let ambientLight, sunLight, fillLight;
         let sensorPins = [];
         let scarpLine = null;
+        let obsSlipPlaneMesh = null;
         let animTime = 0;
+        let obsRealDemMatrix = null;  // Real multi-source DEM grid from /api/geospatial/terrain
+        let obsGridRows = 32, obsGridCols = 32;
+        let obsCurrentDemSource = 'consensus';
 
-        function initObservatory3D() {
+        // Fetch real DEM and then initialize the Observatory 3D twin
+        async function initObservatory3DWithRealDEM(source) {
+            source = source || obsCurrentDemSource;
+            obsCurrentDemSource = source;
+            try {
+                const resp = await fetch(`/api/geospatial/terrain?product=elevation&grid_size=32&source=${source}`);
+                if (resp.ok) {
+                    const data = await resp.json();
+                    if (data.status === 'SUCCESS' && data.matrix) {
+                        obsRealDemMatrix = data.matrix;
+                        obsGridRows = data.matrix.length;
+                        obsGridCols = data.matrix[0].length;
+                        const srcBadge = document.getElementById('obs-dem-src-badge');
+                        if (srcBadge) srcBadge.textContent = data.provenance || '[HISTORICAL]';
+                    }
+                }
+            } catch (e) {
+                console.warn('[PAHAD Observatory] DEM fetch fallback:', e);
+            }
+            initObservatory3D();
+        }
+
+        function switchObsDemSource(sourceKey) {
+            const srcLabels = {
+                consensus: 'Consensus 30m',
+                isro_cartodem: 'ISRO CartoDEM',
+                copernicus_glo30: 'Copernicus GLO-30'
+            };
+            ['consensus', 'isro_cartodem', 'copernicus_glo30'].forEach(k => {
+                const btn = document.getElementById(`obs-dem-${k}`);
+                if (!btn) return;
+                btn.className = k === sourceKey
+                    ? 'px-2 py-0.5 text-[10px] rounded font-semibold bg-sky-800 border border-sky-500 text-sky-200 cursor-pointer'
+                    : 'px-2 py-0.5 text-[10px] rounded bg-slate-800 border border-slate-700 text-slate-400 hover:text-slate-200 cursor-pointer';
+            });
+            const lbl = document.getElementById('obs-dem-src-label');
+            if (lbl) lbl.textContent = srcLabels[sourceKey] || sourceKey;
+            // Reload 3D twin with new source
+            initObservatory3DWithRealDEM(sourceKey);
+        }
+
+
             const container = document.getElementById('observatory-three-canvas');
             if (!container) return;
 
