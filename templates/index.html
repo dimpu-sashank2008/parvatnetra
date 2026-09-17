@@ -7266,28 +7266,6 @@ function initMap(){
     map.getPane('nerStateBoundariesPane').style.zIndex = 350;
 
     L.control.layers({'ISRO Bhuvan Satellite (Primary)':bhuvanSat,'Dark Obsidian':cartoDark,'Google Hybrid Satellite':googleHybrid,'Google Terrain (Topo)':googleTerrain,'ESRI World Imagery':esriWorld,'Carto Voyager (Road Network)':cartoVoyager},{'ISRO Landslide Hazard':bhuvanLandslideHazard,'ISRO/NESAC Susceptibility':bhuvanSusceptibility},{position:'bottomleft'}).addTo(map);
-
-    map.on('overlayadd', function(e) {
-        if (e.layer === window.bhuvanLandslideHazard) {
-            if (typeof loadISROThematicLayer === 'function') loadISROThematicLayer('landslide_hazard');
-            var btn = document.getElementById('lc-toggle-bhuvan-hazard');
-            if (btn) { btn.classList.remove('off'); btn.classList.add('on'); }
-        } else if (e.layer === window.bhuvanSusceptibility) {
-            if (typeof loadISROThematicLayer === 'function') loadISROThematicLayer('landslide_susceptibility');
-            var btn = document.getElementById('lc-toggle-bhuvan-suscept');
-            if (btn) { btn.classList.remove('off'); btn.classList.add('on'); }
-        }
-    });
-    map.on('overlayremove', function(e) {
-        if (e.layer === window.bhuvanLandslideHazard) {
-            var btn = document.getElementById('lc-toggle-bhuvan-hazard');
-            if (btn) { btn.classList.remove('on'); btn.classList.add('off'); }
-        } else if (e.layer === window.bhuvanSusceptibility) {
-            var btn = document.getElementById('lc-toggle-bhuvan-suscept');
-            if (btn) { btn.classList.remove('on'); btn.classList.add('off'); }
-        }
-    });
-
     markerLayerGroup=L.layerGroup().addTo(map);
     roadLayerGroup=L.layerGroup().addTo(map);
     sensorLayerGroup=L.layerGroup().addTo(map);
@@ -7309,7 +7287,7 @@ function initMap(){
     nerStateBoundariesLayerGroup=L.layerGroup().addTo(map);
     window.nerStateBoundariesLayerGroup=nerStateBoundariesLayerGroup;
 
-    layerGroupMap={current_risk_zones:currentRiskZonesLayerGroup,risk:roadLayerGroup,insar:insarLayerGroup,cuts:cutsLayerGroup,river:riverLayerGroup,detours:detoursLayerGroup,scars:scarsLayerGroup,sensors:sensorLayerGroup,habitations:habitationsLayerGroup,reports:reportsLayerGroup,bro_fleet:broFleetLayerGroup,sar:sarLayerGroup,contours:contoursLayerGroup,historical_landslides:historicalLandslidesLayerGroup,vegetation:vegetationLayerGroup,sat_footprint:satFootprintLayerGroup,state_boundaries:nerStateBoundariesLayerGroup};
+    layerGroupMap={current_risk_zones:currentRiskZonesLayerGroup,risk:roadLayerGroup,insar:insarLayerGroup,cuts:cutsLayerGroup,river:riverLayerGroup,detours:detoursLayerGroup,scars:scarsLayerGroup,sensors:sensorLayerGroup,habitations:habitationsLayerGroup,reports:reportsLayerGroup,bro_fleet:broFleetLayerGroup,sar:sarLayerGroup,contours:contoursLayerGroup,historical_landslides:historicalLandslidesLayerGroup,vegetation:vegetationLayerGroup,sat_footprint:satFootprintLayerGroup,state_boundaries:nerStateBoundariesLayerGroup,bhuvan_hazard:bhuvanLandslideHazard,bhuvan_suscept:bhuvanSusceptibility};
     
     // Fit NER Regional Extent (all 8 Northeastern states)
     window.NER_BOUNDS = L.latLngBounds([[21.8, 88.0], [29.5, 97.5]]);
@@ -7332,8 +7310,8 @@ function initMap(){
     loadNerStateBoundaries();
     loadCurrentRiskZones(false);
     loadSpatialRisk();loadIoTSensors();loadInSARPoints();loadAISatelliteScars();loadTeestaRiver();loadAnthropogenicCuts();loadEvacuationPlan();loadHabitationMatrix();loadClusteredReports();loadBROFleet();loadSARTargets();refreshTeestaHydro();loadGeospatialLayers();loadGeospatialOverviewCard();
+    if (typeof loadBhuvanThematicLayers === 'function') loadBhuvanThematicLayers();
     if (typeof checkBhuvanStatus === 'function') checkBhuvanStatus();
-    if (typeof loadAllISROThematicLayers === 'function') loadAllISROThematicLayers();
 
     // Setup periodic non-disruptive refresh loop for Current Risk Zones (Section 9)
     if (!window._currentRiskZonesInterval) {
@@ -8390,59 +8368,14 @@ function switchMainBasemap(type) {
 }
 window.switchMainBasemap = switchMainBasemap;
 
-async function loadISROThematicLayer(layerId) {
-    var targetLayer = (layerId === 'landslide_hazard') ? window.bhuvanLandslideHazard : window.bhuvanSusceptibility;
-    if (!targetLayer || targetLayer.getLayers().length > 0) return;
-    try {
-        var res = await fetch('/api/isro/thematic-zones?layer=' + encodeURIComponent(layerId));
-        var data = await res.json();
-        if (data && data.features && data.features.length > 0) {
-            var geojsonLayer = L.geoJSON(data, {
-                style: function(feature) {
-                    var p = feature.properties || {};
-                    return {
-                        color: p.color || '#ea580c',
-                        weight: 2.5,
-                        opacity: 0.95,
-                        fillColor: p.fill_color || '#f97316',
-                        fillOpacity: p.fill_opacity || 0.40,
-                        dashArray: p.hazard_grade === 'VERY HIGH' ? '6,4' : null
-                    };
-                },
-                onEachFeature: function(feature, layer) {
-                    var p = feature.properties || {};
-                    var badgeClass = p.hazard_grade === 'VERY HIGH' ? 'background:rgba(185,28,28,0.3);color:#f87171;border:1px solid rgba(239,68,68,0.5);' : 'background:rgba(217,119,6,0.25);color:#fbbf24;border:1px solid rgba(245,158,11,0.4);';
-                    var popupHtml = '<div style="min-width:220px;font-family:inherit;padding:2px;">' +
-                        '<div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">' +
-                        '<span style="font-size:9px;font-weight:bold;padding:1px 5px;border-radius:3px;' + badgeClass + '">' + (p.provenance || '[ISRO/NRSC]') + ' ' + (p.hazard_grade || p.susceptibility_class || 'HAZARD ZONE') + '</span>' +
-                        '</div>' +
-                        '<div style="font-weight:bold;font-size:13px;color:#fff;margin-bottom:2px;">' + (p.name || 'NER Hazard Corridor') + '</div>' +
-                        '<div style="font-size:11px;color:#94a3b8;margin-bottom:4px;">State: <b style="color:#e2e8f0;">' + (p.state || 'NER') + '</b>' + (p.district ? ' &bull; Dist: <b style="color:#e2e8f0;">' + p.district + '</b>' : '') + '</div>' +
-                        (p.geology ? '<div style="font-size:10px;color:#cbd5e1;margin-bottom:2px;">Geology: <i>' + p.geology + '</i></div>' : '') +
-                        (p.slope_deg ? '<div style="font-size:10px;color:#cbd5e1;margin-bottom:2px;">Slope: <b>' + p.slope_deg + '</b></div>' : '') +
-                        (p.rainfall_trigger_24h_mm ? '<div style="font-size:10px;color:#38bdf8;margin-bottom:2px;">Trigger 24h: <b>' + p.rainfall_trigger_24h_mm + ' mm</b></div>' : '') +
-                        '<div style="font-size:9px;color:#34d399;margin-top:6px;font-family:monospace;border-top:1px solid rgba(100,116,139,0.3);padding-top:3px;">Authority: ' + (p.authority || 'ISRO / NRSC Disaster Management Support') + '</div>' +
-                        '</div>';
-                    layer.bindPopup(popupHtml);
-                }
-            });
-            targetLayer.addLayer(geojsonLayer);
-        }
-    } catch(e) {
-        console.error('Failed to load ISRO thematic layer ' + layerId + ':', e);
-    }
-}
-window.loadISROThematicLayer = loadISROThematicLayer;
-
-function loadAllISROThematicLayers() {
-    loadISROThematicLayer('landslide_hazard');
-    loadISROThematicLayer('landslide_susceptibility');
-}
-window.loadAllISROThematicLayers = loadAllISROThematicLayers;
-
 async function toggleBhuvanLayer(layerId, btn) {
     if (!window.map) return;
-    var targetLayer = (layerId === 'landslide_hazard') ? window.bhuvanLandslideHazard : window.bhuvanSusceptibility;
+    var targetLayer = null;
+    if (layerId === 'landslide_hazard') {
+        targetLayer = window.bhuvanLandslideHazard;
+    } else if (layerId === 'landslide_susceptibility') {
+        targetLayer = window.bhuvanSusceptibility;
+    }
     if (!targetLayer) return;
 
     if (window.map.hasLayer(targetLayer)) {
@@ -8452,7 +8385,46 @@ async function toggleBhuvanLayer(layerId, btn) {
             btn.classList.add('off');
         }
     } else {
-        await loadISROThematicLayer(layerId);
+        if (targetLayer.getLayers().length === 0) {
+            try {
+                var res = await fetch('/api/isro/thematic-zones?layer=' + encodeURIComponent(layerId));
+                var data = await res.json();
+                if (data && data.features && data.features.length > 0) {
+                    var geojsonLayer = L.geoJSON(data, {
+                        style: function(feature) {
+                            var p = feature.properties || {};
+                            return {
+                                color: p.color || '#ea580c',
+                                weight: 2.5,
+                                opacity: 0.95,
+                                fillColor: p.fill_color || '#f97316',
+                                fillOpacity: p.fill_opacity || 0.40,
+                                dashArray: p.hazard_grade === 'VERY HIGH' ? '6,4' : null
+                            };
+                        },
+                        onEachFeature: function(feature, layer) {
+                            var p = feature.properties || {};
+                            var badgeClass = p.hazard_grade === 'VERY HIGH' ? 'background:rgba(185,28,28,0.3);color:#f87171;border:1px solid rgba(239,68,68,0.5);' : 'background:rgba(217,119,6,0.25);color:#fbbf24;border:1px solid rgba(245,158,11,0.4);';
+                            var popupHtml = '<div style="min-width:220px;font-family:inherit;padding:2px;">' +
+                                '<div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">' +
+                                '<span style="font-size:9px;font-weight:bold;padding:1px 5px;border-radius:3px;' + badgeClass + '">' + (p.provenance || '[ISRO/NRSC]') + ' ' + (p.hazard_grade || p.susceptibility_class || 'HAZARD ZONE') + '</span>' +
+                                '</div>' +
+                                '<div style="font-weight:bold;font-size:13px;color:#fff;margin-bottom:2px;">' + (p.name || 'NER Hazard Corridor') + '</div>' +
+                                '<div style="font-size:11px;color:#94a3b8;margin-bottom:4px;">State: <b style="color:#e2e8f0;">' + (p.state || 'NER') + '</b>' + (p.district ? ' &bull; Dist: <b style="color:#e2e8f0;">' + p.district + '</b>' : '') + '</div>' +
+                                (p.geology ? '<div style="font-size:10px;color:#cbd5e1;margin-bottom:2px;">Geology: <i>' + p.geology + '</i></div>' : '') +
+                                (p.slope_deg ? '<div style="font-size:10px;color:#cbd5e1;margin-bottom:2px;">Slope: <b>' + p.slope_deg + '</b></div>' : '') +
+                                (p.rainfall_trigger_24h_mm ? '<div style="font-size:10px;color:#38bdf8;margin-bottom:2px;">Trigger 24h: <b>' + p.rainfall_trigger_24h_mm + ' mm</b></div>' : '') +
+                                '<div style="font-size:9px;color:#34d399;margin-top:6px;font-family:monospace;border-top:1px solid rgba(100,116,139,0.3);padding-top:3px;">Authority: ' + (p.authority || 'ISRO / NRSC Disaster Management Support') + '</div>' +
+                                '</div>';
+                            layer.bindPopup(popupHtml);
+                        }
+                    });
+                    targetLayer.addLayer(geojsonLayer);
+                }
+            } catch(e) {
+                console.error('Failed to load ISRO thematic zones:', e);
+            }
+        }
         targetLayer.addTo(window.map);
         if (btn) {
             btn.classList.remove('off');
@@ -8465,6 +8437,83 @@ async function toggleBhuvanLayer(layerId, btn) {
     }
 }
 window.toggleBhuvanLayer = toggleBhuvanLayer;
+
+async function loadBhuvanThematicLayers() {
+    try {
+        if (window.bhuvanLandslideHazard && window.bhuvanLandslideHazard.getLayers().length === 0) {
+            var resHazard = await fetch('/api/isro/thematic-zones?layer=landslide_hazard');
+            var dataHazard = await resHazard.json();
+            if (dataHazard && dataHazard.features && dataHazard.features.length > 0) {
+                var geojsonHazard = L.geoJSON(dataHazard, {
+                    style: function(feature) {
+                        var p = feature.properties || {};
+                        return {
+                            color: p.color || '#dc2626',
+                            weight: 2.5,
+                            opacity: 0.95,
+                            fillColor: p.fill_color || '#ef4444',
+                            fillOpacity: p.fill_opacity || 0.40,
+                            dashArray: p.hazard_grade === 'VERY HIGH' ? '6,4' : null
+                        };
+                    },
+                    onEachFeature: function(feature, layer) {
+                        var p = feature.properties || {};
+                        var badgeClass = p.hazard_grade === 'VERY HIGH' ? 'background:rgba(185,28,28,0.3);color:#f87171;border:1px solid rgba(239,68,68,0.5);' : 'background:rgba(217,119,6,0.25);color:#fbbf24;border:1px solid rgba(245,158,11,0.4);';
+                        var popupHtml = '<div style="min-width:220px;font-family:inherit;padding:2px;">' +
+                            '<div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">' +
+                            '<span style="font-size:9px;font-weight:bold;padding:1px 5px;border-radius:3px;' + badgeClass + '">' + (p.provenance || '[ISRO/NRSC]') + ' ' + (p.hazard_grade || 'HAZARD ZONE') + '</span>' +
+                            '</div>' +
+                            '<div style="font-weight:bold;font-size:13px;color:#fff;margin-bottom:2px;">' + (p.name || 'NER Hazard Corridor') + '</div>' +
+                            '<div style="font-size:11px;color:#94a3b8;margin-bottom:4px;">State: <b style="color:#e2e8f0;">' + (p.state || 'NER') + '</b>' + (p.district ? ' &bull; Dist: <b style="color:#e2e8f0;">' + p.district + '</b>' : '') + '</div>' +
+                            (p.geology ? '<div style="font-size:10px;color:#cbd5e1;margin-bottom:2px;">Geology: <i>' + p.geology + '</i></div>' : '') +
+                            (p.slope_deg ? '<div style="font-size:10px;color:#cbd5e1;margin-bottom:2px;">Slope: <b>' + p.slope_deg + '</b></div>' : '') +
+                            (p.rainfall_trigger_24h_mm ? '<div style="font-size:10px;color:#38bdf8;margin-bottom:2px;">Trigger 24h: <b>' + p.rainfall_trigger_24h_mm + ' mm</b></div>' : '') +
+                            '<div style="font-size:9px;color:#34d399;margin-top:6px;font-family:monospace;border-top:1px solid rgba(100,116,139,0.3);padding-top:3px;">Authority: ' + (p.authority || 'ISRO / NRSC Disaster Management Support') + '</div>' +
+                            '</div>';
+                        layer.bindPopup(popupHtml);
+                    }
+                });
+                window.bhuvanLandslideHazard.addLayer(geojsonHazard);
+            }
+        }
+        if (window.bhuvanSusceptibility && window.bhuvanSusceptibility.getLayers().length === 0) {
+            var resSusc = await fetch('/api/isro/thematic-zones?layer=landslide_susceptibility');
+            var dataSusc = await resSusc.json();
+            if (dataSusc && dataSusc.features && dataSusc.features.length > 0) {
+                var geojsonSusc = L.geoJSON(dataSusc, {
+                    style: function(feature) {
+                        var p = feature.properties || {};
+                        return {
+                            color: p.color || '#ea580c',
+                            weight: 2,
+                            opacity: 0.9,
+                            fillColor: p.fill_color || '#f97316',
+                            fillOpacity: p.fill_opacity || 0.32
+                        };
+                    },
+                    onEachFeature: function(feature, layer) {
+                        var p = feature.properties || {};
+                        var popupHtml = '<div style="min-width:220px;font-family:inherit;padding:2px;">' +
+                            '<div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">' +
+                            '<span style="font-size:9px;font-weight:bold;padding:1px 5px;border-radius:3px;background:rgba(234,88,12,0.25);color:#fb923c;border:1px solid rgba(234,88,12,0.5);">' + (p.provenance || '[ISRO/NESAC]') + ' ' + (p.susceptibility_class || 'SUSCEPTIBILITY') + '</span>' +
+                            '</div>' +
+                            '<div style="font-weight:bold;font-size:13px;color:#fff;margin-bottom:2px;">' + (p.name || 'NER Basin Escarpment') + '</div>' +
+                            '<div style="font-size:11px;color:#94a3b8;margin-bottom:4px;">State: <b style="color:#e2e8f0;">' + (p.state || 'NER') + '</b></div>' +
+                            (p.slope_class ? '<div style="font-size:10px;color:#cbd5e1;margin-bottom:2px;">Slope Class: <b>' + p.slope_class + '</b></div>' : '') +
+                            (p.vegetation_cover ? '<div style="font-size:10px;color:#cbd5e1;margin-bottom:2px;">Cover: ' + p.vegetation_cover + '</div>' : '') +
+                            '<div style="font-size:9px;color:#34d399;margin-top:6px;font-family:monospace;border-top:1px solid rgba(100,116,139,0.3);padding-top:3px;">Authority: ' + (p.authority || 'NESAC / ISRO NERDRR') + '</div>' +
+                            '</div>';
+                        layer.bindPopup(popupHtml);
+                    }
+                });
+                window.bhuvanSusceptibility.addLayer(geojsonSusc);
+            }
+        }
+    } catch(err) {
+        console.error('[ISRO] Error preloading thematic layers:', err);
+    }
+}
+window.loadBhuvanThematicLayers = loadBhuvanThematicLayers;
 
 function toggleBhuvanSatBtn(btn) {
     if (!window.map) return;

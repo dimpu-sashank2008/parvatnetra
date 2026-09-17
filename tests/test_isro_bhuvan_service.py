@@ -149,14 +149,16 @@ class TestISROBhuvanService(unittest.TestCase):
         self.assertIn('id="bhuvan-status-pill"', html)
         self.assertIn('id="bhuvan-status-bar"', html)
 
-        # Layer toggles
-        self.assertIn('id="lc-toggle-bhuvan-hazard"', html)
-        self.assertIn('id="lc-toggle-bhuvan-suscept"', html)
-        self.assertIn('id="lc-toggle-bhuvan-sat"', html)
+        # Layer toggles - verified ON by default
+        self.assertIn('class="lcp-toggle on" id="lc-toggle-bhuvan-hazard"', html)
+        self.assertIn('class="lcp-toggle on" id="lc-toggle-bhuvan-suscept"', html)
+        self.assertIn('class="lcp-toggle on" id="lc-toggle-bhuvan-sat"', html)
 
-        # Basemap button
+        # Basemap button - verified active by default
         self.assertIn('id="mb-bhuvan"', html)
         self.assertIn("Bhuvan", html)
+        self.assertIn("bhuvanLandslideHazard=L.layerGroup().addTo(map)", html)
+        self.assertIn("bhuvanSusceptibility=L.layerGroup().addTo(map)", html)
 
     def test_api_isro_thematic_zones(self):
         """Test GET /api/isro/thematic-zones returns valid GeoJSON for hazard and susceptibility."""
