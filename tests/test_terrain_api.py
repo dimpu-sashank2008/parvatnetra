@@ -115,5 +115,19 @@ class TestTerrainAPI(unittest.TestCase):
         self.assertIn("PAHAD AI", html)
 
 
+    def test_terrain_difference_product(self):
+        res = self.client.get("/api/geospatial/terrain?product=difference&source_a=isro_cartodem&source_b=copernicus_glo30&grid_size=16")
+        self.assertEqual(res.status_code, 200)
+        data = res.get_json()
+        self.assertEqual(data.get("status"), "SUCCESS")
+        self.assertEqual(data.get("product"), "difference")
+        self.assertEqual(data.get("source_a"), "isro_cartodem")
+        self.assertEqual(data.get("source_b"), "copernicus_glo30")
+        self.assertIn("mae_m", data)
+        self.assertIn("agreement_within_2m_pct", data)
+        self.assertIn("matrix", data)
+        self.assertEqual(len(data["matrix"]), 16)
+
+
 if __name__ == '__main__':
     unittest.main()

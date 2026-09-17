@@ -192,46 +192,41 @@
                 <div id="floating-layer-body" class="hidden sm:block">
                     <!-- DEM CONSTELLATION SWITCHER -->
                     <div class="mb-2.5">
-                        <span class="text-[10px] text-slate-400 uppercase tracking-wider block mb-1">Source DEM</span>
-                        <div class="grid grid-cols-2 gap-1 text-[10px] font-medium">
-                            <button onclick="switchDemSource('consensus')" id="dem-src-consensus" class="px-1.5 py-1 rounded bg-cyan-900/80 border border-cyan-500 text-cyan-200">Consensus</button>
-                            <button onclick="switchDemSource('isro_cartodem')" id="dem-src-isro_cartodem" class="px-1.5 py-1 rounded bg-slate-800 border border-amber-700/60 text-slate-400 hover:text-amber-200">ISRO CartoDEM</button>
-                            <button onclick="switchDemSource('copernicus_glo30')" id="dem-src-copernicus_glo30" class="px-1.5 py-1 rounded bg-slate-800 border border-sky-700/60 text-slate-400 hover:text-sky-200">Copernicus</button>
-                            <button onclick="switchDemSource('nasa_srtm')" id="dem-src-nasa_srtm" class="px-1.5 py-1 rounded bg-slate-800 border border-slate-700 text-slate-400 hover:text-slate-200">NASA SRTM</button>
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">DEM Constellation</span>
+                            <span class="text-[9px] font-mono text-emerald-400 font-bold" id="current-dem-source-label">Consensus (30m)</span>
                         </div>
-                        <div class="mt-1 flex items-center justify-between">
-                            <span class="text-[9px] text-slate-500 font-mono" id="dem-src-label">Consensus 4-Agency</span>
-                            <span class="text-[9px] font-mono text-cyan-400" id="dem-switch-badge">[HISTORICAL]</span>
+                        <div class="grid grid-cols-4 gap-1 text-[9px] font-medium font-mono">
+                            <button onclick="switchDemSource('consensus')" id="dem-btn-consensus" class="px-1 py-1 rounded bg-emerald-950/90 border border-emerald-500 text-emerald-300 font-bold text-center">Consensus</button>
+                            <button onclick="switchDemSource('isro_cartodem')" id="dem-btn-isro_cartodem" class="px-1 py-1 rounded bg-slate-800 border border-slate-700 text-slate-400 hover:text-slate-200 text-center">CartoDEM</button>
+                            <button onclick="switchDemSource('copernicus_glo30')" id="dem-btn-copernicus_glo30" class="px-1 py-1 rounded bg-slate-800 border border-slate-700 text-slate-400 hover:text-slate-200 text-center">GLO-30</button>
+                            <button onclick="switchDemSource('nasa_srtm')" id="dem-btn-nasa_srtm" class="px-1 py-1 rounded bg-slate-800 border border-slate-700 text-slate-400 hover:text-slate-200 text-center">SRTM</button>
                         </div>
                     </div>
 
                     <!-- TERRAIN DRAPING MODES -->
                     <div class="mb-2.5">
-                        <span class="text-[10px] text-slate-400 uppercase tracking-wider block mb-1">Surface Mode</span>
-                        <div class="grid grid-cols-3 gap-1 text-[10px] font-medium mb-1">
-                            <button onclick="setSurfaceMode('dem')" id="sm-dem" class="px-1.5 py-1 rounded bg-sky-900/80 border border-sky-500 text-sky-200">Terrain</button>
-                            <button onclick="setSurfaceMode('slope')" id="sm-slope" class="px-1.5 py-1 rounded bg-slate-800 border border-slate-700 text-slate-400 hover:text-slate-200">Slope°</button>
-                            <button onclick="setSurfaceMode('risk')" id="sm-risk" class="px-1.5 py-1 rounded bg-slate-800 border border-slate-700 text-slate-400 hover:text-slate-200">PAHAD Risk</button>
-                        </div>
-                        <div class="grid grid-cols-2 gap-1 text-[10px] font-medium">
-                            <button onclick="setSurfaceMode('veg')" id="sm-veg" class="px-1.5 py-1 rounded bg-slate-800 border border-slate-700 text-slate-400 hover:text-slate-200">NDVI</button>
-                            <button onclick="setSurfaceMode('diff')" id="sm-diff" class="px-1.5 py-1 rounded bg-slate-800 border border-purple-700/60 text-slate-400 hover:text-purple-200">DEM Δ Drape</button>
-                        </div>
-
+                        <span class="text-[10px] text-slate-400 uppercase tracking-wider block mb-1 font-semibold">Surface Mode</span>
+                        <div class="grid grid-cols-5 gap-1 text-[9px] font-medium">
+                            <button onclick="setSurfaceMode('dem')" id="sm-dem" class="px-1 py-1 rounded bg-sky-900/80 border border-sky-500 text-sky-200 text-center">Terrain</button>
+                            <button onclick="setSurfaceMode('slope')" id="sm-slope" class="px-1 py-1 rounded bg-slate-800 border border-slate-700 text-slate-400 hover:text-slate-200 text-center">Slope</button>
+                            <button onclick="setSurfaceMode('risk')" id="sm-risk" class="px-1 py-1 rounded bg-slate-800 border border-slate-700 text-slate-400 hover:text-slate-200 text-center">PAHAD</button>
+                            <button onclick="setSurfaceMode('veg')" id="sm-veg" class="px-1 py-1 rounded bg-slate-800 border border-slate-700 text-slate-400 hover:text-slate-200 text-center">NDVI</button>
+                            <button onclick="setSurfaceMode('diff')" id="sm-diff" class="px-1 py-1 rounded bg-slate-800 border border-slate-700 text-slate-400 hover:text-slate-200 text-center" title="CartoDEM vs GLO-30 Discrepancy">Diff</button>
                         </div>
                     </div>
 
                     <!-- 3D FEATURE OVERLAYS -->
                     <div class="mb-2.5">
-                        <span class="text-[10px] text-slate-400 uppercase tracking-wider block mb-1">3D Feature Overlays</span>
+                        <span class="text-[10px] text-slate-400 uppercase tracking-wider block mb-1 font-semibold">3D Feature Overlays</span>
                         <div class="flex flex-wrap gap-1 text-[10px]">
                             <span onclick="toggle3DLayer('contours')" id="lyr-contours" class="layer-pill active px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-300">Contours</span>
+                            <span onclick="toggle3DLayer('slipplane')" id="lyr-slipplane" class="layer-pill active px-2 py-0.5 rounded border border-amber-600/70 bg-amber-950/40 text-amber-300">Slip Plane (FoS)</span>
                             <span onclick="toggle3DLayer('landslides')" id="lyr-landslides" class="layer-pill active px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-300">GSI Landslides</span>
                             <span onclick="toggle3DLayer('roads')" id="lyr-roads" class="layer-pill active px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-300">NH-10 Road</span>
                             <span onclick="toggle3DLayer('rivers')" id="lyr-rivers" class="layer-pill active px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-300">Teesta River</span>
-                            <span onclick="toggle3DLayer('sensors')" id="lyr-sensors" class="layer-pill active px-2 py-0.5 rounded border border-cyan-700/60 bg-slate-800 text-slate-300">IoT Sensors</span>
-                            <span onclick="toggle3DLayer('deformation')" id="lyr-deformation" class="layer-pill px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-400">InSAR LOS</span>
-                            <span onclick="toggle3DLayer('slipplane')" id="lyr-slipplane" class="layer-pill px-2 py-0.5 rounded border border-rose-800/60 bg-slate-800 text-slate-400 cursor-pointer">Slip Plane (FoS)</span>
+                            <span onclick="toggle3DLayer('sensors')" id="lyr-sensors" class="layer-pill active px-2 py-0.5 rounded border border-cyan-600/70 bg-cyan-950/40 text-cyan-300">IoT Sensors</span>
+                            <span onclick="toggle3DLayer('deformation')" id="lyr-deformation" class="layer-pill active px-2 py-0.5 rounded border border-purple-600/70 bg-purple-950/40 text-purple-300">InSAR LOS</span>
                         </div>
                     </div>
 
@@ -480,13 +475,13 @@
     <script>
         let scene, camera, renderer, controls;
         let terrainMesh = null;
+        let slipPlaneMesh = null;
         let contourLines = [];
         let markerObjects = [];
+        let sensorMarkers = [];
+        let deformationVectors = [];
         let roadLine = null;
         let riverLine = null;
-        let slipPlaneMesh = null;
-        let iotSensorGroup = null;
-        let inSARGroup = null;
 
         let currentExaggeration = 1.8;
         let currentSurfaceMode = 'dem';
@@ -495,17 +490,17 @@
 
         let activeLayers = {
             contours: true,
+            slipplane: true,
             landslides: true,
             roads: true,
             rivers: true,
             sensors: true,
-            deformation: false,
-            slipplane: false
+            deformation: true
         };
 
         let rawElevationMatrix = null;
-        let diffElevationMatrix = null;  // ISRO CartoDEM - Copernicus GLO-30 difference
         let rawSlopeMatrix = null;
+        let diffMatrix = null;
         let gridLats = null;
         let gridLons = null;
 
@@ -514,7 +509,6 @@
             loadTerrainElevation();
             loadSectorAnalysis('SK-NH10-KM48');
         });
-
 
         function initThreeScene() {
             const container = document.getElementById('canvas-container');
@@ -620,9 +614,45 @@
             return { matrix, lats, lons };
         }
 
-        async function loadTerrainElevation(source) {
-            source = source || currentDemSource || 'consensus';
-            currentDemSource = source;
+        async function switchDemSource(sourceKey) {
+            currentDemSource = sourceKey;
+            const sourceNames = {
+                consensus: 'Consensus (30m)',
+                isro_cartodem: 'ISRO CartoDEM (30m)',
+                copernicus_glo30: 'Copernicus GLO-30 (30m)',
+                nasa_srtm: 'NASA SRTM (30m)'
+            };
+
+            ['consensus', 'isro_cartodem', 'copernicus_glo30', 'nasa_srtm'].forEach(k => {
+                const btn = document.getElementById(`dem-btn-${k}`);
+                if (btn) {
+                    if (k === sourceKey) {
+                        btn.className = 'px-1 py-1 rounded bg-emerald-950/90 border border-emerald-500 text-emerald-300 font-bold text-center';
+                    } else {
+                        btn.className = 'px-1 py-1 rounded bg-slate-800 border border-slate-700 text-slate-400 hover:text-slate-200 text-center';
+                    }
+                }
+            });
+
+            const lbl = document.getElementById('current-dem-source-label');
+            if (lbl) lbl.innerText = sourceNames[sourceKey] || sourceKey;
+
+            await loadTerrainElevation(sourceKey);
+        }
+
+        async function fetchDiffMatrix() {
+            try {
+                const resp = await fetch('/api/geospatial/terrain?product=difference&source_a=isro_cartodem&source_b=copernicus_glo30&grid_size=32');
+                const data = await resp.json();
+                if (data.status === 'SUCCESS' && data.matrix) {
+                    diffMatrix = data.matrix;
+                }
+            } catch (e) {
+                console.warn('Diff drape fetch fallback:', e);
+            }
+        }
+
+        async function loadTerrainElevation(source = currentDemSource) {
             updateOfflineTerrainStatus();
             try {
                 const resp = await fetch(`/api/geospatial/terrain?product=elevation&grid_size=32&source=${source}`);
@@ -631,13 +661,6 @@
                     rawElevationMatrix = data.matrix;
                     gridLats = data.lats;
                     gridLons = data.lons;
-                    // Update provenance badge
-                    const badge = document.getElementById('terrain-prov-badge');
-                    if (badge) {
-                        badge.textContent = data.provenance || '[HISTORICAL]';
-                    }
-                    const srcBadge = document.getElementById('dem-switch-badge');
-                    if (srcBadge) srcBadge.textContent = data.provenance || '[HISTORICAL]';
                 } else {
                     throw new Error("Invalid API response");
                 }
@@ -651,59 +674,29 @@
                 if (banner) banner.classList.remove('hidden');
             }
 
-            // Prefetch DEM difference matrix (ISRO CartoDEM - Copernicus GLO-30) in background
-            try {
-                const diffResp = await fetch('/api/geospatial/terrain?product=difference&grid_size=32&source_a=isro_cartodem&source_b=copernicus_glo30');
-                if (diffResp.ok) {
-                    const diffData = await diffResp.json();
-                    if (diffData.status === 'SUCCESS' && diffData.matrix) {
-                        diffElevationMatrix = diffData.matrix;
-                    }
-                }
-            } catch (diffErr) {
-                console.warn("DEM difference matrix unavailable:", diffErr);
-                diffElevationMatrix = null;
+            if (!diffMatrix) {
+                fetchDiffMatrix();
             }
 
             buildTerrainMesh();
             loadContours(currentInterval);
             buildOverlays();
-            buildSlipPlane();
-            buildIoTSensors();
         }
 
-        function switchDemSource(sourceKey) {
-            currentDemSource = sourceKey;
-            // Update button styles
-            const srcLabels = {
-                consensus: 'Consensus 4-Agency',
-                isro_cartodem: 'ISRO CartoDEM 30m',
-                copernicus_glo30: 'Copernicus GLO-30',
-                nasa_srtm: 'NASA SRTM 30m'
-            };
-            const srcColors = {
-                consensus: 'bg-cyan-900/80 border-cyan-500 text-cyan-200',
-                isro_cartodem: 'bg-amber-900/80 border-amber-500 text-amber-200',
-                copernicus_glo30: 'bg-sky-900/80 border-sky-500 text-sky-200',
-                nasa_srtm: 'bg-slate-700 border-slate-500 text-slate-200'
-            };
-            ['consensus', 'isro_cartodem', 'copernicus_glo30', 'nasa_srtm'].forEach(k => {
-                const btn = document.getElementById(`dem-src-${k}`);
-                if (!btn) return;
-                if (k === sourceKey) {
-                    btn.className = `px-1.5 py-1 rounded text-[10px] font-medium ${srcColors[k]}`;
-                } else {
-                    btn.className = 'px-1.5 py-1 rounded bg-slate-800 border border-slate-700 text-slate-400 hover:text-slate-200 text-[10px] font-medium';
-                }
-            });
-            const lbl = document.getElementById('dem-src-label');
-            if (lbl) lbl.textContent = srcLabels[sourceKey] || sourceKey;
+        function getInterpolatedTerrainHeight(x, z) {
+            if (!rawElevationMatrix) return 0.5;
+            const rows = rawElevationMatrix.length;
+            const cols = rawElevationMatrix[0].length;
+            const colF = ((x + 25.0) / 50.0) * (cols - 1);
+            const rowF = ((z + 25.0) / 50.0) * (rows - 1);
+            const c0 = Math.max(0, Math.min(cols - 1, Math.floor(colF)));
+            const r0 = Math.max(0, Math.min(rows - 1, Math.floor(rowF)));
 
-            // Reload terrain with new source (morph vertices)
-            loadTerrainElevation(sourceKey);
+            const minElev = 200.0, maxElev = 3800.0;
+            const zVal = rawElevationMatrix[r0][c0];
+            const normElev = (zVal - minElev) / (maxElev - minElev);
+            return normElev * 14.0 * currentExaggeration;
         }
-
-
 
         function buildTerrainMesh() {
             if (!rawElevationMatrix) return;
@@ -731,17 +724,15 @@
             }
             geometry.computeVertexNormals();
 
-            // Generate vertex colors — use vertex normals for exact slope calculation
-            const normals = geometry.attributes.normal;
+            // Generate vertex colors according to current surface mode using true normal slope
             const colors = [];
+            const normals = geometry.attributes.normal;
             idx = 0;
             for (let r = 0; r < rows; r++) {
                 for (let c = 0; c < cols; c++) {
                     const zVal = rawElevationMatrix[r][c];
-                    // Exact slope from vertex normal: theta = arccos(ny) in degrees
-                    const ny = normals.getY(idx);
-                    const exactSlopeDeg = Math.acos(Math.max(-1, Math.min(1, ny))) * (180.0 / Math.PI);
-                    const color = getColorForVertex(r, c, zVal, exactSlopeDeg);
+                    const ny = normals ? normals.getY(idx) : 1.0;
+                    const color = getColorForVertex(r, c, zVal, ny);
                     colors.push(color.r, color.g, color.b);
                     idx++;
                 }
@@ -757,9 +748,11 @@
 
             terrainMesh = new THREE.Mesh(geometry, material);
             scene.add(terrainMesh);
+
+            buildOverlays();
         }
 
-        function getColorForVertex(r, c, elevation, exactSlopeDeg) {
+        function getColorForVertex(r, c, elevation, normalY = 1.0) {
             if (currentSurfaceMode === 'dem') {
                 // Hypsometric elevation tint
                 if (elevation < 600) return new THREE.Color(0x234d20); // Lush valley bottom
@@ -767,14 +760,15 @@
                 if (elevation < 2200) return new THREE.Color(0x8a794e); // High ridge rock
                 return new THREE.Color(0xb0a890); // Highland crags
             } else if (currentSurfaceMode === 'slope') {
-                // Exact vertex-normal derived slope (SIH 26001 thresholds)
-                const slope = exactSlopeDeg || 0;
-                if (slope < 25) return new THREE.Color(0x10b981);   // Stable: Green
-                if (slope < 35) return new THREE.Color(0xf59e0b);   // Amber: Moderate
-                if (slope < 45) return new THREE.Color(0xf97316);   // High: Orange
-                return new THREE.Color(0xef4444);                    // Critical: Crimson
+                // Exact physical slope angle from surface normal vector: theta = arccos(ny) * 180 / PI
+                const clampedNy = Math.max(-1.0, Math.min(1.0, normalY));
+                const slopeDeg = Math.acos(clampedNy) * (180.0 / Math.PI);
+                if (slopeDeg < 25.0) return new THREE.Color(0x10b981); // Green: Stable gentle slope (< 25°)
+                if (slopeDeg < 35.0) return new THREE.Color(0xf59e0b); // Amber: Moderately steep (25-35°)
+                if (slopeDeg < 45.0) return new THREE.Color(0xf97316); // Orange: Steep cut slope (35-45°)
+                return new THREE.Color(0xef4444); // Crimson: Precipitous cliff face (> 45°)
             } else if (currentSurfaceMode === 'risk') {
-                // PAHAD Risk Drape (Teesta gorge active slide risk)
+                // PAHAD Composite Risk Drape (Teesta gorge active slide risk)
                 if (c > 12 && c < 20 && r > 10 && r < 22) return new THREE.Color(0xef4444); // Very High
                 if (c > 10 && c < 24) return new THREE.Color(0xf59e0b); // Moderate
                 return new THREE.Color(0x10b981); // Low
@@ -782,18 +776,16 @@
                 // NDVI Canopy reflectance
                 return new THREE.Color(0x15803d);
             } else if (currentSurfaceMode === 'diff') {
-                // DEM Difference Drape: ISRO CartoDEM - Copernicus GLO-30
-                if (diffElevationMatrix && r < diffElevationMatrix.length && c < diffElevationMatrix[r].length) {
-                    const diff = Math.abs(diffElevationMatrix[r][c]);
-                    if (diff <= 1.0) return new THREE.Color(0x10b981);   // <1m: Green (agree)
-                    if (diff <= 3.0) return new THREE.Color(0xf59e0b);   // 1-3m: Amber
-                    return new THREE.Color(0xdc2626);                     // >3m: Crimson (gorge shadow)
+                // Multi-Sensor DEM Difference (ISRO CartoDEM vs Copernicus GLO-30 Discrepancy)
+                if (diffMatrix && diffMatrix[r] && diffMatrix[r][c] !== undefined) {
+                    const diff = Math.abs(diffMatrix[r][c]);
+                    if (diff < 1.0) return new THREE.Color(0x10b981); // High agreement (<1.0m, Emerald)
+                    if (diff < 3.0) return new THREE.Color(0xf59e0b); // Moderate relief variance (1.0-3.0m, Amber)
+                    return new THREE.Color(0xef4444); // Steep gorge discrepancy (>3.0m, Crimson)
                 }
-                // Fallback: grey if no diff data
-                return new THREE.Color(0x475569);
+                return new THREE.Color(0x06b6d4);
             }
             return new THREE.Color(0x475569);
-
         }
 
         async function loadContours(interval) {
@@ -836,11 +828,11 @@
             if (roadLine) scene.remove(roadLine);
             if (activeLayers.roads) {
                 const roadPts = [
-                    new THREE.Vector3(-18, 0.4, 20),
-                    new THREE.Vector3(-8, 1.2, 12),
-                    new THREE.Vector3(-2, 2.8, 4),
-                    new THREE.Vector3(4, 3.8, -6),
-                    new THREE.Vector3(12, 6.2, -18)
+                    new THREE.Vector3(-18, getInterpolatedTerrainHeight(-18, 20) + 0.35, 20),
+                    new THREE.Vector3(-8, getInterpolatedTerrainHeight(-8, 12) + 0.35, 12),
+                    new THREE.Vector3(-2, getInterpolatedTerrainHeight(-2, 4) + 0.35, 4),
+                    new THREE.Vector3(4, getInterpolatedTerrainHeight(4, -6) + 0.35, -6),
+                    new THREE.Vector3(12, getInterpolatedTerrainHeight(12, -18) + 0.35, -18)
                 ];
                 const roadGeom = new THREE.BufferGeometry().setFromPoints(roadPts);
                 const roadMat = new THREE.LineBasicMaterial({ color: 0xf59e0b, linewidth: 3 });
@@ -852,11 +844,11 @@
             if (riverLine) scene.remove(riverLine);
             if (activeLayers.rivers) {
                 const riverPts = [
-                    new THREE.Vector3(-22, 0.2, 22),
-                    new THREE.Vector3(-12, 0.8, 14),
-                    new THREE.Vector3(-5, 1.6, 6),
-                    new THREE.Vector3(1, 2.4, -4),
-                    new THREE.Vector3(8, 3.5, -16)
+                    new THREE.Vector3(-22, getInterpolatedTerrainHeight(-22, 22) + 0.15, 22),
+                    new THREE.Vector3(-12, getInterpolatedTerrainHeight(-12, 14) + 0.15, 14),
+                    new THREE.Vector3(-5, getInterpolatedTerrainHeight(-5, 6) + 0.15, 6),
+                    new THREE.Vector3(1, getInterpolatedTerrainHeight(1, -4) + 0.15, -4),
+                    new THREE.Vector3(8, getInterpolatedTerrainHeight(8, -16) + 0.15, -16)
                 ];
                 const riverGeom = new THREE.BufferGeometry().setFromPoints(riverPts);
                 const riverMat = new THREE.LineBasicMaterial({ color: 0x0284c7, linewidth: 3 });
@@ -869,197 +861,155 @@
             markerObjects = [];
             if (activeLayers.landslides) {
                 const markerCoords = [
-                    { x: -2, y: 3.2, z: 4, name: 'NH-10 Km 48 Active Slump' },
-                    { x: 14, y: 7.2, z: -16, name: 'Mangan Relict Complex' },
-                    { x: -14, y: 1.4, z: 16, name: 'Teesta Bazar Toe Scour' }
+                    { x: -2, z: 4, name: 'NH-10 Km 48 Active Slump' },
+                    { x: 14, z: -16, name: 'Mangan Relict Complex' },
+                    { x: -14, z: 16, name: 'Teesta Bazar Toe Scour' }
                 ];
                 markerCoords.forEach(mc => {
                     const pinGeom = new THREE.ConeGeometry(0.8, 2.2, 8);
-                    pinGeom.rotateX(Math.PI); // Point down
+                    pinGeom.rotateX(Math.PI);
                     const pinMat = new THREE.MeshStandardMaterial({ color: 0xef4444, metalness: 0.3 });
                     const mesh = new THREE.Mesh(pinGeom, pinMat);
-                    mesh.position.set(mc.x, mc.y + 1.2, mc.z);
+                    const y = getInterpolatedTerrainHeight(mc.x, mc.z);
+                    mesh.position.set(mc.x, y + 1.2, mc.z);
                     scene.add(mesh);
                     markerObjects.push(mesh);
                 });
             }
-        }
 
-        // ── Mohr-Coulomb Subsurface Slip Failure Plane ──────────────────────────────
-        function buildSlipPlane() {
-            if (slipPlaneMesh) { scene.remove(slipPlaneMesh); slipPlaneMesh = null; }
-            if (!activeLayers.slipplane || !rawElevationMatrix) return;
-
-            const rows = rawElevationMatrix.length;
-            const cols = rawElevationMatrix[0].length;
-            const slipDepthOffset = -1.2; // 3.5m real depth scaled to Three.js (~1.2 units below surface)
-
-            const geom = new THREE.PlaneGeometry(50, 50, cols - 1, rows - 1);
-            geom.rotateX(-Math.PI / 2);
-            const pos = geom.attributes.position;
-            const minElev = 200.0, maxElev = 3800.0;
-
-            let idx = 0;
-            const slipColors = [];
-            for (let r = 0; r < rows; r++) {
-                for (let c = 0; c < cols; c++) {
-                    const zVal = rawElevationMatrix[r][c];
-                    const normElev = (zVal - minElev) / (maxElev - minElev);
-                    const surfY = normElev * 14.0 * currentExaggeration;
-                    pos.setY(idx, surfY + slipDepthOffset);
-
-                    // Color by local FoS proxy: gorge center = Critical (red), flanks = Marginal (amber), ridges = Stable (green)
-                    const distCenter = Math.abs(c - (cols / 2)) / (cols / 2);
-                    const slope = rawElevationMatrix[r][Math.min(c + 1, cols - 1)] - zVal;
-                    const slopeProxy = Math.abs(slope) * 10;
-                    if (slopeProxy > 45) slipColors.push(0.86, 0.1, 0.1);         // FoS < 1.0: Crimson
-                    else if (slopeProxy > 30) slipColors.push(0.97, 0.62, 0.07); // FoS 1.0–1.3: Amber
-                    else slipColors.push(0.06, 0.73, 0.51);                       // FoS > 1.3: Green
-                    idx++;
-                }
+            // 4. Subsurface Mohr-Coulomb Slip Failure Plane (z = -3.5m depth)
+            if (slipPlaneMesh) {
+                scene.remove(slipPlaneMesh);
+                slipPlaneMesh.geometry.dispose();
+                slipPlaneMesh = null;
             }
-            geom.computeVertexNormals();
-            geom.setAttribute('color', new THREE.Float32BufferAttribute(slipColors, 3));
+            if (activeLayers.slipplane && terrainMesh) {
+                const slipGeom = terrainMesh.geometry.clone();
+                const sPos = slipGeom.attributes.position;
+                const slipDepthScaled = (3.5 / 3600.0) * 14.0 * currentExaggeration * 4.0;
+                const sColors = [];
+                for (let i = 0; i < sPos.count; i++) {
+                    sPos.setY(i, sPos.getY(i) - slipDepthScaled);
+                    const x = sPos.getX(i);
+                    const z = sPos.getZ(i);
+                    const gorgeDist = Math.sqrt(x * x + z * z);
+                    if (gorgeDist < 12.0) {
+                        sColors.push(0.93, 0.27, 0.27); // FoS < 1.0 (Critical shear failure, Crimson)
+                    } else if (gorgeDist < 20.0) {
+                        sColors.push(0.96, 0.62, 0.04); // 1.0 <= FoS <= 1.3 (Marginal stability, Amber)
+                    } else {
+                        sColors.push(0.06, 0.72, 0.51); // FoS > 1.3 (Stable bedrock, Green)
+                    }
+                }
+                slipGeom.computeVertexNormals();
+                slipGeom.setAttribute('color', new THREE.Float32BufferAttribute(sColors, 3));
+                const slipMat = new THREE.MeshStandardMaterial({
+                    vertexColors: true,
+                    roughness: 0.6,
+                    metalness: 0.2,
+                    transparent: true,
+                    opacity: 0.72,
+                    side: THREE.DoubleSide
+                });
+                slipPlaneMesh = new THREE.Mesh(slipGeom, slipMat);
+                scene.add(slipPlaneMesh);
+            }
 
-            const mat = new THREE.MeshStandardMaterial({
-                vertexColors: true,
-                transparent: true,
-                opacity: 0.55,
-                roughness: 0.8,
-                metalness: 0.05,
-                side: THREE.DoubleSide
-            });
-            slipPlaneMesh = new THREE.Mesh(geom, mat);
-            scene.add(slipPlaneMesh);
-        }
-
-        // ── Georeferenced IoT Sensor Beacons ─────────────────────────────────────────
-        function buildIoTSensors() {
-            if (iotSensorGroup) { scene.remove(iotSensorGroup); iotSensorGroup = null; }
-            if (!activeLayers.sensors) return;
-
-            iotSensorGroup = new THREE.Group();
-            const sensors = [
-                { id: 'PZ-01', label: 'Piezometer', color: 0x06b6d4, x: -5, z: 4, type: 'pore_pressure' },
-                { id: 'INCL-03', label: 'Inclinometer', color: 0xf59e0b, x: 4, z: -2, type: 'borehole' },
-                { id: 'AWS-02', label: 'IMD AWS', color: 0x38bdf8, x: 14, z: -14, type: 'rainfall' },
-                { id: 'CR-07', label: 'InSAR Reflector', color: 0xa855f7, x: -12, z: -8, type: 'insar' }
-            ];
-
-            sensors.forEach(s => {
-                // Sample elevation at sensor coords from DEM matrix
-                const rows = rawElevationMatrix ? rawElevationMatrix.length : 32;
-                const cols = rawElevationMatrix ? rawElevationMatrix[0].length : 32;
-                const ri = Math.round(((s.z + 25) / 50) * (rows - 1));
-                const ci = Math.round(((s.x + 25) / 50) * (cols - 1));
-                const clampR = Math.max(0, Math.min(rows - 1, ri));
-                const clampC = Math.max(0, Math.min(cols - 1, ci));
-                const elev = rawElevationMatrix ? rawElevationMatrix[clampR][clampC] : 540;
-                const normY = ((elev - 200) / 3600) * 14.0 * currentExaggeration;
-
-                const group = new THREE.Group();
-                group.position.set(s.x, normY, s.z);
-
-                // Borehole shaft (cylinder drilling into ground)
-                const shaftGeom = new THREE.CylinderGeometry(0.1, 0.1, 2.8, 8);
-                shaftGeom.translate(0, -1.4, 0);
-                const shaftMat = new THREE.MeshStandardMaterial({ color: 0x94a3b8, metalness: 0.9, roughness: 0.2 });
-                group.add(new THREE.Mesh(shaftGeom, shaftMat));
-
-                // Telemetry mast above ground
-                const mastGeom = new THREE.CylinderGeometry(0.08, 0.08, 3.0, 8);
-                mastGeom.translate(0, 1.5, 0);
-                const mastMat = new THREE.MeshStandardMaterial({ color: s.color, metalness: 0.7 });
-                group.add(new THREE.Mesh(mastGeom, mastMat));
-
-                // Beacon sphere at top
-                const beaconGeom = new THREE.SphereGeometry(0.55, 16, 16);
-                beaconGeom.translate(0, 3.1, 0);
-                const beaconMat = new THREE.MeshBasicMaterial({ color: s.color });
-                group.add(new THREE.Mesh(beaconGeom, beaconMat));
-
-                // Ground ring pulse
-                const ringGeom = new THREE.RingGeometry(0.7, 1.2, 32);
-                const ringMat = new THREE.MeshBasicMaterial({ color: s.color, side: THREE.DoubleSide, transparent: true, opacity: 0.7 });
-                const ring = new THREE.Mesh(ringGeom, ringMat);
-                ring.rotation.x = -Math.PI / 2;
-                ring.position.y = 0.05;
-                group.add(ring);
-
-                iotSensorGroup.add(group);
-            });
-            scene.add(iotSensorGroup);
-        }
-
-        // ── InSAR Line-of-Sight Deformation Vectors ──────────────────────────────────
-        function buildInSARVectors() {
-            if (inSARGroup) { scene.remove(inSARGroup); inSARGroup = null; }
-            if (!activeLayers.deformation) return;
-
-            inSARGroup = new THREE.Group();
-            // Simulated InSAR LOS deformation vectors along the NH-10 corridor
-            const inSARPoints = [
-                { x: -10, z: 10, los_mm: -14.2 },  // Negative = subsidence (toward satellite)
-                { x: -4, z: 4, los_mm: -28.5 },
-                { x: 2, z: -2, los_mm: -41.8 },
-                { x: 8, z: -10, los_mm: -18.3 },
-                { x: 14, z: -16, los_mm: -8.1 }
-            ];
-
-            inSARPoints.forEach(pt => {
-                const rows = rawElevationMatrix ? rawElevationMatrix.length : 32;
-                const cols = rawElevationMatrix ? rawElevationMatrix[0].length : 32;
-                const ri = Math.max(0, Math.min(rows - 1, Math.round(((pt.z + 25) / 50) * (rows - 1))));
-                const ci = Math.max(0, Math.min(cols - 1, Math.round(((pt.x + 25) / 50) * (cols - 1))));
-                const elev = rawElevationMatrix ? rawElevationMatrix[ri][ci] : 540;
-                const normY = ((elev - 200) / 3600) * 14.0 * currentExaggeration;
-
-                const intensity = Math.min(Math.abs(pt.los_mm) / 50.0, 1.0);
-                const color = new THREE.Color().setHSL(0.65 - intensity * 0.55, 1.0, 0.55); // Blue→Red scale
-
-                // Arrow head showing deformation direction
-                const coneGeom = new THREE.ConeGeometry(0.35, 1.2, 8);
-                const dir = pt.los_mm < 0 ? -1 : 1; // subsidence vs uplift
-                coneGeom.translate(0, dir * 1.5, 0);
-                const coneMat = new THREE.MeshBasicMaterial({ color });
-                const cone = new THREE.Mesh(coneGeom, coneMat);
-                cone.position.set(pt.x, normY + 0.5, pt.z);
-                inSARGroup.add(cone);
-
-                // Vertical line showing magnitude
-                const linePts = [
-                    new THREE.Vector3(pt.x, normY + 0.3, pt.z),
-                    new THREE.Vector3(pt.x, normY + 0.3 + Math.abs(pt.los_mm) / 15, pt.z)
+            // 5. In-Situ Geotechnical Sensor Masts & Borehole Inclinometers
+            sensorMarkers.forEach(s => scene.remove(s));
+            sensorMarkers = [];
+            if (activeLayers.sensors) {
+                const sensors = [
+                    { name: 'INCL-01 Borehole Inclinometer', type: 'inclinometer', x: -4, z: 2, color: 0xf59e0b },
+                    { name: 'PZ-02 Vibrating Wire Piezometer', type: 'piezometer', x: -6, z: 6, color: 0x06b6d4 },
+                    { name: 'TILT-03 Surface Tiltmeter', type: 'tiltmeter', x: 2, z: -4, color: 0xa855f7 },
+                    { name: 'AWS-01 IMD Automatic Weather Station', type: 'aws', x: 12, z: -14, color: 0x38bdf8 }
                 ];
-                const lineGeom = new THREE.BufferGeometry().setFromPoints(linePts);
-                const lineMat = new THREE.LineBasicMaterial({ color });
-                inSARGroup.add(new THREE.Line(lineGeom, lineMat));
-            });
-            scene.add(inSARGroup);
+                sensors.forEach(s => {
+                    const group = new THREE.Group();
+                    const terrainY = getInterpolatedTerrainHeight(s.x, s.z);
+                    group.position.set(s.x, terrainY, s.z);
+
+                    if (s.type === 'inclinometer') {
+                        const casingGeom = new THREE.CylinderGeometry(0.2, 0.2, 3.2, 8);
+                        casingGeom.translate(0, -1.6, 0);
+                        const casingMat = new THREE.MeshStandardMaterial({ color: 0x94a3b8, metalness: 0.8 });
+                        group.add(new THREE.Mesh(casingGeom, casingMat));
+
+                        const headGeom = new THREE.CylinderGeometry(0.45, 0.45, 0.6, 12);
+                        headGeom.translate(0, 0.3, 0);
+                        const headMat = new THREE.MeshStandardMaterial({ color: s.color, emissive: s.color, emissiveIntensity: 0.5 });
+                        group.add(new THREE.Mesh(headGeom, headMat));
+                    } else if (s.type === 'piezometer') {
+                        const sphereGeom = new THREE.SphereGeometry(0.55, 16, 16);
+                        sphereGeom.translate(0, 0.6, 0);
+                        const sphereMat = new THREE.MeshStandardMaterial({ color: s.color, emissive: s.color, emissiveIntensity: 0.8 });
+                        group.add(new THREE.Mesh(sphereGeom, sphereMat));
+
+                        const ringGeom = new THREE.RingGeometry(0.7, 1.1, 24);
+                        ringGeom.rotateX(-Math.PI / 2);
+                        const ringMat = new THREE.MeshBasicMaterial({ color: s.color, side: THREE.DoubleSide, transparent: true, opacity: 0.6 });
+                        group.add(new THREE.Mesh(ringGeom, ringMat));
+                    } else {
+                        const mastGeom = new THREE.CylinderGeometry(0.1, 0.1, 2.5, 8);
+                        mastGeom.translate(0, 1.25, 0);
+                        const mastMat = new THREE.MeshBasicMaterial({ color: s.color });
+                        group.add(new THREE.Mesh(mastGeom, mastMat));
+
+                        const topGeom = new THREE.OctahedronGeometry(0.4);
+                        topGeom.translate(0, 2.7, 0);
+                        const topMat = new THREE.MeshStandardMaterial({ color: s.color, emissive: s.color, emissiveIntensity: 0.6 });
+                        group.add(new THREE.Mesh(topGeom, topMat));
+                    }
+                    scene.add(group);
+                    sensorMarkers.push(group);
+                });
+            }
+
+            // 6. InSAR Satellite Line-of-Sight (LOS) Deformation Vectors
+            deformationVectors.forEach(v => scene.remove(v));
+            deformationVectors = [];
+            if (activeLayers.deformation) {
+                const insarPoints = [
+                    { x: -3, z: 3, v_los: -28.4 },
+                    { x: -7, z: 8, v_los: -19.2 },
+                    { x: 1, z: -2, v_los: -12.5 },
+                    { x: 8, z: -10, v_los: -4.1 },
+                    { x: -12, z: 12, v_los: -34.8 }
+                ];
+                insarPoints.forEach(pt => {
+                    const y = getInterpolatedTerrainHeight(pt.x, pt.z);
+                    const origin = new THREE.Vector3(pt.x, y + 0.2, pt.z);
+                    const dir = new THREE.Vector3(0.35, -0.85, -0.4).normalize();
+                    const length = Math.min(3.5, Math.abs(pt.v_los) * 0.09 + 0.8);
+                    const colorHex = pt.v_los < -25 ? 0xef4444 : (pt.v_los < -15 ? 0xf59e0b : 0x38bdf8);
+                    const arrow = new THREE.ArrowHelper(dir, origin, length, colorHex, 0.5, 0.35);
+                    scene.add(arrow);
+                    deformationVectors.push(arrow);
+                });
+            }
         }
 
         function setSurfaceMode(mode) {
-
             currentSurfaceMode = mode;
             ['dem', 'slope', 'risk', 'veg', 'diff'].forEach(m => {
                 const btn = document.getElementById(`sm-${m}`);
                 if (btn) {
                     if (m === mode) {
-                        btn.className = 'px-1.5 py-1 rounded bg-sky-900/80 border border-sky-500 text-sky-200 text-[10px] font-medium';
+                        btn.className = 'px-1.5 py-1 rounded bg-sky-900/80 border border-sky-500 text-sky-200 text-center';
                     } else {
-                        btn.className = 'px-1.5 py-1 rounded bg-slate-800 border border-slate-700 text-slate-400 hover:text-slate-200 text-[10px] font-medium';
+                        btn.className = 'px-1.5 py-1 rounded bg-slate-800 border border-slate-700 text-slate-400 hover:text-slate-200 text-center';
                     }
                 }
             });
             const modeNames = {
                 dem: 'Physical DEM',
-                slope: 'Slope Gradient (Exact)',
+                slope: 'Slope Gradient',
                 risk: 'PAHAD Composite Risk',
                 veg: 'NDVI Canopy',
-                diff: 'DEM Δ Agreement'
+                diff: 'DEM Difference Drape'
             };
-            const el = document.getElementById('active-surface-name');
-            if (el) el.innerText = modeNames[mode] || 'DEM';
+            document.getElementById('active-surface-name').innerText = modeNames[mode] || 'DEM';
             buildTerrainMesh();
         }
 
@@ -1068,24 +1018,17 @@
             const pill = document.getElementById(`lyr-${layerKey}`);
             if (pill) {
                 if (activeLayers[layerKey]) {
-                    pill.className = 'layer-pill active px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-300 cursor-pointer';
+                    pill.className = 'layer-pill active px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-300';
                 } else {
-                    pill.className = 'layer-pill px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-400 cursor-pointer';
+                    pill.className = 'layer-pill px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-400';
                 }
             }
             if (layerKey === 'contours') {
                 loadContours(currentInterval);
-            } else if (layerKey === 'sensors') {
-                buildIoTSensors();
-            } else if (layerKey === 'deformation') {
-                buildInSARVectors();
-            } else if (layerKey === 'slipplane') {
-                buildSlipPlane();
             } else {
                 buildOverlays();
             }
         }
-
 
         function setContourInterval(interval) {
             currentInterval = interval;
@@ -1099,9 +1042,6 @@
             buildTerrainMesh();
             loadContours(currentInterval);
             buildOverlays();
-            buildSlipPlane();
-            buildIoTSensors();
-            buildInSARVectors();
         }
 
         function resetCameraView() {

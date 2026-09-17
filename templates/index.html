@@ -4418,7 +4418,7 @@
                         <div>
                             <span class="text-[10px] text-slate-500 block">Terrain</span>
                             <span class="text-xs font-bold font-mono text-[#0B2545] block mt-0.5">Actual DEM (30m)</span>
-                            <span class="text-[9px] text-emerald-600 font-mono">Copernicus [LIVE]</span>
+                            <span class="text-[9px] text-emerald-600 font-mono">ISRO CartoDEM / GLO-30 [MULTI-SOURCE]</span>
                         </div>
                         <div>
                             <span class="text-[10px] text-slate-500 block">Vegetation</span>
@@ -11604,6 +11604,20 @@ async function fetchAndApply3DTelemetry(zoneName, fosVal) {
         }
     } catch (e) {
         console.warn('Live sensor fetch fallback:', e);
+    }
+
+    try {
+        var lat = (current3DSector && current3DSector.hazardCenter) ? current3DSector.hazardCenter[0] : 27.33;
+        var lon = (current3DSector && current3DSector.hazardCenter) ? current3DSector.hazardCenter[1] : 88.61;
+        var tRes = await fetch('/api/terrain/point?lat=' + lat + '&lon=' + lon);
+        if (tRes.ok) {
+            var tData = await tRes.json();
+            if (tData.status === 'SUCCESS' && tData.consensus) {
+                current3DSector.meanSlope = tData.consensus.slope_deg.toFixed(1) + '° (ISRO/GLO-30 Consensus)';
+            }
+        }
+    } catch (e) {
+        console.warn('Multi-source terrain fetch fallback:', e);
     }
 
     update3DHUD();

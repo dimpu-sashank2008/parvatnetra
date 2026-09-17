@@ -523,21 +523,15 @@
                     <div class="hud-overlay-card absolute top-3 left-3 z-10 px-3 py-2 rounded-lg bg-[#0B1320]/90 backdrop-blur-md border border-slate-700 text-xs">
                         <div class="flex items-center gap-2">
                             <span class="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span>
-                            <span class="font-bold text-slate-100 uppercase tracking-wider text-[11px]">PAHAD FUSION CORE</span>
-                            <span class="text-[10px] font-mono text-sky-400 font-semibold" id="obs-dem-src-badge">[HISTORICAL]</span>
+                            <span class="font-bold text-slate-100 uppercase tracking-wider text-[11px]">PAHAD 3D TWIN</span>
+                            <span class="text-[10px] font-mono text-emerald-400 font-semibold" id="obs-dem-badge">[MULTI-DEM]</span>
                         </div>
                         <p class="text-[10px] text-slate-300 mt-0.5 font-medium">NH-10 Himalayan Corridor • Singtam - Rangpo Sector</p>
-                        <div class="text-[9px] font-mono text-slate-400 mt-1 flex items-center gap-2">
-                            <span id="obs-dem-src-label">Consensus 30m</span>
-                            <span>•</span>
-                            <span>LAT 27°19'N LON 88°36'E</span>
-                        </div>
-                        <!-- DEM Source Switcher -->
-                        <div class="mt-1.5 flex items-center gap-1 flex-wrap">
-                            <span class="text-[8px] text-slate-500 uppercase">DEM:</span>
-                            <button onclick="switchObsDemSource('consensus')" id="obs-dem-consensus" class="px-2 py-0.5 text-[10px] rounded font-semibold bg-sky-800 border border-sky-500 text-sky-200 cursor-pointer">Consensus</button>
-                            <button onclick="switchObsDemSource('isro_cartodem')" id="obs-dem-isro_cartodem" class="px-2 py-0.5 text-[10px] rounded bg-slate-800 border border-slate-700 text-slate-400 hover:text-amber-200 cursor-pointer">ISRO</button>
-                            <button onclick="switchObsDemSource('copernicus_glo30')" id="obs-dem-copernicus_glo30" class="px-2 py-0.5 text-[10px] rounded bg-slate-800 border border-slate-700 text-slate-400 hover:text-sky-200 cursor-pointer">Copernicus</button>
+                        <div class="mt-1.5 flex items-center gap-1 text-[9px] font-mono">
+                            <span class="text-slate-400">DEM:</span>
+                            <button onclick="switchObservatoryDem('consensus')" id="obs-btn-consensus" class="px-1.5 py-0.5 rounded bg-emerald-950/80 border border-emerald-500 text-emerald-300 font-bold">Consensus</button>
+                            <button onclick="switchObservatoryDem('isro_cartodem')" id="obs-btn-isro_cartodem" class="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-400 hover:text-slate-200">CartoDEM</button>
+                            <button onclick="switchObservatoryDem('copernicus_glo30')" id="obs-btn-copernicus_glo30" class="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-400 hover:text-slate-200">GLO-30</button>
                         </div>
                     </div>
 
@@ -1058,54 +1052,10 @@
         let ambientLight, sunLight, fillLight;
         let sensorPins = [];
         let scarpLine = null;
-        let obsSlipPlaneMesh = null;
         let animTime = 0;
-        let obsRealDemMatrix = null;  // Real multi-source DEM grid from /api/geospatial/terrain
-        let obsGridRows = 32, obsGridCols = 32;
-        let obsCurrentDemSource = 'consensus';
-
-        // Fetch real DEM and then initialize the Observatory 3D twin
-        async function initObservatory3DWithRealDEM(source) {
-            source = source || obsCurrentDemSource;
-            obsCurrentDemSource = source;
-            try {
-                const resp = await fetch(`/api/geospatial/terrain?product=elevation&grid_size=32&source=${source}`);
-                if (resp.ok) {
-                    const data = await resp.json();
-                    if (data.status === 'SUCCESS' && data.matrix) {
-                        obsRealDemMatrix = data.matrix;
-                        obsGridRows = data.matrix.length;
-                        obsGridCols = data.matrix[0].length;
-                        const srcBadge = document.getElementById('obs-dem-src-badge');
-                        if (srcBadge) srcBadge.textContent = data.provenance || '[HISTORICAL]';
-                    }
-                }
-            } catch (e) {
-                console.warn('[PAHAD Observatory] DEM fetch fallback:', e);
-            }
-            initObservatory3D();
-        }
-
-        function switchObsDemSource(sourceKey) {
-            const srcLabels = {
-                consensus: 'Consensus 30m',
-                isro_cartodem: 'ISRO CartoDEM',
-                copernicus_glo30: 'Copernicus GLO-30'
-            };
-            ['consensus', 'isro_cartodem', 'copernicus_glo30'].forEach(k => {
-                const btn = document.getElementById(`obs-dem-${k}`);
-                if (!btn) return;
-                btn.className = k === sourceKey
-                    ? 'px-2 py-0.5 text-[10px] rounded font-semibold bg-sky-800 border border-sky-500 text-sky-200 cursor-pointer'
-                    : 'px-2 py-0.5 text-[10px] rounded bg-slate-800 border border-slate-700 text-slate-400 hover:text-slate-200 cursor-pointer';
-            });
-            const lbl = document.getElementById('obs-dem-src-label');
-            if (lbl) lbl.textContent = srcLabels[sourceKey] || sourceKey;
-            // Reload 3D twin with new source
-            initObservatory3DWithRealDEM(sourceKey);
-        }
-
-
+        let observatoryDemSource = 'consensus';
+        let observatoryElevationMatrix = null;
+        let observatorySlipMesh = null;
 
         function initObservatory3D() {
             const container = document.getElementById('observatory-three-canvas');
@@ -1151,39 +1101,22 @@
             const colors = [];
             const colorObj = new THREE.Color();
 
-            // Himalayan geomorphology formula: Teesta canyon incision + fault scarps + ridge crests
+            // Initial altitude profile
             for (let i = 0; i < pos.count; i++) {
                 const x = pos.getX(i);
                 const y = pos.getY(i);
-
-                // Deep structural river canyon (Teesta River bed)
-                const gorgeDist = Math.abs(x - Math.sin(y * 0.05) * 12 - 4);
-                const gorgeDepth = Math.exp(-(gorgeDist * gorgeDist) / 75.0) * 11.0;
-
-                // Major structural fault ridge & rock face
-                const mainRidge = Math.cos(x * 0.07 + 1.1) * Math.sin(y * 0.06) * 8.5;
-                const faultScarp = Math.sin(x * 0.15 - y * 0.10) * 3.5;
-                const steppedTerraces = Math.floor(Math.sin((x + y) * 0.08) * 4.0) * 0.4;
-                const microRelief = Math.sin(x * 0.35) * Math.cos(y * 0.35) * 0.7;
-
-                const z = mainRidge + faultScarp + steppedTerraces + microRelief - gorgeDepth;
+                const z = getTerrainElevation(x, y);
                 pos.setZ(i, z);
 
-                // Per-vertex hypsometric altitude color ramp (Cartographic Geological Tinting)
                 if (z < -4) {
-                    // River Canyon Alluvium: Deep river emerald / dark teal
                     colorObj.setHex(isLight ? 0x0f766e : 0x064e3b);
                 } else if (z < 0.5) {
-                    // Lower Slopes / Forested colluvium: Deep forest moss
                     colorObj.setHex(isLight ? 0x15803d : 0x14532d);
                 } else if (z < 4.8) {
-                    // Active Slope / Cut Face (NH-10 Sector): Weathered schist & ochre sandstone
                     colorObj.setHex(isLight ? 0xb45309 : 0x78350f).lerp(new THREE.Color(0x64748b), 0.25);
                 } else if (z < 8.5) {
-                    // Upper Rock Escarpment: Quartzite & hard gneiss
                     colorObj.setHex(isLight ? 0x64748b : 0x475569);
                 } else {
-                    // Alpine Ridge Summits: High cold granite crest
                     colorObj.setHex(isLight ? 0x94a3b8 : 0x64748b);
                 }
                 colors.push(colorObj.r, colorObj.g, colorObj.b);
@@ -1201,7 +1134,7 @@
             terrainMesh = new THREE.Mesh(geom, mat);
             scene.add(terrainMesh);
 
-            // Subtle Cartographic Isohypse Contour Wireframe Overlay (Survey of India Topo Style)
+            // Subtle Cartographic Isohypse Contour Wireframe Overlay
             const wireMat = new THREE.MeshBasicMaterial({
                 color: isLight ? 0x0284c7 : 0x38bdf8,
                 wireframe: true,
@@ -1213,43 +1146,60 @@
             terrainMesh.add(wireMesh);
 
             // Add 4 Georeferenced In-Situ Sensor Telemetry Pins
-            sensorPins = [];
-            createSensorPin('PZ-01', 'Piezometer', -12, -4, 0x06b6d4); // Cyan (Pore Pressure)
-            createSensorPin('INCL-03', 'Inclinometer', 7, 3, 0xf59e0b); // Amber (Tilt / Disp)
-            createSensorPin('AWS-02', 'IMD AWS', 15, 14, 0x38bdf8); // Sky (Rainfall)
-            createSensorPin('CR-07', 'InSAR Reflector', -9, 13, 0xa855f7); // Purple (Deformation)
-
-            // Add Slump Failure Scarp Delineation Arc (NH-10 Km 48 Slump Zone)
-            createFailureScarp();
+            rebuildSensorPins();
 
             window.addEventListener('resize', onObservatoryWindowResize);
             animateObservatory();
+
+            // Load live multi-source DEM elevation grid asynchronously
+            loadObservatoryDem(observatoryDemSource);
+        }
+
+        async function switchObservatoryDem(source) {
+            observatoryDemSource = source;
+            ['consensus', 'isro_cartodem', 'copernicus_glo30'].forEach(k => {
+                const btn = document.getElementById(`obs-btn-${k}`);
+                if (btn) {
+                    if (k === source) {
+                        btn.className = 'px-1.5 py-0.5 rounded bg-emerald-950/80 border border-emerald-500 text-emerald-300 font-bold';
+                    } else {
+                        btn.className = 'px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-400 hover:text-slate-200';
+                    }
+                }
+            });
+
+            const badge = document.getElementById('obs-dem-badge');
+            if (badge) {
+                badge.innerText = source === 'consensus' ? '[CONSENSUS DEM]' : (source === 'isro_cartodem' ? '[ISRO CARTODEM]' : '[COPERNICUS GLO-30]');
+            }
+
+            await loadObservatoryDem(source);
+        }
+
+        async function loadObservatoryDem(source = observatoryDemSource) {
+            try {
+                const resp = await fetch(`/api/geospatial/terrain?product=elevation&grid_size=32&source=${source}`);
+                const data = await resp.json();
+                if (data.status === 'SUCCESS' && data.matrix) {
+                    observatoryElevationMatrix = data.matrix;
+                    updateObservatoryMeshVertices();
+                }
+            } catch (e) {
+                console.warn('Observatory DEM fetch fallback to procedural relief:', e);
+            }
         }
 
         function getTerrainElevation(x, y) {
-            // If real DEM matrix is available, use bilinear interpolation
-            if (obsRealDemMatrix && obsGridRows > 0 && obsGridCols > 0) {
-                // Map Three.js x,y to grid row,col. The mesh is 74x74 units centered at (0,0)
-                const halfSize = 37.0;
-                const normX = (x + halfSize) / (2 * halfSize);  // 0..1
-                const normY = (y + halfSize) / (2 * halfSize);  // 0..1
-                const gRow = normY * (obsGridRows - 1);
-                const gCol = normX * (obsGridCols - 1);
-                const r0 = Math.max(0, Math.min(obsGridRows - 2, Math.floor(gRow)));
-                const c0 = Math.max(0, Math.min(obsGridCols - 2, Math.floor(gCol)));
-                const fr = gRow - r0;
-                const fc = gCol - c0;
-                // Bilinear interpolation
-                const e00 = obsRealDemMatrix[r0][c0];
-                const e10 = obsRealDemMatrix[r0 + 1][c0];
-                const e01 = obsRealDemMatrix[r0][c0 + 1];
-                const e11 = obsRealDemMatrix[r0 + 1][c0 + 1];
-                const elev = (e00 * (1 - fr) * (1 - fc) + e10 * fr * (1 - fc) + e01 * (1 - fr) * fc + e11 * fr * fc);
-                // Normalize elevation to Three.js Z-height range (~-12 to +12)
-                const minE = 250, maxE = 3600;
-                return ((elev - minE) / (maxE - minE)) * 22.0 - 11.0;
+            if (observatoryElevationMatrix && observatoryElevationMatrix.length > 0) {
+                const rows = observatoryElevationMatrix.length;
+                const cols = observatoryElevationMatrix[0].length;
+                const colF = Math.max(0, Math.min(cols - 1, ((x + 37.0) / 74.0) * (cols - 1)));
+                const rowF = Math.max(0, Math.min(rows - 1, ((y + 37.0) / 74.0) * (rows - 1)));
+                const c0 = Math.floor(colF);
+                const r0 = Math.floor(rowF);
+                const rawZ = observatoryElevationMatrix[r0][c0];
+                return ((rawZ - 200.0) / 3600.0) * 18.0 - 4.0;
             }
-            // Fallback: procedural Himalayan geomorphology formula (Teesta canyon + fault scarps)
             const gorgeDist = Math.abs(x - Math.sin(y * 0.05) * 12 - 4);
             const gorgeDepth = Math.exp(-(gorgeDist * gorgeDist) / 75.0) * 11.0;
             const mainRidge = Math.cos(x * 0.07 + 1.1) * Math.sin(y * 0.06) * 8.5;
@@ -1259,6 +1209,159 @@
             return mainRidge + faultScarp + steppedTerraces + microRelief - gorgeDepth;
         }
 
+        function updateObservatoryMeshVertices() {
+            if (!terrainMesh || !terrainMesh.geometry) return;
+            const isLight = document.getElementById('observatory-body') && document.getElementById('observatory-body').classList.contains('light-mode');
+            const geom = terrainMesh.geometry;
+            const pos = geom.attributes.position;
+            const colors = [];
+            const colorObj = new THREE.Color();
+
+            for (let i = 0; i < pos.count; i++) {
+                const x = pos.getX(i);
+                const y = pos.getY(i);
+                const z = getTerrainElevation(x, y);
+                pos.setZ(i, z);
+
+                if (z < -3) {
+                    colorObj.setHex(isLight ? 0x0f766e : 0x064e3b);
+                } else if (z < 1.0) {
+                    colorObj.setHex(isLight ? 0x15803d : 0x14532d);
+                } else if (z < 5.5) {
+                    colorObj.setHex(isLight ? 0xb45309 : 0x78350f).lerp(new THREE.Color(0x64748b), 0.25);
+                } else if (z < 9.0) {
+                    colorObj.setHex(isLight ? 0x64748b : 0x475569);
+                } else {
+                    colorObj.setHex(isLight ? 0x94a3b8 : 0x64748b);
+                }
+                colors.push(colorObj.r, colorObj.g, colorObj.b);
+            }
+            pos.needsUpdate = true;
+            geom.computeVertexNormals();
+            geom.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+
+            if (wireMesh && wireMesh.geometry) {
+                const wPos = wireMesh.geometry.attributes.position;
+                for (let i = 0; i < wPos.count; i++) {
+                    wPos.setZ(i, pos.getZ(i) + 0.06);
+                }
+                wPos.needsUpdate = true;
+            }
+
+            if (observatorySlipMesh) {
+                scene.remove(observatorySlipMesh);
+                observatorySlipMesh.geometry.dispose();
+                observatorySlipMesh = null;
+            }
+            const slipGeom = geom.clone();
+            const sPos = slipGeom.attributes.position;
+            for (let i = 0; i < sPos.count; i++) {
+                sPos.setZ(i, sPos.getZ(i) - 2.8);
+            }
+            sPos.needsUpdate = true;
+            slipGeom.computeVertexNormals();
+            const slipMat = new THREE.MeshStandardMaterial({
+                color: 0xef4444,
+                roughness: 0.6,
+                metalness: 0.2,
+                transparent: true,
+                opacity: 0.45,
+                side: THREE.DoubleSide
+            });
+            observatorySlipMesh = new THREE.Mesh(slipGeom, slipMat);
+            scene.add(observatorySlipMesh);
+
+            rebuildSensorPins();
+        }
+
+        function rebuildSensorPins() {
+            sensorPins.forEach(p => {
+                if (terrainMesh) terrainMesh.remove(p.group);
+            });
+            sensorPins = [];
+            createSensorPin('PZ-01', 'Piezometer', -12, -4, 0x06b6d4);
+            createSensorPin('INCL-03', 'Inclinometer', 7, 3, 0xf59e0b);
+            createSensorPin('AWS-02', 'IMD AWS', 15, 14, 0x38bdf8);
+            createSensorPin('CR-07', 'InSAR Reflector', -9, 13, 0xa855f7);
+
+            if (scarpLine && terrainMesh) {
+                terrainMesh.remove(scarpLine);
+                scarpLine.geometry.dispose();
+                scarpLine = null;
+            }
+            createFailureScarp();
+        }
+
+        function createSensorPin(id, label, x, y, hexColor) {
+            const z = getTerrainElevation(x, y);
+            const group = new THREE.Group();
+            group.position.set(x, y, z);
+
+            // Vertical telemetry mast needle
+            const mastGeom = new THREE.CylinderGeometry(0.12, 0.12, 3.8, 8);
+            mastGeom.translate(0, 1.9, 0);
+            mastGeom.rotateX(Math.PI / 2);
+            const mastMat = new THREE.MeshBasicMaterial({ color: hexColor });
+            const mast = new THREE.Mesh(mastGeom, mastMat);
+            group.add(mast);
+
+            // Glowing sensor beacon node
+            const beaconGeom = new THREE.SphereGeometry(0.65, 16, 16);
+            beaconGeom.translate(0, 0, 3.8);
+            const beaconMat = new THREE.MeshBasicMaterial({ color: hexColor });
+            const beacon = new THREE.Mesh(beaconGeom, beaconMat);
+            group.add(beacon);
+
+            // Ground radar beacon pulse ring
+            const ringGeom = new THREE.RingGeometry(0.8, 1.3, 32);
+            const ringMat = new THREE.MeshBasicMaterial({
+                color: hexColor,
+                side: THREE.DoubleSide,
+                transparent: true,
+                opacity: 0.8
+            });
+            const ring = new THREE.Mesh(ringGeom, ringMat);
+            ring.position.set(0, 0, 0.08);
+            group.add(ring);
+
+            terrainMesh.add(group);
+            sensorPins.push({ group, ring, baseColor: hexColor, id });
+        }
+
+        function createFailureScarp() {
+            const scarpPoints = [
+                new THREE.Vector3(2, -2, getTerrainElevation(2, -2) + 0.15),
+                new THREE.Vector3(5, 1, getTerrainElevation(5, 1) + 0.15),
+                new THREE.Vector3(9, 5, getTerrainElevation(9, 5) + 0.15),
+                new THREE.Vector3(12, 10, getTerrainElevation(12, 10) + 0.15),
+                new THREE.Vector3(8, 14, getTerrainElevation(8, 14) + 0.15)
+            ];
+            const scarpCurve = new THREE.CatmullRomCurve3(scarpPoints);
+            const scarpGeom = new THREE.BufferGeometry().setFromPoints(scarpCurve.getPoints(60));
+            const scarpMat = new THREE.LineDashedMaterial({
+                color: 0xef4444,
+                dashSize: 0.9,
+                gapSize: 0.45,
+                linewidth: 2
+            });
+            scarpLine = new THREE.Line(scarpGeom, scarpMat);
+            scarpLine.computeLineDistances();
+            terrainMesh.add(scarpLine);
+        }
+
+            window.addEventListener('resize', onObservatoryWindowResize);
+            animateObservatory();
+        }
+
+        function getTerrainElevation(x, y) {
+            const gorgeDist = Math.abs(x - Math.sin(y * 0.05) * 12 - 4);
+            const gorgeDepth = Math.exp(-(gorgeDist * gorgeDist) / 75.0) * 11.0;
+            const mainRidge = Math.cos(x * 0.07 + 1.1) * Math.sin(y * 0.06) * 8.5;
+            const faultScarp = Math.sin(x * 0.15 - y * 0.10) * 3.5;
+            const steppedTerraces = Math.floor(Math.sin((x + y) * 0.08) * 4.0) * 0.4;
+            const microRelief = Math.sin(x * 0.35) * Math.cos(y * 0.35) * 0.7;
+            return mainRidge + faultScarp + steppedTerraces + microRelief - gorgeDepth;
+        }
 
         function createSensorPin(id, label, x, y, hexColor) {
             const z = getTerrainElevation(x, y);
@@ -1622,7 +1725,7 @@
         // Initialize on load
         window.addEventListener('DOMContentLoaded', () => {
             initObservatoryTheme();
-            initObservatory3DWithRealDEM('consensus');  // Fetch real DEM then build twin
+            initObservatory3D();
             runInteractiveSimulation();
         });
     </script>

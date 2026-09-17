@@ -5301,7 +5301,6 @@ def api_geospatial_terrain():
                 "matrix": hillshade_grid.tolist(),
                 "provenance": "[HISTORICAL]"
             }), 200
-
         elif product in ("difference", "diff"):
             src_a = request.args.get("source_a", "isro_cartodem").lower()
             src_b = request.args.get("source_b", "copernicus_glo30").lower()
