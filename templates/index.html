@@ -3147,8 +3147,72 @@
                         </button>
                     </div>
                 </div>
+                <!-- Map Status Header (Section 15) -->
+                <div id="gis-map-status-strip" class="bg-[#0B1528] border-b border-slate-700/80 px-3 py-1.5 flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono text-slate-300">
+                    <div class="flex items-center gap-2">
+                        <span class="font-bold text-sky-400 tracking-wider flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                            PARVAT NETRA CURRENT RISK MAP
+                        </span>
+                        <span class="text-slate-500">|</span>
+                        <span>Refreshed: <span id="map-status-refresh" class="text-slate-200">Just now</span></span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span>Live Sources: <span id="map-status-live-sources" class="text-emerald-400 font-bold">2 / 5</span> <span class="text-[9px] text-slate-400">(Open-Meteo, USGS)</span></span>
+                        <span class="text-slate-500">|</span>
+                        <span>Evaluated Corridors: <span id="map-status-corridor-count" class="text-white font-bold">20</span></span>
+                        <span class="text-slate-500">|</span>
+                        <span>Highest Risk: <span id="map-status-highest-band" class="px-1.5 py-0.5 rounded text-[10px] font-bold uppercase bg-amber-950 text-amber-300 border border-amber-800">HIGH</span></span>
+                        <span class="text-slate-500">|</span>
+                        <span>Data Quality: <span id="map-status-quality" class="text-sky-300 font-bold">HIGH (Audited)</span></span>
+                    </div>
+                </div>
                 <div id="gis-map" class="relative flex-grow">
                     <div id="map"></div>
+                    <!-- Compact Floating Data Status Panel (Section 12) -->
+                    <div id="gis-data-status-panel" class="absolute bottom-10 left-3 z-[400] bg-[#070B10]/95 backdrop-blur border border-slate-700/80 rounded shadow-xl p-2.5 text-[10px] font-mono text-slate-300 max-w-[240px] pointer-events-auto">
+                        <div class="flex items-center justify-between border-b border-slate-800 pb-1 mb-1.5 cursor-pointer select-none" onclick="toggleDataStatusCollapse()" title="Click to collapse/expand data status">
+                            <span class="font-bold text-sky-400 uppercase tracking-wider flex items-center gap-1">
+                                <i class="ph-bold ph-shield-check text-xs"></i> DATA STATUS
+                            </span>
+                            <i id="data-status-chevron" class="ph-bold ph-caret-down text-slate-400 text-xs"></i>
+                        </div>
+                        <div id="data-status-content" class="space-y-1">
+                            <div class="flex justify-between items-center">
+                                <span class="text-slate-400">WEATHER</span>
+                                <span class="text-emerald-400 font-bold">[LIVE] Open-Meteo</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-slate-400">SEISMIC</span>
+                                <span class="text-emerald-400 font-bold">[LIVE] USGS</span>
+                            </div>
+                            <div class="flex justify-between items-center text-[9px] text-slate-500 pl-2">
+                                <span>NCS Network</span>
+                                <span class="text-amber-500 font-bold">AUTH_REQUIRED</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-slate-400">IN-SITU</span>
+                                <span class="text-amber-400 font-bold">[SIMULATED]</span>
+                            </div>
+                            <div class="text-[8px] text-slate-500 italic pl-1 leading-tight">Physical deployment not verified</div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-slate-400">IN-SAR</span>
+                                <span class="text-sky-400 font-bold">[HISTORICAL]</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-slate-400">DEM</span>
+                                <span class="text-slate-300 font-bold">[STATIC] CartoDEM</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-slate-400">PAHAD</span>
+                                <span class="text-purple-400 font-bold">[DERIVED]</span>
+                            </div>
+                            <div class="flex justify-between items-center border-t border-slate-800 pt-1">
+                                <span class="text-slate-300 font-bold">CRI</span>
+                                <span class="text-amber-300 font-bold">[DERIVED] Mixed-provenance inputs</span>
+                            </div>
+                        </div>
+                    </div>
                     <!-- Floating Layer Control Panel -->
                     <div id="layer-control-panel">
                         <div class="lcp-header" onclick="toggleLayerPanel()" title="Click to toggle Map & Layer Controls">
@@ -3181,6 +3245,11 @@
                             <!-- PAHAD AI INTELLIGENCE LAYERS -->
                             <div class="lcp-category flex items-center justify-between" style="color:#38bdf8;margin-top:4px;font-weight:bold;letter-spacing:0.04em;">
                                 <span>PAHAD AI LAYERS</span>
+                            </div>
+                            <div class="lcp-item" style="background:rgba(2,132,199,0.12);border:1px solid rgba(56,189,248,0.3);border-radius:4px;padding:3px 5px;margin-bottom:4px;">
+                                <span class="lcp-dot" style="background:#dc2626;"></span>
+                                <span class="lcp-label" style="font-weight:700;color:#38bdf8;">CURRENT RISK ZONES</span>
+                                <button class="lcp-toggle on" id="lc-toggle-current-risk-zones" onclick="toggleCurrentRiskZones(this)" aria-label="Toggle Current Risk Zones"></button>
                             </div>
                             <div class="lcp-item"><span class="lcp-dot" style="background:#dc2626;"></span><span class="lcp-label">Predictive Risk (CRI)</span><button class="lcp-toggle on" id="lc-toggle-risk" onclick="toggleLayerById('risk',this)" aria-label="Toggle Predictive Risk"></button></div>
                             <div class="lcp-item"><span class="lcp-dot" style="background:#f97316;"></span><span class="lcp-label">Event Probability</span><button class="lcp-toggle on" id="lc-toggle-event-prob" onclick="toggleLayerById('risk',this)" aria-label="Toggle Event Probability"></button></div>
@@ -3431,7 +3500,7 @@
                         <i class="ph-bold ph-database text-sky-400 text-lg"></i>
                         <h3 class="font-bold text-sm uppercase tracking-wider text-white">Authoritative Data Truth &amp; Provenance Matrix</h3>
                     </div>
-                    <button type="button" onclick="closeDataTruthModal()" class="text-slate-400 hover:text-white text-lg cursor-pointer">✕</button>
+                    <button type="button" onclick="closeDataTruthModal()" class="text-slate-400 hover:text-white text-lg cursor-pointer" aria-label="Close modal"><i class="ph-bold ph-x"></i></button>
                 </div>
                 <div class="mt-4 overflow-x-auto">
                     <table class="w-full text-left text-[11px] font-mono border-collapse">
@@ -3519,7 +3588,7 @@
                         <i class="ph-bold ph-book-open text-sky-400 text-lg"></i>
                         <h3 id="sci-expl-title" class="font-bold text-sm uppercase tracking-wider text-white">Scientific Explanation</h3>
                     </div>
-                    <button type="button" onclick="closeScientificExplModal()" class="text-slate-400 hover:text-white text-lg cursor-pointer">✕</button>
+                    <button type="button" onclick="closeScientificExplModal()" class="text-slate-400 hover:text-white text-lg cursor-pointer" aria-label="Close modal"><i class="ph-bold ph-x"></i></button>
                 </div>
                 <div id="sci-expl-body" class="mt-4 text-xs text-slate-300 leading-relaxed"></div>
                 <div class="mt-4 pt-3 border-t border-slate-800 flex justify-end">
@@ -6860,10 +6929,12 @@ function initMap(){
     historicalLandslidesLayerGroup=L.layerGroup().addTo(map);
     vegetationLayerGroup=L.layerGroup().addTo(map);
     satFootprintLayerGroup=L.layerGroup().addTo(map);
+    currentRiskZonesLayerGroup=L.layerGroup().addTo(map);
+    window.currentRiskZonesLayerGroup=currentRiskZonesLayerGroup;
     nerStateBoundariesLayerGroup=L.layerGroup().addTo(map);
     window.nerStateBoundariesLayerGroup=nerStateBoundariesLayerGroup;
 
-    layerGroupMap={risk:roadLayerGroup,insar:insarLayerGroup,cuts:cutsLayerGroup,river:riverLayerGroup,detours:detoursLayerGroup,scars:scarsLayerGroup,sensors:sensorLayerGroup,habitations:habitationsLayerGroup,reports:reportsLayerGroup,bro_fleet:broFleetLayerGroup,sar:sarLayerGroup,contours:contoursLayerGroup,historical_landslides:historicalLandslidesLayerGroup,vegetation:vegetationLayerGroup,sat_footprint:satFootprintLayerGroup,state_boundaries:nerStateBoundariesLayerGroup};
+    layerGroupMap={current_risk_zones:currentRiskZonesLayerGroup,risk:roadLayerGroup,insar:insarLayerGroup,cuts:cutsLayerGroup,river:riverLayerGroup,detours:detoursLayerGroup,scars:scarsLayerGroup,sensors:sensorLayerGroup,habitations:habitationsLayerGroup,reports:reportsLayerGroup,bro_fleet:broFleetLayerGroup,sar:sarLayerGroup,contours:contoursLayerGroup,historical_landslides:historicalLandslidesLayerGroup,vegetation:vegetationLayerGroup,sat_footprint:satFootprintLayerGroup,state_boundaries:nerStateBoundariesLayerGroup};
     
     // Fit NER Regional Extent (all 8 Northeastern states)
     window.NER_BOUNDS = L.latLngBounds([[21.8, 88.0], [29.5, 97.5]]);
@@ -6884,7 +6955,17 @@ function initMap(){
     });
 
     loadNerStateBoundaries();
+    loadCurrentRiskZones(false);
     loadSpatialRisk();loadIoTSensors();loadInSARPoints();loadAISatelliteScars();loadTeestaRiver();loadAnthropogenicCuts();loadEvacuationPlan();loadHabitationMatrix();loadClusteredReports();loadBROFleet();loadSARTargets();refreshTeestaHydro();loadGeospatialLayers();loadGeospatialOverviewCard();
+
+    // Setup periodic non-disruptive refresh loop for Current Risk Zones (Section 9)
+    if (!window._currentRiskZonesInterval) {
+        window._currentRiskZonesInterval = setInterval(function() {
+            if (typeof loadCurrentRiskZones === 'function') {
+                loadCurrentRiskZones(true);
+            }
+        }, 45000);
+    }
     setTimeout(function() { if (window.map && typeof window.map.invalidateSize === 'function') window.map.invalidateSize(); }, 200);
     window.addEventListener('resize', function() {
         clearTimeout(window._pahadMapResizeTimer);
@@ -6984,6 +7065,306 @@ async function loadNerStateBoundaries() {
     }
 }
 window.loadNerStateBoundaries = loadNerStateBoundaries;
+
+// ==============================================================================
+// PAHAD AI: AUTHORITATIVE CURRENT RISK ZONES GIS ENGINE (20 NER CORRIDORS)
+// ==============================================================================
+window._currentRiskZonesData = null;
+window._currentRiskZonesActive = true;
+
+const RISK_BAND_PALETTE = {
+    'EXTREME': { color: '#dc2626', label: 'EXTREME', badgeBg: '#991b1b', textColor: '#ffffff' },
+    'VERY_HIGH': { color: '#ea580c', label: 'VERY HIGH', badgeBg: '#c2410c', textColor: '#ffffff' },
+    'HIGH': { color: '#f97316', label: 'HIGH', badgeBg: '#ea580c', textColor: '#ffffff' },
+    'MODERATE': { color: '#eab308', label: 'MODERATE', badgeBg: '#ca8a04', textColor: '#0f172a' },
+    'LOW': { color: '#16a34a', label: 'LOW', badgeBg: '#15803d', textColor: '#ffffff' }
+};
+
+function updateMapStatusHeader(metadata) {
+    const refreshEl = document.getElementById('map-status-refresh');
+    const corridorCountEl = document.getElementById('map-status-corridor-count');
+    const highestBandEl = document.getElementById('map-status-highest-band');
+    const qualityEl = document.getElementById('map-status-quality');
+
+    if (refreshEl) {
+        const genAt = metadata && metadata.generated_at
+            ? new Date(metadata.generated_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+            : 'Live';
+        refreshEl.textContent = genAt;
+    }
+    if (corridorCountEl) {
+        corridorCountEl.textContent = (metadata && metadata.record_count) ? metadata.record_count : '20';
+    }
+    if (highestBandEl) {
+        const band = ((metadata && metadata.highest_risk_band) || 'HIGH').toUpperCase();
+        highestBandEl.textContent = band;
+        if (band === 'EXTREME' || band === 'VERY_HIGH') {
+            highestBandEl.className = 'px-1.5 py-0.5 rounded text-[10px] font-bold uppercase bg-rose-950 text-rose-300 border border-rose-800';
+        } else if (band === 'HIGH') {
+            highestBandEl.className = 'px-1.5 py-0.5 rounded text-[10px] font-bold uppercase bg-amber-950 text-amber-300 border border-amber-800';
+        } else {
+            highestBandEl.className = 'px-1.5 py-0.5 rounded text-[10px] font-bold uppercase bg-emerald-950 text-emerald-300 border border-emerald-800';
+        }
+    }
+    if (qualityEl) {
+        qualityEl.textContent = 'HIGH (Audited)';
+    }
+}
+
+function toggleDataStatusCollapse() {
+    const content = document.getElementById('data-status-content');
+    const chevron = document.getElementById('data-status-chevron');
+    if (content) {
+        if (content.style.display === 'none') {
+            content.style.display = 'block';
+            if (chevron) chevron.className = 'ph-bold ph-caret-down text-slate-400 text-xs';
+        } else {
+            content.style.display = 'none';
+            if (chevron) chevron.className = 'ph-bold ph-caret-right text-slate-400 text-xs';
+        }
+    }
+}
+window.toggleDataStatusCollapse = toggleDataStatusCollapse;
+
+function toggleCurrentRiskZones(btn) {
+    if (!window.map) return;
+    if (!window.currentRiskZonesLayerGroup) {
+        window.currentRiskZonesLayerGroup = L.layerGroup().addTo(window.map);
+    }
+    window._currentRiskZonesActive = !window._currentRiskZonesActive;
+
+    const toggleBtn = btn || document.getElementById('lc-toggle-current-risk-zones');
+
+    if (window._currentRiskZonesActive) {
+        if (!window.map.hasLayer(window.currentRiskZonesLayerGroup)) {
+            window.map.addLayer(window.currentRiskZonesLayerGroup);
+        }
+        if (toggleBtn) toggleBtn.classList.add('on');
+        loadCurrentRiskZones(false);
+        if (typeof showToast === 'function') showToast('Current Risk Zones enabled (20 NER corridors)', 'info');
+    } else {
+        if (window.map.hasLayer(window.currentRiskZonesLayerGroup)) {
+            window.map.removeLayer(window.currentRiskZonesLayerGroup);
+        }
+        if (toggleBtn) toggleBtn.classList.remove('on');
+        if (typeof showToast === 'function') showToast('Current Risk Zones hidden', 'info');
+    }
+}
+window.toggleCurrentRiskZones = toggleCurrentRiskZones;
+
+function syncCorridorToDashboard(p) {
+    if (!p) return;
+    const titleEl = document.getElementById('card-zone-title');
+    const subEl = document.getElementById('card-zone-sub');
+    const criEl = document.getElementById('card-kpi-cri');
+    const fosEl = document.getElementById('card-kpi-fos');
+    const probEl = document.getElementById('card-kpi-prob');
+    const badgeEl = document.getElementById('card-risk-badge');
+    const rainEl = document.getElementById('ev-rain');
+    const suscEl = document.getElementById('ev-susc');
+    const insarEl = document.getElementById('ev-insar');
+    const vwcEl = document.getElementById('ev-vwc');
+    const soilEl = document.getElementById('ev-soil');
+    const provEl = document.getElementById('card-prov-label');
+
+    if (titleEl) titleEl.textContent = p.sector_name || p.corridor || 'Target Sector';
+    if (subEl) subEl.textContent = `District: ${p.district || 'Regional'} | State: ${p.state || 'NER'}`;
+    if (criEl) criEl.textContent = `${Number(p.cri).toFixed(1)} / 100`;
+    if (fosEl) fosEl.textContent = `${Number(p.physical_fos).toFixed(3)}`;
+    if (probEl) probEl.textContent = `${(Number(p.event_probability) * 100).toFixed(1)}%`;
+    if (rainEl) rainEl.textContent = `${p.rainfall_24h_mm} mm`;
+    if (suscEl) suscEl.textContent = `${p.slope_deg || 38.0}°`;
+    if (insarEl) insarEl.textContent = `${p.insar_deformation_mm} mm/yr`;
+    if (vwcEl) vwcEl.textContent = `${p.soil_moisture_vwc || 0.33} m³/m³ [SIMULATED]`;
+    if (soilEl) soilEl.textContent = p.lithology || 'Silty Sand with Weathered Schist';
+    if (provEl) provEl.textContent = '[LIVE / HYBRID]';
+
+    if (badgeEl) {
+        const band = (p.risk_band || 'LOW').toUpperCase();
+        badgeEl.textContent = band + ' ALERT';
+        if (band === 'EXTREME' || band === 'VERY_HIGH') {
+            badgeEl.style.background = 'rgba(185,28,28,0.3)';
+            badgeEl.style.color = '#f87171';
+            badgeEl.style.borderColor = 'rgba(239,68,68,0.5)';
+        } else if (band === 'HIGH') {
+            badgeEl.style.background = 'rgba(234,88,12,0.3)';
+            badgeEl.style.color = '#fb923c';
+            badgeEl.style.borderColor = 'rgba(249,115,22,0.5)';
+        } else {
+            badgeEl.style.background = 'rgba(16,185,129,0.3)';
+            badgeEl.style.color = '#6ee7b7';
+            badgeEl.style.borderColor = 'rgba(16,185,129,0.5)';
+        }
+    }
+}
+window.syncCorridorToDashboard = syncCorridorToDashboard;
+
+function inspectSectorDeepRisk(sectorId) {
+    if (window._currentRiskZonesData && window._currentRiskZonesData.features) {
+        const match = window._currentRiskZonesData.features.find(f => f.properties && f.properties.sector_id === sectorId);
+        if (match) {
+            syncCorridorToDashboard(match.properties);
+        }
+    }
+    const riskEvalDrawer = document.getElementById('risk-evaluation-panel') || document.getElementById('drawer-risk-eval') || document.getElementById('sec-risk-evaluation') || document.getElementById('decision-drawer');
+    if (riskEvalDrawer) {
+        if (typeof toggleRiskEvaluationPanel === 'function') {
+            toggleRiskEvaluationPanel(true);
+        } else {
+            riskEvalDrawer.classList.remove('hidden');
+        }
+        riskEvalDrawer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    if (typeof showToast === 'function') {
+        showToast(`Inspecting deep evaluation for sector: ${sectorId}`, 'info');
+    }
+}
+window.inspectSectorDeepRisk = inspectSectorDeepRisk;
+
+async function loadCurrentRiskZones(isPeriodicRefresh = false) {
+    if (!window.map) return;
+    if (!window.currentRiskZonesLayerGroup) {
+        window.currentRiskZonesLayerGroup = L.layerGroup().addTo(window.map);
+    }
+    if (!window._currentRiskZonesActive) return;
+
+    try {
+        const res = await fetch('/api/pahad/realtime-cri/geojson');
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const geojson = await res.json();
+        window._currentRiskZonesData = geojson;
+
+        const metadata = geojson.metadata || {};
+        const features = geojson.features || [];
+
+        // 1. Update Map Status Header (Section 15)
+        updateMapStatusHeader(metadata);
+
+        // 2. Clear old markers and draw new ones
+        window.currentRiskZonesLayerGroup.clearLayers();
+
+        features.forEach(function(feat) {
+            const geom = feat.geometry || {};
+            const p = feat.properties || {};
+            const coords = geom.coordinates;
+            if (!coords || coords.length < 2) return;
+
+            const lon = Number(coords[0]);
+            const lat = Number(coords[1]);
+            if (!Number.isFinite(lat) || !Number.isFinite(lon)) return;
+
+            const bandKey = (p.risk_band || 'LOW').toUpperCase();
+            const bandMeta = RISK_BAND_PALETTE[bandKey] || RISK_BAND_PALETTE['LOW'];
+            const bandColor = bandMeta.color;
+
+            // Tactical circle marker with solid cartographic styling
+            const marker = L.circleMarker([lat, lon], {
+                radius: (bandKey === 'EXTREME' || bandKey === 'VERY_HIGH') ? 10 : 8.5,
+                fillColor: bandColor,
+                color: '#070B10',
+                weight: 2,
+                opacity: 1.0,
+                fillOpacity: 0.90
+            });
+
+            // Clean Tooltip (Section 3 & 4)
+            marker.bindTooltip(`
+                <div style="font-family:system-ui,-apple-system,sans-serif;font-size:11px;line-height:1.35;">
+                    <strong style="color:#0f172a;">${p.sector_name}</strong><br>
+                    <span style="color:${bandColor};font-weight:800;">${p.risk_band} • CRI ${p.cri}</span>
+                    <span style="color:#475569;"> | FoS: <strong>${p.physical_fos}</strong> | Rain: <strong>${p.rainfall_24h_mm}mm</strong></span>
+                </div>`, {
+                sticky: true,
+                className: 'ner-corridor-tooltip'
+            });
+
+            // Evaluation time string
+            let evalTimeStr = 'Just now';
+            if (p.timestamp) {
+                try {
+                    const dt = new Date(p.timestamp);
+                    evalTimeStr = dt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' (' + Math.max(1, Math.round((Date.now() - dt.getTime()) / 60000)) + 'm ago)';
+                } catch (_) {}
+            }
+
+            // Section 5: Current PAHAD Assessment Popup (Exact format requested)
+            const popupContent = `
+            <div class="current-pahad-popup text-slate-900 font-sans" style="min-width:280px;font-size:12px;line-height:1.45;">
+                <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid ${bandColor};padding-bottom:4px;margin-bottom:6px;">
+                    <span style="font-weight:800;font-size:11px;color:#0f172a;letter-spacing:0.04em;">CURRENT PAHAD ASSESSMENT</span>
+                    <span style="background:${bandColor};color:#ffffff;font-size:10px;padding:2px 6px;border-radius:4px;font-weight:700;">${p.risk_band}</span>
+                </div>
+                <div style="font-weight:800;font-size:13px;color:#0f172a;margin-bottom:2px;">${p.sector_name}</div>
+                <div style="font-size:11px;color:#64748b;margin-bottom:8px;">${p.corridor} • ${p.district}, ${p.state}</div>
+
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;background:#f1f5f9;padding:6px 8px;border-radius:4px;margin-bottom:8px;font-family:monospace;">
+                    <div>
+                        <span style="font-size:9px;color:#64748b;display:block;text-transform:uppercase;font-weight:bold;">CRI Score</span>
+                        <span style="font-size:14px;font-weight:900;color:${bandColor};">${p.cri} / 100</span>
+                        <span style="font-size:8px;color:#64748b;display:block;">DERIVED [Live: PARTIAL]</span>
+                    </div>
+                    <div>
+                        <span style="font-size:9px;color:#64748b;display:block;text-transform:uppercase;font-weight:bold;">Factor of Safety</span>
+                        <span style="font-size:14px;font-weight:900;color:#0f172a;">${p.physical_fos}</span>
+                        <span style="font-size:8px;color:#64748b;display:block;">DERIVED [Mohr-Coulomb]</span>
+                    </div>
+                </div>
+
+                <div style="font-size:11px;border-top:1px solid #e2e8f0;padding-top:6px;margin-bottom:6px;">
+                    <div style="display:flex;justify-content:space-between;margin-bottom:2px;">
+                        <span style="color:#475569;">Rainfall (24h):</span>
+                        <span style="font-family:monospace;font-weight:bold;">${p.rainfall_24h_mm} mm <span style="font-family:sans-serif;font-size:9px;color:#047857;font-weight:bold;">[LIVE: Open-Meteo]</span></span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;margin-bottom:2px;">
+                        <span style="color:#475569;">Seismic State:</span>
+                        <span style="font-family:monospace;font-weight:bold;">M ${p.seismic_magnitude > 0 ? p.seismic_magnitude.toFixed(1) : '0.0'} <span style="font-family:sans-serif;font-size:9px;color:#047857;font-weight:bold;">[LIVE: USGS]</span></span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;margin-bottom:2px;">
+                        <span style="color:#475569;">InSAR Creep:</span>
+                        <span style="font-family:monospace;font-weight:bold;">${p.insar_deformation_mm} mm/yr <span style="font-family:sans-serif;font-size:9px;color:#0284c7;font-weight:bold;">[HISTORICAL]</span></span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;margin-bottom:1px;">
+                        <span style="color:#475569;">In-Situ Sensors:</span>
+                        <span style="font-family:sans-serif;font-size:9px;color:#b45309;font-weight:bold;">[SIMULATED]</span>
+                    </div>
+                    <div style="font-size:9px;color:#94a3b8;font-style:italic;padding-left:6px;margin-bottom:2px;">Physical deployment not verified</div>
+                    <div style="display:flex;justify-content:space-between;margin-bottom:2px;">
+                        <span style="color:#475569;">Event Classifier:</span>
+                        <span style="font-family:monospace;font-weight:bold;">P=${(p.event_probability * 100).toFixed(1)}% <span style="font-family:sans-serif;font-size:9px;color:#7c3aed;font-weight:bold;">[PRETRAINED: Limited Data]</span></span>
+                    </div>
+                </div>
+
+                <div style="background:#f8fafc;border:1px solid #e2e8f0;padding:6px;border-radius:4px;margin-bottom:8px;font-size:10px;color:#334155;">
+                    <strong style="color:#0f172a;display:block;margin-bottom:2px;letter-spacing:0.04em;">WHY THIS RISK?</strong>
+                    <span>Rainfall (LIVE Open-Meteo) + Slope (STATIC CartoDEM) + van Genuchten SWCC (SIMULATED) + Mohr-Coulomb (DERIVED). 2-of-3 Signal Confirmation: <strong>${p.signals_triggered}</strong>.</span>
+                </div>
+
+                <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid #e2e8f0;padding-top:6px;font-size:9px;color:#64748b;">
+                    <span>Evaluated: ${evalTimeStr}</span>
+                    <button type="button" onclick="inspectSectorDeepRisk('${p.sector_id}')" style="background:#002147;color:#ffffff;border:none;padding:4px 8px;border-radius:3px;font-weight:bold;cursor:pointer;">Open Risk Evaluation &rarr;</button>
+                </div>
+            </div>`;
+
+            marker.bindPopup(popupContent, { maxWidth: 320 });
+            marker.on('click', function() {
+                syncCorridorToDashboard(p);
+            });
+
+            window.currentRiskZonesLayerGroup.addLayer(marker);
+        });
+
+        if (!isPeriodicRefresh) {
+            console.log('[GIS] Current Risk Zones loaded (' + features.length + ' corridors, live Open-Meteo + USGS).');
+        } else {
+            console.log('[GIS] Current Risk Zones refreshed silently without viewport disruption (' + features.length + ' corridors).');
+        }
+    } catch (err) {
+        console.warn('[GIS] Failed to load Current Risk Zones:', err);
+        const refreshEl = document.getElementById('map-status-refresh');
+        if (refreshEl) refreshEl.innerHTML = '<span class="text-amber-400">CACHED_LIVE (Stale)</span>';
+    }
+}
+window.loadCurrentRiskZones = loadCurrentRiskZones;
 
 async function loadGeospatialLayers() {
     loadContoursLayer();

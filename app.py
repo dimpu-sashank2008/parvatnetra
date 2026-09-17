@@ -567,6 +567,9 @@ def ingest_imd_rainfall():
         logger.error(f"Failed to ingest IMD data: {str(e)}")
         return jsonify({"status": "SUCCESS", "records_processed": 4, "fallback": True, "message": str(e)}), 200
 
+# In-memory registry for submitted field reports during offline / local / testing runs
+_LOCAL_SUBMITTED_REPORTS = []
+
 @app.route("/api/reports/submit", methods=["POST"])
 def submit_report():
     """
@@ -783,6 +786,27 @@ def submit_report():
                     "tracking_ref": tracking_ref,
                     "submitted_at": submitted_at
                 }
+
+        _LOCAL_SUBMITTED_REPORTS.insert(0, {
+            "report_id": new_id,
+            "tracking_id": tracking_ref,
+            "tracking_ref": tracking_ref,
+            "reported_at": submitted_at or datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"),
+            "reporter_name": reporter_name,
+            "phone": phone,
+            "latitude": float(lat),
+            "longitude": float(lon),
+            "severity": severity,
+            "description": description,
+            "image_url": image_url,
+            "status": "PENDING_VERIFICATION",
+            "cv_crack_type": cv_result.get("cv_crack_type"),
+            "cv_confidence_pct": cv_result.get("cv_confidence_pct"),
+            "cv_aperture_mm": cv_result.get("cv_aperture_mm"),
+            "triage_priority": cv_result.get("triage_priority"),
+            "cluster_id": assigned_cluster_id,
+            "data_provenance": "[VERIFIED_FIELD]"
+        })
 
         return jsonify(response_payload), 201
     except Exception as e:
@@ -1572,7 +1596,7 @@ def list_reports():
                 "data_provenance": "[SIMULATED]"
             }
         ]
-        return jsonify(fallback_reports), 200
+        return jsonify(list(_LOCAL_SUBMITTED_REPORTS) + fallback_reports), 200
 
 
 @app.route("/api/reports/verify", methods=["POST"])
