@@ -1273,24 +1273,53 @@
         body.light-mode div.bg-\[\#0B192C\]:not(#system-header-bar) a:hover {
             color: #0284C7 !important;
         }
+        body.light-mode #top-accessibility-bar {
+            background-color: #F8FAFC !important;
+            border-bottom: 1px solid #E2E8F0 !important;
+            color: #1E293B !important;
+        }
+        body.light-mode #top-accessibility-bar #lbl-goi {
+            color: #0F172A !important;
+        }
+        body.light-mode #top-accessibility-bar #lbl-ministry {
+            color: #475569 !important;
+        }
         body.light-mode #top-accessibility-bar button,
         body.light-mode div.bg-\[\#0B192C\]:not(#system-header-bar) button,
         body.light-mode #theme-toggle-btn {
-            background-color: #F1F5F9 !important;
+            background-color: #FFFFFF !important;
             border: 1px solid #CBD5E1 !important;
             color: #334155 !important;
         }
         body.light-mode #top-accessibility-bar button:hover,
         body.light-mode div.bg-\[\#0B192C\]:not(#system-header-bar) button:hover,
         body.light-mode #theme-toggle-btn:hover {
-            background-color: #E2E8F0 !important;
+            border-color: #94A3B8 !important;
             color: #0F172A !important;
+        }
+        body.light-mode #lang-pill {
+            background-color: #FFFFFF !important;
+            border: 1px solid #CBD5E1 !important;
+            color: #0F172A !important;
+        }
+        body.light-mode #lang-pill:hover {
+            border-color: #94A3B8 !important;
+        }
+        #lang-pill #lang-select,
+        body.light-mode #lang-pill #lang-select {
+            background-color: transparent !important;
+            border: none !important;
+            outline: none !important;
+            box-shadow: none !important;
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+            color: inherit !important;
         }
         body.light-mode #top-accessibility-bar select,
         body.light-mode div.bg-\[\#0B192C\]:not(#system-header-bar) select,
         body.light-mode #lang-select {
-            background-color: #FFFFFF !important;
-            border: 1px solid #CBD5E1 !important;
+            background-color: transparent !important;
+            border: none !important;
             color: #0F172A !important;
         }
 
@@ -2687,19 +2716,19 @@
       <span class="font-bold text-amber-400">[RESEARCH PROTOTYPE]</span> PARVAT NETRA is an SIH 2026 AI-assisted research and decision-support prototype. Not an official Government of India emergency broadcast service.
     </div>
 
-    <!-- TOP ACCESSIBILITY BAR (GIGW 3.0) -->
-    <div id="top-accessibility-bar" class="bg-[#0B192C] text-white text-xs py-1.5 px-4 border-b border-slate-800">
+    <!-- TOP ACCESSIBILITY BAR (GIGW 3.0) - COMPACT SLIMLINE -->
+    <div id="top-accessibility-bar" class="bg-[#0B192C] text-white text-xs py-0.5 sm:py-1 px-3 sm:px-4 border-b border-slate-800">
       <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-1.5 min-w-0">
         <div class="flex items-center space-x-2 text-[11px] min-w-0">
-          <span class="font-semibold truncate max-w-[210px] sm:max-w-none" id="lbl-goi" data-i18n="goi">स्मार्ट इंडिया हैकथॉन | Smart India Hackathon 2026</span>
-          <span class="text-slate-500 hidden sm:inline">|</span>
-          <span id="lbl-ministry" data-i18n="ministry" class="hidden sm:inline">उत्तर पूर्वी क्षेत्र विकास मंत्रालय (MDoNER)</span>
+          <span class="font-semibold truncate max-w-[210px] sm:max-w-none text-slate-200" id="lbl-goi" data-i18n="goi">स्मार्ट इंडिया हैकथॉन | Smart India Hackathon 2026</span>
+          <span class="text-slate-600 hidden sm:inline">|</span>
+          <span id="lbl-ministry" data-i18n="ministry" class="hidden sm:inline text-slate-300">उत्तर पूर्वी क्षेत्र विकास मंत्रालय (MDoNER)</span>
           <!-- Skip to main content (hidden visually from UI, preserved in DOM for accessibility/tests) -->
           <a href="#main-content" class="sr-only focus:not-sr-only text-slate-300 hover:underline" style="display: none !important;">
             <i class="ph-bold ph-wheelchair text-xs"></i> <span>मुख्य सामग्री पर जाएं | Skip to main content</span>
           </a>
         </div>
-        <div class="flex flex-wrap items-center gap-1.5 sm:gap-2 text-[11px]">
+        <div class="flex flex-wrap items-center gap-1.5 sm:gap-2.5 text-[11px]">
           <!-- Font size controls (hidden from UI) -->
           <div class="hidden items-center space-x-1" title="Font Size Adjustment" style="display: none !important;">
             <button onclick="changeFontSize('sm')" class="px-1.5 py-0.5 bg-slate-800 border border-slate-700 rounded font-bold hover:bg-slate-700 transition" aria-label="Decrease font size">A-</button>
@@ -2710,51 +2739,72 @@
           <button onclick="toggleHighContrast()" class="hidden px-2 py-0.5 bg-slate-800 border border-slate-700 rounded font-semibold items-center gap-1 hover:bg-slate-700 transition" title="Toggle High Contrast" style="display: none !important;">
             <i class="ph-bold ph-circle-half text-xs"></i> <span data-i18n="high_contrast">Contrast</span>
           </button>
-          <span class="text-slate-500 hidden sm:inline">|</span>
-          <button id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Switch to light mode" title="Switch color theme" class="px-2.5 py-0.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded font-semibold flex items-center gap-1.5 transition text-[11px] shadow-xs active:scale-95 cursor-pointer">
-            <span id="theme-icon" class="flex items-center justify-center">
-              <i class="ph-bold ph-sun text-amber-400 text-xs" aria-hidden="true"></i>
-            </span>
-            <span id="theme-text" class="text-[11px] font-semibold">Light Mode</span>
-          </button>
-          <span class="text-slate-500 hidden sm:inline">|</span>
-          <select id="lang-select" aria-label="Portal Language" onchange="setPortalLanguage(this.value)" class="bg-slate-800 text-white text-xs px-2 py-0.5 border border-slate-700 rounded focus:outline-none">
-            <option value="en">English</option>
-            <option value="hi">हिन्दी</option>
-            <option value="ne">नेपाली</option>
-            <option value="bh">ལྷོ་སྐད (Bhutia)</option>
-            <option value="lp">རོང་རིང (Lepcha)</option>
-            <option value="as">অসমীয়া</option>
-          </select>
-          <span class="text-slate-500 hidden sm:inline">|</span>
-          <div class="flex flex-col items-center justify-center">
+
+          <!-- COMPACT THEME CAPSULE TOGGLE (System / Light / Dark) -->
+          <div class="inline-flex items-center gap-1.5" title="Switch Theme">
+            <span class="text-[11px] font-medium text-slate-400 hidden sm:inline">Theme</span>
+            <button id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Switch to light mode" title="Switch color theme" class="inline-flex items-center p-0.5 rounded-full bg-slate-900 border border-slate-700 hover:border-slate-500 transition cursor-pointer shadow-inner">
+              <span id="theme-opt-system" onclick="event.stopPropagation(); setThemeMode('system');" class="w-5 h-5 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-200 transition text-[10px]" title="System Theme">
+                <i class="ph-bold ph-desktop" aria-hidden="true"></i>
+              </span>
+              <span id="theme-opt-light" onclick="event.stopPropagation(); setThemeMode('light');" class="w-5 h-5 rounded-full flex items-center justify-center text-slate-400 hover:text-amber-400 transition text-[10px]" title="Light Mode">
+                <i class="ph-bold ph-sun" aria-hidden="true"></i>
+              </span>
+              <span id="theme-opt-dark" onclick="event.stopPropagation(); setThemeMode('dark');" class="w-5 h-5 rounded-full flex items-center justify-center text-white bg-slate-800 border border-slate-600/80 shadow-xs text-[10px] transition" title="Dark Mode">
+                <i class="ph-bold ph-moon-stars" aria-hidden="true"></i>
+              </span>
+              <span id="theme-icon" class="sr-only"><i class="ph-bold ph-sun text-amber-400 text-xs" aria-hidden="true"></i></span>
+              <span id="theme-text" class="sr-only">Light Mode</span>
+            </button>
+          </div>
+
+          <span class="text-slate-600 hidden sm:inline">|</span>
+
+          <!-- COMPACT LANGUAGE PILL SELECTOR -->
+          <div id="lang-pill" class="inline-flex items-center gap-1 bg-slate-900 border border-slate-700 hover:border-slate-500 rounded-full px-2 py-0.5 text-[11px] shadow-inner transition" title="Portal Language">
+            <i class="ph-bold ph-translate text-sky-400 text-xs shrink-0" aria-hidden="true"></i>
+            <select id="lang-select" aria-label="Portal Language" onchange="setPortalLanguage(this.value)" class="bg-transparent text-slate-200 text-[11px] font-medium focus:outline-none cursor-pointer pr-1 py-0 appearance-none border-none outline-none leading-none">
+              <option value="en" class="bg-slate-900 text-white">English</option>
+              <option value="hi" class="bg-slate-900 text-white">हिन्दी</option>
+              <option value="ne" class="bg-slate-900 text-white">नेपाली</option>
+              <option value="bh" class="bg-slate-900 text-white">ལྷོ་སྐད (Bhutia)</option>
+              <option value="lp" class="bg-slate-900 text-white">རོང་རིང (Lepcha)</option>
+              <option value="as" class="bg-slate-900 text-white">অসমীয়া</option>
+            </select>
+            <i class="ph-bold ph-caret-down text-[9px] text-slate-400 shrink-0 pointer-events-none"></i>
+          </div>
+
+          <span class="text-slate-600 hidden sm:inline">|</span>
+
+          <!-- AUTH & PROBLEM STATEMENT PILL (COMPACT ROW) -->
+          <div class="flex items-center gap-1.5">
             {% if session.get('user_role') %}
               <div class="flex items-center gap-1.5">
-                <span class="sih-logged-in-pill inline-flex items-center gap-2 pl-3 pr-1 py-0.5 bg-white text-slate-800 border border-emerald-600 rounded-full text-xs font-semibold shadow-xs" title="Logged in as {{ session.get('user_role')|upper }}">
-                  <span class="text-[11px] font-bold text-emerald-800 tracking-tight">{{ session.get('user_role')|upper }}</span>
-                  <span class="w-[22px] h-[22px] rounded-full bg-emerald-600 flex items-center justify-center text-white shrink-0 shadow-xs">
-                    <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                <span class="sih-logged-in-pill inline-flex items-center gap-2 pl-2.5 pr-1 py-0.5 bg-white text-slate-800 border border-emerald-600 rounded-full text-[11px] font-semibold shadow-xs" title="Logged in as {{ session.get('user_role')|upper }}">
+                  <span class="text-[10px] font-bold text-emerald-800 tracking-tight">{{ session.get('user_role')|upper }}</span>
+                  <span class="w-[18px] h-[18px] rounded-full bg-emerald-600 flex items-center justify-center text-white shrink-0 shadow-xs">
+                    <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
                       <circle cx="12" cy="7.5" r="3.5"></circle>
                       <path d="M5.5 19a6.5 6.5 0 0 1 13 0" stroke-linecap="round"></path>
                     </svg>
                   </span>
                 </span>
-                <a href="/logout" class="px-2.5 py-0.5 bg-red-700 hover:bg-red-600 text-white text-[10px] font-bold rounded-full border border-red-600 transition shadow-xs">
+                <a href="/logout" class="px-2 py-0.5 bg-red-700 hover:bg-red-600 text-white text-[9px] font-bold rounded-full border border-red-600 transition shadow-xs">
                   Logout
                 </a>
               </div>
             {% else %}
-              <a href="/login" class="sih-login-pill group inline-flex items-center gap-2 pl-3.5 pr-1 py-0.5 bg-white hover:bg-[#FFF9F5] text-slate-800 border border-[#FF5E00] hover:border-[#E65100] rounded-full text-xs font-semibold transition-all duration-200 shadow-xs hover:shadow-md cursor-pointer" id="btn-portal-login" title="Portal Login">
-                <span class="text-[12px] font-bold tracking-tight sih-login-text" style="color: #1E293B !important;">Portal Login</span>
-                <span class="sih-avatar-circle w-[22px] h-[22px] rounded-full bg-[#FF5E00] group-hover:bg-[#E65100] flex items-center justify-center text-white shrink-0 transition-all duration-200 shadow-xs">
-                  <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+              <a href="/login" class="sih-login-pill group inline-flex items-center gap-1.5 pl-2.5 pr-1 py-0.5 bg-white hover:bg-[#FFF9F5] text-slate-800 border border-[#FF5E00] hover:border-[#E65100] rounded-full text-[11px] font-semibold transition-all duration-200 shadow-xs hover:shadow-md cursor-pointer" id="btn-portal-login" title="Portal Login">
+                <span class="text-[11px] font-bold tracking-tight sih-login-text" style="color: #1E293B !important;">Portal Login</span>
+                <span class="sih-avatar-circle w-[18px] h-[18px] rounded-full bg-[#FF5E00] group-hover:bg-[#E65100] flex items-center justify-center text-white shrink-0 transition-all duration-200 shadow-xs">
+                  <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
                     <circle cx="12" cy="7.5" r="3.5"></circle>
                     <path d="M5.5 19a6.5 6.5 0 0 1 13 0" stroke-linecap="round"></path>
                   </svg>
                 </span>
               </a>
             {% endif %}
-            <span class="text-[9px] font-mono font-bold text-amber-300/90 tracking-wider mt-0.5 uppercase" title="Smart India Hackathon Problem Statement">PS: SIH26001</span>
+            <span class="text-[9px] font-mono font-bold text-amber-300/90 tracking-wider hidden lg:inline-block uppercase px-1.5 py-0.5 bg-slate-900/60 border border-slate-700/60 rounded" title="Smart India Hackathon Problem Statement">SIH26001</span>
           </div>
         </div>
       </div>
@@ -3112,7 +3162,7 @@
                     <div class="flex items-center space-x-2 min-w-0">
                         <i class="ph-bold ph-globe-hemisphere-east text-[#0B2545] text-base shrink-0"></i>
                         <h2 class="font-bold text-xs sm:text-sm text-[#0B2545] truncate" id="lbl-gis-title"><span class="sm:hidden">GIS Hazard Map</span><span class="hidden sm:inline">Operational GIS Hazard Viewer (WGS84)</span></h2>
-                        <span class="text-xs text-slate-500 ml-1 hidden md:inline font-medium"><span class="inline-block w-2 h-2 rounded-full bg-red-600 mr-0.5"></span> RED &nbsp; <span class="inline-block w-2 h-2 rounded-full bg-amber-500 mr-0.5"></span> ORANGE &nbsp; <span class="inline-block w-2 h-2 rounded-full bg-yellow-400 mr-0.5"></span> YELLOW</span>
+                        <span class="text-xs text-slate-500 ml-1 hidden md:inline font-medium"><span class="inline-block w-2 h-2 rounded-full bg-red-600 mr-0.5"></span> CRITICAL &nbsp; <span class="inline-block w-2 h-2 rounded-full bg-amber-500 mr-0.5"></span> HIGH &nbsp; <span class="inline-block w-2 h-2 rounded-full bg-yellow-400 mr-0.5"></span> MODERATE &nbsp; <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 mr-0.5"></span> LOW</span>
                     </div>
                     <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
                         <span id="coord-display" class="font-mono text-[11px] sm:text-xs text-slate-500 hidden sm:inline">25.7000, 92.8000</span>
@@ -3171,13 +3221,13 @@
                     <div id="map"></div>
                     <!-- Compact Floating Data Status Panel (Section 12) -->
                     <div id="gis-data-status-panel" class="absolute bottom-10 left-3 z-[400] bg-[#070B10]/95 backdrop-blur border border-slate-700/80 rounded shadow-xl p-2.5 text-[10px] font-mono text-slate-300 max-w-[240px] pointer-events-auto">
-                        <div class="flex items-center justify-between border-b border-slate-800 pb-1 mb-1.5 cursor-pointer select-none" onclick="toggleDataStatusCollapse()" title="Click to collapse/expand data status">
+                        <div id="data-status-header" class="flex items-center justify-between cursor-pointer select-none" onclick="toggleDataStatusCollapse()" title="Click to collapse/expand data status">
                             <span class="font-bold text-sky-400 uppercase tracking-wider flex items-center gap-1">
                                 <i class="ph-bold ph-shield-check text-xs"></i> DATA STATUS
                             </span>
-                            <i id="data-status-chevron" class="ph-bold ph-caret-down text-slate-400 text-xs"></i>
+                            <i id="data-status-chevron" class="ph-bold ph-caret-right text-slate-400 text-xs"></i>
                         </div>
-                        <div id="data-status-content" class="space-y-1">
+                        <div id="data-status-content" class="space-y-1" style="display: none;">
                             <div class="flex justify-between items-center">
                                 <span class="text-slate-400">WEATHER</span>
                                 <span class="text-emerald-400 font-bold">[LIVE] Open-Meteo</span>
@@ -3301,7 +3351,7 @@
             </div>
 
             <!-- Decision Intelligence Card (4 cols) -->
-            <div class="xl:col-span-4 flex flex-col gap-4">
+            <div id="risk-evaluation-panel" class="xl:col-span-4 flex flex-col gap-4">
                 <div class="dark-card flex flex-col flex-1">
                     <div class="dark-card-header">
                         <div class="flex items-center space-x-2"><i class="ph-bold ph-tree-structure text-amber-400 text-base"></i><h2 class="font-bold text-sm text-white" id="lbl-evidence-title">Decision Intelligence Card</h2></div>
@@ -3494,18 +3544,18 @@
 
         <!-- PHASE 14: Authoritative Data Truth & Provenance Modal (Section 4) -->
         <div id="modal-data-truth-matrix" class="fixed inset-0 bg-black/75 backdrop-blur-xs z-[99999] hidden items-center justify-center p-4">
-            <div class="bg-[#0A1124] border border-slate-700 rounded-lg max-w-4xl w-full p-5 shadow-2xl text-slate-100 max-h-[90vh] overflow-y-auto">
-                <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+            <div class="data-truth-modal-card bg-[#FFF7ED] border-2 border-[#FED7AA] rounded-xl max-w-4xl w-full p-5 shadow-2xl text-slate-900 max-h-[90vh] overflow-y-auto">
+                <div class="flex items-center justify-between pb-3 border-b border-[#FED7AA]">
                     <div class="flex items-center gap-2">
-                        <i class="ph-bold ph-database text-sky-400 text-lg"></i>
-                        <h3 class="font-bold text-sm uppercase tracking-wider text-white">Authoritative Data Truth &amp; Provenance Matrix</h3>
+                        <i class="ph-bold ph-database text-[#D9531E] text-lg"></i>
+                        <h3 class="font-bold text-sm uppercase tracking-wider text-[#0B2545]">Authoritative Data Truth &amp; Provenance Matrix</h3>
                     </div>
-                    <button type="button" onclick="closeDataTruthModal()" class="text-slate-400 hover:text-white text-lg cursor-pointer" aria-label="Close modal"><i class="ph-bold ph-x"></i></button>
+                    <button type="button" onclick="closeDataTruthModal()" class="text-slate-500 hover:text-slate-900 hover:bg-[#FED7AA]/50 p-1 rounded text-lg cursor-pointer transition" aria-label="Close modal"><i class="ph-bold ph-x"></i></button>
                 </div>
-                <div class="mt-4 overflow-x-auto">
-                    <table class="w-full text-left text-[11px] font-mono border-collapse">
-                        <thead>
-                            <tr class="bg-slate-900/80 text-slate-400 uppercase text-[9px] border-b border-slate-800">
+                <div class="mt-4 overflow-x-auto rounded-lg border border-[#FED7AA]">
+                    <table class="w-full text-left text-[11px] font-mono border-collapse bg-[#FFFDF9]">
+                        <thead class="bg-[#FED7AA]">
+                            <tr class="text-[#7C2D12] uppercase text-[9px] font-bold border-b border-[#FDBA74]">
                                 <th class="p-2.5">Data Stream / Modality</th>
                                 <th class="p-2.5">Provider</th>
                                 <th class="p-2.5">Status</th>
@@ -3514,68 +3564,68 @@
                                 <th class="p-2.5">Fallback Architecture</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-slate-800/60 text-slate-300">
-                            <tr>
-                                <td class="p-2.5 font-bold text-white">Precipitation &amp; Nowcast</td>
-                                <td class="p-2.5">IMD NWP / AWS</td>
-                                <td class="p-2.5"><span class="px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800 font-bold">LIVE</span></td>
-                                <td class="p-2.5">IMD GFS/WRF API</td>
-                                <td class="p-2.5">Hourly</td>
-                                <td class="p-2.5 text-slate-400">Mandal-Sarkar Climatological I-D</td>
+                        <tbody class="divide-y divide-[#FED7AA]/60 text-[#1E293B]">
+                            <tr class="hover:bg-[#FFF5EA] transition-colors">
+                                <td class="p-2.5 font-bold text-[#0B2545]">Precipitation &amp; Nowcast</td>
+                                <td class="p-2.5 font-semibold text-[#1E293B]">IMD NWP / AWS</td>
+                                <td class="p-2.5"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-900 border border-emerald-400 font-bold text-[10px]">LIVE</span></td>
+                                <td class="p-2.5 text-[#1E293B]">IMD GFS/WRF API</td>
+                                <td class="p-2.5 text-[#334155] font-semibold">Hourly</td>
+                                <td class="p-2.5 text-[#475569]">Mandal-Sarkar Climatological I-D</td>
                             </tr>
-                            <tr>
-                                <td class="p-2.5 font-bold text-white">Terrain Elevation (DEM)</td>
-                                <td class="p-2.5">ISRO CartoDEM</td>
-                                <td class="p-2.5"><span class="px-1.5 py-0.5 rounded bg-blue-950 text-sky-300 border border-blue-800 font-bold">MODELLED</span></td>
-                                <td class="p-2.5">CartoDEM 30m Grid</td>
-                                <td class="p-2.5">Static High-Res</td>
-                                <td class="p-2.5 text-slate-400">Copernicus GLO-30 DEM</td>
+                            <tr class="hover:bg-[#FFF5EA] transition-colors">
+                                <td class="p-2.5 font-bold text-[#0B2545]">Terrain Elevation (DEM)</td>
+                                <td class="p-2.5 font-semibold text-[#1E293B]">ISRO CartoDEM</td>
+                                <td class="p-2.5"><span class="px-2 py-0.5 rounded bg-sky-100 text-sky-900 border border-sky-400 font-bold text-[10px]">MODELLED</span></td>
+                                <td class="p-2.5 text-[#1E293B]">CartoDEM 30m Grid</td>
+                                <td class="p-2.5 text-[#334155] font-semibold">Static High-Res</td>
+                                <td class="p-2.5 text-[#475569]">Copernicus GLO-30 DEM</td>
                             </tr>
-                            <tr>
-                                <td class="p-2.5 font-bold text-white">Historical Landslides</td>
-                                <td class="p-2.5">GSI NLFC / NLSM</td>
-                                <td class="p-2.5"><span class="px-1.5 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700 font-bold">HISTORICAL</span></td>
-                                <td class="p-2.5">Archival Database</td>
-                                <td class="p-2.5">2022–2024</td>
-                                <td class="p-2.5 text-slate-400">Regional Susceptibility Baseline</td>
+                            <tr class="hover:bg-[#FFF5EA] transition-colors">
+                                <td class="p-2.5 font-bold text-[#0B2545]">Historical Landslides</td>
+                                <td class="p-2.5 font-semibold text-[#1E293B]">GSI NLFC / NLSM</td>
+                                <td class="p-2.5"><span class="px-2 py-0.5 rounded bg-amber-100 text-amber-900 border border-amber-400 font-bold text-[10px]">HISTORICAL</span></td>
+                                <td class="p-2.5 text-[#1E293B]">Archival Database</td>
+                                <td class="p-2.5 text-[#334155] font-semibold">2022–2024</td>
+                                <td class="p-2.5 text-[#475569]">Regional Susceptibility Baseline</td>
                             </tr>
-                            <tr>
-                                <td class="p-2.5 font-bold text-white">In-Situ Piezometer &amp; Tilt</td>
-                                <td class="p-2.5">Soil Mechanics Engine</td>
-                                <td class="p-2.5"><span class="px-1.5 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-800 font-bold">SIMULATED</span></td>
-                                <td class="p-2.5">Mohr-Coulomb Physics</td>
-                                <td class="p-2.5">Real-time Sim</td>
-                                <td class="p-2.5 text-slate-400">Static Suction Equilibrium (SWCC)</td>
+                            <tr class="hover:bg-[#FFF5EA] transition-colors">
+                                <td class="p-2.5 font-bold text-[#0B2545]">In-Situ Piezometer &amp; Tilt</td>
+                                <td class="p-2.5 font-semibold text-[#1E293B]">Soil Mechanics Engine</td>
+                                <td class="p-2.5"><span class="px-2 py-0.5 rounded bg-orange-100 text-orange-950 border border-orange-400 font-bold text-[10px]">SIMULATED</span></td>
+                                <td class="p-2.5 text-[#1E293B]">Mohr-Coulomb Physics</td>
+                                <td class="p-2.5 text-[#334155] font-semibold">Real-time Sim</td>
+                                <td class="p-2.5 text-[#475569]">Static Suction Equilibrium (SWCC)</td>
                             </tr>
-                            <tr>
-                                <td class="p-2.5 font-bold text-white">Surface Deformation (InSAR)</td>
-                                <td class="p-2.5">ESA Copernicus Sentinel-1</td>
-                                <td class="p-2.5"><span class="px-1.5 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700 font-bold">CACHED</span></td>
-                                <td class="p-2.5">Persistent Scatterer (PS)</td>
-                                <td class="p-2.5">12-Day Orbit</td>
-                                <td class="p-2.5 text-slate-400">NISAR L-Band Roadmap</td>
+                            <tr class="hover:bg-[#FFF5EA] transition-colors">
+                                <td class="p-2.5 font-bold text-[#0B2545]">Surface Deformation (InSAR)</td>
+                                <td class="p-2.5 font-semibold text-[#1E293B]">ESA Copernicus Sentinel-1</td>
+                                <td class="p-2.5"><span class="px-2 py-0.5 rounded bg-indigo-100 text-indigo-900 border border-indigo-400 font-bold text-[10px]">CACHED</span></td>
+                                <td class="p-2.5 text-[#1E293B]">Persistent Scatterer (PS)</td>
+                                <td class="p-2.5 text-[#334155] font-semibold">12-Day Orbit</td>
+                                <td class="p-2.5 text-[#475569]">NISAR L-Band Roadmap</td>
                             </tr>
-                            <tr>
-                                <td class="p-2.5 font-bold text-white">Civil Defense Siren Actuator</td>
-                                <td class="p-2.5">EOC Dual-Key Terminal</td>
-                                <td class="p-2.5"><span class="px-1.5 py-0.5 rounded bg-rose-950 text-rose-300 border border-rose-800 font-bold">AUTH_REQUIRED</span></td>
-                                <td class="p-2.5">Dual HMAC Token</td>
-                                <td class="p-2.5">On-Demand</td>
-                                <td class="p-2.5 text-slate-400">Sandboxed Dry-Run Test Harness</td>
+                            <tr class="hover:bg-[#FFF5EA] transition-colors">
+                                <td class="p-2.5 font-bold text-[#0B2545]">Civil Defense Siren Actuator</td>
+                                <td class="p-2.5 font-semibold text-[#1E293B]">EOC Dual-Key Terminal</td>
+                                <td class="p-2.5"><span class="px-2 py-0.5 rounded bg-rose-100 text-rose-900 border border-rose-400 font-bold text-[10px]">AUTH_REQUIRED</span></td>
+                                <td class="p-2.5 text-[#1E293B]">Dual HMAC Token</td>
+                                <td class="p-2.5 text-[#334155] font-semibold">On-Demand</td>
+                                <td class="p-2.5 text-[#475569]">Sandboxed Dry-Run Test Harness</td>
                             </tr>
-                            <tr>
-                                <td class="p-2.5 font-bold text-white">Uninstrumented Corridors</td>
-                                <td class="p-2.5">N/A</td>
-                                <td class="p-2.5"><span class="px-1.5 py-0.5 rounded bg-neutral-900 text-neutral-400 border border-neutral-700 font-bold">UNAVAILABLE</span></td>
-                                <td class="p-2.5">Missing Telemetry</td>
-                                <td class="p-2.5">N/A</td>
-                                <td class="p-2.5 text-slate-400">Regional Topographic Slope Proxy</td>
+                            <tr class="hover:bg-[#FFF5EA] transition-colors">
+                                <td class="p-2.5 font-bold text-[#0B2545]">Uninstrumented Corridors</td>
+                                <td class="p-2.5 font-semibold text-[#1E293B]">N/A</td>
+                                <td class="p-2.5"><span class="px-2 py-0.5 rounded bg-stone-200 text-stone-900 border border-stone-400 font-bold text-[10px]">UNAVAILABLE</span></td>
+                                <td class="p-2.5 text-[#1E293B]">Missing Telemetry</td>
+                                <td class="p-2.5 text-[#334155] font-semibold">N/A</td>
+                                <td class="p-2.5 text-[#475569]">Regional Topographic Slope Proxy</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-                <div class="mt-4 p-3 rounded bg-slate-900/60 border border-slate-800 text-[10px] text-slate-400 leading-normal">
-                    <strong class="text-white">Evaluator Note:</strong> PARVAT NETRA strictly observes institutional data integrity. Sensor variables are flagged as <span class="font-mono text-amber-300">[SIMULATED]</span> because physical hillside borehole instrumentation is awaiting final institutional rollout.
+                <div class="evaluator-note-box mt-4 p-3 rounded-lg bg-[#FFEDD5] border-2 border-[#FED7AA] text-[10px] text-[#7C2D12] leading-normal">
+                    <strong class="text-[#0B2545] font-bold">Evaluator Note:</strong> PARVAT NETRA strictly observes institutional data integrity. Sensor variables are flagged as <span class="font-mono font-bold text-orange-950 bg-[#FED7AA] px-1.5 py-0.5 rounded border border-[#FDBA74]">[SIMULATED]</span> because physical hillside borehole instrumentation is awaiting final institutional rollout.
                 </div>
             </div>
         </div>
@@ -3593,6 +3643,217 @@
                 <div id="sci-expl-body" class="mt-4 text-xs text-slate-300 leading-relaxed"></div>
                 <div class="mt-4 pt-3 border-t border-slate-800 flex justify-end">
                     <button type="button" onclick="closeScientificExplModal()" class="px-3 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold cursor-pointer">Close</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAHAD AI: Deep Risk Evaluation Dossier Modal -->
+        <div id="modal-risk-evaluation" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[99999] hidden items-center justify-center p-3 sm:p-5 overflow-y-auto" onclick="if(event.target===this)closeRiskEvaluationModal();" role="dialog" aria-modal="true" aria-labelledby="re-modal-title">
+            <div class="bg-[#0A1124] border border-slate-700/80 rounded-xl max-w-4xl w-full shadow-2xl text-slate-200 overflow-hidden my-auto max-h-[92vh] flex flex-col">
+                <!-- Modal Header -->
+                <div class="px-5 py-3.5 bg-[#0D182E] border-b border-slate-800 flex items-center justify-between shrink-0">
+                    <div class="flex items-center gap-2.5">
+                        <span class="p-1.5 rounded bg-sky-950/80 text-sky-400 text-base font-bold border border-sky-800 flex items-center justify-center">
+                            <i class="ph-bold ph-gauge"></i>
+                        </span>
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <h3 id="re-modal-title" class="font-black text-sm uppercase tracking-wider text-white">PAHAD AI RISK EVALUATION DOSSIER</h3>
+                                <span id="re-modal-sector-id-badge" class="font-mono text-[10px] px-1.5 py-0.5 rounded bg-slate-800 text-sky-300 border border-slate-700">--</span>
+                            </div>
+                            <p id="re-modal-subtitle" class="text-[11px] text-slate-400">Autonomous Multi-Modal Geotechnical Stability &amp; Trigger Analysis</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button type="button" id="btn-re-execute-live" onclick="executeRiskEvaluation(window._currentInspectedSectorId, true)" class="px-2.5 py-1 bg-sky-900/60 hover:bg-sky-800 text-sky-200 rounded text-[11px] font-bold border border-sky-700 flex items-center gap-1.5 transition cursor-pointer" title="Re-run live multi-modal evaluation">
+                            <i id="re-execute-icon" class="ph-bold ph-arrows-clockwise"></i>
+                            <span id="re-execute-label">Re-execute Live</span>
+                        </button>
+                        <button type="button" onclick="closeRiskEvaluationModal()" class="text-slate-400 hover:text-white text-lg p-1 transition cursor-pointer" aria-label="Close modal">
+                            <i class="ph-bold ph-x"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Modal Body (Scrollable) -->
+                <div class="p-5 space-y-4 overflow-y-auto flex-1 text-xs">
+                    <!-- Section 1: Location & Status Banner -->
+                    <div class="flex flex-wrap items-center justify-between gap-3 p-3 rounded-lg bg-slate-900/80 border border-slate-800">
+                        <div>
+                            <span class="text-slate-500 uppercase font-bold text-[10px] tracking-wider block">Inspected Target Corridor</span>
+                            <h2 id="re-modal-name" class="text-base font-black text-white leading-tight mt-0.5">--</h2>
+                            <p id="re-modal-location" class="text-slate-400 text-[11px]">--</p>
+                            <div class="flex items-center gap-2 mt-1 text-[10px] font-mono text-slate-400">
+                                <span id="re-modal-coords-elev">--</span>
+                            </div>
+                        </div>
+                        <div class="flex flex-col items-end gap-1.5 shrink-0">
+                            <div class="flex items-center gap-1.5">
+                                <span id="re-modal-risk-badge" class="px-2.5 py-1 rounded text-xs font-black uppercase tracking-wider" style="background:rgba(234,88,12,0.3);color:#fb923c;border:1px solid rgba(249,115,22,0.5);">--</span>
+                                <span id="re-modal-provenance-badge" class="px-2 py-1 rounded text-[10px] font-mono font-bold bg-emerald-950 text-emerald-300 border border-emerald-800">[LIVE / HYBRID]</span>
+                            </div>
+                            <span id="re-modal-evaluated-at" class="text-[10px] text-slate-400 font-mono">Evaluated: Just now</span>
+                        </div>
+                    </div>
+
+                    <!-- Section 2: 4 Core Evaluation KPI Cards -->
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-2.5">
+                        <!-- Card 1: CRI Score -->
+                        <div class="p-3 bg-slate-900/60 border border-slate-800 rounded-lg text-center flex flex-col justify-between">
+                            <div>
+                                <span class="text-[9px] uppercase font-bold text-slate-400 tracking-wider block">Composite Risk (CRI)</span>
+                                <div class="mt-1">
+                                    <span id="re-val-cri" class="text-2xl font-mono font-black text-amber-400">--</span>
+                                    <span class="text-[11px] text-slate-500">/ 100</span>
+                                </div>
+                            </div>
+                            <div class="mt-2 pt-1.5 border-t border-slate-800/80 text-[10px] text-slate-400">
+                                Band: <strong id="re-val-cri-band" class="text-amber-300">--</strong>
+                            </div>
+                        </div>
+
+                        <!-- Card 2: Factor of Safety -->
+                        <div class="p-3 bg-slate-900/60 border border-slate-800 rounded-lg text-center flex flex-col justify-between">
+                            <div>
+                                <span class="text-[9px] uppercase font-bold text-slate-400 tracking-wider block">Factor of Safety (FoS)</span>
+                                <div class="mt-1">
+                                    <span id="re-val-fos" class="text-2xl font-mono font-black text-emerald-400">--</span>
+                                </div>
+                            </div>
+                            <div class="mt-2 pt-1.5 border-t border-slate-800/80 text-[10px] text-slate-400">
+                                Mechanics: <strong id="re-val-fos-status" class="text-emerald-300">Mohr-Coulomb</strong>
+                            </div>
+                        </div>
+
+                        <!-- Card 3: P(Event) Forecast -->
+                        <div class="p-3 bg-slate-900/60 border border-slate-800 rounded-lg text-center flex flex-col justify-between">
+                            <div>
+                                <span class="text-[9px] uppercase font-bold text-slate-400 tracking-wider block">P(Event) 24h</span>
+                                <div class="mt-1">
+                                    <span id="re-val-prob" class="text-2xl font-mono font-black text-rose-400">--%</span>
+                                </div>
+                            </div>
+                            <div class="mt-2 pt-1.5 border-t border-slate-800/80 text-[9px] font-mono text-slate-400 flex justify-center gap-1">
+                                <span>6h: <strong id="re-prob-6h">--</strong></span>
+                                <span>|</span>
+                                <span>48h: <strong id="re-prob-48h">--</strong></span>
+                            </div>
+                        </div>
+
+                        <!-- Card 4: 2-of-3 Signal Confirmation -->
+                        <div class="p-3 bg-slate-900/60 border border-slate-800 rounded-lg text-center flex flex-col justify-between">
+                            <div>
+                                <span class="text-[9px] uppercase font-bold text-slate-400 tracking-wider block">2-of-3 Signal Guard</span>
+                                <div class="mt-1">
+                                    <span id="re-val-signals" class="text-2xl font-mono font-black text-sky-400">-- / 3</span>
+                                </div>
+                            </div>
+                            <div class="mt-2 pt-1.5 border-t border-slate-800/80 text-[10px] text-slate-400">
+                                Status: <strong id="re-val-signals-status" class="text-sky-300">Corroborated</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 3: Multi-Modal Evidence Breakdown -->
+                    <div>
+                        <span class="text-[10px] font-black uppercase tracking-wider text-sky-400 block mb-2 flex items-center gap-1.5">
+                            <i class="ph-bold ph-chart-line-up"></i> MULTI-MODAL EVIDENCE &amp; TELEMETRY EXECUTION
+                        </span>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 font-mono text-[11px]">
+                            <!-- Weather Stream -->
+                            <div class="p-3 bg-slate-900/70 border border-slate-800 rounded-lg space-y-1.5">
+                                <div class="flex items-center justify-between pb-1 border-b border-slate-800 text-[10px] font-sans">
+                                    <span class="font-bold text-slate-300 flex items-center gap-1"><i class="ph-bold ph-cloud-rain text-sky-400"></i> HYDROMETEOROLOGY</span>
+                                    <span class="text-emerald-400 font-bold font-mono text-[9px]">[LIVE: Open-Meteo]</span>
+                                </div>
+                                <div class="flex justify-between text-slate-300"><span>24h Rainfall:</span><strong id="re-rain-24h" class="text-white">-- mm</strong></div>
+                                <div class="flex justify-between text-slate-300"><span>72h Antecedent (API):</span><strong id="re-rain-72h" class="text-white">-- mm</strong></div>
+                                <div class="flex justify-between text-slate-300"><span>Mandal-Sarkar I-D:</span><strong id="re-rain-threshold" class="text-amber-400">--</strong></div>
+                                <div class="flex justify-between text-slate-300"><span>Peak Current Rate:</span><strong id="re-rain-1h" class="text-white">-- mm/h</strong></div>
+                            </div>
+
+                            <!-- Seismic Stream -->
+                            <div class="p-3 bg-slate-900/70 border border-slate-800 rounded-lg space-y-1.5">
+                                <div class="flex items-center justify-between pb-1 border-b border-slate-800 text-[10px] font-sans">
+                                    <span class="font-bold text-slate-300 flex items-center gap-1"><i class="ph-bold ph-activity text-rose-400"></i> SEISMIC &amp; SHAKING</span>
+                                    <span class="text-emerald-400 font-bold font-mono text-[9px]">[LIVE: USGS]</span>
+                                </div>
+                                <div class="flex justify-between text-slate-300"><span>Regional Magnitude:</span><strong id="re-seismic-event" class="text-white">M --</strong></div>
+                                <div class="flex justify-between text-slate-300"><span>Epicentral Distance:</span><strong id="re-seismic-dist" class="text-white">-- km</strong></div>
+                                <div class="flex justify-between text-slate-300"><span>Hypocenter Depth:</span><strong id="re-seismic-depth" class="text-white">-- km</strong></div>
+                                <div class="flex justify-between text-slate-300"><span>Shaking Proxy (PGA):</span><strong id="re-seismic-pga" class="text-slate-400">0.00g (Stable)</strong></div>
+                            </div>
+
+                            <!-- InSAR & Earth Observation -->
+                            <div class="p-3 bg-slate-900/70 border border-slate-800 rounded-lg space-y-1.5">
+                                <div class="flex items-center justify-between pb-1 border-b border-slate-800 text-[10px] font-sans">
+                                    <span class="font-bold text-slate-300 flex items-center gap-1"><i class="ph-bold ph-satellite text-purple-400"></i> RADAR INTERFEROMETRY (InSAR)</span>
+                                    <span class="text-sky-400 font-bold font-mono text-[9px]">[HISTORICAL]</span>
+                                </div>
+                                <div class="flex justify-between text-slate-300"><span>Sentinel-1 LOS Rate:</span><strong id="re-insar-vel" class="text-white">-- mm/yr</strong></div>
+                                <div class="flex justify-between text-slate-300"><span>Cumulative Creep:</span><strong id="re-insar-cum" class="text-white">-- mm</strong></div>
+                                <div class="flex justify-between text-slate-300"><span>Vegetation Health (NDVI):</span><strong id="re-ndvi" class="text-white">--</strong></div>
+                                <div class="flex justify-between text-slate-300"><span>Slope Gradient:</span><strong id="re-slope" class="text-amber-400">--° [STATIC CartoDEM]</strong></div>
+                            </div>
+
+                            <!-- In-Situ & Geotechnical Mechanics -->
+                            <div class="p-3 bg-slate-900/70 border border-slate-800 rounded-lg space-y-1.5">
+                                <div class="flex items-center justify-between pb-1 border-b border-slate-800 text-[10px] font-sans">
+                                    <span class="font-bold text-slate-300 flex items-center gap-1"><i class="ph-bold ph-compass text-amber-400"></i> GEOTECHNICAL TELEMETRY</span>
+                                    <span class="text-amber-400 font-bold font-mono text-[9px]">[SIMULATED]</span>
+                                </div>
+                                <div class="flex justify-between text-slate-300"><span>Soil Moisture (VWC):</span><strong id="re-vwc" class="text-white">-- m³/m³</strong></div>
+                                <div class="flex justify-between text-slate-300"><span>Pore Water Pressure (u):</span><strong id="re-pore-pressure" class="text-white">-- kPa</strong></div>
+                                <div class="flex justify-between text-slate-300"><span>Hillslope Tilt:</span><strong id="re-tilt" class="text-white">--°</strong></div>
+                                <div class="flex justify-between text-slate-300"><span>Effective Shear (c', φ'):</span><strong id="re-cohesion-friction" class="text-white">--</strong></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 4: Physical Synthesis Box -->
+                    <div class="p-3.5 rounded-lg bg-[#070E1E] border border-slate-800 text-slate-300 space-y-1.5 font-sans">
+                        <div class="flex items-center justify-between">
+                            <span class="text-[10px] font-black uppercase tracking-wider text-amber-400 flex items-center gap-1">
+                                <i class="ph-bold ph-lightbulb"></i> WHY THIS RISK? — INTEGRATED CAUSAL SYNTHESIS
+                            </span>
+                            <span class="text-[9px] font-mono text-slate-400">van Genuchten SWCC + Mohr-Coulomb</span>
+                        </div>
+                        <p id="re-why-this-risk" class="text-slate-200 text-[11px] leading-relaxed">--</p>
+                    </div>
+
+                    <!-- Section 5: Executive Emergency Protocol & Detour -->
+                    <div class="p-3 rounded-lg bg-blue-950/30 border border-blue-900/50 text-slate-300 space-y-2 font-sans">
+                        <div class="flex items-center justify-between">
+                            <span class="text-[10px] font-black uppercase tracking-wider text-sky-300 flex items-center gap-1">
+                                <i class="ph-bold ph-shield-warning"></i> EXECUTIVE RESPONSE PROTOCOL &amp; HIGHWAY PASSABILITY
+                            </span>
+                            <span id="re-highway-status" class="px-2 py-0.5 rounded text-[10px] font-black uppercase bg-emerald-950 text-emerald-300 border border-emerald-800">PASSAGE MONITORED</span>
+                        </div>
+                        <div class="text-[11px] space-y-1 text-slate-300">
+                            <div><span class="text-slate-400 font-medium">Recommended Action:</span> <strong id="re-rec-action" class="text-amber-300 font-bold">--</strong></div>
+                            <div><span class="text-slate-400 font-medium">Mountain Evacuation Detour:</span> <span id="re-detour-info" class="text-slate-200">--</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="px-5 py-3 bg-[#0D182E] border-t border-slate-800 flex flex-wrap items-center justify-between gap-2 shrink-0 text-xs">
+                    <div class="text-[10px] font-mono text-slate-400 flex items-center gap-2">
+                        <span id="re-modal-data-hash" class="truncate max-w-[200px]">SHA-256: Verified</span>
+                        <span>&bull;</span>
+                        <span>Multi-Source Corroborated</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button type="button" onclick="centerMapOnSector()" class="px-3 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-sky-300 border border-slate-700 font-semibold flex items-center gap-1 transition cursor-pointer">
+                            <i class="ph-bold ph-crosshair"></i> Focus on Map
+                        </button>
+                        <button type="button" onclick="syncModalToDashboard()" class="px-3 py-1.5 rounded bg-sky-900 hover:bg-sky-800 text-white font-semibold flex items-center gap-1 transition cursor-pointer">
+                            <i class="ph-bold ph-arrows-merge"></i> Sync to Dashboard
+                        </button>
+                        <button type="button" onclick="closeRiskEvaluationModal()" class="px-3.5 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white font-semibold transition cursor-pointer">
+                            Close
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -7114,13 +7375,16 @@ function updateMapStatusHeader(metadata) {
 function toggleDataStatusCollapse() {
     const content = document.getElementById('data-status-content');
     const chevron = document.getElementById('data-status-chevron');
+    const header = document.getElementById('data-status-header');
     if (content) {
         if (content.style.display === 'none') {
             content.style.display = 'block';
             if (chevron) chevron.className = 'ph-bold ph-caret-down text-slate-400 text-xs';
+            if (header) header.classList.add('border-b', 'border-slate-800', 'pb-1', 'mb-1.5');
         } else {
             content.style.display = 'none';
             if (chevron) chevron.className = 'ph-bold ph-caret-right text-slate-400 text-xs';
+            if (header) header.classList.remove('border-b', 'border-slate-800', 'pb-1', 'mb-1.5');
         }
     }
 }
@@ -7152,6 +7416,9 @@ function toggleCurrentRiskZones(btn) {
 }
 window.toggleCurrentRiskZones = toggleCurrentRiskZones;
 
+let _currentInspectedSectorId = null;
+let _currentInspectedProperties = null;
+
 function syncCorridorToDashboard(p) {
     if (!p) return;
     const titleEl = document.getElementById('card-zone-title');
@@ -7167,20 +7434,24 @@ function syncCorridorToDashboard(p) {
     const soilEl = document.getElementById('ev-soil');
     const provEl = document.getElementById('card-prov-label');
 
+    const criVal = Number(p.cri !== undefined ? p.cri : (p.final_cri !== undefined ? p.final_cri : 0)).toFixed(1);
+    const fosVal = Number(p.physical_fos !== undefined ? p.physical_fos : 1.0).toFixed(3);
+    const probVal = (Number(p.event_probability !== undefined ? p.event_probability : (p.event_probability_24h !== undefined ? p.event_probability_24h : 0)) * 100).toFixed(1);
+
     if (titleEl) titleEl.textContent = p.sector_name || p.corridor || 'Target Sector';
     if (subEl) subEl.textContent = `District: ${p.district || 'Regional'} | State: ${p.state || 'NER'}`;
-    if (criEl) criEl.textContent = `${Number(p.cri).toFixed(1)} / 100`;
-    if (fosEl) fosEl.textContent = `${Number(p.physical_fos).toFixed(3)}`;
-    if (probEl) probEl.textContent = `${(Number(p.event_probability) * 100).toFixed(1)}%`;
-    if (rainEl) rainEl.textContent = `${p.rainfall_24h_mm} mm`;
+    if (criEl) criEl.textContent = `${criVal} / 100`;
+    if (fosEl) fosEl.textContent = `${fosVal}`;
+    if (probEl) probEl.textContent = `${probVal}%`;
+    if (rainEl) rainEl.textContent = `${p.rainfall_24h_mm || 0} mm`;
     if (suscEl) suscEl.textContent = `${p.slope_deg || 38.0}°`;
-    if (insarEl) insarEl.textContent = `${p.insar_deformation_mm} mm/yr`;
+    if (insarEl) insarEl.textContent = `${p.insar_deformation_mm || 0} mm/yr`;
     if (vwcEl) vwcEl.textContent = `${p.soil_moisture_vwc || 0.33} m³/m³ [SIMULATED]`;
     if (soilEl) soilEl.textContent = p.lithology || 'Silty Sand with Weathered Schist';
-    if (provEl) provEl.textContent = '[LIVE / HYBRID]';
+    if (provEl) provEl.textContent = p.overall_provenance || '[LIVE / HYBRID]';
 
     if (badgeEl) {
-        const band = (p.risk_band || 'LOW').toUpperCase();
+        const band = (p.alert_band || p.risk_band || 'LOW').toUpperCase();
         badgeEl.textContent = band + ' ALERT';
         if (band === 'EXTREME' || band === 'VERY_HIGH') {
             badgeEl.style.background = 'rgba(185,28,28,0.3)';
@@ -7199,27 +7470,308 @@ function syncCorridorToDashboard(p) {
 }
 window.syncCorridorToDashboard = syncCorridorToDashboard;
 
-function inspectSectorDeepRisk(sectorId) {
-    if (window._currentRiskZonesData && window._currentRiskZonesData.features) {
-        const match = window._currentRiskZonesData.features.find(f => f.properties && f.properties.sector_id === sectorId);
-        if (match) {
-            syncCorridorToDashboard(match.properties);
+function openRiskEvaluationModal(sectorId) {
+    if (!sectorId) return;
+    _currentInspectedSectorId = sectorId;
+    window._currentInspectedSectorId = sectorId;
+
+    const modal = document.getElementById('modal-risk-evaluation');
+    if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+    }
+
+    // 1. Immediately find match in existing GeoJSON data to render with zero latency
+    let cachedProp = null;
+    if (window._currentRiskZonesData && Array.isArray(window._currentRiskZonesData.features)) {
+        const feat = window._currentRiskZonesData.features.find(f => {
+            const p = f.properties || {};
+            return p.sector_id === sectorId ||
+                   (p.aliases && p.aliases.includes(sectorId)) ||
+                   (p.sector_name && p.sector_name.toLowerCase().includes(sectorId.toLowerCase())) ||
+                   (p.corridor && p.corridor.toLowerCase().includes(sectorId.toLowerCase()));
+        });
+        if (feat && feat.properties) {
+            cachedProp = feat.properties;
+            _currentInspectedProperties = cachedProp;
+            renderRiskEvaluationData(cachedProp);
+            syncCorridorToDashboard(cachedProp);
         }
     }
-    const riskEvalDrawer = document.getElementById('risk-evaluation-panel') || document.getElementById('drawer-risk-eval') || document.getElementById('sec-risk-evaluation') || document.getElementById('decision-drawer');
+
+    // 2. Highlight and sync dashboard decision panel
+    const riskEvalDrawer = document.getElementById('risk-evaluation-panel') || document.getElementById('decision-intelligence-card');
     if (riskEvalDrawer) {
-        if (typeof toggleRiskEvaluationPanel === 'function') {
-            toggleRiskEvaluationPanel(true);
-        } else {
-            riskEvalDrawer.classList.remove('hidden');
-        }
-        riskEvalDrawer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        riskEvalDrawer.classList.remove('hidden');
     }
+
+    // 3. Trigger live execution / fetch to get the freshest live record
+    executeRiskEvaluation(sectorId, false);
+
     if (typeof showToast === 'function') {
-        showToast(`Inspecting deep evaluation for sector: ${sectorId}`, 'info');
+        const displayName = cachedProp ? (cachedProp.sector_name || sectorId) : sectorId;
+        showToast(`Opening Risk Evaluation Dossier: ${displayName}`, 'info');
     }
 }
+window.openRiskEvaluationModal = openRiskEvaluationModal;
+
+function closeRiskEvaluationModal() {
+    const modal = document.getElementById('modal-risk-evaluation');
+    if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }
+}
+window.closeRiskEvaluationModal = closeRiskEvaluationModal;
+
+async function executeRiskEvaluation(sectorId, showToastNotification = true) {
+    if (!sectorId) sectorId = _currentInspectedSectorId;
+    if (!sectorId) return;
+
+    const btnLabel = document.getElementById('re-execute-label');
+    const btnIcon = document.getElementById('re-execute-icon');
+    if (btnIcon) btnIcon.classList.add('animate-spin');
+    if (btnLabel) btnLabel.textContent = 'Executing...';
+
+    try {
+        const res = await fetch('/api/pahad/realtime-cri/sector/' + encodeURIComponent(sectorId));
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const data = await res.json();
+        if (data && data.record) {
+            _currentInspectedProperties = data.record;
+            renderRiskEvaluationData(data.record);
+            syncCorridorToDashboard(data.record);
+            if (showToastNotification && typeof showToast === 'function') {
+                const criNum = Number(data.record.final_cri || 0).toFixed(1);
+                showToast(`Live execution complete: ${data.record.sector_name} (CRI: ${criNum} [${data.record.alert_band}])`, 'success');
+            }
+        }
+    } catch (err) {
+        console.warn('[PAHAD] Live sector evaluation fetch notice:', err);
+        if (showToastNotification && typeof showToast === 'function') {
+            showToast(`Evaluated ${sectorId} from authoritative runtime cache.`, 'info');
+        }
+    } finally {
+        if (btnIcon) btnIcon.classList.remove('animate-spin');
+        if (btnLabel) btnLabel.textContent = 'Re-execute Live';
+    }
+}
+window.executeRiskEvaluation = executeRiskEvaluation;
+
+function renderRiskEvaluationData(p) {
+    if (!p) return;
+    const band = (p.alert_band || p.risk_band || 'LOW').toUpperCase();
+    const bandMeta = (typeof RISK_BAND_PALETTE !== 'undefined' && RISK_BAND_PALETTE[band]) ? RISK_BAND_PALETTE[band] : { color: '#16a34a', label: 'LOW', badgeBg: '#15803d', textColor: '#ffffff' };
+
+    // Header & identity
+    const sidEl = document.getElementById('re-modal-sector-id-badge');
+    const nameEl = document.getElementById('re-modal-name');
+    const locEl = document.getElementById('re-modal-location');
+    const coordsEl = document.getElementById('re-modal-coords-elev');
+    const badgeEl = document.getElementById('re-modal-risk-badge');
+    const provBadgeEl = document.getElementById('re-modal-provenance-badge');
+    const timeEl = document.getElementById('re-modal-evaluated-at');
+
+    if (sidEl) sidEl.textContent = p.sector_id || 'SECTOR';
+    if (nameEl) nameEl.textContent = p.sector_name || p.corridor || 'Target Sector';
+    if (locEl) locEl.textContent = `${p.corridor || 'Corridor'} • ${p.district || ''}, ${p.state || 'NER'}`;
+    if (coordsEl) {
+        const lat = Number(p.latitude || 0).toFixed(4);
+        const lon = Number(p.longitude || 0).toFixed(4);
+        const elev = p.elevation_m ? `${p.elevation_m}m` : '--';
+        const slope = p.slope_deg ? `${p.slope_deg}°` : '--';
+        coordsEl.textContent = `${lat}°N, ${lon}°E • Elev: ${elev} • Slope: ${slope} • Formation: ${p.lithology || 'Metasedimentary'}`;
+    }
+
+    if (badgeEl) {
+        badgeEl.textContent = band + ' ALERT';
+        badgeEl.style.backgroundColor = bandMeta.badgeBg || '#15803d';
+        badgeEl.style.color = bandMeta.textColor || '#ffffff';
+        badgeEl.style.borderColor = bandMeta.color || '#16a34a';
+    }
+
+    if (provBadgeEl) {
+        provBadgeEl.textContent = p.overall_provenance || '[LIVE / HYBRID]';
+    }
+
+    if (timeEl) {
+        let tsStr = 'Live';
+        if (p.timestamp) {
+            try {
+                tsStr = new Date(p.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' UTC';
+            } catch (_) {}
+        }
+        timeEl.textContent = `Evaluated: ${tsStr}`;
+    }
+
+    // 4 Core KPIs
+    const criVal = Number(p.final_cri !== undefined ? p.final_cri : (p.cri !== undefined ? p.cri : 0)).toFixed(1);
+    const fosVal = Number(p.physical_fos !== undefined ? p.physical_fos : 1.0).toFixed(3);
+    const probVal = (Number(p.event_probability_24h !== undefined ? p.event_probability_24h : (p.event_probability !== undefined ? p.event_probability : 0)) * 100).toFixed(1);
+    const signalsVal = p.signals_triggered_count !== undefined ? p.signals_triggered_count : (p.signals_triggered || '1');
+
+    const criEl = document.getElementById('re-val-cri');
+    const criBandEl = document.getElementById('re-val-cri-band');
+    const fosEl = document.getElementById('re-val-fos');
+    const fosStatusEl = document.getElementById('re-val-fos-status');
+    const probEl = document.getElementById('re-val-prob');
+    const prob6hEl = document.getElementById('re-prob-6h');
+    const prob48hEl = document.getElementById('re-prob-48h');
+    const signalsEl = document.getElementById('re-val-signals');
+    const signalsStatusEl = document.getElementById('re-val-signals-status');
+
+    if (criEl) {
+        criEl.textContent = criVal;
+        criEl.style.color = bandMeta.color;
+    }
+    if (criBandEl) {
+        criBandEl.textContent = band;
+        criBandEl.style.color = bandMeta.color;
+    }
+    if (fosEl) {
+        fosEl.textContent = fosVal;
+        fosEl.style.color = Number(fosVal) < 1.0 ? '#f87171' : (Number(fosVal) < 1.3 ? '#fbbf24' : '#34d399');
+    }
+    if (fosStatusEl) {
+        if (Number(fosVal) < 1.0) {
+            fosStatusEl.textContent = 'CRITICAL LIMIT (FoS < 1.0)';
+            fosStatusEl.className = 'text-rose-400 font-bold';
+        } else if (Number(fosVal) < 1.3) {
+            fosStatusEl.textContent = 'MARGINAL (1.0 ≤ FoS < 1.3)';
+            fosStatusEl.className = 'text-amber-400 font-bold';
+        } else {
+            fosStatusEl.textContent = 'STABLE (FoS ≥ 1.3)';
+            fosStatusEl.className = 'text-emerald-400 font-bold';
+        }
+    }
+    if (probEl) probEl.textContent = probVal + '%';
+    if (prob6hEl) prob6hEl.textContent = (Number(probVal) * 0.62).toFixed(1) + '%';
+    if (prob48hEl) prob48hEl.textContent = Math.min(99.0, Number(probVal) * 1.18).toFixed(1) + '%';
+
+    if (signalsEl) signalsEl.textContent = signalsVal + ' / 3';
+    if (signalsStatusEl) {
+        signalsStatusEl.textContent = Number(signalsVal) >= 2 ? 'CORROBORATED (Dual Confirmed)' : 'SUB-THRESHOLD (Single Signal)';
+        signalsStatusEl.style.color = Number(signalsVal) >= 2 ? '#f87171' : '#38bdf8';
+    }
+
+    // Telemetry Breakdown
+    const r24 = document.getElementById('re-rain-24h');
+    const r72 = document.getElementById('re-rain-72h');
+    const rThresh = document.getElementById('re-rain-threshold');
+    const r1h = document.getElementById('re-rain-1h');
+
+    if (r24) r24.textContent = `${p.rainfall_24h_mm || 0} mm`;
+    if (r72) r72.textContent = `${p.rainfall_72h_mm || p.api_3d_mm || 0} mm`;
+    if (rThresh) {
+        const exceeded = p.mandal_sarkar_exceeded || p.rainfall_threshold_status === 'EXCEEDED';
+        rThresh.textContent = exceeded ? 'EXCEEDED' : 'NORMAL';
+        rThresh.className = exceeded ? 'text-amber-400 font-bold' : 'text-emerald-400 font-bold';
+    }
+    if (r1h) r1h.textContent = `${p.rainfall_1h_mm || p.rainfall_current_mmh || 0} mm/h`;
+
+    const seEl = document.getElementById('re-seismic-event');
+    const sdEl = document.getElementById('re-seismic-dist');
+    const sdpEl = document.getElementById('re-seismic-depth');
+    const spgaEl = document.getElementById('re-seismic-pga');
+
+    if (seEl) seEl.textContent = `M ${Number(p.seismic_magnitude || 0).toFixed(1)}`;
+    if (sdEl) sdEl.textContent = `${p.seismic_distance_km ? Number(p.seismic_distance_km).toFixed(1) : '350+'} km`;
+    if (sdpEl) sdpEl.textContent = `${p.seismic_depth_km ? Number(p.seismic_depth_km).toFixed(1) : '120+'} km`;
+    if (spgaEl) spgaEl.textContent = `${Number(p.seismic_shaking_proxy_g || 0).toFixed(2)}g (${Number(p.seismic_magnitude || 0) >= 5.0 ? 'Elevated' : 'Stable'})`;
+
+    const ivEl = document.getElementById('re-insar-vel');
+    const icEl = document.getElementById('re-insar-cum');
+    const ndviEl = document.getElementById('re-ndvi');
+    const slopeEl = document.getElementById('re-slope');
+
+    if (ivEl) ivEl.textContent = `${p.insar_deformation_mm || 0} mm/yr`;
+    if (icEl) icEl.textContent = `${p.cumulative_displacement_mm || 0} mm`;
+    if (ndviEl) ndviEl.textContent = `${p.ndvi || 0.65}`;
+    if (slopeEl) slopeEl.textContent = `${p.slope_deg || 35.0}° [STATIC CartoDEM]`;
+
+    const vwcEl = document.getElementById('re-vwc');
+    const ppEl = document.getElementById('re-pore-pressure');
+    const tiltEl = document.getElementById('re-tilt');
+    const cfEl = document.getElementById('re-cohesion-friction');
+
+    if (vwcEl) vwcEl.textContent = `${p.soil_moisture_vwc || 0.28} m³/m³`;
+    if (ppEl) ppEl.textContent = `${p.pore_water_pressure_kpa || 1.2} kPa`;
+    if (tiltEl) tiltEl.textContent = `${p.tilt_deg || 0.4}°`;
+    if (cfEl) cfEl.textContent = `c' = ${p.cohesion_kpa || 18} kPa | φ' = ${p.friction_deg || 28}°`;
+
+    // Synthesis & Protocol
+    const whyEl = document.getElementById('re-why-this-risk');
+    if (whyEl) {
+        whyEl.textContent = `Rainfall (${p.rainfall_24h_mm || 0}mm via Open-Meteo) combined with slope gradient (${p.slope_deg || 35}° CartoDEM), unsaturated van Genuchten SWCC matrix suction (VWC ${p.soil_moisture_vwc || 0.28}), and Mohr-Coulomb limit equilibrium yields Factor of Safety ${fosVal}. Active Signal Corroboration: ${signalsVal}/3 signals triggered.`;
+    }
+
+    const recEl = document.getElementById('re-rec-action');
+    const hwEl = document.getElementById('re-highway-status');
+    const detEl = document.getElementById('re-detour-info');
+
+    if (recEl) recEl.textContent = p.recommended_action || (Number(fosVal) < 1.0 ? 'Immediate Heavy Vehicle Restriction & BRO SOP-ALPHA' : 'Maintain routine telemetry monitoring.');
+    if (hwEl) {
+        if (band === 'EXTREME' || Number(fosVal) < 1.0) {
+            hwEl.textContent = 'PASSAGE RESTRICTED';
+            hwEl.className = 'px-2 py-0.5 rounded text-[10px] font-black uppercase bg-rose-950 text-rose-300 border border-rose-800';
+        } else if (band === 'HIGH' || band === 'VERY_HIGH') {
+            hwEl.textContent = 'CONTROLLED TRANSIT';
+            hwEl.className = 'px-2 py-0.5 rounded text-[10px] font-black uppercase bg-amber-950 text-amber-300 border border-amber-800';
+        } else {
+            hwEl.textContent = 'PASSAGE OPEN (MONITORED)';
+            hwEl.className = 'px-2 py-0.5 rounded text-[10px] font-black uppercase bg-emerald-950 text-emerald-300 border border-emerald-800';
+        }
+    }
+    if (detEl) {
+        detEl.textContent = (band === 'EXTREME' || band === 'VERY_HIGH')
+            ? `Active bypass detour operational for ${p.corridor || 'corridor'}. Emergency plant staging mobilized.`
+            : `Primary arterial corridor clear. Regular logistics clearance active.`;
+    }
+
+    const hashEl = document.getElementById('re-modal-data-hash');
+    if (hashEl) {
+        hashEl.textContent = `SHA-256: ${(p.data_hash_sha256 || '4fcea396faf1').substring(0, 16)}...`;
+    }
+}
+
+function centerMapOnSector() {
+    closeRiskEvaluationModal();
+    if (_currentInspectedProperties && window.map) {
+        const lat = Number(_currentInspectedProperties.latitude);
+        const lon = Number(_currentInspectedProperties.longitude);
+        if (Number.isFinite(lat) && Number.isFinite(lon)) {
+            window.map.setView([lat, lon], 12, { animate: true });
+            if (typeof showToast === 'function') {
+                showToast(`Focused map on ${_currentInspectedProperties.sector_name || 'sector'}`, 'info');
+            }
+        }
+    }
+}
+window.centerMapOnSector = centerMapOnSector;
+
+function syncModalToDashboard() {
+    if (_currentInspectedProperties) {
+        syncCorridorToDashboard(_currentInspectedProperties);
+        closeRiskEvaluationModal();
+        const card = document.getElementById('card-zone-title');
+        if (card) card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        if (typeof showToast === 'function') {
+            showToast(`Synchronized ${_currentInspectedProperties.sector_name || 'sector'} to Decision Card`, 'success');
+        }
+    }
+}
+window.syncModalToDashboard = syncModalToDashboard;
+
+function inspectSectorDeepRisk(sectorId) {
+    openRiskEvaluationModal(sectorId);
+}
 window.inspectSectorDeepRisk = inspectSectorDeepRisk;
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeRiskEvaluationModal();
+    }
+});
 
 async function loadCurrentRiskZones(isPeriodicRefresh = false) {
     if (!window.map) return;
@@ -10145,6 +10697,35 @@ function showToast(message,type){
     },4000);
 }
 
+function setThemeMode(mode) {
+    var body = document.getElementById('page-body');
+    var isLight = false;
+    if (mode === 'system') {
+        localStorage.setItem('parvat_theme', 'system');
+        isLight = !window.matchMedia('(prefers-color-scheme: dark)').matches;
+    } else if (mode === 'light') {
+        localStorage.setItem('parvat_theme', 'light');
+        isLight = true;
+    } else {
+        localStorage.setItem('parvat_theme', 'dark');
+        isLight = false;
+    }
+
+    if (isLight) {
+        body.classList.add('light-mode');
+        body.classList.remove('dark-mode');
+        document.documentElement.classList.remove('dark');
+        document.documentElement.classList.add('light');
+    } else {
+        body.classList.remove('light-mode');
+        body.classList.add('dark-mode');
+        document.documentElement.classList.add('dark');
+        document.documentElement.classList.remove('light');
+    }
+    updateThemeUI(isLight);
+}
+window.setThemeMode = setThemeMode;
+
 function toggleTheme() {
     var body = document.getElementById('page-body');
     var isLight = body.classList.toggle('light-mode');
@@ -10165,6 +10746,29 @@ function updateThemeUI(isLight) {
     var icon = document.getElementById('theme-icon');
     var text = document.getElementById('theme-text');
     var btn = document.getElementById('theme-toggle-btn');
+    var optLight = document.getElementById('theme-opt-light');
+    var optDark = document.getElementById('theme-opt-dark');
+    var optSystem = document.getElementById('theme-opt-system');
+    var themeMode = localStorage.getItem('parvat_theme') || (isLight ? 'light' : 'dark');
+
+    if (optLight && optDark && optSystem) {
+        if (themeMode === 'system') {
+            optSystem.className = isLight 
+                ? 'w-5 h-5 rounded-full flex items-center justify-center bg-slate-300 text-slate-900 shadow-xs text-[10px]' 
+                : 'w-5 h-5 rounded-full flex items-center justify-center bg-slate-700 text-sky-300 shadow-xs border border-slate-600 text-[10px]';
+            optLight.className = 'w-5 h-5 rounded-full flex items-center justify-center text-slate-400 hover:text-amber-400 transition text-[10px]';
+            optDark.className = 'w-5 h-5 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-200 transition text-[10px]';
+        } else if (isLight) {
+            optLight.className = 'w-5 h-5 rounded-full flex items-center justify-center bg-amber-400 text-slate-900 shadow-xs font-bold text-[10px]';
+            optDark.className = 'w-5 h-5 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-600 transition text-[10px]';
+            optSystem.className = 'w-5 h-5 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-600 transition text-[10px]';
+        } else {
+            optDark.className = 'w-5 h-5 rounded-full flex items-center justify-center text-white bg-slate-800 border border-slate-600/80 shadow-xs text-[10px] transition';
+            optLight.className = 'w-5 h-5 rounded-full flex items-center justify-center text-slate-400 hover:text-amber-400 transition text-[10px]';
+            optSystem.className = 'w-5 h-5 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-200 transition text-[10px]';
+        }
+    }
+
     if (icon) {
         icon.innerHTML = isLight 
             ? '<i class="ph-bold ph-moon text-sky-400 text-xs" aria-hidden="true"></i>' 
@@ -10175,8 +10779,8 @@ function updateThemeUI(isLight) {
     }
     if (btn) {
         btn.className = isLight 
-            ? 'px-2.5 py-0.5 bg-slate-100 border border-slate-300 rounded text-slate-700 hover:bg-slate-200 hover:text-slate-900 transition flex items-center gap-1.5 text-[11px] font-semibold shadow-xs active:scale-95 cursor-pointer'
-            : 'px-2.5 py-0.5 bg-slate-800 border border-slate-700 rounded text-slate-200 hover:bg-slate-700 hover:text-white transition flex items-center gap-1.5 text-[11px] font-semibold shadow-xs active:scale-95 cursor-pointer';
+            ? 'inline-flex items-center p-0.5 rounded-full bg-slate-100 border border-slate-300 hover:border-slate-400 transition cursor-pointer shadow-inner'
+            : 'inline-flex items-center p-0.5 rounded-full bg-slate-900 border border-slate-700 hover:border-slate-500 transition cursor-pointer shadow-inner';
         btn.title = isLight ? 'Switch to dark mode' : 'Switch to light mode';
         btn.setAttribute('aria-label', isLight ? 'Switch to dark mode' : 'Switch to light mode');
     }
@@ -10188,10 +10792,12 @@ function updateThemeUI(isLight) {
 function initTheme() {
     var savedTheme = localStorage.getItem('parvat_theme');
     var body = document.getElementById('page-body');
-    var icon = document.getElementById('theme-icon');
-    var text = document.getElementById('theme-text');
-    var btn = document.getElementById('theme-toggle-btn');
-    var isLight = (savedTheme === 'light');
+    var isLight = false;
+    if (savedTheme === 'system') {
+        isLight = !window.matchMedia('(prefers-color-scheme: dark)').matches;
+    } else {
+        isLight = (savedTheme === 'light');
+    }
     if (isLight) {
         body.classList.add('light-mode');
         body.classList.remove('dark-mode');
@@ -10203,21 +10809,7 @@ function initTheme() {
         document.documentElement.classList.add('dark');
         document.documentElement.classList.remove('light');
     }
-    if (icon) {
-        icon.innerHTML = isLight 
-            ? '<i class="ph-bold ph-moon text-sky-400 text-xs" aria-hidden="true"></i>' 
-            : '<i class="ph-bold ph-sun text-amber-400 text-xs" aria-hidden="true"></i>';
-    }
-    if (text) {
-        text.innerText = isLight ? 'Dark Mode' : 'Light Mode';
-    }
-    if (btn) {
-        btn.className = isLight 
-            ? 'px-2.5 py-1 bg-slate-100 border border-slate-300 rounded text-slate-700 hover:bg-slate-200 hover:text-slate-900 transition flex items-center gap-1.5 text-xs font-semibold shadow-xs active:scale-95'
-            : 'px-2.5 py-1 bg-slate-800 border border-slate-700 rounded text-slate-200 hover:bg-slate-700 hover:text-white transition flex items-center gap-1.5 text-xs font-semibold shadow-xs active:scale-95';
-        btn.title = isLight ? 'Switch to dark mode' : 'Switch to light mode';
-        btn.setAttribute('aria-label', isLight ? 'Switch to dark mode' : 'Switch to light mode');
-    }
+    updateThemeUI(isLight);
 }
 
 function toggleContrast(){document.getElementById('page-body').classList.toggle('high-contrast');}

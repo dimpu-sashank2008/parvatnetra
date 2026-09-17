@@ -1608,3 +1608,94 @@ body.light-mode .micro-skeleton {
     }
 }
 
+/* ========================================================================= */
+/* PHASE 14: AUTHORITATIVE DATA TRUTH MODAL — FADED SAFFRON PALETTE          */
+/* High-contrast dark typography (#0B2545 / #1E293B) on Faded Saffron        */
+/* ========================================================================= */
+#modal-data-truth-matrix .data-truth-modal-card,
+#modal-data-truth-matrix > div {
+    background-color: #FFF7ED !important;
+    background: #FFF7ED !important;
+    border: 2px solid #FED7AA !important;
+    color: #0F172A !important;
+    box-shadow: 0 25px 50px -12px rgba(217, 83, 30, 0.15), 0 10px 25px -5px rgba(0, 0, 0, 0.25) !important;
+}
+
+#modal-data-truth-matrix h3 {
+    color: #0B2545 !important;
+}
+
+#modal-data-truth-matrix table {
+    background-color: #FFFDF9 !important;
+    background: #FFFDF9 !important;
+    color: #1E293B !important;
+}
+
+#modal-data-truth-matrix thead,
+#modal-data-truth-matrix thead tr {
+    background-color: #FED7AA !important;
+    background: #FED7AA !important;
+    border-bottom: 2px solid #FDBA74 !important;
+}
+
+#modal-data-truth-matrix thead th {
+    color: #7C2D12 !important;
+    font-weight: 700 !important;
+    font-size: 10px !important;
+}
+
+#modal-data-truth-matrix tbody tr {
+    background-color: #FFFDF9 !important;
+    background: #FFFDF9 !important;
+    border-bottom: 1px solid #FED7AA !important;
+}
+
+#modal-data-truth-matrix tbody tr:nth-child(even) {
+    background-color: #FFF7ED !important;
+    background: #FFF7ED !important;
+}
+
+#modal-data-truth-matrix tbody tr:hover {
+    background-color: #FFEDD5 !important;
+    background: #FFEDD5 !important;
+}
+
+#modal-data-truth-matrix tbody td {
+    color: #1E293B !important;
+}
+
+#modal-data-truth-matrix tbody td:first-child,
+#modal-data-truth-matrix tbody td.font-bold {
+    color: #0B2545 !important;
+    font-weight: 700 !important;
+}
+
+#modal-data-truth-matrix .evaluator-note-box {
+    background-color: #FFEDD5 !important;
+    background: #FFEDD5 !important;
+    border: 2px solid #FED7AA !important;
+    color: #7C2D12 !important;
+}
+
+#modal-data-truth-matrix .evaluator-note-box strong {
+    color: #0B2545 !important;
+}
+
+/* Also protect modal-scientific-expl in light mode */
+body.light-mode #modal-scientific-expl > div {
+    background-color: #FFF7ED !important;
+    border: 2px solid #FED7AA !important;
+    color: #0F172A !important;
+}
+
+body.light-mode #modal-scientific-expl h3 {
+    color: #0B2545 !important;
+}
+
+body.light-mode #modal-scientific-expl #sci-expl-body,
+body.light-mode #modal-scientific-expl #sci-expl-body p,
+body.light-mode #modal-scientific-expl #sci-expl-body span {
+    color: #1E293B !important;
+}
+
+
