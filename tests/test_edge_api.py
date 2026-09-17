@@ -138,6 +138,44 @@ class TestEdgeAPI(unittest.TestCase):
         self.assertIn("ACOUSTIC EVACUATION SIREN CONTROLLER", html)
         self.assertIn("SIH 26001", html)
 
+    def test_mesh_nodes_status_no_boxes(self):
+        """Verify mesh node status in edge_network.html displays clean text without box styling."""
+        res = self.client.get("/edge-network")
+        self.assertEqual(res.status_code, 200)
+        html = res.get_data(as_text=True)
+        # Verify clean text is rendered
+        self.assertIn("सक्रिय • HEALTHY", html)
+        # Verify box styling (border/background/pill) is removed from status column
+        self.assertNotIn('bg-emerald-950 text-emerald-300 border border-emerald-800', html)
+
+    def test_all_user_reported_elements_have_no_boxes(self):
+        """Verify badges, table roles, safety protocol banner, and siren buttons have no box/border styling."""
+        res = self.client.get("/edge-network")
+        self.assertEqual(res.status_code, 200)
+        html = res.get_data(as_text=True)
+
+        # 1. [SIMULATED / MESH] badge has no box
+        self.assertIn("[SIMULATED / MESH]", html)
+        self.assertNotIn('badge-sim font-semibold">[SIMULATED / MESH]', html)
+
+        # 2. [EDGE SAFETY STATE] badge has no box
+        self.assertIn("[EDGE SAFETY STATE]", html)
+        self.assertNotIn('badge-sim font-semibold" id="risk-prov-tag">[EDGE SAFETY STATE]', html)
+
+        # 3. Table role badges (SENSOR & RELAY) have no box/border
+        self.assertIn("सेंसर • SENSOR", html)
+        self.assertNotIn('border border-slate-700 font-medium">सेंसर • SENSOR', html)
+        self.assertNotIn('border border-amber-800 font-medium">रिले • RELAY', html)
+
+        # 4. [SQLITE STORE] badge has no box
+        self.assertIn("[SQLITE STORE]", html)
+        self.assertNotIn('badge-live font-semibold" id="sync-mode-tag">[SQLITE STORE]', html)
+
+        # 5. Safety protocol banner and siren buttons have no enclosing box/border
+        self.assertNotIn('border border-amber-800/60 rounded-lg text-[11px] text-amber-300', html)
+        self.assertNotIn('border border-amber-600 transition flex items-center justify-center space-x-1', html)
+
 
 if __name__ == "__main__":
     unittest.main()
+
