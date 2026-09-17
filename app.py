@@ -5112,6 +5112,7 @@ def api_geospatial_dem():
     """
     GET /api/geospatial/dem
     Returns DEM dataset metadata, bounds, CRS, resolution, and optional point elevation.
+    Supports multi-source breakdown across space agency constellations.
     """
     from services.dem_service import DEM_SERVICE
     lat_str = request.args.get("lat")
@@ -5125,14 +5126,20 @@ def api_geospatial_dem():
             lon = float(lon_str)
             meta["queried_point"] = {"lat": lat, "lon": lon}
             meta["elevation_m"] = DEM_SERVICE.get_elevation(lat, lon)
+            multi_res = DEM_SERVICE.get_multi_source_elevation(lat, lon)
+            meta["multi_source_elevation"] = multi_res.to_dict()
         except ValueError:
             pass
     elif sector_id:
         from engine.pahad_sectors import CriticalSectorRegistry
         sec = CriticalSectorRegistry().get_sector(sector_id)
         if sec:
+            lat = float(sec["lat"])
+            lon = float(sec["lon"])
             meta["sector_id"] = sector_id
-            meta["elevation_m"] = DEM_SERVICE.get_elevation(float(sec["lat"]), float(sec["lon"]))
+            meta["elevation_m"] = DEM_SERVICE.get_elevation(lat, lon)
+            multi_res = DEM_SERVICE.get_multi_source_elevation(lat, lon)
+            meta["multi_source_elevation"] = multi_res.to_dict()
 
     return jsonify(meta), 200
 
@@ -5145,6 +5152,7 @@ def api_geospatial_terrain():
       bbox: min_lon,min_lat,max_lon,max_lat (default Sikkim corridor)
       resolution: cell size in meters (default 30.0)
       product: elevation, slope, aspect, curvature, hillshade, contours
+      source: consensus, isro_cartodem, copernicus_glo30, nasa_srtm, jaxa_alos
     """
     try:
         import numpy as np
@@ -5156,6 +5164,7 @@ def api_geospatial_terrain():
 
         bbox_str = request.args.get("bbox")
         product = request.args.get("product", "elevation").lower()
+        source = request.args.get("source", "consensus").lower()
         interval_m = float(request.args.get("interval", 20.0))
         grid_size = int(request.args.get("grid_size", 32))
         grid_size = max(8, min(64, grid_size))
@@ -5183,13 +5192,15 @@ def api_geospatial_terrain():
             min_lon=bounds["min_lon"],
             max_lon=bounds["max_lon"],
             grid_rows=grid_size,
-            grid_cols=grid_size
+            grid_cols=grid_size,
+            source=source
         )
 
         if product == "contours":
             contours_geojson = generate_contours(elev_grid, bounds, interval_m=interval_m)
             contours_geojson["product"] = "contours"
             contours_geojson["status"] = "SUCCESS"
+            contours_geojson["source_selected"] = source
             contours_geojson["geojson"] = {
                 "type": contours_geojson.get("type", "FeatureCollection"),
                 "features": contours_geojson.get("features", [])
@@ -5204,6 +5215,7 @@ def api_geospatial_terrain():
             return jsonify({
                 "status": "SUCCESS",
                 "product": "slope",
+                "source_selected": source,
                 "units": "degrees",
                 "bounds": bounds,
                 "grid_shape": list(slope_grid.shape),
@@ -5216,6 +5228,7 @@ def api_geospatial_terrain():
                     "mean_slope_deg": mean_sl,
                     "resolution_m": 30.0,
                     "bounds": bounds,
+                    "source_selected": source,
                     "provenance": "[HISTORICAL]"
                 },
                 "matrix": np.round(slope_grid, 1).tolist(),
@@ -5229,6 +5242,7 @@ def api_geospatial_terrain():
             return jsonify({
                 "status": "SUCCESS",
                 "product": "aspect",
+                "source_selected": source,
                 "units": "degrees_clockwise_north",
                 "bounds": bounds,
                 "grid_shape": list(aspect_grid.shape),
@@ -5241,6 +5255,7 @@ def api_geospatial_terrain():
             return jsonify({
                 "status": "SUCCESS",
                 "product": "curvature",
+                "source_selected": source,
                 "bounds": bounds,
                 "plan_curvature": np.round(plan_curv, 4).tolist(),
                 "profile_curvature": np.round(prof_curv, 4).tolist(),
@@ -5252,6 +5267,7 @@ def api_geospatial_terrain():
             return jsonify({
                 "status": "SUCCESS",
                 "product": "hillshade",
+                "source_selected": source,
                 "units": "8-bit illumination (0-255)",
                 "bounds": bounds,
                 "matrix": hillshade_grid.tolist(),
@@ -5264,6 +5280,7 @@ def api_geospatial_terrain():
             return jsonify({
                 "status": "SUCCESS",
                 "product": "elevation",
+                "source_selected": source,
                 "units": "meters",
                 "bounds": bounds,
                 "grid_shape": list(elev_grid.shape),
@@ -5274,6 +5291,7 @@ def api_geospatial_terrain():
                     "max_elevation_m": max_el,
                     "resolution_m": 30.0,
                     "bounds": bounds,
+                    "source_selected": source,
                     "provenance": "[HISTORICAL]"
                 },
                 "matrix": np.round(elev_grid, 1).tolist(),
@@ -5287,7 +5305,112 @@ def api_geospatial_terrain():
         return jsonify({"status": "ERROR", "message": str(e)}), 500
 
 
+@app.route("/api/terrain/point", methods=["GET"])
+def api_terrain_point():
+    """
+    GET /api/terrain/point
+    Parameters:
+      lat: float (required, default 27.33)
+      lon: float (required, default 88.61)
+      cohesion: float (optional, default 16.0 kPa)
+      friction: float (optional, default 28.0 deg)
+      depth: float (optional, default 3.5 m)
+      water_table: float (optional, default 0.5 ratio)
+    Returns:
+      Consensus elevation, slope, aspect, curvature, TRI,
+      multi-source breakdown across space agencies (ISRO, Copernicus, NASA, JAXA),
+      and Geotechnical Slope Stability Envelope.
+    """
+    try:
+        from services.dem_service import DEM_SERVICE
+        lat = float(request.args.get("lat", 27.33))
+        lon = float(request.args.get("lon", 88.61))
+        c_kpa = float(request.args.get("cohesion", 16.0))
+        phi_deg = float(request.args.get("friction", 28.0))
+        z_m = float(request.args.get("depth", 3.5))
+        m_ratio = float(request.args.get("water_table", 0.5))
+
+        multi_terr = DEM_SERVICE.get_multi_source_terrain(lat, lon)
+        envelope = DEM_SERVICE.get_stability_envelope(
+            lat=lat, lon=lon,
+            cohesion_kpa=c_kpa,
+            friction_deg=phi_deg,
+            soil_depth_m=z_m,
+            water_table_ratio=m_ratio
+        )
+
+        return jsonify({
+            "status": "SUCCESS",
+            "latitude": multi_terr.latitude,
+            "longitude": multi_terr.longitude,
+            "consensus": {
+                "elevation_m": multi_terr.consensus_elevation_m,
+                "slope_deg": multi_terr.consensus_slope_deg,
+                "aspect_deg": multi_terr.consensus_aspect_deg,
+                "curvature": multi_terr.consensus_curvature,
+                "terrain_ruggedness_index": multi_terr.terrain_ruggedness_index,
+                "relative_relief_m": multi_terr.relative_relief_m,
+                "agreement_score": multi_terr.agreement_score,
+                "uncertainty_band": multi_terr.uncertainty_band
+            },
+            "sources": {
+                "slopes": multi_terr.source_slopes,
+                "elevations": multi_terr.source_elevations,
+                "slope_std_dev_deg": multi_terr.slope_std_dev_deg,
+                "slope_min_deg": multi_terr.slope_min_deg,
+                "slope_max_deg": multi_terr.slope_max_deg,
+                "worst_case_slope_deg": multi_terr.worst_case_slope_deg,
+                "sources_consulted": multi_terr.sources_consulted,
+                "has_ground_survey": multi_terr.has_ground_survey,
+                "ground_survey_delta_deg": multi_terr.ground_survey_delta_deg
+            },
+            "stability_envelope": envelope,
+            "provenance": multi_terr.provenance
+        }), 200
+    except Exception as e:
+        logger.error(f"Error in /api/terrain/point: {e}", exc_info=True)
+        return jsonify({"status": "ERROR", "message": str(e)}), 500
+
+
+@app.route("/api/terrain/multi-source", methods=["GET"])
+def api_terrain_multi_source():
+    """
+    GET /api/terrain/multi-source
+    Returns side-by-side comparative analysis of ISRO CartoDEM, Copernicus GLO-30,
+    NASA SRTM, and JAXA ALOS at the specified coordinate.
+    """
+    try:
+        from services.dem_service import DEM_SERVICE
+        lat = float(request.args.get("lat", 27.33))
+        lon = float(request.args.get("lon", 88.61))
+
+        elev_result = DEM_SERVICE.get_multi_source_elevation(lat, lon)
+        terr_result = DEM_SERVICE.get_multi_source_terrain(lat, lon)
+
+        return jsonify({
+            "status": "SUCCESS",
+            "latitude": lat,
+            "longitude": lon,
+            "elevation_analysis": elev_result.to_dict(),
+            "terrain_analysis": terr_result.to_dict(),
+            "summary": {
+                "consensus_elevation_m": terr_result.consensus_elevation_m,
+                "consensus_slope_deg": terr_result.consensus_slope_deg,
+                "elevation_agreement_score": elev_result.agreement_score,
+                "slope_agreement_score": terr_result.agreement_score,
+                "confidence_tier": elev_result.confidence_tier,
+                "uncertainty_band": terr_result.uncertainty_band,
+                "primary_source": elev_result.primary_source
+            },
+            "provenance": terr_result.provenance
+        }), 200
+    except Exception as e:
+        logger.error(f"Error in /api/terrain/multi-source: {e}", exc_info=True)
+        return jsonify({"status": "ERROR", "message": str(e)}), 500
+
+
 @app.route("/api/geospatial/vegetation", methods=["GET"])
+
 def api_geospatial_vegetation():
     """
     GET /api/geospatial/vegetation

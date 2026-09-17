@@ -113,6 +113,26 @@ class PhysicalSlopeResult:
 
 
 @dataclass
+class MultiSourceSlopeResult:
+    consensus_fs: float
+    conservative_fs: float
+    optimistic_fs: float
+    consensus_slope_deg: float
+    worst_case_slope_deg: float
+    gentlest_slope_deg: float
+    slope_std_dev_deg: float
+    slope_sensitivity_per_deg: float
+    envelope_classification: str
+    is_conservative_unstable: bool
+    is_consensus_unstable: bool
+    agreement_score: float
+    sources_consulted: List[str]
+
+    def to_dict(self) -> Dict[str, Any]:
+        return asdict(self)
+
+
+@dataclass
 class EmpiricalThresholdResult:
     duration_hours: float
     duration_days: float
@@ -254,9 +274,100 @@ def calculate_infinite_slope_fs(
     )
 
 
+def calculate_multi_source_slope_fs(
+    cohesion_kpa: float,
+    friction_deg: float,
+    slope_consensus_deg: float,
+    slope_max_deg: float,
+    slope_min_deg: float,
+    soil_depth_m: float,
+    water_table_ratio: float,
+    soil_sat_weight: float,
+    water_unit_weight: float = 9.81,
+    slope_std_dev_deg: float = 1.0,
+    agreement_score: float = 0.95,
+    sources_consulted: Optional[List[str]] = None
+) -> MultiSourceSlopeResult:
+    """
+    Computes a comprehensive geotechnical Factor of Safety (FoS) stability envelope
+    accounting for topographic slope variations across multiple space agency DEM constellations
+    (ISRO CartoDEM, Copernicus GLO-30, NASA SRTM, JAXA ALOS) and ground surveys:
+      1. Consensus FoS using multi-agency agreed slope angle
+      2. Conservative FoS using worst-case steepest observed slope
+      3. Optimistic FoS using gentlest slope
+      4. Numerical slope sensitivity dFoS/dBeta
+    """
+    sources = sources_consulted or [
+        "ISRO CartoDEM (30m)",
+        "Copernicus DEM GLO-30 (30m)",
+        "NASA SRTM / NASADEM (30m)",
+        "JAXA ALOS World 3D"
+    ]
+
+    res_consensus = calculate_infinite_slope_fs(
+        cohesion_kpa=cohesion_kpa,
+        friction_deg=friction_deg,
+        slope_deg=slope_consensus_deg,
+        soil_depth_m=soil_depth_m,
+        water_table_ratio=water_table_ratio,
+        soil_sat_weight=soil_sat_weight,
+        water_unit_weight=water_unit_weight
+    )
+
+    res_conservative = calculate_infinite_slope_fs(
+        cohesion_kpa=cohesion_kpa,
+        friction_deg=friction_deg,
+        slope_deg=slope_max_deg,
+        soil_depth_m=soil_depth_m,
+        water_table_ratio=water_table_ratio,
+        soil_sat_weight=soil_sat_weight,
+        water_unit_weight=water_unit_weight
+    )
+
+    res_optimistic = calculate_infinite_slope_fs(
+        cohesion_kpa=cohesion_kpa,
+        friction_deg=friction_deg,
+        slope_deg=slope_min_deg,
+        soil_depth_m=soil_depth_m,
+        water_table_ratio=water_table_ratio,
+        soil_sat_weight=soil_sat_weight,
+        water_unit_weight=water_unit_weight
+    )
+
+    slope_span = max(0.1, slope_max_deg - slope_min_deg)
+    d_fos = (res_optimistic.factor_of_safety - res_conservative.factor_of_safety) / slope_span
+
+    if res_conservative.factor_of_safety <= 1.0:
+        if res_consensus.factor_of_safety <= 1.0:
+            classification = "UNSTABLE_CONVERGENT"
+        else:
+            classification = "CRITICAL_ON_STEEPEST_SLOPE"
+    elif res_consensus.factor_of_safety <= 1.25:
+        classification = "MARGINAL_SENSITIVE"
+    else:
+        classification = "STABLE_ROBUST"
+
+    return MultiSourceSlopeResult(
+        consensus_fs=res_consensus.factor_of_safety,
+        conservative_fs=res_conservative.factor_of_safety,
+        optimistic_fs=res_optimistic.factor_of_safety,
+        consensus_slope_deg=round(slope_consensus_deg, 2),
+        worst_case_slope_deg=round(slope_max_deg, 2),
+        gentlest_slope_deg=round(slope_min_deg, 2),
+        slope_std_dev_deg=round(slope_std_dev_deg, 2),
+        slope_sensitivity_per_deg=round(d_fos, 4),
+        envelope_classification=classification,
+        is_conservative_unstable=(res_conservative.factor_of_safety <= 1.0),
+        is_consensus_unstable=(res_consensus.factor_of_safety <= 1.0),
+        agreement_score=round(agreement_score, 3),
+        sources_consulted=sources
+    )
+
+
 # =============================================================================
 # 2. NORTH-EAST HIMALAYA EMPIRICAL RAINFALL THRESHOLDS
 # =============================================================================
+
 
 def calculate_id_threshold(duration_hours: float) -> float:
     """

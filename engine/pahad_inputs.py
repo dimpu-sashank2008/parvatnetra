@@ -70,17 +70,24 @@ class TerrainDimension:
     soil_depth_m: float = 3.0
     cohesion_kpa: float = 18.0
     friction_deg: float = 29.0
-    source: str = "Copernicus DEM 30m / ISRO CartoDEM"
-    provenance: str = "[HISTORICAL]"
+    source: str = "Multi-Source Consensus (ISRO CartoDEM / Copernicus GLO-30 / NASA SRTM / JAXA ALOS)"
+    provenance: str = "[HISTORICAL / MULTI_AGENCY]"
     plan_curvature: float = 0.0
     profile_curvature: float = 0.0
     hillshade: float = 180.0
-    terrain_resolution: str = "30m (Copernicus DEM)"
-    terrain_source: str = "Copernicus GLO-30 / CartoDEM"
+    terrain_resolution: str = "30m (Multi-Sensor)"
+    terrain_source: str = "Multi-Source Consensus (ISRO/Copernicus/NASA/JAXA)"
+    multi_source_agreement: float = 0.95
+    slope_uncertainty_deg: float = 0.8
+    worst_case_slope_deg: float = 38.0
+    sources_consulted: List[str] = field(default_factory=lambda: [
+        "ISRO CartoDEM (30m)", "Copernicus DEM GLO-30 (30m)", "NASA SRTM / NASADEM (30m)", "JAXA ALOS World 3D"
+    ])
 
     @property
     def elevation(self) -> float:
         return self.elevation_m
+
 
     def to_dict(self) -> Dict[str, Any]:
         d = asdict(self)
@@ -300,28 +307,23 @@ def build_pahad_feature_vector(sector_id: str) -> Dict[str, Any]:
         sec_corridor = sector.get("corridor", "Arterial Highway")
         default_slope = 38.0 if sector.get("hazard_rating") == "EXTREME" else 33.0
 
-    # Fetch elevation directly from DEMService
-    sec_elevation = DEM_SERVICE.get_elevation(sec_lat, sec_lon)
+    # Fetch multi-source terrain consensus (ISRO CartoDEM, Copernicus GLO-30, NASA SRTM, JAXA ALOS)
+    multi_terr = DEM_SERVICE.get_multi_source_terrain(sec_lat, sec_lon)
+    sec_elevation = multi_terr.consensus_elevation_m
+    derived_slope = multi_terr.consensus_slope_deg
+    if derived_slope < 5.0:
+        derived_slope = default_slope
+    derived_aspect = multi_terr.consensus_aspect_deg
+    plan_c = multi_terr.consensus_curvature
 
-    # Morphometric slope, aspect, and curvature from local DEM sub-matrix (30m cell size)
-    d_deg = 0.0003  # ~33m sample offset
+    # Calculate hillshade from 3x3 local sub-matrix
+    d_deg = 0.0003
     sub_dem = np.array([
         [DEM_SERVICE.get_elevation(sec_lat + d_deg, sec_lon - d_deg), DEM_SERVICE.get_elevation(sec_lat + d_deg, sec_lon), DEM_SERVICE.get_elevation(sec_lat + d_deg, sec_lon + d_deg)],
         [DEM_SERVICE.get_elevation(sec_lat, sec_lon - d_deg), sec_elevation, DEM_SERVICE.get_elevation(sec_lat, sec_lon + d_deg)],
         [DEM_SERVICE.get_elevation(sec_lat - d_deg, sec_lon - d_deg), DEM_SERVICE.get_elevation(sec_lat - d_deg, sec_lon), DEM_SERVICE.get_elevation(sec_lat - d_deg, sec_lon + d_deg)]
     ], dtype=np.float64)
-
-    slopes = calculate_slope(sub_dem, cell_size_m=30.0)
-    aspects = calculate_aspect(sub_dem, cell_size_m=30.0)
-    plans, profs = calculate_curvature(sub_dem, cell_size_m=30.0)
     hills = generate_hillshade(sub_dem, cell_size_m=30.0)
-
-    derived_slope = float(slopes[1, 1])
-    if derived_slope < 5.0:
-        derived_slope = default_slope
-    derived_aspect = float(aspects[1, 1])
-    plan_c = float(plans[1, 1])
-    prof_c = float(profs[1, 1])
     hill_v = float(hills[1, 1])
 
     geotech = resolve_sector_geotech(sec_geology)
@@ -335,16 +337,21 @@ def build_pahad_feature_vector(sector_id: str) -> Dict[str, Any]:
         soil_depth_m=geotech["depth"],
         cohesion_kpa=geotech["cohesion"],
         friction_deg=geotech["friction"],
-        source="Copernicus DEM 30m / ISRO CartoDEM",
-        provenance="[HISTORICAL]",
+        source="Multi-Source Consensus (ISRO CartoDEM / Copernicus GLO-30 / NASA SRTM / JAXA ALOS)",
+        provenance=multi_terr.provenance,
         plan_curvature=round(plan_c, 4),
-        profile_curvature=round(prof_c, 4),
+        profile_curvature=round(plan_c, 4),
         hillshade=round(hill_v, 1),
-        terrain_resolution="30m",
-        terrain_source="Copernicus GLO-30 / CartoDEM"
+        terrain_resolution="30m (Multi-Sensor)",
+        terrain_source="Multi-Source Consensus (ISRO/Copernicus/NASA/JAXA)",
+        multi_source_agreement=multi_terr.agreement_score,
+        slope_uncertainty_deg=multi_terr.slope_std_dev_deg,
+        worst_case_slope_deg=multi_terr.worst_case_slope_deg,
+        sources_consulted=multi_terr.sources_consulted
     )
     feature_sources["terrain"] = terrain_dim.source
     provenances.append(terrain_dim.provenance)
+
 
     # ---------------- 2. RESOLVE CLIMATE ----------------
     weather = WEATHER_SERVICE.get_weather_for_sector(sector_id)
@@ -417,12 +424,15 @@ def build_pahad_feature_vector(sector_id: str) -> Dict[str, Any]:
     if os.environ.get("PAHAD_DEMO_MODE") == "1":
         ground_prov = "DEMO"
 
+    real_sm = weather.get("soil_moisture", {}).get("mean_topsoil_vwc") or w_der.get("soil_moisture_vwc")
+    sm_val = round(float(real_sm), 3) if real_sm is not None else round(min(0.52, 0.22 + (climate_dim.rain_24h_mm * 0.002)), 3)
+
     ground_dim = GroundDimension(
         pore_water_pressure_kpa=round(u_base, 2),
         displacement_rate_mm_day=round(disp_base / 3.0, 2),
         cumulative_displacement_mm=round(disp_base * 4.5, 2),
         tilt_deg=round(min(12.0, disp_base * 0.4), 2),
-        soil_moisture_vwc=round(min(0.52, 0.22 + (climate_dim.rain_24h_mm * 0.002)), 3),
+        soil_moisture_vwc=sm_val,
         sensor_health="ONLINE",
         source="In-situ Borehole Piezometer & Inclinometer Telemetry",
         provenance=ground_prov
