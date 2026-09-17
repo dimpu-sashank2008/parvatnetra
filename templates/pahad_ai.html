@@ -524,13 +524,20 @@
                         <div class="flex items-center gap-2">
                             <span class="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span>
                             <span class="font-bold text-slate-100 uppercase tracking-wider text-[11px]">PAHAD FUSION CORE</span>
-                            <span class="text-[10px] font-mono text-sky-400 font-semibold">[ACTIVE DEM]</span>
+                            <span class="text-[10px] font-mono text-sky-400 font-semibold" id="obs-dem-src-badge">[HISTORICAL]</span>
                         </div>
                         <p class="text-[10px] text-slate-300 mt-0.5 font-medium">NH-10 Himalayan Corridor • Singtam - Rangpo Sector</p>
                         <div class="text-[9px] font-mono text-slate-400 mt-1 flex items-center gap-2">
-                            <span>WGS84 • 30m GLO-30</span>
+                            <span id="obs-dem-src-label">Consensus 30m</span>
                             <span>•</span>
                             <span>LAT 27°19'N LON 88°36'E</span>
+                        </div>
+                        <!-- DEM Source Switcher -->
+                        <div class="mt-1.5 flex items-center gap-1 flex-wrap">
+                            <span class="text-[8px] text-slate-500 uppercase">DEM:</span>
+                            <button onclick="switchObsDemSource('consensus')" id="obs-dem-consensus" class="px-2 py-0.5 text-[10px] rounded font-semibold bg-sky-800 border border-sky-500 text-sky-200 cursor-pointer">Consensus</button>
+                            <button onclick="switchObsDemSource('isro_cartodem')" id="obs-dem-isro_cartodem" class="px-2 py-0.5 text-[10px] rounded bg-slate-800 border border-slate-700 text-slate-400 hover:text-amber-200 cursor-pointer">ISRO</button>
+                            <button onclick="switchObsDemSource('copernicus_glo30')" id="obs-dem-copernicus_glo30" class="px-2 py-0.5 text-[10px] rounded bg-slate-800 border border-slate-700 text-slate-400 hover:text-sky-200 cursor-pointer">Copernicus</button>
                         </div>
                     </div>
 
@@ -1099,6 +1106,8 @@
         }
 
 
+
+        function initObservatory3D() {
             const container = document.getElementById('observatory-three-canvas');
             if (!container) return;
 
@@ -1218,6 +1227,29 @@
         }
 
         function getTerrainElevation(x, y) {
+            // If real DEM matrix is available, use bilinear interpolation
+            if (obsRealDemMatrix && obsGridRows > 0 && obsGridCols > 0) {
+                // Map Three.js x,y to grid row,col. The mesh is 74x74 units centered at (0,0)
+                const halfSize = 37.0;
+                const normX = (x + halfSize) / (2 * halfSize);  // 0..1
+                const normY = (y + halfSize) / (2 * halfSize);  // 0..1
+                const gRow = normY * (obsGridRows - 1);
+                const gCol = normX * (obsGridCols - 1);
+                const r0 = Math.max(0, Math.min(obsGridRows - 2, Math.floor(gRow)));
+                const c0 = Math.max(0, Math.min(obsGridCols - 2, Math.floor(gCol)));
+                const fr = gRow - r0;
+                const fc = gCol - c0;
+                // Bilinear interpolation
+                const e00 = obsRealDemMatrix[r0][c0];
+                const e10 = obsRealDemMatrix[r0 + 1][c0];
+                const e01 = obsRealDemMatrix[r0][c0 + 1];
+                const e11 = obsRealDemMatrix[r0 + 1][c0 + 1];
+                const elev = (e00 * (1 - fr) * (1 - fc) + e10 * fr * (1 - fc) + e01 * (1 - fr) * fc + e11 * fr * fc);
+                // Normalize elevation to Three.js Z-height range (~-12 to +12)
+                const minE = 250, maxE = 3600;
+                return ((elev - minE) / (maxE - minE)) * 22.0 - 11.0;
+            }
+            // Fallback: procedural Himalayan geomorphology formula (Teesta canyon + fault scarps)
             const gorgeDist = Math.abs(x - Math.sin(y * 0.05) * 12 - 4);
             const gorgeDepth = Math.exp(-(gorgeDist * gorgeDist) / 75.0) * 11.0;
             const mainRidge = Math.cos(x * 0.07 + 1.1) * Math.sin(y * 0.06) * 8.5;
@@ -1226,6 +1258,7 @@
             const microRelief = Math.sin(x * 0.35) * Math.cos(y * 0.35) * 0.7;
             return mainRidge + faultScarp + steppedTerraces + microRelief - gorgeDepth;
         }
+
 
         function createSensorPin(id, label, x, y, hexColor) {
             const z = getTerrainElevation(x, y);
@@ -1589,7 +1622,7 @@
         // Initialize on load
         window.addEventListener('DOMContentLoaded', () => {
             initObservatoryTheme();
-            initObservatory3D();
+            initObservatory3DWithRealDEM('consensus');  // Fetch real DEM then build twin
             runInteractiveSimulation();
         });
     </script>
