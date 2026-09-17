@@ -43,6 +43,22 @@ body.dark-mode #system-header-bar nav {
     box-shadow: none !important;
 }
 
+body.light-mode #btn-top-mdoner-tour {
+    background-color: #FFFFFF !important;
+    border: 1px solid #CBD5E1 !important;
+    color: #1E293B !important;
+}
+
+body.light-mode #btn-top-mdoner-tour:hover {
+    border-color: #94A3B8 !important;
+    color: #0F172A !important;
+}
+
+body.light-mode #btn-top-mdoner-tour i {
+    color: #0284C7 !important;
+}
+
+
 body.light-mode header h1,
 body.light-mode header h2,
 body.light-mode header h3,

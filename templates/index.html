@@ -1332,7 +1332,18 @@
             color: #0F172A !important;
         }
 
-        /* PAHAD AI Pipeline Ribbon (Faded Saffron Theme) */
+        /* PAHAD AI Pipeline Ribbon (Faded Saffron Theme - Clean & Simple) */
+        #pahad-pipeline-ribbon .pipeline-step {
+            color: #F1F5F9;
+            transition: color 0.15s ease;
+        }
+        #pahad-pipeline-ribbon .pipeline-step:hover {
+            color: #FDE68A;
+        }
+        #pahad-pipeline-ribbon .pipeline-arrow {
+            color: #F59E0B;
+        }
+
         body.light-mode #pahad-pipeline-ribbon {
             background: linear-gradient(90deg, #FFF7ED 0%, #FFEDD5 50%, #FFF7ED 100%) !important;
             border: 1px solid #FDBA74 !important;
@@ -1341,7 +1352,28 @@
         body.light-mode #pahad-pipeline-ribbon .pipeline-label span {
             color: #9A3412 !important;
         }
+        body.light-mode #pahad-pipeline-ribbon .pipeline-label i {
+            color: #EA580C !important;
+        }
+        body.light-mode #pahad-pipeline-ribbon .pipeline-step {
+            color: #1E293B !important;
+        }
+        body.light-mode #pahad-pipeline-ribbon .pipeline-step:hover {
+            color: #B45309 !important;
+        }
         body.light-mode #pahad-pipeline-ribbon .pipeline-arrow {
+            color: #EA580C !important;
+        }
+        body.light-mode #pahad-pipeline-ribbon .btn-data-truth {
+            background: #FFFFFF !important;
+            border: 1px solid #FDBA74 !important;
+            color: #9A3412 !important;
+        }
+        body.light-mode #pahad-pipeline-ribbon .btn-data-truth:hover {
+            background: #FFEDD5 !important;
+            color: #7C2D12 !important;
+        }
+        body.light-mode #pahad-pipeline-ribbon .btn-data-truth i {
             color: #EA580C !important;
         }
 
@@ -2762,6 +2794,14 @@
             <i class="ph-bold ph-circle-half text-xs"></i> <span data-i18n="high_contrast">Contrast</span>
           </button>
 
+          <!-- MDONER • SENTINEL TOUR TRIGGER PILL -->
+          <button type="button" id="btn-top-mdoner-tour" onclick="event.preventDefault(); startInteractiveTour(1);" class="inline-flex items-center gap-1 text-[10px] font-mono uppercase px-2 py-0.5 border border-slate-700 hover:border-slate-500 text-slate-300 hover:text-white bg-slate-900 hover:bg-slate-800 rounded-full cursor-pointer transition shadow-inner" title="Ministry of Development of North Eastern Region (MDoNER). Click to start interactive tour.">
+            <span class="font-bold tracking-wider">MDoNER • Sentinel</span>
+            <i class="ph-bold ph-info text-[10px] text-sky-400"></i>
+          </button>
+
+          <span class="text-slate-600 hidden sm:inline">|</span>
+
           <!-- COMPACT THEME CAPSULE TOGGLE (System / Light / Dark) -->
           <div class="inline-flex items-center gap-1.5" title="Switch Theme">
             <span class="text-[11px] font-medium text-slate-400 hidden sm:inline">Theme</span>
@@ -2862,10 +2902,6 @@
                 <span class="hidden sm:inline text-sm md:text-base font-serif font-bold text-slate-700 dark:text-slate-300 whitespace-nowrap">
                   पर्वत नेत्र
                 </span>
-                <button type="button" onclick="event.preventDefault(); startInteractiveTour(1);" class="hidden xl:inline-flex items-center gap-1 text-[9px] font-mono uppercase px-1.5 py-0.5 border border-slate-300 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-500 text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800/80 whitespace-nowrap rounded cursor-pointer transition" title="Ministry of Development of North Eastern Region (MDoNER). Click to start interactive tour.">
-                  <span>MDoNER • Sentinel</span>
-                  <i class="ph-bold ph-info text-[9px]"></i>
-                </button>
               </div>
               <p class="text-[10px] sm:text-[11px] md:text-xs font-medium text-slate-600 dark:text-slate-300 tracking-normal m-0 truncate max-w-[170px] sm:max-w-none">
                 AI-Assisted Landslide Risk Intelligence for the Northeast • <span onclick="event.preventDefault(); startInteractiveTour(1);" class="text-slate-900 dark:text-slate-200 hover:underline font-bold cursor-pointer transition">PAHAD AI ↗</span>
@@ -3151,26 +3187,26 @@
                         <i class="ph-bold ph-git-commit text-amber-400 text-sm"></i>
                         <span class="text-amber-100 font-extrabold tracking-wide">PAHAD AI Pipeline:</span>
                     </span>
-                    <div class="flex items-center gap-1.5 text-[10px] font-mono text-slate-300 flex-wrap">
-                        <span class="px-2 py-0.5 rounded bg-slate-900/90 text-slate-100 border border-slate-700/80 font-semibold shadow-xs">DATA</span>
-                        <span class="pipeline-arrow text-amber-400 font-bold">→</span>
-                        <span class="px-2 py-0.5 rounded bg-blue-950/90 text-sky-200 border border-sky-600/80 font-bold cursor-pointer hover:border-sky-400 hover:text-white transition shadow-xs" onclick="openScientificExplModal('fos')">PHYSICS (FoS)</span>
-                        <span class="pipeline-arrow text-amber-400 font-bold">→</span>
-                        <span class="px-2 py-0.5 rounded bg-purple-950/90 text-purple-200 border border-purple-600/80 font-bold cursor-pointer hover:border-purple-400 hover:text-white transition shadow-xs" onclick="openScientificExplModal('ml')">ML (P_event)</span>
-                        <span class="pipeline-arrow text-amber-400 font-bold">→</span>
-                        <span class="px-2 py-0.5 rounded bg-slate-900/90 text-slate-100 border border-slate-700/80 font-semibold shadow-xs">EVIDENCE</span>
-                        <span class="pipeline-arrow text-amber-400 font-bold">→</span>
-                        <span class="px-2 py-0.5 rounded bg-indigo-950/90 text-indigo-200 border border-indigo-600/80 font-bold shadow-xs">PAHAD AI</span>
-                        <span class="pipeline-arrow text-amber-400 font-bold">→</span>
-                        <span class="px-2 py-0.5 rounded bg-rose-950/90 text-rose-200 border border-rose-600/80 font-black cursor-pointer hover:border-rose-400 hover:text-white transition shadow-xs" onclick="openScientificExplModal('cri')">CRI</span>
-                        <span class="pipeline-arrow text-amber-400 font-bold">→</span>
-                        <span class="px-2 py-0.5 rounded bg-amber-950/90 text-amber-200 border border-amber-600/80 font-black cursor-pointer hover:border-amber-400 hover:text-white transition shadow-xs" onclick="openScientificExplModal('corroboration')">2-of-3 CORROBORATION</span>
-                        <span class="pipeline-arrow text-amber-400 font-bold">→</span>
-                        <span class="px-2 py-0.5 rounded bg-emerald-950/90 text-emerald-200 border border-emerald-600/80 font-black shadow-xs">AUTHORITY DECISION</span>
+                    <div class="flex items-center gap-2 text-[11px] font-mono flex-wrap">
+                        <span class="pipeline-step font-semibold">DATA</span>
+                        <span class="pipeline-arrow font-bold">→</span>
+                        <span class="pipeline-step font-semibold cursor-pointer hover:underline" onclick="openScientificExplModal('fos')">PHYSICS (FoS)</span>
+                        <span class="pipeline-arrow font-bold">→</span>
+                        <span class="pipeline-step font-semibold cursor-pointer hover:underline" onclick="openScientificExplModal('ml')">ML (P_event)</span>
+                        <span class="pipeline-arrow font-bold">→</span>
+                        <span class="pipeline-step font-semibold">EVIDENCE</span>
+                        <span class="pipeline-arrow font-bold">→</span>
+                        <span class="pipeline-step font-semibold">PAHAD AI</span>
+                        <span class="pipeline-arrow font-bold">→</span>
+                        <span class="pipeline-step font-semibold cursor-pointer hover:underline" onclick="openScientificExplModal('cri')">CRI</span>
+                        <span class="pipeline-arrow font-bold">→</span>
+                        <span class="pipeline-step font-semibold cursor-pointer hover:underline" onclick="openScientificExplModal('corroboration')">2-of-3 CORROBORATION</span>
+                        <span class="pipeline-arrow font-bold">→</span>
+                        <span class="pipeline-step font-semibold">AUTHORITY DECISION</span>
                     </div>
                 </div>
                 <div class="flex items-center gap-2">
-                    <button type="button" onclick="openDataTruthModal()" class="px-2.5 py-1 rounded bg-slate-900/90 hover:bg-slate-800 text-amber-300 hover:text-amber-200 border border-amber-500/50 hover:border-amber-300 text-[10px] font-mono font-bold flex items-center gap-1.5 transition cursor-pointer shadow-xs">
+                    <button type="button" onclick="openDataTruthModal()" class="btn-data-truth px-2.5 py-1 rounded bg-slate-900/90 hover:bg-slate-800 text-amber-300 hover:text-amber-200 border border-amber-500/50 hover:border-amber-300 text-[10px] font-mono font-bold flex items-center gap-1.5 transition cursor-pointer shadow-xs">
                         <i class="ph-bold ph-table text-amber-400"></i> <span>DATA TRUTH MATRIX</span>
                     </button>
                 </div>
