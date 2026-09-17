@@ -14,11 +14,33 @@ body.light-mode {
 }
 
 body.light-mode header,
-body.light-mode nav,
 body.light-mode .masthead-container {
     background-color: #FFF5E9 !important;
     border-bottom: 2px solid #FED7AA !important;
     color: #1E293B !important;
+}
+
+body.light-mode header#system-header-bar {
+    background-color: #FFFFFF !important;
+    border-bottom: 1px solid #E2E8F0 !important;
+    color: #0F172A !important;
+}
+
+/* SIH Portal Primary Navigation Container — Zero background, zero outline, pure text */
+#portal-primary-nav,
+nav#portal-primary-nav,
+#system-header-bar nav,
+body.light-mode #portal-primary-nav,
+body.light-mode nav#portal-primary-nav,
+body.light-mode #system-header-bar nav,
+body.dark-mode #portal-primary-nav,
+body.dark-mode nav#portal-primary-nav,
+body.dark-mode #system-header-bar nav {
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
 }
 
 body.light-mode header h1,
@@ -402,9 +424,24 @@ body.light-mode main .bg-white {
 
 body.light-mode .portal-choice-card h3,
 body.light-mode .portal-choice-card p,
-body.light-mode .portal-choice-card span,
+body.light-mode .portal-choice-card span:not(a *):not(button *),
 body.light-mode .portal-choice-card li {
     color: #1E293B !important;
+}
+
+body.light-mode .portal-choice-card a.bg-\[\#003366\],
+body.light-mode .portal-choice-card a.bg-\[\#003366\] *,
+body.light-mode .portal-choice-card a.bg-\[\#D97706\],
+body.light-mode .portal-choice-card a.bg-\[\#D97706\] *,
+body.light-mode a[href*="/login/authority"],
+body.light-mode a[href*="/login/authority"] *,
+body.light-mode a[href*="/login/citizen"],
+body.light-mode a[href*="/login/citizen"] *,
+body.light-mode button#btn-submit-authority,
+body.light-mode button#btn-submit-authority *,
+body.light-mode button#btn-submit-citizen,
+body.light-mode button#btn-submit-citizen * {
+    color: #FFFFFF !important;
 }
 
 body.light-mode .portal-choice-card .text-slate-500,
@@ -573,9 +610,7 @@ body.dark-mode {
 }
 
 body:not(.light-mode) header,
-body.dark-mode header,
-body:not(.light-mode) nav,
-body.dark-mode nav {
+body.dark-mode header {
     background-color: #080E1C !important;
     border-bottom: 1px solid rgba(147, 197, 253, 0.22) !important;
     color: #F8FAFC !important;

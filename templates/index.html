@@ -416,6 +416,15 @@
             color: #0F172A !important;
             border-bottom-color: #E2E8F0 !important;
         }
+        body.light-mode #system-header-bar nav,
+        body.light-mode #portal-primary-nav,
+        #portal-primary-nav {
+            background: transparent !important;
+            background-color: transparent !important;
+            border: none !important;
+            border-bottom: none !important;
+            box-shadow: none !important;
+        }
         body.light-mode #system-header-bar #parvat-brand-title,
         body.light-mode #system-header-bar .parvat-brand-title {
             color: #0F172A !important;
@@ -1321,6 +1330,19 @@
             background-color: transparent !important;
             border: none !important;
             color: #0F172A !important;
+        }
+
+        /* PAHAD AI Pipeline Ribbon (Faded Saffron Theme) */
+        body.light-mode #pahad-pipeline-ribbon {
+            background: linear-gradient(90deg, #FFF7ED 0%, #FFEDD5 50%, #FFF7ED 100%) !important;
+            border: 1px solid #FDBA74 !important;
+        }
+        body.light-mode #pahad-pipeline-ribbon .pipeline-label,
+        body.light-mode #pahad-pipeline-ribbon .pipeline-label span {
+            color: #9A3412 !important;
+        }
+        body.light-mode #pahad-pipeline-ribbon .pipeline-arrow {
+            color: #EA580C !important;
         }
 
         /* SIH Login Pill Component (Pixel-perfect matching SIH Specification) */
@@ -2853,7 +2875,7 @@
         </div>
 
         <!-- Center: Official Government Portal Nav Links (Pure Text SIH Standard, Zero Outlines) -->
-        <nav id="portal-primary-nav" class="hidden lg:flex items-center gap-5 xl:gap-7 mx-4" aria-label="Portal Primary Navigation">
+        <nav id="portal-primary-nav" class="hidden lg:flex items-center gap-5 xl:gap-7 mx-4 bg-transparent border-0" style="background: transparent !important; background-color: transparent !important; border: none !important; border-bottom: none !important; box-shadow: none !important;" aria-label="Portal Primary Navigation">
           <a href="/" class="portal-nav-link text-xs xl:text-[13px] font-bold text-[#1A2972] dark:text-white hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors cursor-pointer" title="National Landslide Risk Dashboard">डैशबोर्ड | Overview</a>
           <a href="/climate-map" class="portal-nav-link text-xs xl:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors cursor-pointer" title="NER Real-Time Weather, Precipitation &amp; Radar">मौसम | Climate</a>
           <a href="/seismic" class="portal-nav-link text-xs xl:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors cursor-pointer" title="NCS &amp; USGS Seismological Sentinel">भूकंप | Seismic</a>
@@ -3121,34 +3143,35 @@
     <!-- ===== AUTHORITY MODE ===== -->
     <div id="authority-view" class="max-w-7xl mx-auto px-4 py-5"><div id="authority-mode">
 
-        <!-- PHASE 14: PAHAD AI One-Glance Decision Pipeline Ribbon (Section 5) -->
-        <div id="pahad-pipeline-ribbon" class="mb-4 p-2.5 rounded-lg bg-[#070D1A] border border-slate-700/60 shadow-md">
+        <!-- PHASE 14: PAHAD AI One-Glance Decision Pipeline Ribbon (Section 5) - Faded Saffron Theme -->
+        <div id="pahad-pipeline-ribbon" class="mb-4 p-2.5 rounded-lg border border-amber-500/40 shadow-md transition-colors" style="background: linear-gradient(90deg, rgba(255, 153, 51, 0.16) 0%, rgba(217, 119, 6, 0.10) 50%, rgba(255, 153, 51, 0.16) 100%), #0A0E17;">
             <div class="flex flex-wrap items-center justify-between gap-2">
-                <div class="flex items-center gap-2">
-                    <span class="text-[10px] font-black uppercase tracking-wider text-sky-400 flex items-center gap-1">
-                        <i class="ph-bold ph-git-commit"></i> PAHAD AI Pipeline:
+                <div class="flex items-center gap-2.5 flex-wrap">
+                    <span class="pipeline-label text-[11px] font-black uppercase tracking-wider text-amber-200 flex items-center gap-1.5 drop-shadow-xs">
+                        <i class="ph-bold ph-git-commit text-amber-400 text-sm"></i>
+                        <span class="text-amber-100 font-extrabold tracking-wide">PAHAD AI Pipeline:</span>
                     </span>
                     <div class="flex items-center gap-1.5 text-[10px] font-mono text-slate-300 flex-wrap">
-                        <span class="px-1.5 py-0.5 rounded bg-slate-800 text-slate-200">DATA</span>
-                        <span class="text-slate-500">→</span>
-                        <span class="px-1.5 py-0.5 rounded bg-blue-950 text-sky-300 font-semibold cursor-pointer hover:underline" onclick="openScientificExplModal('fos')">PHYSICS (FoS)</span>
-                        <span class="text-slate-500">→</span>
-                        <span class="px-1.5 py-0.5 rounded bg-purple-950 text-purple-300 font-semibold cursor-pointer hover:underline" onclick="openScientificExplModal('ml')">ML (P_event)</span>
-                        <span class="text-slate-500">→</span>
-                        <span class="px-1.5 py-0.5 rounded bg-slate-800 text-slate-200">EVIDENCE</span>
-                        <span class="text-slate-500">→</span>
-                        <span class="px-1.5 py-0.5 rounded bg-indigo-950 text-indigo-300 font-semibold">PAHAD AI</span>
-                        <span class="text-slate-500">→</span>
-                        <span class="px-1.5 py-0.5 rounded bg-rose-950 text-rose-300 font-bold cursor-pointer hover:underline" onclick="openScientificExplModal('cri')">CRI</span>
-                        <span class="text-slate-500">→</span>
-                        <span class="px-1.5 py-0.5 rounded bg-amber-950 text-amber-300 font-bold cursor-pointer hover:underline" onclick="openScientificExplModal('corroboration')">2-of-3 CORROBORATION</span>
-                        <span class="text-slate-500">→</span>
-                        <span class="px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-300 font-bold">AUTHORITY DECISION</span>
+                        <span class="px-2 py-0.5 rounded bg-slate-900/90 text-slate-100 border border-slate-700/80 font-semibold shadow-xs">DATA</span>
+                        <span class="pipeline-arrow text-amber-400 font-bold">→</span>
+                        <span class="px-2 py-0.5 rounded bg-blue-950/90 text-sky-200 border border-sky-600/80 font-bold cursor-pointer hover:border-sky-400 hover:text-white transition shadow-xs" onclick="openScientificExplModal('fos')">PHYSICS (FoS)</span>
+                        <span class="pipeline-arrow text-amber-400 font-bold">→</span>
+                        <span class="px-2 py-0.5 rounded bg-purple-950/90 text-purple-200 border border-purple-600/80 font-bold cursor-pointer hover:border-purple-400 hover:text-white transition shadow-xs" onclick="openScientificExplModal('ml')">ML (P_event)</span>
+                        <span class="pipeline-arrow text-amber-400 font-bold">→</span>
+                        <span class="px-2 py-0.5 rounded bg-slate-900/90 text-slate-100 border border-slate-700/80 font-semibold shadow-xs">EVIDENCE</span>
+                        <span class="pipeline-arrow text-amber-400 font-bold">→</span>
+                        <span class="px-2 py-0.5 rounded bg-indigo-950/90 text-indigo-200 border border-indigo-600/80 font-bold shadow-xs">PAHAD AI</span>
+                        <span class="pipeline-arrow text-amber-400 font-bold">→</span>
+                        <span class="px-2 py-0.5 rounded bg-rose-950/90 text-rose-200 border border-rose-600/80 font-black cursor-pointer hover:border-rose-400 hover:text-white transition shadow-xs" onclick="openScientificExplModal('cri')">CRI</span>
+                        <span class="pipeline-arrow text-amber-400 font-bold">→</span>
+                        <span class="px-2 py-0.5 rounded bg-amber-950/90 text-amber-200 border border-amber-600/80 font-black cursor-pointer hover:border-amber-400 hover:text-white transition shadow-xs" onclick="openScientificExplModal('corroboration')">2-of-3 CORROBORATION</span>
+                        <span class="pipeline-arrow text-amber-400 font-bold">→</span>
+                        <span class="px-2 py-0.5 rounded bg-emerald-950/90 text-emerald-200 border border-emerald-600/80 font-black shadow-xs">AUTHORITY DECISION</span>
                     </div>
                 </div>
                 <div class="flex items-center gap-2">
-                    <button type="button" onclick="openDataTruthModal()" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-sky-300 border border-slate-600 text-[10px] font-mono font-bold flex items-center gap-1 transition cursor-pointer">
-                        <i class="ph-bold ph-table"></i> <span>DATA TRUTH MATRIX</span>
+                    <button type="button" onclick="openDataTruthModal()" class="px-2.5 py-1 rounded bg-slate-900/90 hover:bg-slate-800 text-amber-300 hover:text-amber-200 border border-amber-500/50 hover:border-amber-300 text-[10px] font-mono font-bold flex items-center gap-1.5 transition cursor-pointer shadow-xs">
+                        <i class="ph-bold ph-table text-amber-400"></i> <span>DATA TRUTH MATRIX</span>
                     </button>
                 </div>
             </div>
