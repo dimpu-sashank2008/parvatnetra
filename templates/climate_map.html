@@ -217,10 +217,12 @@
 
                     <!-- INFRASTRUCTURE LAYERS -->
                     <div>
-                        <span class="text-[10px] text-slate-400 uppercase tracking-wider block mb-1">Infrastructure & Assets</span>
+                        <span class="text-[10px] text-slate-400 uppercase tracking-wider block mb-1">Infrastructure, Hydro & EO</span>
                         <div class="flex flex-wrap gap-1 text-[10px]">
                             <span onclick="toggleLayer('roads')" id="lyr-roads" class="layer-pill active px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-300">NH-10 Corridor</span>
                             <span onclick="toggleLayer('rivers')" id="lyr-rivers" class="layer-pill active px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-300">Teesta River</span>
+                            <span onclick="toggleLayer('cwc_gauges')" id="lyr-cwc_gauges" class="layer-pill active px-2 py-0.5 rounded border border-sky-600/50 bg-sky-950/40 text-sky-300">CWC Gauges (5)</span>
+                            <span onclick="toggleLayer('insar_scatterers')" id="lyr-insar_scatterers" class="layer-pill active px-2 py-0.5 rounded border border-purple-600/50 bg-purple-950/40 text-purple-300">InSAR Radar (8)</span>
                             <span onclick="toggleLayer('historical')" id="lyr-historical" class="layer-pill px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-400">GSI Landslides</span>
                         </div>
                     </div>
@@ -491,6 +493,8 @@
             fos_zones: false,
             roads: true,
             rivers: true,
+            cwc_gauges: true,
+            insar_scatterers: true,
             historical: false
         };
 
@@ -526,6 +530,8 @@
             mapLayers.markers = L.layerGroup().addTo(climateMap);
             mapLayers.roads = L.layerGroup().addTo(climateMap);
             mapLayers.rivers = L.layerGroup().addTo(climateMap);
+            mapLayers.cwc_gauges = L.layerGroup().addTo(climateMap);
+            mapLayers.insar_scatterers = L.layerGroup().addTo(climateMap);
             
             drawInfrastructureOverlays();
         }
@@ -561,7 +567,33 @@
                     pill.className = 'layer-pill px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-400';
                 }
             }
-            renderSectorMarkers();
+            if (layerKey === 'cwc_gauges') {
+                if (activeLayers.cwc_gauges) {
+                    climateMap.addLayer(mapLayers.cwc_gauges);
+                } else {
+                    climateMap.removeLayer(mapLayers.cwc_gauges);
+                }
+            } else if (layerKey === 'insar_scatterers') {
+                if (activeLayers.insar_scatterers) {
+                    climateMap.addLayer(mapLayers.insar_scatterers);
+                } else {
+                    climateMap.removeLayer(mapLayers.insar_scatterers);
+                }
+            } else if (layerKey === 'roads') {
+                if (activeLayers.roads) {
+                    climateMap.addLayer(mapLayers.roads);
+                } else {
+                    climateMap.removeLayer(mapLayers.roads);
+                }
+            } else if (layerKey === 'rivers') {
+                if (activeLayers.rivers) {
+                    climateMap.addLayer(mapLayers.rivers);
+                } else {
+                    climateMap.removeLayer(mapLayers.rivers);
+                }
+            } else {
+                renderSectorMarkers();
+            }
         }
 
         function drawInfrastructureOverlays() {
@@ -588,6 +620,117 @@
                 weight: 3.0,
                 opacity: 0.75
             }).bindPopup('<strong>Teesta River Waterway</strong><br/>Hydrodynamic Basal Scour Zone').addTo(mapLayers.rivers);
+
+            // Load CWC 5-Station Cascade & InSAR Persistent Scatterers
+            loadCWCGauges();
+            loadInSARScatterers();
+        }
+
+        async function loadCWCGauges() {
+            try {
+                const resp = await fetch('/api/cwc/stations');
+                if (!resp.ok) return;
+                const json = await resp.json();
+                const stations = json.stations || [];
+                mapLayers.cwc_gauges.clearLayers();
+
+                stations.forEach(st => {
+                    const coords = [st.coordinates[1], st.coordinates[0]];
+                    const isCritical = st.scour_risk_level === 'CRITICAL' || st.coupled_fos < 1.0;
+                    const isHigh = st.scour_risk_level === 'HIGH' || st.coupled_fos < 1.25;
+                    const ringColor = isCritical ? '#EF4444' : (isHigh ? '#F59E0B' : '#0EA5E9');
+                    const badgeClass = isCritical ? 'bg-rose-950/80 text-rose-400 border-rose-500' : (isHigh ? 'bg-amber-950/80 text-amber-400 border-amber-500' : 'bg-sky-950/80 text-sky-400 border-sky-500');
+
+                    const iconHtml = `
+                        <div style="position:relative; display:flex; align-items:center; justify-content:center; width:26px; height:26px;">
+                            <div style="width:18px; height:18px; border-radius:50%; background:#070B10; border:2px solid ${ringColor}; display:flex; align-items:center; justify-content:center; box-shadow:0 0 8px ${ringColor}88;">
+                                <span style="font-size:9px;">🌊</span>
+                            </div>
+                        </div>
+                    `;
+                    const marker = L.marker(coords, {
+                        icon: L.divIcon({
+                            className: 'cwc-gauge-icon',
+                            html: iconHtml,
+                            iconSize: [26, 26],
+                            iconAnchor: [13, 13]
+                        })
+                    });
+
+                    marker.bindPopup(`
+                        <div class="p-2 text-xs font-mono space-y-1.5" style="min-width:240px;">
+                            <div class="flex items-center justify-between border-b border-slate-700 pb-1">
+                                <span class="font-bold text-sky-400">${st.station_id}</span>
+                                <span class="px-1.5 py-0.5 text-[9px] rounded border ${badgeClass}">[${st.scour_risk_level}]</span>
+                            </div>
+                            <div class="font-sans font-semibold text-slate-100">${st.station_name}</div>
+                            <div class="text-[11px] text-slate-300 space-y-1 pt-1">
+                                <div class="flex justify-between"><span>River Stage:</span> <strong class="text-white">${st.water_level_m} m</strong></div>
+                                <div class="flex justify-between"><span>Danger Level:</span> <span class="text-rose-400">${st.danger_level_m} m</span></div>
+                                <div class="flex justify-between"><span>Discharge:</span> <strong class="text-white">${st.discharge_cumecs} cumecs</strong></div>
+                                <div class="flex justify-between"><span>Basal Shear (τ<sub>b</sub>):</span> <strong class="text-amber-400">${st.basal_shear_stress_pa} Pa</strong></div>
+                                <div class="flex justify-between"><span>Toe Scour Loss:</span> <strong class="text-rose-400">${st.toe_resistance_loss_pct}%</strong></div>
+                                <div class="flex justify-between"><span>Coupled Slope FoS:</span> <strong class="${st.coupled_fos < 1.0 ? 'text-rose-400 font-bold' : (st.coupled_fos < 1.25 ? 'text-amber-400' : 'text-emerald-400')}">${st.coupled_fos} [${st.coupled_risk_tier}]</strong></div>
+                            </div>
+                            <div class="text-[9px] text-slate-500 pt-1 border-t border-slate-800">[LIVE] CWC Teesta Hydro-Telemetry</div>
+                        </div>
+                    `);
+                    marker.addTo(mapLayers.cwc_gauges);
+                });
+            } catch (err) {
+                console.warn("Could not load CWC gauges:", err);
+            }
+        }
+
+        async function loadInSARScatterers() {
+            try {
+                const resp = await fetch('/api/insar/points');
+                if (!resp.ok) return;
+                const json = await resp.json();
+                const points = json.features || [];
+                mapLayers.insar_scatterers.clearLayers();
+
+                points.forEach(ps => {
+                    const coords = [ps.geometry.coordinates[1], ps.geometry.coordinates[0]];
+                    const vel = ps.los_velocity_mm_yr;
+                    const isCritical = vel < -20.0;
+                    const isHigh = vel < -10.0;
+                    const color = isCritical ? '#EF4444' : (isHigh ? '#F59E0B' : (vel < -5.0 ? '#06B6D4' : '#10B981'));
+
+                    const marker = L.circleMarker(coords, {
+                        radius: isCritical ? 9 : 6,
+                        color: color,
+                        fillColor: color,
+                        fillOpacity: 0.85,
+                        weight: 2
+                    });
+
+                    marker.bindPopup(`
+                        <div class="p-2 text-xs font-mono space-y-1.5" style="min-width:250px;">
+                            <div class="flex items-center justify-between border-b border-slate-700 pb-1">
+                                <span class="font-bold text-purple-300">${ps.station_code || 'PS-' + ps.point_id}</span>
+                                <span class="px-1.5 py-0.5 text-[9px] rounded border" style="color:${color}; border-color:${color}88;">${ps.deformation_classification}</span>
+                            </div>
+                            <div class="font-sans font-semibold text-slate-100">${ps.location_name}</div>
+                            <div class="text-[11px] text-slate-300 space-y-1 pt-1">
+                                <div class="flex justify-between"><span>Mission:</span> <span class="text-white">${ps.mission}</span></div>
+                                <div class="flex justify-between"><span>Track / Dir:</span> <span class="text-white">${ps.orbit_track || 121} (${ps.track_direction || 'Ascending'})</span></div>
+                                <div class="flex justify-between"><span>LOS Velocity (v<sub>LOS</sub>):</span> <strong style="color:${color}; font-size:12px;">${vel} mm/yr</strong></div>
+                                <div class="flex justify-between"><span>Uncertainty (σ<sub>v</sub>):</span> <span class="text-slate-400">±${ps.velocity_uncertainty_mm_yr || 1.2} mm/yr</span></div>
+                                <div class="flex justify-between"><span>Cumulative Disp:</span> <strong class="text-white">${ps.cumulative_disp_mm} mm</strong></div>
+                                <div class="flex justify-between"><span>Coherence (γ):</span> <span class="text-emerald-400">${ps.coherence}</span></div>
+                            </div>
+                            <button onclick="openInSARTimeseriesModal(${ps.point_id})" class="mt-2 w-full py-1 bg-purple-900/80 hover:bg-purple-800 border border-purple-500/50 text-purple-200 rounded text-[10px] font-semibold tracking-wider uppercase transition cursor-pointer">
+                                View 24-Epoch InSAR History
+                            </button>
+                            <div class="text-[9px] text-slate-500 pt-1 border-t border-slate-800">[HISTORICAL / S-1A PS-InSAR]</div>
+                        </div>
+                    `);
+                    marker.addTo(mapLayers.insar_scatterers);
+                });
+            } catch (err) {
+                console.warn("Could not load InSAR scatterers:", err);
+            }
         }
 
         async function loadSectorClimate(sectorId) {
@@ -961,6 +1104,146 @@
                 }
             }
         });
+
+        let insarModalChart = null;
+        async function openInSARTimeseriesModal(pointId) {
+            const modal = document.getElementById('insar-timeseries-modal');
+            if (!modal) return;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+
+            try {
+                const resp = await fetch(`/api/insar/timeseries/${pointId}`);
+                if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+                const data = await resp.json();
+                
+                document.getElementById('insar-modal-title').innerText = `${data.station_code || 'Point ' + pointId} — ${data.location_name}`;
+                document.getElementById('insar-modal-subtitle').innerText = `Track ${data.orbit_track} (${data.track_direction}) • ${data.total_epochs} Epochs (${data.repeat_cycle_days}-day repeat) • Total Time: ${data.time_span_days} days`;
+
+                const creep = data.creep_analysis || {};
+                document.getElementById('insar-modal-vel').innerText = `${creep.velocity_mm_year || 0} mm/yr`;
+                document.getElementById('insar-modal-acc').innerText = `${creep.acceleration_mm_day2 || 0} mm/day²`;
+                document.getElementById('insar-modal-inv').innerText = creep.inverse_velocity ? `${creep.inverse_velocity} d/mm` : 'N/A';
+                
+                const statusEl = document.getElementById('insar-modal-status');
+                statusEl.innerText = creep.creep_status || 'STABLE';
+                if (creep.creep_status === 'TERTIARY_CREEP_ACCELERATION') {
+                    statusEl.className = 'text-rose-400 font-bold';
+                } else if (creep.creep_status === 'STEADY_SECONDARY_CREEP') {
+                    statusEl.className = 'text-amber-400 font-semibold';
+                } else {
+                    statusEl.className = 'text-emerald-400 font-semibold';
+                }
+
+                const epochs = data.epochs || [];
+                const labels = epochs.map(e => e.acquisition_date);
+                const dispValues = epochs.map(e => e.cumulative_displacement_mm);
+
+                const ctx = document.getElementById('insarTimeseriesChart').getContext('2d');
+                if (insarModalChart) {
+                    insarModalChart.destroy();
+                }
+
+                insarModalChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Cumulative LOS Displacement (mm)',
+                            data: dispValues,
+                            borderColor: '#A855F7',
+                            backgroundColor: 'rgba(168, 85, 247, 0.15)',
+                            fill: true,
+                            tension: 0.25,
+                            pointRadius: 3,
+                            pointBackgroundColor: '#C084FC',
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                ticks: { color: '#94A3B8', font: { size: 9 }, maxTicksLimit: 8 },
+                                grid: { color: 'rgba(51, 65, 85, 0.25)' }
+                            },
+                            y: {
+                                title: { display: true, text: 'LOS Disp (mm)', color: '#CBD5E1', font: { size: 10 } },
+                                ticks: { color: '#94A3B8', font: { size: 9 } },
+                                grid: { color: 'rgba(51, 65, 85, 0.25)' }
+                            }
+                        },
+                        plugins: {
+                            legend: { labels: { color: '#E2E8F0', font: { size: 10 } } }
+                        }
+                    }
+                });
+            } catch (err) {
+                console.error("Failed to load InSAR time series:", err);
+            }
+        }
+
+        function closeInSARModal() {
+            const modal = document.getElementById('insar-timeseries-modal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
     </script>
+
+    <!-- INSAR 24-EPOCH DISPLACEMENT MODAL -->
+    <div id="insar-timeseries-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/75 backdrop-blur-xs p-4">
+        <div class="w-full max-w-2xl rounded-xl bg-[#0B132B] border border-purple-500/40 p-4 sm:p-5 shadow-2xl space-y-4 text-slate-200">
+            <div class="flex items-center justify-between border-b border-purple-900/40 pb-2.5">
+                <div>
+                    <h3 id="insar-modal-title" class="font-bold text-sm sm:text-base text-white flex items-center gap-2">
+                        <span class="text-purple-400">🛰️</span> Persistent Scatterer InSAR Analysis
+                    </h3>
+                    <p id="insar-modal-subtitle" class="text-[11px] font-mono text-slate-400 mt-0.5">Sentinel-1 12-day Repeat Stack</p>
+                </div>
+                <button onclick="closeInSARModal()" class="text-slate-400 hover:text-white p-1 rounded transition text-lg leading-none cursor-pointer">&times;</button>
+            </div>
+
+            <!-- Geotechnical Metrics Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-mono">
+                <div class="p-2 rounded bg-slate-900/80 border border-slate-800">
+                    <span class="text-[10px] text-slate-400 block">v<sub>LOS</sub> (Annual)</span>
+                    <strong id="insar-modal-vel" class="text-white text-sm">--</strong>
+                </div>
+                <div class="p-2 rounded bg-slate-900/80 border border-slate-800">
+                    <span class="text-[10px] text-slate-400 block">Acceleration</span>
+                    <strong id="insar-modal-acc" class="text-white text-sm">--</strong>
+                </div>
+                <div class="p-2 rounded bg-slate-900/80 border border-slate-800">
+                    <span class="text-[10px] text-slate-400 block">Fukuzono 1/v</span>
+                    <strong id="insar-modal-inv" class="text-purple-300 text-sm">--</strong>
+                </div>
+                <div class="p-2 rounded bg-slate-900/80 border border-slate-800">
+                    <span class="text-[10px] text-slate-400 block">Creep State</span>
+                    <strong id="insar-modal-status" class="text-emerald-400 text-xs">--</strong>
+                </div>
+            </div>
+
+            <!-- Chart Container -->
+            <div class="p-3 bg-[#070B10] rounded-lg border border-slate-800">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-[11px] font-mono text-slate-300">24-Epoch Interferometric Deformation History</span>
+                    <span class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-purple-950/80 border border-purple-600/40 text-purple-300">[HISTORICAL / S-1A PS-InSAR]</span>
+                </div>
+                <div class="h-52 w-full relative">
+                    <canvas id="insarTimeseriesChart"></canvas>
+                </div>
+            </div>
+
+            <div class="flex justify-between items-center text-[10px] font-mono text-slate-500 pt-1 border-t border-slate-800">
+                <span>Voight-Fukuzono (1988) Tertiary Failure Projection Active</span>
+                <button onclick="closeInSARModal()" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded border border-slate-700 transition cursor-pointer">
+                    Dismiss
+                </button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

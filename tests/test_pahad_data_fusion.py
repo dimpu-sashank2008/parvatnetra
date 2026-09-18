@@ -6,9 +6,11 @@ Unit & Integration Tests for PAHAD Multi-Modal Data Fusion, Alert Safety Rules,
 and Flask REST API Endpoints.
 """
 
+import os
+os.environ["PARVAT_TESTING"] = "1"
+
 import unittest
 import json
-import os
 
 from engine.pahad_models import evaluate_pahad_fused_risk
 from app import app

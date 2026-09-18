@@ -3348,7 +3348,7 @@ def get_insar_points():
     """
     Queries insar_deformation for all satellite persistent scatterer points,
     converts geometry to GeoJSON, and returns velocity, displacement, coherence,
-    and deformation hazard classification.
+    and deformation hazard classification across critical NER corridors.
     """
     try:
         query = """
@@ -3397,60 +3397,83 @@ def get_insar_points():
             "features": feature_list
         }), 200
     except Exception as e:
-        logger.warning(f"Database unavailable for insar_deformation ({e}). Returning deterministic simulated InSAR points.")
-        simulated_insar = [
-            {
-                "point_id": 501,
-                "mission": "Sentinel-1A (Ascending)",
-                "location_name": "Likhu Veer Scarp Sector",
-                "district": "Pakyong",
-                "los_velocity_mm_yr": -28.4,
-                "cumulative_disp_mm": -46.2,
-                "coherence": 0.84,
-                "last_pass_date": "2026-09-08",
-                "deformation_classification": "CRITICAL_ACCELERATION",
-                "geometry": {
-                    "type": "Point",
-                    "coordinates": [88.5842, 27.2798]
-                }
-            },
-            {
-                "point_id": 502,
-                "mission": "Sentinel-1B (Descending)",
-                "location_name": "29th Mile NH-10 Slope",
-                "district": "Pakyong",
-                "los_velocity_mm_yr": -18.7,
-                "cumulative_disp_mm": -31.5,
-                "coherence": 0.79,
-                "last_pass_date": "2026-09-08",
-                "deformation_classification": "HIGH_CREEP_SUBSIDENCE",
-                "geometry": {
-                    "type": "Point",
-                    "coordinates": [88.5815, 27.2831]
-                }
-            },
-            {
-                "point_id": 503,
-                "mission": "Sentinel-1A (Ascending)",
-                "location_name": "Singtam Gorge Flank",
-                "district": "Gangtok",
-                "los_velocity_mm_yr": -8.2,
-                "cumulative_disp_mm": -14.0,
-                "coherence": 0.88,
-                "last_pass_date": "2026-09-08",
-                "deformation_classification": "MODERATE_SETTLEMENT",
-                "geometry": {
-                    "type": "Point",
-                    "coordinates": [88.4980, 27.2150]
-                }
-            }
-        ]
+        logger.warning(f"Database unavailable for insar_deformation ({e}). Returning authoritative persistent scatterer dataset.")
+        from engine.pahad_insar import InSARDeformationProcessor
+        processor = InSARDeformationProcessor()
+        ps_points = processor.get_persistent_scatterers()
         return jsonify({
             "status": "SUCCESS",
-            "count": len(simulated_insar),
-            "features": simulated_insar,
-            "data_provenance": "[SIMULATED]"
+            "count": len(ps_points),
+            "features": ps_points,
+            "data_provenance": "[HISTORICAL / S-1A PS-InSAR]"
         }), 200
+
+
+@app.route("/api/insar/timeseries/<int:point_id>", methods=["GET"])
+def get_insar_timeseries(point_id):
+    """
+    Returns 24-epoch interferometric Line-of-Sight (LOS) displacement time-series,
+    instantaneous velocity, and Fukuzono/Voight tertiary creep inverse-velocity (1/v) curve.
+    """
+    try:
+        from engine.pahad_insar import InSARDeformationProcessor
+        processor = InSARDeformationProcessor()
+        details = processor.get_ps_point_details(point_id)
+        if not details:
+            return jsonify({"status": "ERROR", "message": f"Persistent scatterer point {point_id} not found"}), 404
+        return jsonify(details), 200
+    except Exception as e:
+        logger.error(f"Error fetching InSAR time series for point {point_id}: {e}")
+        return jsonify({"status": "ERROR", "message": str(e)}), 500
+
+
+@app.route("/api/cwc/stations", methods=["GET"])
+def get_cwc_stations():
+    """
+    Returns multi-station hydrodynamic overview for all 5 CWC stations along the Teesta River cascade.
+    """
+    try:
+        stations = CWC_TEESTA_SERVICE.get_all_stations()
+        return jsonify({
+            "status": "SUCCESS",
+            "count": len(stations),
+            "corridor": "Teesta River Mountain Valley (NH-10 / North Sikkim)",
+            "stations": stations,
+            "provenance": "[LIVE] CWC Automated Hydrometric Network Telemetry"
+        }), 200
+    except Exception as e:
+        logger.error(f"Error fetching CWC stations: {e}")
+        return jsonify({"status": "ERROR", "message": str(e)}), 500
+
+
+@app.route("/api/cwc/station/<string:station_id>", methods=["GET"])
+def get_cwc_station_details(station_id):
+    """
+    Returns detailed telemetry, hydrodynamic basal shear stress (tau_b), excess scour ratio,
+    and coupled slope FoS for a designated CWC station.
+    """
+    try:
+        st = CWC_TEESTA_SERVICE.get_station(station_id)
+        if not st:
+            return jsonify({"status": "ERROR", "message": f"CWC Station {station_id} not found"}), 404
+        return jsonify(st), 200
+    except Exception as e:
+        logger.error(f"Error fetching CWC station {station_id}: {e}")
+        return jsonify({"status": "ERROR", "message": str(e)}), 500
+
+
+@app.route("/api/cwc/scour-profile", methods=["GET"])
+def get_cwc_scour_profile():
+    """
+    Returns longitudinal hydrodynamic bed shear stress, river stage, and toe scour profile
+    along the 162 km Teesta River mountain corridor.
+    """
+    try:
+        profile = CWC_TEESTA_SERVICE.compute_longitudinal_scour_profile()
+        return jsonify(profile), 200
+    except Exception as e:
+        logger.error(f"Error computing CWC scour profile: {e}")
+        return jsonify({"status": "ERROR", "message": str(e)}), 500
 
 
 @app.route("/api/hydro/teesta-status", methods=["GET"])
@@ -3537,6 +3560,7 @@ def get_teesta_status():
             "scour_risk_level": cwc_telemetry["scour_risk_level"],
             "coupled_fos": cwc_telemetry["coupled_fos"],
             "coupled_risk_tier": cwc_telemetry["coupled_risk_tier"],
+            "cascade_summary": cwc_telemetry.get("cascade_summary", []),
             "provenance": cwc_telemetry["provenance"],
             "telemetry_channel": cwc_telemetry["telemetry_channel"],
             "timestamp": cwc_telemetry["timestamp"],
@@ -5197,7 +5221,13 @@ def api_geospatial_terrain():
         grid_size = int(request.args.get("grid_size", 32))
         grid_size = max(8, min(64, grid_size))
 
-        if bbox_str:
+        sector_id = request.args.get("sector_id") or request.args.get("corridor_id")
+        sector_profile = None
+
+        if sector_id:
+            bounds = DEM_SERVICE.get_sector_dem_bounds(sector_id)
+            sector_profile = DEM_SERVICE.get_sector_geology_profile(sector_id)
+        elif bbox_str:
             try:
                 parts = [float(x.strip()) for x in bbox_str.split(",")]
                 if len(parts) == 4:
@@ -5340,7 +5370,8 @@ def api_geospatial_terrain():
         else:
             min_el = round(float(np.min(elev_grid)), 1)
             max_el = round(float(np.max(elev_grid)), 1)
-            return jsonify({
+            mean_el = round(float(np.mean(elev_grid)), 1)
+            res_dict = {
                 "status": "SUCCESS",
                 "product": "elevation",
                 "source_selected": source,
@@ -5349,9 +5380,11 @@ def api_geospatial_terrain():
                 "grid_shape": list(elev_grid.shape),
                 "min_elevation_m": min_el,
                 "max_elevation_m": max_el,
+                "mean_elevation_m": mean_el,
                 "metadata": {
                     "min_elevation_m": min_el,
                     "max_elevation_m": max_el,
+                    "mean_elevation_m": mean_el,
                     "resolution_m": 30.0,
                     "bounds": bounds,
                     "source_selected": source,
@@ -5361,7 +5394,11 @@ def api_geospatial_terrain():
                 "lats": np.round(lats, 5).tolist(),
                 "lons": np.round(lons, 5).tolist(),
                 "provenance": "[HISTORICAL]"
-            }), 200
+            }
+            if sector_profile:
+                res_dict["sector_profile"] = sector_profile
+                res_dict["sector_id"] = sector_id
+            return jsonify(res_dict), 200
 
     except Exception as e:
         logger.error(f"Error in /api/geospatial/terrain: {e}", exc_info=True)

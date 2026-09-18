@@ -1,5 +1,5 @@
 {
-  "model_version": "test-v1.0",
+  "model_version": "v1.0.0-phase3.1",
   "dataset_hash": "79ece554fd0d2fc62d69a21fd4d39172f7dd4995d5645e126a91d1a08c1c579e",
   "training_rows": 16,
   "validation_rows": 12,

@@ -1,6 +1,6 @@
 # PAHAD AI Landslide Event Model — Calibration & Reliability Report
 
-**Model Version**: `test-v1.0`  
+**Model Version**: `v1.0.0-phase3.1`  
 **Dataset SHA-256**: `79ece554fd0d2fc6...`  
 **Status**: `TRAINED_LIMITED_DATA`  
 **Calibration Method**: Platt Sigmoid Scaling (`CalibratedClassifierCV`)  

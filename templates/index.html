@@ -11191,6 +11191,7 @@ function toggleLanguage(lang){
 // =======================================================================
 let scene3D, camera3D, renderer3D, controls3D;
 let terrainMesh, slipPlaneMesh, contourMaterial, solidMaterial, crackLineMesh, roadLineMesh;
+let roadRibbonMesh = null, riverMesh3D = null, strataSkirtMesh = null;
 let beaconGroup = null, beaconSpheres = [];
 let showContours = true;
 let showSlipPlane = true;
@@ -11253,6 +11254,66 @@ const sector3DProfiles = {
         defaultTauB: 180,
         severity: 'HIGH',
         subterraneanSlipDepth: 5.10
+    },
+    'dikchu_dam': {
+        name: 'Dikchu Hydropower & NH-10 Link',
+        elevationMultiplier: 1.9,
+        terrainColor: '#1e293b',
+        hazardCenter: [27.3980, 88.5280],
+        meshType: 'river_gorge_shear',
+        elevationRange: '520m – 1,480m AMSL',
+        contourInterval: 'Δh = 40m Gorge Intervals',
+        meanSlope: '44.2° (Steep Spillway Flanks)',
+        defaultFoS: 0.812,
+        defaultVwc: 58.2,
+        defaultTauB: 5400,
+        severity: 'HIGH',
+        subterraneanSlipDepth: 5.80
+    },
+    'mangan_escarpment': {
+        name: 'Mangan North District Escarpment',
+        elevationMultiplier: 2.3,
+        terrainColor: '#0f172a',
+        hazardCenter: [27.5120, 88.5340],
+        meshType: 'escarpment',
+        elevationRange: '890m – 2,240m AMSL',
+        contourInterval: 'Δh = 50m Escarpment Intervals',
+        meanSlope: '46.8° (Gneiss Rockfall Cliff)',
+        defaultFoS: 0.690,
+        defaultVwc: 62.1,
+        defaultTauB: 7200,
+        severity: 'RED',
+        subterraneanSlipDepth: 7.20
+    },
+    'sonapur_tunnel': {
+        name: 'Sonapur Mudflow Tunnel (Meghalaya)',
+        elevationMultiplier: 1.6,
+        terrainColor: '#1e293b',
+        hazardCenter: [25.1120, 92.3580],
+        meshType: 'tunnel_portal',
+        elevationRange: '180m – 780m AMSL',
+        contourInterval: 'Δh = 25m Portal Intervals',
+        meanSlope: '39.2° (Weathered Sandstone Debris)',
+        defaultFoS: 0.720,
+        defaultVwc: 64.5,
+        defaultTauB: 6100,
+        severity: 'RED',
+        subterraneanSlipDepth: 6.80
+    },
+    'hunthar_aizawl': {
+        name: 'Hunthar Veng Aizawl (Mizoram)',
+        elevationMultiplier: 1.7,
+        terrainColor: '#111827',
+        hazardCenter: [23.7380, 92.7050],
+        meshType: 'terrace_slope',
+        elevationRange: '620m – 1,180m AMSL',
+        contourInterval: 'Δh = 20m Slope Intervals',
+        meanSlope: '34.5° (Sinking Zone Shale Facies)',
+        defaultFoS: 0.765,
+        defaultVwc: 54.8,
+        defaultTauB: 3800,
+        severity: 'RED',
+        subterraneanSlipDepth: 5.50
     }
 };
 
@@ -11277,6 +11338,16 @@ function getTerrainHeight(x, z, profile) {
         var pad = (Math.abs(x - 10) < 6 && Math.abs(z - 4) < 8) ? 3.5 : 0;
         var drainage = -Math.exp(-(z * z) / 180.0) * 4.0;
         return Math.max(baseSlope + bench + pad + drainage, -8.0);
+    } else if (mType === 'escarpment') {
+        var scarp = (Math.exp(-((x + 8) * (x + 8)) / 180.0) * 32.0 + Math.cos(z * 0.05) * 6.0) * (mult / 2.3);
+        var cliff = Math.atan((x + 5) * 0.25) * 14.0;
+        var debris = Math.max(0, -x * 0.4) * 3.5;
+        return Math.max(scarp + cliff + debris, -6.0);
+    } else if (mType === 'tunnel_portal') {
+        var chute = (Math.sin(x * 0.05) * 6.0 + Math.cos(z * 0.04) * 8.0) * (mult / 1.6);
+        var canyon = -Math.exp(-(x * x) / 80.0) * 14.0;
+        var bench = Math.abs(z - 1) < 5 ? 0.8 : 0;
+        return Math.max(chute + canyon + bench, -7.0);
     } else {
         // Default / 'river_gorge_shear': Steep Teesta River gorge canyon, colluvial valley cuts, basal toe scour
         var slope = (Math.sin(x * 0.04) * 8.0 + Math.cos(z * 0.03) * 6.0) * (mult / 1.8);
@@ -11294,9 +11365,11 @@ function updateSectorFeatures(profile) {
 
     // Remove existing feature vectors safely
     if (roadLineMesh) { scene3D.remove(roadLineMesh); if (roadLineMesh.geometry) roadLineMesh.geometry.dispose(); }
+    if (roadRibbonMesh) { scene3D.remove(roadRibbonMesh); if (roadRibbonMesh.geometry) roadRibbonMesh.geometry.dispose(); roadRibbonMesh = null; }
+    if (riverMesh3D) { scene3D.remove(riverMesh3D); if (riverMesh3D.geometry) riverMesh3D.geometry.dispose(); riverMesh3D = null; }
     if (crackLineMesh) { scene3D.remove(crackLineMesh); if (crackLineMesh.geometry) crackLineMesh.geometry.dispose(); }
 
-    // 1. Sector Road Ribbon Vector
+    // 1. Sector Road Ribbon Vector (Compatibility Line)
     var roadPts = [];
     if (mType === 'ridge_crest') {
         for (var rx = -36; rx <= 36; rx += 2) {
@@ -11321,6 +11394,79 @@ function updateSectorFeatures(profile) {
     var roadMat = new THREE.LineBasicMaterial({ color: 0x38BDF8, linewidth: 3 });
     roadLineMesh = new THREE.Line(roadGeom, roadMat);
     scene3D.add(roadLineMesh);
+
+    // 1B. Physical 3D Dual-Lane Highway Ribbon
+    if (roadPts.length > 2) {
+        var roadWidth = 2.4;
+        var ribbonGeom = new THREE.BufferGeometry();
+        var ribbonVerts = [];
+        var ribbonIndices = [];
+        for (var rIdx = 0; rIdx < roadPts.length; rIdx++) {
+            var p = roadPts[rIdx];
+            var tangent = (rIdx < roadPts.length - 1) ? 
+                roadPts[rIdx + 1].clone().sub(p).normalize() : 
+                p.clone().sub(roadPts[rIdx - 1]).normalize();
+            var normal = new THREE.Vector3(-tangent.z, 0, tangent.x).normalize();
+            
+            var pLeft = p.clone().add(normal.clone().multiplyScalar(-roadWidth / 2));
+            var pRight = p.clone().add(normal.clone().multiplyScalar(roadWidth / 2));
+            pLeft.y = getTerrainHeight(pLeft.x, pLeft.z, prof) + 0.16;
+            pRight.y = getTerrainHeight(pRight.x, pRight.z, prof) + 0.16;
+            
+            ribbonVerts.push(pLeft.x, pLeft.y, pLeft.z);
+            ribbonVerts.push(pRight.x, pRight.y, pRight.z);
+            
+            if (rIdx < roadPts.length - 1) {
+                var base = rIdx * 2;
+                ribbonIndices.push(base, base + 1, base + 2);
+                ribbonIndices.push(base + 1, base + 3, base + 2);
+            }
+        }
+        ribbonGeom.setAttribute('position', new THREE.Float32BufferAttribute(ribbonVerts, 3));
+        ribbonGeom.setIndex(ribbonIndices);
+        ribbonGeom.computeVertexNormals();
+        roadRibbonMesh = new THREE.Mesh(ribbonGeom, new THREE.MeshStandardMaterial({
+            color: 0x1E293B,
+            roughness: 0.8,
+            metalness: 0.2,
+            side: THREE.DoubleSide
+        }));
+        scene3D.add(roadRibbonMesh);
+    }
+
+    // 1C. Dynamic 3D River Surface for Gorge and Valley Scenarios
+    if (mType === 'river_gorge_shear' || mType === 'tunnel_portal') {
+        var riverGeom = new THREE.BufferGeometry();
+        var rVerts = [], rIdxs = [], origYArr = [];
+        var riverHalfWidth = 3.6;
+        for (var rz = -38; rz <= 38; rz += 2) {
+            var rx = (mType === 'tunnel_portal') ? 0 : (Math.sin(rz * 0.08) * 2.0);
+            var ry = Math.min(getTerrainHeight(rx - riverHalfWidth, rz, prof), getTerrainHeight(rx + riverHalfWidth, rz, prof)) + 0.35;
+            rVerts.push(rx - riverHalfWidth, ry, rz);
+            rVerts.push(rx + riverHalfWidth, ry, rz);
+            origYArr.push(ry, ry);
+            
+            var rowIdx = (rz + 38) / 2;
+            if (rz < 38) {
+                var b = rowIdx * 2;
+                rIdxs.push(b, b + 1, b + 2);
+                rIdxs.push(b + 1, b + 3, b + 2);
+            }
+        }
+        riverGeom.setAttribute('position', new THREE.Float32BufferAttribute(rVerts, 3));
+        riverGeom.setIndex(rIdxs);
+        riverGeom.computeVertexNormals();
+        riverMesh3D = new THREE.Mesh(riverGeom, new THREE.MeshStandardMaterial({
+            color: 0x0284C7,
+            roughness: 0.15,
+            metalness: 0.45,
+            transparent: true,
+            opacity: 0.76,
+            side: THREE.DoubleSide
+        }));
+        riverMesh3D.userData = { origY: origYArr };
+        scene3D.add(riverMesh3D);
+    }
 
     // 2. Sector Geomorphic Distress / Retaining Feature Vector
     var crackPts = [];
@@ -11516,6 +11662,56 @@ function updateTerrainMesh(profile) {
         slipPlaneMesh.visible = showSlipPlane;
     }
 
+    // 2B. Subsurface Geological Stratigraphy Skirt around terrain perimeter
+    if (strataSkirtMesh) {
+        scene3D.remove(strataSkirtMesh);
+        if (strataSkirtMesh.geometry) strataSkirtMesh.geometry.dispose();
+        strataSkirtMesh = null;
+    }
+    var skirtGeom = new THREE.BufferGeometry();
+    var sVerts = [], sColors = [], sIndices = [];
+    var perimeterPts = [];
+    for (var sx = -40; sx <= 40; sx += 4) perimeterPts.push({ x: sx, z: -40 });
+    for (var sz = -40; sz <= 40; sz += 4) perimeterPts.push({ x: 40, z: sz });
+    for (var sx = 40; sx >= -40; sx -= 4) perimeterPts.push({ x: sx, z: 40 });
+    for (var sz = 40; sz >= -40; sz -= 4) perimeterPts.push({ x: -40, z: sz });
+    
+    var skirtDepth = 10.0;
+    for (var pi = 0; pi < perimeterPts.length; pi++) {
+        var pt = perimeterPts[pi];
+        var topY = getTerrainHeight(pt.x, pt.z, profile);
+        var botY = topY - skirtDepth;
+        var midY = topY - sDepth;
+        
+        var vBase = pi * 3;
+        sVerts.push(pt.x, topY, pt.z);
+        sVerts.push(pt.x, midY, pt.z);
+        sVerts.push(pt.x, botY, pt.z);
+        
+        sColors.push(0.72, 0.58, 0.42); // colluvium mantle
+        sColors.push(0.55, 0.42, 0.28); // weathered schist
+        sColors.push(0.18, 0.24, 0.32); // intact bedrock
+        
+        if (pi < perimeterPts.length - 1) {
+            var nBase = (pi + 1) * 3;
+            sIndices.push(vBase, vBase + 1, nBase);
+            sIndices.push(nBase, vBase + 1, nBase + 1);
+            sIndices.push(vBase + 1, vBase + 2, nBase + 1);
+            sIndices.push(nBase + 1, vBase + 2, nBase + 2);
+        }
+    }
+    skirtGeom.setAttribute('position', new THREE.Float32BufferAttribute(sVerts, 3));
+    skirtGeom.setAttribute('color', new THREE.Float32BufferAttribute(sColors, 3));
+    skirtGeom.setIndex(sIndices);
+    skirtGeom.computeVertexNormals();
+    strataSkirtMesh = new THREE.Mesh(skirtGeom, new THREE.MeshStandardMaterial({
+        vertexColors: true,
+        roughness: 0.9,
+        metalness: 0.1,
+        side: THREE.DoubleSide
+    }));
+    scene3D.add(strataSkirtMesh);
+
     // 3. Update Road Ribbon and Sector Feature Lines
     updateSectorFeatures(profile);
 
@@ -11661,6 +11857,14 @@ function open3DTerrainModel(zoneName, fosVal) {
             sKey = 'pakyong_sector';
         } else if (zl.indexOf('tathangchen') >= 0) {
             sKey = 'tathangchen';
+        } else if (zl.indexOf('dikchu') >= 0) {
+            sKey = 'dikchu_dam';
+        } else if (zl.indexOf('mangan') >= 0) {
+            sKey = 'mangan_escarpment';
+        } else if (zl.indexOf('sonapur') >= 0) {
+            sKey = 'sonapur_tunnel';
+        } else if (zl.indexOf('hunthar') >= 0) {
+            sKey = 'hunthar_aizawl';
         }
     }
     current3DSector = sector3DProfiles[sKey] || sector3DProfiles['gangtok_corridor'];
@@ -11978,7 +12182,7 @@ function init3DScene(sectorKey) {
 
     update3DHUD();
 
-    // Render Animation Loop with Sensor Pulse
+    // Render Animation Loop with Sensor Pulse and River Waves
     function animate3D() {
         animationFrameId = requestAnimationFrame(animate3D);
         var time = performance.now() * 0.003;
@@ -11989,6 +12193,14 @@ function init3DScene(sectorKey) {
                     sp.scale.set(scale, scale, scale);
                 }
             });
+        }
+        if (riverMesh3D && riverMesh3D.geometry && riverMesh3D.geometry.attributes && riverMesh3D.geometry.attributes.position) {
+            var rPos = riverMesh3D.geometry.attributes.position;
+            for (var rw = 0; rw < rPos.count; rw++) {
+                var oY = riverMesh3D.userData.origY ? riverMesh3D.userData.origY[rw] : rPos.getY(rw);
+                rPos.setY(rw, oY + Math.sin(time * 3.2 + rw * 0.5) * 0.07);
+            }
+            rPos.needsUpdate = true;
         }
         if (controls3D) controls3D.update();
         if (renderer3D && scene3D && camera3D) {

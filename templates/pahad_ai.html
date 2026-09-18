@@ -1056,6 +1056,8 @@
         let observatoryDemSource = 'consensus';
         let observatoryElevationMatrix = null;
         let observatorySlipMesh = null;
+        let observatoryMinElev = 250.0;
+        let observatoryMaxElev = 3600.0;
 
         function initObservatory3D() {
             const container = document.getElementById('observatory-three-canvas');
@@ -1182,6 +1184,10 @@
                 const data = await resp.json();
                 if (data.status === 'SUCCESS' && data.matrix) {
                     observatoryElevationMatrix = data.matrix;
+                    if (data.min_elev !== undefined && data.max_elev !== undefined) {
+                        observatoryMinElev = data.min_elev;
+                        observatoryMaxElev = data.max_elev;
+                    }
                     updateObservatoryMeshVertices();
                 }
             } catch (e) {
@@ -1197,8 +1203,17 @@
                 const rowF = Math.max(0, Math.min(rows - 1, ((y + 37.0) / 74.0) * (rows - 1)));
                 const c0 = Math.floor(colF);
                 const r0 = Math.floor(rowF);
-                const rawZ = observatoryElevationMatrix[r0][c0];
-                return ((rawZ - 200.0) / 3600.0) * 18.0 - 4.0;
+                const c1 = Math.min(cols - 1, c0 + 1);
+                const r1 = Math.min(rows - 1, r0 + 1);
+                const dc = colF - c0;
+                const dr = rowF - r0;
+                const z00 = observatoryElevationMatrix[r0][c0];
+                const z10 = observatoryElevationMatrix[r0][c1];
+                const z01 = observatoryElevationMatrix[r1][c0];
+                const z11 = observatoryElevationMatrix[r1][c1];
+                const rawZ = (1 - dc) * (1 - dr) * z00 + dc * (1 - dr) * z10 + (1 - dc) * dr * z01 + dc * dr * z11;
+                const span = Math.max(10.0, observatoryMaxElev - observatoryMinElev);
+                return ((rawZ - observatoryMinElev) / span) * 16.0 - 4.0;
             }
             const gorgeDist = Math.abs(x - Math.sin(y * 0.05) * 12 - 4);
             const gorgeDepth = Math.exp(-(gorgeDist * gorgeDist) / 75.0) * 11.0;
