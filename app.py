@@ -60,8 +60,64 @@ if os.environ.get("FLASK_ENV") == "production" or os.environ.get("SESSION_COOKIE
 def set_security_headers(response):
     response.headers["X-Content-Type-Options"] = "nosniff"
     response.headers["X-Frame-Options"] = "SAMEORIGIN"
+    response.headers["X-XSS-Protection"] = "1; mode=block"
     response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+    response.headers["Permissions-Policy"] = "camera=(self), microphone=(), geolocation=(self)"
     return response
+
+@app.errorhandler(400)
+def handle_bad_request(e):
+    if request.path.startswith('/api/'):
+        return jsonify({
+            "status": "ERROR",
+            "error_code": 400,
+            "error": "Bad Request",
+            "message": str(getattr(e, 'description', e)),
+            "path": request.path,
+            "timestamp": datetime.now(timezone.utc).isoformat()
+        }), 400
+    return "<h1>400 Bad Request</h1>", 400
+
+@app.errorhandler(404)
+def handle_not_found(e):
+    if request.path.startswith('/api/'):
+        return jsonify({
+            "status": "ERROR",
+            "error_code": 404,
+            "error": "Endpoint Not Found",
+            "message": f"Resource {request.path} not found on this server.",
+            "path": request.path,
+            "timestamp": datetime.now(timezone.utc).isoformat()
+        }), 404
+    return "<h1>404 Not Found</h1>", 404
+
+@app.errorhandler(405)
+def handle_method_not_allowed(e):
+    if request.path.startswith('/api/'):
+        return jsonify({
+            "status": "ERROR",
+            "error_code": 405,
+            "error": "Method Not Allowed",
+            "message": f"HTTP method {request.method} is not permitted for {request.path}.",
+            "path": request.path,
+            "timestamp": datetime.now(timezone.utc).isoformat()
+        }), 405
+    return "<h1>405 Method Not Allowed</h1>", 405
+
+@app.errorhandler(500)
+def handle_internal_server_error(e):
+    logging.getLogger("PARVAT_NETRA").error(f"Handled 500 on {request.path}: {e}")
+    if request.path.startswith('/api/'):
+        return jsonify({
+            "status": "ERROR",
+            "error_code": 500,
+            "error": "Internal Server Error",
+            "message": "Internal error occurred. Fail-safe state preserved.",
+            "path": request.path,
+            "timestamp": datetime.now(timezone.utc).isoformat()
+        }), 500
+    return "<h1>500 Internal Server Error</h1>", 500
+
 
 @app.route('/static/<path:filename>')
 def serve_static(filename):
@@ -178,7 +234,7 @@ except OSError:
 def get_db(max_retries=None):
     default_timeout = int(os.environ.get("DB_CONNECT_TIMEOUT", "1" if os.environ.get("PARVAT_TESTING") == "1" else "3"))
     if max_retries is None:
-        retries = int(os.environ.get("DB_MAX_RETRIES", "1" if os.environ.get("PARVAT_TESTING") == "1" else "1"))
+        retries = int(os.environ.get("DB_MAX_RETRIES", "1" if os.environ.get("PARVAT_TESTING") == "1" else "2"))
     else:
         retries = max_retries
     timeout = default_timeout
@@ -193,7 +249,7 @@ def get_db(max_retries=None):
             if attempt == retries - 1:
                 raise e
             import time
-            time.sleep(0.5)
+            time.sleep(0.2)
 
 def init_db():
     """Idempotent database initialization applying PostGIS schema and initial seed."""

@@ -2574,3 +2574,33 @@ body.light-mode #modal-feature-phone .text-slate-300 {
     color: #1E293B !important;
 }
 
+/* ========================================================================= */
+/* EOC NAVIGATION DRAWER & TARGET PULSE HIGHLIGHT                           */
+/* ========================================================================= */
+.eoc-nav-item.active {
+    background-color: rgba(245, 158, 11, 0.12) !important;
+    border-left: 3px solid #F59E0B !important;
+    color: #FFFFFF !important;
+}
+.eoc-nav-item.active i {
+    color: #F59E0B !important;
+}
+.eoc-nav-highlighted {
+    animation: eocTargetPulse 2.2s ease-out !important;
+    border-color: #F59E0B !important;
+}
+@keyframes eocTargetPulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.85);
+        outline: 2px solid #F59E0B;
+    }
+    50% {
+        box-shadow: 0 0 0 12px rgba(245, 158, 11, 0);
+        outline: 2px solid #F59E0B;
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(245, 158, 11, 0);
+        outline: none;
+    }
+}
+

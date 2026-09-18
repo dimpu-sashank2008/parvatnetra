@@ -1456,12 +1456,12 @@
                     <!-- Destination Input -->
                     <div class="space-y-3 pt-1">
                         <div>
-                            <label class="text-[11px] font-mono text-slate-300 uppercase font-semibold">Evaluation Email (Optional)</label>
-                            <input id="drill-email" type="email" placeholder="judge@smartindiahackathon.gov.in" class="w-full mt-1 bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded p-2 font-mono focus:border-blue-500 outline-none">
+                            <label for="drill-email" class="text-[11px] font-mono text-slate-300 uppercase font-semibold">Evaluation Email (Optional)</label>
+                            <input id="drill-email" aria-label="Evaluation Email" autocomplete="email" type="email" placeholder="judge@smartindiahackathon.gov.in" class="w-full mt-1 bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded p-2 font-mono focus:border-blue-500 outline-none">
                         </div>
                         <div>
-                            <label class="text-[11px] font-mono text-slate-300 uppercase font-semibold">Evaluation Mobile (Optional)</label>
-                            <input id="drill-phone" type="tel" placeholder="+91 9876543210" class="w-full mt-1 bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded p-2 font-mono focus:border-blue-500 outline-none">
+                            <label for="drill-phone" class="text-[11px] font-mono text-slate-300 uppercase font-semibold">Evaluation Mobile (Optional)</label>
+                            <input id="drill-phone" aria-label="Evaluation Mobile Phone" autocomplete="tel" type="tel" placeholder="+91 9876543210" class="w-full mt-1 bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded p-2 font-mono focus:border-blue-500 outline-none">
                         </div>
                     </div>
 
@@ -1561,7 +1561,7 @@
                     Incident Commander Authorization PIN:
                 </label>
                 <div class="flex gap-2">
-                    <input id="modal-input-pin" type="text" value="NDMA-2026" placeholder="Enter EOC PIN" class="flex-1 bg-slate-950 border border-slate-700 rounded px-3 py-1.5 text-slate-100 font-mono text-xs focus:border-red-500 focus:outline-none" />
+                    <input id="modal-input-pin" aria-label="Incident Commander Authorization PIN" autocomplete="off" type="text" value="NDMA-2026" placeholder="Enter EOC PIN" class="flex-1 bg-slate-950 border border-slate-700 rounded px-3 py-1.5 text-slate-100 font-mono text-xs focus:border-red-500 focus:outline-none" />
                     <button onclick="document.getElementById('modal-input-pin').value='NDMA-2026'" class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded text-[10px]">
                         Auto-Fill Drill PIN
                     </button>

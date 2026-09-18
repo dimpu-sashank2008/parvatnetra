@@ -12,24 +12,31 @@
  * - Never intercept requests in a way that breaks authentication
  */
 
-const CACHE_NAME = 'parvat-netra-v5.4.0';
-const DYNAMIC_CACHE_NAME = 'parvat-netra-dynamic-v5.4.0';
+const CACHE_NAME = 'parvat-netra-v5.5.0';
+const DYNAMIC_CACHE_NAME = 'parvat-netra-dynamic-v5.5.0';
 
 const PRECACHE_ASSETS = [
     '/',
     '/static/manifest.json',
     '/static/images/parvat_netra_emblem.png',
+    '/static/css/parvat_theme.css',
     '/static/js/i18n.js',
     '/static/js/network_state.js',
     '/static/js/local_store.js',
     '/static/js/sync_manager.js',
     '/static/js/offline_manager.js',
     '/static/js/offline_routing.js',
+    '/static/js/winning_modals.js',
     '/static/pahad_offline_cache.json',
     '/static/data/offline_core_package.json',
     '/api/geospatial/offline-manifest',
     '/api/pahad/event-model/status',
     '/api/pahad/event-model/data-quality',
+    '/api/hardware/bom',
+    '/api/sitrep/official-memo?scenario=glof',
+    '/api/sitrep/official-memo?scenario=remal',
+    '/api/sitrep/official-memo?scenario=tupul',
+    '/api/sitrep/official-memo?scenario=sonapur',
     '/edge-network',
     '/demo',
     '/static/js/offline_field_triage.js'

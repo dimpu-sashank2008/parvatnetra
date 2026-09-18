@@ -2082,6 +2082,26 @@
             color: #001833 !important;
         }
 
+        /* EOC Navigation In-Page Element Target Pulse Highlight */
+        .eoc-nav-highlighted {
+            animation: eocTargetPulse 2.2s ease-out !important;
+            border-color: #F59E0B !important;
+        }
+        @keyframes eocTargetPulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.85);
+                outline: 2px solid #F59E0B;
+            }
+            50% {
+                box-shadow: 0 0 0 12px rgba(245, 158, 11, 0);
+                outline: 2px solid #F59E0B;
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(245, 158, 11, 0);
+                outline: none;
+            }
+        }
+
         /* ========================================================================= */
         /* DARK MODE: DARK COLOUR & LIGHT FADED BLUE COMBO                           */
         /* ========================================================================= */
@@ -2750,7 +2770,7 @@
     <!-- PHASE 9C: EOC LEFT SIDEBAR BACKDROP & DRAWER -->
     <div id="eoc-sidebar-backdrop" onclick="toggleSidebarMenu(false)" class="fixed inset-0 z-[90000] bg-black/70 backdrop-blur-xs hidden transition-opacity duration-200" aria-hidden="true"></div>
 
-    <nav id="eoc-sidebar-drawer" class="fixed top-0 left-0 bottom-0 w-84 max-w-[85vw] z-[90001] bg-[#070B10] border-r border-slate-800 text-slate-200 shadow-2xl flex flex-col transform -translate-x-full transition-transform duration-200 overflow-y-auto hidden" aria-label="EOC Navigation Drawer">
+    <nav id="eoc-sidebar-drawer" class="fixed top-0 left-0 bottom-0 w-84 max-w-[85vw] z-[90001] bg-[#070B10] border-r border-slate-800 text-slate-200 shadow-2xl flex flex-col transform -translate-x-full transition-transform duration-200 overflow-y-auto hidden" aria-label="EOC Master Directory Navigation Drawer" role="dialog" aria-modal="true">
       <!-- Drawer Header -->
       <div class="p-4 bg-[#0B1320] border-b border-slate-800 flex items-center justify-between">
         <div class="flex items-center gap-3">
@@ -2802,121 +2822,158 @@
 
       <!-- Navigation Categories -->
       <div class="py-2 flex-grow overflow-y-auto space-y-1 text-xs">
-        <!-- 1. PAHAD AI -->
-        <div class="eoc-nav-section-title text-[10px] font-black tracking-widest text-[#737373] uppercase px-4 py-1.5">1. PAHAD AI</div>
+        <!-- 0. SIH EVALUATOR & TOP-1 DEFENSE -->
+        <div class="eoc-nav-section-title text-[10px] font-black tracking-widest text-amber-400 uppercase px-4 py-1.5 flex items-center gap-1.5">
+          <i class="ph-bold ph-shield-check text-amber-400"></i>
+          <span>0. SIH TOP-1 DEFENSE</span>
+        </div>
+        <a href="javascript:void(0)" onclick="toggleSidebarMenu(false); toggleJudgeDefenseOverlay(true);" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-amber-950/30 transition text-[#FDE68A] border-l-2 border-amber-500/80">
+          <i class="ph-bold ph-shield-check text-amber-400"></i>
+          <span class="font-bold">SIH Top-1 Judge Defense</span>
+          <span class="eoc-nav-badge ml-auto text-[9px] font-mono px-1.5 py-0.5 rounded bg-amber-950/80 text-amber-300 border border-amber-500 font-bold tracking-wider">★ TOP-1</span>
+        </a>
+        <a href="javascript:void(0)" onclick="toggleSidebarMenu(false); openDataTruthModal();" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
+          <i class="ph-bold ph-certificate text-emerald-400"></i>
+          <span>Data Truth &amp; Provenance</span>
+          <span class="eoc-nav-badge ml-auto text-[9px] font-mono px-1.5 py-0.5 rounded bg-emerald-950/60 text-emerald-300 border border-emerald-700">GSI/IMD</span>
+        </a>
+        <a href="javascript:void(0)" onclick="toggleSidebarMenu(false); openScientificExplModal('fos');" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
+          <i class="ph-bold ph-scales text-cyan-400"></i>
+          <span>Mohr-Coulomb Physics</span>
+          <span class="eoc-nav-badge ml-auto text-[9px] font-mono px-1.5 py-0.5 rounded bg-cyan-950/60 text-cyan-300 border border-cyan-700">PHYSICS</span>
+        </a>
+
+        <!-- 1. PAHAD PREDICTIVE AI -->
+        <div class="eoc-nav-section-title text-[10px] font-black tracking-widest text-[#94A3B8] uppercase px-4 py-1.5 mt-2">1. PAHAD PREDICTIVE AI</div>
         <a href="javascript:void(0)" onclick="navigateToPanel('prediction')" class="eoc-nav-item active flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
-          <i class="ph-bold ph-brain text-[#A3A3A3]"></i>
-          <span>Current Prediction</span>
+          <i class="ph-bold ph-brain text-emerald-400"></i>
+          <span>Current Prediction &amp; CRI</span>
           <span class="eoc-nav-badge ml-auto text-[9px] font-mono px-1.5 py-0.5 rounded bg-[#1C2A1E] text-[#4ADE80] border border-[#166534]">PRIMARY</span>
         </a>
         <a href="javascript:void(0)" onclick="navigateToPanel('horizon-forecast')" id="nav-item-horizon-forecast" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
           <i class="ph-bold ph-hourglass-high text-blue-300"></i>
-          <span>Horizon Forecast</span>
+          <span>Horizon Forecast (6h-48h)</span>
           <span class="eoc-nav-badge ml-auto text-[9px] font-mono px-1.5 py-0.5 rounded bg-[#14223A] text-blue-200 border border-[#1E3A8A]">6-48h</span>
         </a>
-        <a href="javascript:void(0)" onclick="navigateToPanel('prediction'); togglePredictionDetails(true); document.getElementById('pahad-forecast-panel')?.scrollIntoView({behavior:'smooth'});" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
-          <i class="ph-bold ph-chart-line-up text-[#A3A3A3]"></i>
-          <span>Forecast</span>
-        </a>
-        <a href="javascript:void(0)" onclick="navigateToPanel('prediction'); togglePredictionDetails(true);" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
-          <i class="ph-bold ph-scales text-[#A3A3A3]"></i>
-          <span>Prediction Evidence</span>
+        <a href="javascript:void(0)" onclick="navigateToPanel('evidence')" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
+          <i class="ph-bold ph-scales text-amber-300"></i>
+          <span>Prediction Evidence Ledger</span>
+          <span class="eoc-nav-badge ml-auto text-[9px] font-mono px-1.5 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">FUSED</span>
         </a>
 
-        <!-- 2. MAP -->
-        <div class="eoc-nav-section-title text-[10px] font-black tracking-widest text-[#737373] uppercase px-4 py-1.5 mt-2">2. MAP &amp; TERRAIN</div>
+        <!-- 2. GIS & TERRAIN INTELLIGENCE -->
+        <div class="eoc-nav-section-title text-[10px] font-black tracking-widest text-[#94A3B8] uppercase px-4 py-1.5 mt-2">2. GIS &amp; TERRAIN INTELLIGENCE</div>
         <a href="javascript:void(0)" onclick="navigateToPanel('map')" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
-          <i class="ph-bold ph-map-trifold text-[#A3A3A3]"></i>
-          <span>GIS Map</span>
+          <i class="ph-bold ph-map-trifold text-sky-400"></i>
+          <span>Operational GIS Hazard Map</span>
+          <span class="eoc-nav-badge ml-auto text-[9px] font-mono px-1.5 py-0.5 rounded bg-sky-950/60 text-sky-300 border border-sky-800">LEAFLET</span>
         </a>
-        <a href="javascript:void(0)" onclick="toggleSidebarMenu(false); open3DTerrainModal();" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
-          <i class="ph-bold ph-cube text-[#A3A3A3]"></i>
-          <span>3D Terrain</span>
+        <a href="javascript:void(0)" onclick="toggleSidebarMenu(false); open3DTerrainModel('NH-10 Km 48 (29th Mile Sector)', 0.745);" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
+          <i class="ph-bold ph-cube text-purple-400"></i>
+          <span>3D Terrain Digital Twin</span>
+          <span class="eoc-nav-badge ml-auto text-[9px] font-mono px-1.5 py-0.5 rounded bg-purple-950/60 text-purple-300 border border-purple-800">DEM 3D</span>
         </a>
-        <a href="/climate-map" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
-          <i class="ph-bold ph-cloud-rain text-[#A3A3A3]"></i>
-          <span>Climate</span>
+        <a href="javascript:void(0)" onclick="toggleSidebarMenu(false); if(typeof toggleGsiInSarOverlay==='function') toggleGsiInSarOverlay(); navigateToPanel('map');" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
+          <i class="ph-bold ph-satellite text-teal-400"></i>
+          <span>InSAR &amp; GSI Quadrangles</span>
+          <span class="eoc-nav-badge ml-auto text-[9px] font-mono px-1.5 py-0.5 rounded bg-teal-950/60 text-teal-300 border border-teal-800">SENTINEL-1</span>
         </a>
-        <a href="/seismic" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
-          <i class="ph-bold ph-activity text-[#A3A3A3]"></i>
-          <span>Seismic</span>
+        <a href="javascript:void(0)" onclick="toggleSidebarMenu(false); openWeatherForecastModal();" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
+          <i class="ph-bold ph-cloud-rain text-blue-400"></i>
+          <span>Live IMD Weather &amp; Radar</span>
+          <span class="eoc-nav-badge ml-auto text-[9px] font-mono px-1.5 py-0.5 rounded bg-blue-950/60 text-blue-300 border border-blue-800">LIVE IMD</span>
+        </a>
+        <a href="javascript:void(0)" onclick="navigateToPanel('seismic')" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
+          <i class="ph-bold ph-activity text-rose-400"></i>
+          <span>NCS Seismic Monitoring</span>
+          <span class="eoc-nav-badge ml-auto text-[9px] font-mono px-1.5 py-0.5 rounded bg-rose-950/60 text-rose-300 border border-rose-800">USGS/NCS</span>
         </a>
 
-        <!-- 3. FIELD -->
-        <div class="eoc-nav-section-title text-[10px] font-black tracking-widest text-[#737373] uppercase px-4 py-1.5 mt-2">3. FIELD OPERATIONS</div>
-        <a href="javascript:void(0)" onclick="navigateToPanel('field-ops')" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
-          <i class="ph-bold ph-broadcast text-[#A3A3A3]"></i>
-          <span>Sensors</span>
+        <!-- 3. FIELD OPERATIONS & SENSORS -->
+        <div class="eoc-nav-section-title text-[10px] font-black tracking-widest text-[#94A3B8] uppercase px-4 py-1.5 mt-2">3. FIELD OPERATIONS &amp; SENSORS</div>
+        <a href="javascript:void(0)" onclick="navigateToPanel('sensors')" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
+          <i class="ph-bold ph-broadcast text-emerald-400"></i>
+          <span>IoT In-Situ Telemetry Stream</span>
+          <span class="eoc-nav-badge ml-auto text-[9px] font-mono px-1.5 py-0.5 rounded bg-emerald-950/60 text-emerald-300 border border-emerald-800">PIEZO/TILT</span>
         </a>
         <a href="javascript:void(0)" onclick="toggleSidebarMenu(false); openCitizenReportModal();" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
-          <i class="ph-bold ph-identification-badge text-[#A3A3A3]"></i>
-          <span>Field Reports</span>
+          <i class="ph-bold ph-identification-badge text-amber-400"></i>
+          <span>Citizen Field Incident Report</span>
+          <span class="eoc-nav-badge ml-auto text-[9px] font-mono px-1.5 py-0.5 rounded bg-amber-950/60 text-amber-300 border border-amber-800">NDMA-01</span>
         </a>
-        <a href="javascript:void(0)" onclick="navigateToPanel('field-ops')" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
-          <i class="ph-bold ph-clipboard-text text-[#A3A3A3]"></i>
-          <span>Field Tasks</span>
+        <a href="javascript:void(0)" onclick="navigateToPanel('triage')" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
+          <i class="ph-bold ph-clipboard-text text-sky-400"></i>
+          <span>AI Field Triage &amp; Queue</span>
+          <span class="eoc-nav-badge ml-auto text-[9px] font-mono px-1.5 py-0.5 rounded bg-sky-950/60 text-sky-300 border border-sky-800">TRIAGE</span>
         </a>
         <a href="/edge-network" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
-          <i class="ph-bold ph-wifi-slash text-[#A3A3A3]"></i>
-          <span>Offline Operations</span>
+          <i class="ph-bold ph-wifi-slash text-orange-400"></i>
+          <span>Offline BLE Mesh Gateways</span>
+          <span class="eoc-nav-badge ml-auto text-[9px] font-mono px-1.5 py-0.5 rounded bg-orange-950/60 text-orange-300 border border-orange-800">OFFLINE</span>
         </a>
 
-        <!-- 4. EOC -->
-        <div class="eoc-nav-section-title text-[10px] font-black tracking-widest text-[#737373] uppercase px-4 py-1.5 mt-2">4. EOC COMMAND</div>
-        <a href="javascript:void(0)" onclick="navigateToPanel('eoc')" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
-          <i class="ph-bold ph-list-numbers text-[#A3A3A3]"></i>
-          <span>Incidents</span>
+        <!-- 4. EOC TACTICAL COMMAND -->
+        <div class="eoc-nav-section-title text-[10px] font-black tracking-widest text-[#94A3B8] uppercase px-4 py-1.5 mt-2">4. EOC TACTICAL COMMAND</div>
+        <a href="javascript:void(0)" onclick="navigateToPanel('sitrep')" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
+          <i class="ph-bold ph-file-text text-amber-300"></i>
+          <span>Autonomous AI SITREP</span>
+          <span class="eoc-nav-badge ml-auto text-[9px] font-mono px-1.5 py-0.5 rounded bg-amber-950/60 text-amber-300 border border-amber-800">AI BRIEF</span>
         </a>
-        <a href="javascript:void(0)" onclick="navigateToPanel('eoc')" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
-          <i class="ph-bold ph-newspaper text-[#A3A3A3]"></i>
-          <span>Command Brief</span>
+        <a href="javascript:void(0)" onclick="toggleSidebarMenu(false); if(typeof togglePahadRegionalDrawer==='function') togglePahadRegionalDrawer();" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
+          <i class="ph-bold ph-buildings text-indigo-400"></i>
+          <span>Regional EOC Matrix (8-NER)</span>
+          <span class="eoc-nav-badge ml-auto text-[9px] font-mono px-1.5 py-0.5 rounded bg-indigo-950/60 text-indigo-300 border border-indigo-800">8 STATES</span>
         </a>
-        <a href="javascript:void(0)" onclick="navigateToPanel('eoc')" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
-          <i class="ph-bold ph-shield-check text-[#A3A3A3]"></i>
-          <span>Authority Review</span>
+        <a href="javascript:void(0)" onclick="toggleSidebarMenu(false); openHistoricalMediaModal();" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
+          <i class="ph-bold ph-file-text text-violet-400"></i>
+          <span>GSI Landslide Media Archive</span>
+          <span class="eoc-nav-badge ml-auto text-[9px] font-mono px-1.5 py-0.5 rounded bg-violet-950/60 text-violet-300 border border-violet-800">10 QUAD</span>
         </a>
-        <a href="javascript:void(0)" onclick="navigateToPanel('eoc')" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
-          <i class="ph-bold ph-file-text text-[#A3A3A3]"></i>
-          <span>SITREP</span>
+        <a href="javascript:void(0)" onclick="navigateToPanel('routing')" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
+          <i class="ph-bold ph-navigation-arrow text-emerald-400"></i>
+          <span>BRO Corridor Clearance</span>
+          <span class="eoc-nav-badge ml-auto text-[9px] font-mono px-1.5 py-0.5 rounded bg-emerald-950/60 text-emerald-300 border border-emerald-800">IRC SP:84</span>
         </a>
 
-        <!-- 5. RESPONSE -->
-        <div class="eoc-nav-section-title text-[10px] font-black tracking-widest text-[#737373] uppercase px-4 py-1.5 mt-2">5. RESPONSE</div>
-        <a href="javascript:void(0)" onclick="navigateToPanel('response')" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
-          <i class="ph-bold ph-navigation-arrow text-[#A3A3A3]"></i>
-          <span>Routing</span>
+        <!-- 5. PUBLIC WARNING & SAFEGUARDS -->
+        <div class="eoc-nav-section-title text-[10px] font-black tracking-widest text-[#94A3B8] uppercase px-4 py-1.5 mt-2">5. PUBLIC WARNING &amp; SAFEGUARDS</div>
+        <a href="javascript:void(0)" onclick="toggleSidebarMenu(false); openCapModal();" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
+          <i class="ph-bold ph-shield-warning text-rose-400"></i>
+          <span>NDMA CAP v1.2 Dispatch</span>
+          <span class="eoc-nav-badge ml-auto text-[9px] font-mono px-1.5 py-0.5 rounded bg-rose-950/60 text-rose-300 border border-rose-800">CAP-XML</span>
+        </a>
+        <a href="javascript:void(0)" onclick="navigateToPanel('siren')" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
+          <i class="ph-bold ph-warning-octagon text-red-400"></i>
+          <span>Autonomous Siren Grid</span>
+          <span class="eoc-nav-badge ml-auto text-[9px] font-mono px-1.5 py-0.5 rounded bg-[#2B1818] text-[#F87171] border border-[#991B1B]">2-OF-3 RULE</span>
         </a>
         <a href="/notifications" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
-          <i class="ph-bold ph-target text-[#A3A3A3]"></i>
-          <span>Geofence</span>
-        </a>
-        <a href="/notifications" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
-          <i class="ph-bold ph-bell-ringing text-[#A3A3A3]"></i>
-          <span>Notifications</span>
-        </a>
-        <a href="javascript:void(0)" onclick="navigateToPanel('response'); document.getElementById('pahad-autonomous-siren-card')?.scrollIntoView({behavior:'smooth'});" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
-          <i class="ph-bold ph-warning-octagon text-[#A3A3A3]"></i>
-          <span>Siren Control</span>
-          <span class="eoc-nav-badge ml-auto text-[9px] font-mono px-1.5 py-0.5 rounded bg-[#2B1818] text-[#F87171] border border-[#991B1B]">SAFEGUARD</span>
+          <i class="ph-bold ph-bell-ringing text-yellow-400"></i>
+          <span>15km Geo-Alert Center</span>
+          <span class="eoc-nav-badge ml-auto text-[9px] font-mono px-1.5 py-0.5 rounded bg-yellow-950/60 text-yellow-300 border border-yellow-800">SMS/PUSH</span>
         </a>
 
-        <!-- 6. SYSTEM -->
-        <div class="eoc-nav-section-title text-[10px] font-black tracking-widest text-[#737373] uppercase px-4 py-1.5 mt-2">6. SYSTEM</div>
+        <!-- 6. SYSTEM GOVERNANCE & MLOPS -->
+        <div class="eoc-nav-section-title text-[10px] font-black tracking-widest text-[#94A3B8] uppercase px-4 py-1.5 mt-2">6. SYSTEM GOVERNANCE &amp; MLOPS</div>
         <a href="javascript:void(0)" onclick="navigateToPanel('system')" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
-          <i class="ph-bold ph-heartbeat text-[#A3A3A3]"></i>
-          <span>Data Health</span>
+          <i class="ph-bold ph-heartbeat text-emerald-400"></i>
+          <span>Sensor &amp; Pipeline Health</span>
+          <span class="eoc-nav-badge ml-auto text-[9px] font-mono px-1.5 py-0.5 rounded bg-emerald-950/60 text-emerald-300 border border-emerald-800">HEALTH</span>
         </a>
-        <a href="javascript:void(0)" onclick="navigateToPanel('system')" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
-          <i class="ph-bold ph-cpu text-[#A3A3A3]"></i>
-          <span>Model Status</span>
+        <a href="javascript:void(0)" onclick="navigateToPanel('model-status')" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
+          <i class="ph-bold ph-cpu text-cyan-400"></i>
+          <span>Phase 3.1 Model Registry</span>
+          <span class="eoc-nav-badge ml-auto text-[9px] font-mono px-1.5 py-0.5 rounded bg-cyan-950/60 text-cyan-300 border border-cyan-800">REGISTRY</span>
         </a>
         <a href="/console" target="_blank" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
-          <i class="ph-bold ph-terminal-window text-[#A3A3A3]"></i>
-          <span>Audit</span>
+          <i class="ph-bold ph-terminal-window text-slate-400"></i>
+          <span>EOC Operator Console</span>
+          <span class="eoc-nav-badge ml-auto text-[9px] font-mono px-1.5 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">CLI/LOGS</span>
         </a>
-        <a href="/console" target="_blank" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
-          <i class="ph-bold ph-shield text-[#A3A3A3]"></i>
-          <span>Security</span>
+        <a href="/api/docs" target="_blank" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
+          <i class="ph-bold ph-file-text text-slate-400"></i>
+          <span>OpenAPI v3 Documentation</span>
+          <span class="eoc-nav-badge ml-auto text-[9px] font-mono px-1.5 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">API SPEC</span>
         </a>
       </div>
       <!-- Drawer Footer -->
@@ -4589,7 +4646,7 @@
             </div>
 
             <!-- SEISMIC SIGNAL CARD -->
-            <div class="kpi-card kpi-stagger-2 bg-white border border-[#E2E8F0] rounded-md p-4 shadow-sm flex flex-col justify-between">
+            <div id="seismic-quick-status" class="kpi-card kpi-stagger-2 bg-white border border-[#E2E8F0] rounded-md p-4 shadow-sm flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between mb-1.5">
                         <span class="text-[11px] font-bold uppercase tracking-wider text-purple-800 flex items-center gap-1.5">
@@ -4957,14 +5014,14 @@
                         Vehicle Classification (IRC Standards):
                     </label>
                     <div class="grid grid-cols-2 gap-2">
-                        <select id="citizen-vehicle-weight-select" onchange="onCitizenWeightPresetChange(this.value)" class="w-full text-xs font-medium bg-white border border-slate-300 rounded-none p-2.5 text-slate-900 focus:ring-1 focus:ring-[#002147] focus:border-[#002147]">
+                        <select id="citizen-vehicle-weight-select" aria-label="IRC Vehicle Classification" onchange="onCitizenWeightPresetChange(this.value)" class="w-full text-xs font-medium bg-white border border-slate-300 rounded-none p-2.5 text-slate-900 focus:ring-1 focus:ring-[#002147] focus:border-[#002147]">
                             <option value="3.5">IRC CLASS: LIGHT MOTOR VEHICLES (LMV / AMBULANCE) (&le; 3.5 T)</option>
                             <option value="18.5">MEDIUM COMMERCIAL / BUS (&le; 18.5 T)</option>
                             <option value="32.0" selected>IRC CLASS: HEAVY GOODS VEHICLES (HGV / FREIGHT CONVOYS) [32T]</option>
                             <option value="custom">CUSTOM REGISTERED GVW</option>
                         </select>
                         <div class="relative">
-                            <input id="citizen-vehicle-weight-input" type="number" step="0.5" min="0.5" max="60.0" value="32.0" class="w-full text-xs font-bold bg-white border border-slate-300 rounded-none p-2.5 pr-7 text-slate-900 focus:ring-1 focus:ring-[#002147] focus:border-[#002147]" placeholder="Tonnes">
+                            <input id="citizen-vehicle-weight-input" aria-label="Gross vehicle weight in tonnes" type="number" step="0.5" min="0.5" max="60.0" value="32.0" class="w-full text-xs font-bold bg-white border border-slate-300 rounded-none p-2.5 pr-7 text-slate-900 focus:ring-1 focus:ring-[#002147] focus:border-[#002147]" placeholder="Tonnes">
                             <span class="absolute right-2.5 top-2.5 text-[11px] font-bold text-slate-400 font-mono">T</span>
                         </div>
                     </div>
@@ -5115,11 +5172,11 @@
                         <form id="citizen-report-form" onsubmit="handleCitizenReport(event)" class="space-y-3 text-xs">
                             <div>
                                 <label for="c-inp-name" class="block font-bold text-slate-700 uppercase text-[10px] tracking-wider mb-1">Reporter Full Name</label>
-                                <input type="text" id="c-inp-name" required placeholder="Full name as per official ID" class="w-full p-2 border border-slate-300 rounded-none bg-white text-slate-900 text-xs">
+                                <input type="text" id="c-inp-name" aria-label="Reporter Full Name" autocomplete="name" required placeholder="Full name as per official ID" class="w-full p-2 border border-slate-300 rounded-none bg-white text-slate-900 text-xs">
                             </div>
                             <div>
                                 <label for="c-inp-phone" class="block font-bold text-slate-700 uppercase text-[10px] tracking-wider mb-1">Contact Phone (10-Digit Mobile)</label>
-                                <input type="tel" id="c-inp-phone" required placeholder="+91-9876543210" class="w-full p-2 border border-slate-300 rounded-none bg-white text-slate-900 text-xs font-mono">
+                                <input type="tel" id="c-inp-phone" aria-label="Contact Phone" autocomplete="tel" required placeholder="+91-9876543210" class="w-full p-2 border border-slate-300 rounded-none bg-white text-slate-900 text-xs font-mono">
                             </div>
                             <div>
                                 <label for="c-inp-desc" class="block font-bold text-slate-700 uppercase text-[10px] tracking-wider mb-1">Field Observation Description</label>
@@ -5779,18 +5836,18 @@
         <div class="grid grid-cols-2 gap-3">
           <div>
             <label for="custom-lat-input" class="block text-[10px] font-bold text-slate-400 uppercase mb-0.5">Latitude (°N)</label>
-            <input type="number" id="custom-lat-input" step="0.0001" min="20.0" max="31.0" placeholder="e.g. 25.5820" class="w-full bg-slate-800 border border-slate-600 rounded px-2.5 py-1.5 text-xs text-slate-100 font-mono focus:border-sky-500 focus:outline-hidden">
+            <input type="number" id="custom-lat-input" aria-label="Latitude in decimal degrees north" step="0.0001" min="20.0" max="31.0" placeholder="e.g. 25.5820" class="w-full bg-slate-800 border border-slate-600 rounded px-2.5 py-1.5 text-xs text-slate-100 font-mono focus:border-sky-500 focus:outline-hidden">
             <span class="text-[9px] text-slate-500">NER Bounds: 20.0°N – 30.5°N</span>
           </div>
           <div>
             <label for="custom-lon-input" class="block text-[10px] font-bold text-slate-400 uppercase mb-0.5">Longitude (°E)</label>
-            <input type="number" id="custom-lon-input" step="0.0001" min="87.0" max="98.0" placeholder="e.g. 94.1200" class="w-full bg-slate-800 border border-slate-600 rounded px-2.5 py-1.5 text-xs text-slate-100 font-mono focus:border-sky-500 focus:outline-hidden">
+            <input type="number" id="custom-lon-input" aria-label="Longitude in decimal degrees east" step="0.0001" min="87.0" max="98.0" placeholder="e.g. 94.1200" class="w-full bg-slate-800 border border-slate-600 rounded px-2.5 py-1.5 text-xs text-slate-100 font-mono focus:border-sky-500 focus:outline-hidden">
             <span class="text-[9px] text-slate-500">NER Bounds: 87.0°E – 98.0°E</span>
           </div>
         </div>
         <div>
           <label for="custom-name-input" class="block text-[10px] font-bold text-slate-400 uppercase mb-0.5">Location Identifier / Landmark (Optional)</label>
-          <input type="text" id="custom-name-input" placeholder="e.g. Dzukou Valley Pass Checkpoint" class="w-full bg-slate-800 border border-slate-600 rounded px-2.5 py-1.5 text-xs text-slate-100 focus:border-sky-500 focus:outline-hidden">
+          <input type="text" id="custom-name-input" aria-label="Location Identifier or Landmark" placeholder="e.g. Dzukou Valley Pass Checkpoint" class="w-full bg-slate-800 border border-slate-600 rounded px-2.5 py-1.5 text-xs text-slate-100 focus:border-sky-500 focus:outline-hidden">
         </div>
         <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-800">
           <button type="button" onclick="closeCustomCoordModal()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded text-xs font-semibold">Cancel</button>
@@ -6304,7 +6361,7 @@
                     </label>
                     
                     <div id="crm-photo-dropzone" class="border-2 border-dashed border-slate-700 hover:border-[#1E3A8A] rounded-xl p-3 text-center bg-slate-950/60 cursor-pointer transition" onclick="document.getElementById('crm-photo-file').click()">
-                        <input type="file" id="crm-photo-file" name="photo" accept="image/*" capture="environment" class="hidden" onchange="previewCitizenModalPhoto(event)">
+                        <input type="file" id="crm-photo-file" name="photo" aria-label="Upload incident field photo" accept="image/*" capture="environment" class="hidden" onchange="previewCitizenModalPhoto(event)">
                         
                         <div id="crm-dropzone-prompt" class="space-y-1 py-2">
                             <i class="ph-bold ph-camera text-3xl text-slate-400 block"></i>
@@ -6331,11 +6388,11 @@
                 <div class="grid grid-cols-2 gap-2">
                     <div>
                         <label for="crm-name" class="block font-bold text-slate-400 mb-0.5 text-[11px]">Reporter Name (Optional)</label>
-                        <input type="text" id="crm-name" name="reporter_name" placeholder="Citizen Traveler" class="w-full p-2 rounded-lg bg-slate-950 border border-slate-700 text-slate-200 text-xs">
+                        <input type="text" id="crm-name" name="reporter_name" aria-label="Reporter Name" autocomplete="name" placeholder="Citizen Traveler" class="w-full p-2 rounded-lg bg-slate-950 border border-slate-700 text-slate-200 text-xs">
                     </div>
                     <div>
                         <label for="crm-phone" class="block font-bold text-slate-400 mb-0.5 text-[11px]">Contact Phone (Optional)</label>
-                        <input type="tel" id="crm-phone" name="phone" placeholder="+91-XXXXXXXXXX" class="w-full p-2 rounded-lg bg-slate-950 border border-slate-700 text-slate-200 text-xs">
+                        <input type="tel" id="crm-phone" name="phone" aria-label="Contact Phone" autocomplete="tel" placeholder="+91-XXXXXXXXXX" class="w-full p-2 rounded-lg bg-slate-950 border border-slate-700 text-slate-200 text-xs">
                     </div>
                 </div>
 
@@ -6946,7 +7003,7 @@
                     <span class="font-bold text-xs sm:text-sm text-slate-200">OFFICIAL GOI DISASTER MEMORANDUM &bull; SITREP DISPATCH</span>
                 </div>
                 <div class="flex items-center gap-2">
-                    <select id="sitrep-scenario-select" onchange="loadOfficialSitrep(this.value)" class="bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded px-2.5 py-1 font-mono focus:ring-1 focus:ring-amber-400 cursor-pointer">
+                    <select id="sitrep-scenario-select" aria-label="Select Official SitRep Historical Scenario" onchange="loadOfficialSitrep(this.value)" class="bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded px-2.5 py-1 font-mono focus:ring-1 focus:ring-amber-400 cursor-pointer">
                         <option value="glof">GLOF Surge (Sikkim NH-10)</option>
                         <option value="remal">Cyclone Remal (Meghalaya NH-06)</option>
                         <option value="tupul">Tupul Railway Cut (Manipur)</option>
@@ -7606,47 +7663,139 @@ function toggleSidebarMenu(open) {
 }
 window.toggleSidebarMenu = toggleSidebarMenu;
 
+function eocHighlightPulse(element) {
+    if (!element) return;
+    element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    element.classList.add('eoc-nav-highlighted');
+    setTimeout(function() {
+        element.classList.remove('eoc-nav-highlighted');
+    }, 2400);
+}
+window.eocHighlightPulse = eocHighlightPulse;
+
 function navigateToPanel(panelId) {
+    // 1. Update active styling in sidebar
+    var navItems = document.querySelectorAll('#eoc-sidebar-drawer .eoc-nav-item');
+    navItems.forEach(function(item) {
+        var onclickAttr = item.getAttribute('onclick') || '';
+        if (onclickAttr.indexOf("navigateToPanel('" + panelId + "')") !== -1) {
+            item.classList.add('active');
+        } else {
+            item.classList.remove('active');
+        }
+    });
+
+    // 2. Hide all workspace views by default
     var views = document.querySelectorAll('.workspace-view');
     views.forEach(function(v) { v.classList.add('hidden'); });
 
+    // 3. Handle specific panel target routing
     var targetView = null;
+    var targetElementId = null;
+
     if (panelId === 'horizon-forecast') {
         targetView = document.getElementById('view-horizon-forecast');
         var secId = (document.getElementById('horizon-corridor-select') ? document.getElementById('horizon-corridor-select').value : null) || window.currentActiveSector || 'SK-NH10-KM48';
         if (typeof fetchHorizonForecast === 'function') {
             fetchHorizonForecast(secId);
         }
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     } else if (panelId === 'prediction') {
         targetView = document.getElementById('view-prediction');
-    } else if (panelId === 'map' || panelId === 'gis' || panelId === 'evacuation') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (panelId === 'map' || panelId === 'gis') {
         targetView = document.getElementById('view-prediction');
-        setTimeout(function() {
-            var el = document.getElementById('gis-map-card') || document.getElementById('authority-map-slot');
-            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            if (window.map && typeof window.map.invalidateSize === 'function') {
-                window.map.invalidateSize();
-            }
-        }, 150);
-    } else if (panelId === 'response' || panelId === 'siren') {
+        targetElementId = 'gis-map-card';
+    } else if (panelId === 'evidence' || panelId === 'explain') {
+        targetView = document.getElementById('view-prediction');
+        if (typeof togglePredictionDetails === 'function') {
+            togglePredictionDetails(true);
+        }
+        targetElementId = 'pahad-prediction-details-panel';
+    } else if (panelId === 'fos') {
+        targetView = document.getElementById('view-prediction');
+        if (typeof openScientificExplModal === 'function') {
+            openScientificExplModal('fos');
+        }
+    } else if (panelId === 'sensors' || panelId === 'field-ops' || panelId === 'telemetry') {
+        targetView = document.getElementById('view-prediction');
+        targetElementId = 'teesta-hydro-widget';
+    } else if (panelId === 'triage' || panelId === 'field-tasks' || panelId === 'reports' || panelId === 'incidents') {
+        targetView = document.getElementById('view-prediction');
+        targetElementId = 'observation-queue-section';
+    } else if (panelId === 'sitrep' || panelId === 'command-brief') {
+        targetView = document.getElementById('view-prediction');
+        targetElementId = 'ai-sitrep-card';
+        if (typeof syncSitRep === 'function') {
+            syncSitRep();
+        }
+    } else if (panelId === 'routing' || panelId === 'evacuation' || panelId === 'bypass') {
+        targetView = document.getElementById('view-prediction');
+        targetElementId = 'citizen-bypass-calculator-card';
+    } else if (panelId === 'siren') {
         targetView = document.getElementById('view-response');
-    } else if (panelId === 'system' || panelId === 'telemetry' || panelId === 'demo') {
+        targetElementId = 'pahad-autonomous-siren-card';
+    } else if (panelId === 'response') {
+        targetView = document.getElementById('view-response');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (panelId === 'system' || panelId === 'data-health') {
         targetView = document.getElementById('view-system');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (panelId === 'model-status') {
+        targetView = document.getElementById('view-system');
+        targetElementId = 'pahad-model-status-panel';
+    } else if (panelId === 'seismic') {
+        targetView = document.getElementById('view-prediction');
+        targetElementId = 'seismic-quick-status';
+    } else if (panelId === 'weather') {
+        if (typeof openWeatherForecastModal === 'function') {
+            openWeatherForecastModal();
+        }
     } else {
         targetView = document.getElementById('view-' + panelId) || document.getElementById('view-prediction');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     if (targetView) {
         targetView.classList.remove('hidden');
     }
 
-    // Close menu drawer
-    toggleSidebarMenu(false);
+    // If targeting an in-page element, scroll to and highlight it
+    if (targetElementId) {
+        setTimeout(function() {
+            var el = document.getElementById(targetElementId);
+            if (el) {
+                eocHighlightPulse(el);
+            }
+            if ((panelId === 'map' || panelId === 'gis') && window.map && typeof window.map.invalidateSize === 'function') {
+                window.map.invalidateSize();
+            }
+        }, 180);
+    }
 
-    // Scroll to top
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // 4. Close menu drawer
+    toggleSidebarMenu(false);
 }
 window.navigateToPanel = navigateToPanel;
+
+// Add alias for 3D Terrain Modal so open3DTerrainModal never throws
+window.open3DTerrainModal = function(zoneName, fosVal) {
+    if (typeof open3DTerrainModel === 'function') {
+        open3DTerrainModel(zoneName || 'NH-10 Km 48 (29th Mile Sector)', fosVal || 0.745);
+    } else {
+        console.warn('[3D TERRAIN] open3DTerrainModel not yet loaded.');
+    }
+};
+
+// Global Keyboard Accessibility: Esc closes sidebar
+window.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' || e.keyCode === 27) {
+        var drawer = document.getElementById('eoc-sidebar-drawer');
+        if (drawer && !drawer.classList.contains('hidden')) {
+            toggleSidebarMenu(false);
+        }
+    }
+});
 
 var predictionMiniMap = null;
 var predictionMiniMapMarker = null;
@@ -13592,14 +13741,15 @@ function updateCriRiskBand(score, bandText) {
 window.updateCriRiskBand = updateCriRiskBand;
 
 /* Phase 9E / 11K.1: Prediction Details Panel Toggle with Subtle Motion */
-function togglePredictionDetails() {
+function togglePredictionDetails(forceOpen) {
     const panel = document.getElementById('pahad-prediction-details-panel');
     const label = document.getElementById('label-toggle-prediction-details');
     const icon = document.getElementById('icon-toggle-prediction-details');
     if (!panel) return;
     const isHidden = panel.classList.contains('hidden');
+    const shouldOpen = (typeof forceOpen === 'boolean') ? forceOpen : isHidden;
     const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (isHidden) {
+    if (shouldOpen) {
         panel.classList.remove('hidden');
         if (label) label.textContent = 'Collapse';
         if (icon) {
@@ -16315,7 +16465,7 @@ window.toggleGsiInSarOverlay = toggleGsiInSarOverlay;
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                             <div>
                                 <label class="block text-xs font-bold text-slate-800 dark:text-slate-300 mb-1 uppercase tracking-wider">Target Micro-Corridor:</label>
-                                <select id="history-correlate-sector" class="w-full bg-white dark:bg-slate-800 border border-slate-400 dark:border-slate-700 rounded-none px-3 py-2 text-xs text-slate-900 dark:text-white">
+                                <select id="history-correlate-sector" aria-label="Select Himalayan Corridor for Historical Correlation" class="w-full bg-white dark:bg-slate-800 border border-slate-400 dark:border-slate-700 rounded-none px-3 py-2 text-xs text-slate-900 dark:text-white">
                                     <option value="SK-NH10-KM48">NH-10 Km 48 (29th Mile, Singtam-Rangpo, Sikkim)</option>
                                     <option value="ML-SONAPUR-TUNNEL">NH-06 Sonapur Tunnel Portal (Jaintia Hills, Meghalaya)</option>
                                     <option value="MZ-HUNTHAR-VENG">NH-54 / Hunthar Veng Sinking Zone (Aizawl, Mizoram)</option>
@@ -16327,7 +16477,7 @@ window.toggleGsiInSarOverlay = toggleGsiInSarOverlay;
                             <div>
                                 <label class="block text-xs font-bold text-slate-800 dark:text-slate-300 mb-1 uppercase tracking-wider">Live IMD Precipitation (mm):</label>
                                 <div class="flex items-center gap-2">
-                                    <input type="number" id="history-correlate-rainfall" value="125.0" min="0" max="500" step="0.5" class="w-full bg-white dark:bg-slate-800 border border-slate-400 dark:border-slate-700 rounded-none px-3 py-2 text-xs text-slate-900 dark:text-white font-mono">
+                                    <input type="number" id="history-correlate-rainfall" aria-label="Live IMD Precipitation in millimeters" value="125.0" min="0" max="500" step="0.5" class="w-full bg-white dark:bg-slate-800 border border-slate-400 dark:border-slate-700 rounded-none px-3 py-2 text-xs text-slate-900 dark:text-white font-mono">
                                     <span class="text-xs text-slate-600 dark:text-slate-400 font-bold">mm</span>
                                 </div>
                             </div>
