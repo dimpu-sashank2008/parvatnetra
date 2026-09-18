@@ -29,7 +29,10 @@ const PRECACHE_ASSETS = [
     '/static/data/offline_core_package.json',
     '/api/geospatial/offline-manifest',
     '/api/pahad/event-model/status',
-    '/api/pahad/event-model/data-quality'
+    '/api/pahad/event-model/data-quality',
+    '/edge-network',
+    '/demo',
+    '/static/js/offline_field_triage.js'
 ];
 
 // URLs that must NEVER be cached (Auth, Passwords, Session Management, Push Sync)

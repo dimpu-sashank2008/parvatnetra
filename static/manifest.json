@@ -25,5 +25,21 @@
     "disaster-response",
     "government",
     "intelligence"
+  ],
+  "shortcuts": [
+    {
+      "name": "Edge LoRa Mesh & Offline Triage",
+      "short_name": "Edge Triage",
+      "description": "Zero-connectivity first responder triage and LoRa sub-GHz monitor",
+      "url": "/edge-network",
+      "icons": [{ "src": "/static/images/parvat_netra_emblem.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Judge Presentation Sandbox",
+      "short_name": "Judge Demo",
+      "description": "Autonomous multi-physics disaster cascade evaluator",
+      "url": "/demo",
+      "icons": [{ "src": "/static/images/parvat_netra_emblem.png", "sizes": "192x192" }]
+    }
   ]
 }

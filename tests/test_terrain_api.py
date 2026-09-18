@@ -137,10 +137,16 @@ class TestTerrainAPI(unittest.TestCase):
         self.assertIn("Se La Group", sela["bedrock_type"])
         self.assertIn("Main Central Thrust", sela["structural_context"])
         
-        # Test Lower Siang / Kimin / Bhalukpong (Sheet 83I / 83E)
+        # Test Lower Siang / Basar / Likabali (Sheet 83I)
         bhaluk = DEM_SERVICE.get_sector_geology_profile("AR-BHALUK-01")
         self.assertIn("83I", bhaluk["gsi_quadrangle"])
         self.assertIn("Main Boundary Thrust", bhaluk["structural_context"])
+        
+        # Test Dafla / Itanagar / Kimin / Ziro (Sheet 83E)
+        dafla = DEM_SERVICE.get_sector_geology_profile("AR-KIMIN-01")
+        self.assertIn("83E", dafla["gsi_quadrangle"])
+        self.assertIn("Dafla Quadrangle", dafla["gsi_quadrangle"])
+        self.assertIn("Subansiri", dafla["bedrock_type"])
         
         # Test Shillong / Cherrapunji / Mawsynram (Sheet 78O)
         cherra = DEM_SERVICE.get_sector_geology_profile("ML-MAWSYNRAM")

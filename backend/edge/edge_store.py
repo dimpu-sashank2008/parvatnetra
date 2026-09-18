@@ -155,9 +155,29 @@ class EdgeStore:
                     );
                 """)
 
+                # 6. edge_field_reports (First Responder Offline Triage Reports)
+                cur.execute("""
+                    CREATE TABLE IF NOT EXISTS edge_field_reports (
+                        report_id TEXT PRIMARY KEY,
+                        incident_type TEXT NOT NULL,
+                        latitude REAL NOT NULL,
+                        longitude REAL NOT NULL,
+                        severity TEXT NOT NULL,
+                        casualties INTEGER DEFAULT 0,
+                        crack_aperture_mm REAL DEFAULT 0.0,
+                        notes TEXT,
+                        reporter_name TEXT,
+                        reporter_role TEXT DEFAULT 'FIRST_RESPONDER',
+                        sync_status TEXT DEFAULT 'SYNCED_EDGE',
+                        created_at TEXT NOT NULL,
+                        synced_at TEXT
+                    );
+                """)
+
                 # Indexes
                 cur.execute("CREATE INDEX IF NOT EXISTS idx_readings_node_ts ON edge_sensor_readings(node_id, timestamp);")
                 cur.execute("CREATE INDEX IF NOT EXISTS idx_sync_queue_status ON edge_sync_queue(sync_status);")
+                cur.execute("CREATE INDEX IF NOT EXISTS idx_field_reports_created ON edge_field_reports(created_at);")
                 conn.commit()
 
     # --------------------------------------------------------------------------
@@ -502,3 +522,84 @@ class EdgeStore:
         if expected_crc is not None:
             return calc_crc == (expected_crc & 0xFFFF)
         return True
+
+    # --------------------------------------------------------------------------
+    # First Responder Offline Field Triage Reports
+    # --------------------------------------------------------------------------
+
+    def insert_field_report(
+        self,
+        report_data: Dict[str, Any],
+        buffer_for_cloud: bool = True
+    ) -> str:
+        """Inserts a first responder damage/casualty report and buffers for central sync."""
+        now_iso = datetime.now(timezone.utc).isoformat()
+        report_id = str(report_data.get("report_id") or f"RPT-FIELD-{int(datetime.now().timestamp() * 1000)}")
+        inc_type = str(report_data.get("incident_type", "SLOPE_CRACK"))
+        lat = float(report_data.get("latitude", 27.0984))
+        lng = float(report_data.get("longitude", 88.4892))
+        severity = str(report_data.get("severity", "HIGH")).upper()
+        casualties = int(report_data.get("casualties", 0))
+        crack_mm = float(report_data.get("crack_aperture_mm", 0.0))
+        notes = str(report_data.get("notes", ""))
+        reporter_name = str(report_data.get("reporter_name", "Anonymous Responder"))
+        reporter_role = str(report_data.get("reporter_role", "FIRST_RESPONDER"))
+
+        with self._lock:
+            with self._get_connection() as conn:
+                cur = conn.cursor()
+                cur.execute("""
+                    INSERT INTO edge_field_reports (
+                        report_id, incident_type, latitude, longitude, severity,
+                        casualties, crack_aperture_mm, notes, reporter_name,
+                        reporter_role, sync_status, created_at, synced_at
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'SYNCED_EDGE', ?, NULL)
+                    ON CONFLICT(report_id) DO UPDATE SET
+                        severity = excluded.severity,
+                        casualties = excluded.casualties,
+                        crack_aperture_mm = excluded.crack_aperture_mm,
+                        notes = excluded.notes;
+                """, (
+                    report_id, inc_type, lat, lng, severity,
+                    casualties, crack_mm, notes, reporter_name,
+                    reporter_role, now_iso
+                ))
+
+                if buffer_for_cloud:
+                    cur.execute("""
+                        INSERT INTO edge_sync_queue (
+                            record_type, local_ref_id, payload_json, sync_status, queued_at
+                        ) VALUES (?, ?, ?, 'PENDING', ?)
+                    """, (
+                        "FIELD_REPORT",
+                        report_id,
+                        json.dumps({
+                            "report_id": report_id,
+                            "incident_type": inc_type,
+                            "latitude": lat,
+                            "longitude": lng,
+                            "severity": severity,
+                            "casualties": casualties,
+                            "crack_aperture_mm": crack_mm,
+                            "notes": notes,
+                            "reporter_name": reporter_name,
+                            "created_at": now_iso
+                        }),
+                        now_iso
+                    ))
+                conn.commit()
+
+        return report_id
+
+    def query_field_reports(self, limit: int = 50) -> List[Dict[str, Any]]:
+        """Retrieves recent locally-stored field triage reports."""
+        with self._lock:
+            with self._get_connection() as conn:
+                cur = conn.cursor()
+                cur.execute("""
+                    SELECT * FROM edge_field_reports
+                    ORDER BY created_at DESC
+                    LIMIT ?
+                """, (limit,))
+                return [dict(r) for r in cur.fetchall()]
+

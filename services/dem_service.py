@@ -869,20 +869,35 @@ class DEMService:
                 "cohesion_kpa": 26.0,
                 "permeability_m_s": 1.8e-5
             }
-        elif "BHALUK" in sid or "PASIGHAT" in sid or "SIANG" in sid or "KIMIN" in sid or "HARMOTI" in sid or "ZIRO" in sid:
+        elif "DAFLA" in sid or "ITANAGAR" in sid or "KIMIN" in sid or "HARMOTI" in sid or "YUPIA" in sid or "SAGALEE" in sid:
+            return {
+                "sector_id": "AR-DAFLA-01",
+                "colluvium_depth_m": 3.2,
+                "weathered_zone_depth_m": 6.2,
+                "slip_depth_m": 4.2,
+                "bedrock_depth_m": 9.0,
+                "bedrock_type": "Subansiri & Dafla Formation multistoried sandstones, Kimin friable sands & Lichi Volcanics",
+                "gsi_quadrangle": "GSI Degree Sheet 83E (Dafla Quadrangle, Arunachal Pradesh/Assam)",
+                "structural_context": "Main Boundary Thrust (MBT) & Bomdila Thrust imbricate footwall zone",
+                "soil_unit_weight_kn_m3": 19.3,
+                "friction_angle_deg": 28.5,
+                "cohesion_kpa": 16.5,
+                "permeability_m_s": 4.2e-5
+            }
+        elif "BHALUK" in sid or "PASIGHAT" in sid or "SIANG" in sid or "BASAR" in sid or "LIKABALI" in sid:
             return {
                 "sector_id": "AR-BHALUK-01",
-                "colluvium_depth_m": 3.4,
-                "weathered_zone_depth_m": 6.5,
-                "slip_depth_m": 4.5,
-                "bedrock_depth_m": 9.5,
-                "bedrock_type": "Siwalik molasse sandstones & Gondwana sheared carbonaceous phyllites",
-                "gsi_quadrangle": "GSI Degree Sheet 83I (Lower Siang) & 83E (Subansiri Quadrangle)",
-                "structural_context": "Main Boundary Thrust (MBT), Tipi Thrust & Bomdila Thrust imbricate corridor",
-                "soil_unit_weight_kn_m3": 19.1,
-                "friction_angle_deg": 27.5,
-                "cohesion_kpa": 15.0,
-                "permeability_m_s": 4.8e-5
+                "colluvium_depth_m": 3.5,
+                "weathered_zone_depth_m": 6.8,
+                "slip_depth_m": 4.6,
+                "bedrock_depth_m": 9.8,
+                "bedrock_type": "Siwalik molasse sandstones, Rotung agglomeratic basalts & Gondwana sheared phyllites",
+                "gsi_quadrangle": "GSI Degree Sheet 83I (Lower Siang Quadrangle, Arunachal Pradesh)",
+                "structural_context": "Main Boundary Thrust (MBT), Tipi Thrust, Miri Thrust & Himalayan Frontal Thrust (HFT)",
+                "soil_unit_weight_kn_m3": 19.2,
+                "friction_angle_deg": 28.0,
+                "cohesion_kpa": 16.0,
+                "permeability_m_s": 4.5e-5
             }
         elif "CHERRA" in sid or "MAWSYNRAM" in sid or "SHILLONG" in sid:
             return {

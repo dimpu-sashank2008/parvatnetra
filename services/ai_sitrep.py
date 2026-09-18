@@ -16,6 +16,7 @@ import os
 import json
 import time
 import logging
+from typing import Dict, Any, List, Optional, Tuple
 from datetime import datetime, timezone
 from services.cwc_sync import CWC_TEESTA_SERVICE
 
@@ -273,6 +274,129 @@ class AISitRepGenerator:
             self._omniroute_cooldown_until = time.time() + 60.0
             logger.debug(f"OmniRoute briefing fallback to physical synthesis (cooldown 60s): {e}")
         return None
+
+    def generate_tactical_mobilization_plan(
+        self,
+        sector_id: str = "SK-NH10-KM48",
+        vti_score: Optional[float] = None,
+        fos: Optional[float] = None,
+        cri: Optional[float] = None,
+        population_exposed: int = 1200,
+        road_criticality: float = 0.85
+    ) -> Dict[str, Any]:
+        """
+        Calculates tactical emergency resource mobilization per NDMA / MDoNER mountain protocols.
+        Determines requirements for:
+        1. NDRF/SDRF Urban & Mountain Search & Rescue (SAR) battalions
+        2. Border Roads Organisation (BRO) Task Force machinery (JCBs, excavators, Bailey bridge spans)
+        3. Medical Triage & Field Hospital Capacity
+        4. Civilian Shelter & Evacuation Staging
+        5. Public Information Broadcast dialect payload
+        """
+        # Determine effective threat score
+        threat = float(vti_score if vti_score is not None else (cri if cri is not None else 65.0))
+        physical_fos = float(fos if fos is not None else 1.15)
+
+        if threat >= 90.0 or physical_fos <= 0.8:
+            priority_tier = "PRIORITY_1_CRITICAL"
+            ndrf_personnel = 160
+            ndrf_teams = 4
+            canine_units = 4
+            acoustic_life_detectors = 6
+            bro_heavy_excavators = 8
+            bro_bulldozers = 4
+            bailey_bridge_spans_ft = 200  # 2 x 100ft modular spans
+            medical_triage_tier = "LEVEL_2_MOBILE_SURGICAL"
+            shelter_beds = max(600, int(population_exposed * 0.65))
+            transit_directive = "IMMEDIATE_MANDATORY_EVACUATION"
+            air_recon_needed = True
+            estimated_staging_hours = 1.5
+        elif threat >= 70.0 or physical_fos < 1.0:
+            priority_tier = "PRIORITY_2_HIGH"
+            ndrf_personnel = 80
+            ndrf_teams = 2
+            canine_units = 2
+            acoustic_life_detectors = 3
+            bro_heavy_excavators = 4
+            bro_bulldozers = 2
+            bailey_bridge_spans_ft = 80
+            medical_triage_tier = "LEVEL_1_ADVANCED_AID_POST"
+            shelter_beds = max(350, int(population_exposed * 0.35))
+            transit_directive = "CONTROLLED_ONE_WAY_DETOUR"
+            air_recon_needed = False
+            estimated_staging_hours = 3.0
+        elif threat >= 40.0 or physical_fos < 1.3:
+            priority_tier = "PRIORITY_3_ELEVATED"
+            ndrf_personnel = 30
+            ndrf_teams = 1
+            canine_units = 1
+            acoustic_life_detectors = 1
+            bro_heavy_excavators = 2
+            bro_bulldozers = 1
+            bailey_bridge_spans_ft = 0
+            medical_triage_tier = "PRIMARY_HEALTH_CENTER_ALERT"
+            shelter_beds = max(100, int(population_exposed * 0.15))
+            transit_directive = "HEAVY_CONVOYS_RESTRICTED"
+            air_recon_needed = False
+            estimated_staging_hours = 6.0
+        else:
+            priority_tier = "PRIORITY_4_NORMAL"
+            ndrf_personnel = 0
+            ndrf_teams = 0
+            canine_units = 0
+            acoustic_life_detectors = 0
+            bro_heavy_excavators = 1
+            bro_bulldozers = 0
+            bailey_bridge_spans_ft = 0
+            medical_triage_tier = "STANDARD_COMMUNITY_HEALTH"
+            shelter_beds = 0
+            transit_directive = "UNRESTRICTED_MOUNTAIN_TRANSIT"
+            air_recon_needed = False
+            estimated_staging_hours = 0.0
+
+        now_iso = datetime.now(timezone.utc).isoformat()
+        dispatch_id = f"DISPATCH-MDoNER-{int(time.time())}"
+
+        return {
+            "dispatch_id": dispatch_id,
+            "timestamp": now_iso,
+            "sector_id": sector_id,
+            "threat_score": threat,
+            "physical_fos": physical_fos,
+            "priority_tier": priority_tier,
+            "transit_directive": transit_directive,
+            "ndrf_sdrf": {
+                "rescue_battalions": ndrf_teams,
+                "deployed_personnel": ndrf_personnel,
+                "canine_search_teams": canine_units,
+                "deep_acoustic_life_detectors": acoustic_life_detectors,
+                "specialist_gear": [
+                    "Rope Rescue Kits (Class 3)",
+                    "Hydraulic Concrete Cutters",
+                    "Mudflow Siphon Pumps"
+                ]
+            },
+            "bro_infrastructure": {
+                "tracked_excavators_20ton": bro_heavy_excavators,
+                "crawler_bulldozers": bro_bulldozers,
+                "bailey_bridge_spans_feet": bailey_bridge_spans_ft,
+                "task_force_unit": "Project Swastik / Pushpak Detachment",
+                "road_cut_shoring_crews": max(1, bro_heavy_excavators // 2)
+            },
+            "medical_and_shelter": {
+                "triage_category": medical_triage_tier,
+                "field_hospital_beds": shelter_beds,
+                "ambulance_staging_count": max(2, ndrf_teams * 2),
+                "trauma_stabilization_kits": shelter_beds // 4
+            },
+            "aerial_support": {
+                "heli_recon_requested": air_recon_needed,
+                "staging_helipad": "Gangtok Army Helipad / Pakyong Airport" if "SK" in sector_id else "Regional Emergency Helipad",
+                "aircraft_type": "HAL ALH Dhruv / Mi-17V5" if air_recon_needed else "NONE"
+            },
+            "operational_readiness_hours": estimated_staging_hours,
+            "provenance": "[NDMA / MDoNER TACTICAL ENGINE]"
+        }
 
 
 # Global Singleton

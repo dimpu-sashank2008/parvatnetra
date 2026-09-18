@@ -229,6 +229,9 @@
                             <span onclick="toggle3DLayer('rivers')" id="lyr-rivers" class="layer-pill active px-2 py-0.5 rounded border border-slate-700 bg-slate-800 text-slate-300">Teesta River</span>
                             <span onclick="toggle3DLayer('sensors')" id="lyr-sensors" class="layer-pill active px-2 py-0.5 rounded border border-cyan-600/70 bg-cyan-950/40 text-cyan-300">IoT Sensors</span>
                             <span onclick="toggle3DLayer('deformation')" id="lyr-deformation" class="layer-pill active px-2 py-0.5 rounded border border-purple-600/70 bg-purple-950/40 text-purple-300">InSAR LOS</span>
+                            <span onclick="toggle3DLayer('seepage')" id="lyr-seepage" class="layer-pill active px-2 py-0.5 rounded border border-cyan-500/80 bg-cyan-950/60 text-cyan-200">Wetting Front (SWCC)</span>
+                            <span onclick="toggle3DLayer('radardome')" id="lyr-radardome" class="layer-pill active px-2 py-0.5 rounded border border-purple-500/80 bg-purple-950/60 text-purple-200">Radar Echo (DWR)</span>
+                            <span onclick="toggle3DLayer('insartertiary')" id="lyr-insartertiary" class="layer-pill active px-2 py-0.5 rounded border border-rose-500/80 bg-rose-950/60 text-rose-200">InSAR Tertiary Creep</span>
                         </div>
                     </div>
 
@@ -491,6 +494,10 @@
         let riverLine = null;
         let riverMesh = null;
         let crackMesh = null;
+        let seepageMesh = null;
+        let radarDomeMesh = null;
+        let tertiaryPins = [];
+        let tertiaryPulseRings = [];
 
         let currentExaggeration = 1.8;
         let currentSurfaceMode = 'dem';
@@ -519,7 +526,10 @@
             rivers: true,
             sensors: true,
             deformation: true,
-            cracks: true
+            cracks: true,
+            seepage: true,
+            radardome: true,
+            insartertiary: true
         };
 
         let rawElevationMatrix = null;
@@ -611,6 +621,25 @@
                 sensorPulseRings.forEach(ring => {
                     ring.scale.set(pulseScale, pulseScale, 1);
                     if (ring.material) ring.material.opacity = pulseOpacity;
+                });
+            }
+
+            // Animate Doppler Radar echo dome rotation & pulse
+            if (radarDomeMesh) {
+                radarDomeMesh.rotation.y += 0.004;
+                const rPulse = 0.22 + 0.08 * Math.sin(animClock * 2.0);
+                radarDomeMesh.children.forEach(c => {
+                    if (c.material && c.material.transparent) c.material.opacity = rPulse;
+                });
+            }
+
+            // Animate InSAR Tertiary Creep alarm rings
+            if (tertiaryPulseRings && tertiaryPulseRings.length > 0) {
+                const tScale = 1.0 + 0.40 * Math.sin(animClock * 4.5);
+                const tOpacity = 0.40 + 0.35 * Math.cos(animClock * 4.5);
+                tertiaryPulseRings.forEach(ring => {
+                    ring.scale.set(tScale, tScale, 1);
+                    if (ring.material) ring.material.opacity = tOpacity;
                 });
             }
 
@@ -1404,6 +1433,126 @@
                     const arrow = new THREE.ArrowHelper(dir, origin, length, colorHex, 0.55, 0.38);
                     scene.add(arrow);
                     deformationVectors.push(arrow);
+                });
+            }
+
+            // 9. Transient Seepage Infiltration Front & Matric Suction Slice (van Genuchten SWCC)
+            if (seepageMesh) scene.remove(seepageMesh);
+            seepageMesh = null;
+            if (activeLayers.seepage) {
+                const seepageGroup = new THREE.Group();
+                const wWidth = 18;
+                const wDepth = 18;
+                const segs = 16;
+                const seepageGeom = new THREE.PlaneGeometry(wWidth, wDepth, segs, segs);
+                seepageGeom.rotateX(-Math.PI / 2);
+                const sPos = seepageGeom.attributes.position;
+
+                for (let i = 0; i < sPos.count; i++) {
+                    const sx = sPos.getX(i) - 4;
+                    const sz = sPos.getZ(i) + 8;
+                    const terrY = getInterpolatedTerrainHeight(sx, sz);
+                    // Wetting front L_f(t) descending 1.4m into colluvium
+                    const wetY = terrY - 1.4;
+                    sPos.setXYZ(i, sx, wetY, sz);
+                }
+                seepageGeom.computeVertexNormals();
+
+                const seepageMat = new THREE.MeshStandardMaterial({
+                    color: 0x0284C7,
+                    transparent: true,
+                    opacity: 0.65,
+                    side: THREE.DoubleSide,
+                    roughness: 0.35,
+                    metalness: 0.2
+                });
+                const wettingSlab = new THREE.Mesh(seepageGeom, seepageMat);
+                seepageGroup.add(wettingSlab);
+
+                // Percolation flux vectors
+                [-10, -4, 2].forEach(ax => {
+                    [4, 10, 16].forEach(az => {
+                        const ty = getInterpolatedTerrainHeight(ax, az);
+                        const arrowOrigin = new THREE.Vector3(ax, ty - 0.15, az);
+                        const arrowDir = new THREE.Vector3(0, -1, 0);
+                        const arrow = new THREE.ArrowHelper(arrowDir, arrowOrigin, 1.2, 0x38BDF8, 0.35, 0.2);
+                        seepageGroup.add(arrow);
+                    });
+                });
+
+                scene.add(seepageGroup);
+                seepageMesh = seepageGroup;
+            }
+
+            // 10. Doppler Weather Radar (DWR) 3D Convective Reflectivity Cloud
+            if (radarDomeMesh) scene.remove(radarDomeMesh);
+            radarDomeMesh = null;
+            if (activeLayers.radardome) {
+                const radarGroup = new THREE.Group();
+                const domeRadius = 22.0;
+                const domeGeom = new THREE.SphereGeometry(domeRadius, 24, 16, 0, Math.PI * 2, 0, Math.PI * 0.55);
+                const domeMat = new THREE.MeshBasicMaterial({
+                    color: 0xA855F7,
+                    transparent: true,
+                    opacity: 0.24,
+                    wireframe: true
+                });
+                const wireDome = new THREE.Mesh(domeGeom, domeMat);
+                wireDome.position.set(0, 16, 0);
+                radarGroup.add(wireDome);
+
+                // Convective storm core (Z >= 45 dBZ)
+                const coreGeom = new THREE.SphereGeometry(9.5, 16, 12);
+                const coreMat = new THREE.MeshBasicMaterial({
+                    color: 0xEF4444,
+                    transparent: true,
+                    opacity: 0.30
+                });
+                const coreMesh = new THREE.Mesh(coreGeom, coreMat);
+                coreMesh.position.set(-3, 20, 3);
+                radarGroup.add(coreMesh);
+
+                scene.add(radarGroup);
+                radarDomeMesh = radarGroup;
+            }
+
+            // 11. InSAR Tertiary Creep Acceleration & Saito Failure Projection Pins
+            tertiaryPins.forEach(p => scene.remove(p));
+            tertiaryPins = [];
+            tertiaryPulseRings = [];
+            if (activeLayers.insartertiary) {
+                const creepHotspots = [
+                    { id: 'PS-501', label: 'NH-10 Km 48 Slump', x: -5, z: 5, v_los: -34.8, phase: 'TERTIARY', eta: '18h' },
+                    { id: 'PS-509', label: 'Sonapur Ridge Escarpment', x: 8, z: -8, v_los: -26.2, phase: 'TERTIARY', eta: '24h' },
+                    { id: 'PS-510', label: 'Hunthar Veng Active Slide', x: -12, z: 12, v_los: -41.5, phase: 'TERTIARY', eta: '12h' }
+                ];
+                creepHotspots.forEach(pt => {
+                    const group = new THREE.Group();
+                    const ty = getInterpolatedTerrainHeight(pt.x, pt.z);
+                    group.position.set(pt.x, ty, pt.z);
+
+                    // Crimson beacon pin
+                    const pinGeom = new THREE.CylinderGeometry(0.16, 0.05, 3.8, 8);
+                    pinGeom.translate(0, 1.9, 0);
+                    const pinMat = new THREE.MeshStandardMaterial({ color: 0xDC2626, emissive: 0xDC2626, emissiveIntensity: 0.85 });
+                    group.add(new THREE.Mesh(pinGeom, pinMat));
+
+                    // Pulsating alarm aura ring
+                    const auraGeom = new THREE.RingGeometry(0.8, 2.4, 32);
+                    auraGeom.rotateX(-Math.PI / 2);
+                    auraGeom.translate(0, 0.1, 0);
+                    const auraMat = new THREE.MeshBasicMaterial({ color: 0xEF4444, transparent: true, opacity: 0.65, side: THREE.DoubleSide });
+                    const auraMesh = new THREE.Mesh(auraGeom, auraMat);
+                    group.add(auraMesh);
+                    tertiaryPulseRings.push(auraMesh);
+
+                    // Floating sphere head
+                    const headGeom = new THREE.SphereGeometry(0.65, 16, 16);
+                    headGeom.translate(0, 3.9, 0);
+                    group.add(new THREE.Mesh(headGeom, pinMat));
+
+                    scene.add(group);
+                    tertiaryPins.push(group);
                 });
             }
         }

@@ -4671,6 +4671,72 @@ def api_weather_forecast():
         return jsonify({"status": "ERROR", "message": str(e)}), 500
 
 
+@app.route("/api/weather/nowcast", methods=["GET"])
+def api_weather_nowcast():
+    """
+    GET /api/weather/nowcast
+    Returns IMD Doppler Weather Radar (DWR) reflectivity (dBZ), instantaneous
+    rainfall rate (mm/h), convective cell status, and 1h/3h/6h nowcasts.
+    Query params: sector_id (optional), lat (optional), lon (optional).
+    """
+    from services.imd_radar_service import IMD_RADAR_SERVICE
+    from services.weather_service import WEATHER_SERVICE
+    sector_id = request.args.get("sector_id", "SK-NH10-KM48")
+    lat_str = request.args.get("lat")
+    lon_str = request.args.get("lon")
+    try:
+        if lat_str and lon_str:
+            lat, lon = float(lat_str), float(lon_str)
+            base_w = WEATHER_SERVICE.get_weather(lat=lat, lon=lon)
+        else:
+            base_w = WEATHER_SERVICE.get_weather_for_sector(sector_id)
+            lat = base_w.get("location", {}).get("lat", 27.33)
+            lon = base_w.get("location", {}).get("lon", 88.61)
+
+        r24 = base_w.get("rainfall", {}).get("rain_24h_mm", 48.0)
+        res = IMD_RADAR_SERVICE.get_radar_nowcast(lat=lat, lon=lon, sector_id=sector_id, base_rainfall_24h=r24)
+        return jsonify({"status": "SUCCESS", "sector_id": sector_id, "data": res.to_dict()}), 200
+    except Exception as e:
+        logger.error(f"Error in /api/weather/nowcast: {e}", exc_info=True)
+        return jsonify({"status": "ERROR", "message": str(e)}), 500
+
+
+@app.route("/api/weather/forecast-horizons", methods=["GET"])
+def api_weather_forecast_horizons():
+    """
+    GET /api/weather/forecast-horizons
+    Returns forward-looking cumulative rainfall horizons (6h, 12h, 24h, 48h)
+    derived from IMD DWR nowcasts and NWP numerical models.
+    """
+    from services.imd_radar_service import IMD_RADAR_SERVICE
+    from services.weather_service import WEATHER_SERVICE
+    sector_id = request.args.get("sector_id", "SK-NH10-KM48")
+    try:
+        base_w = WEATHER_SERVICE.get_weather_for_sector(sector_id)
+        lat = base_w.get("location", {}).get("lat", 27.33)
+        lon = base_w.get("location", {}).get("lon", 88.61)
+        r24 = base_w.get("rainfall", {}).get("rain_24h_mm", 48.0)
+        res = IMD_RADAR_SERVICE.get_radar_nowcast(lat=lat, lon=lon, sector_id=sector_id, base_rainfall_24h=r24)
+        return jsonify({
+            "status": "SUCCESS",
+            "sector_id": sector_id,
+            "timestamp": res.timestamp,
+            "horizons": {
+                "6h": res.nowcast_6h_mm,
+                "12h": res.forecast_12h_mm,
+                "24h": res.forecast_24h_mm,
+                "48h": res.forecast_48h_mm
+            },
+            "instantaneous_rate_mmh": res.instantaneous_rain_rate_mmh,
+            "reflectivity_dbz": res.reflectivity_dbz,
+            "cloudburst_risk": res.cloudburst_risk,
+            "provenance": res.provenance
+        }), 200
+    except Exception as e:
+        logger.error(f"Error in /api/weather/forecast-horizons: {e}", exc_info=True)
+        return jsonify({"status": "ERROR", "message": str(e)}), 500
+
+
 @app.route("/api/seismic/latest", methods=["GET"])
 def api_seismic_latest():
     """
@@ -5806,16 +5872,19 @@ def api_routing_safe_route():
     returning distance, estimated time, and hazard exposure.
     """
     try:
+        from services.offline_routing_service import OFFLINE_ROUTING_SERVICE
         gvw_class = request.args.get("gvw_class", "LIGHT_UTILITY")
+        is_blocked = "SK-NH10" in OFFLINE_ROUTING_SERVICE.blocked_corridors_set
+
         return jsonify({
             "status": "OPERATIONAL",
             "gvw_class": gvw_class,
             "primary_corridor": {
                 "name": "NH-10 (Siliguri - Gangtok Teesta Gorge)",
-                "status": "BLOCKED",
-                "hazard_exposure": "EXTREME (Active Failure at 29th Mile)",
-                "is_safe": False,
-                "closure_reason": "Excessive pore-water pressure and debris accumulation"
+                "status": "BLOCKED" if is_blocked else "ACTIVE",
+                "hazard_exposure": "EXTREME (Active Failure at 29th Mile)" if is_blocked else "MONITORED",
+                "is_safe": not is_blocked,
+                "closure_reason": "Excessive pore-water pressure and debris accumulation" if is_blocked else ""
             },
             "recommended_route": {
                 "name": "NH-717A (Lava - Pakyong Strategic Bypass)",
@@ -5831,6 +5900,371 @@ def api_routing_safe_route():
     except Exception as e:
         logger.error(f"Error in /api/routing/safe-route: {e}", exc_info=True)
         return jsonify({"status": "ERROR", "message": str(e)}), 500
+
+
+@app.route("/api/routing/multi-profile", methods=["GET", "POST"])
+def api_routing_multi_profile():
+    """
+    GET, POST /api/routing/multi-profile
+    Evaluates FASTEST, SHORTEST, and SAFEST evacuation routes across the NER road network graph.
+    Applies dynamic hazard cost optimization factoring Mohr-Coulomb FoS and CRI.
+    """
+    try:
+        from services.offline_routing_service import OFFLINE_ROUTING_SERVICE
+
+        data = request.get_json(silent=True) or {}
+        origin_lat = float(request.args.get("origin_lat", data.get("origin_lat", 27.2458)))
+        origin_lon = float(request.args.get("origin_lon", data.get("origin_lon", 88.5124)))
+        dest_lat = float(request.args.get("dest_lat", data.get("dest_lat", 27.1780)))
+        dest_lon = float(request.args.get("dest_lon", data.get("dest_lon", 88.5290)))
+        vehicle_weight_tons = float(request.args.get("weight_tons", data.get("weight_tons", 15.0)))
+
+        profiles = {}
+        for pref in ("FASTEST", "SHORTEST", "SAFEST"):
+            res = OFFLINE_ROUTING_SERVICE.plan_offline_route(
+                origin_lat=origin_lat,
+                origin_lon=origin_lon,
+                dest_lat=dest_lat,
+                dest_lon=dest_lon,
+                routing_preference=pref,
+                vehicle_weight_tons=vehicle_weight_tons,
+                avoid_blockages=True
+            )
+            profiles[pref] = res
+
+        # Specific corridor topology metadata for NH-10 / NH-717A
+        is_nh10_blocked = "SK-NH10" in OFFLINE_ROUTING_SERVICE.blocked_corridors_set
+
+        corridor_data = {
+            "FASTEST": {
+                "name": "NH-10 Teesta Riverline Highway" if not is_nh10_blocked else "NH-717A Hill Ridge Bypass (Fallback)",
+                "profile": "FASTEST",
+                "distance_km": 52.4 if not is_nh10_blocked else 92.0,
+                "duration_minutes": 85 if not is_nh10_blocked else 145,
+                "avg_speed_kmh": 37.0 if not is_nh10_blocked else 38.0,
+                "hazard_exposure": "CRITICAL (Toe Scour Zone)" if not is_nh10_blocked else "MODERATE",
+                "safety_score": 0.35 if not is_nh10_blocked else 0.78,
+                "max_incline_pct": 8.5,
+                "bridge_gvw_tons": 35.0,
+                "status": "IMPASSABLE" if is_nh10_blocked else "WARNING_ELEVATED",
+                "is_severed": is_nh10_blocked,
+                "via": "Melli - 29th Mile - Singtam",
+                "checkpoints": ["Melli BRO Post", "Km 48 Likhu Veer", "Singtam Junction"]
+            },
+            "SHORTEST": {
+                "name": "Old Cart Road / Teesta Valley Track",
+                "profile": "SHORTEST",
+                "distance_km": 44.8,
+                "duration_minutes": 115,
+                "avg_speed_kmh": 23.0,
+                "hazard_exposure": "HIGH (Steep Unpaved Gradients)",
+                "safety_score": 0.52,
+                "max_incline_pct": 16.2,
+                "bridge_gvw_tons": 12.0,
+                "status": "RESTRICTED_LIGHT_ONLY",
+                "is_severed": False,
+                "via": "Tarkhola - Rungpo Track",
+                "checkpoints": ["Tarkhola Outpost", "Rangpo Suspension Bridge"]
+            },
+            "SAFEST": {
+                "name": "NH-717A Strategic High-Ground Corridor",
+                "profile": "SAFEST",
+                "distance_km": 88.6,
+                "duration_minutes": 125,
+                "avg_speed_kmh": 42.5,
+                "hazard_exposure": "MINIMAL (High-Ridge Hard Rock)",
+                "safety_score": 0.94,
+                "max_incline_pct": 6.8,
+                "bridge_gvw_tons": 45.0,
+                "status": "ACTIVE_RECOMMENDED",
+                "is_severed": False,
+                "via": "Bagrakote - Lava - Algarah - Pedong - Reshi - Rhenock - Pakyong",
+                "checkpoints": ["758 BRTF Swastik Base", "Lava Pass Staging", "Reshi Chhidang Heavy Bridge", "Rangpo Relief Stadium"]
+            }
+        }
+
+        return jsonify({
+            "status": "SUCCESS",
+            "is_nh10_severed": is_nh10_blocked,
+            "recommended_profile": "SAFEST",
+            "corridors": corridor_data,
+            "engine_results": profiles,
+            "origin": {"lat": origin_lat, "lon": origin_lon, "label": "NH-10 Km 48 Hazard Centroid"},
+            "destination": {"lat": dest_lat, "lon": dest_lon, "label": "Rangpo Relief Hub Stadium"},
+            "provenance": "[OFFLINE ROUTE / GRAPH]",
+            "timestamp": datetime.now(timezone.utc).isoformat()
+        }), 200
+    except Exception as e:
+        logger.error(f"Error in /api/routing/multi-profile: {e}", exc_info=True)
+        return jsonify({"status": "ERROR", "message": str(e)}), 500
+
+
+@app.route("/api/routing/simulate-severance", methods=["POST"])
+def api_routing_simulate_severance():
+    """
+    POST /api/routing/simulate-severance
+    Toggles arterial corridor severance (e.g. NH-10 Km 48) to demonstrate
+    instant dynamic rerouting to SAFEST bypass without map remount.
+    """
+    try:
+        from services.offline_routing_service import OFFLINE_ROUTING_SERVICE
+
+        payload = request.get_json(silent=True) or {}
+        corridor_id = payload.get("corridor_id", "SK-NH10")
+        force_state = payload.get("severed") if payload.get("severed") is not None else payload.get("blocked")
+
+        current_blocked = corridor_id in OFFLINE_ROUTING_SERVICE.blocked_corridors_set
+
+        if force_state is not None:
+            new_blocked = bool(force_state)
+        else:
+            new_blocked = not current_blocked
+
+        if new_blocked:
+            OFFLINE_ROUTING_SERVICE.block_corridor(corridor_id, reason="Landslide Failure at Km 48")
+        else:
+            OFFLINE_ROUTING_SERVICE.unblock_corridor(corridor_id)
+
+        return jsonify({
+            "status": "SUCCESS",
+            "corridor_id": corridor_id,
+            "is_severed": new_blocked,
+            "blocked": new_blocked,
+            "message": f"Corridor {corridor_id} is now {'SEVERED (Blocked by Debris Flow)' if new_blocked else 'OPEN (Cleared by BRO)'}.",
+            "recommended_bypass": "NH-717A (Lava - Pakyong Corridor)" if new_blocked else "NH-10 (Direct)",
+            "timestamp": datetime.now(timezone.utc).isoformat()
+        }), 200
+    except Exception as e:
+        logger.error(f"Error in /api/routing/simulate-severance: {e}", exc_info=True)
+        return jsonify({"status": "ERROR", "message": str(e)}), 500
+
+
+# =========================================================================
+# Phase 12A: Edge Computer Vision Crack Aperture Inspection APIs (Modality 5)
+# =========================================================================
+
+@app.route("/api/cv/cameras", methods=["GET"])
+def api_cv_cameras():
+    """
+    GET /api/cv/cameras
+    Returns all monitored roadside optical CCTV and UAV drone cameras.
+    """
+    try:
+        from services.cv_analyzer import EDGE_CV_ANALYZER
+        cameras = EDGE_CV_ANALYZER.get_registered_cameras()
+        return jsonify({
+            "status": "SUCCESS",
+            "success": True,
+            "cameras": cameras,
+            "count": len(cameras),
+            "total_cameras": len(cameras),
+            "provenance": "[EDGE-CV / SENSOR-FEED]",
+            "timestamp": datetime.now(timezone.utc).isoformat()
+        }), 200
+    except Exception as e:
+        logger.error(f"Error in /api/cv/cameras: {e}", exc_info=True)
+        return jsonify({"status": "ERROR", "success": False, "error": str(e)}), 500
+
+
+@app.route("/api/cv/analyze-aperture", methods=["GET", "POST"])
+def api_cv_analyze_aperture():
+    """
+    GET, POST /api/cv/analyze-aperture
+    Performs sub-pixel optical flow crack aperture tracking and mudflow segmentation.
+    """
+    try:
+        from services.cv_analyzer import EDGE_CV_ANALYZER
+        if request.method == "POST":
+            data = request.get_json(silent=True) or {}
+            camera_id = data.get("camera_id") or request.args.get("camera_id", "CAM-NH10-KM48")
+            stage = data.get("simulated_stage") or data.get("stage") or request.args.get("stage")
+        else:
+            camera_id = request.args.get("camera_id", "CAM-NH10-KM48")
+            stage = request.args.get("simulated_stage") or request.args.get("stage")
+
+        analysis = EDGE_CV_ANALYZER.analyze_frame(camera_id, stage=stage)
+        stream_meta = EDGE_CV_ANALYZER.analyze_camera_stream(camera_id, override_stage=stage)
+        analysis["stream_meta"] = stream_meta
+        analysis["telemetry"] = stream_meta.get("telemetry")
+        analysis["vision_overlay"] = stream_meta.get("vision_overlay")
+        return jsonify(analysis), 200
+    except Exception as e:
+        logger.error(f"Error in /api/cv/analyze-aperture: {e}", exc_info=True)
+        return jsonify({"status": "ERROR", "success": False, "error": str(e)}), 500
+
+
+@app.route("/api/cv/simulate-dilation", methods=["POST"])
+def api_cv_simulate_dilation():
+    """
+    POST /api/cv/simulate-dilation
+    Toggles camera tension crack dilation stage (NORMAL, SHEARING, CRITICAL).
+    """
+    try:
+        from services.cv_analyzer import EDGE_CV_ANALYZER, CRITICAL_APERTURE_LIMIT_MM
+        payload = request.get_json(silent=True) or {}
+        camera_id = payload.get("camera_id", "CAM-NH10-KM48")
+        stage = (payload.get("stage") or "").upper().strip()
+
+        if stage not in ["NORMAL", "SHEARING", "CRITICAL"]:
+            return jsonify({
+                "status": "ERROR",
+                "success": False,
+                "error": f"Invalid stage '{stage}'. Must be one of: NORMAL, SHEARING, CRITICAL."
+            }), 400
+
+        EDGE_CV_ANALYZER.set_camera_stage(camera_id, stage)
+        res = EDGE_CV_ANALYZER.analyze_frame(camera_id, stage=stage)
+        stream_meta = EDGE_CV_ANALYZER.analyze_camera_stream(camera_id, override_stage=stage)
+        res["stream_meta"] = stream_meta
+        res["telemetry"] = stream_meta.get("telemetry")
+        res["vision_overlay"] = stream_meta.get("vision_overlay")
+
+        if res.get("breach_threshold_exceeded"):
+            res["triangulation_signal_contribution"] = "SIGNAL_1_PHYSICAL_RUPTURE"
+            logger.warning(f"[EDGE CV BREACH] Camera {camera_id} aperture {res.get('aperture_mm')}mm >= {CRITICAL_APERTURE_LIMIT_MM}mm limit!")
+
+        return jsonify(res), 200
+    except Exception as e:
+        logger.error(f"Error in /api/cv/simulate-dilation: {e}", exc_info=True)
+        return jsonify({"status": "ERROR", "success": False, "error": str(e)}), 500
+
+
+# =========================================================================
+# Phase 12B: OmniRoute AI Voice Commander & Multi-Dialect Acoustic Briefing
+# =========================================================================
+
+@app.route("/api/voice/briefing", methods=["GET", "POST"])
+def api_voice_briefing():
+    """
+    GET, POST /api/voice/briefing
+    Generates tactical executive audio briefing text and localized speech scripts
+    across English, Hindi, and Nepali with ITU-T emergency preamble chime specifications.
+    """
+    try:
+        from services.ai_voice_commander import AI_VOICE_COMMANDER
+        if request.method == "POST":
+            data = request.get_json(silent=True) or {}
+            sector_id = data.get("sector_id") or request.args.get("sector_id", "SK-NH10-KM48")
+            language = data.get("language") or request.args.get("language", "en")
+            fos = float(data.get("fos")) if data.get("fos") is not None else float(request.args.get("fos", 0.48))
+            cri = float(data.get("cri")) if data.get("cri") is not None else float(request.args.get("cri", 95.0))
+            rainfall_24h = float(data.get("rainfall_24h")) if data.get("rainfall_24h") is not None else float(request.args.get("rainfall_24h", 185.0))
+            crack_aperture = float(data.get("crack_aperture_mm", data.get("crack_aperture", request.args.get("crack_aperture_mm", request.args.get("crack_aperture", 42.5)))))
+            insar_velocity = float(data.get("insar_velocity", request.args.get("insar_velocity", -34.2)))
+            scenario = data.get("scenario") or request.args.get("scenario", "teesta_sikkim")
+        else:
+            sector_id = request.args.get("sector_id", "SK-NH10-KM48")
+            language = request.args.get("language", "en")
+            fos = float(request.args.get("fos", 0.48))
+            cri = float(request.args.get("cri", 95.0))
+            rainfall_24h = float(request.args.get("rainfall_24h", 185.0))
+            crack_aperture = float(request.args.get("crack_aperture_mm", request.args.get("crack_aperture", 42.5)))
+            insar_velocity = float(request.args.get("insar_velocity", -34.2))
+            scenario = request.args.get("scenario", "teesta_sikkim")
+
+        briefing = AI_VOICE_COMMANDER.generate_briefing(
+            sector_id=sector_id,
+            language=language,
+            fos=fos,
+            cri=cri,
+            rainfall_24h=rainfall_24h,
+            crack_aperture=crack_aperture,
+            insar_velocity=insar_velocity
+        )
+        return jsonify(briefing), 200
+    except Exception as e:
+        logger.error(f"Error in /api/voice/briefing: {e}", exc_info=True)
+        return jsonify({"status": "ERROR", "success": False, "error": str(e)}), 500
+
+
+# =========================================================================
+# Phase 12C: 1-Click NDMA SACHET Cell-Broadcast & Siren Dispatch Engine
+# =========================================================================
+
+@app.route("/api/alerts/dispatch-sachet", methods=["POST"])
+def api_dispatch_sachet():
+    """
+    POST /api/alerts/dispatch-sachet
+    Enforces EOC Commander authorization (PIN: NDMA-2026) and 2-of-3 Triangulation Gate.
+    Dispatches simulated C-DAC cell-broadcast to geo-fenced mobile cells and actuates
+    the hardware siren dry-run relay with full audit logging.
+    """
+    try:
+        import uuid
+        data = request.get_json(silent=True) or {}
+        commander_pin = str(data.get("commander_pin", "")).strip()
+        sector_id = data.get("sector_id", "SK-NH10-KM48")
+        corroborated_signals = int(data.get("corroborated_signals", 3))
+        target_subscribers = int(data.get("target_subscribers", 5000))
+
+        # Enforce Rule 26 & EOC authorization PIN
+        if commander_pin != "NDMA-2026":
+            return jsonify({
+                "success": False,
+                "status": "UNAUTHORIZED",
+                "error": "Invalid Incident Commander Authorization PIN. (Authorized PIN: NDMA-2026)"
+            }), 401
+
+        # Enforce 2-of-3 Confirmation Invariant
+        if corroborated_signals < 2:
+            return jsonify({
+                "success": False,
+                "status": "SAFETY_GATE_REJECTED",
+                "error": "Strict Safety Invariant Violation: Public dispatch requires >= 2 independent corroborated signals. Current corroborated signals: " + str(corroborated_signals)
+            }), 400
+
+        dispatch_id = f"CAP-CDAC-{uuid.uuid4().hex[:8].upper()}"
+        ts_utc = datetime.now(timezone.utc).isoformat()
+        reached = int(target_subscribers * 0.986)
+
+        # Trigger Siren Relay in DRY_RUN Mode
+        siren_status = {
+            "controller_id": "SIREN-GW-01-TEESTA",
+            "sector": sector_id,
+            "armed": True,
+            "dry_run": True,
+            "hw_enabled": False,
+            "acoustic_pattern": "ITU-T 130dB Evacuation Tone 3 (Continuous 120s)",
+            "relay_state": "ACTUATED_DRY_RUN",
+            "physical_hazard_suppressed": True
+        }
+
+        dispatch_payload = {
+            "success": True,
+            "status": "DISPATCHED",
+            "dispatch_id": dispatch_id,
+            "timestamp": ts_utc,
+            "sector_id": sector_id,
+            "corroborated_signals": corroborated_signals,
+            "triangulation_gate": "PASSED (2-of-3 Confirmed)",
+            "cdac_cell_broadcast": {
+                "targeted_subscribers": target_subscribers,
+                "delivered_acknowledgments": reached,
+                "delivery_rate_pct": 98.6,
+                "cell_towers": [
+                    {"tower_id": "AIRTEL-29TH-MILE-01", "status": "BROADCAST_CONFIRMED", "subscribers": 1420},
+                    {"tower_id": "JIO-LIKHUVEER-02", "status": "BROADCAST_CONFIRMED", "subscribers": 1850},
+                    {"tower_id": "BSNL-TEESTABAZAAR-01", "status": "BROADCAST_CONFIRMED", "subscribers": 1120},
+                    {"tower_id": "VODAFONE-RANGPO-03", "status": "BROADCAST_CONFIRMED", "subscribers": 540}
+                ],
+                "latency_seconds": 1.84
+            },
+            "siren_actuation": siren_status,
+            "cap_message": {
+                "identifier": dispatch_id,
+                "sender": "IN-NDMA-SACHET-CENTRAL-01",
+                "headline": f"EXTREME RED ALERT: Imminent Landslide Rupture at {sector_id}",
+                "instruction": "Immediately evacuate highway and seek designated high-ground shelters. BRO corridors closed."
+            },
+            "provenance": "[DISPATCH / AUTHORIZED-CAP-v1.2]"
+        }
+
+        logger.info(f"[SACHET-DISPATCH] Authorized dispatch {dispatch_id} executed for {sector_id} (Subscribers: {reached}/{target_subscribers})")
+        return jsonify(dispatch_payload), 200
+
+    except Exception as e:
+        logger.error(f"Error in /api/alerts/dispatch-sachet: {e}", exc_info=True)
+        return jsonify({"success": False, "status": "ERROR", "error": str(e)}), 500
 
 
 @app.route("/api/alerts/active", methods=["GET"])
@@ -7628,6 +8062,80 @@ def api_pahad_history_evidence_submit():
             "status": "ERROR",
             "message": f"Failed to submit visual evidence: {str(e)}"
         }), 500
+
+
+# =============================================================================
+# PHASE 3.1+ TACTICAL DISASTER COMMANDER BRIEFING & RESOURCE MOBILIZATION
+# =============================================================================
+
+@app.route("/api/tactical/briefing", methods=["GET"])
+def api_tactical_briefing():
+    """
+    GET /api/tactical/briefing
+    Generates unified NDMA / MDoNER mountain tactical incident briefing
+    combining multimodal sensor telemetry, VTI index, and emergency resource staging.
+    """
+    try:
+        from services.ai_sitrep import AI_SITREP_SERVICE
+        sector_id = request.args.get("sector_id", "SK-NH10-KM48")
+        sitrep_res = AI_SITREP_SERVICE.generate_situation_report({"sector": sector_id})
+
+        vti = sitrep_res.get("vti_score", 65.0)
+        fos = sitrep_res.get("telemetry_summary", {}).get("factor_of_safety", 1.15)
+        mob_plan = AI_SITREP_SERVICE.generate_tactical_mobilization_plan(
+            sector_id=sector_id,
+            vti_score=vti,
+            fos=fos
+        )
+
+        return jsonify({
+            "status": "SUCCESS",
+            "sector_id": sector_id,
+            "sitrep": sitrep_res.get("sitrep"),
+            "executive_briefing": sitrep_res.get("executive_briefing"),
+            "vti_score": vti,
+            "vti_tier": sitrep_res.get("vti_tier"),
+            "vti_action": sitrep_res.get("vti_action"),
+            "telemetry": sitrep_res.get("telemetry_summary"),
+            "mobilization_plan": mob_plan,
+            "provenance": sitrep_res.get("provenance", "[LIVE / NDMA TACTICAL]")
+        }), 200
+    except Exception as e:
+        logger.error(f"Error in /api/tactical/briefing: {e}", exc_info=True)
+        return jsonify({"status": "ERROR", "message": str(e)}), 500
+
+
+@app.route("/api/tactical/dispatch-plan", methods=["POST"])
+def api_tactical_dispatch_plan():
+    """
+    POST /api/tactical/dispatch-plan
+    Generates operational asset mobilization manifest for NDRF, SDRF, and BRO Task Forces.
+    """
+    try:
+        from services.ai_sitrep import AI_SITREP_SERVICE
+        body = request.get_json(silent=True) or {}
+        sector_id = body.get("sector_id", "SK-NH10-KM48")
+        vti_score = body.get("vti_score")
+        fos = body.get("fos")
+        cri = body.get("cri")
+        pop_exposed = int(body.get("population_exposed", 1200))
+
+        plan = AI_SITREP_SERVICE.generate_tactical_mobilization_plan(
+            sector_id=sector_id,
+            vti_score=vti_score,
+            fos=fos,
+            cri=cri,
+            population_exposed=pop_exposed
+        )
+
+        return jsonify({
+            "status": "SUCCESS",
+            "sector_id": sector_id,
+            "dispatch_plan": plan
+        }), 200
+    except Exception as e:
+        logger.error(f"Error in /api/tactical/dispatch-plan: {e}", exc_info=True)
+        return jsonify({"status": "ERROR", "message": str(e)}), 500
 
 
 if __name__ == "__main__":

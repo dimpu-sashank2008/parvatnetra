@@ -1,9 +1,9 @@
 {
   "model_name": "PAHAD-Event-Classifier",
-  "version": "v1.0.0-phase3.1",
+  "version": "test-v1.0",
   "algorithm": "gradient_boosting",
-  "created_at": "2026-09-18T01:10:42.910925+00:00",
-  "trained_at": "2026-09-18T01:10:42.910925+00:00",
+  "created_at": "2026-09-18T04:48:31.695911+00:00",
+  "trained_at": "2026-09-18T04:48:31.695911+00:00",
   "dataset_hash": "79ece554fd0d2fc62d69a21fd4d39172f7dd4995d5645e126a91d1a08c1c579e",
   "training_rows": 16,
   "positive_rows": 8,
@@ -24,7 +24,7 @@
   "calibration": "Platt Sigmoid (CalibratedClassifierCV)",
   "calibration_method": "Platt Sigmoid",
   "metrics": {
-    "model_version": "v1.0.0-phase3.1",
+    "model_version": "test-v1.0",
     "dataset_hash": "79ece554fd0d2fc62d69a21fd4d39172f7dd4995d5645e126a91d1a08c1c579e",
     "training_rows": 16,
     "validation_rows": 12,

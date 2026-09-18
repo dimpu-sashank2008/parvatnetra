@@ -340,6 +340,99 @@ def api_edge_sync_flush():
 
 
 # ==============================================================================
+# FIRST RESPONDER OFFLINE FIELD TRIAGE & LORA PACKET APIS
+# ==============================================================================
+
+@edge_bp.route("/api/edge/field-reports/sync", methods=["POST"])
+def api_edge_field_reports_sync():
+    """
+    POST /api/edge/field-reports/sync
+    Ingests batched offline field triage reports from first responders/citizens.
+    Validates, deduplicates, logs into local edge_store, and buffers for cloud sync.
+    """
+    try:
+        gw = get_edge_gateway()
+        payload = request.get_json(silent=True) or {}
+        reports = payload.get("reports", [])
+        if not isinstance(reports, list):
+            return jsonify({"status": "ERROR", "message": "reports field must be a list"}), 400
+
+        inserted_ids = []
+        for r in reports:
+            if isinstance(r, dict):
+                rid = gw.store.insert_field_report(r, buffer_for_cloud=True)
+                inserted_ids.append(rid)
+
+        return jsonify({
+            "status": "SUCCESS",
+            "synced_count": len(inserted_ids),
+            "report_ids": inserted_ids,
+            "provenance": "[EDGE_LORA_SYNC]",
+            "timestamp": datetime.now(timezone.utc).isoformat()
+        }), 200
+    except Exception as e:
+        logger.error(f"[API_EDGE_FIELD_REPORTS_SYNC] Error: {e}", exc_info=True)
+        return jsonify({"status": "ERROR", "message": str(e)}), 500
+
+
+@edge_bp.route("/api/edge/field-reports", methods=["GET"])
+def api_edge_field_reports():
+    """Returns recent locally buffered field triage reports."""
+    try:
+        gw = get_edge_gateway()
+        limit = int(request.args.get("limit", 50))
+        reports = gw.store.query_field_reports(limit=limit)
+        return jsonify({
+            "status": "SUCCESS",
+            "count": len(reports),
+            "reports": reports,
+            "provenance": "[EDGE_LOCAL_STORE]"
+        }), 200
+    except Exception as e:
+        logger.error(f"[API_EDGE_FIELD_REPORTS] Error: {e}", exc_info=True)
+        return jsonify({"status": "ERROR", "message": str(e)}), 500
+
+
+@edge_bp.route("/api/edge/mesh/packets", methods=["GET"])
+def api_edge_mesh_packets():
+    """Returns recent LoRa sub-GHz radio packet frames for packet inspector."""
+    try:
+        gw = get_edge_gateway()
+        limit = int(request.args.get("limit", 25))
+        packets = gw.mesh.get_recent_packets(limit=limit)
+        return jsonify({
+            "status": "SUCCESS",
+            "packets": packets,
+            "frequency_mhz": gw.mesh.frequency_mhz,
+            "modulation": "LoRa CSS (SF7, BW 125kHz, CR 4/5)",
+            "total_packets": gw.mesh.total_packets_received,
+            "provenance": "[LIVE / LORA_MESH]"
+        }), 200
+    except Exception as e:
+        logger.error(f"[API_EDGE_MESH_PACKETS] Error: {e}", exc_info=True)
+        return jsonify({"status": "ERROR", "message": str(e)}), 500
+
+
+@edge_bp.route("/api/edge/mesh/simulate-burst", methods=["POST"])
+def api_edge_mesh_simulate_burst():
+    """Simulates an emergency sub-GHz radio packet burst from deep gorge sensor nodes."""
+    try:
+        gw = get_edge_gateway()
+        count = int(request.args.get("count", 3))
+        results = gw.mesh.simulate_burst(count=count)
+        return jsonify({
+            "status": "SUCCESS",
+            "message": f"Simulated {len(results)} emergency LoRa sub-GHz frames.",
+            "packets": results,
+            "mesh_status": gw.mesh.get_network_status(),
+            "provenance": "[SIMULATED / LORA_BURST]"
+        }), 200
+    except Exception as e:
+        logger.error(f"[API_EDGE_MESH_SIMULATE_BURST] Error: {e}", exc_info=True)
+        return jsonify({"status": "ERROR", "message": str(e)}), 500
+
+
+# ==============================================================================
 # SECTION 25: SEPARATE MISSION-CONTROL WEB PAGE
 # ==============================================================================
 

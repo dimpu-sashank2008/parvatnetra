@@ -584,6 +584,257 @@
             </div>
         </div>
 
+        <!-- SECTION: FIRST RESPONDER OFFLINE FIELD TRIAGE & LORA SUB-GHZ TERMINAL -->
+        <section class="bg-slateCard border border-borderMuted rounded-xl p-5 sm:p-6 space-y-6 shadow-2xl">
+            <!-- Header Strip -->
+            <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between pb-4 border-b border-borderMuted gap-3">
+                <div>
+                    <div class="flex items-center gap-2.5 flex-wrap">
+                        <span class="text-xs text-amber-400 font-bold uppercase tracking-wider">आपदा अग्रिम पंक्ति ट्राइएज</span>
+                        <span class="text-slate-600">|</span>
+                        <h2 class="text-base sm:text-lg font-bold text-white tracking-wide flex items-center gap-2">
+                            <i class="ph-bold ph-shield-warning text-amber-400"></i>
+                            FIRST RESPONDER OFFLINE FIELD TRIAGE &amp; LORA SUB-GHZ TERMINAL
+                        </h2>
+                    </div>
+                    <p class="text-xs text-slate-400 mt-1 leading-relaxed max-w-4xl">
+                        शून्य-नेटवर्क हिमालयी आपदा क्षेत्रों हेतु 100% स्वायत्त फील्ड रिपोर्टिंग। डिवाइस IndexedDB में सुरक्षित स्थानीय बफरिंग, स्वचालित बैकहॉल समकालन, एवं 865–867 MHz (IN865) सब-गीगाहर्ट्ज़ लोरा मेश रेडियो रिले।
+                    </p>
+                    <p id="backhaul-desc" class="text-[11px] text-slate-400 mt-0.5">
+                        Regional fiber &amp; satellite backhaul active. Direct cloud synchronization enabled.
+                    </p>
+                </div>
+                <div class="flex items-center gap-2 shrink-0 flex-wrap">
+                    <span class="px-2.5 py-1 rounded bg-slate-800 text-sky-300 border border-slate-700 font-mono text-[11px] font-semibold">
+                        [OFFLINE-FIRST PWA]
+                    </span>
+                    <span class="px-2.5 py-1 rounded bg-slate-800 text-amber-300 border border-slate-700 font-mono text-[11px] font-semibold">
+                        [IN865 LORA MESH]
+                    </span>
+                    <span id="backhaul-status-badge" class="px-2.5 py-1 rounded bg-emerald-950/70 text-emerald-300 border border-emerald-700/60 font-mono font-bold text-xs">
+                        CLOUD CONNECTED
+                    </span>
+                </div>
+            </div>
+
+            <!-- Dynamic Triage Notification Banner -->
+            <div id="triage-notification" class="hidden p-3 rounded-lg border text-xs font-mono flex items-center gap-2 transition-all"></div>
+
+            <!-- Main Triage Grid: Left 7 cols for Form & Queued Reports, Right 5 cols for RF Mesh & Telemetry -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+                <!-- LEFT: FIELD REPORTING FORM & QUEUED REPORTS (7 COLS) -->
+                <div class="lg:col-span-7 space-y-6">
+
+                    <!-- Triage Form Card -->
+                    <div class="bg-slate-900/80 border border-slate-800 rounded-lg p-4">
+                        <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+                            <span class="text-xs font-bold text-sky-300 uppercase tracking-wide flex items-center gap-1.5">
+                                <i class="ph-bold ph-pencil-simple-line"></i> भूस्खलन क्षति एवं हताहत रिपोर्ट • Geotagged Incident Report
+                            </span>
+                            <span class="text-[10px] text-slate-400 font-mono">100% Offline Capable</span>
+                        </div>
+
+                        <form id="offline-triage-form" class="mt-4 space-y-4 text-xs">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <!-- Incident Type -->
+                                <div>
+                                    <label for="triage-type" class="block text-slate-300 font-semibold mb-1">
+                                        घटना प्रकार • Incident Type
+                                    </label>
+                                    <select id="triage-type" class="w-full bg-slate-950 border border-slate-700 rounded p-2 text-slate-200 focus:border-sky-500 focus:outline-none">
+                                        <option value="SLOPE_CRACK">भू-दरार • Slope Tension Crack</option>
+                                        <option value="ROCKFALL_BLOCKAGE">चट्टान गिरना • Rockfall Highway Blockage</option>
+                                        <option value="MUDSLIDE_DEBRIS">मलबा प्रवाह • Mudslide / Debris Slurry</option>
+                                        <option value="RIVER_BREACH_DAMMING">नदी अवरोध • Teesta River Damming</option>
+                                        <option value="BRIDGE_SCOUR">पुल अपरदन • Bridge Scour / Structural Breach</option>
+                                        <option value="EVACUATION_NEEDED">तत्काल निकासी • Urgent Civilian Evacuation</option>
+                                    </select>
+                                </div>
+
+                                <!-- Severity -->
+                                <div>
+                                    <label for="triage-severity" class="block text-slate-300 font-semibold mb-1">
+                                        गंभीरता स्तर • Severity Level
+                                    </label>
+                                    <select id="triage-severity" class="w-full bg-slate-950 border border-slate-700 rounded p-2 text-slate-200 focus:border-sky-500 focus:outline-none">
+                                        <option value="CRITICAL" class="text-red-400">CRITICAL (अत्यंत गंभीर • Immediate Threat)</option>
+                                        <option value="HIGH" selected class="text-amber-400">HIGH (उच्च जोखिम • Active Displacement)</option>
+                                        <option value="MODERATE" class="text-yellow-400">MODERATE (मध्यम • Warning Threshold)</option>
+                                        <option value="LOW" class="text-emerald-400">LOW (कम • Routine Observation)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- GPS Centroid Lock -->
+                            <div class="p-3 bg-slate-950/70 border border-slate-800 rounded">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-[11px] font-semibold text-slate-300">भू-निर्देशांक • Geolocation Centroid</span>
+                                    <button type="button" id="btn-gps-triage" onclick="acquireTriageGPS()" class="text-[11px] font-bold text-sky-400 hover:text-sky-300 flex items-center gap-1 bg-transparent border-0 cursor-pointer">
+                                        <i class="ph-bold ph-crosshair"></i> Acquire Device GPS
+                                    </button>
+                                </div>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <div>
+                                        <label for="triage-lat" class="block text-[10px] text-slate-400 mb-0.5">Latitude (°N)</label>
+                                        <input type="number" id="triage-lat" step="any" value="27.0984" class="w-full bg-slate-900 border border-slate-700 rounded px-2 py-1.5 text-slate-200 font-mono text-xs">
+                                    </div>
+                                    <div>
+                                        <label for="triage-lng" class="block text-[10px] text-slate-400 mb-0.5">Longitude (°E)</label>
+                                        <input type="number" id="triage-lng" step="any" value="88.4892" class="w-full bg-slate-900 border border-slate-700 rounded px-2 py-1.5 text-slate-200 font-mono text-xs">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Physical Damage Metrics -->
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                <div>
+                                    <label for="triage-crack" class="block text-slate-300 font-semibold mb-1">
+                                        दरार चौड़ाई • Crack Aperture (mm)
+                                    </label>
+                                    <input type="number" id="triage-crack" placeholder="e.g. 45" min="0" step="any" class="w-full bg-slate-950 border border-slate-700 rounded p-2 text-slate-200 font-mono">
+                                </div>
+                                <div>
+                                    <label for="triage-casualties" class="block text-slate-300 font-semibold mb-1">
+                                        फंसे लोग • Casualties / Trapped
+                                    </label>
+                                    <input type="number" id="triage-casualties" value="0" min="0" class="w-full bg-slate-950 border border-slate-700 rounded p-2 text-slate-200 font-mono">
+                                </div>
+                                <div>
+                                    <label for="triage-responder" class="block text-slate-300 font-semibold mb-1">
+                                        उत्तरदाता इकाई • Responder ID
+                                    </label>
+                                    <input type="text" id="triage-responder" value="SDRF Field Patrol Alpha" class="w-full bg-slate-950 border border-slate-700 rounded p-2 text-slate-200">
+                                </div>
+                            </div>
+
+                            <!-- Observations / Notes -->
+                            <div>
+                                <label for="triage-notes" class="block text-slate-300 font-semibold mb-1">
+                                    स्थिति टिप्पणी • Field Tactical Notes
+                                </label>
+                                <textarea id="triage-notes" rows="2" placeholder="Describe slope condition, road blockages, tension crack elongation rate, or immediate relief requirements..." class="w-full bg-slate-950 border border-slate-700 rounded p-2 text-slate-200 resize-none"></textarea>
+                            </div>
+
+                            <!-- Form Action Buttons -->
+                            <div class="flex flex-wrap items-center gap-3 pt-2">
+                                <button type="submit" class="flex-1 py-2.5 px-4 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-lg text-xs flex items-center justify-center gap-2 transition cursor-pointer shadow-sm">
+                                    <i class="ph-bold ph-floppy-disk text-sm"></i>
+                                    <span>रिपोर्ट सहेजें • Save Report (Offline Buffer)</span>
+                                </button>
+                                <button type="button" id="btn-sync-reports" onclick="flushPendingReports()" class="py-2.5 px-4 bg-sky-700 hover:bg-sky-600 text-white font-bold rounded-lg text-xs flex items-center justify-center gap-2 transition cursor-pointer shadow-sm">
+                                    <i class="ph-bold ph-arrows-clockwise text-sm"></i>
+                                    <span>समकालन • Sync to Edge Mesh</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Queued Reports Table -->
+                    <div class="bg-slate-900/80 border border-slate-800 rounded-lg p-4">
+                        <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs font-bold text-white uppercase tracking-wide">
+                                    स्थानीय आपदा रिपोर्ट सूची • LOCALLY BUFFERED TRIAGE DISPATCHES
+                                </span>
+                            </div>
+                            <span id="offline-queue-count" class="px-2 py-0.5 text-[10px] font-mono font-bold rounded bg-emerald-950/70 text-emerald-300 border border-emerald-700/60">
+                                0 PENDING
+                            </span>
+                        </div>
+
+                        <div class="mt-3 overflow-x-auto max-h-56">
+                            <table class="w-full text-left text-xs border-collapse">
+                                <thead>
+                                    <tr class="text-[10px] text-slate-400 border-b border-slate-800 font-semibold tracking-wider font-mono">
+                                        <th class="py-2 px-3">REPORT ID</th>
+                                        <th class="py-2 px-3">INCIDENT</th>
+                                        <th class="py-2 px-3">SEV</th>
+                                        <th class="py-2 px-3">COORDS</th>
+                                        <th class="py-2 px-3">METRIC</th>
+                                        <th class="py-2 px-3">SYNC STATUS</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="offline-reports-tbody" class="divide-y divide-slate-800/60">
+                                    <tr>
+                                        <td colspan="6" class="text-center py-4 text-xs text-slate-500 font-mono">
+                                            // No field reports logged in this local session.
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- RIGHT: SUB-GHZ LORA MESH STREAM & DIAGNOSTICS (5 COLS) -->
+                <div class="lg:col-span-5 space-y-6">
+
+                    <!-- RF Sub-GHz Radio Specs -->
+                    <div class="bg-slate-900/80 border border-slate-800 rounded-lg p-4 space-y-3 text-xs">
+                        <div class="flex items-center justify-between pb-2 border-b border-slate-800">
+                            <span class="font-bold text-amber-400 uppercase tracking-wide flex items-center gap-1.5">
+                                <i class="ph-bold ph-radio"></i> LORA RF SUB-GHZ TELEMETRY
+                            </span>
+                            <span class="text-[10px] font-mono text-emerald-400 font-semibold">865.2 MHz (IN865)</span>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-2 text-[11px] font-mono">
+                            <div class="p-2 rounded bg-slate-950 border border-slate-800/80">
+                                <span class="text-[10px] text-slate-400 block">Modulation / Spreading</span>
+                                <span class="text-slate-200 font-bold">LoRa CSS (SF10)</span>
+                            </div>
+                            <div class="p-2 rounded bg-slate-950 border border-slate-800/80">
+                                <span class="text-[10px] text-slate-400 block">Bandwidth &amp; Code Rate</span>
+                                <span class="text-slate-200 font-bold">125 kHz • CR 4/5</span>
+                            </div>
+                            <div class="p-2 rounded bg-slate-950 border border-slate-800/80">
+                                <span class="text-[10px] text-slate-400 block">Transmit Power</span>
+                                <span class="text-emerald-400 font-bold">+20 dBm (EIRP)</span>
+                            </div>
+                            <div class="p-2 rounded bg-slate-950 border border-slate-800/80">
+                                <span class="text-[10px] text-slate-400 block">Multi-Hop Topology</span>
+                                <span class="text-sky-300 font-bold">Star-of-Stars Mesh</span>
+                            </div>
+                        </div>
+
+                        <button id="btn-sim-burst" onclick="simulateLoRaBurst()" class="w-full py-2.5 px-3 bg-amber-900/60 hover:bg-amber-800 text-amber-200 border border-amber-600/50 rounded-lg text-xs font-bold transition flex items-center justify-center gap-2 cursor-pointer shadow-sm">
+                            <i class="ph-bold ph-broadcast text-amber-400 text-sm"></i>
+                            <span>Simulate LoRa Emergency Burst (Likhu Veer / 29th Mile)</span>
+                        </button>
+
+                        <button type="button" onclick="toggleCloudBackhaul()" class="w-full py-2 px-3 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded border border-slate-700 text-xs font-semibold flex items-center justify-center gap-2 cursor-pointer transition">
+                            <i class="ph-bold ph-plugs"></i>
+                            <span>Toggle Backhaul Severance (Blackout Simulation)</span>
+                        </button>
+                    </div>
+
+                    <!-- Live Raw Packet Stream Container -->
+                    <div class="bg-slate-900/80 border border-slate-800 rounded-lg p-4">
+                        <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs font-bold text-white uppercase tracking-wide">
+                                    लाइव पैकेट स्ट्रीम • LIVE 18-BYTE LORA PACKETS
+                                </span>
+                            </div>
+                            <button onclick="refreshLoRaPackets()" class="text-[11px] text-sky-400 hover:text-sky-300 flex items-center gap-1 bg-transparent border-0 cursor-pointer">
+                                <i class="ph-bold ph-arrows-clockwise"></i> Refresh
+                            </button>
+                        </div>
+
+                        <div id="lora-packet-stream" class="mt-3 bg-slate-950 rounded border border-slate-800 max-h-72 overflow-y-auto space-y-1 p-2">
+                            <div class="text-slate-500 p-2 text-xs font-mono">
+                                // Standing by for 865 MHz LoRa packet transmissions...
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
     </main>
 
     <!-- FOOTER -->
@@ -824,5 +1075,6 @@
         // Auto-refresh status periodically
         setInterval(refreshGatewayStatus, 8000);
     </script>
+    <script src="/static/js/offline_field_triage.js"></script>
 </body>
 </html>

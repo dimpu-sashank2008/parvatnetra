@@ -36,6 +36,7 @@ class LoRaMesh:
         self.total_packets_received = 0
         self.total_packets_forwarded = 0
         self.total_duplicates_dropped = 0
+        self.recent_packets: List[Dict[str, Any]] = []
 
         # Register standard demonstration nodes (NH-10 / Teesta River Gorge)
         self._init_default_nodes()
@@ -151,7 +152,10 @@ class LoRaMesh:
 
         is_relay = packet_data.get("is_relay", False) or (node.get("via_relay") is not None)
 
-        return {
+        # Synthetic 18-byte hex payload representation for diagnostic inspector
+        payload_hex = f"0x{abs(int(rssi_dbm)) & 0xFF:02X}{seq & 0xFFFF:04X}{int(packet_data.get('tilt', 0.5) * 100) & 0xFFFF:04X}{int(packet_data.get('soil_moisture', 30.0) * 10) & 0xFFFF:04X}"
+
+        record = {
             "status": "INGESTED",
             "node_id": node_id,
             "sequence": seq,
@@ -161,8 +165,47 @@ class LoRaMesh:
             "health": node["health"],
             "rssi_dbm": rssi_dbm,
             "snr_db": snr_db,
+            "battery_pct": node.get("battery_pct", 100),
+            "payload_hex": payload_hex,
+            "location": node.get("location", "NER Slope"),
+            "provenance": "[SIMULATED / MESH]",
             "timestamp": now_iso
         }
+        self.recent_packets.insert(0, record)
+        if len(self.recent_packets) > 50:
+            self.recent_packets.pop()
+
+        return record
+
+    def get_recent_packets(self, limit: int = 25) -> List[Dict[str, Any]]:
+        """Returns the most recent received LoRa mesh packets."""
+        return self.recent_packets[:limit]
+
+    def simulate_burst(self, count: int = 3) -> List[Dict[str, Any]]:
+        """Simulates an emergency sub-GHz LoRa transmission burst from gorge nodes."""
+        burst_nodes = [
+            ("SN-NH10-KM48-01", "Likhu Veer Cliff", -78.4, 9.2, 1),
+            ("RN-RIDGE-RELAY-01", "Kalimpong Ridge Mast", -64.5, 11.4, 1),
+            ("SN-DEEP-GORGE-01", "Dikchu Toe Slopes", -91.2, 6.8, 2)
+        ]
+        results = []
+        for i in range(min(count, len(burst_nodes))):
+            nid, loc, rssi, snr, hops = burst_nodes[i]
+            node = self.nodes.get(nid, {})
+            next_seq = node.get("last_sequence", 0) + 1
+            pkt = {
+                "node_id": nid,
+                "sequence": next_seq,
+                "tilt": 1.2 + (i * 0.4),
+                "soil_moisture": 42.0 + (i * 5.0),
+                "pore_pressure": 18.5 + (i * 6.0),
+                "rainfall": 45.0,
+                "battery": max(40, node.get("battery_pct", 90) - 1),
+                "is_relay": hops > 1
+            }
+            res = self.receive_packet(pkt, rssi_dbm=rssi, snr_db=snr)
+            results.append(res)
+        return results
 
     def forward_packet(self, packet_data: Dict[str, Any], relay_id: str) -> Dict[str, Any]:
         """Simulates multi-hop forwarding across a mountain ridge relay node."""
