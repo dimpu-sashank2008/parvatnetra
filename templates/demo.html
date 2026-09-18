@@ -74,7 +74,22 @@
         body #master-inspection-panel h2,
         body #master-inspection-panel h2 *,
         body.light-mode [class*="from-[#0B132B]"] h1,
-        body [class*="from-[#0B132B]"] h1 {
+        body [class*="from-[#0B132B]"] h1,
+        body.light-mode [class*="bg-[#0B132B]"] h1,
+        body.light-mode [class*="bg-[#0B132B]"] h2,
+        body.light-mode [class*="bg-[#0B132B]"] h3,
+        body.light-mode [class*="bg-[#0B132B]"] h4,
+        body.light-mode [class*="bg-[#101C3D]"] h1,
+        body.light-mode [class*="bg-[#101C3D]"] h2,
+        body.light-mode [class*="bg-[#101C3D]"] h3,
+        body.light-mode [class*="bg-[#0C152B]"] h1,
+        body.light-mode [class*="bg-[#0C152B]"] h2,
+        body.light-mode [class*="bg-[#0A1636]"] h1,
+        body.light-mode [class*="bg-[#0A1636]"] h2,
+        body [class*="bg-[#0B132B]"] h1,
+        body [class*="bg-[#0B132B]"] h2,
+        body [class*="bg-[#0B132B]"] h3,
+        body [class*="bg-[#101C3D]"] h3 {
             color: #FED7AA !important; /* Luminous Faded Saffron */
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8) !important;
         }
@@ -83,16 +98,26 @@
         body.light-mode #master-inspection-panel p,
         body #master-inspection-panel p,
         body.light-mode [class*="from-[#0B132B]"] p,
-        body [class*="from-[#0B132B]"] p {
+        body [class*="from-[#0B132B]"] p,
+        body.light-mode [class*="bg-[#0B132B]"] p,
+        body.light-mode [class*="bg-[#101C3D]"] p,
+        body.light-mode [class*="bg-[#0C152B]"] p,
+        body.light-mode [class*="bg-[#0A1636]"] p,
+        body [class*="bg-[#0B132B]"] p,
+        body [class*="bg-[#101C3D]"] p {
             color: #FEF3C7 !important; /* Soft Faded Saffron Cream */
             line-height: 1.6 !important;
         }
 
-        /* Strong tags inside banner & inspection panel */
+        /* Strong tags inside banner, inspection panel & dark cards */
         body.light-mode [class*="from-[#0B132B]"] p strong,
         body [class*="from-[#0B132B]"] p strong,
         body.light-mode #master-inspection-panel strong,
-        body #master-inspection-panel strong {
+        body #master-inspection-panel strong,
+        body.light-mode [class*="bg-[#0B132B]"] strong,
+        body.light-mode [class*="bg-[#101C3D]"] strong,
+        body [class*="bg-[#0B132B]"] strong,
+        body [class*="bg-[#101C3D]"] strong {
             color: #FBBF24 !important; /* High-contrast Saffron Gold */
             font-weight: 700 !important;
         }
@@ -101,11 +126,15 @@
         body.light-mode #master-inspection-panel .text-slate-400,
         body #master-inspection-panel .text-slate-400,
         body.light-mode #master-inspection-panel .text-slate-300,
-        body #master-inspection-panel .text-slate-300 {
+        body #master-inspection-panel .text-slate-300,
+        body.light-mode [class*="bg-[#0B132B]"] .text-slate-400,
+        body.light-mode [class*="bg-[#101C3D]"] .text-slate-400,
+        body.light-mode [class*="bg-[#0B132B]"] .text-slate-300,
+        body.light-mode [class*="bg-[#101C3D]"] .text-slate-300 {
             color: #FDBA74 !important; /* Faded Saffron */
         }
 
-        /* Any blue/sky text inside master panel or banner -> Faded Saffron */
+        /* Any blue/sky text inside master panel or dark cards -> Faded Saffron */
         body.light-mode #master-inspection-panel [class*="text-sky-"],
         body.light-mode #master-inspection-panel [class*="text-blue-"],
         body.light-mode [class*="from-[#0B132B]"] [class*="text-sky-"],
@@ -113,7 +142,17 @@
         body #master-inspection-panel [class*="text-sky-"],
         body #master-inspection-panel [class*="text-blue-"],
         body [class*="from-[#0B132B]"] [class*="text-sky-"],
-        body [class*="from-[#0B132B]"] [class*="text-blue-"] {
+        body [class*="from-[#0B132B]"] [class*="text-blue-"],
+        body.light-mode [class*="bg-[#0B132B]"] [class*="text-sky-"],
+        body.light-mode [class*="bg-[#0B132B]"] [class*="text-blue-"],
+        body.light-mode [class*="bg-[#101C3D]"] [class*="text-sky-"],
+        body.light-mode [class*="bg-[#101C3D]"] [class*="text-blue-"],
+        body.light-mode [class*="bg-slate-900"] [class*="text-sky-"],
+        body.light-mode [class*="bg-slate-950"] [class*="text-sky-"],
+        body [class*="bg-[#0B132B]"] [class*="text-sky-"],
+        body [class*="bg-[#0B132B]"] [class*="text-blue-"],
+        body [class*="bg-[#101C3D]"] [class*="text-sky-"],
+        body [class*="bg-[#101C3D]"] [class*="text-blue-"] {
             color: #FDBA74 !important; /* Faded Saffron */
         }
 
@@ -122,6 +161,10 @@
         body #master-inspection-panel [class*="bg-sky-"],
         body.light-mode [class*="from-[#0B132B]"] [class*="bg-sky-"],
         body [class*="from-[#0B132B]"] [class*="bg-sky-"],
+        body.light-mode [class*="bg-[#0B132B]"] [class*="bg-sky-"],
+        body.light-mode [class*="bg-[#101C3D]"] [class*="bg-sky-"],
+        body [class*="bg-[#0B132B]"] [class*="bg-sky-"],
+        body [class*="bg-[#101C3D]"] [class*="bg-sky-"],
         body.light-mode #master-inspection-panel span.border-sky-600\/70,
         body #master-inspection-panel span.border-sky-600\/70 {
             background-color: rgba(120, 53, 15, 0.45) !important;
@@ -352,7 +395,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3.5">
                 <!-- Scenario 1: Cyclone Remal Aizawl -->
-                <div id="card-scen-remal" onclick="selectScenario('remal_mizoram')" class="bg-[#0B132B] hover:bg-[#101C3D] border border-slate-800 hover:border-sky-500/70 rounded-lg p-4 cursor-pointer transition-all duration-200 shadow-md relative group flex flex-col justify-between">
+                <div id="card-scen-remal" onclick="selectScenario('remal_mizoram')" class="bg-[#0B132B] hover:bg-[#101C3D] border border-slate-800 hover:border-amber-500/70 rounded-lg p-4 cursor-pointer transition-all duration-200 shadow-md relative group flex flex-col justify-between">
                     <div class="space-y-2">
                         <div class="flex items-center justify-between">
                             <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-red-950 text-red-300 border border-red-800">
@@ -360,10 +403,10 @@
                             </span>
                             <span class="text-[10px] font-mono text-slate-400">28 MAY 2024</span>
                         </div>
-                        <h3 class="text-xs font-bold text-white group-hover:text-sky-300 transition-colors leading-snug">
-                            Cyclone Remal Deluge & Quarry Collapse
+                        <h3 class="text-xs font-bold text-amber-100 group-hover:text-amber-300 transition-colors leading-snug">
+                            Cyclone Deluge & Quarry Collapse
                         </h3>
-                        <div class="text-[11px] text-slate-400 font-mono">
+                        <div class="text-[11px] text-amber-200/70 font-mono">
                             Melthum Quarry & Slope, Aizawl (MZ)
                         </div>
                         <div class="grid grid-cols-2 gap-1.5 pt-2 text-[10px] font-mono">
@@ -381,17 +424,17 @@
                             </div>
                             <div class="bg-slate-900/80 p-1.5 rounded border border-slate-800/80">
                                 <span class="text-slate-500 block">DWR Core</span>
-                                <span class="text-sky-400 font-bold">52 dBZ</span>
+                                <span class="text-amber-300 font-bold">52 dBZ</span>
                             </div>
                         </div>
                     </div>
-                    <button class="mt-3 w-full py-1.5 px-2.5 bg-blue-600/30 hover:bg-blue-600 text-sky-300 hover:text-white rounded border border-blue-500/40 text-[11px] font-mono font-bold transition flex items-center justify-center gap-1.5">
+                    <button class="mt-3 w-full py-1.5 px-2.5 bg-amber-600/20 hover:bg-amber-600 text-amber-200 hover:text-white rounded border border-amber-500/40 text-[11px] font-mono font-bold transition flex items-center justify-center gap-1.5">
                         <i class="ph-bold ph-play"></i> Execute Cascade
                     </button>
                 </div>
 
                 <!-- Scenario 2: Teesta GLOF & Surge Sikkim -->
-                <div id="card-scen-teesta" onclick="selectScenario('teesta_sikkim')" class="bg-[#0B132B] hover:bg-[#101C3D] border-2 border-sky-500 bg-[#101C3D] rounded-lg p-4 cursor-pointer transition-all duration-200 shadow-md relative group flex flex-col justify-between">
+                <div id="card-scen-teesta" onclick="selectScenario('teesta_sikkim')" class="bg-[#101C3D] border-2 border-amber-500 rounded-lg p-4 cursor-pointer transition-all duration-200 shadow-md relative group flex flex-col justify-between">
                     <div class="space-y-2">
                         <div class="flex items-center justify-between">
                             <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-red-950 text-red-300 border border-red-800">
@@ -399,10 +442,10 @@
                             </span>
                             <span class="text-[10px] font-mono text-slate-400">04 OCT 2023</span>
                         </div>
-                        <h3 class="text-xs font-bold text-white group-hover:text-sky-300 transition-colors leading-snug">
+                        <h3 class="text-xs font-bold text-amber-100 group-hover:text-amber-300 transition-colors leading-snug">
                             South Lhonak GLOF & Teesta Basin Surge
                         </h3>
-                        <div class="text-[11px] text-slate-400 font-mono">
+                        <div class="text-[11px] text-amber-200/70 font-mono">
                             29th Mile Slump, NH-10 (SK)
                         </div>
                         <div class="grid grid-cols-2 gap-1.5 pt-2 text-[10px] font-mono">
@@ -420,17 +463,17 @@
                             </div>
                             <div class="bg-slate-900/80 p-1.5 rounded border border-slate-800/80">
                                 <span class="text-slate-500 block">GLOF Surge</span>
-                                <span class="text-sky-400 font-bold">4,800 m³/s</span>
+                                <span class="text-amber-300 font-bold">4,800 m³/s</span>
                             </div>
                         </div>
                     </div>
-                    <button class="mt-3 w-full py-1.5 px-2.5 bg-blue-600 text-white rounded border border-blue-500 text-[11px] font-mono font-bold transition flex items-center justify-center gap-1.5 shadow">
+                    <button class="mt-3 w-full py-1.5 px-2.5 bg-amber-600 text-white rounded border border-amber-500 text-[11px] font-mono font-bold transition flex items-center justify-center gap-1.5 shadow">
                         <i class="ph-bold ph-play"></i> Execute Cascade
                     </button>
                 </div>
 
                 <!-- Scenario 3: Tupul Railway Avalanche Manipur -->
-                <div id="card-scen-tupul" onclick="selectScenario('tupul_manipur')" class="bg-[#0B132B] hover:bg-[#101C3D] border border-slate-800 hover:border-sky-500/70 rounded-lg p-4 cursor-pointer transition-all duration-200 shadow-md relative group flex flex-col justify-between">
+                <div id="card-scen-tupul" onclick="selectScenario('tupul_manipur')" class="bg-[#0B132B] hover:bg-[#101C3D] border border-slate-800 hover:border-amber-500/70 rounded-lg p-4 cursor-pointer transition-all duration-200 shadow-md relative group flex flex-col justify-between">
                     <div class="space-y-2">
                         <div class="flex items-center justify-between">
                             <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-red-950 text-red-300 border border-red-800">
@@ -438,10 +481,10 @@
                             </span>
                             <span class="text-[10px] font-mono text-slate-400">30 JUN 2022</span>
                         </div>
-                        <h3 class="text-xs font-bold text-white group-hover:text-sky-300 transition-colors leading-snug">
+                        <h3 class="text-xs font-bold text-amber-100 group-hover:text-amber-300 transition-colors leading-snug">
                             Tupul Railway Debris Avalanche
                         </h3>
-                        <div class="text-[11px] text-slate-400 font-mono">
+                        <div class="text-[11px] text-amber-200/70 font-mono">
                             Jiribam-Imphal Yard, Noney (MN)
                         </div>
                         <div class="grid grid-cols-2 gap-1.5 pt-2 text-[10px] font-mono">
@@ -459,17 +502,17 @@
                             </div>
                             <div class="bg-slate-900/80 p-1.5 rounded border border-slate-800/80">
                                 <span class="text-slate-500 block">Failure Mode</span>
-                                <span class="text-sky-400 font-bold">Rotational</span>
+                                <span class="text-amber-300 font-bold">Rotational</span>
                             </div>
                         </div>
                     </div>
-                    <button class="mt-3 w-full py-1.5 px-2.5 bg-blue-600/30 hover:bg-blue-600 text-sky-300 hover:text-white rounded border border-blue-500/40 text-[11px] font-mono font-bold transition flex items-center justify-center gap-1.5">
+                    <button class="mt-3 w-full py-1.5 px-2.5 bg-amber-600/20 hover:bg-amber-600 text-amber-200 hover:text-white rounded border border-amber-500/40 text-[11px] font-mono font-bold transition flex items-center justify-center gap-1.5">
                         <i class="ph-bold ph-play"></i> Execute Cascade
                     </button>
                 </div>
 
                 <!-- Scenario 4: Sonapur Deluge & Rockfall Meghalaya -->
-                <div id="card-scen-sonapur" onclick="selectScenario('sonapur_meghalaya')" class="bg-[#0B132B] hover:bg-[#101C3D] border border-slate-800 hover:border-sky-500/70 rounded-lg p-4 cursor-pointer transition-all duration-200 shadow-md relative group flex flex-col justify-between">
+                <div id="card-scen-sonapur" onclick="selectScenario('sonapur_meghalaya')" class="bg-[#0B132B] hover:bg-[#101C3D] border border-slate-800 hover:border-amber-500/70 rounded-lg p-4 cursor-pointer transition-all duration-200 shadow-md relative group flex flex-col justify-between">
                     <div class="space-y-2">
                         <div class="flex items-center justify-between">
                             <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-red-950 text-red-300 border border-red-800">
@@ -477,10 +520,10 @@
                             </span>
                             <span class="text-[10px] font-mono text-slate-400">17 JUN 2023</span>
                         </div>
-                        <h3 class="text-xs font-bold text-white group-hover:text-sky-300 transition-colors leading-snug">
+                        <h3 class="text-xs font-bold text-amber-100 group-hover:text-amber-300 transition-colors leading-snug">
                             Sonapur Deluge & Rockfall Severing
                         </h3>
-                        <div class="text-[11px] text-slate-400 font-mono">
+                        <div class="text-[11px] text-amber-200/70 font-mono">
                             Sonapur Tunnel Portal, NH-6 (ML)
                         </div>
                         <div class="grid grid-cols-2 gap-1.5 pt-2 text-[10px] font-mono">
@@ -498,11 +541,11 @@
                             </div>
                             <div class="bg-slate-900/80 p-1.5 rounded border border-slate-800/80">
                                 <span class="text-slate-500 block">DWR Core</span>
-                                <span class="text-sky-400 font-bold">56 dBZ</span>
+                                <span class="text-amber-300 font-bold">56 dBZ</span>
                             </div>
                         </div>
                     </div>
-                    <button class="mt-3 w-full py-1.5 px-2.5 bg-blue-600/30 hover:bg-blue-600 text-sky-300 hover:text-white rounded border border-blue-500/40 text-[11px] font-mono font-bold transition flex items-center justify-center gap-1.5">
+                    <button class="mt-3 w-full py-1.5 px-2.5 bg-amber-600/20 hover:bg-amber-600 text-amber-200 hover:text-white rounded border border-amber-500/40 text-[11px] font-mono font-bold transition flex items-center justify-center gap-1.5">
                         <i class="ph-bold ph-play"></i> Execute Cascade
                     </button>
                 </div>
@@ -514,8 +557,8 @@
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
                 <div>
                     <div class="flex items-center gap-2">
-                        <span class="text-xs font-mono font-bold text-sky-400 uppercase tracking-wider">Active Disaster Scenario:</span>
-                        <h2 id="active-scen-title" class="text-sm font-bold text-white font-mono">South Lhonak GLOF & Teesta Basin Surge (SK-NH10-KM48)</h2>
+                        <span class="text-xs font-mono font-bold text-amber-400 uppercase tracking-wider">Active Disaster Scenario:</span>
+                        <h2 id="active-scen-title" class="text-sm font-bold text-amber-100 font-mono">South Lhonak GLOF & Teesta Basin Surge (SK-NH10-KM48)</h2>
                     </div>
                     <p id="active-scen-meta" class="text-xs text-slate-400 font-mono mt-0.5">
                         Location: 29th Mile Slump, Teesta Valley, Sikkim | Centroid: Lat 27.0984, Lng 88.4892 | Date: 04 Oct 2023
@@ -530,22 +573,22 @@
 
             <!-- Pipeline Visual Steps -->
             <div>
-                <div class="text-[10px] font-mono text-slate-400 uppercase font-semibold mb-2">Autonomous Multi-Agency Execution Pipeline</div>
+                <div class="text-[10px] font-mono text-amber-200/70 uppercase font-semibold mb-2">Autonomous Multi-Agency Execution Pipeline</div>
                 <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2 text-center font-mono text-[10px]">
                     <div id="step-1" class="cascade-step completed p-2 rounded border border-slate-800 bg-slate-900/60">
-                        <div class="font-bold text-sky-400">01. DWR Radar</div>
+                        <div class="font-bold text-amber-300">01. DWR Radar</div>
                         <div class="text-slate-400 text-[9px] mt-0.5">Core &ge;45 dBZ</div>
                     </div>
                     <div id="step-2" class="cascade-step completed p-2 rounded border border-slate-800 bg-slate-900/60">
-                        <div class="font-bold text-sky-400">02. Wetting Front</div>
+                        <div class="font-bold text-amber-300">02. Wetting Front</div>
                         <div class="text-slate-400 text-[9px] mt-0.5">SWCC &psi;&rarr;0 kPa</div>
                     </div>
                     <div id="step-3" class="cascade-step completed p-2 rounded border border-slate-800 bg-slate-900/60">
-                        <div class="font-bold text-sky-400">03. InSAR Creep</div>
+                        <div class="font-bold text-amber-300">03. InSAR Creep</div>
                         <div class="text-slate-400 text-[9px] mt-0.5">Saito 1/v&rarr;0</div>
                     </div>
                     <div id="step-4" class="cascade-step completed p-2 rounded border border-slate-800 bg-slate-900/60">
-                        <div class="font-bold text-sky-400">04. Mohr-Coulomb</div>
+                        <div class="font-bold text-amber-300">04. Mohr-Coulomb</div>
                         <div class="text-slate-400 text-[9px] mt-0.5">FoS &lt; 1.0 Limit</div>
                     </div>
                     <div id="step-5" class="cascade-step completed p-2 rounded border border-slate-800 bg-slate-900/60">
@@ -571,8 +614,8 @@
         <!-- Live Multi-Physics Telemetry Gauges Grid -->
         <section class="space-y-3">
             <div class="flex items-center justify-between">
-                <h2 class="text-xs sm:text-sm font-bold text-white uppercase font-mono tracking-wider flex items-center gap-2">
-                    <i class="ph-bold ph-gauge text-sky-400 text-base"></i>
+                <h2 class="text-xs sm:text-sm font-bold text-amber-100 uppercase font-mono tracking-wider flex items-center gap-2">
+                    <i class="ph-bold ph-gauge text-amber-400 text-base"></i>
                     <span>Real-Time Multi-Physics Geotechnical Telemetry</span>
                 </h2>
                 <span class="text-[10px] font-mono text-slate-400">MOHR-COULOMB • MARSHALL-PALMER • VAN GENUCHTEN • SAITO</span>
@@ -608,15 +651,15 @@
                 </div>
 
                 <!-- Gauge 3: DWR Radar -->
-                <div class="bg-[#0B132B] border border-sky-900/50 rounded-lg p-3.5 space-y-1.5 shadow">
+                <div class="bg-[#0B132B] border border-amber-900/50 rounded-lg p-3.5 space-y-1.5 shadow">
                     <div class="flex items-center justify-between text-[10px] font-mono uppercase text-slate-400">
                         <span>DWR Radar Echo</span>
-                        <span class="text-sky-400 font-bold">IMD S-BAND</span>
+                        <span class="text-amber-400 font-bold">IMD S-BAND</span>
                     </div>
-                    <div class="text-2xl font-bold font-mono text-sky-400" id="val-dwr">49 dBZ</div>
-                    <div class="text-[10px] text-sky-300 font-mono" id="val-dwr-rate">51.2 mm/h Convective</div>
+                    <div class="text-2xl font-bold font-mono text-amber-300" id="val-dwr">49 dBZ</div>
+                    <div class="text-[10px] text-amber-200 font-mono" id="val-dwr-rate">51.2 mm/h Convective</div>
                     <div class="w-full bg-slate-800 rounded-full h-1.5 mt-2">
-                        <div id="bar-dwr" class="bg-sky-500 h-1.5 rounded-full" style="width: 82%"></div>
+                        <div id="bar-dwr" class="bg-amber-500 h-1.5 rounded-full" style="width: 82%"></div>
                     </div>
                     <div class="text-[9px] text-slate-500 font-mono pt-1">Marshall-Palmer Z=200 R^1.6</div>
                 </div>
@@ -746,7 +789,7 @@
                     <div class="bg-slate-900/90 border border-slate-800 rounded-lg p-3 space-y-1">
                         <div class="text-[10px] text-slate-400 uppercase font-semibold">NDRF / SDRF Rescue Force</div>
                         <div class="text-base font-bold text-white mt-0.5" id="tactical-ndrf">60 Rescuers</div>
-                        <div class="text-[11px] text-sky-300" id="tactical-canines">4 Search Canines • 4 Life Detectors</div>
+                        <div class="text-[11px] text-amber-300" id="tactical-canines">4 Search Canines • 4 Life Detectors</div>
                         <div class="text-[9px] text-slate-500 pt-1" id="tactical-unit">2nd Bn Forward Troop</div>
                     </div>
 
@@ -771,10 +814,10 @@
                         <div>
                             <div class="flex items-center gap-2">
                                 <span class="text-xs font-bold text-white uppercase tracking-wide flex items-center gap-1.5">
-                                    <i class="ph-bold ph-git-fork text-sky-400"></i>
+                                    <i class="ph-bold ph-git-fork text-amber-400"></i>
                                     <span>Tactical Evacuation Routing & Road Graph</span>
                                 </span>
-                                <span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-sky-950/80 text-sky-300 border border-sky-700/60">[OFFLINE ROUTE / GRAPH]</span>
+                                <span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-950/80 text-amber-300 border border-amber-700/60">[OFFLINE ROUTE / GRAPH]</span>
                             </div>
                             <p class="text-[10px] text-slate-400 mt-0.5">Evaluates multi-modal mountain corridor hazard penalties, slope inclines, and bridge limits</p>
                         </div>
@@ -801,7 +844,7 @@
                         </div>
                         <div class="bg-slate-950/70 border border-slate-800/80 rounded p-2">
                             <div class="text-[9px] text-slate-400 uppercase">Estimated Transit</div>
-                            <div id="route-metric-time" class="text-xs font-bold text-sky-300 mt-0.5">118 min</div>
+                            <div id="route-metric-time" class="text-xs font-bold text-amber-300 mt-0.5">118 min</div>
                         </div>
                         <div class="bg-slate-950/70 border border-slate-800/80 rounded p-2">
                             <div class="text-[9px] text-slate-400 uppercase">Hazard Exposure</div>
@@ -915,10 +958,10 @@
                 <div>
                     <div class="flex items-center gap-2">
                         <h2 class="text-xs sm:text-sm font-bold text-white uppercase font-mono tracking-wide flex items-center gap-2">
-                            <i class="ph-bold ph-video-camera text-sky-400 text-base"></i>
+                            <i class="ph-bold ph-video-camera text-amber-400 text-base"></i>
                             <span>Edge Computer Vision &amp; Drone/CCTV Crack Aperture Analyzer</span>
                         </h2>
-                        <span class="px-2 py-0.5 text-[9px] font-mono font-bold rounded bg-sky-950/80 text-sky-300 border border-sky-700/60">MODALITY 5</span>
+                        <span class="px-2 py-0.5 text-[9px] font-mono font-bold rounded bg-amber-950/80 text-amber-300 border border-amber-700/60">MODALITY 5</span>
                     </div>
                     <p class="text-xs text-slate-400 mt-0.5 font-mono">
                         Sub-pixel tension crack aperture (<span class="text-slate-200 font-semibold">w<sub>crack</sub></span>), dilation velocity (<span class="text-slate-200 font-semibold">dw/dt</span>), and shear displacement vector fields
@@ -1075,8 +1118,8 @@
                     <div class="bg-slate-900/90 border border-slate-800 rounded-lg p-3 space-y-1">
                         <div class="text-[9px] text-slate-400 uppercase">Downslope Shear Displacement Vector</div>
                         <div class="flex items-center justify-between text-slate-200 text-[11px] pt-0.5">
-                            <span>&Delta;x: <strong id="cv-vec-dx" class="text-sky-300">+13.0 mm</strong></span>
-                            <span>&Delta;y: <strong id="cv-vec-dy" class="text-sky-300">+25.0 mm</strong></span>
+                            <span>&Delta;x: <strong id="cv-vec-dx" class="text-amber-300">+13.0 mm</strong></span>
+                            <span>&Delta;y: <strong id="cv-vec-dy" class="text-amber-300">+25.0 mm</strong></span>
                             <span>Total &Delta;s: <strong id="cv-vec-mag" class="text-emerald-300">28.1 mm</strong></span>
                         </div>
                     </div>
@@ -1138,7 +1181,7 @@
                     </button>
                 </div>
                 <div class="relative">
-                    <pre id="cap-xml-display" class="h-64 overflow-y-auto bg-slate-950 border border-slate-800 rounded-lg p-3 text-[11px] font-mono text-sky-300 scrollbar-thin whitespace-pre-wrap leading-relaxed"><!-- Loading OASIS CAP v1.2 XML... --></pre>
+                    <pre id="cap-xml-display" class="h-64 overflow-y-auto bg-slate-950 border border-slate-800 rounded-lg p-3 text-[11px] font-mono text-amber-200 scrollbar-thin whitespace-pre-wrap leading-relaxed"><!-- Loading OASIS CAP v1.2 XML... --></pre>
                 </div>
             </div>
 
@@ -1208,10 +1251,10 @@
                     <div class="flex items-center gap-2">
                         <span class="text-slate-400">Audio Standard: <strong class="text-amber-400">ITU-T 960Hz &rarr; 800Hz Preamble Chime</strong></span>
                         <span class="text-slate-600">•</span>
-                        <span class="text-slate-400">Engine: <strong class="text-sky-400">W3C Web Audio + SpeechSynthesis</strong></span>
+                        <span class="text-slate-400">Engine: <strong class="text-amber-300">W3C Web Audio + SpeechSynthesis</strong></span>
                     </div>
                     <div class="flex items-center gap-2">
-                        <span id="voice-provenance-badge" class="px-2 py-0.5 rounded text-[10px] font-bold bg-sky-950 text-sky-300 border border-sky-800">
+                        <span id="voice-provenance-badge" class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-950/80 text-amber-300 border border-amber-800">
                             [OMNIROUTE / LLM-ENRICHED]
                         </span>
                         <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-950/70 text-emerald-300 border border-emerald-700/60">
@@ -1493,7 +1536,7 @@
             <div class="bg-slate-900/80 border border-slate-800 rounded-lg p-3 space-y-1.5 font-mono text-xs text-slate-300">
                 <div class="flex justify-between text-[11px]">
                     <span class="text-slate-400">Target Corridor:</span>
-                    <span id="modal-dispatch-corridor" class="font-bold text-sky-300">SK-NH10-KM48 (29th Mile Slump)</span>
+                    <span id="modal-dispatch-corridor" class="font-bold text-amber-300">SK-NH10-KM48 (29th Mile Slump)</span>
                 </div>
                 <div class="flex justify-between text-[11px]">
                     <span class="text-slate-400">Geo-Fenced Cells:</span>
@@ -1526,7 +1569,7 @@
             <!-- Dispatch Progress & Results Feed -->
             <div id="modal-dispatch-progress" class="hidden space-y-2 font-mono text-xs">
                 <div class="flex items-center justify-between text-[10px]">
-                    <span id="modal-dispatch-progress-label" class="text-sky-300">Transmitting to C-DAC Cell Broadcast Gateway...</span>
+                    <span id="modal-dispatch-progress-label" class="text-amber-300">Transmitting to C-DAC Cell Broadcast Gateway...</span>
                     <span id="modal-dispatch-progress-pct" class="text-white font-bold">0%</span>
                 </div>
                 <div class="w-full bg-slate-950 rounded-full h-2 overflow-hidden border border-slate-800">
@@ -1762,11 +1805,11 @@
             ['remal', 'teesta', 'tupul', 'sonapur'].forEach(k => {
                 const el = document.getElementById('card-scen-' + k);
                 if (k === key.split('_')[0]) {
-                    el.className = 'bg-[#101C3D] border-2 border-sky-500 rounded-lg p-4 cursor-pointer transition-all duration-200 shadow-md relative group flex flex-col justify-between';
-                    el.querySelector('button').className = 'mt-3 w-full py-1.5 px-2.5 bg-blue-600 text-white rounded border border-blue-500 text-[11px] font-mono font-bold transition flex items-center justify-center gap-1.5 shadow';
+                    el.className = 'bg-[#101C3D] border-2 border-amber-500 rounded-lg p-4 cursor-pointer transition-all duration-200 shadow-md relative group flex flex-col justify-between';
+                    el.querySelector('button').className = 'mt-3 w-full py-1.5 px-2.5 bg-amber-600 text-white rounded border border-amber-500 text-[11px] font-mono font-bold transition flex items-center justify-center gap-1.5 shadow';
                 } else {
-                    el.className = 'bg-[#0B132B] hover:bg-[#101C3D] border border-slate-800 hover:border-sky-500/70 rounded-lg p-4 cursor-pointer transition-all duration-200 shadow-md relative group flex flex-col justify-between';
-                    el.querySelector('button').className = 'mt-3 w-full py-1.5 px-2.5 bg-blue-600/30 hover:bg-blue-600 text-sky-300 hover:text-white rounded border border-blue-500/40 text-[11px] font-mono font-bold transition flex items-center justify-center gap-1.5';
+                    el.className = 'bg-[#0B132B] hover:bg-[#101C3D] border border-slate-800 hover:border-amber-500/70 rounded-lg p-4 cursor-pointer transition-all duration-200 shadow-md relative group flex flex-col justify-between';
+                    el.querySelector('button').className = 'mt-3 w-full py-1.5 px-2.5 bg-amber-600/20 hover:bg-amber-600 text-amber-200 hover:text-white rounded border border-amber-500/40 text-[11px] font-mono font-bold transition flex items-center justify-center gap-1.5';
                 }
             });
 
@@ -2385,7 +2428,7 @@
                 if (bar) bar.style.width = '75%';
                 if (pct) pct.innerText = '75%';
                 if (label) label.innerText = 'Transmitting C-DAC Cell Broadcast Channel 4370 to 4 towers...';
-                if (logBox) logBox.innerHTML += `<div class="text-sky-300">[1.1s] Cell-broadcast packets pushed to Likhu Veer, 29th Mile, Teesta Bazaar, Rangpo.</div>`;
+                if (logBox) logBox.innerHTML += `<div class="text-amber-300">[1.1s] Cell-broadcast packets pushed to Likhu Veer, 29th Mile, Teesta Bazaar, Rangpo.</div>`;
 
                 await new Promise(r => setTimeout(r, 500));
 

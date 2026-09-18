@@ -34,6 +34,11 @@ class TestE2EPlaywright(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
+        try:
+            import playwright
+        except ImportError:
+            raise unittest.SkipTest("Playwright is not installed in the environment.")
+
         # Verify server is responding
         try:
             r = requests.get(f"{BASE_URL}/api/health", timeout=5)
