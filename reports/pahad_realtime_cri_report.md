@@ -1,7 +1,7 @@
 # PARVAT NETRA • REAL-TIME MULTIMODAL CRI DATASET REPORT
 **Evaluation Engine:** PAHAD AI Multimodal Fusion Engine v3.1  
-**Generated UTC:** 2026-09-18T15:03:30.623251+00:00  
-**Dataset SHA-256:** `f91c8fd7366db73f981bafb519848751dac9d12daafc629cbc5ac930e62d62a5`  
+**Generated UTC:** 2026-09-18T15:06:35.422205+00:00  
+**Dataset SHA-256:** `833bd32b7dfe6585aae14f080331423101e4609b1310d12c9ac402b8ef9df509`  
 **Filed Files:** `data/realtime/realtime_cri_dataset.csv`, `data/realtime/realtime_cri_dataset.json`  
 
 ---
@@ -9,7 +9,7 @@
 ## 1. Executive Summary
 This dataset files live multi-modal sensor and meteorological observations across all 20 GSI critical monitoring corridors in the 8 North-Eastern Region (NER) states:
 - **Total Sectors Evaluated:** 20
-- **Average Sector CRI:** 12.41 / 100
+- **Average Sector CRI:** 12.55 / 100
 - **Average Mohr-Coulomb FoS:** 3.272
 - **Peak 24h Rainfall Recorded:** 63.3 mm
 - **Alert Band Distribution:**
@@ -39,12 +39,12 @@ This dataset files live multi-modal sensor and meteorological observations acros
 | `AR-PASIGHAT-01` | NH-515 / Siang Valley | Arunachal Pradesh | 1.8 mm | 3.7 M | 3.288 | 7.92 | **7.92** | `LOW` | 1/3 | `[LIVE/HYBRID]` |
 | `AR-SELA-01` | NH-13 | Arunachal Pradesh | 6.7 mm | 3.7 M | 5.653 | 8.78 | **8.78** | `LOW` | 1/3 | `[LIVE/HYBRID]` |
 | `MN-TUPUL-01` | Jiribam-Imphal Railway | Manipur | 0.0 mm | 3.7 M | 0.804 | 32.61 | **32.61** | `MODERATE` | 1/3 | `[LIVE/HYBRID]` |
-| `MN-JIRIBAM-01` | NH-37 Lifeline | Manipur | 1.9 mm | 5.2 M | 4.367 | 5.52 | **5.52** | `LOW` | 1/3 | `[LIVE/HYBRID]` |
-| `ML-SONAPUR-01` | NH-06 Barak Valley Lifeline | Meghalaya | 1.2 mm | 5.2 M | 3.885 | 5.75 | **5.75** | `LOW` | 0/3 | `[LIVE/HYBRID]` |
-| `ML-CHERRA-01` | Sohra-Shella Corridor | Meghalaya | 2.6 mm | 5.2 M | 2.93 | 6.0 | **6.0** | `LOW` | 1/3 | `[LIVE/HYBRID]` |
-| `AS-DIMA-01` | Lumding-Badarpur Hill Section | Assam | 1.1 mm | 5.2 M | 2.906 | 5.95 | **5.95** | `LOW` | 0/3 | `[LIVE/HYBRID]` |
-| `AS-GUWAHATI-01` | Guwahati Urban Rim | Assam | 13.6 mm | 5.2 M | 6.069 | 7.41 | **7.41** | `LOW` | 1/3 | `[LIVE/HYBRID]` |
-| `TR-BARAMURA-01` | NH-08 National Corridor | Tripura | 0.4 mm | 5.2 M | 4.025 | 6.0 | **6.0** | `LOW` | 0/3 | `[LIVE/HYBRID]` |
+| `MN-JIRIBAM-01` | NH-37 Lifeline | Manipur | 1.9 mm | 3.7 M | 4.367 | 6.02 | **6.02** | `LOW` | 1/3 | `[LIVE/HYBRID]` |
+| `ML-SONAPUR-01` | NH-06 Barak Valley Lifeline | Meghalaya | 1.2 mm | 3.7 M | 3.885 | 6.34 | **6.34** | `LOW` | 0/3 | `[LIVE/HYBRID]` |
+| `ML-CHERRA-01` | Sohra-Shella Corridor | Meghalaya | 2.6 mm | 3.7 M | 2.93 | 6.44 | **6.44** | `LOW` | 1/3 | `[LIVE/HYBRID]` |
+| `AS-DIMA-01` | Lumding-Badarpur Hill Section | Assam | 1.1 mm | 3.7 M | 2.906 | 6.38 | **6.38** | `LOW` | 0/3 | `[LIVE/HYBRID]` |
+| `AS-GUWAHATI-01` | Guwahati Urban Rim | Assam | 13.6 mm | 3.7 M | 6.069 | 8.1 | **8.1** | `LOW` | 1/3 | `[LIVE/HYBRID]` |
+| `TR-BARAMURA-01` | NH-08 National Corridor | Tripura | 0.4 mm | 3.7 M | 4.025 | 6.0 | **6.0** | `LOW` | 0/3 | `[LIVE/HYBRID]` |
 
 ---
 
