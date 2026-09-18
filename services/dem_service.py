@@ -727,6 +727,8 @@ class DEMService:
                 "slip_depth_m": 4.2,
                 "bedrock_depth_m": 8.0,
                 "bedrock_type": "Daling Group quartz-chlorite phyllite",
+                "gsi_quadrangle": "GSI Degree Sheet 78A/78B (Sikkim Quadrangle)",
+                "structural_context": "Main Central Thrust (MCT) footwall crushed zone",
                 "soil_unit_weight_kn_m3": 19.4,
                 "friction_angle_deg": 28.5,
                 "cohesion_kpa": 14.5,
@@ -740,6 +742,8 @@ class DEMService:
                 "slip_depth_m": 3.8,
                 "bedrock_depth_m": 9.0,
                 "bedrock_type": "Daling sheared quartzite & river gravel",
+                "gsi_quadrangle": "GSI Degree Sheet 78A (Gangtok Quadrangle)",
+                "structural_context": "Teesta River gorge basal toe erosion reach",
                 "soil_unit_weight_kn_m3": 20.1,
                 "friction_angle_deg": 31.0,
                 "cohesion_kpa": 12.0,
@@ -753,6 +757,8 @@ class DEMService:
                 "slip_depth_m": 3.5,
                 "bedrock_depth_m": 7.5,
                 "bedrock_type": "Biotite gneiss with steep foliation",
+                "gsi_quadrangle": "GSI Degree Sheet 78A (Dikchu Reach)",
+                "structural_context": "Steep valley foliation dipping towards road cut",
                 "soil_unit_weight_kn_m3": 19.8,
                 "friction_angle_deg": 33.0,
                 "cohesion_kpa": 18.0,
@@ -766,6 +772,8 @@ class DEMService:
                 "slip_depth_m": 6.2,
                 "bedrock_depth_m": 12.0,
                 "bedrock_type": "Relict landslide debris & Chungthang gneiss",
+                "gsi_quadrangle": "GSI Degree Sheet 78A (North Sikkim)",
+                "structural_context": "High-altitude periglacial & flash-flood scarp",
                 "soil_unit_weight_kn_m3": 18.9,
                 "friction_angle_deg": 26.0,
                 "cohesion_kpa": 10.0,
@@ -779,10 +787,72 @@ class DEMService:
                 "slip_depth_m": 4.8,
                 "bedrock_depth_m": 10.5,
                 "bedrock_type": "Jaintia Group sandstone & shale",
+                "gsi_quadrangle": "GSI Degree Sheet 83C (Jaintia Hills)",
+                "structural_context": "Sonapur tunnel portal active debris chute",
                 "soil_unit_weight_kn_m3": 19.5,
                 "friction_angle_deg": 29.0,
                 "cohesion_kpa": 13.5,
                 "permeability_m_s": 4.1e-5
+            }
+        elif "TUPUL" in sid or "NONEY" in sid:
+            return {
+                "sector_id": "MN-TUPUL-01",
+                "colluvium_depth_m": 4.2,
+                "weathered_zone_depth_m": 8.5,
+                "slip_depth_m": 6.8,
+                "bedrock_depth_m": 14.0,
+                "bedrock_type": "Disang Group splintery dark shale & flysch turbidite",
+                "gsi_quadrangle": "GSI Degree Sheet 83H (Imphal Quadrangle, Manipur)",
+                "structural_context": "Indo-Myanmar Range Palaeogene fold belt, Irang fault zone",
+                "soil_unit_weight_kn_m3": 18.6,
+                "friction_angle_deg": 24.5,
+                "cohesion_kpa": 11.5,
+                "permeability_m_s": 6.8e-5
+            }
+        elif "PIPHEMA" in sid or "DZUDZA" in sid or "PAGALA" in sid:
+            return {
+                "sector_id": "NL-PIPHEMA-01",
+                "colluvium_depth_m": 5.0,
+                "weathered_zone_depth_m": 9.2,
+                "slip_depth_m": 7.5,
+                "bedrock_depth_m": 15.0,
+                "bedrock_type": "Disang-Barail Schuppen Belt sheared shale & flaggy sandstone",
+                "gsi_quadrangle": "GSI Degree Sheet 83G (Peren) & 83J (Sibsagar, Nagaland)",
+                "structural_context": "Schuppen Belt imbricate thrust zone (Disang & Naga Thrusts)",
+                "soil_unit_weight_kn_m3": 18.4,
+                "friction_angle_deg": 23.0,
+                "cohesion_kpa": 10.5,
+                "permeability_m_s": 8.4e-5
+            }
+        elif "KOLASIB" in sid or "HUNTHAR" in sid or "SAIRANG" in sid:
+            return {
+                "sector_id": "MZ-KOLASIB-01",
+                "colluvium_depth_m": 3.6,
+                "weathered_zone_depth_m": 6.8,
+                "slip_depth_m": 4.5,
+                "bedrock_depth_m": 11.0,
+                "bedrock_type": "Surma Group (Bhuban & Bokabil) rhythmic sandstone & shale",
+                "gsi_quadrangle": "GSI Degree Sheet 83D (Silchar Quadrangle, Mizoram/Assam)",
+                "structural_context": "Longai river shear zone, steep anticlinal fold limb",
+                "soil_unit_weight_kn_m3": 19.3,
+                "friction_angle_deg": 29.5,
+                "cohesion_kpa": 16.0,
+                "permeability_m_s": 3.9e-5
+            }
+        elif "GOALPARA" in sid:
+            return {
+                "sector_id": "AS-GOALPARA-01",
+                "colluvium_depth_m": 2.2,
+                "weathered_zone_depth_m": 4.2,
+                "slip_depth_m": 3.0,
+                "bedrock_depth_m": 6.5,
+                "bedrock_type": "Assam-Meghalaya Gneissic Complex & Brahmaputra alluvium",
+                "gsi_quadrangle": "GSI Degree Sheet 78J (Goalpara Quadrangle, Assam)",
+                "structural_context": "Himalayan frontal thrust transition to Brahmaputra basin",
+                "soil_unit_weight_kn_m3": 19.9,
+                "friction_angle_deg": 32.5,
+                "cohesion_kpa": 17.5,
+                "permeability_m_s": 2.5e-5
             }
         else:
             return {
@@ -792,6 +862,8 @@ class DEMService:
                 "slip_depth_m": 4.0,
                 "bedrock_depth_m": 8.0,
                 "bedrock_type": "Himalayan metasedimentary colluvium",
+                "gsi_quadrangle": "GSI Regional 1:250k Quadrangle Map Database",
+                "structural_context": "Regional tectonic thrust & joint-controlled mountain slope",
                 "soil_unit_weight_kn_m3": 19.2,
                 "friction_angle_deg": 29.5,
                 "cohesion_kpa": 15.0,

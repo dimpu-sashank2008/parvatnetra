@@ -235,8 +235,14 @@ class PahadUnifiedInputContract:
 # 2. SECTOR ATTRIBUTE RESOLVERS & GEOTECHNICAL BASELINES
 # =============================================================================
 
-# Calibrated physical baselines by corridor geology
+# Calibrated physical baselines grounded in GSI Quadrangle Maps (83D, 83H, 83J, 83G, 78A, 78J)
 GEOLOGY_BASELINES = {
+    "disang": {"cohesion": 11.5, "friction": 24.0, "depth": 5.2, "curvature": 0.065},
+    "bhuban": {"cohesion": 17.5, "friction": 29.5, "depth": 3.8, "curvature": 0.02},
+    "bokabil": {"cohesion": 16.0, "friction": 28.0, "depth": 4.2, "curvature": 0.03},
+    "barail": {"cohesion": 24.0, "friction": 33.0, "depth": 3.2, "curvature": -0.01},
+    "daling": {"cohesion": 14.5, "friction": 28.5, "depth": 4.2, "curvature": 0.035},
+    "tipam": {"cohesion": 19.0, "friction": 30.0, "depth": 3.6, "curvature": -0.01},
     "quartzite": {"cohesion": 24.0, "friction": 34.0, "depth": 3.0, "curvature": -0.02},
     "phyllite": {"cohesion": 14.0, "friction": 27.0, "depth": 4.5, "curvature": 0.04},
     "schist": {"cohesion": 18.0, "friction": 29.0, "depth": 4.0, "curvature": 0.02},
