@@ -52,6 +52,126 @@
         .cascade-step.completed { border-color: #10B981; background: rgba(16, 185, 129, 0.12); }
         .scrollbar-thin::-webkit-scrollbar { width: 5px; height: 5px; }
         .scrollbar-thin::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+
+        /* ========================================================================= */
+        /* FADED SAFFRON TYPOGRAPHY & HIGH-CONTRAST OVERRIDE (REPLACING BLUE TEXT)   */
+        /* Faded Saffron Palette: #FED7AA (Cream Saffron), #FDBA74 (Soft Saffron),   */
+        /* #FEF3C7 (Warm Saffron Text), #F59E0B (Saffron Gold)                       */
+        /* ========================================================================= */
+        body.light-mode #master-inspection-panel,
+        body #master-inspection-panel,
+        body.light-mode [class*="from-[#0B132B]"],
+        body [class*="from-[#0B132B]"],
+        body.light-mode [class*="from-[#0C152B]"],
+        body [class*="from-[#0C152B]"] {
+            border-color: rgba(245, 158, 11, 0.45) !important;
+        }
+
+        /* Headings on dark cards */
+        body.light-mode #master-inspection-panel h1,
+        body.light-mode #master-inspection-panel h2,
+        body.light-mode #master-inspection-panel h2 *,
+        body #master-inspection-panel h2,
+        body #master-inspection-panel h2 *,
+        body.light-mode [class*="from-[#0B132B]"] h1,
+        body [class*="from-[#0B132B]"] h1 {
+            color: #FED7AA !important; /* Luminous Faded Saffron */
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8) !important;
+        }
+
+        /* Paragraphs & body text on dark cards */
+        body.light-mode #master-inspection-panel p,
+        body #master-inspection-panel p,
+        body.light-mode [class*="from-[#0B132B]"] p,
+        body [class*="from-[#0B132B]"] p {
+            color: #FEF3C7 !important; /* Soft Faded Saffron Cream */
+            line-height: 1.6 !important;
+        }
+
+        /* Strong tags inside banner & inspection panel */
+        body.light-mode [class*="from-[#0B132B]"] p strong,
+        body [class*="from-[#0B132B]"] p strong,
+        body.light-mode #master-inspection-panel strong,
+        body #master-inspection-panel strong {
+            color: #FBBF24 !important; /* High-contrast Saffron Gold */
+            font-weight: 700 !important;
+        }
+
+        /* Subtitles & stage labels */
+        body.light-mode #master-inspection-panel .text-slate-400,
+        body #master-inspection-panel .text-slate-400,
+        body.light-mode #master-inspection-panel .text-slate-300,
+        body #master-inspection-panel .text-slate-300 {
+            color: #FDBA74 !important; /* Faded Saffron */
+        }
+
+        /* Any blue/sky text inside master panel or banner -> Faded Saffron */
+        body.light-mode #master-inspection-panel [class*="text-sky-"],
+        body.light-mode #master-inspection-panel [class*="text-blue-"],
+        body.light-mode [class*="from-[#0B132B]"] [class*="text-sky-"],
+        body.light-mode [class*="from-[#0B132B]"] [class*="text-blue-"],
+        body #master-inspection-panel [class*="text-sky-"],
+        body #master-inspection-panel [class*="text-blue-"],
+        body [class*="from-[#0B132B]"] [class*="text-sky-"],
+        body [class*="from-[#0B132B]"] [class*="text-blue-"] {
+            color: #FDBA74 !important; /* Faded Saffron */
+        }
+
+        /* Badges: Transform dark-blue into Faded Saffron pill */
+        body.light-mode #master-inspection-panel [class*="bg-sky-"],
+        body #master-inspection-panel [class*="bg-sky-"],
+        body.light-mode [class*="from-[#0B132B]"] [class*="bg-sky-"],
+        body [class*="from-[#0B132B]"] [class*="bg-sky-"],
+        body.light-mode #master-inspection-panel span.border-sky-600\/70,
+        body #master-inspection-panel span.border-sky-600\/70 {
+            background-color: rgba(120, 53, 15, 0.45) !important;
+            border-color: rgba(245, 158, 11, 0.6) !important;
+            color: #FED7AA !important;
+        }
+
+        /* Narrative Drill Box */
+        #drill-narrative-box,
+        body.light-mode #drill-narrative-box {
+            background-color: rgba(11, 19, 43, 0.95) !important;
+            border: 1px solid rgba(245, 158, 11, 0.45) !important;
+            color: #FEF3C7 !important;
+        }
+        #drill-narrative-box span#drill-narrative-title,
+        body.light-mode #drill-narrative-box span#drill-narrative-title {
+            color: #FED7AA !important; /* Faded Saffron */
+            font-weight: 700 !important;
+        }
+        #drill-narrative-box p#drill-narrative-desc,
+        body.light-mode #drill-narrative-box p#drill-narrative-desc {
+            color: #FEF3C7 !important; /* Soft Faded Saffron Cream */
+        }
+        #drill-narrative-box span#drill-narrative-badge,
+        body.light-mode #drill-narrative-box span#drill-narrative-badge {
+            background-color: rgba(146, 64, 14, 0.4) !important;
+            border: 1px solid rgba(245, 158, 11, 0.6) !important;
+            color: #FED7AA !important;
+        }
+        #drill-narrative-box i#drill-narrative-icon,
+        body.light-mode #drill-narrative-box i#drill-narrative-icon {
+            color: #F59E0B !important;
+        }
+
+        /* Step Pill 1 and Active Step Pill in Navigation */
+        #master-inspection-panel button[id^="pill-drill-"].border-sky-500,
+        body.light-mode #master-inspection-panel button[id^="pill-drill-"].border-sky-500,
+        #master-inspection-panel button[id^="pill-drill-"].active {
+            border-color: #F59E0B !important;
+            background-color: rgba(180, 83, 9, 0.4) !important;
+            color: #FED7AA !important;
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.3) !important;
+        }
+
+        /* Active stage title in progress indicator */
+        #drill-stage-title,
+        body.light-mode #drill-stage-title {
+            color: #FDBA74 !important;
+            font-weight: 700 !important;
+        }
     </style>
 </head>
 <body class="h-full flex flex-col overflow-y-auto">

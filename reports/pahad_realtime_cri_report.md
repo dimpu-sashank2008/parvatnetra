@@ -1,7 +1,7 @@
 # PARVAT NETRA • REAL-TIME MULTIMODAL CRI DATASET REPORT
 **Evaluation Engine:** PAHAD AI Multimodal Fusion Engine v3.1  
-**Generated UTC:** 2026-09-18T06:54:31.132189+00:00  
-**Dataset SHA-256:** `350da6d7d767b8f8670e0594f9c5c43bb6be8ace968edd3c6af4a7aacafe8822`  
+**Generated UTC:** 2026-09-18T07:00:27.202630+00:00  
+**Dataset SHA-256:** `069ad8bcbe2eaf91e3f7ef15d9930230edb2fd1f33e51be7eac5cd0c6fd5fa98`  
 **Filed Files:** `data/realtime/realtime_cri_dataset.csv`, `data/realtime/realtime_cri_dataset.json`  
 
 ---
@@ -9,8 +9,8 @@
 ## 1. Executive Summary
 This dataset files live multi-modal sensor and meteorological observations across all 20 GSI critical monitoring corridors in the 8 North-Eastern Region (NER) states:
 - **Total Sectors Evaluated:** 20
-- **Average Sector CRI:** 12.97 / 100
-- **Average Mohr-Coulomb FoS:** 3.263
+- **Average Sector CRI:** 13.09 / 100
+- **Average Mohr-Coulomb FoS:** 3.264
 - **Peak 24h Rainfall Recorded:** 64.5 mm
 - **Alert Band Distribution:**
   - `EXTREME`: 0
@@ -25,8 +25,8 @@ This dataset files live multi-modal sensor and meteorological observations acros
 
 | Sector ID | Corridor | State | 24h Rain | Seismic Mag | FoS | Raw CRI | Final CRI | Alert Band | Agreement | Provenance |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| `SK-NH10-KM48` | National Highway 10 | Sikkim | 11.0 mm | 3.7 M | 0.964 | 35.96 | **35.96** | `MODERATE` | 2/3 | `[LIVE/HYBRID]` |
-| `SK-SINGTAM-01` | NH-10 / Teesta River Gorge | Sikkim | 47.6 mm | 3.7 M | 2.474 | 31.31 | **31.31** | `MODERATE` | 1/3 | `[LIVE/HYBRID]` |
+| `SK-NH10-KM48` | National Highway 10 | Sikkim | 29.3 mm | 3.7 M | 0.938 | 39.91 | **39.91** | `MODERATE` | 2/3 | `[LIVE/HYBRID]` |
+| `SK-SINGTAM-01` | NH-10 / Teesta River Gorge | Sikkim | 38.7 mm | 3.7 M | 2.526 | 29.68 | **29.68** | `MODERATE` | 1/3 | `[LIVE/HYBRID]` |
 | `SK-DIKCHU-01` | North Sikkim Highway | Sikkim | 29.3 mm | 3.7 M | 4.758 | 11.47 | **11.47** | `LOW` | 1/3 | `[LIVE/HYBRID]` |
 | `SK-MANGAN-01` | Mangan-Chungthang Road | Sikkim | 64.5 mm | 3.7 M | 2.635 | 27.6 | **27.6** | `MODERATE` | 1/3 | `[LIVE/HYBRID]` |
 | `MZ-HUNTHAR-01` | NH-06 / Western Arterial | Mizoram | 3.8 mm | 3.7 M | 3.031 | 9.26 | **9.26** | `LOW` | 1/3 | `[LIVE/HYBRID]` |
