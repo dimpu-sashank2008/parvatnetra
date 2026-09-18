@@ -111,6 +111,87 @@ class WeatherCache:
 
 
 # =============================================================================
+# 1B. ROADWAY SIGHT VISIBILITY & MOUNTAIN FOG CLASSIFIER
+# =============================================================================
+
+def classify_visibility(vis_m: Optional[float]) -> Dict[str, Any]:
+    """
+    Classifies horizontal roadway sight distance according to Indian Ministry of Road
+    Transport and Highways (MoRTH), IMD, and Border Roads Organisation (BRO)
+    Himalayan mountain corridor guidelines.
+
+    Categories:
+      - < 200m:  DENSE_FREEZING_FOG ("EXTREME DENSE FOG", #EF4444)
+                 Convoy halted or proceed with pilot vehicle <= 15 km/h. Hazard lights mandatory.
+      - < 500m:  DENSE_FOG ("DENSE MOUNTAIN FOG", #F59E0B)
+                 High risk of blind hairpins. Fog lamps mandatory, speed capped at 25 km/h.
+      - < 1500m: MODERATE_FOG ("MODERATE FOG", #FBBF24)
+                 Low-beam headlights required, caution on ghat curves, speed capped at 40 km/h.
+      - < 4000m: MIST_HAZE ("VALLEY MIST & HAZE", #38BDF8)
+                 Valley mist and atmospheric haze. Normal mountain driving caution advised.
+      - >= 4000m: CLEAR ("CLEAR HORIZONTAL VISIBILITY", #10B981)
+                 Optimal sight distance. Normal convoy and civilian transit permitted.
+    """
+    if vis_m is None or math.isnan(vis_m) or vis_m < 0:
+        val_m = 10000.0
+    else:
+        val_m = float(vis_m)
+
+    val_km = round(val_m / 1000.0, 2)
+
+    if val_m < 200:
+        return {
+            "visibility_m": round(val_m, 1),
+            "visibility_km": val_km,
+            "classification": "DENSE_FREEZING_FOG",
+            "label": "EXTREME DENSE FOG",
+            "color": "#EF4444",
+            "speed_limit": "Halt / <= 15 km/h",
+            "driving_advisory": "Extreme dense fog (< 200m). Convoys halt or proceed with pilot vehicle at <= 15 km/h. Hazard lights mandatory."
+        }
+    elif val_m < 500:
+        return {
+            "visibility_m": round(val_m, 1),
+            "visibility_km": val_km,
+            "classification": "DENSE_FOG",
+            "label": "DENSE MOUNTAIN FOG",
+            "color": "#F59E0B",
+            "speed_limit": "<= 25 km/h",
+            "driving_advisory": "Dense mountain fog (< 500m). High risk of blind hairpins. Fog lamps mandatory, speed capped at 25 km/h."
+        }
+    elif val_m < 1500:
+        return {
+            "visibility_m": round(val_m, 1),
+            "visibility_km": val_km,
+            "classification": "MODERATE_FOG",
+            "label": "MODERATE FOG",
+            "color": "#FBBF24",
+            "speed_limit": "<= 40 km/h",
+            "driving_advisory": "Moderate fog (< 1.5 km). Low-beam headlights required, caution on ghat curves, speed capped at 40 km/h."
+        }
+    elif val_m < 4000:
+        return {
+            "visibility_m": round(val_m, 1),
+            "visibility_km": val_km,
+            "classification": "MIST_HAZE",
+            "label": "VALLEY MIST & HAZE",
+            "color": "#38BDF8",
+            "speed_limit": "<= 50 km/h",
+            "driving_advisory": "Valley mist and atmospheric haze (< 4 km). Normal mountain driving caution advised."
+        }
+    else:
+        return {
+            "visibility_m": round(val_m, 1),
+            "visibility_km": val_km,
+            "classification": "CLEAR",
+            "label": "CLEAR HORIZONTAL VISIBILITY",
+            "color": "#10B981",
+            "speed_limit": "Max 50 km/h",
+            "driving_advisory": "Optimal sight distance (> 4 km). Normal convoy and civilian transit permitted across mountain passes."
+        }
+
+
+# =============================================================================
 # 2. PROVIDER ABSTRACTION
 # =============================================================================
 
@@ -192,6 +273,23 @@ class IMDWeatherProvider(WeatherProvider):
                     raw = resp.json()
                     self._last_status = "LIVE"
                     self._last_error = None
+                    atm_raw = raw.get("atmosphere", {})
+                    vis_val = raw.get("visibility_km") or atm_raw.get("visibility_km") or raw.get("visibility_m") or atm_raw.get("visibility_m")
+                    if vis_val is not None:
+                        vis_m = float(vis_val) * 1000.0 if float(vis_val) < 100.0 else float(vis_val)
+                    else:
+                        vis_m = 8000.0
+                    vis_info = classify_visibility(vis_m)
+                    atm_clean = dict(atm_raw)
+                    atm_clean.update({
+                        "visibility_m": vis_info["visibility_m"],
+                        "visibility_km": vis_info["visibility_km"],
+                        "fog_classification": vis_info["classification"],
+                        "fog_label": vis_info["label"],
+                        "speed_limit": vis_info["speed_limit"],
+                        "driving_advisory": vis_info["driving_advisory"],
+                        "visibility_color": vis_info["color"]
+                    })
                     return {
                         "source": self.name,
                         "provenance": "LIVE",
@@ -201,7 +299,7 @@ class IMDWeatherProvider(WeatherProvider):
                         "rain_24h_mm": float(raw.get("rain_24h_mm", 0.0)),
                         "rain_72h_mm": float(raw.get("rain_72h_mm", 0.0)),
                         "forecast": raw.get("forecast", {}),
-                        "atmosphere": raw.get("atmosphere", {})
+                        "atmosphere": atm_clean
                     }
                 else:
                     self._last_error = f"HTTP {resp.status_code}"
@@ -254,7 +352,7 @@ class OpenMeteoWeatherProvider(WeatherProvider):
             "latitude": round(lat, 4),
             "longitude": round(lon, 4),
             "hourly": "precipitation,soil_moisture_0_to_1cm,soil_moisture_1_to_3cm,temperature_2m,relative_humidity_2m",
-            "current": "precipitation,temperature_2m,relative_humidity_2m,surface_pressure,wind_speed_10m,cloud_cover",
+            "current": "precipitation,temperature_2m,relative_humidity_2m,surface_pressure,wind_speed_10m,cloud_cover,visibility",
             "models": "best_match,ecmwf_ifs025,gfs_seamless,icon_seamless",
             "forecast_days": 3,
             "timezone": "auto"
@@ -279,7 +377,7 @@ class OpenMeteoWeatherProvider(WeatherProvider):
                 "latitude": round(lat, 4),
                 "longitude": round(lon, 4),
                 "hourly": "precipitation,temperature_2m,relative_humidity_2m,surface_pressure,wind_speed_10m,cloud_cover",
-                "current": "precipitation,temperature_2m,relative_humidity_2m,surface_pressure,wind_speed_10m,cloud_cover",
+                "current": "precipitation,temperature_2m,relative_humidity_2m,surface_pressure,wind_speed_10m,cloud_cover,visibility",
                 "forecast_days": 3,
                 "timezone": "auto"
             }
@@ -346,6 +444,10 @@ class OpenMeteoWeatherProvider(WeatherProvider):
         sm01 = float(sm01_series[0]) if sm01_series else 0.32
         sm13 = float(sm13_series[0]) if sm13_series else sm01
 
+        # Horizontal Visibility (sight distance)
+        cur_vis = current.get("visibility")
+        vis_info = classify_visibility(float(cur_vis) if cur_vis is not None else 8000.0)
+
         return {
             "source": self.name,
             "provenance": "LIVE",
@@ -368,7 +470,14 @@ class OpenMeteoWeatherProvider(WeatherProvider):
                 "humidity_pct": float(current.get("relative_humidity_2m", 80.0)),
                 "pressure_hpa": float(current.get("surface_pressure", 1010.0)),
                 "wind_kmh": float(current.get("wind_speed_10m", 12.0)),
-                "cloud_pct": float(current.get("cloud_cover", 65.0))
+                "cloud_pct": float(current.get("cloud_cover", 65.0)),
+                "visibility_m": vis_info["visibility_m"],
+                "visibility_km": vis_info["visibility_km"],
+                "fog_classification": vis_info["classification"],
+                "fog_label": vis_info["label"],
+                "speed_limit": vis_info["speed_limit"],
+                "driving_advisory": vis_info["driving_advisory"],
+                "visibility_color": vis_info["color"]
             },
             "models_consensus": {
                 "ecmwf_ifs_24h_mm": round(ecmwf_24h, 2),
@@ -437,7 +546,7 @@ class NASAPowerWeatherProvider(WeatherProvider):
                 daily_val = vals[-1] if vals else 12.0
                 cum_72 = sum(vals[-3:]) if len(vals) >= 3 else daily_val * 2.5
                 self._last_status = "LIVE"
-                self._last_error = None
+                vis_info = classify_visibility(7500.0)
                 return {
                     "source": self.name,
                     "provenance": "LIVE",
@@ -460,7 +569,14 @@ class NASAPowerWeatherProvider(WeatherProvider):
                         "humidity_pct": 80.0,
                         "pressure_hpa": 1010.0,
                         "wind_kmh": 10.0,
-                        "cloud_pct": 60.0
+                        "cloud_pct": 60.0,
+                        "visibility_m": vis_info["visibility_m"],
+                        "visibility_km": vis_info["visibility_km"],
+                        "fog_classification": vis_info["classification"],
+                        "fog_label": vis_info["label"],
+                        "speed_limit": vis_info["speed_limit"],
+                        "driving_advisory": vis_info["driving_advisory"],
+                        "visibility_color": vis_info["color"]
                     }
                 }
         except Exception as e:
@@ -510,6 +626,7 @@ class PostGISWeatherProvider(WeatherProvider):
                         daily = float(row.get("daily_actual", 35.0))
                         cum_48 = float(row.get("cumulative_48h", daily * 1.8))
                         self._last_status = "CONNECTED"
+                        vis_info = classify_visibility(6000.0)
                         return {
                             "source": self.name,
                             "provenance": "HISTORICAL",
@@ -533,7 +650,14 @@ class PostGISWeatherProvider(WeatherProvider):
                                 "humidity_pct": 85.0,
                                 "pressure_hpa": 1008.0,
                                 "wind_kmh": 14.0,
-                                "cloud_pct": 80.0
+                                "cloud_pct": 80.0,
+                                "visibility_m": vis_info["visibility_m"],
+                                "visibility_km": vis_info["visibility_km"],
+                                "fog_classification": vis_info["classification"],
+                                "fog_label": vis_info["label"],
+                                "speed_limit": vis_info["speed_limit"],
+                                "driving_advisory": vis_info["driving_advisory"],
+                                "visibility_color": vis_info["color"]
                             }
                         }
         except Exception as e:
@@ -582,6 +706,13 @@ class DemoSimulatedWeatherProvider(WeatherProvider):
         rain_24h = round(base_rain_24h, 2)
         rain_72h = round(base_rain_24h * 2.1, 2)
 
+        # Realistic visibility inversely proportional to rainfall & humidity
+        if is_demo and (sector_id and "KM48" in sector_id.upper()):
+            sim_vis_m = 350.0  # Extreme cloudburst dense fog
+        else:
+            sim_vis_m = max(600.0, 10000.0 - (base_rain_24h * 85.0) - (coord_seed * 40.0))
+        vis_info = classify_visibility(sim_vis_m)
+
         return {
             "source": self.name,
             "provenance": "DEMO" if is_demo else "SIMULATED",
@@ -604,7 +735,14 @@ class DemoSimulatedWeatherProvider(WeatherProvider):
                 "humidity_pct": 92.0,
                 "pressure_hpa": 1006.0,
                 "wind_kmh": 22.0,
-                "cloud_pct": 95.0
+                "cloud_pct": 95.0,
+                "visibility_m": vis_info["visibility_m"],
+                "visibility_km": vis_info["visibility_km"],
+                "fog_classification": vis_info["classification"],
+                "fog_label": vis_info["label"],
+                "speed_limit": vis_info["speed_limit"],
+                "driving_advisory": vis_info["driving_advisory"],
+                "visibility_color": vis_info["color"]
             }
         }
 
@@ -859,6 +997,15 @@ class WeatherService:
             "wind_kmh": 12.0,
             "cloud_pct": 75.0
         })
+        if "visibility_m" not in atmosphere:
+            vis_info = classify_visibility(atmosphere.get("visibility_m", 8000.0))
+            atmosphere["visibility_m"] = vis_info["visibility_m"]
+            atmosphere["visibility_km"] = vis_info["visibility_km"]
+            atmosphere["fog_classification"] = vis_info["classification"]
+            atmosphere["fog_label"] = vis_info["label"]
+            atmosphere["speed_limit"] = vis_info["speed_limit"]
+            atmosphere["driving_advisory"] = vis_info["driving_advisory"]
+            atmosphere["visibility_color"] = vis_info["color"]
 
         # Calculate Derived PAHAD Geotechnical Inputs
         antecedent_indices = calculate_antecedent_precipitation_indices(
@@ -951,6 +1098,7 @@ class WeatherService:
                     district=sec.get("district"),
                     state=sec.get("state")
                 )
+                atm_info = w.get("atmosphere", {})
                 return {
                     "sector_id": sec["sector_id"],
                     "name": sec["name"],
@@ -961,6 +1109,13 @@ class WeatherService:
                     "current_intensity_mmh": w["rainfall"]["current_mm_hr"],
                     "api_3d": w["derived_pahad"]["api_3d"],
                     "threshold_state": w["derived_pahad"]["rainfall_intensity_duration_state"],
+                    "visibility_m": atm_info.get("visibility_m", 10000.0),
+                    "visibility_km": atm_info.get("visibility_km", 10.0),
+                    "fog_classification": atm_info.get("fog_classification", "CLEAR"),
+                    "fog_label": atm_info.get("fog_label", "CLEAR HORIZONTAL VISIBILITY"),
+                    "speed_limit": atm_info.get("speed_limit", "Max 50 km/h"),
+                    "driving_advisory": atm_info.get("driving_advisory", ""),
+                    "visibility_color": atm_info.get("visibility_color", "#10B981"),
                     "provenance": w["provenance"],
                     "source": w["source"]
                 }

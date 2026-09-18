@@ -3712,6 +3712,10 @@
                                 <span class="text-slate-600 font-medium">Field Observation:</span>
                                 <span id="ev-soil" class="font-bold text-[#B91C1C]">CONFIRMED (Tension Cracks)</span>
                             </div>
+                            <div class="flex justify-between py-1 border-t border-slate-100 text-xs">
+                                <span class="text-slate-600 font-medium">Road Sight Visibility:</span>
+                                <span id="ev-visibility" class="font-bold text-[#10B981]">CLEAR (> 5 km)</span>
+                            </div>
                             <div id="row-toe-scour" class="flex justify-between py-1 text-xs border-t border-slate-100 hidden">
                                 <span class="text-slate-600 font-medium">Toe Scour Pp Loss:</span>
                                 <span id="ev-toe-scour" class="font-bold text-[#B91C1C]">-96% (Critical)</span>
@@ -8371,6 +8375,34 @@ function syncCorridorToDashboard(p) {
     if (vwcEl) vwcEl.textContent = `${p.soil_moisture_vwc ? Number(p.soil_moisture_vwc).toFixed(3) : '0.320'} m³/m³ [LIVE: ERA5]`;
     if (soilEl) soilEl.textContent = p.lithology || 'Silty Sand with Weathered Schist';
     if (provEl) provEl.textContent = p.overall_provenance || '[LIVE / HYBRID]';
+
+    const visEl = document.getElementById('ev-visibility');
+    if (visEl) {
+        if (p.fog_label || p.visibility_label) {
+            const label = p.fog_label || p.visibility_label;
+            const dist = p.visibility_km ? `${Number(p.visibility_km).toFixed(1)} km` : (p.visibility_m ? `${Math.round(p.visibility_m)} m` : '');
+            visEl.textContent = `${label} (${dist})`;
+            if (p.visibility_color) visEl.style.color = p.visibility_color;
+        } else if (p.visibility_m !== undefined) {
+            const vm = Number(p.visibility_m);
+            if (vm < 200) {
+                visEl.textContent = `EXTREME DENSE FOG (${Math.round(vm)} m)`;
+                visEl.style.color = '#EF4444';
+            } else if (vm < 500) {
+                visEl.textContent = `DENSE FOG (${Math.round(vm)} m)`;
+                visEl.style.color = '#F59E0B';
+            } else if (vm < 1500) {
+                visEl.textContent = `MODERATE FOG (${(vm/1000).toFixed(1)} km)`;
+                visEl.style.color = '#FBBF24';
+            } else if (vm < 4000) {
+                visEl.textContent = `MIST & HAZE (${(vm/1000).toFixed(1)} km)`;
+                visEl.style.color = '#38BDF8';
+            } else {
+                visEl.textContent = `CLEAR (${(vm/1000).toFixed(1)} km)`;
+                visEl.style.color = '#10B981';
+            }
+        }
+    }
 
     if (badgeEl) {
         const band = (p.alert_band || p.risk_band || 'LOW').toUpperCase();

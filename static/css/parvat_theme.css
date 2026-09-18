@@ -271,6 +271,30 @@ body.light-mode .bg-zinc-800 {
     color: #1E293B !important;
 }
 
+/* Himalayan Highway Visibility & Sight Distance Widget */
+#highway-visibility-widget {
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+body.light-mode #highway-visibility-widget {
+    background-color: #FFFFFF !important;
+    border-color: #FED7AA !important;
+    color: #1E293B !important;
+}
+
+body.light-mode #highway-visibility-widget .bg-\[\#070B10\] {
+    background-color: #FFFDF9 !important;
+    border-color: #FED7AA !important;
+}
+
+body.light-mode #highway-visibility-widget #vis-sight-meters {
+    color: #0F172A !important;
+}
+
+body.light-mode #highway-visibility-widget #vis-driving-advisory {
+    color: #334155 !important;
+}
+
 /* Borders in Light Mode */
 body.light-mode .border-\[\#222222\],
 body.light-mode .border-\[\#27272A\],

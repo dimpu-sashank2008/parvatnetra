@@ -56,6 +56,13 @@ class ClimateDimension:
     source: str
     provenance: str
     models_consensus: Dict[str, Any] = field(default_factory=dict)
+    visibility_m: float = 10000.0
+    visibility_km: float = 10.0
+    fog_classification: str = "CLEAR"
+    fog_label: str = "CLEAR HORIZONTAL VISIBILITY"
+    speed_limit: str = "Max 50 km/h"
+    driving_advisory: str = "Optimal sight distance. Normal convoy and vehicle transit permitted."
+    visibility_color: str = "#10B981"
 
     def to_dict(self) -> Dict[str, Any]:
         return asdict(self)
@@ -397,7 +404,14 @@ def build_pahad_feature_vector(sector_id: str) -> Dict[str, Any]:
         threshold_state=str(w_der.get("rainfall_intensity_duration_state", "NORMAL")),
         source=weather.get("source", "WeatherService"),
         provenance=weather.get("provenance", "LIVE"),
-        models_consensus=weather.get("models_consensus", {})
+        models_consensus=weather.get("models_consensus", {}),
+        visibility_m=float(w_atm.get("visibility_m", 10000.0)),
+        visibility_km=float(w_atm.get("visibility_km", 10.0)),
+        fog_classification=str(w_atm.get("fog_classification", "CLEAR")),
+        fog_label=str(w_atm.get("fog_label", "CLEAR HORIZONTAL VISIBILITY")),
+        speed_limit=str(w_atm.get("speed_limit", "Max 50 km/h")),
+        driving_advisory=str(w_atm.get("driving_advisory", "Optimal sight distance. Normal convoy and vehicle transit permitted.")),
+        visibility_color=str(w_atm.get("visibility_color", "#10B981"))
     )
     feature_sources["climate"] = climate_dim.source
     provenances.append(climate_dim.provenance)
@@ -567,6 +581,8 @@ def build_pahad_feature_vector(sector_id: str) -> Dict[str, Any]:
         "api_3d": climate_dim.api_3d,
         "api_7d": climate_dim.api_7d,
         "api_30d": climate_dim.api_30d,
+        "visibility_m": climate_dim.visibility_m,
+        "visibility_km": climate_dim.visibility_km,
         "pore_water_pressure_kpa": ground_dim.pore_water_pressure_kpa,
         "displacement_rate_mm_day": ground_dim.displacement_rate_mm_day,
         "cumulative_displacement_mm": ground_dim.cumulative_displacement_mm,

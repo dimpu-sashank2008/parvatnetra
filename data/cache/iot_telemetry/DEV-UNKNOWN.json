@@ -4,7 +4,7 @@
     "sensor_type": "piezometer",
     "latitude": 27.33,
     "longitude": 88.61,
-    "timestamp": "2026-09-18T04:48:34.433735Z",
+    "timestamp": "2026-09-18T14:59:11.876569Z",
     "value": 28.5,
     "unit": "kPa",
     "battery_pct": 95.0,
@@ -13,12 +13,12 @@
     "provenance": "[UNAUTHENTICATED]",
     "quality": "GOOD"
   },
-  "fetched_at": 1789706914.4337354,
+  "fetched_at": 1789743551.8765695,
   "ttl": 1800,
   "meta": {
     "source": "IoT Node (HTTP)",
     "provenance": "[UNAUTHENTICATED]",
-    "stored_at": "2026-09-18T04:48:34Z",
+    "stored_at": "2026-09-18T14:59:11Z",
     "ttl": 1800
   }
 }
