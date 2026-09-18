@@ -89,6 +89,23 @@ Automated leakage audit via `scripts/check_event_leakage.py` verifies:
 - Zero temporal overlap between train ($\le 2023$), validation (H1 2024), and test (H2 2024) partitions.
 - Zero lookahead leakage (all antecedent precipitation indices $API_{30d}$, 24h/72h rainfall, and displacement metrics strictly computed backward from assessment timestamp).
 
+### 3.4 Authoritative GSI Geological Quadrangle Map (GQM) Stratigraphic Grounding Catalog
+All hillslope physical baselines, cohesion ($c'$), internal friction angle ($\phi'$), shear surface depth ($z$), and structural tectonic controls are strictly calibrated against 10 official Geological Survey of India (GSI) 1:250,000 Geological Quadrangle Maps:
+
+| GSI Degree Sheet | Quadrangle Name | Target Corridors & Jurisdictions | Lithostratigraphic Formations | Critical Structural & Tectonic Controls |
+| :---: | :---: | :---: | :---: | :---: |
+| **Sheet 78M** | **Tawang Quadrangle** | Arunachal Pradesh (Tawang, Sela Pass, NH-13) | Se La Group Higher Himalayan Crystallines, Bomdila Group, Dirang / Lumla Formation | Main Central Thrust (MCT) hanging wall zone, active periglacial freeze-thaw loosening |
+| **Sheet 83I** | **Lower Siang Quadrangle** | Arunachal Pradesh (Kimin, Harmoti, Ziro, Lower Siang) | Sub-Himalayan Siwalik molasse sandstones, Gondwana and Dafla/Subansiri formations | Main Boundary Thrust (MBT), Himalayan Frontal Thrust (HFT), Tipi Thrust, Bomdila Thrust, Miri Thrust |
+| **Sheet 83E** | **Subansiri Quadrangle** | Arunachal Pradesh / Assam (Papum Pare, Itanagar, Subansiri basin) | Upper/Middle Tertiary sandstones, Gondwana coal-bearing shales | Himalayan frontal imbricate thrust zone |
+| **Sheet 78O** | **Shillong Quadrangle** | Meghalaya (Shillong, East Khasi Hills, Ri-Bhoi, Cherrapunji) | Shillong Group quartzites & phyllites, Mahadek sandstones, Sylhet/Shella karstic limestones | **Dawki Fault** (east-west plate boundary master fault), **Kulsi Fault** strike-slip system |
+| **Sheet 78K** | **Tura Quadrangle** | Meghalaya (East/West Garo Hills, Tura Range, Nokrek) | Assam-Meghalaya Gneissic Complex (AMGC), Kopili & Simsang splintery shales | **Dapsi Thrust**, Dawki Fault western extension |
+| **Sheet 78J** | **Goalpara Quadrangle** | Assam & Bhutan Foothills (Goalpara, Kokrajhar, Bongaigaon) | AMGC crystalline basement, Buxa group dolomites, Quaternary Brahmaputra alluvium | Himalayan frontal flexural ramp |
+| **Sheet 83D** | **Silchar Quadrangle** | Assam / Mizoram / Tripura (Barak Valley, Kolasib, Cachar, Aizawl link) | Surma Group (Bhuban & Bokabil) rhythmic sandstones, shales, siltstones | Longai river shear zone, steep anticlinal limbs |
+| **Sheet 83H** | **Imphal Quadrangle** | Manipur (Noney, Tupul Railway Corridor, Jiribam axis) | Disang Group splintery dark grey flysch shales, Barail arenites | Irang Fault zone, Indo-Myanmar Range fold-and-thrust belt |
+| **Sheet 83G** | **Peren Quadrangle** | Nagaland (Peren, Kohima, NH-29 Lifeline, Barail Range) | Barail massive quartz arenites & Disang flysch shales | Pagla Pahar regional shear zone |
+| **Sheet 83J** | **Sibsagar Quadrangle** | Nagaland / Assam border (Wokha, Mokokchung, Belt of Schuppen) | Disang-Barail thrust sheets, Tipam sandstone | Belt of Schuppen imbricate thrust duplex, **Naga Thrust** |
+| **Sheet 78A/78B**| **Sikkim Quadrangle** | Sikkim (NH-10 Km 48, Singtam, Dikchu, Mangan, Teesta Gorge) | Daling Group quartz-chlorite phyllites, Chungthang gneisses | Main Central Thrust (MCT) footwall crushed zone, Teesta gorge toe erosion |
+
 ---
 
 ## 4. Model Specification & Calibration

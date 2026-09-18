@@ -128,6 +128,36 @@ class TestTerrainAPI(unittest.TestCase):
         self.assertIn("matrix", data)
         self.assertEqual(len(data["matrix"]), 16)
 
+    def test_gsi_quadrangle_geology_profiles(self):
+        from services.dem_service import DEM_SERVICE
+        
+        # Test Tawang / Sela (Sheet 78M)
+        sela = DEM_SERVICE.get_sector_geology_profile("AR-SELA-01")
+        self.assertIn("78M", sela["gsi_quadrangle"])
+        self.assertIn("Se La Group", sela["bedrock_type"])
+        self.assertIn("Main Central Thrust", sela["structural_context"])
+        
+        # Test Lower Siang / Kimin / Bhalukpong (Sheet 83I / 83E)
+        bhaluk = DEM_SERVICE.get_sector_geology_profile("AR-BHALUK-01")
+        self.assertIn("83I", bhaluk["gsi_quadrangle"])
+        self.assertIn("Main Boundary Thrust", bhaluk["structural_context"])
+        
+        # Test Shillong / Cherrapunji / Mawsynram (Sheet 78O)
+        cherra = DEM_SERVICE.get_sector_geology_profile("ML-MAWSYNRAM")
+        self.assertIn("78O", cherra["gsi_quadrangle"])
+        self.assertIn("Dawki Fault", cherra["structural_context"])
+        
+        # Test Tura / Garo Hills (Sheet 78K)
+        tura = DEM_SERVICE.get_sector_geology_profile("ML-TURA-01")
+        self.assertIn("78K", tura["gsi_quadrangle"])
+        self.assertIn("Dapsi Thrust", tura["structural_context"])
+        
+        # Test Tupul Railway Corridor (Sheet 83H)
+        tupul = DEM_SERVICE.get_sector_geology_profile("MN-TUPUL-01")
+        self.assertIn("83H", tupul["gsi_quadrangle"])
+        self.assertIn("Disang Group", tupul["bedrock_type"])
+
 
 if __name__ == '__main__':
     unittest.main()
+

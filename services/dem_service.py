@@ -854,6 +854,66 @@ class DEMService:
                 "cohesion_kpa": 17.5,
                 "permeability_m_s": 2.5e-5
             }
+        elif "SELA" in sid or "TAWANG" in sid:
+            return {
+                "sector_id": "AR-SELA-01",
+                "colluvium_depth_m": 2.5,
+                "weathered_zone_depth_m": 5.2,
+                "slip_depth_m": 3.8,
+                "bedrock_depth_m": 8.5,
+                "bedrock_type": "Se La Group migmatites & Higher Himalayan Crystallines",
+                "gsi_quadrangle": "GSI Degree Sheet 78M (Tawang Quadrangle, Arunachal Pradesh)",
+                "structural_context": "Main Central Thrust (MCT) hanging wall zone with active freeze-thaw loosening",
+                "soil_unit_weight_kn_m3": 20.5,
+                "friction_angle_deg": 34.5,
+                "cohesion_kpa": 26.0,
+                "permeability_m_s": 1.8e-5
+            }
+        elif "BHALUK" in sid or "PASIGHAT" in sid or "SIANG" in sid or "KIMIN" in sid or "HARMOTI" in sid or "ZIRO" in sid:
+            return {
+                "sector_id": "AR-BHALUK-01",
+                "colluvium_depth_m": 3.4,
+                "weathered_zone_depth_m": 6.5,
+                "slip_depth_m": 4.5,
+                "bedrock_depth_m": 9.5,
+                "bedrock_type": "Siwalik molasse sandstones & Gondwana sheared carbonaceous phyllites",
+                "gsi_quadrangle": "GSI Degree Sheet 83I (Lower Siang) & 83E (Subansiri Quadrangle)",
+                "structural_context": "Main Boundary Thrust (MBT), Tipi Thrust & Bomdila Thrust imbricate corridor",
+                "soil_unit_weight_kn_m3": 19.1,
+                "friction_angle_deg": 27.5,
+                "cohesion_kpa": 15.0,
+                "permeability_m_s": 4.8e-5
+            }
+        elif "CHERRA" in sid or "MAWSYNRAM" in sid or "SHILLONG" in sid:
+            return {
+                "sector_id": "ML-MAWSYNRAM",
+                "colluvium_depth_m": 2.9,
+                "weathered_zone_depth_m": 5.8,
+                "slip_depth_m": 4.0,
+                "bedrock_depth_m": 8.0,
+                "bedrock_type": "Shillong Group quartzites & Sylhet/Shella karstic limestone-sandstone",
+                "gsi_quadrangle": "GSI Degree Sheet 78O (Shillong Quadrangle, Meghalaya/Assam)",
+                "structural_context": "Dawki Fault & Kulsi Fault strike-slip/thrust scarp with high orographic precipitation",
+                "soil_unit_weight_kn_m3": 20.2,
+                "friction_angle_deg": 33.5,
+                "cohesion_kpa": 22.0,
+                "permeability_m_s": 3.2e-5
+            }
+        elif "TURA" in sid or "GARO" in sid or "NONGPOH" in sid:
+            return {
+                "sector_id": "ML-TURA-01",
+                "colluvium_depth_m": 3.1,
+                "weathered_zone_depth_m": 6.2,
+                "slip_depth_m": 4.2,
+                "bedrock_depth_m": 8.8,
+                "bedrock_type": "Assam-Meghalaya Gneissic Complex (AMGC) & Kopili splintery shale",
+                "gsi_quadrangle": "GSI Degree Sheet 78K (Tura Quadrangle, Garo Hills, Meghalaya)",
+                "structural_context": "Dapsi Thrust & Dawki Fault western extension zone",
+                "soil_unit_weight_kn_m3": 19.6,
+                "friction_angle_deg": 30.0,
+                "cohesion_kpa": 18.0,
+                "permeability_m_s": 2.9e-5
+            }
         else:
             return {
                 "sector_id": sector_id,
