@@ -2030,6 +2030,58 @@
             color: #1E293B !important;
         }
 
+        /* CITIZEN DETOUR & CLEARANCE ACTION BUTTONS — FADED SAFFRON PALETTE (#FED7AA) */
+        #btn-citizen-calc-bypass,
+        #btn-citizen-calc-bypass *,
+        #btn-open-citizen-report-modal,
+        #btn-open-citizen-report-modal *,
+        #btn-play-voice,
+        #btn-play-voice *,
+        #btn-submit-report,
+        #btn-submit-report *,
+        .citizen-detour-card a[href*="google.com/maps/dir"],
+        .citizen-detour-card a[href*="google.com/maps/dir"] *,
+        body.light-mode #btn-citizen-calc-bypass,
+        body.light-mode #btn-citizen-calc-bypass *,
+        body.light-mode #btn-open-citizen-report-modal,
+        body.light-mode #btn-open-citizen-report-modal *,
+        body.light-mode #btn-play-voice,
+        body.light-mode #btn-play-voice *,
+        body.light-mode #btn-submit-report,
+        body.light-mode #btn-submit-report *,
+        body.light-mode .citizen-detour-card a[href*="google.com/maps/dir"],
+        body.light-mode .citizen-detour-card a[href*="google.com/maps/dir"] * {
+            background-color: #FED7AA !important;
+            border-color: #F59E0B !important;
+            color: #002147 !important;
+            font-weight: 800 !important;
+        }
+
+        #btn-citizen-calc-bypass:hover,
+        #btn-citizen-calc-bypass:hover *,
+        #btn-open-citizen-report-modal:hover,
+        #btn-open-citizen-report-modal:hover *,
+        #btn-play-voice:hover,
+        #btn-play-voice:hover *,
+        #btn-submit-report:hover,
+        #btn-submit-report:hover *,
+        .citizen-detour-card a[href*="google.com/maps/dir"]:hover,
+        .citizen-detour-card a[href*="google.com/maps/dir"]:hover *,
+        body.light-mode #btn-citizen-calc-bypass:hover,
+        body.light-mode #btn-citizen-calc-bypass:hover *,
+        body.light-mode #btn-open-citizen-report-modal:hover,
+        body.light-mode #btn-open-citizen-report-modal:hover *,
+        body.light-mode #btn-play-voice:hover,
+        body.light-mode #btn-play-voice:hover *,
+        body.light-mode #btn-submit-report:hover,
+        body.light-mode #btn-submit-report:hover *,
+        body.light-mode .citizen-detour-card a[href*="google.com/maps/dir"]:hover,
+        body.light-mode .citizen-detour-card a[href*="google.com/maps/dir"]:hover * {
+            background-color: #FDBA74 !important;
+            border-color: #D97706 !important;
+            color: #001833 !important;
+        }
+
         /* ========================================================================= */
         /* DARK MODE: DARK COLOUR & LIGHT FADED BLUE COMBO                           */
         /* ========================================================================= */
@@ -4839,9 +4891,9 @@
                     </button>
                 </div>
                 <div>
-                    <button id="btn-open-citizen-report-modal" onclick="openCitizenReportModal()" class="px-5 py-2.5 bg-[#002147] hover:bg-[#001833] text-white font-bold text-xs uppercase tracking-wider rounded-none shadow-xl flex items-center gap-2 transition active:scale-95 border border-[#001833]">
-                        <i class="ph-bold ph-camera text-base"></i>
-                        <span data-i18n="report_hazard">Report Landslide / Road Hazard</span>
+                    <button id="btn-open-citizen-report-modal" onclick="openCitizenReportModal()" class="px-5 py-2.5 bg-[#FED7AA] hover:bg-[#FDBA74] text-[#002147] font-extrabold text-xs uppercase tracking-wider rounded-none shadow-sm flex items-center gap-2 transition active:scale-95 border border-[#F59E0B]" style="background: #FED7AA !important; border: 1px solid #F59E0B !important; color: #002147 !important;">
+                        <i class="ph-bold ph-camera text-base text-[#002147]"></i>
+                        <span data-i18n="report_hazard" style="color: #002147 !important; font-weight: 800;">Report Landslide / Road Hazard</span>
                     </button>
                 </div>
             </div>
@@ -4904,9 +4956,9 @@
 
                 <!-- Action Button -->
                 <div class="md:col-span-3">
-                    <button id="btn-citizen-calc-bypass" onclick="calculateCitizenBypassAndShelters()" class="w-full py-2.5 px-4 bg-[#002147] hover:bg-[#001833] text-white text-xs font-bold uppercase tracking-wider rounded-none border border-[#001833] transition flex items-center justify-center gap-2 active:scale-95 shadow-none">
-                        <i class="ph-bold ph-calculator"></i>
-                        <span>CALCULATE CORRIDOR CLEARANCE &amp; REFUGE</span>
+                    <button id="btn-citizen-calc-bypass" onclick="calculateCitizenBypassAndShelters()" class="w-full py-2.5 px-4 bg-[#FED7AA] hover:bg-[#FDBA74] text-[#002147] text-xs font-extrabold uppercase tracking-wider rounded-none border border-[#F59E0B] transition flex items-center justify-center gap-2 active:scale-95 shadow-sm" style="background: #FED7AA !important; border: 1px solid #F59E0B !important; color: #002147 !important;">
+                        <i class="ph-bold ph-calculator text-[#002147]"></i>
+                        <span style="color: #002147 !important; font-weight: 800;">CALCULATE CORRIDOR CLEARANCE &amp; REFUGE</span>
                         <span class="hidden">Find Eligible Bypass &amp; Shelters</span>
                     </button>
                 </div>
@@ -4976,9 +5028,9 @@
                     <a href="https://www.google.com/maps/dir/?api=1&origin=Siliguri,West+Bengal&destination=Gangtok,Sikkim&waypoints=Sevoke%7CMungpoo%7CJorebungalow%7CKalimpong%7CRangpo,Sikkim&travelmode=driving" 
                        target="_blank" 
                        rel="noopener noreferrer" 
-                       class="w-full py-2 px-4 rounded-none text-xs font-bold text-white flex items-center justify-center gap-2 transition active:scale-95 uppercase tracking-wider" 
-                       style="background: #002147; border: 1px solid #001833; text-decoration: none;">
-                        <span>NAVIGATE VIA MUNGPOO (GOOGLE MAPS) &rarr;</span>
+                       class="w-full py-2 px-4 rounded-none text-xs font-extrabold flex items-center justify-center gap-2 transition active:scale-95 uppercase tracking-wider bg-[#FED7AA] hover:bg-[#FDBA74] border border-[#F59E0B] shadow-sm" 
+                       style="background: #FED7AA !important; border: 1px solid #F59E0B !important; text-decoration: none; color: #002147 !important;">
+                        <span style="color: #002147 !important; font-weight: 800;">NAVIGATE VIA MUNGPOO (GOOGLE MAPS) &rarr;</span>
                         <span class="hidden">Navigate via Mungpoo on Google Maps</span>
                     </a>
                 </div>
@@ -5006,9 +5058,9 @@
                     <a href="https://www.google.com/maps/dir/?api=1&origin=Siliguri,West+Bengal&destination=Gangtok,Sikkim&waypoints=Damdim%7CGorubathan%7CLava,West+Bengal%7CAlgarah%7CRangpo,Sikkim&travelmode=driving" 
                        target="_blank" 
                        rel="noopener noreferrer" 
-                       class="w-full py-2 px-4 rounded-none text-xs font-bold text-white flex items-center justify-center gap-2 transition active:scale-95 uppercase tracking-wider" 
-                       style="background: #002147; border: 1px solid #001833; text-decoration: none;">
-                        <span>NAVIGATE 45T BYPASS (GOOGLE MAPS) &rarr;</span>
+                       class="w-full py-2 px-4 rounded-none text-xs font-extrabold flex items-center justify-center gap-2 transition active:scale-95 uppercase tracking-wider bg-[#FED7AA] hover:bg-[#FDBA74] border border-[#F59E0B] shadow-sm" 
+                       style="background: #FED7AA !important; border: 1px solid #F59E0B !important; text-decoration: none; color: #002147 !important;">
+                        <span style="color: #002147 !important; font-weight: 800;">NAVIGATE 45T BYPASS (GOOGLE MAPS) &rarr;</span>
                         <span class="hidden">Navigate 45T Bypass on Google Maps</span>
                     </a>
                 </div>
@@ -5020,7 +5072,9 @@
                         <div class="flex items-center gap-2 flex-wrap">
                             <div class="inline-flex items-center gap-1 bg-slate-100 border border-slate-300 rounded-none p-0.5 text-[10px]"><span class="text-slate-600 px-1 font-bold">GAIN:</span><button onclick="setEmergencyVolume(1.0)" class="px-1.5 py-0.5 rounded-none text-slate-700 hover:bg-white" title="100% Standard Gain">1x</button><button onclick="setEmergencyVolume(2.0)" class="px-1.5 py-0.5 rounded-none text-slate-700 hover:bg-white" title="200% High Boost">2x</button><button onclick="setEmergencyVolume(3.0)" class="px-1.5 py-0.5 rounded-none bg-red-700 text-white font-bold" title="300% Mega Boost">3x MEGA</button></div>
                             <select id="voice-lang-select" aria-label="Voice alert language" class="text-xs px-2 py-1.5 rounded-none font-semibold text-slate-800 border border-slate-300 bg-white"><option value="en">English (en-IN)</option><option value="hi">&#2361;&#2367;&#2344;&#2381;&#2342;&#2368; Hindi</option><option value="ne">&#2344;&#2375;&#2346;&#2366;&#2354;&#2368; Nepali</option><option value="as">&#2437;&#2488;&#2478;&#2496;&#2479;&#2492;&#2494; Assamese</option></select>
-                            <button id="btn-play-voice" onclick="playVoiceAlert()" class="px-4 py-1.5 rounded-none text-xs font-bold flex items-center gap-2 active:scale-95 transition bg-[#002147] hover:bg-[#001833] text-white border border-[#001833]"><i class="ph-bold ph-play"></i> <span data-i18n="voice_broadcast">Play Emergency Broadcast</span></button>
+                            <button id="btn-play-voice" onclick="playVoiceAlert()" class="px-4 py-1.5 rounded-none text-xs font-extrabold flex items-center gap-2 active:scale-95 transition bg-[#FED7AA] hover:bg-[#FDBA74] text-[#002147] border border-[#F59E0B] shadow-sm" style="background: #FED7AA !important; border: 1px solid #F59E0B !important; color: #002147 !important;">
+                                <i class="ph-bold ph-play text-[#002147]"></i> <span data-i18n="voice_broadcast" style="color: #002147 !important; font-weight: 800;">Play Emergency Broadcast</span>
+                            </button>
                             <button id="btn-stop-voice" onclick="stopVoiceAlert()" class="px-3 py-1.5 rounded-none text-xs font-bold transition bg-slate-200 hover:bg-slate-300 text-slate-800 border border-slate-300">Stop</button>
                         </div>
                     </div>
@@ -5102,8 +5156,8 @@
                                 <div><label for="c-inp-lat" class="block font-bold text-slate-600 text-[10px] uppercase mb-1">Latitude</label><input type="number" step="0.0001" id="c-inp-lat" value="27.201" class="w-full p-2 border border-slate-300 rounded-none bg-white text-slate-900 text-xs mono"></div>
                                 <div><label for="c-inp-lon" class="block font-bold text-slate-600 text-[10px] uppercase mb-1">Longitude</label><input type="number" step="0.0001" id="c-inp-lon" value="88.518" class="w-full p-2 border border-slate-300 rounded-none bg-white text-slate-900 text-xs mono"></div>
                             </div>
-                            <button type="submit" id="btn-submit-report" class="w-full py-2 px-4 bg-[#002147] hover:bg-[#001733] text-white text-xs font-bold uppercase tracking-wider rounded-none border border-[#001733] transition shadow-none active:scale-95">
-                                SUBMIT OFFICIAL OBSERVATION TO SEOC TRIAGE
+                            <button type="submit" id="btn-submit-report" class="w-full py-2 px-4 bg-[#FED7AA] hover:bg-[#FDBA74] text-[#002147] text-xs font-extrabold uppercase tracking-wider rounded-none border border-[#F59E0B] transition shadow-sm active:scale-95" style="background: #FED7AA !important; border: 1px solid #F59E0B !important; color: #002147 !important;">
+                                <span style="color: #002147 !important; font-weight: 800;">SUBMIT OFFICIAL OBSERVATION TO SEOC TRIAGE</span>
                                 <span class="hidden">Submit to SDRF Triage</span>
                             </button>
                         </form>
@@ -14696,7 +14750,7 @@ async function calculateCitizenBypassAndShelters() {
     var corridorId = corridorSelect.value;
     var weight = parseFloat(weightInput.value) || 32.0;
 
-    if (btn) btn.innerHTML = '<i class="ph-bold ph-spinner animate-spin"></i><span>Calculating Corridor Clearance...</span>';
+    if (btn) btn.innerHTML = '<i class="ph-bold ph-spinner animate-spin text-[#002147]"></i><span style="color: #002147 !important; font-weight: 800;">Calculating Corridor Clearance...</span>';
 
     try {
         // 1. Post to bypass router
@@ -14837,7 +14891,7 @@ async function calculateCitizenBypassAndShelters() {
             recBanner.innerHTML = '<div>Failed to evaluate bypass routing. Please ensure local server connectivity.</div>';
         }
     } finally {
-        if (btn) btn.innerHTML = '<i class="ph-bold ph-calculator"></i><span>CALCULATE CORRIDOR CLEARANCE &amp; REFUGE</span>';
+        if (btn) btn.innerHTML = '<i class="ph-bold ph-calculator text-[#002147]"></i><span style="color: #002147 !important; font-weight: 800;">CALCULATE CORRIDOR CLEARANCE &amp; REFUGE</span>';
     }
 }
 window.calculateCitizenBypassAndShelters = calculateCitizenBypassAndShelters;

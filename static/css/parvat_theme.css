@@ -2197,5 +2197,56 @@ body.light-mode #drill-stage-title {
     font-weight: 700 !important;
 }
 
+/* ========================================================================= */
+/* CITIZEN DETOUR & CLEARANCE ACTION BUTTONS — FADED SAFFRON PALETTE (#FED7AA) */
+/* ========================================================================= */
+#btn-citizen-calc-bypass,
+#btn-citizen-calc-bypass *,
+#btn-open-citizen-report-modal,
+#btn-open-citizen-report-modal *,
+#btn-play-voice,
+#btn-play-voice *,
+#btn-submit-report,
+#btn-submit-report *,
+.citizen-detour-card a[href*="google.com/maps/dir"],
+.citizen-detour-card a[href*="google.com/maps/dir"] *,
+body.light-mode #btn-citizen-calc-bypass,
+body.light-mode #btn-citizen-calc-bypass *,
+body.light-mode #btn-open-citizen-report-modal,
+body.light-mode #btn-open-citizen-report-modal *,
+body.light-mode #btn-play-voice,
+body.light-mode #btn-play-voice *,
+body.light-mode #btn-submit-report,
+body.light-mode #btn-submit-report *,
+body.light-mode .citizen-detour-card a[href*="google.com/maps/dir"],
+body.light-mode .citizen-detour-card a[href*="google.com/maps/dir"] * {
+    background-color: #FED7AA !important;
+    border-color: #F59E0B !important;
+    color: #002147 !important;
+    font-weight: 800 !important;
+}
 
-
+#btn-citizen-calc-bypass:hover,
+#btn-citizen-calc-bypass:hover *,
+#btn-open-citizen-report-modal:hover,
+#btn-open-citizen-report-modal:hover *,
+#btn-play-voice:hover,
+#btn-play-voice:hover *,
+#btn-submit-report:hover,
+#btn-submit-report:hover *,
+.citizen-detour-card a[href*="google.com/maps/dir"]:hover,
+.citizen-detour-card a[href*="google.com/maps/dir"]:hover *,
+body.light-mode #btn-citizen-calc-bypass:hover,
+body.light-mode #btn-citizen-calc-bypass:hover *,
+body.light-mode #btn-open-citizen-report-modal:hover,
+body.light-mode #btn-open-citizen-report-modal:hover *,
+body.light-mode #btn-play-voice:hover,
+body.light-mode #btn-play-voice:hover *,
+body.light-mode #btn-submit-report:hover,
+body.light-mode #btn-submit-report:hover *,
+body.light-mode .citizen-detour-card a[href*="google.com/maps/dir"]:hover,
+body.light-mode .citizen-detour-card a[href*="google.com/maps/dir"]:hover * {
+    background-color: #FDBA74 !important;
+    border-color: #D97706 !important;
+    color: #001833 !important;
+}
