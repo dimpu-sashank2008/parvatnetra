@@ -280,17 +280,38 @@ def get_verified_regional_events():
     ]
 
 
+class SilentHTTPServer(HTTPServer):
+    """HTTPServer that suppresses noisy stack traces when clients abort or reset connections."""
+
+    def handle_error(self, request, client_address):
+        exc_type, _, _ = sys.exc_info()
+        if exc_type and issubclass(exc_type, (ConnectionError, BrokenPipeError, ConnectionResetError, ConnectionAbortedError, socket.error)):
+            return
+        super().handle_error(request, client_address)
+
+
 class NCSStagingHandler(BaseHTTPRequestHandler):
     """HTTP Request Handler for NCS MoES API Emulator."""
 
+    def handle(self):
+        try:
+            super().handle()
+        except (ConnectionError, BrokenPipeError, ConnectionResetError, ConnectionAbortedError, socket.error):
+            pass
+
     def _send_json(self, status_code, data):
-        body = json.dumps(data, indent=2).encode("utf-8")
-        self.send_response(status_code)
-        self.send_header("Content-Type", "application/json; charset=utf-8")
-        self.send_header("Content-Length", str(len(body)))
-        self.send_header("Access-Control-Allow-Origin", "*")
-        self.end_headers()
-        self.wfile.write(body)
+        try:
+            body = json.dumps(data, indent=2).encode("utf-8")
+            self.send_response(status_code)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Content-Length", str(len(body)))
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.end_headers()
+            self.wfile.write(body)
+        except (ConnectionError, BrokenPipeError, ConnectionResetError, ConnectionAbortedError, socket.error):
+            pass
+        except Exception as e:
+            logger.debug(f"[NCS Gateway] Socket write deferred: {e}")
 
     def do_GET(self):
         parsed = urlparse(self.path)
@@ -406,7 +427,7 @@ def start_gateway_background(port=DEFAULT_PORT, host="127.0.0.1"):
         return True
 
     try:
-        server = HTTPServer((host, port), NCSStagingHandler)
+        server = SilentHTTPServer((host, port), NCSStagingHandler)
         thread = threading.Thread(target=server.serve_forever, daemon=True)
         thread.start()
         _GATEWAY_SERVER = server
@@ -447,7 +468,7 @@ def main():
     print("Press Ctrl+C to stop.")
     print("=" * 70)
 
-    server = HTTPServer((args.host, args.port), NCSStagingHandler)
+    server = SilentHTTPServer((args.host, args.port), NCSStagingHandler)
     try:
         server.serve_forever()
     except KeyboardInterrupt:
