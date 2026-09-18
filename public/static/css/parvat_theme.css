@@ -200,6 +200,9 @@ body.light-mode .card,
 body.light-mode .bg-slateCard,
 body.light-mode [class*="bg-slateCard"],
 body.light-mode .bg-\[\#0B132B\],
+body.light-mode .bg-\[\#0B1320\],
+body.light-mode .bg-\[\#0E1522\],
+body.light-mode #pahad-autonomous-siren-card,
 body.light-mode .bg-\[\#070B10\],
 body.light-mode .bg-\[\#0F172A\],
 body.light-mode .bg-\[\#0A0A0A\],
@@ -1111,19 +1114,26 @@ body.dark-mode .text-purple-400 {
 /* INSTITUTIONAL TYPOGRAPHIC HIERARCHY (MATCHING SIH GOVT PORTAL)           */
 /* ========================================================================= */
 
-/* Level 1: Hero Titles & Main Brand (Top Importance) */
-.gov-title-hero,
-#parvat-brand-title {
+/* Level 1: Hero Titles (Top Importance) */
+.gov-title-hero {
     font-size: 1.75rem !important; /* ~28px */
     font-weight: 900 !important;
     letter-spacing: -0.02em !important;
     line-height: 1.2 !important;
 }
 @media (min-width: 640px) {
-    .gov-title-hero,
-    #parvat-brand-title {
+    .gov-title-hero {
         font-size: 2.125rem !important; /* ~34px */
     }
+}
+
+/* System Header Brand Title (Institutional compact navbar brand) */
+#system-header-bar #parvat-brand-title,
+#parvat-brand-title {
+    font-size: 1.125rem !important; /* ~18px */
+    font-weight: 900 !important;
+    letter-spacing: 0.04em !important;
+    line-height: 1.2 !important;
 }
 
 /* Level 2: Primary Section Headings (e.g. WHAT IS SIH? / PAHAD AI Overview) */
@@ -1766,5 +1776,261 @@ body.light-mode #modal-scientific-expl #sci-expl-body p,
 body.light-mode #modal-scientific-expl #sci-expl-body span {
     color: #1E293B !important;
 }
+
+/* ==========================================================================
+   PAHAD AUTONOMOUS SIREN ACCESS & SAFETY INVARIANT WARNING STYLING
+   Enforces WCAG AAA contrast ratio (>= 7:1) in both Dark Mode and Light Mode.
+   Prevents dark-on-dark unreadable text and ensures statutory warnings stand out.
+   ========================================================================== */
+
+/* Dark Mode (Default) */
+#pahad-autonomous-siren-card {
+    background-color: #0B1320 !important;
+    border: 1px solid #1E293B !important;
+    color: #F8FAFC !important;
+}
+
+#pahad-autonomous-siren-card h3 {
+    color: #F8FAFC !important;
+}
+
+#pahad-autonomous-siren-card .siren-subtitle,
+#pahad-autonomous-siren-card p.text-slate-400 {
+    color: #94A3B8 !important;
+}
+
+#pahad-autonomous-siren-card .siren-warning-box,
+#pahad-autonomous-siren-card .bg-amber-950\/30 {
+    background-color: rgba(69, 26, 3, 0.45) !important;
+    border: 1px solid rgba(217, 119, 6, 0.6) !important;
+}
+
+#pahad-autonomous-siren-card .siren-warning-box .warning-title,
+#pahad-autonomous-siren-card .bg-amber-950\/30 .text-amber-400 {
+    color: #FCD34D !important;
+}
+
+#pahad-autonomous-siren-card .siren-warning-box p,
+#pahad-autonomous-siren-card .siren-warning-box ul,
+#pahad-autonomous-siren-card .siren-warning-box li,
+#pahad-autonomous-siren-card .bg-amber-950\/30 p,
+#pahad-autonomous-siren-card .bg-amber-950\/30 ul,
+#pahad-autonomous-siren-card .bg-amber-950\/30 li {
+    color: #FEF3C7 !important;
+}
+
+#pahad-autonomous-siren-card .siren-warning-box strong,
+#pahad-autonomous-siren-card .bg-amber-950\/30 strong {
+    color: #FDE68A !important;
+}
+
+#pahad-autonomous-siren-card .siren-warning-box em,
+#pahad-autonomous-siren-card .bg-amber-950\/30 em {
+    color: #F59E0B !important;
+    font-style: normal;
+    font-weight: 800;
+}
+
+#pahad-autonomous-siren-card .siren-warning-box code,
+#pahad-autonomous-siren-card .bg-amber-950\/30 code {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+    color: #FDE68A !important;
+    border: 1px solid rgba(245, 158, 11, 0.4) !important;
+    padding: 1px 5px !important;
+    border-radius: 3px !important;
+    font-weight: 700 !important;
+}
+
+/* Light Mode Overrides for Siren Access Card */
+body.light-mode #pahad-autonomous-siren-card {
+    background-color: #FFFFFF !important;
+    border: 1px solid #FED7AA !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06) !important;
+    color: #1E293B !important;
+}
+
+body.light-mode #pahad-autonomous-siren-card .border-slate-800,
+body.light-mode #pahad-autonomous-siren-card .border-slate-800\/80 {
+    border-color: #FED7AA !important;
+}
+
+body.light-mode #pahad-autonomous-siren-card h3 {
+    color: #0B2545 !important;
+    font-weight: 800 !important;
+}
+
+body.light-mode #pahad-autonomous-siren-card .siren-subtitle,
+body.light-mode #pahad-autonomous-siren-card p.text-slate-400,
+body.light-mode #pahad-autonomous-siren-card .text-slate-400 {
+    color: #475569 !important;
+    font-weight: 500 !important;
+}
+
+body.light-mode #pahad-autonomous-siren-card .siren-icon-box,
+body.light-mode #pahad-autonomous-siren-card .bg-rose-950\/80 {
+    background-color: #FFE4E6 !important;
+    border-color: #FDA4AF !important;
+    color: #BE123C !important;
+}
+
+body.light-mode #pahad-autonomous-siren-card #siren-access-badge {
+    background-color: #F1F5F9 !important;
+    border-color: #CBD5E1 !important;
+    color: #475569 !important;
+    font-weight: 800 !important;
+}
+
+body.light-mode #pahad-autonomous-siren-card #siren-access-badge.bg-rose-950\/80 {
+    background-color: #FFE4E6 !important;
+    border-color: #FDA4AF !important;
+    color: #9F1239 !important;
+}
+
+body.light-mode #pahad-autonomous-siren-card #btn-toggle-siren-access {
+    background-color: #003366 !important;
+    color: #FFFFFF !important;
+    border-color: #002244 !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+body.light-mode #pahad-autonomous-siren-card #btn-toggle-siren-access.bg-rose-950 {
+    background-color: #DC2626 !important;
+    color: #FFFFFF !important;
+    border-color: #B91C1C !important;
+}
+
+body.light-mode #pahad-autonomous-siren-card #btn-test-siren-grid {
+    background-color: #F8FAFC !important;
+    color: #0B2545 !important;
+    border-color: #CBD5E1 !important;
+}
+
+/* Light Mode: Siren Safety Invariant Warning Box (High Contrast Gold / Amber on Warm Cream) */
+body.light-mode #pahad-autonomous-siren-card .siren-warning-box,
+body.light-mode #pahad-autonomous-siren-card .bg-amber-950\/30,
+body.light-mode .siren-warning-box,
+body.light-mode .bg-amber-950\/30 {
+    background-color: #FFFBEB !important;
+    border: 1.5px solid #FCD34D !important;
+    box-shadow: 0 1px 3px rgba(217, 119, 6, 0.08) !important;
+}
+
+body.light-mode #pahad-autonomous-siren-card .siren-warning-box .warning-title,
+body.light-mode #pahad-autonomous-siren-card .bg-amber-950\/30 .text-amber-400,
+body.light-mode .siren-warning-box .warning-title,
+body.light-mode .bg-amber-950\/30 .text-amber-400 {
+    color: #92400E !important;
+    font-weight: 800 !important;
+}
+
+body.light-mode #pahad-autonomous-siren-card .siren-warning-box p,
+body.light-mode #pahad-autonomous-siren-card .bg-amber-950\/30 p,
+body.light-mode .siren-warning-box p,
+body.light-mode .bg-amber-950\/30 p {
+    color: #78350F !important;
+    font-weight: 500 !important;
+    line-height: 1.6 !important;
+}
+
+body.light-mode #pahad-autonomous-siren-card .siren-warning-box strong,
+body.light-mode #pahad-autonomous-siren-card .bg-amber-950\/30 strong,
+body.light-mode .siren-warning-box strong,
+body.light-mode .bg-amber-950\/30 strong {
+    color: #92400E !important;
+    font-weight: 800 !important;
+}
+
+body.light-mode #pahad-autonomous-siren-card .siren-warning-box em,
+body.light-mode #pahad-autonomous-siren-card .bg-amber-950\/30 em,
+body.light-mode .siren-warning-box em,
+body.light-mode .bg-amber-950\/30 em {
+    color: #B45309 !important;
+    font-style: normal !important;
+    font-weight: 800 !important;
+    text-decoration: underline !important;
+}
+
+body.light-mode #pahad-autonomous-siren-card .siren-warning-box ul,
+body.light-mode #pahad-autonomous-siren-card .siren-warning-box li,
+body.light-mode #pahad-autonomous-siren-card .bg-amber-950\/30 ul,
+body.light-mode #pahad-autonomous-siren-card .bg-amber-950\/30 li,
+body.light-mode .siren-warning-box ul,
+body.light-mode .siren-warning-box li,
+body.light-mode .bg-amber-950\/30 ul,
+body.light-mode .bg-amber-950\/30 li {
+    color: #78350F !important;
+    font-weight: 600 !important;
+}
+
+body.light-mode #pahad-autonomous-siren-card .siren-warning-box code,
+body.light-mode #pahad-autonomous-siren-card .bg-amber-950\/30 code,
+body.light-mode .siren-warning-box code,
+body.light-mode .bg-amber-950\/30 code {
+    background-color: #FEF3C7 !important;
+    color: #92400E !important;
+    border: 1px solid #FCD34D !important;
+    padding: 1px 5px !important;
+    border-radius: 3px !important;
+    font-weight: 800 !important;
+}
+
+/* Light Mode: Siren Status Grid Sub-Boxes */
+body.light-mode #pahad-autonomous-siren-card .siren-metric-box,
+body.light-mode #pahad-autonomous-siren-card .bg-\[\#070B10\] {
+    background-color: #FFFDF9 !important;
+    border: 1px solid #FED7AA !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+}
+
+body.light-mode #pahad-autonomous-siren-card .metric-label,
+body.light-mode #pahad-autonomous-siren-card .text-slate-500 {
+    color: #64748B !important;
+    font-weight: 600 !important;
+}
+
+body.light-mode #pahad-autonomous-siren-card #siren-state-display {
+    color: #0F172A !important;
+    font-weight: 900 !important;
+}
+
+body.light-mode #pahad-autonomous-siren-card #siren-state-display.text-rose-400 {
+    color: #DC2626 !important;
+}
+
+body.light-mode #pahad-autonomous-siren-card .text-emerald-400 {
+    color: #047857 !important;
+    font-weight: 900 !important;
+}
+
+body.light-mode #pahad-autonomous-siren-card .text-blue-300 {
+    color: #003366 !important;
+    font-weight: 900 !important;
+}
+
+body.light-mode #pahad-autonomous-siren-card #siren-connected-nodes,
+body.light-mode #pahad-autonomous-siren-card .text-purple-400 {
+    color: #6B21A8 !important;
+    font-weight: 900 !important;
+}
+
+/* Light Mode: Siren Footer Actions */
+body.light-mode #pahad-autonomous-siren-card #siren-last-ping {
+    color: #0B2545 !important;
+    font-weight: 700 !important;
+}
+
+body.light-mode #pahad-autonomous-siren-card a[href*="/notifications"] {
+    background-color: #F8FAFC !important;
+    color: #0B2545 !important;
+    border-color: #CBD5E1 !important;
+}
+
+body.light-mode #pahad-autonomous-siren-card #btn-manual-emergency-siren {
+    background-color: #DC2626 !important;
+    color: #FFFFFF !important;
+    border: 1px solid #B91C1C !important;
+    font-weight: 800 !important;
+}
+
 
 

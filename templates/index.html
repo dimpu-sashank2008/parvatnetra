@@ -194,7 +194,7 @@
             max-width: 100vw !important;
         }
         #system-header-bar > div {
-            flex-wrap: wrap !important;
+            flex-wrap: nowrap !important;
         }
         @media (max-width: 768px) {
             #system-header-bar .role-switcher-container,
@@ -2546,6 +2546,152 @@
             color: #F8FAFC !important;
         }
 
+        /* PAHAD Autonomous Siren Access Card - Universal Contrast & Accessibility */
+        #pahad-autonomous-siren-card {
+            background-color: #0B1320;
+            border-color: #1E293B;
+            color: #F8FAFC;
+        }
+        #pahad-autonomous-siren-card .siren-warning-box,
+        #pahad-autonomous-siren-card .bg-amber-950\/30 {
+            background-color: rgba(69, 26, 3, 0.45) !important;
+            border: 1px solid rgba(217, 119, 6, 0.6) !important;
+        }
+        #pahad-autonomous-siren-card .siren-warning-box p,
+        #pahad-autonomous-siren-card .siren-warning-box ul,
+        #pahad-autonomous-siren-card .siren-warning-box li,
+        #pahad-autonomous-siren-card .bg-amber-950\/30 p,
+        #pahad-autonomous-siren-card .bg-amber-950\/30 ul,
+        #pahad-autonomous-siren-card .bg-amber-950\/30 li {
+            color: #FEF3C7 !important;
+        }
+        #pahad-autonomous-siren-card .siren-warning-box code,
+        #pahad-autonomous-siren-card .bg-amber-950\/30 code {
+            background-color: rgba(0, 0, 0, 0.5) !important;
+            color: #FDE68A !important;
+            border: 1px solid rgba(245, 158, 11, 0.4) !important;
+        }
+
+        /* Siren Access Card Light Mode Overrides */
+        body.light-mode #pahad-autonomous-siren-card,
+        body.light-mode .bg-\[\#0B1320\] {
+            background-color: #FFFFFF !important;
+            border-color: #FED7AA !important;
+            color: #1E293B !important;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06) !important;
+        }
+        body.light-mode #pahad-autonomous-siren-card h3 {
+            color: #0B2545 !important;
+            font-weight: 800 !important;
+        }
+        body.light-mode #pahad-autonomous-siren-card .siren-subtitle,
+        body.light-mode #pahad-autonomous-siren-card p.text-slate-400,
+        body.light-mode #pahad-autonomous-siren-card .text-slate-400 {
+            color: #475569 !important;
+        }
+        body.light-mode #pahad-autonomous-siren-card .siren-icon-box,
+        body.light-mode #pahad-autonomous-siren-card .bg-rose-950\/80 {
+            background-color: #FFE4E6 !important;
+            border-color: #FDA4AF !important;
+            color: #BE123C !important;
+        }
+        body.light-mode #pahad-autonomous-siren-card .siren-warning-box,
+        body.light-mode #pahad-autonomous-siren-card .bg-amber-950\/30,
+        body.light-mode .siren-warning-box,
+        body.light-mode .bg-amber-950\/30 {
+            background-color: #FFFBEB !important;
+            border: 1.5px solid #FCD34D !important;
+            box-shadow: 0 1px 3px rgba(217, 119, 6, 0.08) !important;
+        }
+        body.light-mode #pahad-autonomous-siren-card .siren-warning-box .warning-title,
+        body.light-mode #pahad-autonomous-siren-card .bg-amber-950\/30 .text-amber-400,
+        body.light-mode .siren-warning-box .warning-title,
+        body.light-mode .bg-amber-950\/30 .text-amber-400 {
+            color: #92400E !important;
+            font-weight: 800 !important;
+        }
+        body.light-mode #pahad-autonomous-siren-card .siren-warning-box p,
+        body.light-mode #pahad-autonomous-siren-card .bg-amber-950\/30 p,
+        body.light-mode .siren-warning-box p,
+        body.light-mode .bg-amber-950\/30 p {
+            color: #78350F !important;
+            font-weight: 500 !important;
+            line-height: 1.6 !important;
+        }
+        body.light-mode #pahad-autonomous-siren-card .siren-warning-box strong,
+        body.light-mode #pahad-autonomous-siren-card .bg-amber-950\/30 strong,
+        body.light-mode .siren-warning-box strong,
+        body.light-mode .bg-amber-950\/30 strong {
+            color: #92400E !important;
+            font-weight: 800 !important;
+        }
+        body.light-mode #pahad-autonomous-siren-card .siren-warning-box em,
+        body.light-mode #pahad-autonomous-siren-card .bg-amber-950\/30 em,
+        body.light-mode .siren-warning-box em,
+        body.light-mode .bg-amber-950\/30 em {
+            color: #B45309 !important;
+            font-style: normal !important;
+            font-weight: 800 !important;
+            text-decoration: underline !important;
+        }
+        body.light-mode #pahad-autonomous-siren-card .siren-warning-box ul,
+        body.light-mode #pahad-autonomous-siren-card .siren-warning-box li,
+        body.light-mode #pahad-autonomous-siren-card .bg-amber-950\/30 ul,
+        body.light-mode #pahad-autonomous-siren-card .bg-amber-950\/30 li,
+        body.light-mode .siren-warning-box ul,
+        body.light-mode .siren-warning-box li,
+        body.light-mode .bg-amber-950\/30 ul,
+        body.light-mode .bg-amber-950\/30 li {
+            color: #78350F !important;
+            font-weight: 600 !important;
+        }
+        body.light-mode #pahad-autonomous-siren-card .siren-warning-box code,
+        body.light-mode #pahad-autonomous-siren-card .bg-amber-950\/30 code,
+        body.light-mode .siren-warning-box code,
+        body.light-mode .bg-amber-950\/30 code {
+            background-color: #FEF3C7 !important;
+            color: #92400E !important;
+            border: 1px solid #FCD34D !important;
+            padding: 1px 5px !important;
+            border-radius: 3px !important;
+            font-weight: 800 !important;
+        }
+        body.light-mode #pahad-autonomous-siren-card .siren-metric-box,
+        body.light-mode #pahad-autonomous-siren-card .bg-\[\#070B10\] {
+            background-color: #FFFDF9 !important;
+            border: 1px solid #FED7AA !important;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+        }
+        body.light-mode #pahad-autonomous-siren-card .metric-label,
+        body.light-mode #pahad-autonomous-siren-card .text-slate-500 {
+            color: #64748B !important;
+            font-weight: 600 !important;
+        }
+        body.light-mode #pahad-autonomous-siren-card #siren-state-display {
+            color: #0F172A !important;
+            font-weight: 900 !important;
+        }
+        body.light-mode #pahad-autonomous-siren-card #siren-last-ping {
+            color: #0B2545 !important;
+            font-weight: 700 !important;
+        }
+        body.light-mode #pahad-autonomous-siren-card #siren-access-badge {
+            background-color: #F1F5F9 !important;
+            border-color: #CBD5E1 !important;
+            color: #475569 !important;
+            font-weight: 800 !important;
+        }
+        body.light-mode #pahad-autonomous-siren-card #btn-toggle-siren-access {
+            background-color: #003366 !important;
+            color: #FFFFFF !important;
+            border-color: #002244 !important;
+        }
+        body.light-mode #pahad-autonomous-siren-card #btn-test-siren-grid {
+            background-color: #F8FAFC !important;
+            color: #0B2545 !important;
+            border-color: #CBD5E1 !important;
+        }
+
 </style>
 </head>
 <body id="page-body" class="min-h-screen flex flex-col font-size-base dark-mode">
@@ -2876,7 +3022,7 @@
     <header id="system-header-bar" class="bg-[#0A0A0A] text-white border-b border-[#222222] px-3 sm:px-4 py-1.5 shadow-sm transition-colors min-h-[52px] flex items-center">
       <div class="max-w-7xl mx-auto flex items-center justify-between gap-2 sm:gap-3 w-full min-w-0">
         <!-- Left Side: Official PARVAT NETRA Visual Branding Identity Lockup -->
-        <div class="flex items-center gap-2 sm:gap-3 py-1 min-w-0 flex-1">
+        <div class="flex items-center gap-2 sm:gap-3 py-1 shrink-0">
           <!-- PHASE 9C: Hamburger Drawer Toggle Button -->
           <button id="btn-hamburger-menu" onclick="toggleSidebarMenu()" class="w-9 h-9 min-w-[36px] min-h-[36px] p-1.5 sm:p-2 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white border border-slate-300 dark:border-slate-700 transition focus:outline-none focus:ring-2 focus:ring-slate-400 mr-0.5 sm:mr-1 flex items-center justify-center shadow-xs cursor-pointer shrink-0" aria-label="Toggle EOC Navigation Menu" aria-expanded="false" title="Toggle EOC Navigation Menu">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"></path></svg>
@@ -2884,7 +3030,7 @@
           </button>
 
           <!-- Official Sentinel Mountain-Eye Emblem & Title Link -->
-          <a href="/" class="flex items-center gap-2 sm:gap-3 group cursor-pointer min-w-0 flex-1" title="Smart India Hackathon 2026 • Ministry of Development of North Eastern Region — Return to Overview">
+          <a href="/" class="flex items-center gap-2 sm:gap-3 group cursor-pointer shrink-0" title="Smart India Hackathon 2026 • Ministry of Development of North Eastern Region — Return to Overview">
             <div class="relative flex-shrink-0 w-10 h-10 sm:w-11 sm:h-11 rounded-full p-[2px] bg-gradient-to-tr from-amber-400 via-amber-200 to-amber-500 shadow-sm flex items-center justify-center group-hover:scale-105 transition-transform duration-150">
               <img src="/static/images/parvat_netra_emblem_circle.png" 
                    alt="PARVAT NETRA Sentinel Emblem" 
@@ -2894,33 +3040,33 @@
             </div>
 
             <!-- Title & Subtitle Stack -->
-            <div class="flex flex-col justify-center leading-tight min-w-0 flex-1">
-              <div class="flex items-baseline gap-1.5 sm:gap-2 min-w-0 flex-wrap sm:flex-nowrap">
-                <h1 id="parvat-brand-title" class="parvat-brand-title text-sm sm:text-base md:text-lg font-serif font-black tracking-wider text-slate-900 dark:text-white uppercase m-0 whitespace-nowrap group-hover:underline">
+            <div class="flex flex-col justify-center leading-tight">
+              <div class="flex items-baseline gap-1.5 sm:gap-2 min-w-0">
+                <h1 id="parvat-brand-title" class="parvat-brand-title text-sm sm:text-base font-serif font-black tracking-wider text-slate-900 dark:text-white uppercase m-0 whitespace-nowrap group-hover:underline">
                   PARVAT NETRA
                 </h1>
-                <span class="hidden sm:inline text-sm md:text-base font-serif font-bold text-slate-700 dark:text-slate-300 whitespace-nowrap">
+                <span class="hidden sm:inline text-xs sm:text-sm font-serif font-bold text-slate-700 dark:text-slate-300 whitespace-nowrap">
                   पर्वत नेत्र
                 </span>
               </div>
-              <p class="text-[10px] sm:text-[11px] md:text-xs font-medium text-slate-600 dark:text-slate-300 tracking-normal m-0 truncate max-w-[170px] sm:max-w-none">
-                AI-Assisted Landslide Risk Intelligence for the Northeast • <span onclick="event.preventDefault(); startInteractiveTour(1);" class="text-slate-900 dark:text-slate-200 hover:underline font-bold cursor-pointer transition">PAHAD AI ↗</span>
+              <p class="text-[10px] sm:text-[11px] font-medium text-slate-600 dark:text-slate-300 tracking-normal m-0 truncate max-w-[200px] xl:max-w-[260px] hidden sm:block">
+                AI-Assisted Landslide Risk Intelligence • <span onclick="event.preventDefault(); startInteractiveTour(1);" class="text-slate-900 dark:text-slate-200 hover:underline font-bold cursor-pointer transition">PAHAD AI ↗</span>
               </p>
             </div>
           </a>
         </div>
 
         <!-- Center: Official Government Portal Nav Links (Pure Text SIH Standard, Zero Outlines) -->
-        <nav id="portal-primary-nav" class="hidden lg:flex items-center gap-5 xl:gap-7 mx-4 bg-transparent border-0" style="background: transparent !important; background-color: transparent !important; border: none !important; border-bottom: none !important; box-shadow: none !important;" aria-label="Portal Primary Navigation">
-          <a href="/" class="portal-nav-link text-xs xl:text-[13px] font-bold text-[#1A2972] dark:text-white hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors cursor-pointer" title="National Landslide Risk Dashboard">डैशबोर्ड | Overview</a>
-          <a href="/climate-map" class="portal-nav-link text-xs xl:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors cursor-pointer" title="NER Real-Time Weather, Precipitation &amp; Radar">मौसम | Climate</a>
-          <a href="/seismic" class="portal-nav-link text-xs xl:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors cursor-pointer" title="NCS &amp; USGS Seismological Sentinel">भूकंप | Seismic</a>
-          <a href="/terrain-3d" class="portal-nav-link text-xs xl:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors cursor-pointer" title="ISRO CartoDEM &amp; GLO-30 3D Digital Twin">3D भूभाग | Twin</a>
-          <a href="/pahad-ai" class="portal-nav-link text-xs xl:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors cursor-pointer" title="PAHAD AI Multimodal Observatory">वेधशाला | AI</a>
-          <a href="/edge-network" class="portal-nav-link text-xs xl:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors cursor-pointer" title="Local Sub-GHz Edge Network &amp; Offline LoRa Mesh">ऑफलाइन | Edge LoRa</a>
-          <a href="/demo" class="portal-nav-link text-xs xl:text-[13px] font-bold text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 transition-colors cursor-pointer flex items-center gap-1" title="SIH Evaluator Simulation Sandbox"><i class="ph-bold ph-lightning text-xs"></i> <span>परीक्षक | Judge Demo</span></a>
-          <button type="button" onclick="startInteractiveTour(1)" class="portal-nav-link text-xs xl:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors flex items-center gap-1 cursor-pointer bg-transparent border-0 p-0" title="Start Interactive Platform Tour">
-            <i class="ph-bold ph-compass text-xs"></i> <span>दौरा | Tour</span>
+        <nav id="portal-primary-nav" class="hidden lg:flex items-center gap-2 xl:gap-3.5 ml-auto mr-0 bg-transparent border-0 shrink-0" style="background: transparent !important; background-color: transparent !important; border: none !important; border-bottom: none !important; box-shadow: none !important;" aria-label="Portal Primary Navigation">
+          <a href="/" class="portal-nav-link text-xs xl:text-[13px] font-bold text-[#1A2972] dark:text-white hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors whitespace-nowrap shrink-0 px-1" title="National Landslide Risk Dashboard"><span class="hidden 2xl:inline">डैशबोर्ड | </span>Overview</a>
+          <a href="/climate-map" class="portal-nav-link text-xs xl:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors whitespace-nowrap shrink-0 px-1" title="NER Real-Time Weather, Precipitation &amp; Radar"><span class="hidden 2xl:inline">मौसम | </span>Climate</a>
+          <a href="/seismic" class="portal-nav-link text-xs xl:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors whitespace-nowrap shrink-0 px-1" title="NCS &amp; USGS Seismological Sentinel"><span class="hidden 2xl:inline">भूकंप | </span>Seismic</a>
+          <a href="/terrain-3d" class="portal-nav-link text-xs xl:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors whitespace-nowrap shrink-0 px-1" title="ISRO CartoDEM &amp; GLO-30 3D Digital Twin"><span class="hidden 2xl:inline">3D भूभाग | </span>3D Twin</a>
+          <a href="/pahad-ai" class="portal-nav-link text-xs xl:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors whitespace-nowrap shrink-0 px-1" title="PAHAD AI Multimodal Observatory"><span class="hidden 2xl:inline">वेधशाला | </span>PAHAD AI</a>
+          <a href="/edge-network" class="portal-nav-link text-xs xl:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors whitespace-nowrap shrink-0 px-1" title="Local Sub-GHz Edge Network &amp; Offline LoRa Mesh"><span class="hidden 2xl:inline">ऑफलाइन | </span>Edge LoRa</a>
+          <a href="/demo" class="portal-nav-link text-xs xl:text-[13px] font-bold text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 transition-colors whitespace-nowrap shrink-0 px-1 flex items-center gap-1" title="SIH Evaluator Simulation Sandbox"><i class="ph-bold ph-lightning text-xs"></i> <span class="hidden 2xl:inline">परीक्षक | </span><span>Judge Demo</span></a>
+          <button type="button" onclick="startInteractiveTour(1)" class="portal-nav-link text-xs xl:text-[13px] font-semibold text-[#1A2972] dark:text-slate-200 hover:text-[#0A1648] dark:hover:text-sky-300 transition-colors whitespace-nowrap shrink-0 px-1 flex items-center gap-1 cursor-pointer bg-transparent border-0 p-0" title="Start Interactive Platform Tour">
+            <i class="ph-bold ph-compass text-xs"></i> <span class="hidden 2xl:inline">दौरा | </span><span>Tour</span>
           </button>
         </nav>
 
@@ -5923,7 +6069,7 @@
       <div id="pahad-autonomous-siren-card" class="bg-[#0B1320] border border-slate-800 rounded-lg p-5 shadow-xl space-y-4">
         <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800/80 pb-4">
           <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded bg-rose-950/80 border border-rose-800/80 flex items-center justify-center text-rose-400">
+            <div class="siren-icon-box w-10 h-10 rounded bg-rose-950/80 border border-rose-800/80 flex items-center justify-center text-rose-400">
               <i class="ph-bold ph-siren text-xl"></i>
             </div>
             <div>
@@ -5931,7 +6077,7 @@
                 <h3 class="text-base font-black text-slate-100 uppercase tracking-wider">PAHAD Autonomous Siren Access</h3>
                 <span id="siren-access-badge" class="px-2 py-0.5 rounded text-[10px] font-mono font-black uppercase bg-slate-800 text-slate-400 border border-slate-700">DISABLED</span>
               </div>
-              <p class="text-xs text-slate-400 mt-0.5">Physical emergency siren grid for Himalayan highway chokepoints & high-risk settlements</p>
+              <p class="siren-subtitle text-xs text-slate-400 mt-0.5">Physical emergency siren grid for Himalayan highway chokepoints & high-risk settlements</p>
             </div>
           </div>
           
@@ -5946,8 +6092,8 @@
         </div>
 
         <!-- Strict Safety Invariants Warning Box -->
-        <div class="bg-amber-950/30 border border-amber-800/60 rounded p-3 text-xs space-y-1.5">
-          <div class="flex items-center gap-2 text-amber-400 font-bold uppercase tracking-wider text-[11px]">
+        <div class="siren-warning-box bg-amber-950/30 border border-amber-800/60 rounded p-3 text-xs space-y-1.5">
+          <div class="warning-title flex items-center gap-2 text-amber-400 font-bold uppercase tracking-wider text-[11px]">
             <i class="ph-bold ph-shield-warning text-sm"></i>
             <span>Safety Invariants & Statutory Authority Protocol</span>
           </div>
@@ -5963,23 +6109,23 @@
 
         <!-- Siren Status Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-xs">
-          <div class="bg-[#070B10] border border-slate-800 rounded p-3">
-            <span class="text-[10px] uppercase font-bold text-slate-500 block">Siren Controller</span>
+          <div class="siren-metric-box bg-[#070B10] border border-slate-800 rounded p-3">
+            <span class="metric-label text-[10px] uppercase font-bold text-slate-500 block">Siren Controller</span>
             <span id="siren-state-display" class="text-sm font-black text-slate-300 font-mono mt-1 block">DISABLED</span>
             <span class="text-[10px] text-slate-500 mt-0.5 block">State locked by default</span>
           </div>
-          <div class="bg-[#070B10] border border-slate-800 rounded p-3">
-            <span class="text-[10px] uppercase font-bold text-slate-500 block">Human Authorization</span>
+          <div class="siren-metric-box bg-[#070B10] border border-slate-800 rounded p-3">
+            <span class="metric-label text-[10px] uppercase font-bold text-slate-500 block">Human Authorization</span>
             <span class="text-sm font-black text-emerald-400 font-mono mt-1 block">MANDATORY</span>
             <span class="text-[10px] text-slate-500 mt-0.5 block">District Magistrate / BRO EOC</span>
           </div>
-          <div class="bg-[#070B10] border border-slate-800 rounded p-3">
-            <span class="text-[10px] uppercase font-bold text-slate-500 block">Corroboration Rule</span>
+          <div class="siren-metric-box bg-[#070B10] border border-slate-800 rounded p-3">
+            <span class="metric-label text-[10px] uppercase font-bold text-slate-500 block">Corroboration Rule</span>
             <span class="text-sm font-black text-blue-300 font-mono mt-1 block">2-OF-3 SIGNAL</span>
             <span class="text-[10px] text-slate-500 mt-0.5 block">FoS + Rainfall + Inclinometer</span>
           </div>
-          <div class="bg-[#070B10] border border-slate-800 rounded p-3">
-            <span class="text-[10px] uppercase font-bold text-slate-500 block">Connected Edge Siren Nodes</span>
+          <div class="siren-metric-box bg-[#070B10] border border-slate-800 rounded p-3">
+            <span class="metric-label text-[10px] uppercase font-bold text-slate-500 block">Connected Edge Siren Nodes</span>
             <span id="siren-connected-nodes" class="text-sm font-black text-purple-400 font-mono mt-1 block">4 Active Nodes</span>
             <span class="text-[10px] text-slate-500 mt-0.5 block">NH-10 Km 48, Seti Jhora, Likuvir, Rangpo</span>
           </div>
