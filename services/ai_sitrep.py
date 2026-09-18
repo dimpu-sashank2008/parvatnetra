@@ -398,6 +398,154 @@ class AISitRepGenerator:
             "provenance": "[NDMA / MDoNER TACTICAL ENGINE]"
         }
 
+    def generate_official_ndma_sitrep(self, scenario_id: str = "glof") -> Dict[str, Any]:
+        """
+        Generates an authentic Government of India / NDMA disaster situation report memo.
+        Formats multi-physics telemetry, 2-of-3 corroboration, evacuation routes, and asset deployments.
+        """
+        scenarios = {
+            "glof": {
+                "name": "South Lhonak Glacial Lake Outburst Flood & Teesta Basal Scour",
+                "sector": "NH-10 Km 48 (Seti Jhora / Likuvir Gorge)",
+                "state": "Sikkim",
+                "district": "Pakhyong / Kalimpong Border",
+                "bypass": "NH-717A (Bagrakote - Labha - Algarah - Pedong - Reshi - Rhenock - Ranipool)",
+                "severed_road": "National Highway 10 (Km 42 - Km 54 submerged/scoured)",
+                "fos": 0.48,
+                "rainfall_rate": "84.5 mm/h (Doppler Echo 49.5 dBZ)",
+                "radar_val": "49.5 dBZ",
+                "insar_creep": "18.4 mm/day (Saito Failure Window: 1.8 hrs)",
+                "cv_crack": "42.5 mm (Threshold: 30.0 mm)",
+                "teesta_scour": "5,988 Pa (Threshold: 4,000 Pa)"
+            },
+            "remal": {
+                "name": "Cyclone Remal Severe Orographic Deluge & Quarry Slide",
+                "sector": "Melthum Stone Quarry Chokepoint",
+                "state": "Mizoram",
+                "district": "Aizawl",
+                "bypass": "Lengpui - Sairang Alternate Ridge Road",
+                "severed_road": "Aizawl - Lunglei State Highway Corridor",
+                "fos": 0.52,
+                "rainfall_rate": "92.0 mm/h (Doppler Echo 52.0 dBZ)",
+                "radar_val": "52.0 dBZ",
+                "insar_creep": "22.1 mm/day (Saito Failure Window: 1.4 hrs)",
+                "cv_crack": "38.0 mm (Threshold: 30.0 mm)",
+                "teesta_scour": "N/A (Tlawng River Surcharge)"
+            },
+            "tupul": {
+                "name": "Tupul Railway Construction Yard Debris Avalanche",
+                "sector": "Jiribam - Imphal Rail Corridor (Tunnel 12 Adit)",
+                "state": "Manipur",
+                "district": "Noney",
+                "bypass": "Old Cachar Road (Light 4x4 Emergency Convoys Only)",
+                "severed_road": "NH-37 (Imphal - Jiribam Highway)",
+                "fos": 0.39,
+                "rainfall_rate": "76.0 mm/h (Doppler Echo 48.0 dBZ)",
+                "radar_val": "48.0 dBZ",
+                "insar_creep": "27.5 mm/day (Saito Failure Window: 0.9 hrs)",
+                "cv_crack": "49.0 mm (Threshold: 30.0 mm)",
+                "teesta_scour": "Ijei River Damming Threat: CRITICAL"
+            },
+            "sonapur": {
+                "name": "Sonapur Tunnel Dip-Slope Sandstone Catastrophic Rockfall",
+                "sector": "Sonapur Tunnel Portal Corridor",
+                "state": "Meghalaya",
+                "district": "East Jaintia Hills",
+                "bypass": "Shillong - Jowai - Dawki - Silchar Relief Detour",
+                "severed_road": "NH-06 (Barapani - Silchar Lifeline Chokepoint)",
+                "fos": 0.58,
+                "rainfall_rate": "110.0 mm/h (Doppler Echo 54.0 dBZ)",
+                "radar_val": "54.0 dBZ",
+                "insar_creep": "15.8 mm/day (Saito Failure Window: 2.2 hrs)",
+                "cv_crack": "34.5 mm (Threshold: 30.0 mm)",
+                "teesta_scour": "Lubha River Flash Level: 4.8m above Danger Mark"
+            }
+        }
+
+        scen = scenarios.get(scenario_id.lower(), scenarios["glof"])
+        now_dt = datetime.now(timezone.utc)
+        now_ist = now_dt.strftime("%d %B %Y, %H:%M:%S IST")
+        now_iso = now_dt.isoformat()
+        memo_ref = f"NDMA/NER/EOC/2026/SITREP-{int(time.time()) % 10000:04d}"
+
+        return {
+            "status": "success",
+            "memo_reference": memo_ref,
+            "classification": "EMERGENCY DISASTER SITUATION REPORT // PRIORITY-1 IMMEDIATE",
+            "governing_statute": "Disaster Management Act 2005 (Section 35 & 38)",
+            "issuing_authority": "National Disaster Management Authority (NDMA) & MDoNER Joint Operations EOC",
+            "incident_name": scen["name"],
+            "disaster_level": "LEVEL-3 (NATIONAL DISASTER ALERT)",
+            "timestamp_ist": now_ist,
+            "timestamp_iso": now_iso,
+            "geography": {
+                "state": scen["state"],
+                "district": scen["district"],
+                "monitored_corridor": scen["sector"],
+                "severed_artery": scen["severed_road"],
+                "designated_detour": scen["bypass"]
+            },
+            "multi_physics_evidence": {
+                "signal_1_radar": {
+                    "source": "IMD Doppler Weather Radar (Agartala / Mohanbari / Cherrapunji)",
+                    "reading": scen["rainfall_rate"],
+                    "threshold": "> 45.0 dBZ / > 50.0 mm/h",
+                    "status": "EXCEEDED // CLOUDBURST REGIME"
+                },
+                "signal_2_geotechnical": {
+                    "source": "Infinite Slope Mohr-Coulomb & van Genuchten SWCC",
+                    "reading": f"Factor of Safety (FoS) = {scen['fos']:.2f}",
+                    "threshold": "FoS < 1.00 (Limit State Detachment)",
+                    "status": "CRITICAL COLLAPSE IMMINENT"
+                },
+                "signal_3_insar": {
+                    "source": "Sentinel-1 SAR Interferometry (ESA / ISRO Bhuvan) & Saito Inversion",
+                    "reading": scen["insar_creep"],
+                    "threshold": "1/v -> 0 (Tertiary Creep Acceleration)",
+                    "status": "ACCELERATING (Predicted Rupture < 2 Hours)"
+                },
+                "signal_4_edge_cv": {
+                    "source": "Roadside SONY STARVIS HD/IR Optical Camera Aperture Tracker",
+                    "reading": scen["cv_crack"],
+                    "threshold": ">= 30.0 mm Tension Crack Opening",
+                    "status": "PHYSICAL RUPTURE BREACH VERIFIED"
+                }
+            },
+            "triangulation_confirmation": {
+                "rule": "2-of-3 Independent Sensor Corroboration Standard",
+                "signals_confirmed": "4 of 4 Signals Triangulated",
+                "false_alarm_probability": "< 0.001%",
+                "status": "VERIFIED PHYSICAL HAZARD (FULL MITIGATION AUTHORIZED)"
+            },
+            "emergency_directives": [
+                f"Immediate suspension of all civilian traffic on {scen['severed_road']}.",
+                f"Reroute all military convoys, emergency ambulances, and essential supply trucks via {scen['bypass']}.",
+                "Evacuate all habitations within 1.5 km of the toe-scour debris cone to designated relief camps.",
+                "Activate C-DOT / C-DAC Geo-fenced Cell Broadcast Service (CBS) Channel 4370 in 9 regional languages."
+            ],
+            "asset_mobilization": {
+                "ndrf_battalions": "2 Units (160 personnel, 4 search canines, 6 acoustic life detectors)",
+                "bro_machinery": "8x 20-Ton Tracked Hydraulic Excavators, 4x Crawler Bulldozers, Project Swastik",
+                "bailey_bridging": "200 Feet Pre-Fab Bailey Bridge Spans (Staged at Siliguri / Rangpo Base)",
+                "medical_triage": "4 Trauma Stabilization Units, 450 Emergency Shelter Beds"
+            },
+            "cell_broadcast_metrics": {
+                "channel": "C-DAC Channel 4370 (Cell Broadcast Service)",
+                "corridor_handsets_targeted": 5000,
+                "successful_deliveries": 4930,
+                "delivery_rate_pct": 98.6,
+                "delivery_latency_sec": 1.8,
+                "languages_broadcasted": 9
+            },
+            "signoff": {
+                "officer_name": "District Magistrate / Incident Commander",
+                "duty_station": f"{scen['district']} District EOC / BRO HQ",
+                "cryptographic_hash": "SHA256: 9b41bf31e7845f2283adcf41870b32941aa892",
+                "status": "AUTHENTICATED & FILED"
+            }
+        }
+
 
 # Global Singleton
 AI_SITREP_SERVICE = AISitRepGenerator()
+

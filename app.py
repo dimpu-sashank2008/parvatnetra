@@ -1303,6 +1303,26 @@ def ai_sitrep():
     return jsonify(report), 200
 
 
+@app.route("/api/sitrep/official-memo", methods=["GET"])
+def api_sitrep_official_memo():
+    """
+    Returns authentic Government of India / NDMA disaster situation report memo.
+    Accepts ?scenario=glof|remal|tupul|sonapur
+    """
+    scenario = request.args.get("scenario", "glof")
+    memo = AI_SITREP_SERVICE.generate_official_ndma_sitrep(scenario_id=scenario)
+    return jsonify(memo), 200
+
+
+@app.route("/api/hardware/bom", methods=["GET"])
+def api_hardware_bom():
+    """
+    Returns comprehensive hardware architecture, itemized BOM, power budget, and unit economics.
+    """
+    from services.hardware_bom_service import get_hardware_bom_data
+    return jsonify(get_hardware_bom_data()), 200
+
+
 @app.route("/api/ai/evaluate-vti", methods=["POST", "GET"])
 def ai_evaluate_vti():
     """

@@ -2239,6 +2239,201 @@ body.light-mode .citizen-detour-card a[href*="google.com/maps/dir"] * {
 body.light-mode #btn-citizen-calc-bypass:hover,
 body.light-mode #btn-citizen-calc-bypass:hover *,
 body.light-mode #btn-open-citizen-report-modal:hover,
+body [class*="from-[#0C152B]"] {
+    border-color: rgba(245, 158, 11, 0.45) !important;
+}
+
+/* Headings on dark cards */
+body.light-mode #master-inspection-panel h1,
+body.light-mode #master-inspection-panel h2,
+body.light-mode #master-inspection-panel h2 *,
+body #master-inspection-panel h2,
+body #master-inspection-panel h2 *,
+body.light-mode [class*="from-[#0B132B]"] h1,
+body [class*="from-[#0B132B]"] h1,
+body.light-mode [class*="bg-[#0B132B]"] h1,
+body.light-mode [class*="bg-[#0B132B]"] h2,
+body.light-mode [class*="bg-[#0B132B]"] h3,
+body.light-mode [class*="bg-[#0B132B]"] h4,
+body.light-mode [class*="bg-[#101C3D]"] h1,
+body.light-mode [class*="bg-[#101C3D]"] h2,
+body.light-mode [class*="bg-[#101C3D]"] h3,
+body.light-mode [class*="bg-[#0C152B]"] h1,
+body.light-mode [class*="bg-[#0C152B]"] h2,
+body.light-mode [class*="bg-[#0A1636]"] h1,
+body.light-mode [class*="bg-[#0A1636]"] h2,
+body [class*="bg-[#0B132B]"] h1,
+body [class*="bg-[#0B132B]"] h2,
+body [class*="bg-[#0B132B]"] h3,
+body [class*="bg-[#101C3D]"] h3 {
+    color: #FED7AA !important; /* Luminous Faded Saffron */
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8) !important;
+}
+
+/* Paragraphs & body text on dark cards */
+body.light-mode #master-inspection-panel p,
+body #master-inspection-panel p,
+body.light-mode [class*="from-[#0B132B]"] p,
+body [class*="from-[#0B132B]"] p,
+body.light-mode [class*="bg-[#0B132B]"] p,
+body.light-mode [class*="bg-[#101C3D]"] p,
+body.light-mode [class*="bg-[#0C152B]"] p,
+body.light-mode [class*="bg-[#0A1636]"] p,
+body [class*="bg-[#0B132B]"] p,
+body [class*="bg-[#101C3D]"] p {
+    color: #FEF3C7 !important; /* Soft Faded Saffron Cream */
+    line-height: 1.6 !important;
+}
+
+/* Strong tags inside banner, inspection panel & dark cards */
+body.light-mode [class*="from-[#0B132B]"] p strong,
+body [class*="from-[#0B132B]"] p strong,
+body.light-mode #master-inspection-panel strong,
+body #master-inspection-panel strong,
+body.light-mode [class*="bg-[#0B132B]"] strong,
+body.light-mode [class*="bg-[#101C3D]"] strong,
+body [class*="bg-[#0B132B]"] strong,
+body [class*="bg-[#101C3D]"] strong {
+    color: #FBBF24 !important; /* High-contrast Saffron Gold */
+    font-weight: 700 !important;
+}
+
+/* Subtitles & stage labels */
+body.light-mode #master-inspection-panel .text-slate-400,
+body #master-inspection-panel .text-slate-400,
+body.light-mode #master-inspection-panel .text-slate-300,
+body #master-inspection-panel .text-slate-300,
+body.light-mode [class*="bg-[#0B132B]"] .text-slate-400,
+body.light-mode [class*="bg-[#101C3D]"] .text-slate-400,
+body.light-mode [class*="bg-[#0B132B]"] .text-slate-300,
+body.light-mode [class*="bg-[#101C3D]"] .text-slate-300 {
+    color: #FDBA74 !important; /* Faded Saffron */
+}
+
+/* Any blue/sky text inside master panel or dark cards -> Faded Saffron */
+body.light-mode #master-inspection-panel [class*="text-sky-"],
+body.light-mode #master-inspection-panel [class*="text-blue-"],
+body.light-mode [class*="from-[#0B132B]"] [class*="text-sky-"],
+body.light-mode [class*="from-[#0B132B]"] [class*="text-blue-"],
+body #master-inspection-panel [class*="text-sky-"],
+body #master-inspection-panel [class*="text-blue-"],
+body [class*="from-[#0B132B]"] [class*="text-sky-"],
+body [class*="from-[#0B132B]"] [class*="text-blue-"],
+body.light-mode [class*="bg-[#0B132B]"] [class*="text-sky-"],
+body.light-mode [class*="bg-[#0B132B]"] [class*="text-blue-"],
+body.light-mode [class*="bg-[#101C3D]"] [class*="text-sky-"],
+body.light-mode [class*="bg-[#101C3D]"] [class*="text-blue-"],
+body.light-mode [class*="bg-slate-900"] [class*="text-sky-"],
+body.light-mode [class*="bg-slate-950"] [class*="text-sky-"],
+body [class*="bg-[#0B132B]"] [class*="text-sky-"],
+body [class*="bg-[#0B132B]"] [class*="text-blue-"],
+body [class*="bg-[#101C3D]"] [class*="text-sky-"],
+body [class*="bg-[#101C3D]"] [class*="text-blue-"] {
+    color: #FDBA74 !important; /* Faded Saffron */
+}
+
+/* Badges: Transform dark-blue into Faded Saffron pill */
+body.light-mode #master-inspection-panel [class*="bg-sky-"],
+body #master-inspection-panel [class*="bg-sky-"],
+body.light-mode [class*="from-[#0B132B]"] [class*="bg-sky-"],
+body [class*="from-[#0B132B]"] [class*="bg-sky-"],
+body.light-mode [class*="bg-[#0B132B]"] [class*="bg-sky-"],
+body.light-mode [class*="bg-[#101C3D]"] [class*="bg-sky-"],
+body [class*="bg-[#0B132B]"] [class*="bg-sky-"],
+body [class*="bg-[#101C3D]"] [class*="bg-sky-"],
+body.light-mode #master-inspection-panel span.border-sky-600\/70,
+body #master-inspection-panel span.border-sky-600\/70 {
+    background-color: rgba(120, 53, 15, 0.45) !important;
+    border-color: rgba(245, 158, 11, 0.6) !important;
+    color: #FED7AA !important;
+}
+
+/* Narrative Drill Box */
+#drill-narrative-box,
+body.light-mode #drill-narrative-box {
+    background-color: rgba(11, 19, 43, 0.95) !important;
+    border: 1px solid rgba(245, 158, 11, 0.45) !important;
+    color: #FEF3C7 !important;
+}
+#drill-narrative-box span#drill-narrative-title,
+body.light-mode #drill-narrative-box span#drill-narrative-title {
+    color: #FED7AA !important; /* Faded Saffron */
+    font-weight: 700 !important;
+}
+#drill-narrative-box p#drill-narrative-desc,
+body.light-mode #drill-narrative-box p#drill-narrative-desc {
+    color: #FEF3C7 !important; /* Soft Faded Saffron Cream */
+}
+#drill-narrative-box span#drill-narrative-badge,
+body.light-mode #drill-narrative-box span#drill-narrative-badge {
+    background-color: rgba(146, 64, 14, 0.4) !important;
+    border: 1px solid rgba(245, 158, 11, 0.6) !important;
+    color: #FED7AA !important;
+}
+#drill-narrative-box i#drill-narrative-icon,
+body.light-mode #drill-narrative-box i#drill-narrative-icon {
+    color: #F59E0B !important;
+}
+
+/* Step Pill 1 and Active Step Pill in Navigation */
+#master-inspection-panel button[id^="pill-drill-"].border-sky-500,
+body.light-mode #master-inspection-panel button[id^="pill-drill-"].border-sky-500,
+#master-inspection-panel button[id^="pill-drill-"].active {
+    border-color: #F59E0B !important;
+    background-color: rgba(180, 83, 9, 0.4) !important;
+    color: #FED7AA !important;
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.3) !important;
+}
+
+/* Active stage title in progress indicator */
+#drill-stage-title,
+body.light-mode #drill-stage-title {
+    color: #FDBA74 !important;
+    font-weight: 700 !important;
+}
+
+/* ========================================================================= */
+/* CITIZEN DETOUR & CLEARANCE ACTION BUTTONS — FADED SAFFRON PALETTE (#FED7AA) */
+/* ========================================================================= */
+#btn-citizen-calc-bypass,
+#btn-citizen-calc-bypass *,
+#btn-open-citizen-report-modal,
+#btn-open-citizen-report-modal *,
+#btn-play-voice,
+#btn-play-voice *,
+#btn-submit-report,
+#btn-submit-report *,
+.citizen-detour-card a[href*="google.com/maps/dir"],
+.citizen-detour-card a[href*="google.com/maps/dir"] *,
+body.light-mode #btn-citizen-calc-bypass,
+body.light-mode #btn-citizen-calc-bypass *,
+body.light-mode #btn-open-citizen-report-modal,
+body.light-mode #btn-open-citizen-report-modal *,
+body.light-mode #btn-play-voice,
+body.light-mode #btn-play-voice *,
+body.light-mode #btn-submit-report,
+body.light-mode #btn-submit-report *,
+body.light-mode .citizen-detour-card a[href*="google.com/maps/dir"],
+body.light-mode .citizen-detour-card a[href*="google.com/maps/dir"] * {
+    background-color: #FED7AA !important;
+    border-color: #F59E0B !important;
+    color: #002147 !important;
+    font-weight: 800 !important;
+}
+
+#btn-citizen-calc-bypass:hover,
+#btn-citizen-calc-bypass:hover *,
+#btn-open-citizen-report-modal:hover,
+#btn-open-citizen-report-modal:hover *,
+#btn-play-voice:hover,
+#btn-play-voice:hover *,
+#btn-submit-report:hover,
+#btn-submit-report:hover *,
+.citizen-detour-card a[href*="google.com/maps/dir"]:hover,
+.citizen-detour-card a[href*="google.com/maps/dir"]:hover *,
+body.light-mode #btn-citizen-calc-bypass:hover,
+body.light-mode #btn-citizen-calc-bypass:hover *,
+body.light-mode #btn-open-citizen-report-modal:hover,
 body.light-mode #btn-open-citizen-report-modal:hover *,
 body.light-mode #btn-play-voice:hover,
 body.light-mode #btn-play-voice:hover *,
@@ -2250,3 +2445,108 @@ body.light-mode .citizen-detour-card a[href*="google.com/maps/dir"]:hover * {
     border-color: #D97706 !important;
     color: #001833 !important;
 }
+
+/* ==========================================================================
+   OFFICIAL NDMA / SDMA SITUATION REPORT PRINT STYLES
+   Formats the disaster sitrep as an authentic crisp Government memo for print/PDF.
+   ========================================================================== */
+@media print {
+    body * {
+        visibility: hidden !important;
+    }
+    #modal-official-sitrep,
+    #modal-official-sitrep #official-sitrep-printable,
+    #modal-official-sitrep #official-sitrep-printable * {
+        visibility: visible !important;
+    }
+    #modal-official-sitrep {
+        position: absolute !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #FFFFFF !important;
+        display: block !important;
+    }
+    #official-sitrep-printable {
+        background: #FFFFFF !important;
+        color: #000000 !important;
+        box-shadow: none !important;
+        border: 1.5px solid #0B2545 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 24px !important;
+        page-break-inside: avoid;
+    }
+    .no-print,
+    .no-print * {
+        display: none !important;
+    }
+}
+
+/* ==========================================================================
+   WINNING MODALS (HARDWARE BOM, OFFICIAL SITREP, 2G FEATURE PHONE)
+   Ensure 100% crisp contrast and text visibility in all themes
+   ========================================================================== */
+/* Dark Mode Default */
+#modal-hardware-bom h3,
+#modal-feature-phone h3,
+body.dark-mode #modal-hardware-bom h3,
+body.dark-mode #modal-feature-phone h3,
+body:not(.light-mode) #modal-hardware-bom h3,
+body:not(.light-mode) #modal-feature-phone h3 {
+    color: #FFFFFF !important;
+}
+
+#modal-hardware-bom p,
+#modal-feature-phone p,
+body.dark-mode #modal-hardware-bom p,
+body.dark-mode #modal-feature-phone p,
+body:not(.light-mode) #modal-hardware-bom p,
+body:not(.light-mode) #modal-feature-phone p {
+    color: #CBD5E1 !important;
+}
+
+#modal-hardware-bom h4,
+#modal-feature-phone h4,
+body.dark-mode #modal-hardware-bom h4,
+body.dark-mode #modal-feature-phone h4,
+body:not(.light-mode) #modal-hardware-bom h4,
+body:not(.light-mode) #modal-feature-phone h4 {
+    color: #FBBF24 !important;
+}
+
+/* Modal Headers are always dark gradients in all modes */
+#modal-hardware-bom .border-b h3,
+#modal-feature-phone .border-b h3,
+body.light-mode #modal-hardware-bom .border-b h3,
+body.light-mode #modal-feature-phone .border-b h3,
+body.light-mode #modal-official-sitrep .no-print h3 {
+    color: #FFFFFF !important;
+}
+
+#modal-hardware-bom .border-b p,
+#modal-feature-phone .border-b p,
+body.light-mode #modal-hardware-bom .border-b p,
+body.light-mode #modal-feature-phone .border-b p {
+    color: #CBD5E1 !important;
+}
+
+body.light-mode #modal-hardware-bom h4,
+body.light-mode #modal-feature-phone h4 {
+    color: #0F172A !important;
+}
+
+body.light-mode #modal-hardware-bom .text-slate-400,
+body.light-mode #modal-feature-phone .text-slate-400 {
+    color: #64748B !important;
+}
+
+body.light-mode #modal-hardware-bom .text-slate-200,
+body.light-mode #modal-hardware-bom .text-slate-300,
+body.light-mode #modal-feature-phone .text-slate-200,
+body.light-mode #modal-feature-phone .text-slate-300 {
+    color: #1E293B !important;
+}
+

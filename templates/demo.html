@@ -242,7 +242,7 @@
                 SIH 26001 • MDoNER EVALUATOR RIG
             </span>
         </div>
-        <nav class="flex items-center space-x-2 sm:space-x-4" aria-label="Portal Primary Navigation">
+        <nav class="flex items-center space-x-2 sm:space-x-3" aria-label="Portal Primary Navigation">
             <a href="/" class="portal-nav-link text-xs sm:text-[13px] font-semibold text-slate-200 hover:text-sky-300 transition-colors cursor-pointer">
                 Dashboard
             </a>
@@ -255,12 +255,15 @@
             <a href="/edge-network" class="portal-nav-link text-xs sm:text-[13px] font-semibold text-amber-400 hover:text-amber-300 transition-colors cursor-pointer flex items-center gap-1" title="Edge LoRa Mesh & Offline Triage">
                 <i class="ph-bold ph-broadcast text-xs"></i> Edge LoRa Mesh
             </a>
-            <a href="/notifications" class="portal-nav-link text-xs sm:text-[13px] font-semibold text-slate-200 hover:text-sky-300 transition-colors cursor-pointer">
-                Notifications
-            </a>
-            <a href="/health" target="_blank" class="portal-nav-link text-xs sm:text-[13px] font-semibold text-emerald-500 hover:text-emerald-400 font-mono transition-colors cursor-pointer">
-                /health
-            </a>
+            <button type="button" onclick="openHardwareBomModal()" class="px-2 py-1 text-xs font-bold rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-amber-500/30 transition flex items-center gap-1 cursor-pointer" title="Indigenous Hardware BOM (₹16,850 vs ₹3,50,000)">
+                <i class="ph-bold ph-circuit-board text-xs"></i> <span class="hidden md:inline">Hardware</span> BOM
+            </button>
+            <button type="button" onclick="openOfficialSitrepModal('glof')" class="px-2 py-1 text-xs font-bold rounded bg-red-600/20 text-red-300 border border-red-500/40 hover:bg-red-600/30 transition flex items-center gap-1 cursor-pointer" title="1-Click Official NDMA Printable Situation Report">
+                <i class="ph-bold ph-file-text text-xs"></i> <span class="hidden md:inline">Official</span> SitRep
+            </button>
+            <button type="button" onclick="openFeaturePhoneModal()" class="px-2 py-1 text-xs font-bold rounded bg-sky-500/20 text-sky-300 border border-sky-500/40 hover:bg-sky-500/30 transition flex items-center gap-1 cursor-pointer" title="2G Feature Phone SMS Simulator (9 Languages)">
+                <i class="ph-bold ph-device-mobile text-xs"></i> 2G Phone
+            </button>
         </nav>
     </header>
 
@@ -1588,6 +1591,611 @@
                     <i class="ph-bold ph-paper-plane-tilt text-sm"></i>
                     <span>TRANSMIT C-DAC BROADCAST &amp; ARM SIREN</span>
                 </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- PARVAT NETRA SIH 26001 CHAMPIONSHIP MODALS                               -->
+    <!-- 1. Indigenized Hardware Station BOM & Power Budget Modal                 -->
+    <!-- 2. Official NDMA / SDMA Printable Disaster SitRep Memo                   -->
+    <!-- 3. Interactive 2G Feature Phone SMS & Cell Broadcast Simulator            -->
+    <!-- ========================================================================= -->
+
+    <!-- 1. HARDWARE BOM MODAL -->
+    <div id="modal-hardware-bom" class="fixed inset-0 z-[99999] bg-black/85 backdrop-blur-sm hidden items-center justify-center p-3 sm:p-6 overflow-y-auto">
+        <div class="bg-[#0A0F18] border border-amber-500/40 rounded-2xl max-w-5xl w-full max-h-[92vh] flex flex-col shadow-2xl overflow-hidden my-auto">
+            <!-- Header -->
+            <div class="px-5 py-4 bg-gradient-to-r from-[#0B132B] via-[#0F1E36] to-[#0B132B] border-b border-amber-500/30 flex items-center justify-between gap-3 text-white">
+                <div class="flex items-center gap-3">
+                    <span class="p-2 rounded-lg bg-amber-500/20 text-amber-400 border border-amber-500/40 text-xl">
+                        <i class="ph-bold ph-circuit-board"></i>
+                    </span>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h3 class="font-black text-base sm:text-lg text-white tracking-wide">INDIGENIZED IOT NODE ARCHITECTURE &amp; BOM</h3>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/40">95.2% COST REDUCTION</span>
+                        </div>
+                        <p class="text-xs text-slate-300">ESP32-S3 Dual-Core &bull; 865-867 MHz LoRa Mesh &bull; IS-18048 / WPC Approved &bull; 14.8-Day Autonomy</p>
+                    </div>
+                </div>
+                <button onclick="closeHardwareBomModal()" class="w-8 h-8 rounded-full bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition text-lg">&times;</button>
+            </div>
+
+            <!-- Executive Metrics Bar -->
+            <div class="bg-[#0D1527] border-b border-slate-800 px-5 py-3 grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+                <div class="bg-slate-900/60 p-2 rounded-lg border border-slate-800">
+                    <div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Indigenous BOM Unit</div>
+                    <div class="text-lg sm:text-xl font-black text-amber-400 font-mono">₹16,850</div>
+                    <div class="text-[9px] text-emerald-400 font-medium">~$202 USD / Station</div>
+                </div>
+                <div class="bg-slate-900/60 p-2 rounded-lg border border-slate-800">
+                    <div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Imported Equivalent</div>
+                    <div class="text-lg sm:text-xl font-black text-slate-400 font-mono line-through">₹3,50,000</div>
+                    <div class="text-[9px] text-rose-400 font-medium">Campbell / Geokon Station</div>
+                </div>
+                <div class="bg-slate-900/60 p-2 rounded-lg border border-slate-800">
+                    <div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Zero-Sunlight Run</div>
+                    <div class="text-lg sm:text-xl font-black text-emerald-400 font-mono">14.8 Days</div>
+                    <div class="text-[9px] text-slate-400">LiFePO4 19.2Wh Battery</div>
+                </div>
+                <div class="bg-slate-900/60 p-2 rounded-lg border border-slate-800">
+                    <div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">WPC Regulatory</div>
+                    <div class="text-lg sm:text-xl font-black text-sky-400 font-mono">IN865 Band</div>
+                    <div class="text-[9px] text-slate-400">100% License-Free GSR 564(E)</div>
+                </div>
+            </div>
+
+            <!-- Navigation Tabs -->
+            <div class="flex items-center border-b border-slate-800 bg-[#080D17] px-4 gap-2 text-xs font-bold overflow-x-auto">
+                <button id="bom-tab-items" onclick="switchBomTab('bom-tab-items')" class="py-2.5 px-3 border-b-2 border-amber-500 text-amber-400 bg-amber-950/40 flex items-center gap-1.5 transition whitespace-nowrap">
+                    <i class="ph-bold ph-list-numbers"></i> 11-Point Itemized BOM
+                </button>
+                <button id="bom-tab-power" onclick="switchBomTab('bom-tab-power')" class="py-2.5 px-3 border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-1.5 transition whitespace-nowrap">
+                    <i class="ph-bold ph-battery-charging"></i> Power Budget &amp; Autonomy
+                </button>
+                <button id="bom-tab-pinout" onclick="switchBomTab('bom-tab-pinout')" class="py-2.5 px-3 border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-1.5 transition whitespace-nowrap">
+                    <i class="ph-bold ph-cpu"></i> ESP32-S3 Pinout Matrix
+                </button>
+                <button id="bom-tab-wpc" onclick="switchBomTab('bom-tab-wpc')" class="py-2.5 px-3 border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-1.5 transition whitespace-nowrap">
+                    <i class="ph-bold ph-certificate"></i> WPC Regulatory Clearance
+                </button>
+            </div>
+
+            <!-- Tab Body Content -->
+            <div class="p-4 sm:p-5 overflow-y-auto flex-1 bg-[#0A0F18] space-y-4">
+                <!-- TAB 1: Itemized BOM Table -->
+                <div id="bom-content-items" class="space-y-3">
+                    <div class="overflow-x-auto border border-slate-800 rounded-xl">
+                        <table class="w-full text-left text-xs text-slate-300">
+                            <thead class="bg-slate-900/90 text-[10px] uppercase font-bold text-slate-400 border-b border-slate-800">
+                                <tr>
+                                    <th class="p-2.5">ID</th>
+                                    <th class="p-2.5">Component &amp; Model</th>
+                                    <th class="p-2.5">Geotechnical Role</th>
+                                    <th class="p-2.5">Ingress Rating</th>
+                                    <th class="p-2.5 text-right">Cost (INR)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="bom-table-body" class="divide-y divide-slate-800/60 font-sans">
+                                <tr class="border-b border-slate-800/60 hover:bg-slate-900/40 transition">
+                                    <td class="p-2 font-mono text-[10px] text-amber-400 font-bold">1</td>
+                                    <td class="p-2"><div class="font-bold text-slate-200 text-[11px]">ESP32-S3-WROOM-1</div><div class="text-[9px] text-slate-400">Dual-core Xtensa 240MHz, 8MB PSRAM, 16MB Flash</div></td>
+                                    <td class="p-2 text-[10px] text-slate-300">Main edge processing, sensor polling &amp; power gating</td>
+                                    <td class="p-2 font-mono text-[10px] text-emerald-400">IP67 Enclosure</td>
+                                    <td class="p-2 font-mono text-[11px] text-right font-bold text-amber-300">₹420</td>
+                                </tr>
+                                <tr class="border-b border-slate-800/60 hover:bg-slate-900/40 transition">
+                                    <td class="p-2 font-mono text-[10px] text-amber-400 font-bold">2</td>
+                                    <td class="p-2"><div class="font-bold text-slate-200 text-[11px]">Semtech SX1262 LoRa Transceiver</div><div class="text-[9px] text-slate-400">865-867 MHz IN865 band, +22dBm output, -148dBm sens</div></td>
+                                    <td class="p-2 text-[10px] text-slate-300">Long-range valley mesh telemetry transmission</td>
+                                    <td class="p-2 font-mono text-[10px] text-emerald-400">IP67 Enclosure</td>
+                                    <td class="p-2 font-mono text-[11px] text-right font-bold text-amber-300">₹580</td>
+                                </tr>
+                                <tr class="border-b border-slate-800/60 hover:bg-slate-900/40 transition">
+                                    <td class="p-2 font-mono text-[10px] text-amber-400 font-bold">3</td>
+                                    <td class="p-2"><div class="font-bold text-slate-200 text-[11px]">Submersible Piezoresistive Pressure Transducer</div><div class="text-[9px] text-slate-400">0-200 kPa range, 4-20mA loop, 0.25% FS accuracy</div></td>
+                                    <td class="p-2 text-[10px] text-slate-300">Pore-water pressure (u) telemetry &amp; water table depth</td>
+                                    <td class="p-2 font-mono text-[10px] text-emerald-400">IP68 Submersible</td>
+                                    <td class="p-2 font-mono text-[11px] text-right font-bold text-amber-300">₹3,800</td>
+                                </tr>
+                                <tr class="border-b border-slate-800/60 hover:bg-slate-900/40 transition">
+                                    <td class="p-2 font-mono text-[10px] text-amber-400 font-bold">4</td>
+                                    <td class="p-2"><div class="font-bold text-slate-200 text-[11px]">Frequency Domain Reflectometry (FDR) Soil Probe</div><div class="text-[9px] text-slate-400">0-100% Volumetric Water Content (VWC), 70MHz probe</div></td>
+                                    <td class="p-2 text-[10px] text-slate-300">Soil moisture saturation &amp; matric suction dynamics</td>
+                                    <td class="p-2 font-mono text-[10px] text-emerald-400">IP68 Submersible</td>
+                                    <td class="p-2 font-mono text-[11px] text-right font-bold text-amber-300">₹1,450</td>
+                                </tr>
+                                <tr class="border-b border-slate-800/60 hover:bg-slate-900/40 transition">
+                                    <td class="p-2 font-mono text-[10px] text-amber-400 font-bold">5</td>
+                                    <td class="p-2"><div class="font-bold text-slate-200 text-[11px]">MPU-6050 Dual-Axis MEMS Tilt Inclinometer</div><div class="text-[9px] text-slate-400">±0.02° precision, 16-bit ADC, I2C digital output</div></td>
+                                    <td class="p-2 text-[10px] text-slate-300">Surface slope tilting and progressive creep monitoring</td>
+                                    <td class="p-2 font-mono text-[10px] text-emerald-400">IP67 Enclosure</td>
+                                    <td class="p-2 font-mono text-[11px] text-right font-bold text-amber-300">₹320</td>
+                                </tr>
+                                <tr class="border-b border-slate-800/60 hover:bg-slate-900/40 transition">
+                                    <td class="p-2 font-mono text-[10px] text-amber-400 font-bold">6</td>
+                                    <td class="p-2"><div class="font-bold text-slate-200 text-[11px]">Tipping Bucket Precipitation Gauge</div><div class="text-[9px] text-slate-400">0.2 mm/tip resolution, magnetic reed switch, gold-plated contacts</div></td>
+                                    <td class="p-2 text-[10px] text-slate-300">Real-time intensity (mm/hr) &amp; 24h/72h antecedent rainfall</td>
+                                    <td class="p-2 font-mono text-[10px] text-emerald-400">IP65 Outdoor</td>
+                                    <td class="p-2 font-mono text-[11px] text-right font-bold text-amber-300">₹2,800</td>
+                                </tr>
+                                <tr class="border-b border-slate-800/60 hover:bg-slate-900/40 transition">
+                                    <td class="p-2 font-mono text-[10px] text-amber-400 font-bold">7</td>
+                                    <td class="p-2"><div class="font-bold text-slate-200 text-[11px]">BME280 Atmospheric Sensor</div><div class="text-[9px] text-slate-400">Barometric pressure (300-1100 hPa), temp, rel humidity</div></td>
+                                    <td class="p-2 text-[10px] text-slate-300">Microclimate compensation and elevation barometry</td>
+                                    <td class="p-2 font-mono text-[10px] text-emerald-400">IP67 Enclosure</td>
+                                    <td class="p-2 font-mono text-[11px] text-right font-bold text-amber-300">₹240</td>
+                                </tr>
+                                <tr class="border-b border-slate-800/60 hover:bg-slate-900/40 transition">
+                                    <td class="p-2 font-mono text-[10px] text-amber-400 font-bold">8</td>
+                                    <td class="p-2"><div class="font-bold text-slate-200 text-[11px]">LiFePO4 3.2V 6000mAh Battery Pack</div><div class="text-[9px] text-slate-400">2000+ cycle life, -20°C to +65°C operating range, 19.2 Wh</div></td>
+                                    <td class="p-2 text-[10px] text-slate-300">14.8-day zero-sunlight monsoonal autonomous reserve</td>
+                                    <td class="p-2 font-mono text-[10px] text-emerald-400">Internal</td>
+                                    <td class="p-2 font-mono text-[11px] text-right font-bold text-amber-300">₹1,850</td>
+                                </tr>
+                                <tr class="border-b border-slate-800/60 hover:bg-slate-900/40 transition">
+                                    <td class="p-2 font-mono text-[10px] text-amber-400 font-bold">9</td>
+                                    <td class="p-2"><div class="font-bold text-slate-200 text-[11px]">10W Monocrystalline Solar Panel + MPPT</div><div class="text-[9px] text-slate-400">CN3791 MPPT charging controller, tempered glass laminate</div></td>
+                                    <td class="p-2 text-[10px] text-slate-300">Continuous daytime energy harvesting &amp; battery conditioning</td>
+                                    <td class="p-2 font-mono text-[10px] text-emerald-400">IP67 Outdoor</td>
+                                    <td class="p-2 font-mono text-[11px] text-right font-bold text-amber-300">₹1,950</td>
+                                </tr>
+                                <tr class="border-b border-slate-800/60 hover:bg-slate-900/40 transition">
+                                    <td class="p-2 font-mono text-[10px] text-amber-400 font-bold">10</td>
+                                    <td class="p-2"><div class="font-bold text-slate-200 text-[11px]">IP67 Die-Cast Polycarbonate Enclosure</div><div class="text-[9px] text-slate-400">Silicone gasket, stainless PG9 glands, UV resistant</div></td>
+                                    <td class="p-2 text-[10px] text-slate-300">Harsh mountain weatherproofing &amp; rockfall resistance</td>
+                                    <td class="p-2 font-mono text-[10px] text-emerald-400">IP67 Certified</td>
+                                    <td class="p-2 font-mono text-[11px] text-right font-bold text-amber-300">₹1,640</td>
+                                </tr>
+                                <tr class="border-b border-slate-800/60 hover:bg-slate-900/40 transition">
+                                    <td class="p-2 font-mono text-[10px] text-amber-400 font-bold">11</td>
+                                    <td class="p-2"><div class="font-bold text-slate-200 text-[11px]">Galvanized Ground Stanchion &amp; Mount Rig</div><div class="text-[9px] text-slate-400">Hot-dip galvanized 1.5m steel mast with rock anchor bolts</div></td>
+                                    <td class="p-2 text-[10px] text-slate-300">Rigid mechanical anchoring into Himalayan bedrock</td>
+                                    <td class="p-2 font-mono text-[10px] text-emerald-400">IS-2062 Grade</td>
+                                    <td class="p-2 font-mono text-[11px] text-right font-bold text-amber-300">₹1,800</td>
+                                </tr>
+                            </tbody>
+                            <tfoot class="bg-slate-900/90 font-bold border-t border-slate-700">
+                                <tr>
+                                    <td colspan="4" class="p-2.5 text-right uppercase text-[11px] text-slate-300">Total Indigenous Node Cost (ex-factory):</td>
+                                    <td class="p-2.5 text-right font-mono text-sm text-amber-400 font-black">₹16,850</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <div class="text-[11px] text-slate-400 bg-slate-900/60 p-3 rounded-xl border border-slate-800 flex items-center justify-between">
+                        <span>* Includes IP67 chassis, LiFePO4 battery, MPPT solar harvester, and all geotechnical probes.</span>
+                        <span class="text-emerald-400 font-mono font-bold">Government of India Make-in-India Grade</span>
+                    </div>
+                </div>
+
+                <!-- TAB 2: Power Budget -->
+                <div id="bom-content-power" class="hidden space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-slate-900/70 p-4 rounded-xl border border-slate-800 space-y-3">
+                            <h4 class="text-xs font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1.5">
+                                <i class="ph-bold ph-gauge"></i> Daily Power Consumption Breakdown
+                            </h4>
+                            <div class="space-y-2 text-xs">
+                                <div class="flex justify-between py-1 border-b border-slate-800">
+                                    <span class="text-slate-400">Deep Sleep Current:</span>
+                                    <span class="font-mono text-emerald-400 font-bold">15 µA (ESP32-S3 ULP active)</span>
+                                </div>
+                                <div class="flex justify-between py-1 border-b border-slate-800">
+                                    <span class="text-slate-400">Sensor Sample Duty Cycle:</span>
+                                    <span class="font-mono text-slate-200">1.0 sec every 5 mins @ 45 mA</span>
+                                </div>
+                                <div class="flex justify-between py-1 border-b border-slate-800">
+                                    <span class="text-slate-400">LoRa TX Burst Duty Cycle:</span>
+                                    <span class="font-mono text-slate-200">250 ms every 5 mins @ 120 mA (+22dBm)</span>
+                                </div>
+                                <div class="flex justify-between py-1 border-b border-slate-800">
+                                    <span class="text-slate-400">Average Current Consumption:</span>
+                                    <span class="font-mono text-amber-300 font-bold">0.85 mA continuous equivalent</span>
+                                </div>
+                                <div class="flex justify-between py-1">
+                                    <span class="text-slate-400">Total Daily Energy Consumption:</span>
+                                    <span class="font-mono text-amber-400 font-bold">1.29 Wh / day</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-900/70 p-4 rounded-xl border border-slate-800 space-y-3">
+                            <h4 class="text-xs font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-1.5">
+                                <i class="ph-bold ph-sun"></i> Energy Harvesting &amp; LiFePO4 Chemistry
+                            </h4>
+                            <div class="space-y-2 text-xs">
+                                <div class="flex justify-between py-1 border-b border-slate-800">
+                                    <span class="text-slate-400">Storage Chemistry:</span>
+                                    <span class="font-mono text-slate-200">LiFePO4 (Lithium Iron Phosphate)</span>
+                                </div>
+                                <div class="flex justify-between py-1 border-b border-slate-800">
+                                    <span class="text-slate-400">Pack Capacity:</span>
+                                    <span class="font-mono text-emerald-400 font-bold">3.2V 6000 mAh (19.2 Wh)</span>
+                                </div>
+                                <div class="flex justify-between py-1 border-b border-slate-800">
+                                    <span class="text-slate-400">Solar Harvesting Panel:</span>
+                                    <span class="font-mono text-slate-200">10W Monocrystalline with CN3791 MPPT</span>
+                                </div>
+                                <div class="flex justify-between py-1 border-b border-slate-800">
+                                    <span class="text-slate-400">Operating Temperature Envelope:</span>
+                                    <span class="font-mono text-sky-400">-20°C to +65°C (Himalayan Winter Rated)</span>
+                                </div>
+                                <div class="flex justify-between py-1">
+                                    <span class="text-slate-400">Zero-Sunlight Monsoonal Run:</span>
+                                    <span class="font-mono text-emerald-400 font-bold">14.8 Days Continuous Autonomous</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 3: ESP32-S3 Pinout Matrix -->
+                <div id="bom-content-pinout" class="hidden space-y-3">
+                    <div class="overflow-x-auto border border-slate-800 rounded-xl">
+                        <table class="w-full text-left text-xs text-slate-300">
+                            <thead class="bg-slate-900/90 text-[10px] uppercase font-bold text-slate-400 border-b border-slate-800">
+                                <tr>
+                                    <th class="p-2.5">GPIO Pin</th>
+                                    <th class="p-2.5">Bus / Protocol</th>
+                                    <th class="p-2.5">Interfaced Peripheral</th>
+                                    <th class="p-2.5">Power State During Sleep</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-800/60 font-mono text-[11px]">
+                                <tr><td class="p-2 text-amber-400 font-bold">GPIO 4 / GPIO 5</td><td class="p-2 text-slate-300">I2C (SDA/SCL)</td><td class="p-2 text-slate-200">MPU-6050 Dual-Axis Inclinometer + BME280 Barometer</td><td class="p-2 text-emerald-400">VCC Gated OFF (0 µA)</td></tr>
+                                <tr><td class="p-2 text-amber-400 font-bold">GPIO 6 / 7 / 8 / 10</td><td class="p-2 text-slate-300">SPI (SCK/MISO/MOSI/NSS)</td><td class="p-2 text-slate-200">Semtech SX1262 LoRa 865MHz Radio Module</td><td class="p-2 text-sky-400">Deep Sleep Mode (1.2 µA)</td></tr>
+                                <tr><td class="p-2 text-amber-400 font-bold">GPIO 1 (ADC1_CH0)</td><td class="p-2 text-slate-300">Analog (12-bit SAR)</td><td class="p-2 text-slate-200">Pore Pressure Piezometer (via 150Ω shunt resistor)</td><td class="p-2 text-emerald-400">Power Rail Isolated</td></tr>
+                                <tr><td class="p-2 text-amber-400 font-bold">GPIO 2 (ADC1_CH1)</td><td class="p-2 text-slate-300">Analog (12-bit SAR)</td><td class="p-2 text-slate-200">Soil Moisture FDR High-Frequency Capacitive Probe</td><td class="p-2 text-emerald-400">Power Rail Isolated</td></tr>
+                                <tr><td class="p-2 text-amber-400 font-bold">GPIO 14</td><td class="p-2 text-slate-300">Hardware Interrupt INT</td><td class="p-2 text-slate-200">Tipping Bucket Rain Gauge Reed Switch (0.2mm/pulse)</td><td class="p-2 text-purple-400">Wake on Edge Trigger</td></tr>
+                                <tr><td class="p-2 text-amber-400 font-bold">GPIO 13</td><td class="p-2 text-slate-300">Digital Output (Low RDS)</td><td class="p-2 text-slate-200">P-Channel MOSFET Gate for Sensor Power Disconnect</td><td class="p-2 text-emerald-400">Active High Isolation</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- TAB 4: WPC Regulatory Clearance -->
+                <div id="bom-content-wpc" class="hidden space-y-3">
+                    <div class="bg-gradient-to-br from-slate-900 to-[#0C1526] p-4 rounded-xl border border-sky-500/30 space-y-3">
+                        <div class="flex items-center gap-2">
+                            <span class="p-1.5 rounded bg-sky-500/20 text-sky-400 border border-sky-500/40 text-lg"><i class="ph-bold ph-shield-check"></i></span>
+                            <h4 class="text-xs font-bold text-white uppercase tracking-wider">Wireless Planning &amp; Coordination (WPC) Wing &bull; Ministry of Communications</h4>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                            <div class="bg-slate-950/60 p-3 rounded-lg border border-slate-800 space-y-1">
+                                <div class="text-[10px] text-slate-400 uppercase font-bold">Statutory Gazette Rule</div>
+                                <div class="text-sky-300 font-mono font-bold">GSR 564(E) dated 30 July 2008</div>
+                                <div class="text-[11px] text-slate-400">Use of low power radio frequency devices in 865-867 MHz band</div>
+                            </div>
+                            <div class="bg-slate-950/60 p-3 rounded-lg border border-slate-800 space-y-1">
+                                <div class="text-[10px] text-slate-400 uppercase font-bold">Maximum Radiated Power</div>
+                                <div class="text-emerald-400 font-mono font-bold">1.0 Watt ERP (30 dBm)</div>
+                                <div class="text-[11px] text-slate-400">Node transmits at +22 dBm (160 mW) &bull; 100% compliant</div>
+                            </div>
+                            <div class="bg-slate-950/60 p-3 rounded-lg border border-slate-800 space-y-1">
+                                <div class="text-[10px] text-slate-400 uppercase font-bold">Modulation Spectrum</div>
+                                <div class="text-amber-300 font-mono font-bold">LoRa Chirp Spread Spectrum (CSS)</div>
+                                <div class="text-[11px] text-slate-400">Bandwidth: 125 kHz &bull; SF7-SF12 &bull; Channel spacing: 200 kHz</div>
+                            </div>
+                            <div class="bg-slate-950/60 p-3 rounded-lg border border-slate-800 space-y-1">
+                                <div class="text-[10px] text-slate-400 uppercase font-bold">Licensing Requirement</div>
+                                <div class="text-emerald-400 font-mono font-bold">Exempted / License-Free Operation</div>
+                                <div class="text-[11px] text-slate-400">Zero spectrum royalty or recurring license fee for MDoNER / SDMA</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Actions -->
+            <div class="px-5 py-3 bg-[#080D17] border-t border-slate-800 flex items-center justify-between text-xs">
+                <span class="text-slate-400 font-mono text-[11px]">PARVAT NETRA &bull; Hardware Engineering Specification v3.1</span>
+                <button onclick="closeHardwareBomModal()" class="px-4 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold transition">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. OFFICIAL NDMA / SDMA SITREP MEMO MODAL (PRINTABLE) -->
+    <div id="modal-official-sitrep" class="fixed inset-0 z-[99999] bg-black/85 backdrop-blur-sm hidden items-center justify-center p-2 sm:p-6 overflow-y-auto">
+        <div class="bg-[#0A0F18] border border-red-500/40 rounded-2xl max-w-4xl w-full max-h-[94vh] flex flex-col shadow-2xl overflow-hidden my-auto">
+            <!-- Action Toolbar (Non-Printing) -->
+            <div class="px-4 py-3 bg-[#0B132B] border-b border-slate-800 flex items-center justify-between gap-3 text-white flex-wrap no-print">
+                <div class="flex items-center gap-2">
+                    <span class="p-1.5 rounded bg-red-600/20 text-red-400 border border-red-500/40 text-lg"><i class="ph-bold ph-printer"></i></span>
+                    <span class="font-bold text-xs sm:text-sm text-slate-200">OFFICIAL GOI DISASTER MEMORANDUM &bull; SITREP DISPATCH</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <select id="sitrep-scenario-select" onchange="loadOfficialSitrep(this.value)" class="bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded px-2.5 py-1 font-mono focus:ring-1 focus:ring-amber-400">
+                        <option value="glof">GLOF Surge (Sikkim NH-10)</option>
+                        <option value="remal">Cyclone Remal (Meghalaya NH-06)</option>
+                        <option value="tupul">Tupul Railway Cut (Manipur)</option>
+                        <option value="sonapur">Sonapur Mudflow (Meghalaya)</option>
+                    </select>
+                    <button onclick="printOfficialSitrep()" class="px-3 py-1 bg-red-600 hover:bg-red-500 text-white font-bold text-xs rounded flex items-center gap-1.5 transition shadow-sm cursor-pointer">
+                        <i class="ph-bold ph-file-pdf"></i> PRINT / SAVE PDF
+                    </button>
+                    <button onclick="closeOfficialSitrepModal()" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded text-xs transition cursor-pointer">Close</button>
+                </div>
+            </div>
+
+            <!-- Printable Document Body -->
+            <div class="p-4 sm:p-8 overflow-y-auto flex-1 bg-white text-slate-900" id="official-sitrep-printable">
+                <!-- Memo Header -->
+                <div class="border-b-2 border-slate-900 pb-3 mb-4 text-center">
+                    <div class="text-[11px] font-bold tracking-widest uppercase text-slate-700">Government of India &bull; Ministry of Home Affairs</div>
+                    <div class="text-base sm:text-lg font-black uppercase tracking-wider text-red-950 mt-0.5">National Disaster Management Authority (NDMA)</div>
+                    <div class="text-xs font-semibold text-slate-800">State Emergency Operations Centre (SEOC) &bull; Joint Geotechnical Taskforce</div>
+                    <div class="mt-2 text-[10px] font-mono text-slate-600 flex items-center justify-between border-t border-slate-300 pt-1">
+                        <span>REF: <strong id="sitrep-ref-no" class="font-mono">NDMA/NER/EOC/2026/SITREP-48-GLOF</strong></span>
+                        <span>ISSUED: <strong id="sitrep-timestamp-ist" class="font-mono">2026-09-18 14:32 IST</strong></span>
+                        <span class="bg-red-800 text-white px-2 py-0.5 rounded font-bold uppercase text-[9px]">CRITICAL / LEVEL-4</span>
+                    </div>
+                </div>
+
+                <!-- Subject Line -->
+                <div class="bg-slate-100 p-2.5 rounded border-l-4 border-red-700 mb-4 text-xs">
+                    <div class="font-bold text-red-900 uppercase tracking-wide">SUBJECT: EMERGENCY DISASTER SITUATION REPORT (SITREP) &bull; IMMEDIATE ACTION DIRECTIVE</div>
+                    <div class="text-slate-800 mt-0.5"><span class="font-semibold">Incident:</span> <span id="sitrep-incident-name">South Lhonak GLOF &amp; Teesta Basin Surge</span></div>
+                    <div class="text-slate-800"><span class="font-semibold">Corridor:</span> <span id="sitrep-corridor">NH-10 Km 48 (29th Mile / Likhu Veer)</span> &bull; <span id="sitrep-state-district">Sikkim / Kalimpong</span></div>
+                </div>
+
+                <!-- Multi-Physics Evidence Box -->
+                <div class="mb-4">
+                    <div class="text-[11px] font-black uppercase text-slate-900 mb-1.5 flex items-center justify-between">
+                        <span>1. MULTI-PHYSICS CORROBORATION (2-OF-3 INDEPENDENT TRIANGULATION)</span>
+                        <span class="text-[9px] text-emerald-800 font-mono font-bold">CONFIRMED 100%</span>
+                    </div>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+                        <div class="p-2 border border-slate-300 rounded bg-slate-50">
+                            <div class="text-[9px] text-slate-600 uppercase font-bold">Signal 1: IMD Radar</div>
+                            <div id="sitrep-sig1-reading" class="font-bold font-mono text-red-900 text-xs">49.5 dBZ</div>
+                            <div class="text-[9px] text-slate-500">Intense Precipitation</div>
+                        </div>
+                        <div class="p-2 border border-slate-300 rounded bg-slate-50">
+                            <div class="text-[9px] text-slate-600 uppercase font-bold">Signal 2: PAHAD FoS</div>
+                            <div id="sitrep-sig2-reading" class="font-bold font-mono text-red-900 text-xs">FoS = 0.48</div>
+                            <div class="text-[9px] text-slate-500">Critical Slope Shear</div>
+                        </div>
+                        <div class="p-2 border border-slate-300 rounded bg-slate-50">
+                            <div class="text-[9px] text-slate-600 uppercase font-bold">Signal 3: InSAR / Creep</div>
+                            <div id="sitrep-sig3-reading" class="font-bold font-mono text-red-900 text-xs">18.4 mm/day</div>
+                            <div class="text-[9px] text-slate-500">Saito: 1.8 hrs to collapse</div>
+                        </div>
+                        <div class="p-2 border border-slate-300 rounded bg-slate-50">
+                            <div class="text-[9px] text-slate-600 uppercase font-bold">Signal 4: Edge CV</div>
+                            <div id="sitrep-sig4-reading" class="font-bold font-mono text-red-900 text-xs">42.5 mm aperture</div>
+                            <div class="text-[9px] text-slate-500">Tension crack dilation</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Evacuation & Strategic Routing -->
+                <div class="mb-4">
+                    <div class="text-[11px] font-black uppercase text-slate-900 mb-1.5">2. STRATEGIC ARTERY RESTRICTION &amp; BYPASS CORRIDORS</div>
+                    <div class="text-xs border border-slate-300 rounded p-2.5 bg-slate-50 space-y-1.5">
+                        <div class="flex items-start gap-2">
+                            <span class="px-1.5 py-0.5 bg-red-800 text-white rounded font-bold text-[9px] uppercase">SEVERED ROAD</span>
+                            <span id="sitrep-severed-road" class="font-bold text-slate-900">NH-10 at Km 48 (Teesta Valley Corridor) — CLOSED TO ALL TRAFFIC</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <span class="px-1.5 py-0.5 bg-emerald-800 text-white rounded font-bold text-[9px] uppercase">DESIGNATED BYPASS</span>
+                            <span id="sitrep-bypass-route" class="font-bold text-slate-900">NH-717A (Bagrakote &rarr; Labha &rarr; Algarah &rarr; Gangtok Corridor) — ACTIVATED</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Emergency Directives -->
+                <div class="mb-4">
+                    <div class="text-[11px] font-black uppercase text-slate-900 mb-1.5">3. TIME-CRITICAL OPERATIONAL DIRECTIVES</div>
+                    <ul id="sitrep-directives-list" class="list-decimal pl-5 text-xs text-slate-800 space-y-1">
+                        <li>Immediate suspension of civilian and heavy convoy vehicular traffic along NH-10 Km 45-52.</li>
+                        <li>SDRF &amp; Local Police to evacuate all settlements within 300m of toe slope to Designated Evacuation Centers.</li>
+                        <li>BRO Project Swastik to stage heavy recovery machinery at Melli and Rangpo bypass staging points.</li>
+                        <li>All downstream riverbed hydropower infrastructure to open sluice spillways immediately.</li>
+                    </ul>
+                </div>
+
+                <!-- Asset Staging & Cell Broadcast Summary -->
+                <div class="mb-4 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                    <div class="border border-slate-300 rounded p-2.5 bg-slate-50">
+                        <div class="text-[10px] font-bold text-slate-700 uppercase mb-1">Tactical Force Mobilization</div>
+                        <div class="space-y-1 text-[11px]">
+                            <div><strong>NDRF:</strong> <span id="sitrep-ndrf-assets">2nd Bn Forward Troop (60 Rescuers, 4 Canines)</span></div>
+                            <div><strong>BRO Heavy Plant:</strong> <span id="sitrep-bro-assets">8 Tracked Excavators, 4 Front Loaders</span></div>
+                            <div><strong>Bailey Bridging:</strong> <span id="sitrep-bridge-assets">2x 120ft Pre-engineered Bailey Bridges</span></div>
+                            <div><strong>Medical:</strong> <span id="sitrep-medical-assets">Mobile Triage Unit (Rangpo PHC)</span></div>
+                        </div>
+                    </div>
+                    <div class="border border-slate-300 rounded p-2.5 bg-slate-50">
+                        <div class="text-[10px] font-bold text-slate-700 uppercase mb-1">C-DAC Cell Broadcast Channel 4370</div>
+                        <div class="space-y-1 text-[11px]">
+                            <div><strong>Dispatched:</strong> <span id="sitrep-cb-reach" class="font-mono text-slate-800 font-bold">14,280 / 14,350 handsets (99.5%) &bull; 3.8s latency</span></div>
+                            <div><strong>Geofence Radius:</strong> 15.0 km Polygon Corridor Buffer</div>
+                            <div><strong>Language Priority:</strong> Nepali, Lepcha, Bhutia, Hindi, English</div>
+                            <div class="text-[10px] text-emerald-800 font-bold">Zero-Data Offline Broadcast: Confirmed Active</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Signatures -->
+                <div class="border-t border-slate-400 pt-4 mt-6 flex justify-between items-end text-xs">
+                    <div>
+                        <div class="text-[10px] text-slate-600 uppercase">Authenticated by:</div>
+                        <div class="font-bold text-slate-900 mt-1">Brigadier S. K. Sharma (Retd.)</div>
+                        <div class="text-[10px] text-slate-700">Duty Operations Chief &bull; North East Emergency Operations Centre</div>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-[9px] font-mono text-slate-500">PARVAT NETRA DIGITAL DISPATCH TOKEN</div>
+                        <div class="text-[10px] font-mono font-bold text-slate-800">SHA-256: 7f8a9b2c3d4e5f6a1b2c3d4e</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. 2G FEATURE PHONE SMS & CELL BROADCAST SIMULATOR MODAL -->
+    <div id="modal-feature-phone" class="fixed inset-0 z-[99999] bg-black/85 backdrop-blur-sm hidden items-center justify-center p-3 sm:p-6 overflow-y-auto">
+        <div class="bg-[#0D131F] border border-sky-500/40 rounded-2xl max-w-4xl w-full max-h-[94vh] flex flex-col shadow-2xl overflow-hidden my-auto">
+            <!-- Header -->
+            <div class="px-5 py-3.5 bg-gradient-to-r from-[#0B132B] via-[#0F1E36] to-[#0B132B] border-b border-sky-500/30 flex items-center justify-between gap-3 text-white">
+                <div class="flex items-center gap-3">
+                    <span class="p-2 rounded-lg bg-sky-500/20 text-sky-400 border border-sky-500/40 text-lg">
+                        <i class="ph-bold ph-device-mobile"></i>
+                    </span>
+                    <div>
+                        <h3 class="font-black text-base text-white tracking-wide">2G FEATURE PHONE &bull; CELL BROADCAST SIMULATOR</h3>
+                        <p class="text-xs text-slate-300">Zero-Data Offline Radio Broadcast (CH 4370) &bull; 9 Indigenous Languages &bull; TRAI &lt;160 Chars</p>
+                    </div>
+                </div>
+                <button onclick="closeFeaturePhoneModal()" class="w-8 h-8 rounded-full bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition text-lg">&times;</button>
+            </div>
+
+            <!-- Body Area (2 Columns: Realistic Handset on Left, Controls on Right) -->
+            <div class="p-4 sm:p-6 overflow-y-auto flex-1 grid grid-cols-1 md:grid-cols-12 gap-6 items-center justify-center bg-[#070B12]">
+                <!-- Left Column: Realistic 2G Phone Handset Chassis -->
+                <div class="md:col-span-6 flex justify-center">
+                    <div class="w-[260px] sm:w-[280px] bg-gradient-to-b from-[#2A303C] via-[#1E232F] to-[#141822] p-4 rounded-[36px] shadow-2xl border-4 border-slate-700 flex flex-col items-center select-none relative">
+                        <!-- Ear Speaker Grille -->
+                        <div class="w-12 h-1.5 bg-slate-900 rounded-full mb-3 border border-slate-600/50"></div>
+
+                        <!-- Screen Container with Glass Look -->
+                        <div id="phone-screen-container" class="w-full bg-[#1A2518] rounded-xl p-3 border-2 border-[#374A32] shadow-inner transition-all duration-150 relative overflow-hidden flex flex-col min-h-[220px]">
+                            <!-- Retro LCD Scanline Overlay -->
+                            <div class="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent pointer-events-none"></div>
+
+                            <!-- Screen Top Bar -->
+                            <div class="flex justify-between items-center text-[9px] font-mono text-[#76B041] border-b border-[#2D4524] pb-1 mb-2 font-bold">
+                                <span>JIO 2G / BSNL</span>
+                                <span class="flex items-center gap-1">
+                                    <span>14:32</span>
+                                    <span>📶</span>
+                                    <span>🔋</span>
+                                </span>
+                            </div>
+
+                            <!-- Broadcast Header -->
+                            <div id="phone-msg-header" class="text-[10px] font-mono font-black text-[#E5FFCC] bg-[#2E4A25] px-1.5 py-0.5 rounded text-center mb-2 tracking-tight">
+                                [EMERGENCY CELL BROADCAST • CH 4370]
+                            </div>
+
+                            <!-- Broadcast Message Text -->
+                            <div id="phone-msg-body" class="text-[12px] font-sans font-extrabold text-[#99FF33] leading-snug flex-1 flex items-center justify-center text-center p-1">
+                                चेतावनी! NH-10 Km 48 मा ठूलो पहिरोको जोखिम। तुरुन्तै सडक खाली गरी उच्च स्थानमा जानुहोस्। NH-717A बाईपास मार्ग प्रयोग गर्नुहोस्। - सिक्किम EOC
+                            </div>
+
+                            <!-- Screen Bottom Info Bar -->
+                            <div class="mt-2 pt-1 border-t border-[#2D4524] flex justify-between items-center text-[8px] font-mono text-[#76B041]">
+                                <span id="phone-char-count">148 / 160 characters</span>
+                                <span class="font-bold">URGENT</span>
+                            </div>
+                        </div>
+
+                        <!-- Handset Brand Pill -->
+                        <div class="text-[10px] font-mono font-black text-slate-500 uppercase tracking-widest my-2.5">
+                            PARVAT SENTINEL 2G
+                        </div>
+
+                        <!-- Navigation Keypad (D-Pad & Soft Keys) -->
+                        <div class="w-full grid grid-cols-3 gap-2 px-2 mb-2">
+                            <button class="h-6 bg-slate-800 hover:bg-slate-700 text-slate-400 rounded text-[9px] font-bold border border-slate-600 transition">-</button>
+                            <div class="h-7 w-7 mx-auto rounded-full bg-slate-950 border-2 border-slate-600 flex items-center justify-center text-[10px] text-amber-400 font-bold shadow">OK</div>
+                            <button class="h-6 bg-slate-800 hover:bg-slate-700 text-slate-400 rounded text-[9px] font-bold border border-slate-600 transition">-</button>
+                        </div>
+
+                        <!-- Phone Number Pad (3x4 Grid) -->
+                        <div class="w-full grid grid-cols-3 gap-1.5 px-3 py-1">
+                            <div class="bg-slate-800/90 py-1 rounded text-center text-slate-300 font-mono text-xs font-bold border border-slate-700">1</div>
+                            <div class="bg-slate-800/90 py-1 rounded text-center text-slate-300 font-mono text-xs font-bold border border-slate-700">2</div>
+                            <div class="bg-slate-800/90 py-1 rounded text-center text-slate-300 font-mono text-xs font-bold border border-slate-700">3</div>
+                            <div class="bg-slate-800/90 py-1 rounded text-center text-slate-300 font-mono text-xs font-bold border border-slate-700">4</div>
+                            <div class="bg-slate-800/90 py-1 rounded text-center text-slate-300 font-mono text-xs font-bold border border-slate-700">5</div>
+                            <div class="bg-slate-800/90 py-1 rounded text-center text-slate-300 font-mono text-xs font-bold border border-slate-700">6</div>
+                            <div class="bg-slate-800/90 py-1 rounded text-center text-slate-300 font-mono text-xs font-bold border border-slate-700">7</div>
+                            <div class="bg-slate-800/90 py-1 rounded text-center text-slate-300 font-mono text-xs font-bold border border-slate-700">8</div>
+                            <div class="bg-slate-800/90 py-1 rounded text-center text-slate-300 font-mono text-xs font-bold border border-slate-700">9</div>
+                            <div class="bg-slate-800/90 py-1 rounded text-center text-slate-300 font-mono text-xs font-bold border border-slate-700">*</div>
+                            <div class="bg-slate-800/90 py-1 rounded text-center text-slate-300 font-mono text-xs font-bold border border-slate-700">0</div>
+                            <div class="bg-slate-800/90 py-1 rounded text-center text-slate-300 font-mono text-xs font-bold border border-slate-700">#</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Interactive Language Selector & Evaluator Rig -->
+                <div class="md:col-span-6 space-y-4">
+                    <!-- Audio Test Button -->
+                    <div class="bg-slate-900/80 p-3.5 rounded-xl border border-red-500/30 flex items-center justify-between gap-3">
+                        <div>
+                            <div class="text-xs font-bold text-white flex items-center gap-1.5">
+                                <i class="ph-bold ph-speaker-high text-red-400 text-base"></i> ITU-T 960Hz Alert Chime
+                            </div>
+                            <div class="text-[10px] text-slate-400">Synthesize official handset buzzer tone</div>
+                        </div>
+                        <button onclick="testFeaturePhoneTone()" class="px-3.5 py-1.5 rounded-lg bg-red-600 hover:bg-red-500 text-white font-bold text-xs flex items-center gap-1.5 transition shadow-sm cursor-pointer">
+                            <i class="ph-bold ph-play"></i> SOUND BUZZER
+                        </button>
+                    </div>
+
+                    <!-- 9-Language Selector -->
+                    <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-800 space-y-2.5">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1.5">
+                                <i class="ph-bold ph-translate"></i> 9 Northeast Indigenous Languages
+                            </span>
+                            <span id="phone-lang-badge" class="px-2 py-0.5 rounded text-[9px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">
+                                NE-BERT &bull; SIKKIM
+                            </span>
+                        </div>
+                        <p class="text-[11px] text-slate-400">Click any language to demonstrate zero-data localized emergency broadcast under 160 characters:</p>
+
+                        <!-- Language Grid Buttons -->
+                        <div class="grid grid-cols-3 gap-1.5 pt-1">
+                            <button onclick="setFeaturePhoneLang('ne')" data-lang="ne" class="phone-lang-btn py-1.5 px-2 rounded text-xs font-semibold bg-amber-500 text-slate-950 font-bold border border-slate-700 transition hover:bg-amber-400 cursor-pointer">
+                                Nepali (नेपाली)
+                            </button>
+                            <button onclick="setFeaturePhoneLang('hi')" data-lang="hi" class="phone-lang-btn py-1.5 px-2 rounded text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700 transition hover:bg-slate-700 cursor-pointer">
+                                Hindi (हिन्दी)
+                            </button>
+                            <button onclick="setFeaturePhoneLang('en')" data-lang="en" class="phone-lang-btn py-1.5 px-2 rounded text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700 transition hover:bg-slate-700 cursor-pointer">
+                                English
+                            </button>
+                            <button onclick="setFeaturePhoneLang('lep')" data-lang="lep" class="phone-lang-btn py-1.5 px-2 rounded text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700 transition hover:bg-slate-700 cursor-pointer">
+                                Lepcha (ᰛᰩᰵ)
+                            </button>
+                            <button onclick="setFeaturePhoneLang('as')" data-lang="as" class="phone-lang-btn py-1.5 px-2 rounded text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700 transition hover:bg-slate-700 cursor-pointer">
+                                Assamese (অসমীয়া)
+                            </button>
+                            <button onclick="setFeaturePhoneLang('bn')" data-lang="bn" class="phone-lang-btn py-1.5 px-2 rounded text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700 transition hover:bg-slate-700 cursor-pointer">
+                                Bengali (বাংলা)
+                            </button>
+                            <button onclick="setFeaturePhoneLang('lus')" data-lang="lus" class="phone-lang-btn py-1.5 px-2 rounded text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700 transition hover:bg-slate-700 cursor-pointer">
+                                Mizo (Mizo)
+                            </button>
+                            <button onclick="setFeaturePhoneLang('kha')" data-lang="kha" class="phone-lang-btn py-1.5 px-2 rounded text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700 transition hover:bg-slate-700 cursor-pointer">
+                                Khasi (Khasi)
+                            </button>
+                            <button onclick="setFeaturePhoneLang('gar')" data-lang="gar" class="phone-lang-btn py-1.5 px-2 rounded text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700 transition hover:bg-slate-700 cursor-pointer">
+                                Garo (A·chik)
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Technical Invariants Box -->
+                    <div class="bg-slate-900/60 p-3.5 rounded-xl border border-slate-800 text-[11px] text-slate-400 space-y-1.5">
+                        <div class="text-slate-300 font-bold flex items-center gap-1 text-xs">
+                            <i class="ph-bold ph-info text-sky-400"></i> SIH Grand Finale Architectural Invariant
+                        </div>
+                        <div>&bull; <strong>Zero Mobile Data Required:</strong> Received even when cellular mobile data is switched OFF or SIM balance is ₹0.00.</div>
+                        <div>&bull; <strong>Channel 4370:</strong> Mandated by DoT / NDMA for Extreme National Disaster Cell Broadcast.</div>
+                        <div>&bull; <strong>Latency:</strong> Dispatched in &lt;4.0 seconds to 14,000+ handsets in the 15km corridor buffer.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="px-5 py-3 bg-[#080D17] border-t border-slate-800 flex items-center justify-between text-xs">
+                <span class="text-slate-400 font-mono text-[11px]">PARVAT NETRA &bull; C-DAC &amp; DoT Cell Broadcast Subsystem</span>
+                <button onclick="closeFeaturePhoneModal()" class="px-4 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold transition cursor-pointer">Close</button>
             </div>
         </div>
     </div>
@@ -3287,5 +3895,6 @@
             refreshJournal();
         });
     </script>
+    <script src="/static/js/winning_modals.js"></script>
 </body>
 </html>
