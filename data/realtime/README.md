@@ -1,9 +1,9 @@
 # Real-Time Multimodal CRI Dataset Directory
 `data/realtime/`
 
-**Generated At:** 2026-09-18T17:26:56.340474+00:00  
+**Generated At:** 2026-09-19T17:18:32.481684+00:00  
 **Sectors Covered:** 20 corridors across 8 North-Eastern states  
-**Dataset SHA-256:** `c8eaf957a71e57c255b4666a2410e906c44e91284896fc363cd4a68841bdee2f`  
+**Dataset SHA-256:** `bc3ce881feba83b8c89fbbc3fae6a00deac38ff83e8c0b0c26197dfe17d7be9f`  
 
 ### Available Files:
 1. `realtime_cri_dataset.csv`: Standardized tabular dataset with 50+ real-time telemetry, geotechnical, and risk attributes.
