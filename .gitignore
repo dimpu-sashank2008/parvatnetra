@@ -107,3 +107,16 @@ local.properties
 **/android/local.properties
 
 .vercel
+
+# ==========================================
+# PAHAD LSTM PRIVATE TRAINING ARTIFACTS
+# CRITICAL: These files contain trained model weights and must NEVER be
+# committed to any public repository. They remain local-only until the
+# user explicitly approves making the trained model public.
+# ==========================================
+models/pahad_lstm_private_weights.pkl
+models/pahad_lstm_private_metrics.json
+models/pahad_lstm_private_weights_*.pkl
+models/pahad_lstm_private_metrics_*.json
+models/_lstm_private*/
+scripts/_audit_db.py

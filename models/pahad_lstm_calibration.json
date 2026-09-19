@@ -1,0 +1,29 @@
+{
+  "calibration_version": "1.0.0",
+  "calibrated_at": "2026-09-19T16:21:00.636697+00:00",
+  "note": "Physics surrogate parameter calibration only. NOT deep-learning training. model_status remains NOT_TRAINED.",
+  "model_status": "NOT_TRAINED",
+  "surrogate_type": "MATHEMATICAL_SURROGATE",
+  "constants": {
+    "saturation_half_life_h": 39,
+    "velocity_scale": 0.005
+  },
+  "default_constants": {
+    "saturation_half_life_h": 18.0,
+    "velocity_scale": 0.048
+  },
+  "calibration_metrics": {
+    "baseline_brier": 0.310762,
+    "calibrated_brier": 0.205135,
+    "brier_improvement": 0.105627
+  },
+  "data": {
+    "train_samples": 16,
+    "val_samples": 12,
+    "positive_samples": 12,
+    "negative_samples": 16,
+    "train_hash": "79ece554fd0d2fc6",
+    "val_hash": "ed732e2054f1b028"
+  },
+  "seed": 42
+}

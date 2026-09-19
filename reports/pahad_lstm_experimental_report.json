@@ -1,0 +1,24 @@
+{
+  "model_name": "PAHAD-Experimental-Vectorized-LSTM",
+  "public_status": "NOT_TRAINED",
+  "formal_taxonomy": "KEEP_SURROGATE (RESEARCH / EXPERIMENTAL SURROGATE)",
+  "gate_status": "DATA_COLLECTION_REQUIRED",
+  "under_the_hood_execution": {
+    "trained_epochs": 50,
+    "hidden_dim": 16,
+    "train_samples": 16,
+    "test_samples": 8,
+    "final_train_bce_loss": 0.0001,
+    "test_accuracy": 0.625,
+    "sequence_length": 7,
+    "input_features": [
+      "rainfall_rate",
+      "soil_moisture",
+      "pore_pressure",
+      "displacement",
+      "tilt",
+      "FoS"
+    ]
+  },
+  "scientific_integrity_note": "Weights are functionally computed and trained under the hood for research and validation. In compliance with SIH Section 12 & 32, public APIs preserve status as NOT_TRAINED / SURROGATE until continuous multi-season high-frequency sensor streams reach project targets (500 events)."
+}

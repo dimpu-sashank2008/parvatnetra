@@ -145,3 +145,9 @@ def test_css_pulse_and_active_classes_synchronized(theme_css_content, public_the
         assert '.eoc-nav-item.active' in css, f".eoc-nav-item.active missing in {name} CSS"
         assert '.eoc-nav-highlighted' in css, f".eoc-nav-highlighted missing in {name} CSS"
         assert '@keyframes eocTargetPulse' in css, f"@keyframes eocTargetPulse missing in {name} CSS"
+
+
+def test_sidebar_github_link_present(index_html_content):
+    assert 'href="https://github.com/dimpu-sashank2008/parvatnetra"' in index_html_content
+    assert 'id="nav-item-github"' in index_html_content
+    assert 'ph-github-logo' in index_html_content
