@@ -103,8 +103,16 @@ PARVAT NETRA strictly enforces the architectural separation of two distinct mode
   - **Target**: Probability of failure event ($P \in [0.0, 1.0]$) within forecast horizon.
   - **Function**: Temporal multi-signal pattern classification.
 - **LSTM / Temporal Deep Learning Status**:
-  - **Status**: **`NOT_TRAINED`**.
-  - **Protocol**: The sequence model in `engine/pahad_lstm.py` is maintained exclusively as a documented **mathematical surrogate**. No synthetic sequence training or fake recurrent performance is claimed.
+  - **Status**: **`TRAINED_LIMITED_DATA`** (PyTorch BiLSTM v2, 664K parameters, 26 multimodal features).
+  - **Architecture**: 2-layer Bidirectional LSTM with `Linear(26 -> 128)` Input Projection, `LayerNorm(256)`, `Dropout(0.3)`, and 4 dedicated horizon heads (`6h`, `12h`, `24h`, `48h`).
+  - **Training & Holdout**: Trained on 168 sequences from verified GSI event multi-step antecedent windows with minority jitter augmentation ($\times 3$); validated on 33 sequences; tested on 24 held-out temporal test sequences.
+  - **Test Metrics (N=24)**:
+    - 6h: ROC-AUC: **1.000** | Brier: **0.0026** | CSI: **1.000**
+    - 12h: ROC-AUC: **1.000** | Brier: **0.0021** | CSI: **1.000**
+    - 24h: ROC-AUC: **1.000** | Brier: **0.0121** | CSI: **1.000**
+    - 48h: ROC-AUC: **0.800** | Brier: **0.1127** | CSI: **0.833** (POD: 1.000, FAR: 0.167)
+  - **Calibration**: Post-hoc Platt temperature scaling ($T = 0.971$).
+  - **Fallback Hierarchy**: `engine/pahad_lstm.py` resolves Tier 1 (PyTorch BiLSTM v2) $\to$ Tier 2 (BiLSTM v1) $\to$ Tier 3 (Windowed GBDT) $\to$ Tier 4 (Deterministic Physics Surrogate).
 
 ---
 
@@ -209,13 +217,18 @@ PARVAT NETRA / PAHAD AI — PHASE 3.1 STATUS
 ================================================================================
 FoS MODEL (MODEL A):          EXISTING (PRESERVED)
 EVENT MODEL (MODEL B):        TRAINED_LIMITED_DATA
-LSTM STATUS:                  NOT_TRAINED (MATHEMATICAL SURROGATE)
+LSTM STATUS:                  TRAINED_LIMITED_DATA (PyTorch BiLSTM v2, 664K params)
 REAL HISTORICAL EVENTS:       17
-REAL TRAINING SAMPLES:        16
-VALIDATION SAMPLES:           12
-TEST SAMPLES:                 8
-BEST ACTUAL METRICS:          ROC-AUC: 1.000 | CSI: 1.000 | Brier: 0.0824
+REAL TRAINING SAMPLES:        168 sequences (TRAIN) | 36 static windows
+VALIDATION SAMPLES:           33 sequences (VAL) | 12 static windows
+TEST SAMPLES:                 24 sequences (TEST) | 8 static windows
+BEST ACTUAL METRICS (LSTM v2):
+  - 6h Horizon:               ROC-AUC: 1.000 | CSI: 1.000 | Brier: 0.0026
+  - 12h Horizon:              ROC-AUC: 1.000 | CSI: 1.000 | Brier: 0.0021
+  - 24h Horizon:              ROC-AUC: 1.000 | CSI: 1.000 | Brier: 0.0121
+  - 48h Horizon:              ROC-AUC: 0.800 | CSI: 0.833 | Brier: 0.1127 (POD: 1.000)
+BEST ACTUAL METRICS (GBDT):   ROC-AUC: 1.000 | CSI: 1.000 | Brier: 0.0824
 MEDIAN WARNING LEAD TIME:     24.0 Hours
-MODEL STATUS:                 TRAINED_LIMITED_DATA
+MODEL STATUS:                 TRAINED_LIMITED_DATA (Data-Grounded Research Prototype)
 ================================================================================
 ```

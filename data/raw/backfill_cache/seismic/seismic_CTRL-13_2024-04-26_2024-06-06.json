@@ -1,0 +1,82 @@
+[
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4.1,
+      "place": "35 km NW of Nongstoin, India",
+      "time": 1717122009465,
+      "updated": 1722976371040,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000mqqy",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us7000mqqy&format=geojson",
+      "felt": null,
+      "cdi": null,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 259,
+      "net": "us",
+      "code": "7000mqqy",
+      "ids": ",us7000mqqy,",
+      "sources": ",us,",
+      "types": ",origin,phase-data,",
+      "nst": 16,
+      "dmin": 3.096,
+      "rms": 1.12,
+      "gap": 124,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.1 - 35 km NW of Nongstoin, India"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        91.0047,
+        25.7318,
+        41.021
+      ]
+    },
+    "id": "us7000mqqy"
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4,
+      "place": "91 km NE of Tawang, India",
+      "time": 1714398948298,
+      "updated": 1721015935040,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000mwzs",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us6000mwzs&format=geojson",
+      "felt": null,
+      "cdi": null,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 246,
+      "net": "us",
+      "code": "6000mwzs",
+      "ids": ",us6000mwzs,",
+      "sources": ",us,",
+      "types": ",origin,phase-data,",
+      "nst": 27,
+      "dmin": 2.028,
+      "rms": 0.84,
+      "gap": 165,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.0 - 91 km NE of Tawang, India"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        92.6067,
+        28.1382,
+        10
+      ]
+    },
+    "id": "us6000mwzs"
+  }
+]

@@ -1,0 +1,122 @@
+[
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4.1,
+      "place": "58 km WNW of Monywa, Myanmar",
+      "time": 1725886006822,
+      "updated": 1732229933040,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000ny32",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us6000ny32&format=geojson",
+      "felt": null,
+      "cdi": null,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 259,
+      "net": "us",
+      "code": "6000ny32",
+      "ids": ",us6000ny32,",
+      "sources": ",us,",
+      "types": ",origin,phase-data,",
+      "nst": 21,
+      "dmin": 1.19,
+      "rms": 0.81,
+      "gap": 136,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.1 - 58 km WNW of Monywa, Myanmar"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        94.6407,
+        22.3738,
+        122.947
+      ]
+    },
+    "id": "us6000ny32"
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4.2,
+      "place": "56 km SSE of Phek, India",
+      "time": 1723676805518,
+      "updated": 1729957714040,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000n729",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us7000n729&format=geojson",
+      "felt": null,
+      "cdi": null,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 271,
+      "net": "us",
+      "code": "7000n729",
+      "ids": ",us7000n729,",
+      "sources": ",us,",
+      "types": ",origin,phase-data,",
+      "nst": 47,
+      "dmin": 3.719,
+      "rms": 0.65,
+      "gap": 101,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.2 - 56 km SSE of Phek, India"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        94.6614,
+        25.1793,
+        10
+      ]
+    },
+    "id": "us7000n729"
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4.4,
+      "place": "65 km NNE of Mawlaik, Myanmar",
+      "time": 1723037763663,
+      "updated": 1729792640040,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000niqj",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us6000niqj&format=geojson",
+      "felt": null,
+      "cdi": null,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 298,
+      "net": "us",
+      "code": "6000niqj",
+      "ids": ",us6000niqj,",
+      "sources": ",us,",
+      "types": ",origin,phase-data,",
+      "nst": 90,
+      "dmin": 3.15,
+      "rms": 0.53,
+      "gap": 53,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.4 - 65 km NNE of Mawlaik, Myanmar"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        94.6559,
+        24.1886,
+        87.298
+      ]
+    },
+    "id": "us6000niqj"
+  }
+]

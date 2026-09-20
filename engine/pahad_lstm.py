@@ -33,6 +33,8 @@ log = logging.getLogger(__name__)
 
 # ─── Artifact Paths ───────────────────────────────────────────────────────────
 _BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+_PYTORCH_V4_PATH  = os.path.join(_BASE_DIR, "models", "pahad_lstm_v4_weights.pt")
+_PYTORCH_V3_PATH  = os.path.join(_BASE_DIR, "models", "pahad_lstm_v3_weights.pt")
 _PYTORCH_V2_PATH  = os.path.join(_BASE_DIR, "models", "pahad_lstm_v2_weights.pt")
 _PYTORCH_V1_PATH  = os.path.join(_BASE_DIR, "models", "pahad_lstm_real_weights.pt")
 _GBDT_WEIGHTS_PATH = os.path.join(_BASE_DIR, "models", "pahad_lstm_private_weights.pkl")
@@ -53,16 +55,6 @@ _TREND_FALL_THRESHOLD: float = -0.15
 _ACTIVE_ENGINE: Optional[dict] = None
 _LOAD_ATTEMPTED: bool = False
 
-# ─── V2 Feature list (26 features, must match train_lstm_v2.py) ───────────────
-_V2_FEATURE_COLS = [
-    "rain_1h", "rain_3h", "rain_6h", "rain_12h", "rain_24h", "rain_48h", "rain_72h",
-    "antecedent_rain_3d", "antecedent_rain_7d", "rain_intensity",
-    "rainfall_threshold_exceedance", "fos", "slope", "aspect", "elevation",
-    "curvature", "soil_moisture", "pore_pressure", "tilt", "ground_displacement",
-    "ndvi", "ndvi_anomaly", "seismic_count_24h", "max_magnitude_24h",
-    "nearest_seismic_distance", "historical_susceptibility",
-]
-
 
 def _try_load_pytorch(weights_path: str, version: str) -> Optional[dict]:
     """Load a PAHADBiLSTM checkpoint. Returns engine dict or None."""
@@ -79,7 +71,57 @@ def _try_load_pytorch(weights_path: str, version: str) -> Optional[dict]:
         n_layers= config.get("num_layers", 2)
         dropout = config.get("dropout", 0.25)
 
-        if version == "v2":
+        if version in ("v3", "v4"):
+            class TemporalAttention(nn.Module):
+                def __init__(self, in_features: int):
+                    super().__init__()
+                    self.att_linear = nn.Sequential(
+                        nn.Linear(in_features, in_features // 2),
+                        nn.Tanh(),
+                        nn.Linear(in_features // 2, 1),
+                    )
+                def forward(self, x: torch.Tensor) -> torch.Tensor:
+                    scores = self.att_linear(x)
+                    weights = torch.softmax(scores, dim=1)
+                    return torch.sum(x * weights, dim=1)
+
+            class PAHADBiLSTMv3(nn.Module):
+                def __init__(self):
+                    super().__init__()
+                    self.input_proj = nn.Sequential(
+                        nn.Linear(n_feat, hidden),
+                        nn.LayerNorm(hidden),
+                        nn.GELU(),
+                        nn.Dropout(0.2),
+                    )
+                    self.lstm = nn.LSTM(
+                        input_size=hidden, hidden_size=hidden,
+                        num_layers=n_layers, batch_first=True,
+                        bidirectional=True, dropout=dropout if n_layers > 1 else 0.0,
+                    )
+                    self.layer_norm = nn.LayerNorm(hidden * 2)
+                    self.attention  = TemporalAttention(hidden * 2)
+                    self.dropout    = nn.Dropout(0.3)
+                    self.heads      = nn.ModuleDict({
+                        h: nn.Sequential(
+                            nn.Linear(hidden * 2, hidden),
+                            nn.GELU(),
+                            nn.Dropout(0.2),
+                            nn.Linear(hidden, 1),
+                        )
+                        for h in ["6h", "12h", "24h", "48h"]
+                    })
+                def forward(self, x):
+                    p = self.input_proj(x)
+                    out, _ = self.lstm(p)
+                    out = self.layer_norm(out)
+                    ctx = self.attention(out)
+                    ctx = self.dropout(ctx)
+                    return {h: self.heads[h](ctx).squeeze(-1) for h in ["6h", "12h", "24h", "48h"]}
+
+            model = PAHADBiLSTMv3()
+
+        elif version == "v2":
             class PAHADBiLSTMv2(nn.Module):
                 def __init__(self):
                     super().__init__()
@@ -100,6 +142,7 @@ def _try_load_pytorch(weights_path: str, version: str) -> Optional[dict]:
                     return {h: self.heads[h](last).squeeze(-1) for h in ["6h", "12h", "24h", "48h"]}
 
             model = PAHADBiLSTMv2()
+
         else:
             class PAHADBiLSTMv1(nn.Module):
                 def __init__(self):
@@ -137,42 +180,64 @@ def _try_load_pytorch(weights_path: str, version: str) -> Optional[dict]:
         return None
 
 
-def _load_engine() -> Optional[dict]:
-    """Lazy-loads the highest-tier available engine (v2 → v1 → GBDT → None)."""
+def _load_engine(force_version: Optional[str] = None) -> Optional[dict]:
+    """Lazy-loads the requested or highest-tier available engine.
+    Respects PAHAD_LSTM_MODEL_VERSION environment variable (defaults to 'v3' for production safety, accepts 'v4' for shadow testing).
+    """
     global _ACTIVE_ENGINE, _LOAD_ATTEMPTED
-    if _LOAD_ATTEMPTED:
+    target_ver = (force_version or os.environ.get("PAHAD_LSTM_MODEL_VERSION", "v3")).lower().strip()
+    if _LOAD_ATTEMPTED and _ACTIVE_ENGINE and _ACTIVE_ENGINE.get("version") == target_ver:
         return _ACTIVE_ENGINE
     _LOAD_ATTEMPTED = True
 
-    # Tier 1: BiLSTM v2 (26 features, hidden=128) — best model
+    # Shadow Evaluation: If v4 explicitly requested
+    if target_ver == "v4":
+        engine = _try_load_pytorch(_PYTORCH_V4_PATH, "v4")
+        if engine:
+            log.info("[PAHAD-LSTM] Experimental v4 Research Checkpoint online — %d features, Attention, T=%.3f",
+                     engine["n_features"], engine["temperature"])
+            _ACTIVE_ENGINE = engine
+            return engine
+        log.warning("[PAHAD-LSTM] Requested v4 but weights not found; falling back to v3")
+
+    # Tier 1: BiLSTM v3 (Default Primary Production Research Model)
+    if target_ver in ("v3", "") or target_ver == "v4":
+        engine = _try_load_pytorch(_PYTORCH_V3_PATH, "v3")
+        if engine:
+            log.info("[PAHAD-LSTM] Tier 1: BiLSTM v3 Grand Multimodal online — %d features, Attention, T=%.3f",
+                     engine["n_features"], engine["temperature"])
+            _ACTIVE_ENGINE = engine
+            return engine
+
+    # Tier 2: BiLSTM v2 (26 features, hidden=128, 664K params)
     engine = _try_load_pytorch(_PYTORCH_V2_PATH, "v2")
     if engine:
-        log.info("[PAHAD-LSTM] Tier 1: BiLSTM v2 online — %d features, hash=%s…, T=%.3f",
+        log.info("[PAHAD-LSTM] Tier 2: BiLSTM v2 online — %d features, hash=%s…, T=%.3f",
                  engine["n_features"], str(engine["dataset_hash"])[:16], engine["temperature"])
         _ACTIVE_ENGINE = engine
         return engine
 
-    # Tier 2: BiLSTM v1 (3 features, hidden=64)
+    # Tier 3: BiLSTM v1 (3 features, hidden=64)
     engine = _try_load_pytorch(_PYTORCH_V1_PATH, "v1")
     if engine:
-        log.info("[PAHAD-LSTM] Tier 2: BiLSTM v1 online — %d features, T=%.3f",
+        log.info("[PAHAD-LSTM] Tier 3: BiLSTM v1 online — %d features, T=%.3f",
                  engine["n_features"], engine["temperature"])
         _ACTIVE_ENGINE = engine
         return engine
 
-    # Tier 3: GBDT Windowed Sequence
+    # Tier 4: GBDT Windowed Sequence
     if os.path.exists(_GBDT_WEIGHTS_PATH):
         try:
             with open(_GBDT_WEIGHTS_PATH, "rb") as fh:
                 gbdt_artifact = pickle.load(fh)
             _ACTIVE_ENGINE = {"type": "GBDT_WINDOWED", "artifact": gbdt_artifact,
                               "dataset_hash": gbdt_artifact.get("dataset_hash", "")}
-            log.info("[PAHAD-LSTM] Tier 3: GBDT Windowed online")
+            log.info("[PAHAD-LSTM] Tier 4: GBDT Windowed online")
             return _ACTIVE_ENGINE
         except Exception as exc:
             log.warning("[PAHAD-LSTM] GBDT load failed (%s)", exc)
 
-    log.info("[PAHAD-LSTM] Tier 4: Physics-informed Mathematical Surrogate active")
+    log.info("[PAHAD-LSTM] Tier 5: Physics-informed Mathematical Surrogate active")
     _ACTIVE_ENGINE = None
     return None
 
@@ -196,7 +261,10 @@ class ForecastResult:
             nf  = engine.get("n_features", 3)
             model_status   = "TRAINED_LIMITED_DATA"
             surrogate_type = f"PYTORCH_BILSTM_{ver}_{nf}F_TEMPORAL_SEQUENCE"
-            provenance     = f"[HISTORICAL+LIVE] PAHAD BiLSTM {ver} ({nf}-Feature) Temporal Sequence Model v3.2 — GSI NER Events"
+            if ver == "V4":
+                provenance     = f"[HISTORICAL+LIVE] PAHAD BiLSTM {ver} ({nf}-Feature) Temporal Sequence Model v4.0 — GSI NER Events"
+            else:
+                provenance     = f"[HISTORICAL+LIVE] PAHAD BiLSTM {ver} ({nf}-Feature) Temporal Sequence Model v3.2 — GSI NER Events"
         elif engine and engine["type"] == "GBDT_WINDOWED":
             model_status   = "TRAINED_LIMITED_DATA"
             surrogate_type = "WINDOWED_GBDT_TEMPORAL_SEQUENCE"
@@ -300,7 +368,67 @@ class LSTMTemporalPredictor:
         r48 = sum(rain[-48:]) if len(rain) >= 48 else sum(rain)
         r72 = sum(rain[-72:]) if len(rain) >= 72 else sum(rain)
 
-        if version == "v2":
+        if version in ("v3", "v4"):
+            # Build (72, 33) matrix: Grand Multimodal Sequence
+            seq = np.zeros((72, 33), dtype=np.float32)
+
+            # Col 0: rainfall_1h trajectory
+            n_rain = min(len(rain), 72)
+            seq[72 - n_rain:, 0] = rain[-n_rain:]
+
+            # Cols 1-10: multi-scale precipitation
+            api3d  = float(sf.get("API_3d", r72 * 1.2))
+            api7d  = float(sf.get("API_7d", r72 * 1.5))
+            api30d = float(sf.get("API_30d", api7d * 2.0))
+            ri     = r1
+            for col_i, val in enumerate([r3, r6, r12, r24, r48, r72, api3d, api7d, api30d, ri]):
+                seq[:, col_i + 1] = val
+
+            # Cols 11-16: soil porosity & geotechnics
+            porosity_val = float(sf.get("soil_porosity", 0.42))
+            pp_val = float(sf.get("pore_pressure", am * 35.0))
+            eff_stress = max(5.0, 36.0 - pp_val)
+            hyd_sat = min(1.0, am / max(porosity_val, 0.1))
+            fos_start = min(fos_val * 1.5, 2.8) if fos_val < 1.5 else fos_val
+            seq[:, 11] = np.linspace(fos_start, fos_val, 72)
+            seq[:, 12] = np.linspace(max(am * 0.4, 0.08), am, 72)
+            seq[:, 13] = porosity_val
+            seq[:, 14] = np.linspace(max(pp_val * 0.2, 0.5), pp_val, 72)
+            seq[:, 15] = eff_stress
+            seq[:, 16] = hyd_sat
+
+            # Cols 17-20: IoT telemetry
+            tilt_val = float(sf.get("tilt", 0.18))
+            tilt_rate = float(sf.get("tilt_rate_24h", tilt_val * 0.3))
+            disp_val = float(sf.get("ground_displacement", 1.2))
+            disp_vel = float(sf.get("displacement_velocity_24h", disp_val * 0.3))
+            seq[:, 17] = np.linspace(max(tilt_val * 0.2, 0.02), tilt_val, 72)
+            seq[:, 18] = tilt_rate
+            seq[:, 19] = np.linspace(max(disp_val * 0.2, 0.1), disp_val, 72)
+            seq[:, 20] = disp_vel
+
+            # Cols 21-24: terrain & topography
+            seq[:, 21] = float(sf.get("slope", 36.0))
+            seq[:, 22] = float(sf.get("aspect", 180.0))
+            seq[:, 23] = float(sf.get("elevation", 750.0))
+            seq[:, 24] = float(sf.get("curvature", -0.015))
+
+            # Cols 25-27: satellite remote sensing
+            seq[:, 25] = float(sf.get("ndvi", 0.52))
+            seq[:, 26] = float(sf.get("ndvi_anomaly", -0.04 if fos_val < 1.3 else 0.0))
+            seq[:, 27] = float(sf.get("insar_velocity", -25.0 if fos_val < 1.3 else -1.5))
+
+            # Cols 28-30: seismic shaking
+            seq[:, 28] = float(sf.get("seismic_count_24h", 0.0))
+            seq[:, 29] = float(sf.get("max_magnitude_24h", 0.0))
+            seq[:, 30] = float(sf.get("nearest_seismic_distance", 999.0))
+
+            # Cols 31-32: vulnerability & composite risk
+            seq[:, 31] = float(sf.get("historical_susceptibility", 0.84))
+            seq[:, 32] = float(sf.get("composite_risk_index_cri", 75.0 if fos_val < 1.3 else 25.0))
+
+            engine_label = f"PYTORCH_BiLSTM_{version.upper()}_33F_ATTENTION_CALIBRATED"
+        elif version == "v2":
             # Build (72, 26) sequence: dynamic rain trajectory + static feature broadcast
             seq = np.zeros((72, 26), dtype=np.float32)
 

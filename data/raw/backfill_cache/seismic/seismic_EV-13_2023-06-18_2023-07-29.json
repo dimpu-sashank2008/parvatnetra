@@ -1,0 +1,242 @@
+[
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4,
+      "place": "75 km SE of Phek, India",
+      "time": 1689969946184,
+      "updated": 1695936845040,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000khhf",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us7000khhf&format=geojson",
+      "felt": null,
+      "cdi": null,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 246,
+      "net": "us",
+      "code": "7000khhf",
+      "ids": ",us7000khhf,",
+      "sources": ",us,",
+      "types": ",origin,phase-data,",
+      "nst": 45,
+      "dmin": 3.951,
+      "rms": 0.56,
+      "gap": 83,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.0 - 75 km SE of Phek, India"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        95.008,
+        25.1642,
+        86.88
+      ]
+    },
+    "id": "us7000khhf"
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4.3,
+      "place": "114 km SE of Phek, India",
+      "time": 1689164807093,
+      "updated": 1694891782040,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000kh27",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us7000kh27&format=geojson",
+      "felt": null,
+      "cdi": null,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 284,
+      "net": "us",
+      "code": "7000kh27",
+      "ids": ",us7000kh27,",
+      "sources": ",us,",
+      "types": ",origin,phase-data,",
+      "nst": 21,
+      "dmin": 4.54,
+      "rms": 0.52,
+      "gap": 128,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.3 - 114 km SE of Phek, India"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        95.4345,
+        25.0831,
+        9.904
+      ]
+    },
+    "id": "us7000kh27"
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4.3,
+      "place": "Myanmar",
+      "time": 1689084360167,
+      "updated": 1694891769040,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000keva",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us7000keva&format=geojson",
+      "felt": null,
+      "cdi": null,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 284,
+      "net": "us",
+      "code": "7000keva",
+      "ids": ",us7000keva,",
+      "sources": ",us,",
+      "types": ",origin,phase-data,",
+      "nst": 62,
+      "dmin": 2.309,
+      "rms": 0.48,
+      "gap": 87,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.3 - Myanmar"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        94.0927,
+        23.1582,
+        77.822
+      ]
+    },
+    "id": "us7000keva"
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4.3,
+      "place": "49 km W of Mawlaik, Myanmar",
+      "time": 1688583909376,
+      "updated": 1694296489040,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000kqab",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us6000kqab&format=geojson",
+      "felt": null,
+      "cdi": null,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 284,
+      "net": "us",
+      "code": "6000kqab",
+      "ids": ",us6000kqab,",
+      "sources": ",us,",
+      "types": ",origin,phase-data,",
+      "nst": 48,
+      "dmin": 2.286,
+      "rms": 1.02,
+      "gap": 69,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.3 - 49 km W of Mawlaik, Myanmar"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        93.9241,
+        23.5846,
+        69.187
+      ]
+    },
+    "id": "us6000kqab"
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4.6,
+      "place": "57 km NW of Sarupathar, India",
+      "time": 1688455532260,
+      "updated": 1694296485040,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000kpzu",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us6000kpzu&format=geojson",
+      "felt": 2,
+      "cdi": 3.1,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 326,
+      "net": "us",
+      "code": "6000kpzu",
+      "ids": ",us6000kpzu,",
+      "sources": ",us,",
+      "types": ",dyfi,origin,phase-data,",
+      "nst": 75,
+      "dmin": 5.599,
+      "rms": 0.68,
+      "gap": 59,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.6 - 57 km NW of Sarupathar, India"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        96.3583,
+        26.5274,
+        89.642
+      ]
+    },
+    "id": "us6000kpzu"
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4.4,
+      "place": "88 km NNW of Sarupathar, India",
+      "time": 1688103842011,
+      "updated": 1694182709040,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000kp19",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us6000kp19&format=geojson",
+      "felt": null,
+      "cdi": null,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 298,
+      "net": "us",
+      "code": "6000kp19",
+      "ids": ",us6000kp19,",
+      "sources": ",us,",
+      "types": ",origin,phase-data,",
+      "nst": 34,
+      "dmin": 5.534,
+      "rms": 0.64,
+      "gap": 132,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.4 - 88 km NNW of Sarupathar, India"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        96.6035,
+        26.9851,
+        10
+      ]
+    },
+    "id": "us6000kp19"
+  }
+]

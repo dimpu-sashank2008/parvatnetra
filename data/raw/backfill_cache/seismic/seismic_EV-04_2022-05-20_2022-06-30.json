@@ -1,0 +1,242 @@
+[
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4.6,
+      "place": "46 km SSE of Mawlaik, Myanmar",
+      "time": 1656525718223,
+      "updated": 1662238998040,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000hyiz",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us6000hyiz&format=geojson",
+      "felt": 1,
+      "cdi": 2,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 326,
+      "net": "us",
+      "code": "6000hyiz",
+      "ids": ",us6000hyiz,",
+      "sources": ",us,",
+      "types": ",dyfi,origin,phase-data,",
+      "nst": 70,
+      "dmin": 2.692,
+      "rms": 0.88,
+      "gap": 64,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.6 - 46 km SSE of Mawlaik, Myanmar"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        94.5018,
+        23.2297,
+        95.51
+      ]
+    },
+    "id": "us6000hyiz"
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4.3,
+      "place": "72 km S of Mawlaik, Myanmar",
+      "time": 1655135081452,
+      "updated": 1661041010040,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000hh3k",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us7000hh3k&format=geojson",
+      "felt": null,
+      "cdi": null,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 284,
+      "net": "us",
+      "code": "7000hh3k",
+      "ids": ",us7000hh3k,",
+      "sources": ",us,",
+      "types": ",origin,phase-data,",
+      "nst": 36,
+      "dmin": 3.211,
+      "rms": 0.67,
+      "gap": 72,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.3 - 72 km S of Mawlaik, Myanmar"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        94.531,
+        22.9945,
+        100.41
+      ]
+    },
+    "id": "us7000hh3k"
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4.2,
+      "place": "68 km NW of Mogok, Myanmar",
+      "time": 1654209629049,
+      "updated": 1659824001040,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000hei4",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us7000hei4&format=geojson",
+      "felt": 0,
+      "cdi": 1,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 271,
+      "net": "us",
+      "code": "7000hei4",
+      "ids": ",us7000hei4,",
+      "sources": ",us,",
+      "types": ",dyfi,origin,phase-data,",
+      "nst": 48,
+      "dmin": 2.674,
+      "rms": 0.53,
+      "gap": 89,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.2 - 68 km NW of Mogok, Myanmar"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        95.957,
+        23.2613,
+        10
+      ]
+    },
+    "id": "us7000hei4"
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4.3,
+      "place": "68 km SE of Mon, India",
+      "time": 1653971979616,
+      "updated": 1659823988040,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000hdq8",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us7000hdq8&format=geojson",
+      "felt": null,
+      "cdi": null,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 284,
+      "net": "us",
+      "code": "7000hdq8",
+      "ids": ",us7000hdq8,",
+      "sources": ",us,",
+      "types": ",origin,phase-data,",
+      "nst": 23,
+      "dmin": 4.13,
+      "rms": 0.95,
+      "gap": 90,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.3 - 68 km SE of Mon, India"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        95.6051,
+        26.3635,
+        95.69
+      ]
+    },
+    "id": "us7000hdq8"
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4.4,
+      "place": "44 km ESE of Falam, Myanmar",
+      "time": 1653278205915,
+      "updated": 1659469859040,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000hd2g",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us7000hd2g&format=geojson",
+      "felt": null,
+      "cdi": null,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 298,
+      "net": "us",
+      "code": "7000hd2g",
+      "ids": ",us7000hd2g,",
+      "sources": ",us,",
+      "types": ",origin,phase-data,",
+      "nst": 27,
+      "dmin": 0.465,
+      "rms": 0.95,
+      "gap": 107,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.4 - 44 km ESE of Falam, Myanmar"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        94.0827,
+        22.7741,
+        13.98
+      ]
+    },
+    "id": "us7000hd2g"
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4.5,
+      "place": "21 km WSW of Falam, Myanmar",
+      "time": 1653102847365,
+      "updated": 1659469836040,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000hmu6",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us6000hmu6&format=geojson",
+      "felt": null,
+      "cdi": null,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 312,
+      "net": "us",
+      "code": "6000hmu6",
+      "ids": ",us6000hmu6,",
+      "sources": ",us,",
+      "types": ",origin,phase-data,",
+      "nst": 62,
+      "dmin": 0.216,
+      "rms": 0.8,
+      "gap": 71,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.5 - 21 km WSW of Falam, Myanmar"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        93.4891,
+        22.8336,
+        47.2
+      ]
+    },
+    "id": "us6000hmu6"
+  }
+]

@@ -1,0 +1,40 @@
+{
+  "feature_count": 32,
+  "feature_names": [
+    "rain_1h",
+    "rain_3h",
+    "rain_6h",
+    "rain_12h",
+    "rain_24h",
+    "rain_48h",
+    "rain_72h",
+    "antecedent_rain_3d",
+    "antecedent_rain_7d",
+    "api_30d",
+    "rain_intensity",
+    "fos",
+    "soil_moisture",
+    "soil_porosity",
+    "pore_pressure",
+    "effective_stress",
+    "hydraulic_saturation",
+    "tilt",
+    "tilt_rate_24h",
+    "ground_displacement",
+    "displacement_velocity_24h",
+    "slope",
+    "aspect",
+    "elevation",
+    "curvature",
+    "ndvi",
+    "ndvi_anomaly",
+    "insar_velocity",
+    "seismic_count_24h",
+    "max_magnitude_24h",
+    "nearest_seismic_distance",
+    "historical_susceptibility"
+  ],
+  "excluded_features": [
+    "composite_risk_index_cri"
+  ]
+}

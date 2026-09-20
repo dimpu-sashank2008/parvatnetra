@@ -1,0 +1,82 @@
+[
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4,
+      "place": "33 km NE of Tura, India",
+      "time": 1674698398723,
+      "updated": 1681239101040,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000jltv",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us6000jltv&format=geojson",
+      "felt": null,
+      "cdi": null,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 246,
+      "net": "us",
+      "code": "6000jltv",
+      "ids": ",us6000jltv,",
+      "sources": ",us,",
+      "types": ",origin,phase-data,",
+      "nst": 16,
+      "dmin": 5.049,
+      "rms": 0.68,
+      "gap": 162,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.0 - 33 km NE of Tura, India"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        90.4362,
+        25.7328,
+        36.679
+      ]
+    },
+    "id": "us6000jltv"
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4.4,
+      "place": "22 km WNW of Trongsa, Bhutan",
+      "time": 1672633294794,
+      "updated": 1678575091040,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000j1if",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us7000j1if&format=geojson",
+      "felt": null,
+      "cdi": null,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 298,
+      "net": "us",
+      "code": "7000j1if",
+      "ids": ",us7000j1if,",
+      "sources": ",us,",
+      "types": ",origin,phase-data,",
+      "nst": 59,
+      "dmin": 3.118,
+      "rms": 0.62,
+      "gap": 107,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.4 - 22 km WNW of Trongsa, Bhutan"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        90.3069,
+        27.5974,
+        35
+      ]
+    },
+    "id": "us7000j1if"
+  }
+]

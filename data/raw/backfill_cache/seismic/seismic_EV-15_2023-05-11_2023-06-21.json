@@ -1,0 +1,242 @@
+[
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4.3,
+      "place": "48 km ESE of Tuensang, India",
+      "time": 1686604988724,
+      "updated": 1692591525040,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000k82d",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us7000k82d&format=geojson",
+      "felt": null,
+      "cdi": null,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 284,
+      "net": "us",
+      "code": "7000k82d",
+      "ids": ",us7000k82d,",
+      "sources": ",us,",
+      "types": ",origin,phase-data,",
+      "nst": 32,
+      "dmin": 5.129,
+      "rms": 0.69,
+      "gap": 134,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.3 - 48 km ESE of Tuensang, India"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        95.2775,
+        26.1093,
+        77.469
+      ]
+    },
+    "id": "us7000k82d"
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4.2,
+      "place": "39 km ESE of Tuensang, India",
+      "time": 1685590253257,
+      "updated": 1705608205089,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000k72v",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us7000k72v&format=geojson",
+      "felt": null,
+      "cdi": null,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 271,
+      "net": "us",
+      "code": "7000k72v",
+      "ids": ",us7000k72v,",
+      "sources": ",us,",
+      "types": ",earthquake-name,origin,phase-data,",
+      "nst": 17,
+      "dmin": 5.554,
+      "rms": 0.9,
+      "gap": 137,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.2 - 39 km ESE of Tuensang, India"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        95.1588,
+        26.0736,
+        31.912
+      ]
+    },
+    "id": "us7000k72v"
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4.9,
+      "place": "6 km NNW of Dhekiajuli, India",
+      "time": 1685327611480,
+      "updated": 1692026338836,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000k4q0",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us7000k4q0&format=geojson",
+      "felt": 8,
+      "cdi": 4.6,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 373,
+      "net": "us",
+      "code": "7000k4q0",
+      "ids": ",us7000k4q0,",
+      "sources": ",us,",
+      "types": ",dyfi,origin,phase-data,",
+      "nst": 143,
+      "dmin": 3.157,
+      "rms": 0.74,
+      "gap": 80,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.9 - 6 km NNW of Dhekiajuli, India"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        92.4485,
+        26.7587,
+        10
+      ]
+    },
+    "id": "us7000k4q0"
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4.5,
+      "place": "Eastern Xizang",
+      "time": 1685299882818,
+      "updated": 1691273257040,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000k4ne",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us7000k4ne&format=geojson",
+      "felt": null,
+      "cdi": null,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 312,
+      "net": "us",
+      "code": "7000k4ne",
+      "ids": ",us7000k4ne,",
+      "sources": ",us,",
+      "types": ",origin,phase-data,",
+      "nst": 83,
+      "dmin": 1.072,
+      "rms": 0.86,
+      "gap": 53,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.5 - Eastern Xizang"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        91.4759,
+        28.6722,
+        10
+      ]
+    },
+    "id": "us7000k4ne"
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4.5,
+      "place": "25 km N of Rang\u0101p\u0101ra, India",
+      "time": 1685223393057,
+      "updated": 1690668044040,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000k4iq",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us7000k4iq&format=geojson",
+      "felt": 1,
+      "cdi": 3.1,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 312,
+      "net": "us",
+      "code": "7000k4iq",
+      "ids": ",us7000k4iq,",
+      "sources": ",us,",
+      "types": ",dyfi,origin,phase-data,",
+      "nst": 26,
+      "dmin": 2.96,
+      "rms": 0.64,
+      "gap": 116,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.5 - 25 km N of Rang\u0101p\u0101ra, India"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        92.6797,
+        27.0688,
+        10
+      ]
+    },
+    "id": "us7000k4iq"
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4.1,
+      "place": "Myanmar-India border region",
+      "time": 1684676852910,
+      "updated": 1690668026040,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000kdmh",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us6000kdmh&format=geojson",
+      "felt": null,
+      "cdi": null,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 259,
+      "net": "us",
+      "code": "6000kdmh",
+      "ids": ",us6000kdmh,",
+      "sources": ",us,",
+      "types": ",origin,phase-data,",
+      "nst": 32,
+      "dmin": 4.546,
+      "rms": 0.67,
+      "gap": 139,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.1 - Myanmar-India border region"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        94.7301,
+        24.8062,
+        83.027
+      ]
+    },
+    "id": "us6000kdmh"
+  }
+]

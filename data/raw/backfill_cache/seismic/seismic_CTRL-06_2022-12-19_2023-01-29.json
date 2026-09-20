@@ -1,0 +1,162 @@
+[
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4,
+      "place": "33 km NE of Tura, India",
+      "time": 1674698398723,
+      "updated": 1681239101040,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000jltv",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us6000jltv&format=geojson",
+      "felt": null,
+      "cdi": null,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 246,
+      "net": "us",
+      "code": "6000jltv",
+      "ids": ",us6000jltv,",
+      "sources": ",us,",
+      "types": ",origin,phase-data,",
+      "nst": 16,
+      "dmin": 5.049,
+      "rms": 0.68,
+      "gap": 162,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.0 - 33 km NE of Tura, India"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        90.4362,
+        25.7328,
+        36.679
+      ]
+    },
+    "id": "us6000jltv"
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 5.1,
+      "place": "12 km NE of Lakhipur, India",
+      "time": 1674481322771,
+      "updated": 1681239114040,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000j6c8",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us7000j6c8&format=geojson",
+      "felt": 11,
+      "cdi": 3.7,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 404,
+      "net": "us",
+      "code": "7000j6c8",
+      "ids": ",us7000j6c8,",
+      "sources": ",us,",
+      "types": ",dyfi,origin,phase-data,",
+      "nst": 110,
+      "dmin": 2.561,
+      "rms": 0.91,
+      "gap": 42,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 5.1 - 12 km NE of Lakhipur, India"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        93.079,
+        24.8836,
+        10
+      ]
+    },
+    "id": "us7000j6c8"
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4.1,
+      "place": "India-Bangladesh border region",
+      "time": 1673900412456,
+      "updated": 1680291881040,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000j4s0",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us7000j4s0&format=geojson",
+      "felt": null,
+      "cdi": null,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 259,
+      "net": "us",
+      "code": "7000j4s0",
+      "ids": ",us7000j4s0,",
+      "sources": ",us,",
+      "types": ",origin,phase-data,",
+      "nst": 43,
+      "dmin": 1.155,
+      "rms": 0.99,
+      "gap": 85,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.1 - India-Bangladesh border region"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        92.4156,
+        23.5913,
+        10
+      ]
+    },
+    "id": "us7000j4s0"
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4.4,
+      "place": "22 km WNW of Trongsa, Bhutan",
+      "time": 1672633294794,
+      "updated": 1678575091040,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000j1if",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us7000j1if&format=geojson",
+      "felt": null,
+      "cdi": null,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 298,
+      "net": "us",
+      "code": "7000j1if",
+      "ids": ",us7000j1if,",
+      "sources": ",us,",
+      "types": ",origin,phase-data,",
+      "nst": 59,
+      "dmin": 3.118,
+      "rms": 0.62,
+      "gap": 107,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.4 - 22 km WNW of Trongsa, Bhutan"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        90.3069,
+        27.5974,
+        35
+      ]
+    },
+    "id": "us7000j1if"
+  }
+]

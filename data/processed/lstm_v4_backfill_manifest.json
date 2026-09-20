@@ -1,0 +1,345 @@
+{
+  "manifest_version": "PAHAD-LSTM-V4-1-BACKFILL-MANIFEST-001",
+  "generated_at": "2026-09-20T11:21:10.697902+00:00",
+  "phase": "V4.1 \u2014 Historical Temporal Data Acquisition & Backfill",
+  "objective": "Build genuine historical 72h temporal sequences replacing synthetic interpolation",
+  "verdict": "BACKFILL_READY_FOR_V4_TRAINING",
+  "verdict_rationale": "Successfully acquired 100% genuine hourly meteorological and soil-hydrological observations from authoritative ECMWF ERA5-Land reanalysis and USGS FDSN seismic catalogs for all 17 documented GSI disaster events (2022-2024) and 20 verified non-event controls. All 105 sequences have unbroken 72-hour coverage with strict zero-future-leakage. In-situ IoT sensors and InSAR are explicitly and honestly preserved as UNAVAILABLE (np.nan), establishing a scientifically defensible foundation for missingness-aware research training.",
+  "dataset_files": {
+    "historical_sequences": {
+      "path": "data/processed/lstm_v4_historical_sequences.csv",
+      "rows": 7560,
+      "sha256": "db2293ff752351cd04a4f98589ef4ae6e97d8d71549f36abc9cf960feea8b9b5"
+    },
+    "historical_events": {
+      "path": "data/processed/lstm_v4_historical_events.csv",
+      "rows": 17,
+      "sha256": "80802616553177e840741f85c98b3e7b1ef41e7fa2fb50e6d7459e8e8939fc48"
+    },
+    "historical_controls": {
+      "path": "data/processed/lstm_v4_historical_controls.csv",
+      "rows": 20,
+      "sha256": "faa7811e52b9b9d7817ba45d6c7aaae9173aab524fee3344ba76ac2ab611b85d"
+    }
+  },
+  "inventory": {
+    "event_count": 17,
+    "control_count": 20,
+    "sequence_count": 105,
+    "complete_sequence_count": 105,
+    "partial_sequence_count": 0,
+    "timesteps_per_sequence": 72,
+    "total_hourly_timesteps": 7560
+  },
+  "partitions": {
+    "TRAIN": {
+      "sequence_count": 48,
+      "event_ids": [
+        "EV-03",
+        "EV-04",
+        "EV-07",
+        "EV-08",
+        "EV-10",
+        "EV-13",
+        "EV-15",
+        "EV-17"
+      ],
+      "control_ids": [
+        "CTRL-01",
+        "CTRL-02",
+        "CTRL-03",
+        "CTRL-04",
+        "CTRL-05",
+        "CTRL-06",
+        "CTRL-07",
+        "CTRL-08"
+      ]
+    },
+    "VAL": {
+      "sequence_count": 33,
+      "event_ids": [
+        "EV-02",
+        "EV-05",
+        "EV-06",
+        "EV-09",
+        "EV-14"
+      ],
+      "control_ids": [
+        "CTRL-09",
+        "CTRL-10",
+        "CTRL-11",
+        "CTRL-12",
+        "CTRL-13",
+        "CTRL-14",
+        "CTRL-19",
+        "CTRL-20"
+      ]
+    },
+    "TEST": {
+      "sequence_count": 24,
+      "event_ids": [
+        "EV-01",
+        "EV-11",
+        "EV-12",
+        "EV-16"
+      ],
+      "control_ids": [
+        "CTRL-15",
+        "CTRL-16",
+        "CTRL-17",
+        "CTRL-18"
+      ]
+    }
+  },
+  "source_datasets": [
+    {
+      "name": "ECMWF ERA5-Land Reanalysis (via Open-Meteo Archive API)",
+      "variables": [
+        "precipitation",
+        "soil_moisture_0_to_7cm",
+        "temperature_2m"
+      ],
+      "spatial_resolution": "0.1 degree (~9 km)",
+      "temporal_resolution": "1 hour",
+      "access": "Open Database License (ODbL) / Public Archive"
+    },
+    {
+      "name": "USGS FDSN Earthquake Catalog",
+      "variables": [
+        "magnitude",
+        "epicentre_lat_lon",
+        "origin_time"
+      ],
+      "spatial_resolution": "Global Point Events (300 km buffer)",
+      "temporal_resolution": "Millisecond precision",
+      "access": "Public Domain"
+    },
+    {
+      "name": "Geological Survey of India (GSI) BHUKOSH & NLSM",
+      "variables": [
+        "landslide_occurrence",
+        "triggering_rainfall",
+        "susceptibility_index"
+      ],
+      "access": "National Geological Repository"
+    },
+    {
+      "name": "ISRO CartoDEM / NASA SRTM 30m DEM",
+      "variables": [
+        "elevation",
+        "slope",
+        "aspect",
+        "curvature"
+      ],
+      "spatial_resolution": "30 meters",
+      "access": "Open Government Data / USGS EarthExplorer"
+    }
+  ],
+  "feature_manifest": {
+    "rain_1h": {
+      "unit": "mm",
+      "source": "ECMWF ERA5-Land Reanalysis",
+      "provenance": "HISTORICAL_OBSERVED",
+      "availability": "PRE_ORIGIN_GENUINE"
+    },
+    "rain_3h": {
+      "unit": "mm",
+      "source": "Rolling 3h sum of ERA5-Land",
+      "provenance": "HISTORICAL_DERIVED",
+      "availability": "PRE_ORIGIN_GENUINE"
+    },
+    "rain_6h": {
+      "unit": "mm",
+      "source": "Rolling 6h sum of ERA5-Land",
+      "provenance": "HISTORICAL_DERIVED",
+      "availability": "PRE_ORIGIN_GENUINE"
+    },
+    "rain_12h": {
+      "unit": "mm",
+      "source": "Rolling 12h sum of ERA5-Land",
+      "provenance": "HISTORICAL_DERIVED",
+      "availability": "PRE_ORIGIN_GENUINE"
+    },
+    "rain_24h": {
+      "unit": "mm",
+      "source": "Rolling 24h sum of ERA5-Land",
+      "provenance": "HISTORICAL_DERIVED",
+      "availability": "PRE_ORIGIN_GENUINE"
+    },
+    "rain_48h": {
+      "unit": "mm",
+      "source": "Rolling 48h sum of ERA5-Land",
+      "provenance": "HISTORICAL_DERIVED",
+      "availability": "PRE_ORIGIN_GENUINE"
+    },
+    "rain_72h": {
+      "unit": "mm",
+      "source": "Rolling 72h sum of ERA5-Land",
+      "provenance": "HISTORICAL_DERIVED",
+      "availability": "PRE_ORIGIN_GENUINE"
+    },
+    "antecedent_rain_3d": {
+      "unit": "mm",
+      "source": "3-day rolling sum",
+      "provenance": "HISTORICAL_DERIVED",
+      "availability": "PRE_ORIGIN_GENUINE"
+    },
+    "antecedent_rain_7d": {
+      "unit": "mm",
+      "source": "7-day rolling sum",
+      "provenance": "HISTORICAL_DERIVED",
+      "availability": "PRE_ORIGIN_GENUINE"
+    },
+    "api_30d": {
+      "unit": "mm",
+      "source": "30-day exponentially decayed API (0.84 daily)",
+      "provenance": "HISTORICAL_DERIVED",
+      "availability": "PRE_ORIGIN_GENUINE"
+    },
+    "rain_intensity": {
+      "unit": "mm/h",
+      "source": "Hourly ERA5-Land precipitation rate",
+      "provenance": "HISTORICAL_OBSERVED",
+      "availability": "PRE_ORIGIN_GENUINE"
+    },
+    "fos": {
+      "unit": "dimensionless",
+      "source": "Mohr-Coulomb Infinite Slope Stability Equation",
+      "provenance": "HISTORICAL_DERIVED",
+      "availability": "PRE_ORIGIN_GENUINE"
+    },
+    "soil_moisture": {
+      "unit": "m^3/m^3",
+      "source": "ECMWF ERA5-Land volumetric soil water (0-7cm)",
+      "provenance": "HISTORICAL_OBSERVED",
+      "availability": "PRE_ORIGIN_GENUINE"
+    },
+    "soil_porosity": {
+      "unit": "dimensionless",
+      "source": "Regional NER Geotechnical Baseline",
+      "provenance": "STATIC",
+      "availability": "PRE_ORIGIN_GENUINE"
+    },
+    "pore_pressure": {
+      "unit": "kPa",
+      "source": "Hydrostatic pore-water pressure from saturation",
+      "provenance": "HISTORICAL_DERIVED",
+      "availability": "PRE_ORIGIN_GENUINE"
+    },
+    "effective_stress": {
+      "unit": "kPa",
+      "source": "Terzaghi effective stress on slip surface",
+      "provenance": "HISTORICAL_DERIVED",
+      "availability": "PRE_ORIGIN_GENUINE"
+    },
+    "hydraulic_saturation": {
+      "unit": "ratio",
+      "source": "Degree of soil water saturation (theta/phi)",
+      "provenance": "HISTORICAL_DERIVED",
+      "availability": "PRE_ORIGIN_GENUINE"
+    },
+    "tilt": {
+      "unit": "degrees",
+      "source": "In-situ borehole inclinometer",
+      "provenance": "UNAVAILABLE",
+      "availability": "HISTORICAL_ABSENT"
+    },
+    "tilt_rate_24h": {
+      "unit": "deg/day",
+      "source": "In-situ inclinometer derivative",
+      "provenance": "UNAVAILABLE",
+      "availability": "HISTORICAL_ABSENT"
+    },
+    "ground_displacement": {
+      "unit": "mm",
+      "source": "In-situ extensometer / GNSS",
+      "provenance": "UNAVAILABLE",
+      "availability": "HISTORICAL_ABSENT"
+    },
+    "displacement_velocity_24h": {
+      "unit": "mm/day",
+      "source": "In-situ displacement velocity",
+      "provenance": "UNAVAILABLE",
+      "availability": "HISTORICAL_ABSENT"
+    },
+    "slope": {
+      "unit": "degrees",
+      "source": "CartoDEM / SRTM 30m Digital Elevation Model",
+      "provenance": "STATIC",
+      "availability": "PRE_ORIGIN_GENUINE"
+    },
+    "aspect": {
+      "unit": "degrees",
+      "source": "CartoDEM 30m terrain aspect",
+      "provenance": "STATIC",
+      "availability": "PRE_ORIGIN_GENUINE"
+    },
+    "elevation": {
+      "unit": "meters",
+      "source": "CartoDEM 30m elevation",
+      "provenance": "STATIC",
+      "availability": "PRE_ORIGIN_GENUINE"
+    },
+    "curvature": {
+      "unit": "1/m",
+      "source": "CartoDEM profile curvature",
+      "provenance": "STATIC",
+      "availability": "PRE_ORIGIN_GENUINE"
+    },
+    "ndvi": {
+      "unit": "index [-1, 1]",
+      "source": "MODIS/Sentinel-2 pre-event baseline",
+      "provenance": "UNAVAILABLE",
+      "availability": "HISTORICAL_ABSENT"
+    },
+    "ndvi_anomaly": {
+      "unit": "z-score",
+      "source": "Sentinel-2 vegetation difference",
+      "provenance": "UNAVAILABLE",
+      "availability": "HISTORICAL_ABSENT"
+    },
+    "insar_velocity": {
+      "unit": "mm/year",
+      "source": "Sentinel-1 InSAR descending LOS track",
+      "provenance": "UNAVAILABLE",
+      "availability": "HISTORICAL_ABSENT"
+    },
+    "seismic_count_24h": {
+      "unit": "count",
+      "source": "USGS FDSN Earthquake Archive (M>=2.0, R<=300km, 24h window)",
+      "provenance": "HISTORICAL_OBSERVED",
+      "availability": "PRE_ORIGIN_GENUINE"
+    },
+    "max_magnitude_24h": {
+      "unit": "Richter",
+      "source": "USGS FDSN Earthquake Archive",
+      "provenance": "HISTORICAL_OBSERVED",
+      "availability": "PRE_ORIGIN_GENUINE"
+    },
+    "nearest_seismic_distance": {
+      "unit": "km",
+      "source": "Great-circle distance to nearest USGS epicentre",
+      "provenance": "HISTORICAL_DERIVED",
+      "availability": "PRE_ORIGIN_GENUINE"
+    },
+    "historical_susceptibility": {
+      "unit": "index [0, 1]",
+      "source": "GSI National Landslide Susceptibility Mapping (NLSM)",
+      "provenance": "STATIC",
+      "availability": "PRE_ORIGIN_GENUINE"
+    }
+  },
+  "window_definition": "72 chronological hourly observations strictly ending at prediction_origin (zero post-origin observation)",
+  "target_definition": {
+    "target_6h": "Binary indicator: failure event occurs within (T_origin, T_origin + 6h]",
+    "target_12h": "Binary indicator: failure event occurs within (T_origin, T_origin + 12h]",
+    "target_24h": "Binary indicator: failure event occurs within (T_origin, T_origin + 24h]",
+    "target_48h": "Binary indicator: failure event occurs within (T_origin, T_origin + 48h]"
+  },
+  "leakage_audit": {
+    "post_origin_leakage_detected": false,
+    "circular_cri_excluded": true,
+    "synthetic_linspace_detected": false,
+    "cross_partition_event_leakage": false
+  }
+}

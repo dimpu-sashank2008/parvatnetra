@@ -1,0 +1,307 @@
+{
+  "manifest_version": "PAHAD-LSTM-V4-DATASET-001",
+  "generated_at": "2026-09-20T11:06:08.952585+00:00",
+  "objective": "Scientifically defensible empirical dataset directly from pahad_observations.db and GSI records",
+  "verdict": "V4_DATASET_REQUIRES_REWORK",
+  "verdict_rationale": "pahad_observations.db contains only 10.3 days of operational telemetry (Sept 2026) with a maximum continuous unbroken window of 6 hours across all sectors. All 17 documented historical disaster events occurred between 2022 and 2024 and are completely absent from the SQLite database. The dataset requires backfilling genuine hourly historical meteorological and geotechnical records (ERA5-Land / IMD gridded reanalysis for 2022-2024) into the database before authentic continuous 72x32 sequence tensors can be completed without synthetic interpolation.",
+  "dataset_files": {
+    "train": {
+      "file": "data/processed/lstm_v4_train.csv",
+      "rows": 168,
+      "sha256": "f7e194556840094ad29318b194e5ee6a5b623145175a902600f354a5a6cd2864"
+    },
+    "val": {
+      "file": "data/processed/lstm_v4_val.csv",
+      "rows": 336,
+      "sha256": "ab682ed2ce288e0ea2c93c8afae40c94653d489d501fdb5e9e86704c60413a5f"
+    },
+    "test": {
+      "file": "data/processed/lstm_v4_test.csv",
+      "rows": 244,
+      "sha256": "f110d303463b1f82c207737b060b40530adbb5bb22c6a9709dc2c46a10808c29"
+    },
+    "hourly_telemetry": {
+      "file": "data/processed/lstm_v4_hourly_observations.csv",
+      "rows": 643,
+      "sha256": "3cd24f8b59c213665070b7eb14801fe895ecaf5c025fa2c3e955747c989a14d1"
+    }
+  },
+  "target_definitions": {
+    "target_6h": "Binary indicator: verified landslide event occurred within (T, T+6h]",
+    "target_12h": "Binary indicator: verified landslide event occurred within (T, T+12h]",
+    "target_24h": "Binary indicator: verified landslide event occurred within (T, T+24h]",
+    "target_48h": "Binary indicator: verified landslide event occurred within (T, T+48h]"
+  },
+  "sequence_specification": {
+    "nominal_sequence_length_hours": 72,
+    "actual_continuous_max_hours_db": 6,
+    "feature_count": 32,
+    "features": [
+      "rain_1h",
+      "rain_3h",
+      "rain_6h",
+      "rain_12h",
+      "rain_24h",
+      "rain_48h",
+      "rain_72h",
+      "antecedent_rain_3d",
+      "antecedent_rain_7d",
+      "api_30d",
+      "rain_intensity",
+      "fos",
+      "soil_moisture",
+      "soil_porosity",
+      "pore_pressure",
+      "effective_stress",
+      "hydraulic_saturation",
+      "tilt",
+      "tilt_rate_24h",
+      "ground_displacement",
+      "displacement_velocity_24h",
+      "slope",
+      "aspect",
+      "elevation",
+      "curvature",
+      "ndvi",
+      "ndvi_anomaly",
+      "insar_velocity",
+      "seismic_count_24h",
+      "max_magnitude_24h",
+      "nearest_seismic_distance",
+      "historical_susceptibility"
+    ],
+    "excluded_features_leakage_prevention": [
+      "composite_risk_index_cri",
+      "raw_cri",
+      "final_cri",
+      "event_probability"
+    ]
+  },
+  "split_methodology": {
+    "type": "Chronological holdout + Grouped Event Isolation",
+    "train_events": [
+      "EV-03",
+      "EV-04",
+      "EV-07",
+      "EV-08",
+      "EV-10",
+      "EV-13",
+      "EV-15",
+      "EV-17"
+    ],
+    "val_events": [
+      "EV-02",
+      "EV-05",
+      "EV-06",
+      "EV-09",
+      "EV-14"
+    ],
+    "test_events": [
+      "EV-01",
+      "EV-11",
+      "EV-12",
+      "EV-16"
+    ],
+    "zero_event_leakage_guaranteed": true
+  },
+  "event_summary": {
+    "total_documented_historical_events": 17,
+    "train_events_count": 8,
+    "val_events_count": 5,
+    "test_events_count": 4
+  },
+  "feature_provenance": {
+    "rain_1h": {
+      "class": "MEASURED",
+      "unit": "mm",
+      "source": "IMD AWS / Open-Meteo",
+      "prediction_available": true
+    },
+    "rain_3h": {
+      "class": "DERIVED_FROM_MEASUREMENTS",
+      "unit": "mm",
+      "source": "Cumulative 3h IMD/ERA5",
+      "prediction_available": true
+    },
+    "rain_6h": {
+      "class": "DERIVED_FROM_MEASUREMENTS",
+      "unit": "mm",
+      "source": "Cumulative 6h IMD/ERA5",
+      "prediction_available": true
+    },
+    "rain_12h": {
+      "class": "DERIVED_FROM_MEASUREMENTS",
+      "unit": "mm",
+      "source": "Cumulative 12h IMD/ERA5",
+      "prediction_available": true
+    },
+    "rain_24h": {
+      "class": "MEASURED",
+      "unit": "mm",
+      "source": "IMD 24h Daily / Open-Meteo",
+      "prediction_available": true
+    },
+    "rain_48h": {
+      "class": "DERIVED_FROM_MEASUREMENTS",
+      "unit": "mm",
+      "source": "Cumulative 48h IMD/ERA5",
+      "prediction_available": true
+    },
+    "rain_72h": {
+      "class": "DERIVED_FROM_MEASUREMENTS",
+      "unit": "mm",
+      "source": "Cumulative 72h IMD/ERA5",
+      "prediction_available": true
+    },
+    "antecedent_rain_3d": {
+      "class": "DERIVED_FROM_MEASUREMENTS",
+      "unit": "mm",
+      "source": "Antecedent Precipitation Index 3d",
+      "prediction_available": true
+    },
+    "antecedent_rain_7d": {
+      "class": "DERIVED_FROM_MEASUREMENTS",
+      "unit": "mm",
+      "source": "Antecedent Precipitation Index 7d",
+      "prediction_available": true
+    },
+    "api_30d": {
+      "class": "DERIVED_FROM_MEASUREMENTS",
+      "unit": "mm",
+      "source": "Antecedent Precipitation Index 30d",
+      "prediction_available": true
+    },
+    "rain_intensity": {
+      "class": "MEASURED",
+      "unit": "mm/h",
+      "source": "IMD Doppler / Gauge Rate",
+      "prediction_available": true
+    },
+    "fos": {
+      "class": "MODEL_DERIVED",
+      "unit": "dimensionless",
+      "source": "Infinite Slope Mohr-Coulomb Mechanics",
+      "prediction_available": true
+    },
+    "soil_moisture": {
+      "class": "MEASURED",
+      "unit": "vwc (m3/m3)",
+      "source": "In-situ FDR Sensor / ERA5-Land",
+      "prediction_available": true
+    },
+    "soil_porosity": {
+      "class": "STATIC",
+      "unit": "dimensionless",
+      "source": "GSI Quadrangle Geotechnical Baseline",
+      "prediction_available": true
+    },
+    "pore_pressure": {
+      "class": "MEASURED",
+      "unit": "kPa",
+      "source": "Vibrating Wire Piezometer",
+      "prediction_available": true
+    },
+    "effective_stress": {
+      "class": "DERIVED_FROM_MEASUREMENTS",
+      "unit": "kPa",
+      "source": "Terzaghi Effective Stress Formulation",
+      "prediction_available": true
+    },
+    "hydraulic_saturation": {
+      "class": "DERIVED_FROM_MEASUREMENTS",
+      "unit": "ratio",
+      "source": "Soil moisture / Porosity",
+      "prediction_available": true
+    },
+    "tilt": {
+      "class": "MEASURED",
+      "unit": "degrees",
+      "source": "MEMS Inclinometer Telemetry",
+      "prediction_available": true
+    },
+    "tilt_rate_24h": {
+      "class": "DERIVED_FROM_MEASUREMENTS",
+      "unit": "deg/day",
+      "source": "24h Delta of MEMS Inclinometer",
+      "prediction_available": true
+    },
+    "ground_displacement": {
+      "class": "MEASURED",
+      "unit": "mm",
+      "source": "Extensometer / Borehole Inclinometer",
+      "prediction_available": true
+    },
+    "displacement_velocity_24h": {
+      "class": "DERIVED_FROM_MEASUREMENTS",
+      "unit": "mm/day",
+      "source": "24h Displacement Rate",
+      "prediction_available": true
+    },
+    "slope": {
+      "class": "STATIC",
+      "unit": "degrees",
+      "source": "CartoDEM 30m / ALOS PALSAR",
+      "prediction_available": true
+    },
+    "aspect": {
+      "class": "STATIC",
+      "unit": "degrees",
+      "source": "CartoDEM 30m",
+      "prediction_available": true
+    },
+    "elevation": {
+      "class": "STATIC",
+      "unit": "meters",
+      "source": "CartoDEM 30m",
+      "prediction_available": true
+    },
+    "curvature": {
+      "class": "STATIC",
+      "unit": "1/m",
+      "source": "CartoDEM Surface Morphometry",
+      "prediction_available": true
+    },
+    "ndvi": {
+      "class": "EXTERNAL",
+      "unit": "index",
+      "source": "Sentinel-2 MSI 10m Vegetation",
+      "prediction_available": true
+    },
+    "ndvi_anomaly": {
+      "class": "EXTERNAL",
+      "unit": "delta",
+      "source": "Sentinel-2 Seasonal Climatology Delta",
+      "prediction_available": true
+    },
+    "insar_velocity": {
+      "class": "EXTERNAL",
+      "unit": "mm/yr",
+      "source": "Sentinel-1 InSAR PS/SBAS LOS",
+      "prediction_available": true
+    },
+    "seismic_count_24h": {
+      "class": "EXTERNAL",
+      "unit": "count",
+      "source": "National Center for Seismology (NCS)",
+      "prediction_available": true
+    },
+    "max_magnitude_24h": {
+      "class": "EXTERNAL",
+      "unit": "Mw",
+      "source": "USGS Realtime API / NCS",
+      "prediction_available": true
+    },
+    "nearest_seismic_distance": {
+      "class": "EXTERNAL",
+      "unit": "km",
+      "source": "NCS / Himalayan Fault Database",
+      "prediction_available": true
+    },
+    "historical_susceptibility": {
+      "class": "STATIC",
+      "unit": "index",
+      "source": "GSI National Landslide Susceptibility Mapping (NLSM)",
+      "prediction_available": true
+    }
+  }
+}

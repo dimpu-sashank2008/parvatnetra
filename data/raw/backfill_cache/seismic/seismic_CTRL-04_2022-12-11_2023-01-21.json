@@ -1,0 +1,242 @@
+[
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4.1,
+      "place": "India-Bangladesh border region",
+      "time": 1673900412456,
+      "updated": 1680291881040,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000j4s0",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us7000j4s0&format=geojson",
+      "felt": null,
+      "cdi": null,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 259,
+      "net": "us",
+      "code": "7000j4s0",
+      "ids": ",us7000j4s0,",
+      "sources": ",us,",
+      "types": ",origin,phase-data,",
+      "nst": 43,
+      "dmin": 1.155,
+      "rms": 0.99,
+      "gap": 85,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.1 - India-Bangladesh border region"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        92.4156,
+        23.5913,
+        10
+      ]
+    },
+    "id": "us7000j4s0"
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4.2,
+      "place": "72 km WSW of Monywa, Myanmar",
+      "time": 1672388000446,
+      "updated": 1678215599040,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000j118",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us7000j118&format=geojson",
+      "felt": null,
+      "cdi": null,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 271,
+      "net": "us",
+      "code": "7000j118",
+      "ids": ",us7000j118,",
+      "sources": ",us,",
+      "types": ",origin,phase-data,",
+      "nst": 20,
+      "dmin": 2.64,
+      "rms": 0.33,
+      "gap": 165,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.2 - 72 km WSW of Monywa, Myanmar"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        94.4673,
+        21.917,
+        99.728
+      ]
+    },
+    "id": "us7000j118"
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4.5,
+      "place": "54 km SSW of Mawlaik, Myanmar",
+      "time": 1672201084774,
+      "updated": 1705604794655,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000j0kh",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us7000j0kh&format=geojson",
+      "felt": null,
+      "cdi": null,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 312,
+      "net": "us",
+      "code": "7000j0kh",
+      "ids": ",us7000j0kh,",
+      "sources": ",us,",
+      "types": ",earthquake-name,origin,phase-data,",
+      "nst": 57,
+      "dmin": 2.364,
+      "rms": 0.73,
+      "gap": 110,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.5 - 54 km SSW of Mawlaik, Myanmar"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        94.14,
+        23.2161,
+        51.119
+      ]
+    },
+    "id": "us7000j0kh"
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4.2,
+      "place": "21 km ESE of Hakha, Myanmar",
+      "time": 1671348042058,
+      "updated": 1677625585040,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000j0gs",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us7000j0gs&format=geojson",
+      "felt": null,
+      "cdi": null,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 271,
+      "net": "us",
+      "code": "7000j0gs",
+      "ids": ",us7000j0gs,",
+      "sources": ",us,",
+      "types": ",origin,phase-data,",
+      "nst": 15,
+      "dmin": 3.498,
+      "rms": 0.51,
+      "gap": 169,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.2 - 21 km ESE of Hakha, Myanmar"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        93.7959,
+        22.5559,
+        39.483
+      ]
+    },
+    "id": "us7000j0gs"
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4.2,
+      "place": "70 km NNE of Mawlaik, Myanmar",
+      "time": 1671293142099,
+      "updated": 1677625582040,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000ja0r",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us6000ja0r&format=geojson",
+      "felt": null,
+      "cdi": null,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 271,
+      "net": "us",
+      "code": "6000ja0r",
+      "ids": ",us6000ja0r,",
+      "sources": ",us,",
+      "types": ",origin,phase-data,",
+      "nst": 46,
+      "dmin": 4.033,
+      "rms": 0.8,
+      "gap": 122,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.2 - 70 km NNE of Mawlaik, Myanmar"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        94.7294,
+        24.2087,
+        98.089
+      ]
+    },
+    "id": "us6000ja0r"
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4.4,
+      "place": "106 km E of Yairipok, India",
+      "time": 1671124373035,
+      "updated": 1676757854040,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000j9ij",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us6000j9ij&format=geojson",
+      "felt": null,
+      "cdi": null,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 298,
+      "net": "us",
+      "code": "6000j9ij",
+      "ids": ",us6000j9ij,",
+      "sources": ",us,",
+      "types": ",origin,phase-data,",
+      "nst": 101,
+      "dmin": 4.435,
+      "rms": 0.49,
+      "gap": 55,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.4 - 106 km E of Yairipok, India"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        95.0837,
+        24.8414,
+        101.752
+      ]
+    },
+    "id": "us6000j9ij"
+  }
+]

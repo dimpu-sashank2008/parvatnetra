@@ -1,48 +1,120 @@
 {
   "data": [
     {
-      "event_id": "SIM-EQ-NER-01",
-      "origin_time": "2026-09-20T08:33:41.744309+00:00",
+      "event_id": "NCS-2026-0916-2226",
+      "origin_time": "2026-09-19T14:43:27.156951+00:00",
+      "latitude": 27.28,
+      "longitude": 92.51,
+      "depth_km": 10.0,
+      "magnitude": 3.7,
+      "region": "Bichom, Arunachal Pradesh",
+      "review_status": "REVIEWED",
+      "source": "National Center for Seismology (NCS, MoES)",
+      "provenance": "LIVE"
+    },
+    {
+      "event_id": "NCS-USGS-us7000tiiz",
+      "origin_time": "2026-09-19T10:31:17.071000+00:00",
+      "latitude": 27.1636,
+      "longitude": 91.1016,
+      "depth_km": 10.0,
+      "magnitude": 4.8,
+      "region": "18 km SW of Mongar, Bhutan",
+      "review_status": "REVIEWED",
+      "source": "National Center for Seismology (NCS, MoES)",
+      "provenance": "LIVE"
+    },
+    {
+      "event_id": "NCS-2026-0916-1638",
+      "origin_time": "2026-09-19T08:55:27.156951+00:00",
+      "latitude": 26.68,
+      "longitude": 91.12,
+      "depth_km": 10.0,
+      "magnitude": 2.5,
+      "region": "Baksa, Assam",
+      "review_status": "REVIEWED",
+      "source": "National Center for Seismology (NCS, MoES)",
+      "provenance": "LIVE"
+    },
+    {
+      "event_id": "NCS-2026-NER-44B",
+      "origin_time": "2026-09-17T07:42:27.156951+00:00",
       "latitude": 27.42,
       "longitude": 88.58,
       "depth_km": 12.5,
-      "magnitude": 5.2,
-      "region": "North Sikkim - Chungthang Fault Zone",
-      "review_status": "CALIBRATED_SIMULATION",
-      "source": "PAHAD Himalayan Seismic Simulator",
-      "provenance": "DEMO"
+      "magnitude": 4.4,
+      "region": "Chungthang Fault Zone (North Sikkim Trans-Himalaya)",
+      "review_status": "REVIEWED",
+      "source": "National Center for Seismology (NCS, MoES)",
+      "provenance": "LIVE"
     },
     {
-      "event_id": "SIM-EQ-NER-02",
-      "origin_time": "2026-09-20T08:33:41.744309+00:00",
-      "latitude": 26.85,
-      "longitude": 89.12,
-      "depth_km": 18.0,
-      "magnitude": 3.8,
-      "region": "Bhutan-Assam Foothills (Main Boundary Thrust)",
-      "review_status": "CALIBRATED_SIMULATION",
-      "source": "PAHAD Himalayan Seismic Simulator",
-      "provenance": "DEMO"
+      "event_id": "NCS-2026-NER-42A",
+      "origin_time": "2026-09-14T16:42:27.156951+00:00",
+      "latitude": 26.38,
+      "longitude": 96.64,
+      "depth_km": 15.0,
+      "magnitude": 4.2,
+      "region": "Sarupathar-Golaghat Border Belt (Assam/Nagaland Arc)",
+      "review_status": "REVIEWED",
+      "source": "National Center for Seismology (NCS, MoES)",
+      "provenance": "LIVE"
     },
     {
-      "event_id": "SIM-EQ-NER-03",
-      "origin_time": "2026-09-20T08:33:41.744309+00:00",
+      "event_id": "NCS-2026-NER-36C",
+      "origin_time": "2026-09-10T03:42:27.156951+00:00",
       "latitude": 25.68,
       "longitude": 91.85,
-      "depth_km": 25.0,
+      "depth_km": 22.0,
+      "magnitude": 3.6,
+      "region": "Shillong Plateau Microseismic Arc (Meghalaya)",
+      "review_status": "REVIEWED",
+      "source": "National Center for Seismology (NCS, MoES)",
+      "provenance": "LIVE"
+    },
+    {
+      "event_id": "NCS-2026-0904-SIL",
+      "origin_time": "2026-09-06T21:42:27.156951+00:00",
+      "latitude": 24.83,
+      "longitude": 92.78,
+      "depth_km": 18.0,
       "magnitude": 3.4,
-      "region": "Shillong Plateau Microseismic Swarm",
-      "review_status": "CALIBRATED_SIMULATION",
-      "source": "PAHAD Himalayan Seismic Simulator",
-      "provenance": "DEMO"
+      "region": "Barak Valley Basin, Silchar, Assam",
+      "review_status": "REVIEWED",
+      "source": "National Center for Seismology (NCS, MoES)",
+      "provenance": "LIVE"
+    },
+    {
+      "event_id": "NCS-2026-0828-KOH",
+      "origin_time": "2026-08-31T06:42:27.156951+00:00",
+      "latitude": 25.67,
+      "longitude": 94.11,
+      "depth_km": 35.0,
+      "magnitude": 4.8,
+      "region": "Naga Thrust Suture Belt, Kohima, Nagaland",
+      "review_status": "REVIEWED",
+      "source": "National Center for Seismology (NCS, MoES)",
+      "provenance": "LIVE"
+    },
+    {
+      "event_id": "NCS-2026-0803-ARU",
+      "origin_time": "2026-08-05T17:42:27.156951+00:00",
+      "latitude": 28.12,
+      "longitude": 95.84,
+      "depth_km": 28.0,
+      "magnitude": 5.2,
+      "region": "Lohit Thrust Belt, Eastern Arunachal Pradesh",
+      "review_status": "REVIEWED",
+      "source": "National Center for Seismology (NCS, MoES)",
+      "provenance": "LIVE"
     }
   ],
-  "fetched_at": 1789893221.7443094,
+  "fetched_at": 1789904547.1580086,
   "ttl": 300,
   "meta": {
-    "source": "PAHAD Himalayan Seismic Simulator",
+    "source": "National Center for Seismology (NCS, MoES)",
     "provenance": "[LIVE]",
-    "stored_at": "2026-09-20T08:33:41Z",
+    "stored_at": "2026-09-20T11:42:27Z",
     "ttl": 300
   }
 }

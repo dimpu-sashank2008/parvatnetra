@@ -1,0 +1,122 @@
+[
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4.1,
+      "place": "9 km NNE of Morigaon, India",
+      "time": 1652631424821,
+      "updated": 1658630333040,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000hld3",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us6000hld3&format=geojson",
+      "felt": 5,
+      "cdi": 3.6,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 260,
+      "net": "us",
+      "code": "6000hld3",
+      "ids": ",us6000hld3,",
+      "sources": ",us,",
+      "types": ",dyfi,origin,phase-data,",
+      "nst": 35,
+      "dmin": 3.701,
+      "rms": 0.72,
+      "gap": 94,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.1 - 9 km NNE of Morigaon, India"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        92.3725,
+        26.3342,
+        10
+      ]
+    },
+    "id": "us6000hld3"
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4.1,
+      "place": "44 km SE of Mawlaik, Myanmar",
+      "time": 1650250672081,
+      "updated": 1656206346040,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000hfn0",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us6000hfn0&format=geojson",
+      "felt": null,
+      "cdi": null,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 259,
+      "net": "us",
+      "code": "6000hfn0",
+      "ids": ",us6000hfn0,",
+      "sources": ",us,",
+      "types": ",origin,phase-data,",
+      "nst": null,
+      "dmin": 2.908,
+      "rms": 0.92,
+      "gap": 125,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.1 - 44 km SE of Mawlaik, Myanmar"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        94.7118,
+        23.3586,
+        111.13
+      ]
+    },
+    "id": "us6000hfn0"
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4.1,
+      "place": "Myanmar-India border region",
+      "time": 1650153086153,
+      "updated": 1656206318040,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000hfc6",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us6000hfc6&format=geojson",
+      "felt": null,
+      "cdi": null,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 259,
+      "net": "us",
+      "code": "6000hfc6",
+      "ids": ",us6000hfc6,",
+      "sources": ",us,",
+      "types": ",origin,phase-data,",
+      "nst": null,
+      "dmin": 3.966,
+      "rms": 0.28,
+      "gap": 107,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.1 - Myanmar-India border region"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        94.8228,
+        25.3875,
+        74.41
+      ]
+    },
+    "id": "us6000hfc6"
+  }
+]

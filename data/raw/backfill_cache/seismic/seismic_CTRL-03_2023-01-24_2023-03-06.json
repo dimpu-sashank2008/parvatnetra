@@ -1,0 +1,162 @@
+[
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4.3,
+      "place": "18 km SE of Cherrapunji, India",
+      "time": 1676519788218,
+      "updated": 1682199192040,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000jpaj",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us6000jpaj&format=geojson",
+      "felt": 6,
+      "cdi": 3.6,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 287,
+      "net": "us",
+      "code": "6000jpaj",
+      "ids": ",us6000jpaj,",
+      "sources": ",us,",
+      "types": ",dyfi,origin,phase-data,",
+      "nst": 39,
+      "dmin": 2.51,
+      "rms": 1.02,
+      "gap": 111,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.3 - 18 km SE of Cherrapunji, India"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        91.8394,
+        25.1917,
+        57.099
+      ]
+    },
+    "id": "us6000jpaj"
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4.3,
+      "place": "68 km S of Mawlaik, Myanmar",
+      "time": 1676242878050,
+      "updated": 1682199201040,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000jqc6",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us6000jqc6&format=geojson",
+      "felt": null,
+      "cdi": null,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 284,
+      "net": "us",
+      "code": "6000jqc6",
+      "ids": ",us6000jqc6,",
+      "sources": ",us,",
+      "types": ",origin,phase-data,",
+      "nst": 24,
+      "dmin": 2.68,
+      "rms": 0.35,
+      "gap": 107,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.3 - 68 km S of Mawlaik, Myanmar"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        94.5227,
+        23.0353,
+        104.754
+      ]
+    },
+    "id": "us6000jqc6"
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4.2,
+      "place": "31 km SSE of Tezpur, India",
+      "time": 1676198894855,
+      "updated": 1682199182040,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000jngh",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us6000jngh&format=geojson",
+      "felt": 2,
+      "cdi": 2,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 272,
+      "net": "us",
+      "code": "6000jngh",
+      "ids": ",us6000jngh,",
+      "sources": ",us,",
+      "types": ",dyfi,origin,phase-data,",
+      "nst": 20,
+      "dmin": 5.67,
+      "rms": 0.47,
+      "gap": 128,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.2 - 31 km SSE of Tezpur, India"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        92.9259,
+        26.3749,
+        10
+      ]
+    },
+    "id": "us6000jngh"
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4.6,
+      "place": "40 km E of W?ngjing, India",
+      "time": 1675140546032,
+      "updated": 1681422792040,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000jkh1",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us6000jkh1&format=geojson",
+      "felt": 1,
+      "cdi": 2.7,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 326,
+      "net": "us",
+      "code": "6000jkh1",
+      "ids": ",us6000jkh1,",
+      "sources": ",us,",
+      "types": ",dyfi,origin,phase-data,",
+      "nst": 76,
+      "dmin": 3.207,
+      "rms": 0.8,
+      "gap": 75,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.6 - 40 km E of W?ngjing, India"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        94.459,
+        24.5866,
+        69.006
+      ]
+    },
+    "id": "us6000jkh1"
+  }
+]

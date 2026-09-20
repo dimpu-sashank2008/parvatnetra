@@ -1,0 +1,122 @@
+[
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4.3,
+      "place": "Myanmar",
+      "time": 1689084360167,
+      "updated": 1694891769040,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000keva",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us7000keva&format=geojson",
+      "felt": null,
+      "cdi": null,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 284,
+      "net": "us",
+      "code": "7000keva",
+      "ids": ",us7000keva,",
+      "sources": ",us,",
+      "types": ",origin,phase-data,",
+      "nst": 62,
+      "dmin": 2.309,
+      "rms": 0.48,
+      "gap": 87,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.3 - Myanmar"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        94.0927,
+        23.1582,
+        77.822
+      ]
+    },
+    "id": "us7000keva"
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4.3,
+      "place": "49 km W of Mawlaik, Myanmar",
+      "time": 1688583909376,
+      "updated": 1694296489040,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000kqab",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us6000kqab&format=geojson",
+      "felt": null,
+      "cdi": null,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 284,
+      "net": "us",
+      "code": "6000kqab",
+      "ids": ",us6000kqab,",
+      "sources": ",us,",
+      "types": ",origin,phase-data,",
+      "nst": 48,
+      "dmin": 2.286,
+      "rms": 1.02,
+      "gap": 69,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.3 - 49 km W of Mawlaik, Myanmar"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        93.9241,
+        23.5846,
+        69.187
+      ]
+    },
+    "id": "us6000kqab"
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 5,
+      "place": "India-Bangladesh border region",
+      "time": 1686890771360,
+      "updated": 1692591544040,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000k8uw",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us7000k8uw&format=geojson",
+      "felt": 78,
+      "cdi": 7.4,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 442,
+      "net": "us",
+      "code": "7000k8uw",
+      "ids": ",us7000k8uw,",
+      "sources": ",us,",
+      "types": ",dyfi,origin,phase-data,",
+      "nst": 79,
+      "dmin": 5.014,
+      "rms": 0.91,
+      "gap": 60,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 5.0 - India-Bangladesh border region"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        92.0224,
+        24.7339,
+        10
+      ]
+    },
+    "id": "us7000k8uw"
+  }
+]

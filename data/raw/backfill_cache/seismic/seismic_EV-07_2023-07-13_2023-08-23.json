@@ -1,0 +1,202 @@
+[
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 5.3,
+      "place": "16 km NW of Kar\u012bmganj, India",
+      "time": 1692024588667,
+      "updated": 1701489253016,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000kzvl",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us6000kzvl&format=geojson",
+      "felt": 163,
+      "cdi": 6.3,
+      "mmi": 5.324,
+      "alert": "green",
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 535,
+      "net": "us",
+      "code": "6000kzvl",
+      "ids": ",us6000kzvl,usauto6000kzvl,at00rzdyj5,",
+      "sources": ",us,usauto,at,",
+      "types": ",dyfi,ground-failure,internal-moment-tensor,internal-origin,losspager,origin,phase-data,shakemap,",
+      "nst": 153,
+      "dmin": 2.358,
+      "rms": 0.75,
+      "gap": 16,
+      "magType": "mww",
+      "type": "earthquake",
+      "title": "M 5.3 - 16 km NW of Kar\u012bmganj, India"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        92.2481,
+        24.9796,
+        36.648
+      ]
+    },
+    "id": "us6000kzvl"
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4.3,
+      "place": "Myanmar",
+      "time": 1691567631524,
+      "updated": 1697580088040,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000knyr",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us7000knyr&format=geojson",
+      "felt": null,
+      "cdi": null,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 284,
+      "net": "us",
+      "code": "7000knyr",
+      "ids": ",us7000knyr,",
+      "sources": ",us,",
+      "types": ",origin,phase-data,",
+      "nst": 34,
+      "dmin": 2.74,
+      "rms": 0.74,
+      "gap": 101,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.3 - Myanmar"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        94.4277,
+        23.6484,
+        125.576
+      ]
+    },
+    "id": "us7000knyr"
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4.3,
+      "place": "39 km ENE of Mawlaik, Myanmar",
+      "time": 1691441864100,
+      "updated": 1697580087040,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000kyik",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us6000kyik&format=geojson",
+      "felt": null,
+      "cdi": null,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 284,
+      "net": "us",
+      "code": "6000kyik",
+      "ids": ",us6000kyik,",
+      "sources": ",us,",
+      "types": ",origin,phase-data,",
+      "nst": 60,
+      "dmin": 3.075,
+      "rms": 0.7,
+      "gap": 57,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.3 - 39 km ENE of Mawlaik, Myanmar"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        94.78,
+        23.7427,
+        109.02
+      ]
+    },
+    "id": "us6000kyik"
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4.4,
+      "place": "82 km E of Falam, Myanmar",
+      "time": 1690229668734,
+      "updated": 1696109799040,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ki2c",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us7000ki2c&format=geojson",
+      "felt": null,
+      "cdi": null,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 298,
+      "net": "us",
+      "code": "7000ki2c",
+      "ids": ",us7000ki2c,",
+      "sources": ",us,",
+      "types": ",origin,phase-data,",
+      "nst": 41,
+      "dmin": 2.623,
+      "rms": 0.55,
+      "gap": 68,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.4 - 82 km E of Falam, Myanmar"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        94.4795,
+        22.8262,
+        97.036
+      ]
+    },
+    "id": "us7000ki2c"
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4.1,
+      "place": "83 km WNW of Monywa, Myanmar",
+      "time": 1690129883608,
+      "updated": 1696109799040,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000khu1",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us7000khu1&format=geojson",
+      "felt": null,
+      "cdi": null,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 259,
+      "net": "us",
+      "code": "7000khu1",
+      "ids": ",us7000khu1,",
+      "sources": ",us,",
+      "types": ",origin,phase-data,",
+      "nst": 29,
+      "dmin": 2.945,
+      "rms": 0.87,
+      "gap": 132,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.1 - 83 km WNW of Monywa, Myanmar"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        94.3695,
+        22.3642,
+        101.114
+      ]
+    },
+    "id": "us7000khu1"
+  }
+]

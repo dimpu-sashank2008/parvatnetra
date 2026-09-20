@@ -103,8 +103,46 @@ class TestPAHADBiLSTMTemporalModel:
 
         engine = _load_engine()
         assert engine is not None
-        # Accept v1 or v2 — both start with PYTORCH_BILSTM
+        # Accept v1, v2, or v3 — all start with PYTORCH_BILSTM
         assert engine["type"].startswith("PYTORCH_BILSTM"), f"Unexpected engine type: {engine['type']}"
         assert "temperature" in engine
         # Temperature must be positive and reasonable
         assert 0.3 < engine["temperature"] < 2.5
+
+    def test_05_bilstm_v3_multimodal_integrity(self):
+        """Verify Grand BiLSTM v3 (33 features, 1.29M params, Temporal Attention)."""
+        weights_path = "models/pahad_lstm_v3_weights.pt"
+        config_path  = "models/pahad_lstm_v3_config.json"
+        metrics_path = "models/pahad_lstm_v3_metrics.json"
+
+        assert os.path.exists(weights_path), "v3 weights missing"
+        assert os.path.getsize(weights_path) > 1_000_000, "v3 weights smaller than 1MB"
+
+        with open(config_path) as f:
+            cfg = json.load(f)
+        assert cfg["version"] == "v3"
+        assert cfg["n_features"] == 33
+        assert cfg["hidden_size"] == 160
+        assert cfg["param_count"] > 1_000_000
+
+        with open(metrics_path) as f:
+            m = json.load(f)
+        for h in ["6h", "12h", "24h", "48h"]:
+            assert h in m["test_metrics"]
+            assert m["test_metrics"][h]["roc_auc"] >= 0.80
+
+        from engine.pahad_lstm import LSTMTemporalPredictor
+        pred = LSTMTemporalPredictor()
+        res = pred.predict_horizon(
+            rainfall_series=[10.0, 20.0, 35.0, 50.0],
+            antecedent_moisture=0.72,
+            sector_id="SK-NH10-KM48",
+            static_features={
+                "FoS": 0.85, "slope": 41.0, "elevation": 820.0,
+                "soil_porosity": 0.44, "pore_pressure": 22.0, "tilt": 1.1,
+                "ground_displacement": 6.5, "insar_velocity": -30.0,
+            }
+        )
+        assert res["status"] == "SUCCESS"
+        assert res["metadata"]["engine"] == "PYTORCH_BiLSTM_V3_33F_ATTENTION_CALIBRATED"
+        assert res["data"]["p_exceedance_24h"] > 0.70

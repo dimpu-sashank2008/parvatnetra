@@ -1,0 +1,82 @@
+[
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4.4,
+      "place": "16 km N of Kolasib, India",
+      "time": 1720127547022,
+      "updated": 1726177948040,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000mx4s",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us7000mx4s&format=geojson",
+      "felt": null,
+      "cdi": null,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 298,
+      "net": "us",
+      "code": "7000mx4s",
+      "ids": ",us7000mx4s,",
+      "sources": ",us,",
+      "types": ",origin,phase-data,",
+      "nst": 60,
+      "dmin": 1.944,
+      "rms": 0.68,
+      "gap": 88,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.4 - 16 km N of Kolasib, India"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        92.6936,
+        24.3726,
+        35
+      ]
+    },
+    "id": "us7000mx4s"
+  },
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4.6,
+      "place": "11 km SSE of Moir\u0101ng, India",
+      "time": 1719409173305,
+      "updated": 1748497729301,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000n89d",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us6000n89d&format=geojson",
+      "felt": 3,
+      "cdi": 4.3,
+      "mmi": null,
+      "alert": null,
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 327,
+      "net": "us",
+      "code": "6000n89d",
+      "ids": ",us6000n89d,",
+      "sources": ",us,",
+      "types": ",dyfi,origin,phase-data,",
+      "nst": 104,
+      "dmin": 2.619,
+      "rms": 0.52,
+      "gap": 66,
+      "magType": "mb",
+      "type": "earthquake",
+      "title": "M 4.6 - 11 km SSE of Moir\u0101ng, India"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        93.8041,
+        24.3949,
+        57.577
+      ]
+    },
+    "id": "us6000n89d"
+  }
+]

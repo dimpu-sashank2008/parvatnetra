@@ -1,0 +1,42 @@
+[
+  {
+    "type": "Feature",
+    "properties": {
+      "mag": 4.9,
+      "place": "28 km S of Go\u0101lp\u0101ra, India",
+      "time": 1696250715979,
+      "updated": 1702589211040,
+      "tz": null,
+      "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000lc8t",
+      "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us6000lc8t&format=geojson",
+      "felt": 69,
+      "cdi": 6.8,
+      "mmi": 5.86,
+      "alert": "green",
+      "status": "reviewed",
+      "tsunami": 0,
+      "sig": 416,
+      "net": "us",
+      "code": "6000lc8t",
+      "ids": ",us6000lc8t,",
+      "sources": ",us,",
+      "types": ",dyfi,ground-failure,losspager,origin,phase-data,shakemap,",
+      "nst": 119,
+      "dmin": 3.799,
+      "rms": 0.6,
+      "gap": 36,
+      "magType": "mww",
+      "type": "earthquake",
+      "title": "M 4.9 - 28 km S of Go\u0101lp\u0101ra, India"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        90.5798,
+        25.9206,
+        10
+      ]
+    },
+    "id": "us6000lc8t"
+  }
+]

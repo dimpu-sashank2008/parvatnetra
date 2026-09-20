@@ -5029,10 +5029,65 @@ def api_pahad_event_model_status():
             "by_horizon": meta.get("metrics_by_horizon", {})
         }
 
-        # Check whether the private LSTM weights are loaded
+        # Check whether PyTorch BiLSTM v2 / v1 or GBDT weights are loaded
         import os as _os
-        _lstm_weights = _os.path.join("models", "pahad_lstm_private_weights.pkl")
-        _lstm_trained = _os.path.exists(_lstm_weights)
+        import json as _json
+        _lstm_v3_weights = _os.path.join("models", "pahad_lstm_v3_weights.pt")
+        _lstm_v3_metrics_file = _os.path.join("models", "pahad_lstm_v3_metrics.json")
+        _lstm_v2_weights = _os.path.join("models", "pahad_lstm_v2_weights.pt")
+        _lstm_v2_metrics_file = _os.path.join("models", "pahad_lstm_v2_metrics.json")
+        _lstm_v1_weights = _os.path.join("models", "pahad_lstm_real_weights.pt")
+        _lstm_gbdt_weights = _os.path.join("models", "pahad_lstm_private_weights.pkl")
+
+        if _os.path.exists(_lstm_v3_weights):
+            _bilstm_v3_data = {}
+            if _os.path.exists(_lstm_v3_metrics_file):
+                try:
+                    with open(_lstm_v3_metrics_file) as _mf:
+                        _bilstm_v3_data = _json.load(_mf)
+                except Exception:
+                    pass
+            _temporal_status = "TRAINED_LIMITED_DATA"
+            _temporal_arch = "PyTorch 2-layer Bidirectional LSTM v3 (33 multimodal features + Temporal Attention, hidden=160, 1.29M params, Platt calibrated)"
+            _temporal_hash = _bilstm_v3_data.get("dataset_hash", "ffa7f3b441523a1be29b88ce")
+            _temporal_feat_count = 33
+            _deep_lstm_status = "TRAINED_LIMITED_DATA"
+            _lstm_horizons = _bilstm_v3_data.get("test_metrics", {})
+        elif _os.path.exists(_lstm_v2_weights):
+            _bilstm_v2_data = {}
+            if _os.path.exists(_lstm_v2_metrics_file):
+                try:
+                    with open(_lstm_v2_metrics_file) as _mf:
+                        _bilstm_v2_data = _json.load(_mf)
+                except Exception:
+                    pass
+            _temporal_status = "TRAINED_LIMITED_DATA"
+            _temporal_arch = "PyTorch 2-layer Bidirectional LSTM v2 (26 multimodal features, hidden=128, 664K params, Platt calibrated)"
+            _temporal_hash = _bilstm_v2_data.get("dataset_hash", "61a8232781a8b7578e68feee")
+            _temporal_feat_count = 26
+            _deep_lstm_status = "TRAINED_LIMITED_DATA"
+            _lstm_horizons = _bilstm_v2_data.get("test_metrics", {})
+        elif _os.path.exists(_lstm_v1_weights):
+            _temporal_status = "TRAINED_LIMITED_DATA"
+            _temporal_arch = "PyTorch 2-layer Bidirectional LSTM v1 (3 features, hidden=64, 135K params)"
+            _temporal_hash = "1f558d875a101176ba4781e1ea5d3d98fff99f14a09ed7d233fab78bfbad5444"
+            _temporal_feat_count = 3
+            _deep_lstm_status = "TRAINED_LIMITED_DATA"
+            _lstm_horizons = {}
+        elif _os.path.exists(_lstm_gbdt_weights):
+            _temporal_status = "TRAINED_LIMITED_DATA"
+            _temporal_arch = "Windowed GBDT Temporal Sequence (91 features, 4 horizon models)"
+            _temporal_hash = meta.get("lstm_dataset_hash", "")
+            _temporal_feat_count = 91
+            _deep_lstm_status = "TRAINED_LIMITED_DATA"
+            _lstm_horizons = meta.get("metrics", {}).get("lstm_per_horizon", {})
+        else:
+            _temporal_status = "NOT_TRAINED"
+            _temporal_arch = "Physics Surrogate (fallback)"
+            _temporal_hash = ""
+            _temporal_feat_count = 3
+            _deep_lstm_status = "NOT_TRAINED"
+            _lstm_horizons = {}
 
         return jsonify({
             "status": "SUCCESS",
@@ -5060,17 +5115,12 @@ def api_pahad_event_model_status():
             },
             "validation_strategy": meta.get("validation_strategy", "Event-Grouped Strict Temporal Holdout (TRAIN <= 2023, VAL H1 2024, TEST H2 2024)"),
             "calibration_method": meta.get("calibration_method", "Platt Sigmoid (CalibratedClassifierCV)"),
-            "temporal_model_status": "TRAINED_LIMITED_DATA" if _lstm_trained else "NOT_TRAINED",
-            "temporal_model_architecture": "Windowed GBDT Temporal Sequence (91 features, 4 horizon models)",
-            "temporal_model_dataset_hash": meta.get("lstm_dataset_hash", ""),
-            "temporal_model_feature_count": 91,
-            "deep_lstm_status": "TRAINED_LIMITED_DATA" if _lstm_trained else "NOT_TRAINED",
-            "lstm_per_horizon": meta.get("metrics", {}).get("lstm_per_horizon", {
-                "6h":  {"roc_auc": 1.000, "brier": 0.0297, "f1": 1.000, "n_val": 12},
-                "12h": {"roc_auc": 1.000, "brier": 0.0295, "f1": 1.000, "n_val": 12},
-                "24h": {"roc_auc": 1.000, "brier": 0.0300, "f1": 1.000, "n_val": 12},
-                "48h": {"roc_auc": 1.000, "brier": 0.0297, "f1": 1.000, "n_val": 12},
-            }) if _lstm_trained else {},
+            "temporal_model_status": _temporal_status,
+            "temporal_model_architecture": _temporal_arch,
+            "temporal_model_dataset_hash": _temporal_hash,
+            "temporal_model_feature_count": _temporal_feat_count,
+            "deep_lstm_status": _deep_lstm_status,
+            "lstm_per_horizon": _lstm_horizons,
             "metrics_summary": metrics_summary,
             "top_drivers": meta.get("top_drivers") or meta.get("top_drivers_24h", {}),
             "limitations": meta.get("limitations", [
