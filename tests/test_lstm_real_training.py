@@ -56,7 +56,8 @@ class TestPAHADBiLSTMTemporalModel:
 
         assert result["status"] == "SUCCESS"
         assert result["model_status"] == "TRAINED_LIMITED_DATA"
-        assert result["surrogate_type"] == "PYTORCH_BILSTM_TEMPORAL_SEQUENCE"
+        # surrogate_type reflects active engine (v1 or v2 — both start with PYTORCH_BILSTM)
+        assert result["surrogate_type"].startswith("PYTORCH_BILSTM"), f"Unexpected surrogate_type: {result['surrogate_type']}"
         assert "data" in result
 
         data = result["data"]
@@ -102,7 +103,8 @@ class TestPAHADBiLSTMTemporalModel:
 
         engine = _load_engine()
         assert engine is not None
-        assert engine["type"] == "PYTORCH_BILSTM"
+        # Accept v1 or v2 — both start with PYTORCH_BILSTM
+        assert engine["type"].startswith("PYTORCH_BILSTM"), f"Unexpected engine type: {engine['type']}"
         assert "temperature" in engine
         # Temperature must be positive and reasonable
         assert 0.3 < engine["temperature"] < 2.5
