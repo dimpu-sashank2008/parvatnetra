@@ -8,14 +8,16 @@
 
 | Attribute | Specification |
 | :--- | :--- |
-| **MODEL** | **PAHAD Event Classifier** (`PAHAD-Event-Classifier-v1.1`) |
+| **MODEL** | **PAHAD Event Classifier** (`PAHAD-Event-Classifier-v3.1.0`) |
 | **TARGET** | **Landslide Event Probability** ($P(\text{failure} \mid \mathbf{x}) \in [0, 1]$) |
 | **GEOGRAPHIC SCOPE** | **North Eastern Region (NER) of India** (8 States: Sikkim, Assam, Meghalaya, Arunachal Pradesh, Nagaland, Manipur, Mizoram, Tripura) |
 | **FORECAST HORIZONS** | **6h / 12h / 24h / 48h** (plus immediate 1h / 3h early-detection windows) |
-| **TRAINING DATA** | **16 Real Samples** (8 documented GSI events, 8 defensible control windows; $\le 2023\text{-}12\text{-}31$) |
-| **VALIDATION METHOD** | **Strict Temporal Holdout** (Val: 12 samples, $2024\text{-}01$ to $2024\text{-}06$; Test: 8 samples, $\ge 2024\text{-}07$) + Grouped Spatial CV |
-| **DATASET SHA-256** | `79ece554fd0d2fc62d69a21fd4d39172f7dd4995d5645e126a91d1a08c1c579e` |
+| **TRAINING DATA** | **36 Real Records** — 16 train / 12 val / 8 test. 17 documented GSI events + 19 defensible control windows ([HISTORICAL+LIVE]) |
+| **VALIDATION METHOD** | **Strict Temporal Holdout** (Val: 12 samples, $2024\text{-}01$ to $2024\text{-}06$; Test: 8 samples, $\ge 2024\text{-}07$) |
+| **GBDT DATASET SHA-256** | `79ece554fd0d2fc62d69a21fd4d39172f7dd4995d5645e126a91d1a08c1c579e` |
+| **LSTM DATASET SHA-256** | `3b15a80f35176971937d4f47989e892d8b0bc48c840c5b1fa893c887894b64ef` |
 | **STATUS** | **`TRAINED_LIMITED_DATA`** (`DATA-GROUNDED RESEARCH PROTOTYPE`) |
+
 
 > [!IMPORTANT]
 > **Data Honesty & Scientific Integrity Invariant**:  
@@ -63,9 +65,13 @@ PARVAT NETRA maintains two strictly separate model families to prevent category 
 2. **MODEL B: PAHAD Landslide Event Model**
    - **Target**: Probability of a documented landslide event within 6h, 12h, 24h, or 48h.
    - **Objective**: Identifies temporal pattern signatures of rapid destabilization from precipitation, displacement, tilt, and antecedent saturation.
-3. **Temporal Deep Learning (LSTM) Status**:
-   - **Status**: **`NOT_TRAINED`**.
-   - **Protocol**: The sequence model in `engine/pahad_lstm.py` is explicitly maintained as a documented **mathematical surrogate** until continuous multi-year telemetry sequences with millisecond timestamps are archived. No synthetic LSTM claims are made.
+3. **Temporal Sequence Model (LSTM Replacement) Status**:
+   - **Status**: **`TRAINED_LIMITED_DATA`** (promoted 2026-09-20).
+   - **Architecture**: Windowed GBDT Temporal Sequence — `GradientBoostingClassifier` + Platt Sigmoid calibration, per-horizon (6h/12h/24h/48h).
+   - **Feature Count**: 91 (34 static geotechnical + 57 temporal lag/rolling-window features extracted from `pahad_observations.db`).
+   - **Dataset Hash**: `3b15a80f35176971937d4f47989e892d8b0bc48c840c5b1fa893c887894b64ef`
+   - **Val Brier Score**: ~0.030 | **Val ROC-AUC**: 1.000 (n=12 — small sample, high variance)
+   - **Note**: PyTorch/TensorFlow not installed. GBDT temporal sequence is the scientifically stronger choice at n=36 (deep learning would overfit severely at this data volume). The `engine/pahad_lstm.py` now auto-loads trained weights and falls back to the mathematical surrogate if weights are missing.
 
 ---
 

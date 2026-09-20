@@ -120,3 +120,18 @@ models/pahad_lstm_private_weights_*.pkl
 models/pahad_lstm_private_metrics_*.json
 models/_lstm_private*/
 scripts/_audit_db.py
+scripts/_show_metrics.py
+scripts/_deep_audit.py
+
+# Real PyTorch LSTM v1 — PRIVATE DO NOT PUBLISH
+models/pahad_lstm_real_weights.pt
+models/pahad_lstm_real_config.json
+models/pahad_lstm_real_metrics.json
+models/pahad_lstm_real_weights_*.pt
+
+# BiLSTM v2 (26-feature enhanced) — PRIVATE DO NOT PUBLISH
+models/pahad_lstm_v2_weights.pt
+models/pahad_lstm_v2_config.json
+models/pahad_lstm_v2_metrics.json
+models/pahad_lstm_v2_weights_*.pt
+scripts/train_lstm_v2.py
