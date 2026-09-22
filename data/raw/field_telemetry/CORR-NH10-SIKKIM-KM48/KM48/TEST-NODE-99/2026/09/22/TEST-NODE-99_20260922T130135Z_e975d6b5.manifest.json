@@ -1,0 +1,14 @@
+{
+  "corridor_id": "CORR-NH10-SIKKIM-KM48",
+  "site_id": "KM48",
+  "sensor_id": "TEST-NODE-99",
+  "timestamp_utc": "2026-09-22T13:01:35.478688+00:00",
+  "byte_count": 17,
+  "payload_file": "TEST-NODE-99_20260922T130135Z_e975d6b5.bin",
+  "payload_sha256": "e975d6b536d44235f4a64b467df7c066956919acaf30fa418abfebc771f71ab2",
+  "custody_signer": "PARVAT_NETRA_CUSTODY_DAEMON",
+  "provenance": "BENCH_SIMULATED",
+  "metadata": {
+    "test": true
+  }
+}

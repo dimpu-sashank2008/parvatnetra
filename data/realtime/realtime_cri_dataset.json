@@ -1,13 +1,13 @@
 {
   "dataset_name": "PARVAT NETRA — Real-Time Multimodal CRI Dataset",
-  "generated_at_utc": "2026-09-22T12:59:32.283301+00:00",
+  "generated_at_utc": "2026-09-22T13:05:07.280991+00:00",
   "sector_count": 20,
   "provenance_standard": "SIH 26001 / NDMA / GSI Guidelines",
   "evaluation_engine": "PAHAD AI Multimodal Fusion Engine v3.1",
   "records": [
     {
-      "record_id": "CRI_RT_SK_NH10_KM48_20260922_125912",
-      "timestamp": "2026-09-22T12:59:11.937374+00:00",
+      "record_id": "CRI_RT_SK_NH10_KM48_20260922_130330",
+      "timestamp": "2026-09-22T13:03:25.467327+00:00",
       "sector_id": "SK-NH10-KM48",
       "sector_name": "NH-10 Km 48 (29th Mile Sector)",
       "state": "Sikkim",
@@ -70,7 +70,7 @@
       "physical_fos": 0.964,
       "ml_fos": 0.347,
       "mandal_sarkar_exceeded": true,
-      "event_probability_24h": 0.311,
+      "event_probability_24h": 0.738,
       "static_susceptibility_s": 0.5,
       "dynamic_precipitation_p": 0.095,
       "ground_anomaly_a": 0.0,
@@ -84,11 +84,11 @@
       "evidence_confidence": 0.81,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Accelerate telemetry polling to 5-minute intervals",
-      "data_hash_sha256": "0acace7be8db8cec248d8cffa597850c94d4dd1b0ec56971ebca4408c955cf7e"
+      "data_hash_sha256": "73c0a5154178e91b7cdc856c2db7c0e03e9dbd7149e882e5e5ef7a70fb39689a"
     },
     {
-      "record_id": "CRI_RT_SK_SINGTAM_01_20260922_125913",
-      "timestamp": "2026-09-22T12:59:12.954499+00:00",
+      "record_id": "CRI_RT_SK_SINGTAM_01_20260922_130335",
+      "timestamp": "2026-09-22T13:03:30.653486+00:00",
       "sector_id": "SK-SINGTAM-01",
       "sector_name": "Singtam Teesta Basin Toe-Scour Zone",
       "state": "Sikkim",
@@ -151,7 +151,7 @@
       "physical_fos": 2.663,
       "ml_fos": 0.942,
       "mandal_sarkar_exceeded": true,
-      "event_probability_24h": 0.294,
+      "event_probability_24h": 0.357,
       "static_susceptibility_s": 0.5,
       "dynamic_precipitation_p": 0.085,
       "ground_anomaly_a": 0.0,
@@ -165,11 +165,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "6f414a08c4a00e81169ef570efb1d09750786725566ce4537542fbf8a774275c"
+      "data_hash_sha256": "aee4c62fa574ae8f2076140ba301785883957a12375bc16dfe80b08975b22de6"
     },
     {
-      "record_id": "CRI_RT_SK_DIKCHU_01_20260922_125914",
-      "timestamp": "2026-09-22T12:59:13.967468+00:00",
+      "record_id": "CRI_RT_SK_DIKCHU_01_20260922_130340",
+      "timestamp": "2026-09-22T13:03:35.351748+00:00",
       "sector_id": "SK-DIKCHU-01",
       "sector_name": "Dikchu Hydro Sector Bluffs",
       "state": "Sikkim",
@@ -232,7 +232,7 @@
       "physical_fos": 4.943,
       "ml_fos": 1.879,
       "mandal_sarkar_exceeded": true,
-      "event_probability_24h": 0.206,
+      "event_probability_24h": 0.064,
       "static_susceptibility_s": 0.5,
       "dynamic_precipitation_p": 0.095,
       "ground_anomaly_a": 0.0,
@@ -246,11 +246,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "cfefeb790932977a88db7a5cb54d489255106b33c94fbbaaa16679a1666aa8e8"
+      "data_hash_sha256": "368e516b0d536bd91b54378b61dec197edf4dc8d2e28ca6cbd0880921869110c"
     },
     {
-      "record_id": "CRI_RT_SK_MANGAN_01_20260922_125915",
-      "timestamp": "2026-09-22T12:59:14.983315+00:00",
+      "record_id": "CRI_RT_SK_MANGAN_01_20260922_130345",
+      "timestamp": "2026-09-22T13:03:40.389570+00:00",
       "sector_id": "SK-MANGAN-01",
       "sector_name": "Mangan Relict Landslide Complex",
       "state": "Sikkim",
@@ -313,7 +313,7 @@
       "physical_fos": 2.953,
       "ml_fos": 1.111,
       "mandal_sarkar_exceeded": true,
-      "event_probability_24h": 0.294,
+      "event_probability_24h": 0.249,
       "static_susceptibility_s": 0.5,
       "dynamic_precipitation_p": 0.171,
       "ground_anomaly_a": 0.014,
@@ -327,11 +327,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "bfc4c8c1bdad222e3f1a61f3698ef9a8c3849f73dcb6cc320dd39015da7c974a"
+      "data_hash_sha256": "295f52726601cd91453a6a70613eb12a72b1be557e67b9ef5d0a3a7de53bb339"
     },
     {
-      "record_id": "CRI_RT_MZ_HUNTHAR_01_20260922_125917",
-      "timestamp": "2026-09-22T12:59:15.995116+00:00",
+      "record_id": "CRI_RT_MZ_HUNTHAR_01_20260922_130350",
+      "timestamp": "2026-09-22T13:03:45.665960+00:00",
       "sector_id": "MZ-HUNTHAR-01",
       "sector_name": "Aizawl NH-6 Hunthar Veng Slump",
       "state": "Mizoram",
@@ -394,7 +394,7 @@
       "physical_fos": 3.031,
       "ml_fos": 1.135,
       "mandal_sarkar_exceeded": true,
-      "event_probability_24h": 0.294,
+      "event_probability_24h": 0.234,
       "static_susceptibility_s": 0.5,
       "dynamic_precipitation_p": 0.076,
       "ground_anomaly_a": 0.0,
@@ -408,11 +408,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "6132f7d32bcdeba2716a01cf1d646b136a58f018ea1a8af3bff15eefa9030d18"
+      "data_hash_sha256": "a9a4911956eaa6bca25668f7d89059b318bf33f7c6634f35ee5709aab47ba4b1"
     },
     {
-      "record_id": "CRI_RT_MZ_SAIRANG_01_20260922_125918",
-      "timestamp": "2026-09-22T12:59:17.010429+00:00",
+      "record_id": "CRI_RT_MZ_SAIRANG_01_20260922_130355",
+      "timestamp": "2026-09-22T13:03:50.518408+00:00",
       "sector_id": "MZ-SAIRANG-01",
       "sector_name": "Sairang Railway Terminal Ridge",
       "state": "Mizoram",
@@ -475,7 +475,7 @@
       "physical_fos": 4.116,
       "ml_fos": 1.61,
       "mandal_sarkar_exceeded": true,
-      "event_probability_24h": 0.206,
+      "event_probability_24h": 0.064,
       "static_susceptibility_s": 0.5,
       "dynamic_precipitation_p": 0.068,
       "ground_anomaly_a": 0.0,
@@ -489,11 +489,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "9e3311b55f9ce2dad12db6f3583199b95cdbf29fe37194d923240a3cd8a2088f"
+      "data_hash_sha256": "ddde57d35bb1e5c823b58485fd7ddb452ace4e9835d2b6244445a45755648d24"
     },
     {
-      "record_id": "CRI_RT_MZ_KOLASIB_01_20260922_125919",
-      "timestamp": "2026-09-22T12:59:18.025509+00:00",
+      "record_id": "CRI_RT_MZ_KOLASIB_01_20260922_130401",
+      "timestamp": "2026-09-22T13:03:55.996668+00:00",
       "sector_id": "MZ-KOLASIB-01",
       "sector_name": "Kolasib Sinking Carriageway",
       "state": "Mizoram",
@@ -556,7 +556,7 @@
       "physical_fos": 3.583,
       "ml_fos": 1.367,
       "mandal_sarkar_exceeded": true,
-      "event_probability_24h": 0.206,
+      "event_probability_24h": 0.085,
       "static_susceptibility_s": 0.5,
       "dynamic_precipitation_p": 0.132,
       "ground_anomaly_a": 0.0,
@@ -570,11 +570,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "c011c32cd7fade6392a9de0080bcfb722fc2104f601c6423599f598d18505354"
+      "data_hash_sha256": "124d60ba536eee4aa0b43f6b5f4672d31b83bf14ace46e21fd3c6623d4368c9f"
     },
     {
-      "record_id": "CRI_RT_NL_PAGALA_01_20260922_125920",
-      "timestamp": "2026-09-22T12:59:19.052092+00:00",
+      "record_id": "CRI_RT_NL_PAGALA_01_20260922_130406",
+      "timestamp": "2026-09-22T13:04:01.227735+00:00",
       "sector_id": "NL-PAGALA-01",
       "sector_name": "Kohima NH-29 Pagala Pahar",
       "state": "Nagaland",
@@ -637,7 +637,7 @@
       "physical_fos": 1.919,
       "ml_fos": 0.697,
       "mandal_sarkar_exceeded": true,
-      "event_probability_24h": 0.294,
+      "event_probability_24h": 0.514,
       "static_susceptibility_s": 0.5,
       "dynamic_precipitation_p": 0.025,
       "ground_anomaly_a": 0.0,
@@ -651,11 +651,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "3f1c503ef89e3183d1d5b5d6c4b153785a3ebbc609054fb43cf51cfd61b1d1ca"
+      "data_hash_sha256": "6ec646d62690691eef8e36da546a55c594113dbc606aaa5c3032a11f43d3f313"
     },
     {
-      "record_id": "CRI_RT_NL_DZUDZA_01_20260922_125921",
-      "timestamp": "2026-09-22T12:59:20.067246+00:00",
+      "record_id": "CRI_RT_NL_DZUDZA_01_20260922_130411",
+      "timestamp": "2026-09-22T13:04:06.413635+00:00",
       "sector_id": "NL-DZUDZA-01",
       "sector_name": "Dzüdza River Bridge Bluffs",
       "state": "Nagaland",
@@ -718,7 +718,7 @@
       "physical_fos": 2.337,
       "ml_fos": 0.846,
       "mandal_sarkar_exceeded": true,
-      "event_probability_24h": 0.294,
+      "event_probability_24h": 0.419,
       "static_susceptibility_s": 0.5,
       "dynamic_precipitation_p": 0.089,
       "ground_anomaly_a": 0.0,
@@ -732,11 +732,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "3d0325e216f8058a93872e02ef9edd3d10397ca18d05d47fd67215abf1ac48ec"
+      "data_hash_sha256": "af0243f8bc4300ffa6926d0a162888ed28930d492a7ca0b349636ef427121ccc"
     },
     {
-      "record_id": "CRI_RT_NL_PIPHEMA_01_20260922_125922",
-      "timestamp": "2026-09-22T12:59:21.080699+00:00",
+      "record_id": "CRI_RT_NL_PIPHEMA_01_20260922_130416",
+      "timestamp": "2026-09-22T13:04:11.193452+00:00",
       "sector_id": "NL-PIPHEMA-01",
       "sector_name": "Piphema Sinking Zone",
       "state": "Nagaland",
@@ -799,7 +799,7 @@
       "physical_fos": 2.753,
       "ml_fos": 1.018,
       "mandal_sarkar_exceeded": true,
-      "event_probability_24h": 0.294,
+      "event_probability_24h": 0.308,
       "static_susceptibility_s": 0.5,
       "dynamic_precipitation_p": 0.274,
       "ground_anomaly_a": 0.085,
@@ -813,11 +813,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "cc40c9c94f84de39c739dcf8f2af1afe94442833d988a116fcdfafbe96540c97"
+      "data_hash_sha256": "2d4e6b280827a6f053d2112b3b0c3c8b4d25883d22a1a1128181fe2ce2086457"
     },
     {
-      "record_id": "CRI_RT_AR_BHALUK_01_20260922_125923",
-      "timestamp": "2026-09-22T12:59:22.092147+00:00",
+      "record_id": "CRI_RT_AR_BHALUK_01_20260922_130421",
+      "timestamp": "2026-09-22T13:04:16.580749+00:00",
       "sector_id": "AR-BHALUK-01",
       "sector_name": "Bhalukpong-Tawang Axis Km 32",
       "state": "Arunachal Pradesh",
@@ -880,7 +880,7 @@
       "physical_fos": 2.694,
       "ml_fos": 0.993,
       "mandal_sarkar_exceeded": true,
-      "event_probability_24h": 0.294,
+      "event_probability_24h": 0.325,
       "static_susceptibility_s": 0.5,
       "dynamic_precipitation_p": 0.021,
       "ground_anomaly_a": 0.0,
@@ -894,11 +894,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "1066b4e2f1e96c46bada2cfb101b9542686bb4c1745e8d4dcef7b17c1f793f55"
+      "data_hash_sha256": "aea5c0bd0ab45cbc88114f7dfd1a7cd93830a30f426a5a14a1c59462f5ec5f19"
     },
     {
-      "record_id": "CRI_RT_AR_PASIGHAT_01_20260922_125924",
-      "timestamp": "2026-09-22T12:59:23.108039+00:00",
+      "record_id": "CRI_RT_AR_PASIGHAT_01_20260922_130427",
+      "timestamp": "2026-09-22T13:04:21.643741+00:00",
       "sector_id": "AR-PASIGHAT-01",
       "sector_name": "Pasighat Siang River Scour Escarpment",
       "state": "Arunachal Pradesh",
@@ -961,7 +961,7 @@
       "physical_fos": 3.288,
       "ml_fos": 1.231,
       "mandal_sarkar_exceeded": false,
-      "event_probability_24h": 0.294,
+      "event_probability_24h": 0.172,
       "static_susceptibility_s": 0.5,
       "dynamic_precipitation_p": 0.001,
       "ground_anomaly_a": 0.0,
@@ -975,11 +975,11 @@
       "evidence_confidence": 0.55,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "3b8609659eb59127386a90feca344720a23bca7f62780519139c705551c80d21"
+      "data_hash_sha256": "15c98a2809be2ba1f82e77a17c9bcd2072d614908e91de764dfa097ea712d241"
     },
     {
-      "record_id": "CRI_RT_AR_SELA_01_20260922_125925",
-      "timestamp": "2026-09-22T12:59:24.135188+00:00",
+      "record_id": "CRI_RT_AR_SELA_01_20260922_130432",
+      "timestamp": "2026-09-22T13:04:27.012262+00:00",
       "sector_id": "AR-SELA-01",
       "sector_name": "Sela Pass North Approach Km 8",
       "state": "Arunachal Pradesh",
@@ -1042,7 +1042,7 @@
       "physical_fos": 5.653,
       "ml_fos": 2.154,
       "mandal_sarkar_exceeded": true,
-      "event_probability_24h": 0.206,
+      "event_probability_24h": 0.064,
       "static_susceptibility_s": 0.5,
       "dynamic_precipitation_p": 0.028,
       "ground_anomaly_a": 0.0,
@@ -1056,11 +1056,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "47c9ce4dee522c22a26dc3e73356cffab5207c0aa298756f59fd431151f52ebc"
+      "data_hash_sha256": "fe3c6fd3021607f28f8b3903b27149df735a3b1354b8b6248ef26b272540dc21"
     },
     {
-      "record_id": "CRI_RT_MN_TUPUL_01_20260922_125926",
-      "timestamp": "2026-09-22T12:59:25.162768+00:00",
+      "record_id": "CRI_RT_MN_TUPUL_01_20260922_130436",
+      "timestamp": "2026-09-22T13:04:32.127613+00:00",
       "sector_id": "MN-TUPUL-01",
       "sector_name": "Noney Tupul Railway Corridor",
       "state": "Manipur",
@@ -1123,7 +1123,7 @@
       "physical_fos": 0.804,
       "ml_fos": 0.303,
       "mandal_sarkar_exceeded": false,
-      "event_probability_24h": 0.311,
+      "event_probability_24h": 0.766,
       "static_susceptibility_s": 0.5,
       "dynamic_precipitation_p": 0.007,
       "ground_anomaly_a": 0.0,
@@ -1137,11 +1137,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Accelerate telemetry polling to 5-minute intervals",
-      "data_hash_sha256": "ae3f76dba74513570b0bdb4a43ebe57186417db6f21dbf431b508678f7aa343d"
+      "data_hash_sha256": "9119cb53c7adeebefe6ce0d0684cdc9bc31f4b5cf80f2b7c09a4cd41f68291ec"
     },
     {
-      "record_id": "CRI_RT_MN_JIRIBAM_01_20260922_125927",
-      "timestamp": "2026-09-22T12:59:26.178717+00:00",
+      "record_id": "CRI_RT_MN_JIRIBAM_01_20260922_130441",
+      "timestamp": "2026-09-22T13:04:36.704428+00:00",
       "sector_id": "MN-JIRIBAM-01",
       "sector_name": "Imphal-Jiribam NH-37 Km 78",
       "state": "Manipur",
@@ -1204,7 +1204,7 @@
       "physical_fos": 4.367,
       "ml_fos": 1.765,
       "mandal_sarkar_exceeded": false,
-      "event_probability_24h": 0.206,
+      "event_probability_24h": 0.064,
       "static_susceptibility_s": 0.5,
       "dynamic_precipitation_p": 0.0,
       "ground_anomaly_a": 0.0,
@@ -1218,11 +1218,11 @@
       "evidence_confidence": 0.55,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "56e69487492c0eef155b238db0c662729989633d1757ed26ec827f9a7a25a384"
+      "data_hash_sha256": "25f15b5136d8e0223fe5cbdcdc0d17483186b5c386eaca4223efb3878bd26556"
     },
     {
-      "record_id": "CRI_RT_ML_SONAPUR_01_20260922_125928",
-      "timestamp": "2026-09-22T12:59:27.193367+00:00",
+      "record_id": "CRI_RT_ML_SONAPUR_01_20260922_130446",
+      "timestamp": "2026-09-22T13:04:41.428349+00:00",
       "sector_id": "ML-SONAPUR-01",
       "sector_name": "Sonapur Tunnel NH-06",
       "state": "Meghalaya",
@@ -1285,7 +1285,7 @@
       "physical_fos": 3.885,
       "ml_fos": 1.569,
       "mandal_sarkar_exceeded": true,
-      "event_probability_24h": 0.206,
+      "event_probability_24h": 0.064,
       "static_susceptibility_s": 0.5,
       "dynamic_precipitation_p": 0.113,
       "ground_anomaly_a": 0.0,
@@ -1299,11 +1299,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "97650e6276b87f3c9566eb9746243493593e0489af0e85073837b1001785ec06"
+      "data_hash_sha256": "df374234ed18450f419b202e0399ddbe936a45eab7b72082002211a2b528fe34"
     },
     {
-      "record_id": "CRI_RT_ML_CHERRA_01_20260922_125929",
-      "timestamp": "2026-09-22T12:59:28.205196+00:00",
+      "record_id": "CRI_RT_ML_CHERRA_01_20260922_130451",
+      "timestamp": "2026-09-22T13:04:46.826593+00:00",
       "sector_id": "ML-CHERRA-01",
       "sector_name": "Cherrapunji South Escarpment",
       "state": "Meghalaya",
@@ -1366,7 +1366,7 @@
       "physical_fos": 2.93,
       "ml_fos": 1.215,
       "mandal_sarkar_exceeded": true,
-      "event_probability_24h": 0.294,
+      "event_probability_24h": 0.182,
       "static_susceptibility_s": 0.5,
       "dynamic_precipitation_p": 0.025,
       "ground_anomaly_a": 0.0,
@@ -1380,11 +1380,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "6a494cb15078fc35e0918d0d18c9e730cdf1b3ab9a25feef5db4486cae4ddc20"
+      "data_hash_sha256": "af9cabbdeea50fd0064a56a6dd96f943d0f52ed57a34b3e2532de6d14266902e"
     },
     {
-      "record_id": "CRI_RT_AS_DIMA_01_20260922_125930",
-      "timestamp": "2026-09-22T12:59:29.219574+00:00",
+      "record_id": "CRI_RT_AS_DIMA_01_20260922_130456",
+      "timestamp": "2026-09-22T13:04:51.707119+00:00",
       "sector_id": "AS-DIMA-01",
       "sector_name": "Dima Hasao Hill Railway Corridor Km 42",
       "state": "Assam",
@@ -1447,7 +1447,7 @@
       "physical_fos": 2.906,
       "ml_fos": 1.088,
       "mandal_sarkar_exceeded": true,
-      "event_probability_24h": 0.294,
+      "event_probability_24h": 0.264,
       "static_susceptibility_s": 0.5,
       "dynamic_precipitation_p": 0.068,
       "ground_anomaly_a": 0.0,
@@ -1461,11 +1461,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "99159914c56f4bdbc7009410dc08d51016f661ae45c4dc4408f5b03d0e8ac2f0"
+      "data_hash_sha256": "51c020d750ecb028272bbad473dd44f55b06b9d1ac02d7c1338efadcf2ad765b"
     },
     {
-      "record_id": "CRI_RT_AS_GUWAHATI_01_20260922_125931",
-      "timestamp": "2026-09-22T12:59:30.245395+00:00",
+      "record_id": "CRI_RT_AS_GUWAHATI_01_20260922_130502",
+      "timestamp": "2026-09-22T13:04:56.821695+00:00",
       "sector_id": "AS-GUWAHATI-01",
       "sector_name": "Guwahati Narakasur Hills",
       "state": "Assam",
@@ -1528,7 +1528,7 @@
       "physical_fos": 6.069,
       "ml_fos": 2.314,
       "mandal_sarkar_exceeded": true,
-      "event_probability_24h": 0.206,
+      "event_probability_24h": 0.064,
       "static_susceptibility_s": 0.5,
       "dynamic_precipitation_p": 0.119,
       "ground_anomaly_a": 0.0,
@@ -1542,11 +1542,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "ede9629674b3f962367a0452ed6c84c187778a677b524725d48205966d1fc615"
+      "data_hash_sha256": "028e0bddf0c6e2de919b8fae3b26717b9845ca5961c5205cae1fb4149ca9047e"
     },
     {
-      "record_id": "CRI_RT_TR_BARAMURA_01_20260922_125932",
-      "timestamp": "2026-09-22T12:59:31.256871+00:00",
+      "record_id": "CRI_RT_TR_BARAMURA_01_20260922_130507",
+      "timestamp": "2026-09-22T13:05:02.139643+00:00",
       "sector_id": "TR-BARAMURA-01",
       "sector_name": "Baramura Hill Range NH-08",
       "state": "Tripura",
@@ -1609,7 +1609,7 @@
       "physical_fos": 4.025,
       "ml_fos": 1.535,
       "mandal_sarkar_exceeded": true,
-      "event_probability_24h": 0.206,
+      "event_probability_24h": 0.064,
       "static_susceptibility_s": 0.5,
       "dynamic_precipitation_p": 0.062,
       "ground_anomaly_a": 0.0,
@@ -1623,7 +1623,7 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "31961143c0081910d922ef7ac09cb95536ae45103a74319191548c9da3c2569c"
+      "data_hash_sha256": "b793fad3d65992ddbe3e487ae451fb2b8aa5c85c3fe59355b70cf0a0d59a8c5f"
     }
   ]
 }

@@ -351,7 +351,7 @@ class SensorRegistry:
 
     def get_device(self, device_id: str) -> Optional[SensorDevice]:
         dev = self._devices.get(device_id)
-        if dev is None or dev.status in (STATUS_COMMISSIONING, STATUS_OFFLINE):
+        if dev is None or dev.status in (STATUS_COMMISSIONING, STATUS_OFFLINE, STATUS_STALE, STATUS_REGISTERED):
             try:
                 conn = self._get_conn()
                 cur = conn.cursor()
@@ -378,13 +378,15 @@ class SensorRegistry:
                             commissioning_progress=list(COMMISSIONING_STAGES) if row[16] == STATUS_ACTIVE else []
                         )
                         self._devices[device_id] = dev
-                    elif row[16] == STATUS_ACTIVE and dev.status != STATUS_ACTIVE:
-                        dev.status = STATUS_ACTIVE
-                        dev.commissioned_at = row[8]
-                        dev.last_seen = row[12]
-                        dev.battery_level = float(row[13])
-                        dev.signal_strength = float(row[14])
-                        dev.commissioning_progress = list(COMMISSIONING_STAGES)
+                    elif row[16] == STATUS_ACTIVE:
+                        is_staleness_override = dev.status in (STATUS_STALE, STATUS_OFFLINE) and row[12] == dev.last_seen
+                        if not is_staleness_override:
+                            dev.status = STATUS_ACTIVE
+                            dev.commissioned_at = row[8]
+                            dev.last_seen = row[12]
+                            dev.battery_level = float(row[13])
+                            dev.signal_strength = float(row[14])
+                            dev.commissioning_progress = list(COMMISSIONING_STAGES)
             except Exception:
                 pass
         return self._devices.get(device_id)
