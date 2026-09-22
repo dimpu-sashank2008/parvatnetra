@@ -3,8 +3,8 @@
     "phase": "PHASE 11M",
     "standard": "SIH 2026 Pre-Submission Freeze",
     "audit_type": "FINAL MODEL ARTIFACT RELEASE INTEGRITY",
-    "timestamp_utc": "2026-09-15T05:41:52.031833+00:00",
-    "all_artifacts_match": true,
+    "timestamp_utc": "2026-09-22T16:43:45.857434+00:00",
+    "all_artifacts_match": false,
     "total_artifacts_verified": 10
   },
   "artifacts": {
@@ -25,9 +25,9 @@
     "pahad_event_model.pkl": {
       "size_bytes": 57100,
       "expected_sha256": "d2094eae9ee6906f5197af5b2fdeb671d6a571080c7f63985b92b95c82ede938",
-      "actual_sha256": "d2094eae9ee6906f5197af5b2fdeb671d6a571080c7f63985b92b95c82ede938",
-      "match": true,
-      "status": "VERIFIED_BIT_FOR_BIT_PARITY"
+      "actual_sha256": "539342aac08d475144ff981b9a565379a59f38fb72d7c322b499dc24b4735480",
+      "match": false,
+      "status": "MISMATCH"
     },
     "pahad_event_model_6h.pkl": {
       "size_bytes": 61657,
@@ -67,9 +67,9 @@
     "pahad_event_metadata.json": {
       "size_bytes": 2152,
       "expected_sha256": "9f408b7acb5c77f1a124fcad5e1898cdc42549f855ac4c45e44d89aebc62e77f",
-      "actual_sha256": "9f408b7acb5c77f1a124fcad5e1898cdc42549f855ac4c45e44d89aebc62e77f",
-      "match": true,
-      "status": "VERIFIED_BIT_FOR_BIT_PARITY"
+      "actual_sha256": "9b576c3fd065b4c9361915ac489e94a92a566020cdca58a8418cf0dac1af037e",
+      "match": false,
+      "status": "MISMATCH"
     },
     "pahad_event_metrics.json": {
       "size_bytes": 657,

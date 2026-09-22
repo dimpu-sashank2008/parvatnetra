@@ -600,6 +600,7 @@ class DatasetExpansionManager:
                     return {
                         "success": True,
                         "status": "MERGED_DUPLICATE",
+                        "is_duplicate": True,
                         "canonical_event_id": existing.event_id,
                         "verification_status": existing.verification_status,
                         "message": f"Merged into existing canonical event {existing.event_id} ({dist_km:.2f}km, {hrs_diff:.1f}h separation)"
@@ -649,6 +650,7 @@ class DatasetExpansionManager:
         return {
             "success": True,
             "status": ver_status,
+            "is_duplicate": False,
             "admitted_to_canonical": admitted,
             "event_id": eid,
             "raw_record_hash": new_event.raw_record_hash,

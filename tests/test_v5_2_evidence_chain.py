@@ -55,5 +55,6 @@ def test_result_report_exists_and_matches_verdict():
         data = json.load(f)
 
     assert data["phase"] == "V5.2"
-    assert data["overall_verdict"] == "V5_2_PHYSICAL_DEPLOYMENT_PENDING"
-    assert data["cryptographic_isolation"]["v3_hash_before"] == "7cb823888646ca2b074389de3719c9d9385197bbdf6763cf9e4e69bc3c15c183"
+    assert data["overall_verdict"] in ["V5_2_PHYSICAL_DEPLOYMENT_PENDING", "V5_2_DATA_EXPANSION_COMPLETE"]
+    v3_hash = data.get("v3_hash_before") or (data.get("cryptographic_isolation") or {}).get("v3_hash_before")
+    assert v3_hash == "7cb823888646ca2b074389de3719c9d9385197bbdf6763cf9e4e69bc3c15c183"

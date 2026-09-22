@@ -9042,6 +9042,152 @@ def api_gods_eye_tile_key():
     }), 200
 
 
+# =============================================================================
+# PHASE V5.2 AUTHORITATIVE DATA EXPANSION APIS (LOCALHOST ONLY)
+# =============================================================================
+
+@app.route("/api/data/events", methods=["GET"])
+def api_data_events():
+    """GET /api/data/events: Returns canonical historical landslide events."""
+    try:
+        from engine.dataset_expansion_manager import DatasetExpansionManager
+        mgr = DatasetExpansionManager.get_instance()
+        events = mgr.list_canonical_events()
+        
+        state = request.args.get("state")
+        district = request.args.get("district")
+        event_type = request.args.get("event_type")
+        if state:
+            events = [e for e in events if e.get("state", "").lower() == state.lower()]
+        if district:
+            events = [e for e in events if e.get("district", "").lower() == district.lower()]
+        if event_type:
+            events = [e for e in events if e.get("event_type", "").lower() == event_type.lower()]
+            
+        return jsonify({
+            "status": "SUCCESS",
+            "phase": "V5.2",
+            "total_count": len(events),
+            "events": events,
+            "provenance": "[HISTORICAL / CANONICAL]"
+        }), 200
+    except Exception as e:
+        logger.error(f"Error in /api/data/events: {e}", exc_info=True)
+        return jsonify({"status": "ERROR", "message": str(e)}), 500
+
+
+@app.route("/api/data/events/<event_id>", methods=["GET"])
+def api_data_event_by_id(event_id: str):
+    """GET /api/data/events/<event_id>: Returns specific canonical event by ID."""
+    try:
+        from engine.dataset_expansion_manager import DatasetExpansionManager
+        mgr = DatasetExpansionManager.get_instance()
+        ev = mgr.get_event(event_id)
+        if not ev:
+            return jsonify({
+                "status": "NOT_FOUND",
+                "message": f"Event '{event_id}' not found in canonical dataset."
+            }), 404
+        return jsonify({
+            "status": "SUCCESS",
+            "phase": "V5.2",
+            "event": ev.to_dict(),
+            "provenance": ev.provenance
+        }), 200
+    except Exception as e:
+        logger.error(f"Error in /api/data/events/{event_id}: {e}", exc_info=True)
+        return jsonify({"status": "ERROR", "message": str(e)}), 500
+
+
+@app.route("/api/data/events/status", methods=["GET"])
+def api_data_events_status():
+    """GET /api/data/events/status: Returns verification tier and registration status."""
+    try:
+        from engine.dataset_expansion_manager import DatasetExpansionManager
+        mgr = DatasetExpansionManager.get_instance()
+        return jsonify({
+            "status": "SUCCESS",
+            "phase": "V5.2",
+            "canonical_event_count": mgr.get_canonical_event_count(),
+            "canonical_control_count": mgr.get_canonical_control_count(),
+            "unverified_event_count": mgr.get_unverified_event_count(),
+            "rejected_event_count": mgr.get_rejected_event_count(),
+            "verification_tiers": mgr.get_verification_tier_counts(),
+            "provenance": "[AUTHORITATIVE_STATUS]"
+        }), 200
+    except Exception as e:
+        logger.error(f"Error in /api/data/events/status: {e}", exc_info=True)
+        return jsonify({"status": "ERROR", "message": str(e)}), 500
+
+
+@app.route("/api/data/events/provenance", methods=["GET"])
+def api_data_events_provenance():
+    """GET /api/data/events/provenance: Returns provenance summary and source breakdown."""
+    try:
+        from engine.dataset_expansion_manager import DatasetExpansionManager
+        mgr = DatasetExpansionManager.get_instance()
+        return jsonify({
+            "status": "SUCCESS",
+            "phase": "V5.2",
+            "provenance_summary": mgr.get_provenance_summary(),
+            "provenance": "[HISTORICAL_PROVENANCE]"
+        }), 200
+    except Exception as e:
+        logger.error(f"Error in /api/data/events/provenance: {e}", exc_info=True)
+        return jsonify({"status": "ERROR", "message": str(e)}), 500
+
+
+@app.route("/api/data/events/statistics", methods=["GET"])
+def api_data_events_statistics():
+    """GET /api/data/events/statistics: Returns quality metrics and geographic coverage summary."""
+    try:
+        from engine.dataset_expansion_manager import DatasetExpansionManager
+        mgr = DatasetExpansionManager.get_instance()
+        return jsonify({
+            "status": "SUCCESS",
+            "phase": "V5.2",
+            "quality_metrics": mgr.get_quality_metrics(),
+            "coverage_summary": mgr.get_coverage_summary(),
+            "provenance": "[AUDIT_STATISTICS]"
+        }), 200
+    except Exception as e:
+        logger.error(f"Error in /api/data/events/statistics: {e}", exc_info=True)
+        return jsonify({"status": "ERROR", "message": str(e)}), 500
+
+
+@app.route("/api/data/ground-truth/status", methods=["GET"])
+def api_data_ground_truth_status():
+    """GET /api/data/ground-truth/status: Returns authoritative ground-truth state."""
+    try:
+        from engine.dataset_expansion_manager import DatasetExpansionManager
+        mgr = DatasetExpansionManager.get_instance()
+        return jsonify({
+            "status": "SUCCESS",
+            "phase": "V5.2",
+            "canonical_events_v5_1": 17,
+            "authoritative_expansion_v5_2": 25,
+            "total_canonical_events": mgr.get_canonical_event_count(),
+            "verified_controls": mgr.get_canonical_control_count(),
+            "temporal_sequences": 105,
+            "physical_sensors_installed": 0,
+            "live_mountain_telemetry_observations": 0,
+            "kinematic_ml_status": "NOT_TRAINED_DATA_PENDING",
+            "production_model_v3": {
+                "status": "ACTIVE_PRODUCTION_FROZEN",
+                "sha256": "7cb823888646ca2b074389de3719c9d9385197bbdf6763cf9e4e69bc3c15c183"
+            },
+            "research_model_v4_5": {
+                "status": "OFFLINE_RESEARCH_ONLY",
+                "deployed": False,
+                "sha256": "31e16ce003cdd2c5934df034e6229661d27a8530a6a0dbc6a18e1ff56277da9f"
+            },
+            "provenance": "[SCIENTIFIC_TRUTH_LEDGER]"
+        }), 200
+    except Exception as e:
+        logger.error(f"Error in /api/data/ground-truth/status: {e}", exc_info=True)
+        return jsonify({"status": "ERROR", "message": str(e)}), 500
+
+
 if __name__ == "__main__":
 
 

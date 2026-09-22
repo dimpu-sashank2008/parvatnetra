@@ -1,0 +1,50 @@
+{
+  "schema_version": "5.2.0",
+  "phase": "V5.2",
+  "generated_at_utc": "2026-09-22T16:50:00Z",
+  "dataset_registry": [
+    {
+      "dataset_id": "DS-RAW-NER-17",
+      "path": "data/raw/historical_landslides_ner.csv",
+      "rows": 17,
+      "events": 17,
+      "classification": "AUTHORITATIVE_BASELINE"
+    },
+    {
+      "dataset_id": "DS-RAW-EXPANSION-V5-2",
+      "path": "data/raw/historical_landslides_expansion_v5_2.json",
+      "rows": 25,
+      "events": 25,
+      "classification": "AUTHORITATIVE_EXPANSION"
+    },
+    {
+      "dataset_id": "DS-CANONICAL-V5-2-42",
+      "path": "data/processed/canonical_event_inventory_v5_2.json",
+      "rows": 42,
+      "events": 42,
+      "controls": 20,
+      "classification": "CANONICAL_INVENTORY_V5_2"
+    },
+    {
+      "dataset_id": "DS-CTRL-HIST-20",
+      "path": "data/processed/lstm_v4_historical_controls.csv",
+      "rows": 20,
+      "controls": 20,
+      "classification": "AUTHORITATIVE_CONTROLS"
+    },
+    {
+      "dataset_id": "DS-V4-4-SEQUENCES-105",
+      "path": "data/processed/lstm_v4_4_real_temporal_sequences.csv",
+      "rows": 17640,
+      "sequences": 105,
+      "classification": "RESEARCH_SEQUENCES"
+    }
+  ],
+  "temporal_splits": {
+    "training_events_count": 24,
+    "validation_events_count": 10,
+    "test_events_count": 8,
+    "rule": "Chronological holdout: Train (<=2023), Val (early 2024), Test (mid/late 2024)"
+  },
+  "status": "EXPANSION_VERIFIED"
+}

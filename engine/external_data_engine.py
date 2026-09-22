@@ -63,9 +63,13 @@ class ExternalSourceRecord:
     retrieval_timestamp: str
     status: str
     description: str
+    notes: str = ""
 
     def to_dict(self) -> Dict[str, Any]:
-        return asdict(self)
+        d = asdict(self)
+        if not d.get("notes"):
+            d["notes"] = self.license_notes or self.description
+        return d
 
 
 @dataclass
@@ -294,7 +298,8 @@ class ExternalDataEngine:
                 license_notes="Field Instrumentation Pilot",
                 retrieval_timestamp="2026-09-20T18:00:00Z",
                 status=STATUS_UNAVAILABLE,
-                description="In-place inclinometers, piezometers, tiltmeters. Field boreholes NOT installed; 0 live field observations."
+                description="In-place inclinometers, piezometers, tiltmeters. Field boreholes NOT installed; 0 live field observations.",
+                notes="PHYSICAL_TELEMETRY_PENDING: Field boreholes not installed; in-situ telemetry pending."
             )
         ]
         for r in records:
@@ -361,10 +366,18 @@ class ExternalDataEngine:
         """Returns all registered external sources as dictionaries."""
         return [s.to_dict() for s in self._sources.values()]
 
+    def list_sources(self) -> List[Dict[str, Any]]:
+        """Returns all registered external sources as dictionaries."""
+        return self.get_source_registry()
+
     def get_source_by_id(self, source_id: str) -> Optional[Dict[str, Any]]:
         """Returns a single external source record by ID."""
         rec = self._sources.get(source_id)
         return rec.to_dict() if rec else None
+
+    def get_source(self, source_id: str) -> Optional[Dict[str, Any]]:
+        """Returns a single external source record by ID."""
+        return self.get_source_by_id(source_id)
 
     def audit_all_connectors(self) -> Dict[str, Any]:
         """
