@@ -28,7 +28,7 @@ services:
   # ============================================================================
   # PARVAT NETRA Sentinel Decision API & Web Frontend (Gunicorn)
   # ============================================================================
-  web:
+  parvat-netra-web:
     build:
       context: .
       dockerfile: Dockerfile
