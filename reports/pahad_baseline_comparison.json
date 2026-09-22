@@ -1,0 +1,37 @@
+{
+  "1_rainfall_only_threshold": {
+    "rule": "Rainfall_24h >= 150mm",
+    "pod": 0.4167,
+    "far": 0.0,
+    "csi": 0.4167,
+    "f1": 0.5882
+  },
+  "2_fos_only_rule": {
+    "rule": "FoS < 1.00",
+    "pod": 0.9167,
+    "far": 0.3529,
+    "csi": 0.6111,
+    "f1": 0.7586
+  },
+  "3_rainfall_plus_fos_rule": {
+    "rule": "Rainfall >= 150mm OR FoS < 1.10",
+    "pod": 1.0,
+    "far": 0.4,
+    "csi": 0.6,
+    "f1": 0.75
+  },
+  "4_pahad_event_ml_model": {
+    "rule": "P(event_24h) >= 0.3",
+    "pod": 1.0,
+    "far": 0.0,
+    "csi": 1.0,
+    "f1": 1.0
+  },
+  "5_pahad_multimodal_fusion": {
+    "rule": "2-of-3 Corroboration Gate",
+    "pod": 1.0,
+    "far": 0.4,
+    "csi": 0.6,
+    "f1": 0.75
+  }
+}

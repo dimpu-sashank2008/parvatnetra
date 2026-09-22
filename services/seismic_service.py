@@ -165,9 +165,16 @@ class NCSSeismicProvider(SeismicProvider):
 
     def status(self) -> Dict[str, Any]:
         configured = self._is_configured()
+        ncs_key = os.environ.get("NCS_API_KEY", "")
+        if not configured or not self.base_url:
+            stat = "UNCONFIGURED"
+        elif not ncs_key:
+            stat = "AUTH_REQUIRED"
+        else:
+            stat = "CONFIGURED"
         return {
             "provider": self.name,
-            "status": "CONFIGURED" if configured else "UNCONFIGURED",
+            "status": stat,
             "endpoint": self.base_url if configured else None,
             "last_error": self._last_error
         }

@@ -1,7 +1,7 @@
 # PARVAT NETRA • REAL-TIME MULTIMODAL CRI DATASET REPORT
 **Evaluation Engine:** PAHAD AI Multimodal Fusion Engine v3.1  
-**Generated UTC:** 2026-09-22T09:40:05.481149+00:00  
-**Dataset SHA-256:** `1e0c8b1202dd29e268f74e8cfbb30d3bf1e20c83caabf480c15e9ce3824bb69c`  
+**Generated UTC:** 2026-09-22T12:22:06.099774+00:00  
+**Dataset SHA-256:** `2d4f67d2960c161f520f4e2467a1a9a95e73f9a1f224bb7fedc3f00796472fa4`  
 **Filed Files:** `data/realtime/realtime_cri_dataset.csv`, `data/realtime/realtime_cri_dataset.json`  
 
 ---
@@ -9,15 +9,15 @@
 ## 1. Executive Summary
 This dataset files live multi-modal sensor and meteorological observations across all 20 GSI critical monitoring corridors in the 8 North-Eastern Region (NER) states:
 - **Total Sectors Evaluated:** 20
-- **Average Sector CRI:** 13.99 / 100
+- **Average Sector CRI:** 14.28 / 100
 - **Average Mohr-Coulomb FoS:** 3.277
 - **Peak 24h Rainfall Recorded:** 42.2 mm
 - **Alert Band Distribution:**
   - `EXTREME`: 0
   - `VERY_HIGH`: 0
   - `HIGH`: 0
-  - `MODERATE`: 5
-  - `LOW`: 15
+  - `MODERATE`: 4
+  - `LOW`: 16
 
 ---
 
@@ -25,26 +25,26 @@ This dataset files live multi-modal sensor and meteorological observations acros
 
 | Sector ID | Corridor | State | 24h Rain | Seismic Mag | FoS | Raw CRI | Final CRI | Alert Band | Agreement | Provenance |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| `SK-NH10-KM48` | National Highway 10 | Sikkim | 14.0 mm | 3.7 M | 0.964 | 36.95 | **36.95** | `MODERATE` | 2/3 | `[LIVE/HYBRID]` |
-| `SK-SINGTAM-01` | NH-10 / Teesta River Gorge | Sikkim | 18.4 mm | 3.7 M | 2.643 | 21.06 | **21.06** | `MODERATE` | 1/3 | `[LIVE/HYBRID]` |
-| `SK-DIKCHU-01` | North Sikkim Highway | Sikkim | 14.0 mm | 3.7 M | 4.943 | 8.0 | **8.0** | `LOW` | 1/3 | `[LIVE/HYBRID]` |
-| `SK-MANGAN-01` | Mangan-Chungthang Road | Sikkim | 23.2 mm | 3.7 M | 2.912 | 14.13 | **14.13** | `LOW` | 1/3 | `[LIVE/HYBRID]` |
-| `MZ-HUNTHAR-01` | NH-06 / Western Arterial | Mizoram | 10.7 mm | 3.7 M | 3.031 | 11.32 | **11.32** | `LOW` | 1/3 | `[LIVE/HYBRID]` |
-| `MZ-SAIRANG-01` | Bairabi-Sairang Rail Spur | Mizoram | 9.5 mm | 3.7 M | 4.116 | 6.89 | **6.89** | `LOW` | 1/3 | `[LIVE/HYBRID]` |
-| `MZ-KOLASIB-01` | NH-306 Silchar-Aizawl Link | Mizoram | 24.2 mm | 3.7 M | 3.509 | 17.37 | **17.37** | `LOW` | 1/3 | `[LIVE/HYBRID]` |
-| `NL-PAGALA-01` | NH-29 Dimapur-Kohima Lifeline | Nagaland | 2.9 mm | 3.7 M | 1.919 | 11.89 | **11.89** | `LOW` | 1/3 | `[LIVE/HYBRID]` |
-| `NL-DZUDZA-01` | NH-29 Km 15 | Nagaland | 9.2 mm | 3.7 M | 2.337 | 12.34 | **12.34** | `LOW` | 1/3 | `[LIVE/HYBRID]` |
-| `NL-PIPHEMA-01` | NH-29 | Nagaland | 42.2 mm | 3.7 M | 2.675 | 25.53 | **25.53** | `MODERATE` | 1/3 | `[LIVE/HYBRID]` |
+| `SK-NH10-KM48` | National Highway 10 | Sikkim | 14.0 mm | 3.7 M | 0.964 | 38.41 | **38.41** | `MODERATE` | 2/3 | `[LIVE/HYBRID]` |
+| `SK-SINGTAM-01` | NH-10 / Teesta River Gorge | Sikkim | 18.4 mm | 3.7 M | 2.643 | 25.03 | **25.03** | `MODERATE` | 1/3 | `[LIVE/HYBRID]` |
+| `SK-DIKCHU-01` | North Sikkim Highway | Sikkim | 14.0 mm | 3.7 M | 4.943 | 9.46 | **9.46** | `LOW` | 1/3 | `[LIVE/HYBRID]` |
+| `SK-MANGAN-01` | Mangan-Chungthang Road | Sikkim | 23.2 mm | 3.7 M | 2.912 | 12.77 | **12.77** | `LOW` | 1/3 | `[LIVE/HYBRID]` |
+| `MZ-HUNTHAR-01` | NH-06 / Western Arterial | Mizoram | 10.7 mm | 3.7 M | 3.031 | 12.98 | **12.98** | `LOW` | 1/3 | `[LIVE/HYBRID]` |
+| `MZ-SAIRANG-01` | Bairabi-Sairang Rail Spur | Mizoram | 9.5 mm | 3.7 M | 4.116 | 8.12 | **8.12** | `LOW` | 1/3 | `[LIVE/HYBRID]` |
+| `MZ-KOLASIB-01` | NH-306 Silchar-Aizawl Link | Mizoram | 24.2 mm | 3.7 M | 3.509 | 15.71 | **15.71** | `LOW` | 1/3 | `[LIVE/HYBRID]` |
+| `NL-PAGALA-01` | NH-29 Dimapur-Kohima Lifeline | Nagaland | 2.9 mm | 3.7 M | 1.919 | 11.95 | **11.95** | `LOW` | 1/3 | `[LIVE/HYBRID]` |
+| `NL-DZUDZA-01` | NH-29 Km 15 | Nagaland | 9.2 mm | 3.7 M | 2.337 | 13.13 | **13.13** | `LOW` | 1/3 | `[LIVE/HYBRID]` |
+| `NL-PIPHEMA-01` | NH-29 | Nagaland | 42.2 mm | 3.7 M | 2.675 | 25.81 | **25.81** | `MODERATE` | 1/3 | `[LIVE/HYBRID]` |
 | `AR-BHALUK-01` | Tawang Strategic Highway | Arunachal Pradesh | 0.5 mm | 3.7 M | 2.694 | 8.26 | **8.26** | `LOW` | 0/3 | `[LIVE/HYBRID]` |
 | `AR-PASIGHAT-01` | NH-515 / Siang Valley | Arunachal Pradesh | 0.0 mm | 3.7 M | 3.288 | 7.5 | **7.5** | `LOW` | 0/3 | `[LIVE/HYBRID]` |
-| `AR-SELA-01` | NH-13 | Arunachal Pradesh | 3.3 mm | 3.7 M | 5.653 | 7.84 | **7.84** | `LOW` | 1/3 | `[LIVE/HYBRID]` |
+| `AR-SELA-01` | NH-13 | Arunachal Pradesh | 3.3 mm | 3.7 M | 5.653 | 7.73 | **7.73** | `LOW` | 1/3 | `[LIVE/HYBRID]` |
 | `MN-TUPUL-01` | Jiribam-Imphal Railway | Manipur | 0.5 mm | 3.7 M | 0.804 | 32.77 | **32.77** | `MODERATE` | 1/3 | `[LIVE/HYBRID]` |
 | `MN-JIRIBAM-01` | NH-37 Lifeline | Manipur | 1.3 mm | 3.7 M | 4.367 | 5.75 | **5.75** | `LOW` | 0/3 | `[LIVE/HYBRID]` |
-| `ML-SONAPUR-01` | NH-06 Barak Valley Lifeline | Meghalaya | 30.2 mm | 3.7 M | 3.746 | 21.24 | **21.24** | `MODERATE` | 1/3 | `[LIVE/HYBRID]` |
+| `ML-SONAPUR-01` | NH-06 Barak Valley Lifeline | Meghalaya | 30.2 mm | 3.7 M | 3.746 | 19.14 | **19.14** | `LOW` | 1/3 | `[LIVE/HYBRID]` |
 | `ML-CHERRA-01` | Sohra-Shella Corridor | Meghalaya | 3.4 mm | 3.7 M | 2.93 | 6.81 | **6.81** | `LOW` | 1/3 | `[LIVE/HYBRID]` |
 | `AS-DIMA-01` | Lumding-Badarpur Hill Section | Assam | 7.5 mm | 3.7 M | 2.906 | 8.66 | **8.66** | `LOW` | 1/3 | `[LIVE/HYBRID]` |
-| `AS-GUWAHATI-01` | Guwahati Urban Rim | Assam | 9.9 mm | 3.7 M | 6.069 | 6.62 | **6.62** | `LOW` | 1/3 | `[LIVE/HYBRID]` |
-| `TR-BARAMURA-01` | NH-08 National Corridor | Tripura | 7.1 mm | 3.7 M | 4.025 | 8.79 | **8.79** | `LOW` | 1/3 | `[LIVE/HYBRID]` |
+| `AS-GUWAHATI-01` | Guwahati Urban Rim | Assam | 9.9 mm | 3.7 M | 6.069 | 7.06 | **7.06** | `LOW` | 1/3 | `[LIVE/HYBRID]` |
+| `TR-BARAMURA-01` | NH-08 National Corridor | Tripura | 7.1 mm | 3.7 M | 4.025 | 8.51 | **8.51** | `LOW` | 1/3 | `[LIVE/HYBRID]` |
 
 ---
 

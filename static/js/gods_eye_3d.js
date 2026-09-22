@@ -1092,6 +1092,23 @@
                 map2d.style.display = 'none';
             }
 
+            // Hide 2D Map Overlays that collide with 3D HUD & scene
+            const dataStatus = document.getElementById('gis-data-status-panel');
+            if (dataStatus) {
+                dataStatus.dataset.prevDisplay = dataStatus.style.display || '';
+                dataStatus.style.display = 'none';
+            }
+            const timeline = document.getElementById('pahad-gis-timeline-control');
+            if (timeline) {
+                timeline.dataset.prevDisplay = timeline.style.display || '';
+                timeline.style.display = 'none';
+            }
+            const layerControl = document.getElementById('layer-control-panel');
+            if (layerControl) {
+                layerControl.dataset.prevDisplay = layerControl.style.display || '';
+                layerControl.style.display = 'none';
+            }
+
             // Show 3D Container
             this.container.classList.remove('hidden');
             this.container.style.display = 'block';
@@ -1140,6 +1157,20 @@
             const map2d = document.getElementById('map');
             if (map2d) {
                 map2d.style.display = 'block';
+            }
+
+            // Restore 2D Map Overlays
+            const dataStatus = document.getElementById('gis-data-status-panel');
+            if (dataStatus) {
+                dataStatus.style.display = dataStatus.dataset.prevDisplay !== undefined ? dataStatus.dataset.prevDisplay : '';
+            }
+            const timeline = document.getElementById('pahad-gis-timeline-control');
+            if (timeline) {
+                timeline.style.display = timeline.dataset.prevDisplay !== undefined ? timeline.dataset.prevDisplay : '';
+            }
+            const layerControl = document.getElementById('layer-control-panel');
+            if (layerControl) {
+                layerControl.style.display = layerControl.dataset.prevDisplay !== undefined ? layerControl.dataset.prevDisplay : '';
             }
 
             // Pause Cesium rendering loop to conserve CPU/GPU

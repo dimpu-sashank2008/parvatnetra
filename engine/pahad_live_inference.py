@@ -345,6 +345,22 @@ def _collect_terrain(lat: float, lon: float, sector_id: Optional[str] = None) ->
             if nearest_res:
                 loc, _ = nearest_res
 
+        # When canonical corridor is recognized, its surveyed ground truth baseline is authoritative
+        if loc:
+            slope = float(loc.slope_deg)
+            elevation = float(loc.elevation_m)
+            terr = svc.get_point_terrain_attributes(lat, lon)
+            terr["slope_deg"] = slope
+            terr["elevation_m"] = elevation
+            terr["canonical_corridor"] = loc.name
+            return terr, FeatureProvenance(
+                feature="terrain",
+                value=slope,
+                provenance="MODELLED",
+                source=f"Canonical Corridor Registry ({loc.name} Geological Baseline)",
+                age_seconds=0.0
+            )
+
         # If we have a local high-resolution DEM raster on disk, compute from raster
         if has_raster:
             terr = svc.get_point_terrain_attributes(lat, lon)
@@ -357,23 +373,9 @@ def _collect_terrain(lat: float, lon: float, sector_id: Optional[str] = None) ->
                 age_seconds=0.0
             )
 
-        # When local raster is not present on disk, query multi-source terrain consensus
+        # Arbitrary location outside recognized corridors without local raster
         terr = svc.get_point_terrain_attributes(lat, lon)
         slope = float(terr.get("slope_deg", 0.0))
-        multi_info = terr.get("multi_source", {})
-        has_survey = multi_info.get("has_ground_survey", False)
-
-        if loc:
-            terr["canonical_corridor"] = loc.name
-            src_desc = f"Multi-Source Consensus (ISRO CartoDEM/Copernicus GLO-30/SRTM/ALOS) + Survey ({loc.name})"
-            return terr, FeatureProvenance(
-                feature="terrain",
-                value=slope,
-                provenance="LIVE" if has_survey else "MODELLED",
-                source=src_desc,
-                age_seconds=0.0
-            )
-
         return terr, FeatureProvenance(
             feature="terrain",
             value=slope,

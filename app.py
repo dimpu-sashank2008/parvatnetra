@@ -1149,7 +1149,7 @@ def dispatch_siren():
 
     # Strict life-safety guardrail: Citizen, field operator, and admin roles are strictly forbidden from dispatching sirens
     if user_role in ["citizen", "public", "field_operator", "admin"]:
-        return jsonify({"status": "FORBIDDEN", "message": "Citizen or non-authority role cannot dispatch tactical sirens."}), 403
+        return jsonify({"status": "FORBIDDEN", "message": "Citizen role cannot dispatch tactical sirens (Authority clearance required)."}), 403
 
     # Primary check: Authority role in session OR valid authority secret token
     is_authorized = (user_role in ["authority", "district_authority", "state_authority"]) or (auth_header == secret_token)

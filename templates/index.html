@@ -234,9 +234,9 @@
         @keyframes pulse-orange{0%{box-shadow:0 0 0 0 rgba(249,115,22,0.8);}70%{box-shadow:0 0 0 10px rgba(249,115,22,0);}100%{box-shadow:0 0 0 0 rgba(249,115,22,0);}}
         /* Maintain Leaflet controls and floating layer panel above map tiles & vectors (which use z-index 200..700), but below modals (z-index > 9999) */
         .leaflet-top, .leaflet-bottom, .leaflet-control {
-            z-index: 800 !important;
+            z-index: 10 !important;
         }
-        #layer-control-panel{position:absolute;top:10px;right:10px;z-index:1200 !important;width:295px;max-width:calc(100vw - 20px);background:#0B192C;border:1px solid #334155;border-radius:6px;box-shadow:0 8px 24px rgba(0,0,0,0.4);overflow:hidden;touch-action:pan-y;transition:all 0.2s ease-in-out;}
+        #layer-control-panel{position:absolute;top:10px;right:10px;z-index:10;width:295px;max-width:calc(100vw - 20px);background:#0B192C;border:1px solid #334155;border-radius:6px;box-shadow:0 8px 24px rgba(0,0,0,0.4);overflow:hidden;touch-action:pan-y;transition:all 0.2s ease-in-out;}
         #layer-control-panel .lcp-header{background:#071220;padding:9px 12px;border-bottom:1px solid #334155;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;}
         #layer-control-panel .lcp-header span{font-size:11px;font-weight:700;color:#FFFFFF;letter-spacing:0.04em;}
         #layer-control-panel .lcp-body{padding:6px 0;background:#0B192C;max-height:55vh;overflow-y:auto;-webkit-overflow-scrolling:touch;}
@@ -3577,7 +3577,7 @@
                     <!-- Phase V5.3 God's Eye 3D Container -->
                     <div id="gods-eye-3d-container" class="hidden absolute inset-0 w-full h-full z-[300]"></div>
                     <!-- Compact Floating Data Status Panel (Section 12) -->
-                    <div id="gis-data-status-panel" class="absolute bottom-10 left-3 z-[400] bg-[#070B10]/95 backdrop-blur border border-slate-700/80 rounded shadow-xl p-2.5 text-[10px] font-mono text-slate-300 max-w-[240px] pointer-events-auto">
+                    <div id="gis-data-status-panel" class="absolute top-[78px] left-3 z-[400] bg-[#070B10]/95 backdrop-blur border border-slate-700/80 rounded shadow-xl p-2.5 text-[10px] font-mono text-slate-300 max-w-[240px] pointer-events-auto">
                         <div id="data-status-header" class="flex items-center justify-between cursor-pointer select-none" onclick="toggleDataStatusCollapse()" title="Click to collapse/expand data status">
                             <span class="font-bold text-sky-400 uppercase tracking-wider flex items-center gap-1">
                                 <i class="ph-bold ph-shield-check text-xs"></i> DATA STATUS
@@ -3742,7 +3742,8 @@
                             <div class="lcp-item"><span class="lcp-dot" style="background:#d97706;"></span><span class="lcp-label">Anthropogenic Hill Cuts</span><button class="lcp-toggle on" id="toggle-cuts-btn" onclick="toggleCutsLayer(this)" aria-label="Toggle Anthropogenic Cuts"></button></div>
                             <div class="lcp-item"><span class="lcp-dot" style="background:#8b5cf6;"></span><span class="lcp-label">Bypass Detours</span><button class="lcp-toggle on" id="toggle-detours-btn" onclick="toggleDetoursLayer(this)" aria-label="Toggle Bypass Detours"></button></div>
                             <div class="lcp-item"><span class="lcp-dot" style="background:#10b981;"></span><span class="lcp-label">Isolated Habitations</span><button class="lcp-toggle on" id="toggle-habitations-btn" onclick="toggleHabitationsLayer(this)" aria-label="Toggle Critical Habitations"></button></div>
-                            <div class="lcp-item" style="margin-bottom:6px;"><span class="lcp-dot" style="background:#f59e0b;"></span><span class="lcp-label">Field Incident Reports</span><button class="lcp-toggle on" id="toggle-reports-btn" onclick="toggleReportsLayer()" aria-label="Toggle Field Incident Reports"></button></div>
+                            <div class="lcp-item"><span class="lcp-dot" style="background:#f59e0b;"></span><span class="lcp-label">Field Incident Reports</span><button class="lcp-toggle on" id="toggle-reports-btn" onclick="toggleReportsLayer()" aria-label="Toggle Field Incident Reports"></button></div>
+                            <div class="lcp-item" style="margin-bottom:6px;"><span class="lcp-dot" style="background:#f43f5e;"></span><span class="lcp-label">Disconnected Devices (SAR)</span><button class="lcp-toggle on" id="lc-toggle-sar" onclick="toggleLayerById('sar',this)" aria-label="Toggle SAR Devices"></button></div>
                         </div>
                     </div>
                 </div>
@@ -8299,7 +8300,7 @@ function initMap(){
     }
 
     var cartoDark=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',{attribution:'Map &copy; Esri, HERE, Garmin',maxZoom:19,maxNativeZoom:16});
-    var googleHybrid=L.tileLayer('https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}',{attribution:'Imagery &copy; Google | MDoNER PARVAT NETRA',maxZoom:20});
+    var googleHybrid=L.tileLayer('https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}',{attribution:'Imagery &copy; Google | MDoNER PARVAT NETRA',maxZoom:20}).addTo(map);
     var googleTerrain=L.tileLayer('https://mt1.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',{attribution:'Terrain &copy; Google',maxZoom:20});
     var esriWorld=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{attribution:'Imagery &copy; Esri',maxZoom:18});
     var cartoVoyager=L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{attribution:'Map &copy; Carto',subdomains:'abcd',maxZoom:19});

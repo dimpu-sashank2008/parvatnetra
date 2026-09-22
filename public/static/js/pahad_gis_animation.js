@@ -204,6 +204,9 @@
             const widget = document.createElement('div');
             widget.id = 'pahad-gis-timeline-control';
             widget.className = 'absolute bottom-3 left-[54px] sm:left-[58px] z-[450] bg-[#070B10]/95 border border-[#1E293B] rounded-md p-2 sm:p-2.5 text-white w-auto max-w-[440px] transition-all select-none shadow-2xl';
+            if (window.GodsEye3D && typeof window.GodsEye3D.isActive === 'function' && window.GodsEye3D.isActive()) {
+                widget.style.display = 'none';
+            }
             widget.innerHTML = `
                 <!-- Header (Clickable to toggle collapse) -->
                 <div id="anim-widget-header" class="flex items-center justify-between gap-2 cursor-pointer transition-colors" title="Click to expand timeline">

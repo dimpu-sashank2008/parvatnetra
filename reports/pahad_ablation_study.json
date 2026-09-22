@@ -1,0 +1,56 @@
+{
+  "A_rainfall_only": {
+    "feature_count": 11,
+    "roc_auc": 1.0,
+    "pr_auc": 1.0,
+    "csi": 0.75,
+    "pod": 1.0,
+    "far": 0.25,
+    "brier_score": 0.1435
+  },
+  "B_terrain_and_fos": {
+    "feature_count": 5,
+    "roc_auc": 0.9792,
+    "pr_auc": 0.9812,
+    "csi": 0.75,
+    "pod": 0.75,
+    "far": 0.0,
+    "brier_score": 0.0895
+  },
+  "C_rainfall_and_fos": {
+    "feature_count": 12,
+    "roc_auc": 1.0,
+    "pr_auc": 1.0,
+    "csi": 0.75,
+    "pod": 1.0,
+    "far": 0.25,
+    "brier_score": 0.1353
+  },
+  "D_rainfall_terrain_seismic": {
+    "feature_count": 18,
+    "roc_auc": 0.9688,
+    "pr_auc": 0.9643,
+    "csi": 0.8,
+    "pod": 1.0,
+    "far": 0.2,
+    "brier_score": 0.1056
+  },
+  "E_rainfall_terrain_seismic_vegetation": {
+    "feature_count": 22,
+    "roc_auc": 1.0,
+    "pr_auc": 1.0,
+    "csi": 1.0,
+    "pod": 1.0,
+    "far": 0.0,
+    "brier_score": 0.003
+  },
+  "F_full_multimodal": {
+    "feature_count": 26,
+    "roc_auc": 1.0,
+    "pr_auc": 1.0,
+    "csi": 1.0,
+    "pod": 1.0,
+    "far": 0.0,
+    "brier_score": 0.003
+  }
+}
