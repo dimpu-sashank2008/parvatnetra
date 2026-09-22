@@ -236,7 +236,7 @@
         .leaflet-top, .leaflet-bottom, .leaflet-control {
             z-index: 800 !important;
         }
-        #layer-control-panel{position:absolute;top:10px;right:10px;z-index:1200 !important;width:260px;background:#0B192C;border:1px solid #334155;border-radius:6px;box-shadow:0 8px 24px rgba(0,0,0,0.4);overflow:hidden;touch-action:pan-y;transition:all 0.2s ease-in-out;}
+        #layer-control-panel{position:absolute;top:10px;right:10px;z-index:1200 !important;width:295px;max-width:calc(100vw - 20px);background:#0B192C;border:1px solid #334155;border-radius:6px;box-shadow:0 8px 24px rgba(0,0,0,0.4);overflow:hidden;touch-action:pan-y;transition:all 0.2s ease-in-out;}
         #layer-control-panel .lcp-header{background:#071220;padding:9px 12px;border-bottom:1px solid #334155;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;}
         #layer-control-panel .lcp-header span{font-size:11px;font-weight:700;color:#FFFFFF;letter-spacing:0.04em;}
         #layer-control-panel .lcp-body{padding:6px 0;background:#0B192C;max-height:55vh;overflow-y:auto;-webkit-overflow-scrolling:touch;}
@@ -3512,6 +3512,10 @@
                             <span id="lbl-toggle-gsi-insar"><span class="hidden sm:inline">SATELLITE INSAR &amp; SENSOR OVERLAY</span><span class="sm:hidden">INSAR &amp; SENSORS</span></span>
                             <span id="lc-toggle-gsi-insar" class="hidden">Toggle GSI Critical Sectors & InSAR</span>
                         </button>
+                        <button id="btn-gods-eye-toggle" onclick="toggleGodsEye3D()" class="px-2 sm:px-2.5 py-1 bg-gradient-to-r from-amber-950 via-amber-900 to-slate-900 hover:from-amber-900 hover:to-slate-800 text-amber-300 hover:text-white border border-amber-500/80 rounded text-[10px] sm:text-xs font-bold transition flex items-center gap-1.5 shadow-sm shrink-0 ring-1 ring-amber-500/30" title="Toggle God's Eye Style Photorealistic 3D Geospatial View">
+                            <i class="ph-bold ph-eye text-amber-400"></i>
+                            <span id="lbl-gods-eye-toggle"><span class="hidden sm:inline">GOD'S EYE 3D</span><span class="sm:hidden">3D EYE</span></span>
+                        </button>
                         <button id="btn-reset-view" onclick="if(typeof resetMapToNerBounds==='function'){resetMapToNerBounds();}else if(window.map&&window.NER_BOUNDS){window.map.fitBounds(window.NER_BOUNDS,{padding:[20,20]});}else if(map){map.setView([25.7,92.8],7);}" class="px-2 sm:px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-[#0B2545] border border-slate-300 rounded text-[10px] sm:text-xs font-bold transition shrink-0" title="Reset view to all 8 Northeast states">Reset</button>
                         <div class="inline-flex border border-slate-400 bg-slate-900 text-[9px] sm:text-[10px] font-bold uppercase tracking-wider rounded-none shrink-0">
                           <button id="btn-map-compact" onclick="setMapViewMode('compact')" 
@@ -3560,6 +3564,8 @@
                 </div>
                 <div id="gis-map" class="relative flex-grow">
                     <div id="map"></div>
+                    <!-- Phase V5.3 God's Eye 3D Container -->
+                    <div id="gods-eye-3d-container" class="hidden absolute inset-0 w-full h-full z-[300]"></div>
                     <!-- Compact Floating Data Status Panel (Section 12) -->
                     <div id="gis-data-status-panel" class="absolute bottom-10 left-3 z-[400] bg-[#070B10]/95 backdrop-blur border border-slate-700/80 rounded shadow-xl p-2.5 text-[10px] font-mono text-slate-300 max-w-[240px] pointer-events-auto">
                         <div id="data-status-header" class="flex items-center justify-between cursor-pointer select-none" onclick="toggleDataStatusCollapse()" title="Click to collapse/expand data status">
@@ -3616,20 +3622,55 @@
                         </div>
                         <div class="lcp-body" id="lcp-body" style="display: none;">
                             <!-- BASEMAP SWITCHER (Section 8 & 9) -->
-                            <div class="p-2 mb-2 bg-[#070B10] border border-slate-800 rounded">
-                                <div class="flex items-center justify-between mb-1.5">
-                                    <span class="text-[10px] text-slate-300 font-bold uppercase tracking-wider">MAP STYLE</span>
-                                    <span id="basemap-mode-pill" class="text-[9px] font-mono px-1.5 py-0.2 rounded bg-emerald-950 text-emerald-400 border border-emerald-800">ONLINE</span>
+                            <div class="p-2.5 mb-2 bg-[#050B14] border border-slate-800/90 rounded-md shadow-sm">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="flex items-center gap-1.5">
+                                        <i class="ph-bold ph-map-trifold text-sky-400 text-xs"></i>
+                                        <span class="text-[10px] text-slate-200 font-bold uppercase tracking-wider">MAP STYLE</span>
+                                    </div>
+                                    <span id="basemap-mode-pill" class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-emerald-950/90 text-emerald-400 border border-emerald-800 font-bold">ONLINE</span>
                                 </div>
-                                <div class="grid grid-cols-6 gap-1 text-[10px] font-mono">
-                                    <button type="button" onclick="switchMainBasemap('dark')" id="mb-dark" class="px-1 py-1 rounded bg-slate-800 text-slate-300 hover:text-white border border-slate-700">Dark</button>
-                                    <button type="button" onclick="switchMainBasemap('terrain')" id="mb-terrain" class="px-1 py-1 rounded bg-slate-800 text-slate-300 hover:text-white border border-slate-700">Terrain</button>
-                                    <button type="button" onclick="switchMainBasemap('street')" id="mb-street" class="px-1 py-1 rounded bg-slate-800 text-slate-300 hover:text-white border border-slate-700">Street</button>
-                                    <button type="button" onclick="switchMainBasemap('satellite')" id="mb-satellite" class="px-1 py-1 rounded bg-slate-800 text-slate-300 hover:text-white border border-slate-700">Satellite</button>
-                                    <button type="button" onclick="switchMainBasemap('topo')" id="mb-topo" class="px-1 py-1 rounded bg-slate-800 text-slate-300 hover:text-white border border-slate-700">Topo</button>
-                                    <button type="button" onclick="switchMainBasemap('bhuvan')" id="mb-bhuvan" class="px-1 py-1 rounded bg-orange-950 text-orange-300 border border-orange-600 font-bold" title="ISRO/NRSC RESOURCESAT-2 Imagery">ISRO Bhuvan</button>
+
+                                <!-- Tier 1: 2D Operational Basemaps -->
+                                <div class="text-[9px] text-slate-400 font-bold uppercase tracking-wider mb-1 flex items-center justify-between">
+                                    <span>2D Basemaps</span>
+                                    <span class="text-[8px] text-slate-500 font-mono">WGS84</span>
                                 </div>
-                                <div id="offline-basemap-badge" class="hidden mt-1 text-[9px] font-mono text-amber-300 bg-amber-950/80 p-1 rounded border border-amber-800">
+                                <div class="grid grid-cols-3 gap-1 mb-1.5 text-[10px] font-mono">
+                                    <button type="button" onclick="switchMainBasemap('dark')" id="mb-dark" class="px-1.5 py-1.5 rounded bg-sky-950 text-sky-300 border border-sky-600 font-bold text-center transition flex items-center justify-center gap-1 shadow-sm">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-sky-400"></span> Dark
+                                    </button>
+                                    <button type="button" onclick="switchMainBasemap('terrain')" id="mb-terrain" class="px-1.5 py-1.5 rounded bg-slate-900 text-slate-300 hover:text-white hover:bg-slate-800 border border-slate-700 text-center transition">
+                                        Terrain
+                                    </button>
+                                    <button type="button" onclick="switchMainBasemap('street')" id="mb-street" class="px-1.5 py-1.5 rounded bg-slate-900 text-slate-300 hover:text-white hover:bg-slate-800 border border-slate-700 text-center transition">
+                                        Street
+                                    </button>
+                                    <button type="button" onclick="switchMainBasemap('satellite')" id="mb-satellite" class="px-1.5 py-1.5 rounded bg-slate-900 text-slate-300 hover:text-white hover:bg-slate-800 border border-slate-700 text-center transition">
+                                        Satellite
+                                    </button>
+                                    <button type="button" onclick="switchMainBasemap('topo')" id="mb-topo" class="px-1.5 py-1.5 rounded bg-slate-900 text-slate-300 hover:text-white hover:bg-slate-800 border border-slate-700 text-center transition col-span-2">
+                                        Topo Contour
+                                    </button>
+                                </div>
+
+                                <!-- Tier 2: Advanced Sovereign & 3D Geospatial Engines -->
+                                <div class="text-[9px] text-slate-400 font-bold uppercase tracking-wider mb-1 mt-2 flex items-center justify-between border-t border-slate-800/80 pt-1.5">
+                                    <span>Advanced Imagery &amp; 3D</span>
+                                </div>
+                                <div class="grid grid-cols-2 gap-1.5 text-[10px] font-mono">
+                                    <button type="button" onclick="switchMainBasemap('bhuvan')" id="mb-bhuvan" class="px-2 py-1.5 rounded bg-orange-950/40 text-orange-400 hover:text-white hover:bg-orange-950/60 border border-orange-900/80 text-center transition flex items-center justify-center gap-1.5 font-bold" title="ISRO / NRSC RESOURCESAT-2 Sovereign Imagery">
+                                        <span class="text-xs">🛰️</span>
+                                        <span>ISRO Bhuvan</span>
+                                    </button>
+                                    <button type="button" onclick="switchMainBasemap('gods-eye-3d')" id="mb-gods-eye" class="px-2 py-1.5 rounded bg-amber-950/40 text-amber-400 hover:text-white hover:bg-amber-950/60 border border-amber-900/80 text-center transition flex items-center justify-center gap-1.5 font-bold" title="God's Eye Style Photorealistic 3D Geospatial View">
+                                        <span class="text-xs">👁️</span>
+                                        <span>God's Eye 3D</span>
+                                    </button>
+                                </div>
+
+                                <div id="offline-basemap-badge" class="hidden mt-2 text-[9px] font-mono text-amber-300 bg-amber-950/80 p-1.5 rounded border border-amber-800 flex items-center gap-1.5">
+                                    <i class="ph-bold ph-wifi-slash text-amber-400"></i>
                                     <span>Offline Operational Map Active</span>
                                 </div>
                             </div>
@@ -7715,6 +7756,13 @@ function navigateToPanel(panelId) {
     } else if (panelId === 'map' || panelId === 'gis') {
         targetView = document.getElementById('view-prediction');
         targetElementId = 'gis-map-card';
+        if (window.GodsEye3D && window.GodsEye3D.isActive()) {
+            if (typeof exitGodsEye3D === 'function') {
+                exitGodsEye3D();
+            } else if (typeof switchMainBasemap === 'function') {
+                switchMainBasemap('bhuvan');
+            }
+        }
     } else if (panelId === 'evidence' || panelId === 'explain') {
         targetView = document.getElementById('view-prediction');
         if (typeof togglePredictionDetails === 'function') {
@@ -8172,6 +8220,14 @@ window.setMapViewMode = setMapViewMode;
 
 document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
+        if (window.GodsEye3D && window.GodsEye3D.isActive()) {
+            if (typeof exitGodsEye3D === 'function') {
+                exitGodsEye3D();
+            } else if (typeof switchMainBasemap === 'function') {
+                switchMainBasemap('bhuvan');
+            }
+            return;
+        }
         if (window.currentMapViewMode === 'maximize' || window.currentMapViewMode === 'maximized') {
             setMapViewMode('standard');
         }
@@ -9336,12 +9392,28 @@ window.loadOfflineOperationalMap = loadOfflineOperationalMap;
 
 function switchMainBasemap(type) {
     if (!window.map) return;
-    const isOffline = !navigator.onLine || (window.ParvatNetworkState && window.ParvatNetworkState.isOffline());
-    if (isOffline && type !== 'dark') {
+    const isOffline = !navigator.onLine;
+    if (isOffline && type !== 'dark' && type !== 'gods-eye-3d') {
         if (typeof showToast === 'function') {
             showToast('Online tile basemap unavailable in offline mode. Operating on pre-bundled vector map.', 'info');
         }
         return;
+    }
+
+    // Handle Phase V5.3 God's Eye 3D Activation / Deactivation
+    if (type === 'gods-eye-3d') {
+        if (window.GodsEye3D) {
+            window.GodsEye3D.activate();
+        }
+        const mapStatusEl = document.getElementById('map-basemap-name');
+        if (mapStatusEl) {
+            mapStatusEl.textContent = "[3D MAP] GOD'S EYE 3D VIEW | PHOTOREALISTIC 3D TERRAIN | CORR-NH10-SIKKIM-KM48";
+        }
+    } else {
+        // Leaving 3D mode -> Deactivate GodsEye3D
+        if (window.GodsEye3D && window.GodsEye3D.isActive()) {
+            window.GodsEye3D.deactivate();
+        }
     }
 
     const bms = [window.cartoDark, window.googleHybrid, window.googleTerrain, window.esriWorld, window.cartoVoyager, window.bhuvanSat];
@@ -9355,34 +9427,49 @@ function switchMainBasemap(type) {
     else if (type === 'street' && window.cartoVoyager) window.cartoVoyager.addTo(window.map);
     else if (type === 'satellite' && (window.esriWorld || window.googleHybrid)) (window.esriWorld || window.googleHybrid).addTo(window.map);
     else if (type === 'topo' && window.googleTerrain) window.googleTerrain.addTo(window.map);
-    else if (type === 'bhuvan' && window.bhuvanSat) window.bhuvanSat.addTo(window.map);
+    else if (type === 'bhuvan' || type === 'primary') {
+        type = 'bhuvan';
+        if (window.bhuvanSat) window.bhuvanSat.addTo(window.map);
+    }
+    else if (type === 'gods-eye-3d') {
+        // 3D mode is active, no 2D Leaflet layer added
+    }
     else if (window.googleHybrid) window.googleHybrid.addTo(window.map);
 
     const mapStatusEl = document.getElementById('map-basemap-name');
-    if (mapStatusEl) {
+    if (mapStatusEl && type !== 'gods-eye-3d') {
         if (isOffline) {
             mapStatusEl.textContent = '[OFFLINE OPERATIONAL MAP] Standalone Vector Package | Zero-Tile Dependency';
-        } else if (type === 'bhuvan') {
-            mapStatusEl.textContent = '[ONLINE MAP] Basemap: ISRO/NRSC BHUVAN SATELLITE (RESOURCESAT-2) | EPSG:4326';
+        } else if (type === 'bhuvan' || type === 'primary') {
+            mapStatusEl.textContent = '[PRIMARY MAP] Basemap: ISRO / NRSC BHUVAN SATELLITE (RESOURCESAT-2) | WGS84 | EPSG:4326';
         } else {
             mapStatusEl.textContent = `[ONLINE MAP] Basemap: ${type.toUpperCase()} | WGS84 | EPSG:4326`;
         }
     }
 
-    ['dark', 'terrain', 'street', 'satellite', 'topo', 'bhuvan'].forEach(t => {
+    ['dark', 'terrain', 'street', 'satellite', 'topo', 'bhuvan', 'gods-eye'].forEach(t => {
         const btn = document.getElementById('mb-' + t);
         if (btn) {
-            if (t === type) {
+            const isMatch = (t === 'gods-eye') ? (type === 'gods-eye-3d') : (t === type);
+            if (isMatch) {
                 if (t === 'bhuvan') {
-                    btn.className = "px-1.5 py-1 rounded bg-orange-950 text-orange-300 border border-orange-600 font-bold";
+                    btn.className = "px-2 py-1.5 rounded bg-orange-950 text-orange-300 border border-orange-500 font-bold text-center transition flex items-center justify-center gap-1.5 shadow-sm ring-1 ring-orange-500/50";
+                } else if (t === 'gods-eye') {
+                    btn.className = "px-2 py-1.5 rounded bg-amber-950 text-amber-300 border border-amber-500 font-bold text-center transition flex items-center justify-center gap-1.5 shadow-sm ring-1 ring-amber-500/50";
+                } else if (t === 'topo') {
+                    btn.className = "px-1.5 py-1.5 rounded bg-sky-950 text-sky-300 border border-sky-500 font-bold text-center transition col-span-2 shadow-sm ring-1 ring-sky-500/50";
                 } else {
-                    btn.className = "px-1.5 py-1 rounded bg-sky-950 text-sky-300 border border-sky-600 font-bold";
+                    btn.className = "px-1.5 py-1.5 rounded bg-sky-950 text-sky-300 border border-sky-500 font-bold text-center transition shadow-sm ring-1 ring-sky-500/50";
                 }
             } else {
                 if (t === 'bhuvan') {
-                    btn.className = "px-1.5 py-1 rounded bg-orange-950/40 text-orange-400 hover:text-white border border-orange-900";
+                    btn.className = "px-2 py-1.5 rounded bg-orange-950/40 text-orange-400 hover:text-white hover:bg-orange-950/60 border border-orange-900/80 text-center transition flex items-center justify-center gap-1.5 font-bold";
+                } else if (t === 'gods-eye') {
+                    btn.className = "px-2 py-1.5 rounded bg-amber-950/40 text-amber-400 hover:text-white hover:bg-amber-950/60 border border-amber-900/80 text-center transition flex items-center justify-center gap-1.5 font-bold";
+                } else if (t === 'topo') {
+                    btn.className = "px-1.5 py-1.5 rounded bg-slate-900 text-slate-300 hover:text-white hover:bg-slate-800 border border-slate-700 text-center transition col-span-2";
                 } else {
-                    btn.className = "px-1.5 py-1 rounded bg-slate-800 text-slate-300 hover:text-white border border-slate-700";
+                    btn.className = "px-1.5 py-1.5 rounded bg-slate-900 text-slate-300 hover:text-white hover:bg-slate-800 border border-slate-700 text-center transition";
                 }
             }
         }
@@ -9398,8 +9485,69 @@ function switchMainBasemap(type) {
             bhuvanSatToggle.classList.add('off');
         }
     }
+
+    // Sync prominent header toggle button
+    const geToggleBtn = document.getElementById('btn-gods-eye-toggle');
+    const geToggleLbl = document.getElementById('lbl-gods-eye-toggle');
+    if (geToggleBtn && geToggleLbl) {
+        if (type === 'gods-eye-3d') {
+            geToggleBtn.className = "px-2.5 sm:px-3 py-1 bg-amber-600 hover:bg-amber-500 text-white border border-amber-300 rounded text-[10px] sm:text-xs font-bold transition flex items-center gap-1.5 shadow-md shrink-0 ring-2 ring-amber-400/50";
+            geToggleLbl.innerHTML = '<span class="hidden sm:inline">EXIT 3D (PRIMARY MAP)</span><span class="sm:hidden">PRIMARY MAP</span>';
+            geToggleBtn.setAttribute('title', 'Exit God\'s Eye 3D and directly open the Primary GIS Map');
+        } else {
+            geToggleBtn.className = "px-2 sm:px-2.5 py-1 bg-gradient-to-r from-amber-950 via-amber-900 to-slate-900 hover:from-amber-900 hover:to-slate-800 text-amber-300 hover:text-white border border-amber-500/80 rounded text-[10px] sm:text-xs font-bold transition flex items-center gap-1.5 shadow-sm shrink-0 ring-1 ring-amber-500/30";
+            geToggleLbl.innerHTML = '<span class="hidden sm:inline">GOD\'S EYE 3D</span><span class="sm:hidden">3D EYE</span>';
+            geToggleBtn.setAttribute('title', 'Toggle God\'s Eye Style Photorealistic 3D Geospatial View');
+        }
+    }
 }
 window.switchMainBasemap = switchMainBasemap;
+
+function exitGodsEye3D() {
+    // 1. Ensure view-prediction (primary GIS map workspace) is visible
+    var viewPred = document.getElementById('view-prediction');
+    if (viewPred && viewPred.classList.contains('hidden')) {
+        var views = document.querySelectorAll('.workspace-view');
+        views.forEach(function(v) { v.classList.add('hidden'); });
+        viewPred.classList.remove('hidden');
+    }
+
+    // 2. Switch directly to Primary Basemap (ISRO Bhuvan Satellite or offline fallback)
+    var isOffline = !navigator.onLine || (window.ParvatNetworkState && typeof window.ParvatNetworkState.isOffline === 'function' && window.ParvatNetworkState.isOffline());
+    var primaryType = isOffline ? 'dark' : 'bhuvan';
+    switchMainBasemap(primaryType);
+
+    // 3. Ensure GIS Map is directly in viewport and focused
+    var gisCard = document.getElementById('gis-map-card');
+    if (gisCard) {
+        gisCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        if (typeof eocHighlightPulse === 'function') {
+            eocHighlightPulse(gisCard);
+        }
+    }
+
+    // 4. Force Leaflet redraw to ensure 0 tile tearing / seamless raster rendering
+    setTimeout(function() {
+        if (window.map && typeof window.map.invalidateSize === 'function') {
+            window.map.invalidateSize();
+        }
+    }, 120);
+    setTimeout(function() {
+        if (window.map && typeof window.map.invalidateSize === 'function') {
+            window.map.invalidateSize();
+        }
+    }, 300);
+}
+window.exitGodsEye3D = exitGodsEye3D;
+
+function toggleGodsEye3D() {
+    if (window.GodsEye3D && window.GodsEye3D.isActive()) {
+        exitGodsEye3D();
+    } else {
+        switchMainBasemap('gods-eye-3d');
+    }
+}
+window.toggleGodsEye3D = toggleGodsEye3D;
 
 async function toggleBhuvanLayer(layerId, btn) {
     if (!window.map) return;
@@ -17932,6 +18080,7 @@ document.addEventListener('DOMContentLoaded', () => {
     </script>
 
     <script src="/static/js/winning_modals.js"></script>
+    <script src="/static/js/gods_eye_3d.js"></script>
 </body>
 </html>
 
