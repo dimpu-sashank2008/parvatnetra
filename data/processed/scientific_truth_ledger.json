@@ -1,0 +1,503 @@
+{
+  "ledger_version": "5.1.0",
+  "generated_at": "2026-09-20T23:55:00Z",
+  "phase": "V5.1",
+  "phase_name": "CROSS_PHASE_SCIENTIFIC_CONSISTENCY_AUDIT_AND_TRUTH_LEDGER_RECONCILIATION",
+  "overall_verdict": "V5_1_TRUTH_LEDGER_VERIFIED",
+  "corridor_id": "CORR-NH10-SIKKIM-KM48",
+  "system_designation": "Smart India Hackathon (SIH) 2026 AI-Assisted Research and Decision-Support Prototype",
+  "production_model": {
+    "model_id": "PAHAD-BiLSTM-v3-MultiModal-33Features",
+    "architecture": "2-layer BiLSTM + Temporal Attention (hidden=160, 33 features)",
+    "weights_file": "models/pahad_lstm_v3_weights.pt",
+    "sha256": "7cb823888646ca2b074389de3719c9d9385197bbdf6763cf9e4e69bc3c15c183",
+    "status": "PRODUCTION_SERVING_FROZEN",
+    "deployment_mode": "ACTIVE_PRODUCTION",
+    "input_sequence_length_hours": 72,
+    "feature_count": 33,
+    "parameter_count": 1293125,
+    "temperature": 1.0552,
+    "forecast_horizons": [
+      "6h",
+      "12h",
+      "24h",
+      "48h"
+    ],
+    "verified_immutable": true
+  },
+  "research_models": [
+    {
+      "model_id": "Model_D_1Layer_BiLSTM_Att_V4_5",
+      "architecture": "1-layer BiLSTM + Multi-Head Temporal Attention (hidden=128, 31 features)",
+      "weights_file": "models/pahad_lstm_v4_5_research_weights.pt",
+      "sha256": "31e16ce003cdd2c5934df034e6229661d27a8530a6a0dbc6a18e1ff56277da9f",
+      "status": "RESEARCH_BASELINE_OFFLINE",
+      "deployment_mode": "OFFLINE_RESEARCH_ONLY",
+      "input_sequence_length_hours": 168,
+      "feature_count": 31,
+      "parameter_count": 127239,
+      "forecast_horizons": [
+        "6h",
+        "12h",
+        "24h",
+        "48h",
+        "72h",
+        "168h"
+      ],
+      "verified_immutable": true
+    },
+    {
+      "model_id": "PAHAD-Event-Classifier-GBDT",
+      "architecture": "Scikit-Learn GradientBoostingClassifier + Platt Sigmoid CalibratedClassifierCV",
+      "model_file": "models/pahad_event_model.pkl",
+      "calibrator_file": "models/pahad_event_calibrator.pkl",
+      "sha256": "80eeeb3c261e4e3e3b3e23927d3b51d8b9d3ffbb9007f3d9d300ad8c44b931be",
+      "status": "TRAINED_LIMITED_DATA",
+      "deployment_mode": "DECISION_SUPPORT_CLASSIFIER",
+      "dataset_rows": 36,
+      "forecast_horizons": [
+        1,
+        3,
+        6,
+        12,
+        24,
+        48
+      ]
+    },
+    {
+      "model_id": "PAHAD-Geotechnical-FoS-Predictor",
+      "architecture": "RandomForestRegressor for Infinite-Slope Mohr-Coulomb Factor of Safety",
+      "model_file": "models/fos_predictor.pkl",
+      "status": "PHYSICS_SURROGATE_ACTIVE",
+      "deployment_mode": "DETERMINISTIC_GEOTECHNICAL_BASELINE",
+      "target": "Factor of Safety (FoS)"
+    },
+    {
+      "model_id": "PAHAD-Kinematic-IoT-ML-Model",
+      "architecture": "Proposed High-Frequency In-Situ Borehole Telemetry Kinematic Neural Network",
+      "status": "NOT_TRAINED_DATA_PENDING",
+      "deployment_mode": "UNINSTANTIATED_PENDING_FIELD_DATA",
+      "weights_file": null,
+      "field_data_available": false
+    }
+  ],
+  "data_truth": {
+    "canonical_documented_events": 17,
+    "canonical_documented_controls": 20,
+    "canonical_temporal_sequences": 105,
+    "canonical_event_model_samples": 36,
+    "quarantined_demo_samples": 25,
+    "total_master_dossier_rows": 61,
+    "real_temporal_sequence_rows": 17640,
+    "canonical_documented_events_v5_1": 17,
+    "authoritative_expansion_events_v5_2": 25,
+    "total_canonical_documented_events": 42,
+    "physical_sensors_verified": 0,
+    "live_sensor_telemetry_verified": 0,
+    "kinematic_ml_status": "NOT_TRAINED_DATA_PENDING"
+  },
+  "dataset_registry": [
+    {
+      "dataset_id": "DS-RAW-NER-17",
+      "path": "data/raw/historical_landslides_ner.csv",
+      "sha256": "47225ba3bfb46c0d8df3029bbdfb39d1b09ad3c683fae325603bbfa58129ff28",
+      "classification": "AUTHORITATIVE",
+      "rows": 17,
+      "events": 17,
+      "controls": 0,
+      "time_span": "2022-05-16 to 2024-10-04",
+      "description": "Canonical 17 documented historical landslide failure events in North-Eastern Region (GSI/NDMA bulletins)"
+    },
+    {
+      "dataset_id": "DS-CTRL-HIST-20",
+      "path": "data/processed/lstm_v4_historical_controls.csv",
+      "sha256": "812b1cb570535bbadcb71887e5052fe2ae7a29e1eb1c01e3895e34be0175b5ae",
+      "classification": "AUTHORITATIVE",
+      "rows": 20,
+      "events": 0,
+      "controls": 20,
+      "time_span": "2023-01-10 to 2024-06-05",
+      "description": "Verified non-event historical negative control observation windows (IMD/SDMA records)"
+    },
+    {
+      "dataset_id": "DS-V4-4-SEQUENCES-105",
+      "path": "data/processed/lstm_v4_4_real_temporal_sequences.csv",
+      "sha256": "89b48d3b8354f8e66a26ccd9dc3b08d8b51a7616b3e983a803aa4d3285c305e3",
+      "classification": "RESEARCH",
+      "rows": 17640,
+      "events": 17,
+      "controls": 20,
+      "sequences": 105,
+      "sequence_length_hours": 168,
+      "features": 37,
+      "synthetic_data": 0,
+      "description": "105 continuous 168-hour real empirical reanalysis sequences for V4.5 research modeling"
+    },
+    {
+      "dataset_id": "DS-EVENT-FEATURES-36",
+      "path": "data/features/features_all.csv",
+      "sha256": "79ece554fd0d2fc62d69a21fd4d39172f7dd4995d5645e126a91d1a08c1c579e",
+      "classification": "AUTHORITATIVE",
+      "rows": 36,
+      "events": 17,
+      "controls": 19,
+      "splits": "Train (16: 8 pos, 8 neg), Val (12: 4 pos, 8 neg), Test (8: 5 pos, 3 neg)",
+      "description": "Event classifier tabular feature matrix (36 real samples)"
+    },
+    {
+      "dataset_id": "DS-DEMO-QUARANTINE-25",
+      "path": "data/features/demo_train.csv",
+      "sha256": "091ff6cf0549321d5854bb6fb9b95955a8820c74fb9369d72491a61cbe1364d9",
+      "classification": "DEMO",
+      "rows": 25,
+      "events": 14,
+      "controls": 11,
+      "status": "QUARANTINED_DEMO_ONLY",
+      "description": "Synthetic demonstration sequences accessible only when PAHAD_DEMO_MODE=1"
+    },
+    {
+      "dataset_id": "DS-RAW-EXPANSION-V5-2",
+      "path": "data/raw/historical_landslides_expansion_v5_2.json",
+      "sha256": "d60a7c6df8d57e1d665f5f034ddf7eec6d5f7674f926678e8ee147f84065bfbe",
+      "classification": "AUTHORITATIVE_EXPANSION",
+      "rows": 25,
+      "events": 25,
+      "controls": 0,
+      "time_span": "2022-05-18 to 2024-09-15",
+      "description": "Authoritative historical expansion of 25 verified disaster events across NER states from GSI, BRO, and SDMA records"
+    }
+  ],
+  "metric_registry": {
+    "authoritative_reproducible_metrics": [
+      {
+        "model": "PAHAD-Event-Classifier-GBDT",
+        "evaluation_partition": "Test Holdout (N=8: 5 pos, 3 neg)",
+        "source_artifact": "models/pahad_event_metrics.json",
+        "dataset_hash": "79ece554fd0d2fc62d69a21fd4d39172f7dd4995d5645e126a91d1a08c1c579e",
+        "roc_auc": 1.0,
+        "pr_auc": 1.0,
+        "pod": 1.0,
+        "far": 0.0,
+        "csi": 1.0,
+        "precision": 1.0,
+        "f1_score": 1.0,
+        "brier_score": 0.0824,
+        "ece": 0.2604,
+        "median_warning_lead_hours": 24.0,
+        "status": "REPRODUCIBLE",
+        "qualification": "Statistically constrained by small holdout sample (N=8). Categorized as TRAINED_LIMITED_DATA."
+      },
+      {
+        "model": "PAHAD-BiLSTM-v3-MultiModal-33Features",
+        "evaluation_partition": "Test Holdout (N=24)",
+        "source_artifact": "models/pahad_lstm_v3_metrics.json",
+        "dataset_hash": "ffa7f3b441523a1be29b88ce90dae2dee3670bd3de5e45b9a93db2519ec5308f",
+        "horizons": {
+          "24h": {
+            "roc_auc": 1.0,
+            "brier": 0.0015,
+            "pod": 1.0,
+            "far": 0.0,
+            "csi": 1.0
+          },
+          "48h": {
+            "roc_auc": 1.0,
+            "brier": 0.0039,
+            "pod": 1.0,
+            "far": 0.0,
+            "csi": 1.0
+          }
+        },
+        "status": "REPRODUCIBLE",
+        "qualification": "Clean historical partition test evaluation under status TRAINED_LIMITED_DATA."
+      },
+      {
+        "model": "Model_D_1Layer_BiLSTM_Att_V4_5",
+        "evaluation_partition": "Single-Pass Frozen Test (N=24 sequences)",
+        "source_artifact": "reports/pahad_lstm_v4_5_result.json",
+        "dataset_hash": "89b48d3b8354f8e66a26ccd9dc3b08d8b51a7616b3e983a803aa4d3285c305e3",
+        "horizons": {
+          "48h": {
+            "csi": 0.9524,
+            "pod": 1.0,
+            "far": 0.0476,
+            "brier": 0.0362,
+            "precision": 0.9524,
+            "f1": 0.9756
+          },
+          "24h": {
+            "csi": 0.5,
+            "pod": 0.75,
+            "far": 0.4,
+            "brier": 0.231,
+            "precision": 0.6,
+            "f1": 0.6667
+          },
+          "12h": {
+            "csi": 0.3333,
+            "pod": 0.75,
+            "far": 0.625,
+            "brier": 0.2476,
+            "precision": 0.375,
+            "f1": 0.5
+          },
+          "6h": {
+            "csi": 0.1667,
+            "pod": 0.5,
+            "far": 0.8,
+            "brier": 0.2519,
+            "precision": 0.2,
+            "f1": 0.2857
+          }
+        },
+        "status": "REPRODUCIBLE",
+        "qualification": "Offline research evaluation demonstrating long-range antecedent moisture skill."
+      }
+    ],
+    "unsupported_metric_claims": [
+      {
+        "claim_text": "ROC-AUC: 0.81 | PR-AUC: 0.74 | POD: 0.78 | FAR: 0.22 | CSI: 0.64",
+        "claimed_dataset": "52 Real Historical Events (41 train, 11 val, 11 test)",
+        "claimed_lead_time": "4.2 hours",
+        "source": "Phase V5.0 response summary block",
+        "forensic_status": "UNSUPPORTED",
+        "disposition": "Formally invalidated and superseded. Figures do not correspond to any physical or software artifact."
+      }
+    ]
+  },
+  "warning_lead_registry": {
+    "authoritative_lead_times": [
+      {
+        "model_family": "Production BiLSTM V3",
+        "target": "Multi-Horizon Landslide Susceptibility Probability",
+        "operational_lead_time": "24.0 to 48.0 hours",
+        "basis": "Synoptic meteorological and hydrological forcing windows"
+      },
+      {
+        "model_family": "PAHAD Event Classifier (GBDT)",
+        "target": "Binary Landslide Occurrence within Forecast Horizon",
+        "operational_lead_time": "24.0 hours",
+        "basis": "Documented antecedent infiltration observation interval"
+      },
+      {
+        "model_family": "Research BiLSTM V4.5",
+        "target": "Long-Range Multi-Horizon Landslide Probability",
+        "operational_lead_time": "48.0 to 168.0 hours",
+        "basis": "Antecedent 7-day soil moisture saturation front (CSI=0.952)"
+      },
+      {
+        "model_family": "Historical Geotechnical Ensemble (Defense Sheet)",
+        "target": "Multi-Modal Warning Sequence",
+        "operational_lead_time": "Median 14.5 hours (Minimum 4.2 hours, Maximum 38.0 hours)",
+        "basis": "Empirical reanalysis historical disaster sequences"
+      },
+      {
+        "model_family": "In-Situ Kinematic ML Model",
+        "target": "Imminent Slope Failure Warning",
+        "operational_lead_time": "0.0 hours (NOT_TRAINED_DATA_PENDING)",
+        "basis": "Requires genuine field telemetry; no live sensor data exists"
+      }
+    ]
+  },
+  "physical_field_telemetry_state": {
+    "physical_sensors_verified": 0,
+    "nameplate_photographs_on_disk": 0,
+    "delivery_challans_on_disk": 0,
+    "borehole_casings_installed": 0,
+    "field_installations_verified": 0,
+    "field_commissioning_verified": 0,
+    "live_mountain_observations": 0,
+    "continuous_live_telemetry_hours": 0.0,
+    "bench_hil_observations": 8640,
+    "telemetry_continuity_windows_status": "UNAVAILABLE"
+  },
+  "calibration_state": {
+    "calibration_verified_count": 0,
+    "calibration_missing_count": 5,
+    "overall_calibration_status": "CALIBRATION_EVIDENCE_MISSING",
+    "note": "Reference strings exist in JSON registry, but zero signed NABL/ISO-17025 laboratory certificates exist on disk."
+  },
+  "institutional_authorization_state": {
+    "government_authorization_status": "AUTHORIZATION_EVIDENCE_MISSING",
+    "token_demotion": {
+      "token": "BRO_NDMA_AUTHORIZED_ACCEPTANCE_2026",
+      "classification": "AUTHORIZATION_UNVERIFIED",
+      "remedy": "Demoted to unverified placeholder. Zero operational authority conferred."
+    },
+    "public_alert_safety": {
+      "siren_relay_hardware": "DRY_RUN_EMULATOR",
+      "public_dispatch_authorized": false,
+      "human_approval_mandatory": true
+    }
+  },
+  "claim_freeze": {
+    "supported_claims": [
+      "Production V3 model is frozen and serving under SHA-256 7cb82388...",
+      "Research V4.5 model demonstrates superior long-range infiltration skill (48h-168h)",
+      "Exact documented historical landslide event count is strictly 17",
+      "Exact documented historical negative control count is strictly 20",
+      "V4.4/V4.5 dataset contains exactly 105 continuous 168-hour empirical sequences",
+      "Event classifier GBDT is calibrated on 36 real observation samples (16 train, 12 val, 8 test)",
+      "Demo dataset of 25 synthetic sequences is strictly quarantined under PAHAD_DEMO_MODE=1",
+      "Bench HIL test framework successfully processes 8,640 frames with zero crashes",
+      "Store-and-forward deduplication achieves 0% observation loss and 0 duplicate creation",
+      "Platform operates as Smart India Hackathon (SIH) 2026 AI-assisted research prototype",
+      "Public siren and alert dispatch are locked to require manual human approval",
+      "V3 and V4.5 model weights are cryptographically verified bit-for-bit unchanged",
+      "CRI feature leakage is eliminated in V4.4/V4.5 feature specifications",
+      "Deterministic Mohr-Coulomb Factor of Safety (FoS) remains primary physical line of defense"
+    ],
+    "partially_supported_claims": [
+      "BRO Project Swastik collaboration is planned for NH-10 KM48 instrumentation (no signed contract)",
+      "SSDMA emergency integration is architecturally ready via CAP schema (public dispatch disabled)",
+      "OASIS CAP v1.2 schema compliance verified (operational authority missing)",
+      "17-Fold LOEO cross-validation executed (single-class test fold limitation disclosed)",
+      "Multi-horizon historical median lead time is 14.5 hours (applies to regional synoptic events, not in-situ IoT)"
+    ],
+    "unsupported_claims": [
+      "Claim of 52 real historical events (UNSUPPORTED: strictly 17 documented events)",
+      "Claim of 41 training, 11 validation, 11 test samples (UNSUPPORTED: untraced placeholder)",
+      "Claim of ROC-AUC 0.81, PR-AUC 0.74, POD 0.78, FAR 0.22, CSI 0.64 (UNSUPPORTED: untraced placeholder)",
+      "Claim of 4.2 hours median warning lead time (UNSUPPORTED: 4.2h was historical minimum / demo formula)",
+      "Claim of NABL/ISO-17025 accredited calibration (UNSUPPORTED: CALIBRATION_EVIDENCE_MISSING)",
+      "Claim of 'BRO_NDMA_AUTHORIZED_ACCEPTANCE_2026' operational clearance (UNSUPPORTED: AUTHORIZATION_UNVERIFIED)"
+    ],
+    "forbidden_claims": [
+      "Claiming physical downhole or surface sensors are installed in the field before drilling occurs",
+      "Claiming live mountain field telemetry is streaming when only bench/HIL simulation is running",
+      "Claiming Kinematic In-Situ ML is trained or production-ready before real field data is collected",
+      "Claiming V4.5 research baseline is active in production without formal commissioning",
+      "Claiming official Government of India or National Disaster Management Authority operational status"
+    ]
+  },
+  "claim_conflict_matrix": [
+    {
+      "conflict_id": "CONF-01",
+      "dimension": "Event Count",
+      "earlier_claim": "17 Canonical Historical Events",
+      "later_claim": "52 Real Historical Events (V5.0 summary text)",
+      "authoritative_artifact": "data/raw/historical_landslides_ner.csv",
+      "resolution": "RESOLVED: Authoritative count is strictly 17. '52' is marked UNSUPPORTED.",
+      "status": "RESOLVED"
+    },
+    {
+      "conflict_id": "CONF-02",
+      "dimension": "Dataset Splits",
+      "earlier_claim": "16 Train, 12 Val, 8 Test (36 real samples)",
+      "later_claim": "41 Train, 11 Val, 11 Test",
+      "authoritative_artifact": "data/features/features_all.csv and models/pahad_event_metadata.json",
+      "resolution": "RESOLVED: Authoritative splits are 16 Train, 12 Val, 8 Test. 41/11/11 marked UNSUPPORTED.",
+      "status": "RESOLVED"
+    },
+    {
+      "conflict_id": "CONF-03",
+      "dimension": "Model Metrics",
+      "earlier_claim": "ROC-AUC: 1.000, PR-AUC: 1.000, POD: 1.000, FAR: 0.000, CSI: 1.000",
+      "later_claim": "ROC-AUC: 0.81, PR-AUC: 0.74, POD: 0.78, FAR: 0.22, CSI: 0.64",
+      "authoritative_artifact": "models/pahad_event_metrics.json",
+      "resolution": "RESOLVED: Authoritative GBDT metrics are from models/pahad_event_metrics.json. 0.81/0.74 marked UNSUPPORTED.",
+      "status": "RESOLVED"
+    },
+    {
+      "conflict_id": "CONF-04",
+      "dimension": "Warning Lead Time",
+      "earlier_claim": "24.0h (Event Model) / 14.5h median (Defense Sheet)",
+      "later_claim": "4.2 hours median warning lead time",
+      "authoritative_artifact": "docs/CORE_IMPLEMENTATION_DEFENSE_SHEET.md and models/pahad_event_metrics.json",
+      "resolution": "RESOLVED: Authoritative median lead time is 14.5h; 4.2h was minimum / demo formula. 'Median 4.2h' marked UNSUPPORTED.",
+      "status": "RESOLVED"
+    },
+    {
+      "conflict_id": "CONF-05",
+      "dimension": "Model Hierarchy",
+      "earlier_claim": "V3 is Active Production; V4.5 is Offline Research Baseline",
+      "later_claim": "Potential ambiguity over V4.5 serving status",
+      "authoritative_artifact": "models/pahad_lstm_v3_weights.pt and docs/PAHAD_LSTM_V4_5_FINAL_RESEARCH_REPORT.md",
+      "resolution": "RESOLVED: V3 remains active production. V4.5 is strictly offline research.",
+      "status": "RESOLVED"
+    },
+    {
+      "conflict_id": "CONF-06",
+      "dimension": "Kinematic ML Training",
+      "earlier_claim": "Kinematic ML Status: NOT_TRAINED_DATA_PENDING",
+      "later_claim": "Potential confusion with mathematical surrogate or synoptic LSTM",
+      "authoritative_artifact": "engine/kinematic_trigger_engine.py",
+      "resolution": "RESOLVED: Kinematic ML is strictly NOT TRAINED. No field weights exist.",
+      "status": "RESOLVED"
+    },
+    {
+      "conflict_id": "CONF-07",
+      "dimension": "CRI Feature Leakage",
+      "earlier_claim": "V3 includes CRI as Feature 33",
+      "later_claim": "V4.4 / V4.5 removes CRI from features",
+      "authoritative_artifact": "models/pahad_lstm_v3_config.json vs data/processed/lstm_v4_4_manifest.json",
+      "resolution": "RESOLVED: Confirmed V3 legacy architecture retains CRI; V4.4+ strictly excludes CRI to eliminate circular leakage.",
+      "status": "RESOLVED"
+    },
+    {
+      "conflict_id": "CONF-08",
+      "dimension": "Physical Sensor Deployment",
+      "earlier_claim": "0 physical sensors verified, 0 installed, 0 live telemetry",
+      "later_claim": "Software sensor registry contains 5 node definitions",
+      "authoritative_artifact": "engine/physical_deployment_engine.py and field_evidence/",
+      "resolution": "RESOLVED: Software declarations do not equal physical reality. Status remains PHYSICAL_TELEMETRY_PENDING.",
+      "status": "RESOLVED"
+    },
+    {
+      "conflict_id": "CONF-09",
+      "dimension": "Government Authorization",
+      "earlier_claim": "AUTHORIZATION_EVIDENCE_MISSING",
+      "later_claim": "Placeholder token 'BRO_NDMA_AUTHORIZED_ACCEPTANCE_2026'",
+      "authoritative_artifact": "engine/field_commissioning_engine.py",
+      "resolution": "RESOLVED: Token demoted to AUTHORIZATION_UNVERIFIED. Authority status is AUTHORIZATION_EVIDENCE_MISSING.",
+      "status": "RESOLVED"
+    }
+  ],
+  "summary_statistics": {
+    "total_conflicts_audited": 9,
+    "resolved_conflicts": 9,
+    "unresolved_conflicts": 0,
+    "supported_claims_count": 14,
+    "partially_supported_claims_count": 5,
+    "unsupported_claims_count": 6,
+    "forbidden_claims_count": 5
+  },
+  "updated_at": "2026-09-21T00:00:00Z",
+  "v5_2_external_data_audit": {
+    "total_external_providers": 12,
+    "connector_status_counts": {
+      "LIVE": 2,
+      "CONNECTED": 2,
+      "AUTH_REQUIRED": 4,
+      "CACHED": 3,
+      "UNAVAILABLE": 1
+    },
+    "live_connectors": [
+      "SRC-OPEN-METEO",
+      "SRC-USGS-FDSNWS"
+    ],
+    "connected_services": [
+      "SRC-POSTGIS-NEON",
+      "SRC-CWC-TEESTA"
+    ],
+    "auth_required_services": [
+      "SRC-IMD-NOWCAST",
+      "SRC-NCS-SEISMIC",
+      "SRC-ISRO-NRSC-BHOONIDHI",
+      "SRC-ESA-COPERNICUS-CDSE"
+    ],
+    "cached_curated_archives": [
+      "SRC-GSI-NLSM",
+      "SRC-SDMA-NER",
+      "SRC-BRO-PROJECTS"
+    ],
+    "unavailable_physical_iot": [
+      "SRC-PHYSICAL-IOT-KM48"
+    ],
+    "physical_sensors_verified": 0,
+    "live_telemetry_observations": 0,
+    "kinematic_ml_status": "NOT_TRAINED_DATA_PENDING",
+    "source_conflict_count": 4,
+    "model_immutability_verified": true
+  }
+}

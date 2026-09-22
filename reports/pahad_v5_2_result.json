@@ -1,0 +1,116 @@
+{
+  "phase": "V5.2",
+  "phase_name": "CONTROLLED_PHYSICAL_PILOT_COMMISSIONING_AND_FIRST_VERIFIED_LIVE_TELEMETRY",
+  "timestamp_utc": "2026-09-21T22:40:00Z",
+  "overall_verdict": "V5_2_PHYSICAL_DEPLOYMENT_PENDING",
+  "final_verdict": "V5_2_PHYSICAL_DEPLOYMENT_PENDING",
+  "corridor_id": "CORR-NH10-SIKKIM-KM48",
+  "corridor_telemetry_status": "NO_PHYSICAL_TELEMETRY",
+  "cryptographic_isolation": {
+    "v3_hash_before": "7cb823888646ca2b074389de3719c9d9385197bbdf6763cf9e4e69bc3c15c183",
+    "v3_hash_after": "7cb823888646ca2b074389de3719c9d9385197bbdf6763cf9e4e69bc3c15c183",
+    "v4_5_hash": "31e16ce003cdd2c5934df034e6229661d27a8530a6a0dbc6a18e1ff56277da9f",
+    "production_v3_untouched": true,
+    "research_v4_5_untouched": true
+  },
+  "physical_evidence_audit": {
+    "sensors_claimed": 5,
+    "sensors_physically_verified": 0,
+    "boreholes_drilled": 0,
+    "casings_installed": 0,
+    "installation_verified": 0,
+    "commissioning_verified": 0,
+    "calibration_evidence_verified": 0,
+    "unverified_claims": 5
+  },
+  "telemetry_census": {
+    "live_observation_count": 0,
+    "bench_observation_count": 8640,
+    "hil_observation_count": 8640,
+    "simulated_observation_count": 120,
+    "unavailable_sensor_count": 5,
+    "first_genuine_live_observation": null,
+    "longest_live_continuity_hours": 0.0,
+    "continuity_windows": {
+      "1h": false,
+      "6h": false,
+      "12h": false,
+      "24h": false,
+      "48h": false,
+      "72h": false,
+      "168h": false
+    }
+  },
+  "sensor_status": {
+    "piezometer": "PLANNED (CALIBRATION_EVIDENCE_MISSING, NOT_INSTALLED)",
+    "inclinometer": "PLANNED (CALIBRATION_EVIDENCE_MISSING, NOT_INSTALLED)",
+    "tiltmeter": "PLANNED (CALIBRATION_EVIDENCE_MISSING, NOT_INSTALLED)",
+    "rain_gauge": "PLANNED (CALIBRATION_EVIDENCE_MISSING, NOT_INSTALLED)",
+    "edge_gateway": "BENCH_ACCEPTED (CONFIGURED_ONLY, BENCH_HIL)"
+  },
+  "calibration_traceability": {
+    "verified": 0,
+    "missing": 5,
+    "unverified": 5,
+    "overall_status": "CALIBRATION_EVIDENCE_MISSING"
+  },
+  "borehole_and_casing": {
+    "borehole_id": "BH-NH10-KM48-01",
+    "drilling_status": "NOT_DRILLED",
+    "casing_status": "NOT_INSTALLED",
+    "depth_m": 25.0,
+    "diameter_mm": 70.0,
+    "casing_type": "ABS inclinometer casing with 4-keyway grooves (DESIGN_SPECIFICATION_ONLY)"
+  },
+  "coordinate_survey": {
+    "survey_method": "COORDINATE_SURVEY_PENDING",
+    "design_latitude": 27.0264,
+    "design_longitude": 88.4312,
+    "surveyed_latitude": null,
+    "surveyed_longitude": null,
+    "status": "SURVEY_PENDING"
+  },
+  "gateway_and_lora": {
+    "gateway_id": "GW-NH10-KM48-01",
+    "hardware": "ESP32 + SX1302 LoRa Concentrator",
+    "frequency_plan": "IN865_867",
+    "mqtt_status": "BENCH_ONLY",
+    "store_and_forward": "VERIFIED_BENCH_DEDUPLICATION"
+  },
+  "first_live_packet": {
+    "status": "AWAITING_PHYSICAL_FIELD_DEPLOYMENT",
+    "first_live_packet_id": null,
+    "sensor_id": null,
+    "timestamp": null
+  },
+  "burn_in_tracking": {
+    "burn_in_status": "PENDING",
+    "hours_elapsed": 0.0,
+    "burn_in_24h": false,
+    "burn_in_72h": false
+  },
+  "dual_stream_state": {
+    "regional_stream": "OPERATIONAL (24h, 48h)",
+    "kinematic_stream": "UNAVAILABLE",
+    "dual_stream_fusion": "DEGRADED_REGIONAL_ONLY"
+  },
+  "scientific_gate": {
+    "kinematic_ml_status": "NOT_TRAINED_DATA_PENDING",
+    "training_gate": "LOCKED_UNTIL_VERIFIED_PHYSICAL_DATA_AVAILABLE"
+  },
+  "safety_boundaries": {
+    "localhost_only": true,
+    "public_deployment": false,
+    "public_exposure": false,
+    "human_authorization_required": true,
+    "public_dispatch_enabled": false,
+    "siren_relay_hardware": "DRY_RUN_EMULATOR"
+  },
+  "blocking_items": [
+    "PHYSICAL_HARDWARE_RECEIPT_PENDING",
+    "BOREHOLE_CASING_PENDING",
+    "FIELD_CALIBRATION_EVIDENCE_MISSING",
+    "LIVE_TELEMETRY_PENDING"
+  ],
+  "verdict_rationale": "Section 5 strictly prohibits simulating physical deployment. In the absence of genuine physical hardware delivery challans, signed NABL calibration certificates, mountain borehole drilling logs, and real LoRa RF field packets, the system maintains complete data honesty and authoritatively evaluates to V5_2_PHYSICAL_DEPLOYMENT_PENDING per Section 33."
+}

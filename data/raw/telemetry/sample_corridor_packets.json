@@ -1,0 +1,112 @@
+{
+  "metadata": {
+    "corridor_id": "CORR-NH10-SIKKIM-KM48",
+    "site_id": "KM48-SLOPE-B1",
+    "capture_source": "BENCH_HIL_OTA_CAPTURE",
+    "capture_timestamp_utc": "2026-09-20T12:00:00Z",
+    "description": "Deterministic 18-byte packed LoRa frames captured from Geokon 4500AL bench test run"
+  },
+  "packet_count": 5,
+  "packets": [
+    {
+      "packet_id": "PKT-RAW-001",
+      "device_id": "PIEZO-NH10-KM48-01",
+      "sensor_id": "PIEZO-NH10-KM48-01",
+      "gateway_id": "GW-NH10-KM48-01",
+      "sequence_number": 1,
+      "timestamp": "2026-09-20T12:00:00Z",
+      "latitude": 27.2023,
+      "longitude": 88.5147,
+      "measurements": {
+        "piezometer": {
+          "value": 42.5,
+          "unit": "kPa"
+        }
+      },
+      "battery": 95.0,
+      "signal_quality": -78.0,
+      "transport": "LORA",
+      "crc_valid": true
+    },
+    {
+      "packet_id": "PKT-RAW-002",
+      "device_id": "PIEZO-NH10-KM48-01",
+      "sensor_id": "PIEZO-NH10-KM48-01",
+      "gateway_id": "GW-NH10-KM48-01",
+      "sequence_number": 2,
+      "timestamp": "2026-09-20T12:05:00Z",
+      "latitude": 27.2023,
+      "longitude": 88.5147,
+      "measurements": {
+        "piezometer": {
+          "value": 42.8,
+          "unit": "kPa"
+        }
+      },
+      "battery": 95.0,
+      "signal_quality": -78.0,
+      "transport": "LORA",
+      "crc_valid": true
+    },
+    {
+      "packet_id": "PKT-RAW-003",
+      "device_id": "PIEZO-NH10-KM48-01",
+      "sensor_id": "PIEZO-NH10-KM48-01",
+      "gateway_id": "GW-NH10-KM48-01",
+      "sequence_number": 3,
+      "timestamp": "2026-09-20T12:10:00Z",
+      "latitude": 27.2023,
+      "longitude": 88.5147,
+      "measurements": {
+        "piezometer": {
+          "value": 43.1,
+          "unit": "kPa"
+        }
+      },
+      "battery": 94.0,
+      "signal_quality": -77.0,
+      "transport": "LORA",
+      "crc_valid": true
+    },
+    {
+      "packet_id": "PKT-RAW-004",
+      "device_id": "PIEZO-NH10-KM48-01",
+      "sensor_id": "PIEZO-NH10-KM48-01",
+      "gateway_id": "GW-NH10-KM48-01",
+      "sequence_number": 4,
+      "timestamp": "2026-09-20T12:15:00Z",
+      "latitude": 27.2023,
+      "longitude": 88.5147,
+      "measurements": {
+        "piezometer": {
+          "value": 43.4,
+          "unit": "kPa"
+        }
+      },
+      "battery": 94.0,
+      "signal_quality": -79.0,
+      "transport": "LORA",
+      "crc_valid": true
+    },
+    {
+      "packet_id": "PKT-RAW-005",
+      "device_id": "PIEZO-NH10-KM48-01",
+      "sensor_id": "PIEZO-NH10-KM48-01",
+      "gateway_id": "GW-NH10-KM48-01",
+      "sequence_number": 5,
+      "timestamp": "2026-09-20T12:20:00Z",
+      "latitude": 27.2023,
+      "longitude": 88.5147,
+      "measurements": {
+        "piezometer": {
+          "value": 43.7,
+          "unit": "kPa"
+        }
+      },
+      "battery": 94.0,
+      "signal_quality": -78.0,
+      "transport": "LORA",
+      "crc_valid": true
+    }
+  ]
+}

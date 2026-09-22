@@ -1,0 +1,103 @@
+{
+  "states": {
+    "PIEZO-NH10-KM48-01": "BENCH_ACCEPTED",
+    "INCL-NH10-KM48-01": "BENCH_ACCEPTED",
+    "TILT-NH10-KM48-01": "BENCH_ACCEPTED",
+    "RAIN-NH10-KM48-01": "BENCH_ACCEPTED",
+    "GW-NH10-KM48-01": "BENCH_ACCEPTED",
+    "PIEZO-LINEAGE-01": "BENCH_ACCEPTED"
+  },
+  "identities": {
+    "PIEZO-NH10-KM48-01": {
+      "sensor_id": "PIEZO-NH10-KM48-01",
+      "manufacturer": "Geokon LLC",
+      "model": "4500AL Vibrating Wire Piezometer",
+      "serial_number": "GK-4500AL-2026-0812",
+      "hardware_revision": "REV-B2",
+      "firmware_version": "v2.1.0-geokon-hil",
+      "sensor_type": "PIEZOMETER",
+      "corridor_id": "CORR-NH10-SIKKIM-KM48",
+      "site_id": "SITE-NH10-KM48",
+      "gateway_id": "GW-NH10-KM48-01",
+      "calibration_version": null,
+      "identity_verified": true,
+      "verification_notes": "VERIFIED: Physical serial number and hardware spec verified."
+    },
+    "INCL-NH10-KM48-01": {
+      "sensor_id": "INCL-NH10-KM48-01",
+      "manufacturer": "Durham Geo Slope Indicator (DGSI)",
+      "model": "Slope Indicator In-Place Inclinometer (IPI)",
+      "serial_number": "DGSI-IPI-2026-0441",
+      "hardware_revision": "REV-C1",
+      "firmware_version": "v1.4.2-ipi-hil",
+      "sensor_type": "INCLINOMETER",
+      "corridor_id": "CORR-NH10-SIKKIM-KM48",
+      "site_id": "SITE-NH10-KM48",
+      "gateway_id": "GW-NH10-KM48-01",
+      "calibration_version": null,
+      "identity_verified": true,
+      "verification_notes": "VERIFIED: Physical serial number and hardware spec verified."
+    },
+    "TILT-NH10-KM48-01": {
+      "sensor_id": "TILT-NH10-KM48-01",
+      "manufacturer": "PARVAT-NETRA Metrology Group",
+      "model": "MEMS Biaxial Digital Surface Tiltmeter",
+      "serial_number": "PN-TILT-2026-0199",
+      "hardware_revision": "REV-A3",
+      "firmware_version": "v1.8.0-tilt-hil",
+      "sensor_type": "TILTMETER",
+      "corridor_id": "CORR-NH10-SIKKIM-KM48",
+      "site_id": "SITE-NH10-KM48",
+      "gateway_id": "GW-NH10-KM48-01",
+      "calibration_version": null,
+      "identity_verified": true,
+      "verification_notes": "VERIFIED: Physical serial number and hardware spec verified."
+    },
+    "RAIN-NH10-KM48-01": {
+      "sensor_id": "RAIN-NH10-KM48-01",
+      "manufacturer": "Texas Electronics",
+      "model": "TR-525M Tipping Bucket Rain Gauge (0.2mm/tip)",
+      "serial_number": "TE-TR525M-2026-1104",
+      "hardware_revision": "REV-A1",
+      "firmware_version": "v1.1.0-rain-hil",
+      "sensor_type": "RAIN_GAUGE",
+      "corridor_id": "CORR-NH10-SIKKIM-KM48",
+      "site_id": "SITE-NH10-KM48",
+      "gateway_id": "GW-NH10-KM48-01",
+      "calibration_version": null,
+      "identity_verified": true,
+      "verification_notes": "VERIFIED: Physical serial number and hardware spec verified."
+    },
+    "GW-NH10-KM48-01": {
+      "sensor_id": "GW-NH10-KM48-01",
+      "manufacturer": "PARVAT-NETRA Edge Hardware Lab",
+      "model": "Solar LoRaWAN Concentrator Node (IP67)",
+      "serial_number": "PN-GW-2026-0038",
+      "hardware_revision": "REV-D4",
+      "firmware_version": "v3.0.1-gateway-hil",
+      "sensor_type": "GATEWAY",
+      "corridor_id": "CORR-NH10-SIKKIM-KM48",
+      "site_id": "SITE-NH10-KM48",
+      "gateway_id": "GW-NH10-KM48-01",
+      "calibration_version": null,
+      "identity_verified": true,
+      "verification_notes": "VERIFIED: Physical serial number and hardware spec verified."
+    },
+    "PIEZO-LINEAGE-01": {
+      "sensor_id": "PIEZO-LINEAGE-01",
+      "manufacturer": "Geokon LLC",
+      "model": "4500AL",
+      "serial_number": "GK-2026-9011",
+      "hardware_revision": "REV-A",
+      "firmware_version": "v1.0.0",
+      "sensor_type": "PIEZOMETER",
+      "corridor_id": "CORR-TEST",
+      "site_id": "SITE-NH10-KM48",
+      "gateway_id": null,
+      "calibration_version": null,
+      "identity_verified": true,
+      "verification_notes": "VERIFIED: Physical serial number and hardware spec verified."
+    }
+  },
+  "transitions": {}
+}

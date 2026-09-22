@@ -1,0 +1,170 @@
+{
+  "manifest_version": "5.0.0",
+  "phase": "V5.0",
+  "phase_name": "PHYSICAL_HARDWARE_PROVENANCE_ACQUISITION_BOREHOLE_CASING_LOGGING_AND_JOINT_PILOT_COMMISSIONING",
+  "timestamp_utc": "2026-09-21T15:15:00Z",
+  "corridor_id": "CORR-NH10-SIKKIM-KM48",
+  "corridor_name": "NH-10 Rangpo–Singtam Geological Corridor, Sikkim",
+  "highway_km": 48.2,
+  "overall_verdict": "V5_0_HARDWARE_EVIDENCE_PENDING",
+  "final_verdict": "V5_0_HARDWARE_EVIDENCE_PENDING",
+  "physical_sensors_verified_count": 0,
+  "boreholes_drilled_count": 0,
+  "casings_installed_count": 0,
+  "field_commissioned_count": 0,
+  "live_mountain_observations_count": 0,
+  "continuous_live_telemetry_hours": 0.0,
+  "production_v3_hash": "7cb823888646ca2b074389de3719c9d9385197bbdf6763cf9e4e69bc3c15c183",
+  "research_v4_5_hash": "31e16ce003cdd2c5934df034e6229661d27a8530a6a0dbc6a18e1ff56277da9f",
+  "kinematic_ml_status": "NOT_TRAINED_DATA_PENDING",
+  "rf_frequency_plan": "IN865_867",
+  "mqtt_broker_status": "BENCH_CONNECTED",
+  "time_sync_max_drift_s": 30.0,
+  "store_and_forward_status": "VERIFIED_BENCH_DEDUPLICATION",
+  "soi_benchmark_station": "SOI-GTS-RANGPO-BM14",
+  "rtk_horizontal_tolerance_m": 0.015,
+  "rtk_vertical_tolerance_m": 0.030,
+  "public_alert_dispatch_status": "DISABLED_SAFETY_LOCK",
+  "siren_activation_status": "DRY_RUN_ONLY",
+  "cryptographic_isolation": {
+    "v3_hash_before": "7cb823888646ca2b074389de3719c9d9385197bbdf6763cf9e4e69bc3c15c183",
+    "v3_hash_after": "7cb823888646ca2b074389de3719c9d9385197bbdf6763cf9e4e69bc3c15c183",
+    "v4_5_hash": "31e16ce003cdd2c5934df034e6229661d27a8530a6a0dbc6a18e1ff56277da9f",
+    "production_v3_untouched": true,
+    "research_v4_5_untouched": true
+  },
+  "sensor_census": {
+    "sensor_claim_count": 5,
+    "sensor_identity_verified_count": 0,
+    "physical_presence_verified_count": 0,
+    "installed_sensor_count": 0,
+    "commissioned_sensor_count": 0,
+    "live_sensor_count": 0,
+    "pending_sensor_count": 5
+  },
+  "sensor_status_matrix": {
+    "current_stage": "BENCH_ACCEPTED",
+    "matrix_stages": [
+      "PLANNED",
+      "BENCH_ACCEPTED",
+      "PHYSICAL_VERIFIED",
+      "INSTALLATION_VERIFIED",
+      "COMMISSIONING_PENDING",
+      "FIELD_COMMISSIONED",
+      "LIVE_MONITORING"
+    ],
+    "nodes_at_bench_accepted": 5,
+    "nodes_at_field_commissioned": 0
+  },
+  "calibration_census": {
+    "calibration_claim_count": 5,
+    "calibration_evidence_verified_count": 0,
+    "calibration_evidence_missing_count": 5,
+    "overall_calibration_status": "CALIBRATION_EVIDENCE_MISSING"
+  },
+  "borehole_census": {
+    "borehole_id": "BH-NH10-KM48-01",
+    "highway_km": 48.2,
+    "casing_depth_m": 25.0,
+    "casing_type": "ABS inclinometer casing with 4-keyway orthogonal tracking grooves",
+    "drilling_status": "NOT_DRILLED",
+    "casing_status": "NOT_INSTALLED",
+    "evidence_status": "BOREHOLE_EVIDENCE_MISSING",
+    "strata_count": 3,
+    "water_table_depth_m": 8.5
+  },
+  "coordinate_survey": {
+    "benchmark_station": "SOI-GTS-RANGPO-BM14",
+    "benchmark_elevation_msl": 612.45,
+    "planned_latitude": 27.2023,
+    "planned_longitude": 88.5147,
+    "planned_elevation_msl": 620.0,
+    "rtk_accuracy_tolerance_m": 0.05,
+    "survey_status": "PENDING_FIELD_SURVEY"
+  },
+  "field_evidence_census": {
+    "dimensions_audited": 9,
+    "verified_dimensions": 0,
+    "pending_dimensions": 9
+  },
+  "telemetry_census": {
+    "live_observation_count": 0,
+    "bench_observation_count": 8640,
+    "hil_observation_count": 8640,
+    "simulated_observation_count": 120,
+    "replayed_real_packet_count": 5,
+    "first_live_telemetry_timestamp": null,
+    "longest_live_continuity_hours": 0.0,
+    "continuity_windows": {
+      "1h": false,
+      "6h": false,
+      "12h": false,
+      "24h": false,
+      "48h": false,
+      "72h": false,
+      "168h": false
+    }
+  },
+  "dual_stream_state": {
+    "regional_stream_status": "AVAILABLE",
+    "kinematic_stream_status": "UNAVAILABLE",
+    "kinematic_ml_status": "NOT_TRAINED_DATA_PENDING",
+    "physical_pilot_status": "PHYSICAL_TELEMETRY_PENDING"
+  },
+  "gateway_status": {
+    "gateway_id": "GW-NH10-KM48-01",
+    "status": "CONFIGURED_ONLY",
+    "frequency_plan": "IN865_867",
+    "store_and_forward": "VERIFIED_BENCH",
+    "crc_verification": "CRC16_CCITT_ACTIVE"
+  },
+  "safety_safeguards": {
+    "human_approval_required": true,
+    "public_dispatch_enabled": false,
+    "siren_dry_run": true,
+    "cap_dispatch_enabled": false,
+    "sachet_dispatch_enabled": false,
+    "cell_broadcast_enabled": false
+  },
+  "burn_in_status": {
+    "observation_hours": 0.0,
+    "packet_delivery_ratio_pct": 0.0,
+    "burn_in_24h_achieved": false,
+    "burn_in_72h_achieved": false,
+    "burn_in_status": "BURN_IN_PENDING",
+    "active_alarming_permitted": false
+  },
+  "raw_custody_architecture": {
+    "custody_root": "data/raw/field_telemetry/CORR-NH10-SIKKIM-KM48/",
+    "payload_format": "RAW_BYTES_BIN",
+    "manifest_format": "SHA256_JSON",
+    "tamper_verification": "ENABLED"
+  },
+  "institutional_claims": {
+    "sih_prototype_declared": true,
+    "ndma_token_demoted": true,
+    "bro_partnership_status": "PLANNED",
+    "ssdma_partnership_status": "PLANNED",
+    "unverified_claims_count": 3
+  },
+  "test_summary": {
+    "v5_0_tests": 72,
+    "v4_9_tests": 67,
+    "v4_8_tests": 28,
+    "v4_7_tests": 31,
+    "v4_6_tests": 26,
+    "v4_5_v4_4_tests": 21,
+    "core_regression_tests": 85,
+    "total_executed": 330,
+    "total_passed": 330,
+    "total_failed": 0,
+    "regressions": 0,
+    "pass_rate_pct": 100.0
+  },
+  "blocking_items": {
+    "P0": "Physical downhole core drilling and sensor casing installation at NH-10 KM48 pending joint field deployment with BRO Project Swastik.",
+    "P1": "Physical accredited ISO/IEC 17025 laboratory calibration certificate PDFs pending upload.",
+    "P2": "Hardware nameplate inspection photographs and delivery inspection logs pending physical hardware receipt."
+  },
+  "authoritative_verdict_rationale": "All software frameworks, LoRa gateway concentrator codecs, store-and-forward deduplication algorithms, 7-stage Sensor Status Matrix transitions, and raw data custody directory architectures are 100% complete and bench-validated. However, genuine physical hardware delivery receipts, nameplate photographs, mountain borehole drilling logs, and live mountain RF telemetry remain pending field acquisition with BRO Project Swastik and SSDMA. Per Section 42, the system authoritatively evaluates to V5_0_HARDWARE_EVIDENCE_PENDING."
+}

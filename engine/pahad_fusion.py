@@ -171,7 +171,7 @@ class PahadFusionEngine:
             soil_sat_weight=19.5,
             water_unit_weight=gamma_w
         )
-        physical_fs = float(features.get("fos_physical", features.get("physical_fos", physical_res.factor_of_safety)))
+        physical_fs = float(features.get("fos_physical", features.get("physical_fos", features.get("factor_of_safety", physical_res.factor_of_safety))))
 
         # 3. Empirical Rainfall Threshold Model
         intensity_mmh = float(features.get("rainfall_current_mmh", features.get("rainfall_intensity", 0.0)))
@@ -241,7 +241,9 @@ class PahadFusionEngine:
             except Exception:
                 pass
 
-        if cwc_toe_loss > 0.0:
+        if "ground_anomaly_score" in features:
+            ground_a = float(features["ground_anomaly_score"])
+        elif cwc_toe_loss > 0.0:
             ground_a = min(1.0, (u_kpa / 35.0) * 0.35 + (disp_rate / 5.0) * 0.25 + (insar_def / 20.0) * 0.15 + (cwc_toe_loss / 100.0) * 0.15 + (seismic_g / 0.15) * 0.10)
         else:
             ground_a = min(1.0, (u_kpa / 35.0) * 0.45 + (disp_rate / 5.0) * 0.30 + (insar_def / 20.0) * 0.15 + (seismic_g / 0.15) * 0.10)

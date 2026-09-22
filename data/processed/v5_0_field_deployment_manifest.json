@@ -1,0 +1,88 @@
+{
+  "manifest_version": "5.0.0",
+  "generated_at": "2026-09-20T23:30:00Z",
+  "corridor_id": "CORR-NH10-SIKKIM-KM48",
+  "corridor_name": "NH-10 Rangpo–Singtam Geological Corridor, Sikkim",
+  "phase": "PHASE_V5_0_PHYSICAL_HARDWARE_PROVENANCE_AND_BOREHOLE_EVIDENCE",
+  "overall_verdict": "V5_0_EVIDENCE_PENDING",
+  "summary": {
+    "planned_sensors_count": 5,
+    "physical_sensors_verified": 0,
+    "boreholes_drilled": 0,
+    "casing_installed": 0,
+    "field_commissioned": 0,
+    "live_mountain_observations": 0,
+    "bench_observations": 8640,
+    "continuous_live_telemetry_hours": 0.0,
+    "calibration_status": "CALIBRATION_EVIDENCE_MISSING",
+    "authority_status": "AUTHORIZATION_EVIDENCE_MISSING",
+    "kinematic_ml_status": "NOT_TRAINED_DATA_PENDING"
+  },
+  "models": {
+    "production_v3": {
+      "path": "models/pahad_lstm_v3_weights.pt",
+      "sha256": "7cb823888646ca2b074389de3719c9d9385197bbdf6763cf9e4e69bc3c15c183",
+      "status": "PRODUCTION_FROZEN"
+    },
+    "research_v4_5": {
+      "path": "models/pahad_lstm_v4_5_research_weights.pt",
+      "sha256": "31e16ce003cdd2c5934df034e6229661d27a8530a6a0dbc6a18e1ff56277da9f",
+      "status": "RESEARCH_BASELINE_FROZEN"
+    }
+  },
+  "test_execution": {
+    "v5_0_tests": 41,
+    "v4_regression_tests": 143,
+    "core_platform_tests": 42,
+    "total_tests_passed": 226,
+    "failures": 0,
+    "pass_rate_pct": 100.0
+  },
+  "sensor_nodes": [
+    {
+      "sensor_id": "PIEZO-NH10-KM48-01",
+      "sensor_type": "PIEZOMETER",
+      "matrix_stage": "BENCH_ACCEPTED",
+      "physical_verified": false,
+      "calibration": "CALIBRATION_EVIDENCE_MISSING",
+      "installation": "NOT_INSTALLED",
+      "telemetry": "PHYSICAL_TELEMETRY_PENDING"
+    },
+    {
+      "sensor_id": "INCL-NH10-KM48-01",
+      "sensor_type": "INCLINOMETER",
+      "matrix_stage": "BENCH_ACCEPTED",
+      "physical_verified": false,
+      "calibration": "CALIBRATION_EVIDENCE_MISSING",
+      "installation": "NOT_INSTALLED",
+      "telemetry": "PHYSICAL_TELEMETRY_PENDING"
+    },
+    {
+      "sensor_id": "TILT-NH10-KM48-01",
+      "sensor_type": "TILTMETER",
+      "matrix_stage": "BENCH_ACCEPTED",
+      "physical_verified": false,
+      "calibration": "CALIBRATION_EVIDENCE_MISSING",
+      "installation": "NOT_INSTALLED",
+      "telemetry": "PHYSICAL_TELEMETRY_PENDING"
+    },
+    {
+      "sensor_id": "RAIN-NH10-KM48-01",
+      "sensor_type": "RAIN_GAUGE",
+      "matrix_stage": "BENCH_ACCEPTED",
+      "physical_verified": false,
+      "calibration": "CALIBRATION_EVIDENCE_MISSING",
+      "installation": "NOT_INSTALLED",
+      "telemetry": "PHYSICAL_TELEMETRY_PENDING"
+    },
+    {
+      "sensor_id": "GW-NH10-KM48-01",
+      "sensor_type": "GATEWAY",
+      "matrix_stage": "BENCH_ACCEPTED",
+      "physical_verified": false,
+      "calibration": "CALIBRATION_EVIDENCE_MISSING",
+      "installation": "NOT_INSTALLED",
+      "telemetry": "PHYSICAL_TELEMETRY_PENDING"
+    }
+  ]
+}

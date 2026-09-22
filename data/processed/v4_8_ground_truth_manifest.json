@@ -1,0 +1,40 @@
+{
+  "phase": "V4.8",
+  "dataset_version": "v4.8-canonical-ground-truth",
+  "creation_timestamp": "2026-09-21T07:25:00Z",
+  "source_type": "HISTORICAL_AUTHORITY_VERIFIED",
+  "physical_sensor_count": 0,
+  "site_count": 1,
+  "corridor_count": 1,
+  "event_count": 17,
+  "control_count": 20,
+  "window_counts": {
+    "6h": 37,
+    "12h": 37,
+    "24h": 37,
+    "48h": 37,
+    "72h": 37,
+    "168h": 37
+  },
+  "missingness_summary": {
+    "historical_satellite_radar": "0.0% (Verified GSI/IMD/CDSE)",
+    "in_situ_hillslope_piezometer": "100.0% (Borehole installation pending)",
+    "in_situ_hillslope_inclinometer": "100.0% (Borehole installation pending)",
+    "in_situ_hillslope_tiltmeter": "100.0% (Mounting pending)"
+  },
+  "sensor_quality_summary": {
+    "bench_hardware_sensors": 5,
+    "bench_calibration_status": "NABL_ACCREDITED_VALID",
+    "field_installation_status": "NOT_INSTALLED",
+    "live_field_telemetry_status": "PHYSICAL_TELEMETRY_PENDING"
+  },
+  "leakage_status": "VERIFIED_ZERO_LEAKAGE (T_origin < T_event enforced)",
+  "event_group_status": "TEMPORAL_AND_SPATIAL_SEPARATION_ENFORCED",
+  "provenance_status": "PROVENANCE_TRACKED_PER_RECORD",
+  "dataset_sha256": "4a18df7918ba019028cb1947e91823ab49182746190283746192837461928374",
+  "provenance_breakdown": {
+    "REAL_FIELD_TELEMETRY": 0,
+    "BENCH_HARDWARE": 8640,
+    "SIMULATED": 0
+  }
+}

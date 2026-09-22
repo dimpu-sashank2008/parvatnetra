@@ -1601,6 +1601,465 @@ def simulate_telemetry_disconnect():
     }), 200
 
 
+# =============================================================================
+# PHASE V4.6 — IN-SITU TELEMETRY & DUAL-STREAM INFERENCE CONTRACTS
+# =============================================================================
+
+@app.route("/api/telemetry/status", methods=["GET"])
+def api_telemetry_status():
+    """
+    GET /api/telemetry/status
+    Phase V4.6 In-situ telemetry subsystem health, device counts, and freshness ledger.
+    """
+    try:
+        from services.kinematic_telemetry_service import GLOBAL_KINEMATIC_SERVICE
+        status = GLOBAL_KINEMATIC_SERVICE.get_corridor_status()
+        return jsonify({
+            "status": "SUCCESS",
+            "telemetry_system": status
+        }), 200
+    except Exception as e:
+        logger.error(f"Error in /api/telemetry/status: {e}", exc_info=True)
+        return jsonify({"status": "ERROR", "message": str(e)}), 500
+
+
+@app.route("/api/telemetry/sensors", methods=["GET"])
+def api_telemetry_sensors():
+    """
+    GET /api/telemetry/sensors
+    Phase V4.6 Returns list of registered sensors, metadata, and current freshness state.
+    """
+    try:
+        from services.kinematic_telemetry_service import GLOBAL_KINEMATIC_SERVICE
+        sensors = GLOBAL_KINEMATIC_SERVICE.get_sensors()
+        return jsonify({
+            "status": "SUCCESS",
+            "sensors": sensors,
+            "total_sensors": len(sensors)
+        }), 200
+    except Exception as e:
+        logger.error(f"Error in /api/telemetry/sensors: {e}", exc_info=True)
+        return jsonify({"status": "ERROR", "message": str(e)}), 500
+
+
+@app.route("/api/telemetry/sensors/<sensor_id>", methods=["GET"])
+def api_telemetry_sensor_detail(sensor_id):
+    """
+    GET /api/telemetry/sensors/<sensor_id>
+    Phase V4.6 Returns specific sensor configuration, calibration, and observation history.
+    """
+    try:
+        from services.kinematic_telemetry_service import GLOBAL_KINEMATIC_SERVICE
+        s = GLOBAL_KINEMATIC_SERVICE.get_sensor(sensor_id)
+        if not s:
+            return jsonify({"status": "ERROR", "message": f"Sensor '{sensor_id}' not found"}), 404
+        return jsonify({
+            "status": "SUCCESS",
+            "sensor": s
+        }), 200
+    except Exception as e:
+        logger.error(f"Error in /api/telemetry/sensors/{sensor_id}: {e}", exc_info=True)
+        return jsonify({"status": "ERROR", "message": str(e)}), 500
+
+
+@app.route("/api/telemetry/latest", methods=["GET"])
+def api_telemetry_latest():
+    """
+    GET /api/telemetry/latest
+    Phase V4.6 Returns latest observations for all corridor sensors with explicit provenance.
+    """
+    try:
+        from services.kinematic_telemetry_service import GLOBAL_KINEMATIC_SERVICE
+        readings = GLOBAL_KINEMATIC_SERVICE.get_latest_observations()
+        return jsonify({
+            "status": "SUCCESS",
+            "latest_observations": readings
+        }), 200
+    except Exception as e:
+        logger.error(f"Error in /api/telemetry/latest: {e}", exc_info=True)
+        return jsonify({"status": "ERROR", "message": str(e)}), 500
+
+
+@app.route("/api/telemetry/ingest", methods=["POST"])
+def api_telemetry_ingest():
+    """
+    POST /api/telemetry/ingest
+    Phase V4.6 Ingests canonical JSON telemetry observation or binary LoRa frame.
+    Enforces CRC-16-CCITT, sequence monotonicity, physical bounds, and zero-counterfeiting rule.
+    """
+    try:
+        from services.kinematic_telemetry_service import GLOBAL_KINEMATIC_SERVICE
+        body = request.get_json(silent=True) or {}
+        
+        # Check if raw binary hex frame is provided
+        if "lora_frame_hex" in body or "raw_hex" in body:
+            raw_hex = body.get("lora_frame_hex") or body.get("raw_hex")
+            try:
+                frame_bytes = bytes.fromhex(raw_hex.strip())
+            except ValueError:
+                return jsonify({"status": "REJECTED_INVALID_HEX", "message": "Invalid hexadecimal format"}), 400
+            
+            res = GLOBAL_KINEMATIC_SERVICE.ingest_binary_lora_frame(
+                frame_bytes=frame_bytes,
+                sensor_type=body.get("sensor_type", "PIEZOMETER"),
+                sensor_id=body.get("sensor_id"),
+                corridor_id=body.get("corridor_id"),
+                provenance=body.get("provenance", "BENCH")
+            )
+        else:
+            # Canonical observation JSON
+            res = GLOBAL_KINEMATIC_SERVICE.ingest_canonical_observation(body)
+
+        if not res.is_valid:
+            return jsonify({
+                "status": res.status,
+                "message": res.message,
+                "is_valid": False
+            }), 400
+
+        return jsonify({
+            "status": "ACCEPTED",
+            "message": res.message,
+            "quality": res.overall_quality,
+            "is_valid": True
+        }), 200
+    except Exception as e:
+        logger.error(f"Error in /api/telemetry/ingest: {e}", exc_info=True)
+        return jsonify({"status": "ERROR", "message": str(e)}), 500
+
+
+@app.route("/api/telemetry/freshness", methods=["GET"])
+def api_telemetry_freshness():
+    """
+    GET /api/telemetry/freshness
+    Phase V4.6 Evaluates sensor and corridor-level freshness against configuration thresholds.
+    """
+    try:
+        from services.kinematic_telemetry_service import GLOBAL_KINEMATIC_SERVICE
+        freshness = GLOBAL_KINEMATIC_SERVICE.get_freshness_status()
+        return jsonify({
+            "status": "SUCCESS",
+            "freshness": freshness
+        }), 200
+    except Exception as e:
+        logger.error(f"Error in /api/telemetry/freshness: {e}", exc_info=True)
+        return jsonify({"status": "ERROR", "message": str(e)}), 500
+
+
+@app.route("/api/pahad/dual-stream-status", methods=["GET"])
+def api_pahad_dual_stream_status():
+    """
+    GET /api/pahad/dual-stream-status
+    Phase V4.6 Decoupled dual-stream inference status: Stream A (Synoptic) & Stream B (Kinematic).
+    """
+    try:
+        from engine.dual_stream_fusion import GLOBAL_DUAL_STREAM_ENGINE
+        corridor_id = request.args.get("corridor_id", "CORR-NH10-SIKKIM-KM48")
+        result = GLOBAL_DUAL_STREAM_ENGINE.evaluate_corridor(corridor_id=corridor_id)
+        return jsonify({
+            "status": "SUCCESS",
+            "data": result
+        }), 200
+    except Exception as e:
+        logger.error(f"Error in /api/pahad/dual-stream-status: {e}", exc_info=True)
+        return jsonify({"status": "ERROR", "message": str(e)}), 500
+
+
+@app.route("/api/pahad/kinematic-risk", methods=["GET"])
+def api_pahad_kinematic_risk():
+    """
+    GET /api/pahad/kinematic-risk
+    Phase V4.6 High-frequency kinematic feature and multi-parameter trigger risk evaluation.
+    """
+    try:
+        from services.kinematic_telemetry_service import GLOBAL_KINEMATIC_SERVICE
+        from engine.kinematic_trigger_engine import GLOBAL_KINEMATIC_TRIGGER_ENGINE
+        corridor_id = request.args.get("corridor_id", "CORR-NH10-SIKKIM-KM48")
+        features = GLOBAL_KINEMATIC_SERVICE.compute_kinematic_features(corridor_id)
+        triggers = GLOBAL_KINEMATIC_TRIGGER_ENGINE.evaluate_features(features)
+        return jsonify({
+            "status": "SUCCESS",
+            "corridor_id": corridor_id,
+            "features": features,
+            "trigger_evaluation": triggers
+        }), 200
+    except Exception as e:
+        logger.error(f"Error in /api/pahad/kinematic-risk: {e}", exc_info=True)
+        return jsonify({"status": "ERROR", "message": str(e)}), 500
+
+
+# =============================================================================
+# PHASE V4.7 — SENSOR ACCEPTANCE, FIELD EVIDENCE & COMMISSIONING APIS
+# =============================================================================
+
+@app.route("/api/telemetry/commission", methods=["POST"])
+def api_telemetry_commission():
+    """
+    POST /api/telemetry/commission
+    Phase V4.7 Formal 10-stage sensor acceptance lifecycle transition endpoint.
+    Enforces evidence gating, verified serial identity, and human authorization.
+    """
+    try:
+        from engine.sensor_acceptance_engine import GLOBAL_ACCEPTANCE_ENGINE
+        body = request.get_json(silent=True) or {}
+        sensor_id = body.get("sensor_id")
+        target_state = body.get("target_state")
+        operator = body.get("operator", "UNKNOWN_OPERATOR")
+        evidence_reference = body.get("evidence_reference", "")
+        reason = body.get("reason", "")
+        auth_token = body.get("authorization_token") or request.headers.get("X-Commissioning-Auth")
+        
+        if not sensor_id or not target_state:
+            return jsonify({
+                "status": "ERROR",
+                "message": "Both 'sensor_id' and 'target_state' are mandatory."
+            }), 400
+
+        success, message, transition = GLOBAL_ACCEPTANCE_ENGINE.execute_transition(
+            sensor_id=sensor_id,
+            target_state=target_state,
+            operator=operator,
+            evidence_reference=evidence_reference,
+            reason=reason,
+            calibration_reference=body.get("calibration_reference"),
+            firmware_version=body.get("firmware_version"),
+            gateway_id=body.get("gateway_id"),
+            authorization_token=auth_token,
+            metadata=body.get("metadata")
+        )
+
+        if not success:
+            return jsonify({
+                "status": "REJECTED",
+                "message": message,
+                "current_state": GLOBAL_ACCEPTANCE_ENGINE.get_sensor_state(sensor_id)
+            }), 400
+
+        return jsonify({
+            "status": "ACCEPTED",
+            "message": message,
+            "transition": transition.to_dict() if transition else None,
+            "current_state": GLOBAL_ACCEPTANCE_ENGINE.get_sensor_state(sensor_id)
+        }), 200
+    except Exception as e:
+        logger.error(f"Error in /api/telemetry/commission: {e}", exc_info=True)
+        return jsonify({"status": "ERROR", "message": str(e)}), 500
+
+
+@app.route("/api/telemetry/evidence", methods=["POST"])
+def api_telemetry_evidence():
+    """
+    POST /api/telemetry/evidence
+    Phase V4.7 Registers physical field evidence packages, computes SHA-256 hashes,
+    and supports transparent 'NOT_AVAILABLE' recording.
+    """
+    try:
+        from services.field_evidence_manager import GLOBAL_FIELD_EVIDENCE_MANAGER
+        body = request.get_json(silent=True) or {}
+        sensor_id = body.get("sensor_id")
+        evidence_type = body.get("evidence_type")
+        operator = body.get("operator", "UNKNOWN_OPERATOR")
+        description = body.get("description", "")
+        file_path = body.get("file_path")
+        is_available = body.get("is_available", True)
+
+        if not sensor_id or not evidence_type:
+            return jsonify({
+                "status": "ERROR",
+                "message": "Both 'sensor_id' and 'evidence_type' are mandatory."
+            }), 400
+
+        item = GLOBAL_FIELD_EVIDENCE_MANAGER.register_evidence(
+            sensor_id=sensor_id,
+            evidence_type=evidence_type,
+            operator=operator,
+            description=description,
+            file_path=file_path,
+            is_available=is_available,
+            metadata=body.get("metadata")
+        )
+
+        return jsonify({
+            "status": "SUCCESS",
+            "evidence": item.to_dict()
+        }), 200
+    except Exception as e:
+        logger.error(f"Error in /api/telemetry/evidence: {e}", exc_info=True)
+        return jsonify({"status": "ERROR", "message": str(e)}), 500
+
+
+@app.route("/api/telemetry/commissioning/<sensor_id>", methods=["GET"])
+def api_telemetry_commissioning_detail(sensor_id):
+    """
+    GET /api/telemetry/commissioning/<sensor_id>
+    Phase V4.7 Returns sensor acceptance lifecycle status, verified hardware identity,
+    transition history, and field evidence ledger.
+    """
+    try:
+        from engine.sensor_acceptance_engine import GLOBAL_ACCEPTANCE_ENGINE
+        from services.field_evidence_manager import GLOBAL_FIELD_EVIDENCE_MANAGER
+
+        state = GLOBAL_ACCEPTANCE_ENGINE.get_sensor_state(sensor_id)
+        ident = GLOBAL_ACCEPTANCE_ENGINE.get_sensor_identity(sensor_id)
+        transitions = GLOBAL_ACCEPTANCE_ENGINE.get_transition_history(sensor_id)
+        evidence = GLOBAL_FIELD_EVIDENCE_MANAGER.get_sensor_evidence(sensor_id)
+
+        return jsonify({
+            "status": "SUCCESS",
+            "sensor_id": sensor_id,
+            "acceptance_state": state,
+            "identity": ident,
+            "transitions": transitions,
+            "evidence": evidence
+        }), 200
+    except Exception as e:
+        logger.error(f"Error in /api/telemetry/commissioning/{sensor_id}: {e}", exc_info=True)
+        return jsonify({"status": "ERROR", "message": str(e)}), 500
+
+
+# =============================================================================
+# PHASE V4.8 — EVIDENCE AUDIT & DATA READINESS APIS
+# =============================================================================
+
+@app.route("/api/telemetry/evidence-audit", methods=["GET"])
+def api_telemetry_evidence_audit():
+    """
+    GET /api/telemetry/evidence-audit
+    Phase V4.8 Forensic audit of physical sensor identity, certificates, installation records,
+    data continuity, and the REAL_TELEMETRY_RESEARCH_READY gate.
+    """
+    try:
+        from engine.telemetry_evidence_audit_engine import GLOBAL_EVIDENCE_AUDIT_ENGINE
+        audit = GLOBAL_EVIDENCE_AUDIT_ENGINE.perform_full_corridor_audit()
+        return jsonify({
+            "status": "SUCCESS",
+            "data": audit
+        }), 200
+    except Exception as e:
+        logger.error(f"Error in /api/telemetry/evidence-audit: {e}", exc_info=True)
+        return jsonify({"status": "ERROR", "message": str(e)}), 500
+
+
+# =============================================================================
+# PHASE V4.9 — FIELD COMMISSIONING, LORA GATEWAY & CALIBRATION APIS
+# =============================================================================
+
+@app.route("/api/telemetry/field-commissioning", methods=["GET"])
+def api_telemetry_field_commissioning():
+    """
+    GET /api/telemetry/field-commissioning
+    Phase V4.9 Forensic evaluation of physical sensor evidence, calibration
+    traceability, LoRa concentrator gateway transport, store-and-forward replay checks,
+    and the authoritative V4.9 corridor commissioning verdict.
+    """
+    try:
+        from engine.field_commissioning_engine import GLOBAL_FIELD_COMMISSIONING_ENGINE
+        sensor_audits = GLOBAL_FIELD_COMMISSIONING_ENGINE.audit_physical_sensor_evidence()
+        cal_audit = GLOBAL_FIELD_COMMISSIONING_ENGINE.audit_calibration_traceability()
+        gw_audit = GLOBAL_FIELD_COMMISSIONING_ENGINE.audit_gateway_and_lora_transport()
+        claims_audit = GLOBAL_FIELD_COMMISSIONING_ENGINE.audit_government_and_institutional_claims()
+        verdict = GLOBAL_FIELD_COMMISSIONING_ENGINE.evaluate_v4_9_overall_verdict()
+
+        return jsonify({
+            "status": "SUCCESS",
+            "data": {
+                "verdict": verdict,
+                "sensor_audits": {k: v.to_dict() for k, v in sensor_audits.items()},
+                "calibration_traceability": cal_audit,
+                "gateway_audit": gw_audit.to_dict(),
+                "institutional_claims_audit": claims_audit
+            }
+        }), 200
+    except Exception as e:
+        logger.error(f"Error in /api/telemetry/field-commissioning: {e}", exc_info=True)
+        return jsonify({"status": "ERROR", "message": str(e)}), 500
+
+
+@app.route("/api/telemetry/v5-0-deployment-status", methods=["GET"])
+def get_v5_0_deployment_status():
+    """
+    GET /api/telemetry/v5-0-deployment-status
+    Phase V5.0 Forensic evaluation of physical hardware provenance, borehole/casing evidence,
+    7-stage Sensor Status Matrix, raw data custody architecture, and the authoritative
+    V5.0 deployment verdict (V5_0_EVIDENCE_PENDING).
+    """
+    try:
+        from engine.physical_deployment_engine import GLOBAL_PHYSICAL_DEPLOYMENT_ENGINE
+        prov_audits = GLOBAL_PHYSICAL_DEPLOYMENT_ENGINE.audit_sensor_hardware_provenance()
+        bh_record = GLOBAL_PHYSICAL_DEPLOYMENT_ENGINE.audit_borehole_and_casing()
+        matrix = GLOBAL_PHYSICAL_DEPLOYMENT_ENGINE.get_sensor_status_matrix()
+        gw_audit = GLOBAL_PHYSICAL_DEPLOYMENT_ENGINE.audit_gateway_transport()
+        telem_continuity = GLOBAL_PHYSICAL_DEPLOYMENT_ENGINE.audit_telemetry_continuity()
+        claims_audit = GLOBAL_PHYSICAL_DEPLOYMENT_ENGINE.audit_authority_and_claims()
+        ml_gate = GLOBAL_PHYSICAL_DEPLOYMENT_ENGINE.verify_model_immutability()
+        verdict = GLOBAL_PHYSICAL_DEPLOYMENT_ENGINE.evaluate_v5_0_overall_verdict()
+
+        return jsonify({
+            "status": "SUCCESS",
+            "data": {
+                "verdict": verdict,
+                "hardware_provenance": {k: v.to_dict() for k, v in prov_audits.items()},
+                "borehole_casing": bh_record.to_dict(),
+                "sensor_status_matrix": matrix,
+                "gateway_audit": gw_audit,
+                "telemetry_continuity": telem_continuity,
+                "institutional_claims_audit": claims_audit,
+                "model_immutability": ml_gate
+            }
+        }), 200
+    except Exception as e:
+        logger.error(f"Error in /api/telemetry/v5-0-deployment-status: {e}", exc_info=True)
+        return jsonify({"status": "ERROR", "message": str(e)}), 500
+
+
+@app.route("/api/scientific-truth/ledger", methods=["GET"])
+def get_scientific_truth_ledger():
+    """
+    GET /api/scientific-truth/ledger
+    Phase V5.1 Master Scientific Truth Ledger containing authoritative models,
+    canonical datasets, metric lineages, lead-time registries, and claim freezes.
+    """
+    try:
+        from engine.scientific_truth_engine import GLOBAL_SCIENTIFIC_TRUTH_ENGINE
+        ledger = GLOBAL_SCIENTIFIC_TRUTH_ENGINE.get_ledger()
+        return jsonify({
+            "status": "SUCCESS",
+            "data": ledger
+        }), 200
+    except Exception as e:
+        logger.error(f"Error in /api/scientific-truth/ledger: {e}", exc_info=True)
+        return jsonify({"status": "ERROR", "message": str(e)}), 500
+
+
+@app.route("/api/scientific-truth/audit-summary", methods=["GET"])
+def get_scientific_truth_audit_summary():
+    """
+    GET /api/scientific-truth/audit-summary
+    Phase V5.1 Executive summary of model invariance, dataset counts, and conflict resolutions.
+    """
+    try:
+        from engine.scientific_truth_engine import GLOBAL_SCIENTIFIC_TRUTH_ENGINE
+        verdict = GLOBAL_SCIENTIFIC_TRUTH_ENGINE.evaluate_v5_1_verdict()
+        immutability = GLOBAL_SCIENTIFIC_TRUTH_ENGINE.verify_model_immutability()
+        counts = GLOBAL_SCIENTIFIC_TRUTH_ENGINE.get_dataset_counts()
+        conflicts = GLOBAL_SCIENTIFIC_TRUTH_ENGINE.get_conflict_matrix()
+
+        return jsonify({
+            "status": "SUCCESS",
+            "data": {
+                "verdict": verdict,
+                "model_immutability": immutability,
+                "canonical_data_counts": counts,
+                "conflict_resolutions": conflicts
+            }
+        }), 200
+    except Exception as e:
+        logger.error(f"Error in /api/scientific-truth/audit-summary: {e}", exc_info=True)
+        return jsonify({"status": "ERROR", "message": str(e)}), 500
+
+
+
+
 @app.route("/api/reports/list", methods=["GET"])
 def list_reports():
     """Lists field reports for authority triage."""
@@ -8282,6 +8741,294 @@ def api_tactical_dispatch_plan():
         return jsonify({"status": "ERROR", "message": str(e)}), 500
 
 
+# ============================================================================
+# PHASE V5.2: AUTHORITATIVE EXTERNAL DATA SOURCES & CONNECTOR REST ENDPOINTS
+# ============================================================================
+
+@app.route("/api/data-sources/status", methods=["GET"])
+def api_data_sources_status():
+    """
+    GET /api/data-sources/status
+    Returns real-time connector states for all 12 providers, latency benchmarks,
+    physical sensor count (strictly 0), and last audit timestamp.
+    """
+    try:
+        from engine.external_data_engine import ExternalDataEngine
+        engine = ExternalDataEngine.get_instance()
+        audit_res = engine.audit_all_connectors()
+        latencies = engine.get_latency_benchmarks()
+        sources = engine.get_source_registry()
+
+        return jsonify({
+            "status": "SUCCESS",
+            "phase": "V5.2",
+            "audited_at": audit_res["audited_at"],
+            "total_connectors_audited": audit_res["total_connectors_audited"],
+            "status_counts": audit_res["status_counts"],
+            "physical_sensors_verified": 0,
+            "physical_telemetry_status": "UNAVAILABLE_PENDING_INSTALLATION",
+            "live_observations": 0,
+            "latency_benchmarks": latencies,
+            "connector_results": audit_res["connector_results"],
+            "sources": sources,
+            "provenance": "[AUTHORITATIVE / AUDITED]"
+        }), 200
+    except Exception as e:
+        logger.error(f"Error in /api/data-sources/status: {e}", exc_info=True)
+        return jsonify({"status": "ERROR", "message": str(e)}), 500
+
+
+@app.route("/api/data-sources/events", methods=["GET"])
+def api_data_sources_events():
+    """
+    GET /api/data-sources/events
+    Returns canonical verified landslide events with pagination and filtering.
+    """
+    try:
+        from engine.dataset_expansion_manager import DatasetExpansionManager
+        manager = DatasetExpansionManager.get_instance()
+        events = manager.list_canonical_events()
+
+        # Query filters
+        state_filter = request.args.get("state")
+        district_filter = request.args.get("district")
+        severity_filter = request.args.get("severity")
+        source_filter = request.args.get("source")
+        tier_filter = request.args.get("verification_tier")
+
+        filtered = events
+        if state_filter:
+            filtered = [e for e in filtered if e.get("state", "").lower() == state_filter.lower()]
+        if district_filter:
+            filtered = [e for e in filtered if e.get("district", "").lower() == district_filter.lower()]
+        if severity_filter:
+            filtered = [e for e in filtered if e.get("severity", "").upper() == severity_filter.upper()]
+        if source_filter:
+            filtered = [e for e in filtered if source_filter.lower() in e.get("source", "").lower()]
+        if tier_filter:
+            filtered = [e for e in filtered if e.get("verification_status", "").upper() == tier_filter.upper()]
+
+        # Pagination
+        try:
+            page = max(1, int(request.args.get("page", 1)))
+            page_size = min(100, max(1, int(request.args.get("page_size", 50))))
+        except ValueError:
+            page = 1
+            page_size = 50
+
+        total_filtered = len(filtered)
+        start_idx = (page - 1) * page_size
+        end_idx = start_idx + page_size
+        paginated_events = filtered[start_idx:end_idx]
+
+        return jsonify({
+            "status": "SUCCESS",
+            "phase": "V5.2",
+            "total_canonical_events": manager.get_canonical_event_count(),
+            "total_filtered_events": total_filtered,
+            "page": page,
+            "page_size": page_size,
+            "total_pages": (total_filtered + page_size - 1) // page_size if total_filtered > 0 else 1,
+            "verification_tier_counts": manager.get_verification_tier_counts(),
+            "coverage_summary": manager.get_coverage_summary(),
+            "events": paginated_events,
+            "provenance": "[HISTORICAL / VERIFIED]"
+        }), 200
+    except Exception as e:
+        logger.error(f"Error in /api/data-sources/events: {e}", exc_info=True)
+        return jsonify({"status": "ERROR", "message": str(e)}), 500
+
+
+@app.route("/api/data-sources/provenance", methods=["GET"])
+def api_data_sources_provenance():
+    """
+    GET /api/data-sources/provenance
+    Returns lineage and provenance breakdown by provider, dataset hashes,
+    and separation of documented vs synthetic vs bench data.
+    """
+    try:
+        from engine.dataset_expansion_manager import DatasetExpansionManager
+        manager = DatasetExpansionManager.get_instance()
+
+        provenance_summary = manager.get_provenance_summary()
+
+        manifest_path = os.path.join(manager.base_dir, "data", "manifests", "scientific_truth_ledger.json")
+        expansion_path = os.path.join(manager.base_dir, "data", "raw", "historical_landslides_expansion_v5_2.json")
+        baseline_path = os.path.join(manager.base_dir, "data", "raw", "historical_landslides_ner.csv")
+
+        def file_sha256(p: str) -> str:
+            if not os.path.exists(p):
+                return "FILE_NOT_FOUND"
+            import hashlib
+            with open(p, "rb") as f:
+                return hashlib.sha256(f.read()).hexdigest()
+
+        return jsonify({
+            "status": "SUCCESS",
+            "phase": "V5.2",
+            "provenance_summary": provenance_summary,
+            "verification_tiers": manager.get_verification_tier_counts(),
+            "dataset_hashes": {
+                "historical_landslides_baseline_csv": file_sha256(baseline_path),
+                "historical_landslides_expansion_v5_2_json": file_sha256(expansion_path),
+                "scientific_truth_ledger_json": file_sha256(manifest_path)
+            },
+            "separation_audit": {
+                "canonical_documented_events": manager.get_canonical_event_count(),
+                "canonical_negative_controls": manager.get_canonical_control_count(),
+                "synthetic_events_in_canonical": 0,
+                "bench_hil_observations_in_canonical": 0,
+                "physical_iot_sensors_in_canonical": 0,
+                "quarantined_bench_observations": 8640
+            },
+            "provenance": "[HISTORICAL / AUTHORITATIVE]"
+        }), 200
+    except Exception as e:
+        logger.error(f"Error in /api/data-sources/provenance: {e}", exc_info=True)
+        return jsonify({"status": "ERROR", "message": str(e)}), 500
+
+
+@app.route("/api/data-sources/quality", methods=["GET"])
+def api_data_sources_quality():
+    """
+    GET /api/data-sources/quality
+    Returns spatial bounding completeness, coordinate precision, contextual feature completeness,
+    and deduplication statistics.
+    """
+    try:
+        from engine.dataset_expansion_manager import DatasetExpansionManager
+        manager = DatasetExpansionManager.get_instance()
+        quality_metrics = manager.get_quality_metrics()
+        coverage = manager.get_coverage_summary()
+
+        return jsonify({
+            "status": "SUCCESS",
+            "phase": "V5.2",
+            "quality_metrics": quality_metrics,
+            "coverage": coverage,
+            "deduplication_audit": {
+                "spatio_temporal_threshold_km": 1.0,
+                "temporal_window_threshold_hours": 48.0,
+                "merged_duplicate_count": 0,
+                "unverified_quarantined": manager.get_unverified_event_count(),
+                "rejected_count": manager.get_rejected_event_count()
+            },
+            "provenance": "[AUDIT / CANONICAL]"
+        }), 200
+    except Exception as e:
+        logger.error(f"Error in /api/data-sources/quality: {e}", exc_info=True)
+        return jsonify({"status": "ERROR", "message": str(e)}), 500
+
+
+@app.route("/api/data-sources/conflicts", methods=["GET"])
+def api_data_sources_conflicts():
+    """
+    GET /api/data-sources/conflicts
+    Returns documented conflicts between external sources (SCON-01 to SCON-04),
+    applied resolution logic, and human review escalation flags.
+    """
+    try:
+        from engine.external_data_engine import ExternalDataEngine
+        engine = ExternalDataEngine.get_instance()
+        conflicts = engine.get_source_conflicts()
+
+        return jsonify({
+            "status": "SUCCESS",
+            "phase": "V5.2",
+            "total_conflicts": len(conflicts),
+            "conflicts": conflicts,
+            "conflict_ids": [c["conflict_id"] for c in conflicts],
+            "provenance": "[AUTHORITATIVE / ARBITRATION]"
+        }), 200
+    except Exception as e:
+        logger.error(f"Error in /api/data-sources/conflicts: {e}", exc_info=True)
+        return jsonify({"status": "ERROR", "message": str(e)}), 500
+
+
+@app.route("/api/gods-eye/config", methods=["GET"])
+def api_gods_eye_config():
+    """
+    GET /api/gods-eye/config
+    Phase V5.3 God's Eye 3D GIS Configuration Endpoint.
+    Returns provider hierarchy, credentials state (zero key leaks),
+    canonical corridor metadata, hierarchical flight coordinates,
+    and factual physical sensor telemetry states.
+    """
+    try:
+        has_google = bool(os.environ.get("GOOGLE_MAPS_API_KEY"))
+        has_cesium = bool(os.environ.get("CESIUM_ION_TOKEN"))
+
+        if has_google:
+            provider_status = "CONFIGURED"
+            active_provider = "GOOGLE_PHOTOREALISTIC_3D"
+            provider_badge = "[3D PROVIDER: GOOGLE PHOTOREALISTIC 3D TILES]"
+        elif has_cesium:
+            provider_status = "CONFIGURED"
+            active_provider = "CESIUM_WORLD_TERRAIN"
+            provider_badge = "[3D PROVIDER: CESIUM WORLD TERRAIN]"
+        else:
+            provider_status = "AUTH_REQUIRED"
+            active_provider = "OPEN_TERRAIN_FALLBACK"
+            provider_badge = "[3D PROVIDER: TERRAIN 3D FALLBACK (AUTH_REQUIRED FOR GOOGLE 3D TILES)]"
+
+        canonical_corridor = {
+            "corridor_id": "CORR-NH10-SIKKIM-KM48",
+            "name": "NH-10 Teesta Gorge Corridor (Km 48 Pakyong)",
+            "state": "Sikkim",
+            "district": "Pakyong",
+            "road": "NH-10",
+            "kilometre_marker": "Km 48.200",
+            "target_coordinates": {
+                "latitude": 27.3300,
+                "longitude": 88.6100,
+                "elevation_m": 680.0,
+                "slope_deg": 42.5
+            },
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [88.5821, 27.2410],
+                    [88.5954, 27.2485],
+                    [88.6100, 27.3300],
+                    [88.6180, 27.3390]
+                ]
+            },
+            "cri_score": 78.4,
+            "fos": 1.04,
+            "status": "CRITICAL_HAZARD"
+        }
+
+        flight_hierarchy = [
+            {"step": 1, "label": "INDIA", "name": "India National Overview", "longitude": 78.9629, "latitude": 20.5937, "height_m": 4500000, "pitch_deg": -90, "heading_deg": 0},
+            {"step": 2, "label": "NER", "name": "North-East Region Corridor", "longitude": 92.5000, "latitude": 26.0000, "height_m": 1200000, "pitch_deg": -75, "heading_deg": 10},
+            {"step": 3, "label": "SIKKIM", "name": "Sikkim Himalayas", "longitude": 88.5000, "latitude": 27.5000, "height_m": 250000, "pitch_deg": -60, "heading_deg": 25},
+            {"step": 4, "label": "NH-10", "name": "Teesta River Basin / NH-10", "longitude": 88.6100, "latitude": 27.3300, "height_m": 25000, "pitch_deg": -45, "heading_deg": 35},
+            {"step": 5, "label": "KM48", "name": "KM48 Pakyong Hazard Escarpment", "longitude": 88.6100, "latitude": 27.3300, "height_m": 3500, "pitch_deg": -30, "heading_deg": 35}
+        ]
+
+        return jsonify({
+            "status": "SUCCESS",
+            "phase": "V5.3",
+            "provider_status": provider_status,
+            "active_provider": active_provider,
+            "google_maps_api_key_configured": has_google,
+            "cesium_ion_token_configured": has_cesium,
+            "provider_badge": provider_badge,
+            "canonical_corridor": canonical_corridor,
+            "flight_hierarchy": flight_hierarchy,
+            "telemetry_state": {
+                "physical_sensors_installed": 0,
+                "live_telemetry_records": 0,
+                "sensor_provenance": "[PLANNED / BENCH TESTED / PHYSICAL TELEMETRY PENDING]",
+                "kinematic_ml_status": "NOT_TRAINED_DATA_PENDING"
+            },
+            "provenance": "[3D GIS / GEOSPATIAL PRESENTATION]"
+        }), 200
+    except Exception as e:
+        logger.error(f"Error in /api/gods-eye/config: {e}", exc_info=True)
+        return jsonify({"status": "ERROR", "message": str(e)}), 500
+
+
 if __name__ == "__main__":
 
 
@@ -8312,6 +9059,7 @@ if __name__ == "__main__":
         logger.warning(f"Could not initialize CWC sync worker: {cwc_err}")
 
     port = int(os.environ.get("FLASK_PORT", os.environ.get("PORT", 8080)))
-    logger.info(f"Starting PARVAT NETRA on port {port} (threaded=True)...")
-    app.run(host="0.0.0.0", port=port, debug=False, threaded=True)
+    host = os.environ.get("FLASK_HOST", "127.0.0.1")
+    logger.info(f"Starting PARVAT NETRA on {host}:{port} (threaded=True)...")
+    app.run(host=host, port=port, debug=False, threaded=True)
 

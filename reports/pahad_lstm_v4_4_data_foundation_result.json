@@ -1,0 +1,22 @@
+{
+  "phase": "V4.4",
+  "timestamp": "2026-09-20T13:32:12.255662+00:00",
+  "events": 17,
+  "controls": 20,
+  "72h_complete_events": 17,
+  "96h_complete_events": 17,
+  "120h_complete_events": 17,
+  "168h_complete_events": 17,
+  "real_temporal_channels": 25,
+  "reanalysis_channels": 21,
+  "satellite_channels": 0,
+  "measured_sensor_channels": 0,
+  "missing_sensor_channels": 9,
+  "synthetic_channels": 0,
+  "leakage_status": "ZERO_LEAKAGE_VERIFIED",
+  "provenance_status": "STRICT_PROVENANCE_ENFORCED",
+  "dataset_sha256": "89b48d3b8354f8e66a26ccd9dc3b08d8b51a7616b3e983a803aa4d3285c305e3",
+  "v3_weights_hash_before": "7cb823888646ca2b074389de3719c9d9385197bbdf6763cf9e4e69bc3c15c183",
+  "v3_weights_hash_after": "7cb823888646ca2b074389de3719c9d9385197bbdf6763cf9e4e69bc3c15c183",
+  "overall_verdict": "V4_4_DATA_FOUNDATION_READY"
+}

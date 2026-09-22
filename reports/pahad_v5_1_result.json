@@ -1,0 +1,117 @@
+{
+  "phase": "V5.1",
+  "phase_name": "SCIENTIFIC_TRUTH_LEDGER_DATASET_LINEAGE_RECONCILIATION_AND_CROSS_PHASE_CONSISTENCY_AUDIT",
+  "timestamp_utc": "2026-09-21T16:00:00Z",
+  "corridor_id": "CORR-NH10-SIKKIM-KM48",
+  "system_designation": "Smart India Hackathon (SIH) 2026 AI-Assisted Research and Decision-Support Prototype",
+  "overall_verdict": "V5_1_CONSISTENT_WITH_LIMITATIONS",
+  "final_verdict": "V5_1_CONSISTENT_WITH_LIMITATIONS",
+  "verdict_rationale": "All cross-phase scientific claims, dataset sample counts, model identities, metrics, and lead-time discrepancies across V4.4–V5.0 are rigorously investigated, reconciled, and codified in the immutable scientific truth ledger without modifying model weights or manufacturing field evidence. Minor documented limitations (sample size N=17 events, GBDT holdout N=8, V4.5 offline research status, and pending field hardware) are fully disclosed per Section 28.",
+  "cryptographic_isolation": {
+    "v3_hash_before": "7cb823888646ca2b074389de3719c9d9385197bbdf6763cf9e4e69bc3c15c183",
+    "v3_hash_after": "7cb823888646ca2b074389de3719c9d9385197bbdf6763cf9e4e69bc3c15c183",
+    "v4_5_hash": "31e16ce003cdd2c5934df034e6229661d27a8530a6a0dbc6a18e1ff56277da9f",
+    "production_v3_untouched": true,
+    "research_v4_5_untouched": true
+  },
+  "canonical_data_truth": {
+    "canonical_documented_events": 17,
+    "canonical_documented_controls": 20,
+    "canonical_temporal_sequences": 105,
+    "canonical_event_model_samples": 36,
+    "tabular_splits": {
+      "train": 16,
+      "val": 12,
+      "test": 8
+    },
+    "quarantined_demo_samples": 25,
+    "real_temporal_sequence_rows": 17640
+  },
+  "model_status_hierarchy": {
+    "production_v3": "ACTIVE_PRODUCTION",
+    "research_v4_5": "RESEARCH_BASELINE_OFFLINE",
+    "event_classifier_gbdt": "TRAINED_LIMITED_DATA",
+    "geotechnical_fos": "PHYSICS_SURROGATE_ACTIVE",
+    "kinematic_ml": "NOT_TRAINED_DATA_PENDING"
+  },
+  "physical_hardware_truth": {
+    "physical_sensors_verified": 0,
+    "nameplate_photographs_on_disk": 0,
+    "delivery_challans_on_disk": 0,
+    "borehole_casings_installed": 0,
+    "live_mountain_observations": 0,
+    "continuous_live_telemetry_hours": 0.0,
+    "bench_hil_observations": 8640,
+    "calibration_status": "CALIBRATION_EVIDENCE_MISSING",
+    "institutional_authorization_status": "AUTHORIZATION_EVIDENCE_MISSING"
+  },
+  "reproducible_metrics": {
+    "event_classifier_gbdt": {
+      "evaluation_set": "real_test.csv (N=8)",
+      "roc_auc": 1.0,
+      "pr_auc": 1.0,
+      "pod": 1.0,
+      "far": 0.0,
+      "csi": 1.0,
+      "brier_score": 0.0824,
+      "ece": 0.2604,
+      "status": "REPRODUCIBLE",
+      "limitations": "Constrained by small holdout sample (N=8)"
+    },
+    "research_v4_5_bilstm": {
+      "dataset": "lstm_v4_4_real_temporal_sequences.csv (N=24)",
+      "48h_csi": 0.952,
+      "48h_pod": 1.0,
+      "48h_far": 0.048,
+      "status": "REPRODUCIBLE",
+      "limitations": "Offline research model; long-range infiltration skill"
+    }
+  },
+  "unsupported_claims_demoted": [
+    "Claim of 52 real historical events (UNSUPPORTED: strictly 17 documented events)",
+    "Claim of 41 training, 11 validation, 11 test samples (UNSUPPORTED: untraced placeholder)",
+    "Claim of ROC-AUC 0.81, PR-AUC 0.74, POD 0.78, FAR 0.22, CSI 0.64 (UNSUPPORTED: untraced placeholder)",
+    "Claim of 4.2 hours median warning lead time (UNSUPPORTED: 4.2h was historical minimum / demo formula)",
+    "Claim of NABL/ISO-17025 accredited calibration (UNSUPPORTED: CALIBRATION_EVIDENCE_MISSING)",
+    "Claim of BRO_NDMA_AUTHORIZED_ACCEPTANCE_2026 operational clearance (UNSUPPORTED: AUTHORIZATION_UNVERIFIED)"
+  ],
+  "authoritative_lead_times": {
+    "production_v3_lead_time": "24.0h to 48.0h",
+    "event_classifier_gbdt_lead_time": "24.0h",
+    "research_v4_5_lead_time": "48.0h to 168.0h",
+    "historical_ensemble_median_lead": "14.5 hours",
+    "historical_minimum_lead": "4.2 hours",
+    "kinematic_ml_lead": "0.0 hours (NOT_TRAINED_DATA_PENDING)"
+  },
+  "safety_safeguards": {
+    "human_approval_required": true,
+    "public_dispatch_enabled": false,
+    "siren_dry_run": true,
+    "cap_dispatch_enabled": false,
+    "sachet_dispatch_enabled": false,
+    "cell_broadcast_enabled": false
+  },
+  "localhost_only": {
+    "localhost_only_enforced": true,
+    "public_deployment": false,
+    "public_exposure": false
+  },
+  "test_summary": {
+    "v5_1_tests": 45,
+    "v5_0_tests": 72,
+    "v4_9_tests": 67,
+    "v4_8_tests": 60,
+    "v4_7_tests": 55,
+    "core_regression_tests": 78,
+    "total_executed": 377,
+    "total_passed": 377,
+    "total_failed": 0,
+    "regressions": 0,
+    "pass_rate_pct": 100.0
+  },
+  "blocking_items": {
+    "P0": "Physical downhole core drilling and sensor casing installation at NH-10 KM48 pending joint field deployment with BRO Project Swastik.",
+    "P1": "Physical accredited ISO/IEC 17025 laboratory calibration certificate PDFs pending upload.",
+    "P2": "Hardware nameplate inspection photographs and delivery inspection logs pending physical hardware receipt."
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "corridor_id": "CORR-NH10-SIKKIM-KM48",
+  "site_id": "KM48",
+  "sensor_id": "PIEZO-NH10-KM48-01",
+  "timestamp_utc": "2026-09-20T17:59:59.820700+00:00",
+  "byte_count": 38,
+  "payload_file": "PIEZO-NH10-KM48-01_20260920T175959Z_cb900770.bin",
+  "payload_sha256": "cb900770d00e1b8f3df2fe8338cd3c071f759c0602becfb0e88e71ee68d1b1b8",
+  "custody_signer": "PARVAT_NETRA_CUSTODY_DAEMON",
+  "provenance": "BENCH_SIMULATED",
+  "metadata": {
+    "source": "BENCH_FIXTURE",
+    "operator": "CustodyTest"
+  }
+}

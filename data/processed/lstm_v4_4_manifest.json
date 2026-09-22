@@ -1,0 +1,103 @@
+{
+  "dataset_version": "v4.4",
+  "created_at": "2026-09-20T13:32:12.255662+00:00",
+  "event_count": 17,
+  "control_count": 20,
+  "total_sequences": 105,
+  "sequence_length_hours": 168,
+  "window_coverage": [
+    "72h",
+    "96h",
+    "120h",
+    "168h"
+  ],
+  "total_rows": 17640,
+  "dataset_sha256": "89b48d3b8354f8e66a26ccd9dc3b08d8b51a7616b3e983a803aa4d3285c305e3",
+  "production_status": "DISABLED",
+  "v3_production_hash": "7cb823888646ca2b074389de3719c9d9385197bbdf6763cf9e4e69bc3c15c183",
+  "channels": {
+    "reanalysis": [
+      "rain_1h",
+      "rain_3h",
+      "rain_6h",
+      "rain_12h",
+      "rain_24h",
+      "rain_48h",
+      "rain_72h",
+      "rain_96h",
+      "rain_120h",
+      "rain_168h",
+      "rain_intensity",
+      "rain_acceleration",
+      "antecedent_rain_3d",
+      "antecedent_rain_7d",
+      "api_30d",
+      "temperature_2m",
+      "soil_moisture",
+      "soil_moisture_change_24h",
+      "seismic_count_24h",
+      "max_magnitude_24h",
+      "nearest_seismic_distance"
+    ],
+    "physics_derived": [
+      "fos",
+      "pore_pressure",
+      "effective_stress",
+      "hydraulic_saturation"
+    ],
+    "static_dem": [
+      "slope",
+      "aspect",
+      "elevation",
+      "curvature",
+      "soil_porosity",
+      "historical_susceptibility"
+    ],
+    "missing_sensors": [
+      "piezometer_pressure",
+      "inclinometer_tilt",
+      "tilt_rate_24h",
+      "ground_displacement",
+      "displacement_velocity_24h",
+      "acoustic_emission",
+      "insar_velocity",
+      "ndvi",
+      "ndvi_anomaly"
+    ],
+    "synthetic_channels": []
+  },
+  "provenance_summary": {
+    "reanalysis_percentage": 52.5,
+    "physics_derived_percentage": 10.0,
+    "static_dem_percentage": 15.0,
+    "missing_sensor_percentage": 22.5,
+    "synthetic_percentage": 0.0
+  },
+  "completeness_ledger": {
+    "72h_events": "17/17 (100%)",
+    "96h_events": "17/17 (100%)",
+    "120h_events": "17/17 (100%)",
+    "168h_events": "17/17 (100%)",
+    "72h_controls": "20/20 (100%)",
+    "96h_controls": "20/20 (100%)",
+    "120h_controls": "20/20 (100%)",
+    "168h_controls": "20/20 (100%)"
+  },
+  "partition_distribution": {
+    "TRAIN": {
+      "events": 8,
+      "controls": 8,
+      "sequences": 48
+    },
+    "VAL": {
+      "events": 5,
+      "controls": 8,
+      "sequences": 33
+    },
+    "TEST": {
+      "events": 4,
+      "controls": 4,
+      "sequences": 24
+    }
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "schema_version": "5.3.0",
+  "phase": "V5.3",
+  "verdict": "V5_3_GODS_EYE_3D_INTEGRATION_VERIFIED",
+  "generated_at": "2026-09-21T00:30:00Z",
+  "presentation_layer": {
+    "status": "INTEGRATED_INTO_EXISTING_GIS_MAP",
+    "parent_container": "gis-map",
+    "container_id": "gods-eye-3d-container",
+    "basemap_option": "gods-eye-3d",
+    "basemap_button": "mb-gods-eye",
+    "engine": "static/js/gods_eye_3d.js",
+    "lazy_loading_verified": true
+  },
+  "provider_hierarchy": {
+    "google_photorealistic_3d": {
+      "status": "AUTH_REQUIRED",
+      "credential_env": "GOOGLE_MAPS_API_KEY",
+      "configured": false
+    },
+    "cesium_world_terrain": {
+      "status": "AUTH_REQUIRED",
+      "credential_env": "CESIUM_ION_TOKEN",
+      "configured": false
+    },
+    "active_provider": "OPEN_TERRAIN_FALLBACK",
+    "provider_badge": "[3D PROVIDER: TERRAIN 3D FALLBACK (AUTH_REQUIRED FOR GOOGLE 3D TILES)]"
+  },
+  "canonical_corridor": {
+    "corridor_id": "CORR-NH10-SIKKIM-KM48",
+    "name": "NH-10 Teesta Gorge Corridor (Km 48 Pakyong)",
+    "state": "Sikkim",
+    "district": "Pakyong",
+    "road": "NH-10",
+    "target_coordinates": {
+      "latitude": 27.3300,
+      "longitude": 88.6100,
+      "elevation_m": 680.0,
+      "slope_deg": 42.5
+    },
+    "cri_score": 78.4,
+    "fos": 1.04
+  },
+  "flight_hierarchy": {
+    "total_levels": 5,
+    "levels": [
+      {"level": 1, "code": "INDIA", "height_km": 4500},
+      {"level": 2, "code": "NER", "height_km": 1200},
+      {"level": 3, "code": "SIKKIM", "height_km": 250},
+      {"level": 4, "code": "NH-10", "height_km": 25},
+      {"level": 5, "code": "KM48", "height_km": 3.5}
+    ]
+  },
+  "synchronized_layers_count": 7,
+  "telemetry_facts": {
+    "physical_sensors_installed": 0,
+    "live_telemetry_records": 0,
+    "sensor_provenance": "[PLANNED / BENCH TESTED / PHYSICAL TELEMETRY PENDING]",
+    "kinematic_ml_status": "NOT_TRAINED_DATA_PENDING"
+  },
+  "model_integrity": {
+    "production_v3_sha256": "7cb823888646ca2b074389de3719c9d9385197bbdf6763cf9e4e69bc3c15c183",
+    "research_v4_5_sha256": "31e16ce003cdd2c5934df034e6229661d27a8530a6a0dbc6a18e1ff56277da9f",
+    "verified_immutable": true
+  },
+  "test_battery": {
+    "total_suites": 8,
+    "total_tests": 26,
+    "passed": 26,
+    "failed": 0,
+    "pass_rate": 1.0
+  }
+}

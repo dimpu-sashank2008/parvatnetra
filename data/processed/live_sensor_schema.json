@@ -1,0 +1,159 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PAHADInSituTelemetryObservation",
+  "description": "Canonical observation schema for PARVAT NETRA / PAHAD AI in-situ geotechnical telemetry.",
+  "type": "object",
+  "required": [
+    "observation_id",
+    "sensor_id",
+    "corridor_id",
+    "site_id",
+    "sensor_type",
+    "timestamp_utc",
+    "value",
+    "unit",
+    "quality",
+    "source",
+    "provenance",
+    "status",
+    "sequence_number",
+    "received_at",
+    "gateway_id",
+    "firmware_version"
+  ],
+  "properties": {
+    "observation_id": {
+      "type": "string",
+      "description": "Unique identifier for this telemetry observation"
+    },
+    "sensor_id": {
+      "type": "string",
+      "description": "Identifier of the sensor producing this observation"
+    },
+    "corridor_id": {
+      "type": "string",
+      "description": "Identifier of the monitored transit corridor (e.g. CORR-NH10-SIKKIM-KM48)"
+    },
+    "site_id": {
+      "type": "string",
+      "description": "Specific monitored slope station ID"
+    },
+    "sensor_type": {
+      "type": "string",
+      "enum": [
+        "PIEZOMETER",
+        "INCLINOMETER",
+        "TILTMETER",
+        "RAIN_GAUGE",
+        "GATEWAY"
+      ],
+      "description": "Instrument category"
+    },
+    "timestamp_utc": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC timestamp when the measurement was sampled at the sensor"
+    },
+    "value": {
+      "type": "number",
+      "description": "Primary measurement value in physical engineering units"
+    },
+    "unit": {
+      "type": "string",
+      "enum": ["kPa", "mm", "deg", "mm/h", "V", "dBm", "C"],
+      "description": "Physical unit of measurement"
+    },
+    "quality": {
+      "type": "string",
+      "enum": ["GOOD", "DEGRADED", "BAD", "UNKNOWN"],
+      "description": "Data quality flag"
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "PHYSICAL_SENSOR",
+        "BENCH_SIMULATOR",
+        "REPLAY",
+        "SYNTHETIC"
+      ],
+      "description": "Physical origin of the reading"
+    },
+    "provenance": {
+      "type": "string",
+      "enum": [
+        "LIVE",
+        "SIMULATED",
+        "HISTORICAL",
+        "TEST",
+        "BENCH"
+      ],
+      "description": "Strict provenance badge indicating trustworthiness"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "LIVE",
+        "CACHED",
+        "SIMULATED",
+        "DERIVED",
+        "UNAVAILABLE",
+        "INVALID",
+        "STALE"
+      ],
+      "description": "Operational processing state"
+    },
+    "sequence_number": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Monotonically increasing sequence number from sensor/gateway"
+    },
+    "received_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC timestamp when packet reached edge ingestion gateway / server"
+    },
+    "gateway_id": {
+      "type": "string",
+      "description": "ID of edge gateway relaying the frame"
+    },
+    "firmware_version": {
+      "type": "string",
+      "description": "Firmware release of transmitting node"
+    },
+    "battery_voltage": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 15.0,
+      "description": "Node battery level in Volts"
+    },
+    "signal_strength": {
+      "type": "number",
+      "description": "RSSI or SNR of the LoRa/RF link in dBm"
+    },
+    "temperature": {
+      "type": "number",
+      "description": "Ambient or internal sensor temperature in degrees Celsius"
+    },
+    "calibration_version": {
+      "type": "string",
+      "description": "Calibration matrix / offset profile version"
+    },
+    "latitude": {
+      "type": "number",
+      "minimum": -90.0,
+      "maximum": 90.0,
+      "description": "WGS84 Latitude of sensor deployment"
+    },
+    "longitude": {
+      "type": "number",
+      "minimum": -180.0,
+      "maximum": 180.0,
+      "description": "WGS84 Longitude of sensor deployment"
+    },
+    "elevation": {
+      "type": "number",
+      "description": "Elevation in meters above MSL"
+    }
+  },
+  "additionalProperties": false
+}

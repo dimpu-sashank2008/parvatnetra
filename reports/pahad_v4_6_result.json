@@ -1,0 +1,86 @@
+{
+  "phase": "V4.6",
+  "verdict": "V4_6_BENCH_VALIDATED_FIELD_PENDING",
+  "completed_at_utc": "2026-09-20T15:00:00Z",
+  "corridor_id": "CORR-NH10-SIKKIM-KM48",
+  "corridor_name": "NH-10 Rangpo–Singtam Geological Corridor, Sikkim",
+  "physical_status": "BENCH_VALIDATED",
+  "telemetry_status": "PHYSICAL_TELEMETRY_PENDING",
+  "field_deployment_pending": true,
+  "dual_stream_architecture": {
+    "decoupled": true,
+    "stream_a_synoptic": {
+      "status": "AVAILABLE",
+      "horizons": ["24h", "48h", "72h", "168h"],
+      "data_sources": ["IMD", "ERA5-Land", "USGS/NCS", "SRTM DEM"],
+      "mechanics": "Mohr-Coulomb Infinite Slope FoS"
+    },
+    "stream_b_kinematic": {
+      "status": "UNAVAILABLE",
+      "reason": "PHYSICAL_TELEMETRY_PENDING",
+      "horizons": ["0h", "1h", "3h", "6h"],
+      "instruments": ["Piezometer", "Inclinometer", "Tiltmeter", "Rain Gauge"],
+      "ml_model_status": "NOT_TRAINED_DATA_PENDING"
+    },
+    "assessment_mode": "REGIONAL_ONLY_MONITORING",
+    "composite_confidence": "MEDIUM_DEGRADED",
+    "public_dispatch_enabled": false
+  },
+  "kinematic_triggers": {
+    "engine": "KinematicTriggerEngine",
+    "total_thresholds": 8,
+    "validation_status": "ENGINEERING_DEFAULT",
+    "public_dispatch": false
+  },
+  "in_situ_hardware": {
+    "bench_validation": "PASSED",
+    "hil_lora_codec_crc16": "VERIFIED_0x1021",
+    "bit_corruption_detection": "100%",
+    "sequence_monotonicity": "ENFORCED"
+  },
+  "model_registry": {
+    "production_v3_path": "models/pahad_lstm_v3_weights.pt",
+    "production_v3_sha256": "7cb823888646ca2b074389de3719c9d9385197bbdf6763cf9e4e69bc3c15c183",
+    "production_v3_status": "LOCKED_UNTOUCHED",
+    "v4_5_research_path": "models/pahad_lstm_v4_5_research_weights.pt",
+    "v4_5_research_sha256": "31e16ce003cdd2c5934df034e6229661d27a8530a6a0dbc6a18e1ff56277da9f",
+    "v4_5_research_status": "OFFLINE_RESEARCH_UNTOUCHED"
+  },
+  "test_battery": {
+    "total_executed": 145,
+    "total_passed": 145,
+    "total_failed": 0,
+    "regressions": 0,
+    "suites": [
+      "tests/test_v4_6_telemetry.py (16 passed)",
+      "tests/test_v4_6_dual_stream.py (10 passed)",
+      "tests/test_v4_5_comprehensive.py (7 passed)",
+      "tests/test_v4_4_data_foundation.py (9 passed)",
+      "tests/test_telemetry_contract.py (8 passed)",
+      "tests/test_edge_gateway_service.py (4 passed)",
+      "tests/test_edge_store.py (6 passed)",
+      "tests/test_pahad_engine.py (11 passed)",
+      "tests/test_pahad_phase2.py (12 passed)",
+      "tests/test_pahad_phase3.py (10 passed)",
+      "tests/test_pahad_data_fusion.py (8 passed)",
+      "tests/test_weather_service.py (10 passed)",
+      "tests/test_seismic_service.py (6 passed)",
+      "tests/test_terrain_api.py (13 passed)",
+      "tests/test_i18n_localization.py (11 passed)",
+      "tests/test_model_regression.py (4 passed)"
+    ]
+  },
+  "documentation_reports": [
+    "docs/PAHAD_V4_6_TELEMETRY_ARCHITECTURE.md",
+    "docs/PAHAD_V4_6_SENSOR_SCHEMA.md",
+    "docs/PAHAD_V4_6_INGESTION_REPORT.md",
+    "docs/PAHAD_V4_6_FEATURE_ENGINEERING_REPORT.md",
+    "docs/PAHAD_V4_6_KINEMATIC_TRIGGER_REPORT.md",
+    "docs/PAHAD_V4_6_DUAL_STREAM_REPORT.md",
+    "docs/PAHAD_V4_6_FAILURE_DEGRADATION_REPORT.md",
+    "docs/PAHAD_V4_6_HIL_REPORT.md",
+    "docs/PAHAD_V4_6_SECURITY_REPORT.md",
+    "docs/PAHAD_V4_6_TEST_REPORT.md",
+    "docs/PAHAD_V4_6_FINAL_REPORT.md"
+  ]
+}

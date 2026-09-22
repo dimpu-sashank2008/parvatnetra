@@ -23,10 +23,11 @@
             this.lastSyncTime = new Date();
             this.listeners = [];
             this.heartbeatInterval = null;
-            this.degradedThresholdMs = 4000;
+            this.degradedThresholdMs = 8000;
 
             this._initEventListeners();
             this._startHeartbeat();
+            this.verifyConnectivity();
         }
 
         _initEventListeners() {
@@ -42,12 +43,12 @@
         }
 
         _startHeartbeat() {
-            // Heartbeat check every 30 seconds to detect silent link drops in mountain corridors
+            // Heartbeat check every 15 seconds to detect link status and recover automatically
             this.heartbeatInterval = setInterval(() => {
-                if (this.currentState !== this.STATE_OFFLINE && this.currentState !== this.STATE_SYNCING) {
+                if (this.currentState !== this.STATE_SYNCING) {
                     this.verifyConnectivity(true);
                 }
-            }, 30000);
+            }, 15000);
         }
 
         async verifyConnectivity(isBackground = false) {

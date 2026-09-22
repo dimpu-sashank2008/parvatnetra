@@ -1,0 +1,37 @@
+{
+  "manifest_version": "1.0.0",
+  "phase": "V4.6",
+  "generated_at_utc": "2026-09-20T15:00:00Z",
+  "corridor_id": "CORR-NH10-SIKKIM-KM48",
+  "corridor_name": "NH-10 Rangpo–Singtam Geological Corridor, Sikkim",
+  "schema_file": "data/processed/live_sensor_schema.json",
+  "registry_file": "data/processed/corridor_sensor_registry.json",
+  "sensor_count": 5,
+  "registered_sensors": [
+    "PIEZO-NH10-KM48-01",
+    "INCL-NH10-KM48-01",
+    "TILT-NH10-KM48-01",
+    "RAIN-NH10-KM48-01",
+    "GW-NH10-KM48-01"
+  ],
+  "physical_status": "BENCH_VALIDATED",
+  "telemetry_status": "PHYSICAL_TELEMETRY_PENDING",
+  "field_deployment_pending": true,
+  "hardware_bench_validated": true,
+  "lora_codec_crc16_verified": true,
+  "stream_a_regional_status": "AVAILABLE",
+  "stream_b_kinematic_status": "UNAVAILABLE",
+  "stream_b_reason": "PHYSICAL_TELEMETRY_PENDING",
+  "kinematic_ml_model_status": "NOT_TRAINED_DATA_PENDING",
+  "production_v3_weights_path": "models/pahad_lstm_v3_weights.pt",
+  "production_v3_weights_sha256": "7cb823888646ca2b074389de3719c9d9385197bbdf6763cf9e4e69bc3c15c183",
+  "v4_5_research_weights_path": "models/pahad_lstm_v4_5_research_weights.pt",
+  "v4_5_research_weights_sha256": "31e16ce003cdd2c5934df034e6229661d27a8530a6a0dbc6a18e1ff56277da9f",
+  "test_metrics": {
+    "total_tests": 145,
+    "passed_tests": 145,
+    "failed_tests": 0,
+    "regressions": 0
+  },
+  "verdict": "V4_6_BENCH_VALIDATED_FIELD_PENDING"
+}

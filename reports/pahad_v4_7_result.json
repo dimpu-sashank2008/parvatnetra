@@ -1,0 +1,59 @@
+{
+  "phase": "V4.7",
+  "phase_name": "FIELD_TELEMETRY_COMMISSIONING_AND_SENSOR_ACCEPTANCE",
+  "timestamp_utc": "2026-09-21T06:50:00Z",
+  "operational_verdict": "V4_7_BENCH_VALIDATED_FIELD_PENDING",
+  "final_verdict": "V4_7_BENCH_VALIDATED_FIELD_PENDING",
+  "corridor_id": "CORR-NH10-SIKKIM-KM48",
+  "corridor_telemetry_status": "PHYSICAL_TELEMETRY_PENDING",
+  "stream_a_synoptic": {
+    "status": "AVAILABLE",
+    "forecast_horizons": ["24h", "48h", "72h", "168h"],
+    "model_version": "v3"
+  },
+  "stream_b_kinematic": {
+    "status": "UNAVAILABLE",
+    "reason": "PHYSICAL_TELEMETRY_PENDING",
+    "model_status": "NOT_TRAINED_DATA_PENDING"
+  },
+  "cryptographic_isolation": {
+    "production_v3_weights": "models/pahad_lstm_v3_weights.pt",
+    "production_v3_sha256": "7cb823888646ca2b074389de3719c9d9385197bbdf6763cf9e4e69bc3c15c183",
+    "production_v3_untouched": true,
+    "research_v4_5_weights": "models/pahad_lstm_v4_5_research_weights.pt",
+    "research_v4_5_sha256": "31e16ce003cdd2c5934df034e6229661d27a8530a6a0dbc6a18e1ff56277da9f",
+    "research_v4_5_untouched": true
+  },
+  "sensor_acceptance_summary": {
+    "total_registered_sensors": 5,
+    "sensors_bench_accepted": 5,
+    "sensors_field_installed": 0,
+    "sensors_field_commissioned": 0,
+    "placeholder_serials_isolated": true,
+    "software_only_commissioning_rejected": true
+  },
+  "telemetry_trust_summary": {
+    "trust_states": ["VERIFIED", "DEGRADED", "UNVERIFIED"],
+    "time_sync_tiers": 3,
+    "max_future_timestamp_tolerance_sec": 30.0,
+    "max_clock_drift_warning_sec": 120.0,
+    "max_transport_latency_sec": 300.0
+  },
+  "field_evidence_summary": {
+    "evidence_root": "field_evidence/",
+    "tamper_detection": "SHA-256",
+    "not_available_protocol_enforced": true,
+    "event_labeling_foundation": ["EVENT", "NON_EVENT", "UNKNOWN"]
+  },
+  "test_battery": {
+    "v4_7_tests": 55,
+    "v4_6_tests": 26,
+    "v4_5_v4_4_tests": 21,
+    "core_regression_tests": 85,
+    "total_executed": 187,
+    "total_passed": 187,
+    "total_failed": 0,
+    "regressions": 0,
+    "pass_rate_pct": 100.0
+  }
+}

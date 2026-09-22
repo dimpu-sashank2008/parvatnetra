@@ -1,0 +1,281 @@
+{
+  "manifest_version": "5.0.0",
+  "generated_at": "2026-09-21T15:15:00Z",
+  "corridor_id": "CORR-NH10-SIKKIM-KM48",
+  "corridor_name": "NH-10 Rangpo–Singtam Geological Corridor, Sikkim",
+  "phase": "PHASE_V5_0_PHYSICAL_HARDWARE_PROVENANCE_AND_BOREHOLE_EVIDENCE",
+  "overall_verdict": "V5_0_HARDWARE_EVIDENCE_PENDING",
+  "dimensions_audited": [
+    "nameplate_photo",
+    "delivery_challan",
+    "custody_record",
+    "borehole_log",
+    "calibration_cert",
+    "installation_record",
+    "commissioning_checklist",
+    "gateway_route",
+    "live_telemetry"
+  ],
+  "hardware_census": {
+    "total_nodes_planned": 5,
+    "physical_sensors_verified": 0,
+    "pending_physical_evidence": 5,
+    "boreholes_drilled": 0,
+    "casings_installed": 0,
+    "calibration_certificates_verified": 0,
+    "calibration_certificates_missing": 5,
+    "live_telemetry_streams_active": 0
+  },
+  "sensor_nodes": [
+    {
+      "sensor_id": "PIEZO-NH10-KM48-01",
+      "sensor_type": "PIEZOMETER",
+      "declared_manufacturer": "Geokon",
+      "declared_model": "4500AL-1.0-MPa",
+      "declared_serial": "GK-4500-2026-0812",
+      "gateway_id": "GW-NH10-KM48-01",
+      "current_stage": "BENCH_ACCEPTED",
+      "nameplate_photo": {
+        "found": false,
+        "path": null,
+        "sha256": null
+      },
+      "delivery_challan": {
+        "found": false,
+        "ref": null
+      },
+      "custody_record": {
+        "found": false,
+        "holder": null
+      },
+      "borehole_log": {
+        "found": false,
+        "ref": null
+      },
+      "calibration_cert": {
+        "found": false,
+        "sha256": null,
+        "status": "CALIBRATION_EVIDENCE_MISSING"
+      },
+      "installation_record": {
+        "found": false,
+        "status": "NOT_INSTALLED"
+      },
+      "commissioning_checklist": {
+        "found": false,
+        "status": "COMMISSIONING_PENDING"
+      },
+      "gateway_route": {
+        "verified": true,
+        "status": "CONFIGURED_ONLY"
+      },
+      "live_telemetry": {
+        "active": false,
+        "evidence": "BENCH_ONLY",
+        "status": "PHYSICAL_TELEMETRY_PENDING"
+      },
+      "device_physically_verified": false,
+      "hardware_identity_status": "UNVERIFIED_IDENTITY"
+    },
+    {
+      "sensor_id": "INCL-NH10-KM48-01",
+      "sensor_type": "INCLINOMETER",
+      "declared_manufacturer": "Durham Geo Slope Indicator (DGSI)",
+      "declared_model": "Digitilt-AT-Biaxial-Probe",
+      "declared_serial": "DGSI-DAT-2026-0441",
+      "gateway_id": "GW-NH10-KM48-01",
+      "current_stage": "BENCH_ACCEPTED",
+      "nameplate_photo": {
+        "found": false,
+        "path": null,
+        "sha256": null
+      },
+      "delivery_challan": {
+        "found": false,
+        "ref": null
+      },
+      "custody_record": {
+        "found": false,
+        "holder": null
+      },
+      "borehole_log": {
+        "found": false,
+        "ref": null
+      },
+      "calibration_cert": {
+        "found": false,
+        "sha256": null,
+        "status": "CALIBRATION_EVIDENCE_MISSING"
+      },
+      "installation_record": {
+        "found": false,
+        "status": "NOT_INSTALLED"
+      },
+      "commissioning_checklist": {
+        "found": false,
+        "status": "COMMISSIONING_PENDING"
+      },
+      "gateway_route": {
+        "verified": true,
+        "status": "CONFIGURED_ONLY"
+      },
+      "live_telemetry": {
+        "active": false,
+        "evidence": "BENCH_ONLY",
+        "status": "PHYSICAL_TELEMETRY_PENDING"
+      },
+      "device_physically_verified": false,
+      "hardware_identity_status": "UNVERIFIED_IDENTITY"
+    },
+    {
+      "sensor_id": "TILT-NH10-KM48-01",
+      "sensor_type": "TILTMETER",
+      "declared_manufacturer": "Jewell Instruments",
+      "declared_model": "Emerald-Biaxial-Tilt-Platform",
+      "declared_serial": "JWL-EM-2026-1092",
+      "gateway_id": "GW-NH10-KM48-01",
+      "current_stage": "BENCH_ACCEPTED",
+      "nameplate_photo": {
+        "found": false,
+        "path": null,
+        "sha256": null
+      },
+      "delivery_challan": {
+        "found": false,
+        "ref": null
+      },
+      "custody_record": {
+        "found": false,
+        "holder": null
+      },
+      "borehole_log": {
+        "found": false,
+        "ref": null
+      },
+      "calibration_cert": {
+        "found": false,
+        "sha256": null,
+        "status": "CALIBRATION_EVIDENCE_MISSING"
+      },
+      "installation_record": {
+        "found": false,
+        "status": "NOT_INSTALLED"
+      },
+      "commissioning_checklist": {
+        "found": false,
+        "status": "COMMISSIONING_PENDING"
+      },
+      "gateway_route": {
+        "verified": true,
+        "status": "CONFIGURED_ONLY"
+      },
+      "live_telemetry": {
+        "active": false,
+        "evidence": "BENCH_ONLY",
+        "status": "PHYSICAL_TELEMETRY_PENDING"
+      },
+      "device_physically_verified": false,
+      "hardware_identity_status": "UNVERIFIED_IDENTITY"
+    },
+    {
+      "sensor_id": "RAIN-NH10-KM48-01",
+      "sensor_type": "RAIN_GAUGE",
+      "declared_manufacturer": "Texas Electronics",
+      "declared_model": "TR-525USW-Tipping-Bucket",
+      "declared_serial": "TX-TR525-2026-0319",
+      "gateway_id": "GW-NH10-KM48-01",
+      "current_stage": "BENCH_ACCEPTED",
+      "nameplate_photo": {
+        "found": false,
+        "path": null,
+        "sha256": null
+      },
+      "delivery_challan": {
+        "found": false,
+        "ref": null
+      },
+      "custody_record": {
+        "found": false,
+        "holder": null
+      },
+      "borehole_log": {
+        "found": false,
+        "ref": null
+      },
+      "calibration_cert": {
+        "found": false,
+        "sha256": null,
+        "status": "CALIBRATION_EVIDENCE_MISSING"
+      },
+      "installation_record": {
+        "found": false,
+        "status": "NOT_INSTALLED"
+      },
+      "commissioning_checklist": {
+        "found": false,
+        "status": "COMMISSIONING_PENDING"
+      },
+      "gateway_route": {
+        "verified": true,
+        "status": "CONFIGURED_ONLY"
+      },
+      "live_telemetry": {
+        "active": false,
+        "evidence": "BENCH_ONLY",
+        "status": "PHYSICAL_TELEMETRY_PENDING"
+      },
+      "device_physically_verified": false,
+      "hardware_identity_status": "UNVERIFIED_IDENTITY"
+    },
+    {
+      "sensor_id": "GW-NH10-KM48-01",
+      "sensor_type": "GATEWAY",
+      "declared_manufacturer": "Dragino / RAKwireless",
+      "declared_model": "Solar LoRaWAN Concentrator Node (IP67)",
+      "declared_serial": "PN-GW-2026-0038",
+      "gateway_id": "GW-NH10-KM48-01",
+      "current_stage": "BENCH_ACCEPTED",
+      "nameplate_photo": {
+        "found": false,
+        "path": null,
+        "sha256": null
+      },
+      "delivery_challan": {
+        "found": false,
+        "ref": null
+      },
+      "custody_record": {
+        "found": false,
+        "holder": null
+      },
+      "borehole_log": {
+        "found": false,
+        "ref": null
+      },
+      "calibration_cert": {
+        "found": false,
+        "sha256": null,
+        "status": "CALIBRATION_EVIDENCE_MISSING"
+      },
+      "installation_record": {
+        "found": false,
+        "status": "NOT_INSTALLED"
+      },
+      "commissioning_checklist": {
+        "found": false,
+        "status": "COMMISSIONING_PENDING"
+      },
+      "gateway_route": {
+        "verified": true,
+        "status": "CONFIGURED_ONLY"
+      },
+      "live_telemetry": {
+        "active": false,
+        "evidence": "BENCH_ONLY",
+        "status": "PHYSICAL_TELEMETRY_PENDING"
+      },
+      "device_physically_verified": false,
+      "hardware_identity_status": "UNVERIFIED_IDENTITY"
+    }
+  ]
+}

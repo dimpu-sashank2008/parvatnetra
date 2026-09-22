@@ -1,0 +1,45 @@
+{
+  "manifest_version": "5.0.0",
+  "generated_at": "2026-09-21T15:15:00Z",
+  "corridor_id": "CORR-NH10-SIKKIM-KM48",
+  "corridor_name": "NH-10 Rangpo–Singtam Geological Corridor, Sikkim",
+  "phase": "PHASE_V5_0_LIVE_TELEMETRY_COMMISSIONING_GATE",
+  "boundary_gate_status": "10_CRITERIA_ACTIVE",
+  "telemetry_counts": {
+    "live_mountain_observations": 0,
+    "bench_observations": 8640,
+    "hil_simulated_frames": 8640,
+    "synthetic_validation_samples": 120,
+    "replayed_real_packets": 5
+  },
+  "first_live_packet": {
+    "timestamp_utc": null,
+    "sensor_id": null,
+    "sequence_number": null,
+    "crc_valid": null,
+    "status": "AWAITING_PHYSICAL_FIELD_DEPLOYMENT"
+  },
+  "continuity_metrics": {
+    "longest_continuous_live_hours": 0.0,
+    "burn_in_24h_achieved": false,
+    "burn_in_72h_achieved": false,
+    "active_threshold_alarming": "BLOCKED_PENDING_72H_BURN_IN",
+    "windows": {
+      "1h": { "status": "UNAVAILABLE", "verified_packets": 0, "completeness_pct": 0.0 },
+      "6h": { "status": "UNAVAILABLE", "verified_packets": 0, "completeness_pct": 0.0 },
+      "12h": { "status": "UNAVAILABLE", "verified_packets": 0, "completeness_pct": 0.0 },
+      "24h": { "status": "UNAVAILABLE", "verified_packets": 0, "completeness_pct": 0.0 },
+      "48h": { "status": "UNAVAILABLE", "verified_packets": 0, "completeness_pct": 0.0 },
+      "72h": { "status": "UNAVAILABLE", "verified_packets": 0, "completeness_pct": 0.0 },
+      "168h": { "status": "UNAVAILABLE", "verified_packets": 0, "completeness_pct": 0.0 }
+    }
+  },
+  "transport_and_deduplication": {
+    "lora_concentrator_gateway": "GW-NH10-KM48-01",
+    "frequency_plan": "IN865_867",
+    "store_and_forward_deduplication": "VERIFIED_BIT_IDENTICAL",
+    "time_synchronization_max_drift_seconds": 30.0,
+    "future_timestamp_rejection": "ACTIVE_ENFORCED",
+    "raw_custody_directory": "data/raw/field_telemetry/CORR-NH10-SIKKIM-KM48/"
+  }
+}

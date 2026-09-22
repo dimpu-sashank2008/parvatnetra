@@ -1,0 +1,133 @@
+{
+  "manifest_version": "5.3.0",
+  "phase": "V5.3",
+  "phase_name": "GODS_EYE_STYLE_3D_GIS_MAP_INTEGRATION",
+  "verdict": "V5_3_GODS_EYE_3D_INTEGRATION_VERIFIED",
+  "generated_at": "2026-09-21T00:30:00Z",
+  "architecture_role": {
+    "presentation_layer": "God's Eye Style Photorealistic 3D Geospatial Engine",
+    "intelligence_layer": "PAHAD AI Multimodal Decision Support System",
+    "integration_type": "Seamless additive option inside existing #gis-map container"
+  },
+  "canonical_corridor": {
+    "corridor_id": "CORR-NH10-SIKKIM-KM48",
+    "name": "NH-10 Teesta Gorge Corridor (Km 48 Pakyong)",
+    "state": "Sikkim",
+    "district": "Pakyong",
+    "road": "NH-10",
+    "kilometre_marker": "Km 48.200",
+    "target_coordinates": {
+      "latitude": 27.3300,
+      "longitude": 88.6100,
+      "elevation_m": 680.0,
+      "slope_deg": 42.5
+    },
+    "escarpment_geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [88.5821, 27.2410],
+        [88.5954, 27.2485],
+        [88.6100, 27.3300],
+        [88.6180, 27.3390]
+      ]
+    },
+    "cri_score": 78.4,
+    "fos": 1.04,
+    "status": "CRITICAL_HAZARD"
+  },
+  "ui_integration": {
+    "container_id": "gods-eye-3d-container",
+    "parent_container": "gis-map",
+    "map_style_button_id": "mb-gods-eye",
+    "javascript_engine": "static/js/gods_eye_3d.js",
+    "transition_lifecycle": "2D Leaflet <-> 3D Cesium with map.invalidateSize()",
+    "lazy_loading": {
+      "script_url": "https://cesium.com/downloads/cesiumjs/releases/1.119/Build/Cesium/Cesium.js",
+      "css_url": "https://cesium.com/downloads/cesiumjs/releases/1.119/Build/Cesium/Widgets/widgets.css",
+      "loaded_on_demand": true
+    }
+  },
+  "provider_hierarchy": {
+    "primary": {
+      "provider": "GOOGLE_PHOTOREALISTIC_3D",
+      "status": "AUTH_REQUIRED",
+      "credential_env": "GOOGLE_MAPS_API_KEY",
+      "configured": false
+    },
+    "secondary": {
+      "provider": "CESIUM_WORLD_TERRAIN",
+      "status": "AUTH_REQUIRED",
+      "credential_env": "CESIUM_ION_TOKEN",
+      "configured": false
+    },
+    "active_fallback": {
+      "provider": "OPEN_TERRAIN_FALLBACK",
+      "status": "ACTIVE",
+      "base_imagery": "CartoDB Dark / OpenStreetMap",
+      "terrain": "Cesium Ellipsoid / Open Elevation",
+      "provider_badge": "[3D PROVIDER: TERRAIN 3D FALLBACK (AUTH_REQUIRED FOR GOOGLE 3D TILES)]"
+    }
+  },
+  "flight_hierarchy": [
+    {"step": 1, "label": "INDIA", "name": "India National Overview", "longitude": 78.9629, "latitude": 20.5937, "height_m": 4500000, "pitch_deg": -90, "heading_deg": 0},
+    {"step": 2, "label": "NER", "name": "North-East Region Corridor", "longitude": 92.5000, "latitude": 26.0000, "height_m": 1200000, "pitch_deg": -75, "heading_deg": 10},
+    {"step": 3, "label": "SIKKIM", "name": "Sikkim Himalayas", "longitude": 88.5000, "latitude": 27.5000, "height_m": 250000, "pitch_deg": -60, "heading_deg": 25},
+    {"step": 4, "label": "NH-10", "name": "Teesta River Basin / NH-10", "longitude": 88.6100, "latitude": 27.3300, "height_m": 25000, "pitch_deg": -45, "heading_deg": 35},
+    {"step": 5, "label": "KM48", "name": "KM48 Pakyong Hazard Escarpment", "longitude": 88.6100, "latitude": 27.3300, "height_m": 3500, "pitch_deg": -30, "heading_deg": 35}
+  ],
+  "synchronized_3d_layers": {
+    "cri_risk_zones": {
+      "classification": "5_TIER_BANDS",
+      "color_scheme": ["#10B981", "#EAB308", "#F97316", "#EA580C", "#DC2626"],
+      "provenance": "[DERIVED / PAHAD AI]"
+    },
+    "fos_slip_surface": {
+      "value": 1.04,
+      "method": "Mohr-Coulomb Limit Equilibrium",
+      "provenance": "[PHYSICS / MOHR-COULOMB]"
+    },
+    "precipitation": {
+      "service": "Open-Meteo High-Resolution NWP",
+      "provenance": "[LIVE / OPEN-METEO]"
+    },
+    "seismic": {
+      "service": "USGS FDSNws Regional Feed",
+      "provenance": "[LIVE / USGS-FDSNWS]"
+    },
+    "earth_observation": {
+      "service": "Sentinel-1 InSAR LOS Displacement (-8.4 mm/yr)",
+      "provenance": "[HISTORICAL / INSAR-LOS]"
+    },
+    "in_situ_sensors": {
+      "physical_count_installed": 0,
+      "live_telemetry_records": 0,
+      "provenance": "[PLANNED / BENCH TESTED / PHYSICAL TELEMETRY PENDING]"
+    },
+    "lifeline_corridor": {
+      "highway": "NH-10",
+      "status": "HAZARD_WATCH_SINGLE_LANE",
+      "provenance": "[HISTORICAL / BRO RECORDS]"
+    }
+  },
+  "model_integrity": {
+    "production_v3_sha256": "7cb823888646ca2b074389de3719c9d9385197bbdf6763cf9e4e69bc3c15c183",
+    "research_v4_5_sha256": "31e16ce003cdd2c5934df034e6229661d27a8530a6a0dbc6a18e1ff56277da9f",
+    "verified_immutable": true,
+    "kinematic_ml_status": "NOT_TRAINED_DATA_PENDING"
+  },
+  "automated_tests": {
+    "test_suites_count": 8,
+    "total_tests_count": 26,
+    "pass_rate_percent": 100.0,
+    "suites": [
+      "tests/test_v5_3_gods_eye.py",
+      "tests/test_v5_3_map_view_switching.py",
+      "tests/test_v5_3_3d_provider_fallback.py",
+      "tests/test_v5_3_3d_data_layers.py",
+      "tests/test_v5_3_3d_provenance.py",
+      "tests/test_v5_3_3d_corridor_isolation.py",
+      "tests/test_v5_3_3d_safety.py",
+      "tests/test_v5_3_3d_performance.py"
+    ]
+  }
+}
