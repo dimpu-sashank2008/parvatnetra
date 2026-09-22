@@ -567,7 +567,10 @@ class SeismicService:
             events, is_stale, age = cached
             if not is_stale:
                 for e in events:
-                    e["provenance"] = "CACHED"
+                    if str(e.get("event_id", "")).startswith("SIM-") or e.get("provenance") == "SIMULATED":
+                        e["provenance"] = "SIMULATED"
+                    else:
+                        e["provenance"] = "CACHED"
                     e["data_age_seconds"] = round(age, 1)
                 return events[:limit]
 

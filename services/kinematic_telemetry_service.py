@@ -309,7 +309,9 @@ class KinematicTelemetryService:
             }
 
         # Overall corridor freshness evaluation
-        if all_unavailable:
+        if self.corridor_metadata.get("field_deployment_pending", True) or self.corridor_metadata.get("telemetry_status") == "PHYSICAL_TELEMETRY_PENDING":
+            overall = "UNAVAILABLE"
+        elif all_unavailable:
             overall = "UNAVAILABLE"
         elif any_stale:
             overall = "STALE"

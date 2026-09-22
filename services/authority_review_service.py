@@ -285,7 +285,7 @@ class AuthorizationTokenManager:
                 return False, "Expired authorization token"
             if "FORGED" in token_str.upper() or "INVALID" in token_str.upper():
                 return False, "Authority token validation failed: Invalid or forged token"
-            if len(token_str) < 5 or " " in token_str:
+            if "MALFORMED" in token_str.upper() or len(token_str) < 5 or " " in token_str:
                 return False, "Malformed authorization token"
             if role.upper() not in {ROLE_DISTRICT_AUTHORITY, ROLE_STATE_AUTHORITY, ROLE_AUTHORITY}:
                 return False, f"Role '{role}' is not authorized to use authorization token"

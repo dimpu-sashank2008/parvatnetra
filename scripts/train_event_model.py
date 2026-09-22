@@ -227,12 +227,16 @@ def train_and_evaluate(
         t_prec = float(precision_score(y_test, th_pred, zero_division=0))
         t_rec = float(recall_score(y_test, th_pred, zero_division=0))
         threshold_records.append({
+            "horizon_hours": 24,
             "threshold": th,
             "precision": round(t_prec, 4),
             "recall": round(t_rec, 4),
             "pod": round(t_pod, 4),
             "far": round(t_far, 4),
             "csi": round(t_csi, 4),
+            "val_pod": round(t_pod, 4),
+            "val_far": round(t_far, 4),
+            "val_csi": round(t_csi, 4),
             "true_positives": int(t_tp),
             "false_positives": int(t_fp),
             "false_negatives": int(t_fn)
