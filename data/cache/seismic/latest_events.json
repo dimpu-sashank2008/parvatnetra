@@ -2,7 +2,7 @@
   "data": [
     {
       "event_id": "NCS-2026-0916-2226",
-      "origin_time": "2026-09-21T15:45:38.156257+00:00",
+      "origin_time": "2026-09-21T15:55:44.483182+00:00",
       "latitude": 27.28,
       "longitude": 92.51,
       "depth_km": 10.0,
@@ -14,7 +14,7 @@
     },
     {
       "event_id": "NCS-2026-0916-1638",
-      "origin_time": "2026-09-21T09:57:38.156257+00:00",
+      "origin_time": "2026-09-21T10:07:44.483182+00:00",
       "latitude": 26.68,
       "longitude": 91.12,
       "depth_km": 10.0,
@@ -38,7 +38,7 @@
     },
     {
       "event_id": "NCS-2026-NER-44B",
-      "origin_time": "2026-09-19T08:44:38.156257+00:00",
+      "origin_time": "2026-09-19T08:54:44.483182+00:00",
       "latitude": 27.42,
       "longitude": 88.58,
       "depth_km": 12.5,
@@ -50,7 +50,7 @@
     },
     {
       "event_id": "NCS-2026-NER-42A",
-      "origin_time": "2026-09-16T17:44:38.156257+00:00",
+      "origin_time": "2026-09-16T17:54:44.483182+00:00",
       "latitude": 26.38,
       "longitude": 96.64,
       "depth_km": 15.0,
@@ -62,7 +62,7 @@
     },
     {
       "event_id": "NCS-2026-NER-36C",
-      "origin_time": "2026-09-12T04:44:38.156257+00:00",
+      "origin_time": "2026-09-12T04:54:44.483182+00:00",
       "latitude": 25.68,
       "longitude": 91.85,
       "depth_km": 22.0,
@@ -74,7 +74,7 @@
     },
     {
       "event_id": "NCS-2026-0904-SIL",
-      "origin_time": "2026-09-08T22:44:38.156257+00:00",
+      "origin_time": "2026-09-08T22:54:44.483182+00:00",
       "latitude": 24.83,
       "longitude": 92.78,
       "depth_km": 18.0,
@@ -86,7 +86,7 @@
     },
     {
       "event_id": "NCS-2026-0828-KOH",
-      "origin_time": "2026-09-02T07:44:38.156257+00:00",
+      "origin_time": "2026-09-02T07:54:44.483182+00:00",
       "latitude": 25.67,
       "longitude": 94.11,
       "depth_km": 35.0,
@@ -98,7 +98,7 @@
     },
     {
       "event_id": "NCS-2026-0803-ARU",
-      "origin_time": "2026-08-07T18:44:38.156257+00:00",
+      "origin_time": "2026-08-07T18:54:44.483182+00:00",
       "latitude": 28.12,
       "longitude": 95.84,
       "depth_km": 28.0,
@@ -109,12 +109,12 @@
       "provenance": "LIVE"
     }
   ],
-  "fetched_at": 1790081078.158773,
+  "fetched_at": 1790081684.4841788,
   "ttl": 300,
   "meta": {
     "source": "National Center for Seismology (NCS, MoES)",
     "provenance": "[LIVE]",
-    "stored_at": "2026-09-22T12:44:38Z",
+    "stored_at": "2026-09-22T12:54:44Z",
     "ttl": 300
   }
 }

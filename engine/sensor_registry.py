@@ -324,10 +324,15 @@ class SensorRegistry:
         if dev.status in (STATUS_STALE, STATUS_OFFLINE):
             dev.status = STATUS_ACTIVE
 
-        # Log to device_health table
+        # Update sensor_registry and log to device_health table
         try:
             conn = self._get_conn()
             cur = conn.cursor()
+            cur.execute("""
+                UPDATE sensor_registry
+                SET last_seen = ?, battery_level = ?, signal_strength = ?, status = ?
+                WHERE device_id = ?
+            """, (now_iso, battery_pct, signal_rssi, dev.status, device_id))
             cur.execute("""
                 INSERT INTO device_health (
                     device_id, recorded_at, status, battery_level, signal_strength,
@@ -345,37 +350,43 @@ class SensorRegistry:
         return True
 
     def get_device(self, device_id: str) -> Optional[SensorDevice]:
-        try:
-            conn = self._get_conn()
-            cur = conn.cursor()
-            cur.execute("""
-                SELECT device_id, sensor_id, sensor_type, latitude, longitude,
-                       sector_id, gateway_id, installation_status, commissioned_at,
-                       firmware_version, hardware_version, calibration_status,
-                       last_seen, battery_level, signal_strength, network_type,
-                       status, created_at
-                FROM sensor_registry
-                WHERE device_id = ?
-            """, (device_id,))
-            row = cur.fetchone()
-            conn.close()
-            if row:
-                existing_prog = self._devices[device_id].commissioning_progress if (device_id in self._devices and self._devices[device_id].commissioning_progress) else []
-                if row[16] == STATUS_ACTIVE and not existing_prog:
-                    existing_prog = list(COMMISSIONING_STAGES)
-                dev = SensorDevice(
-                    device_id=row[0], sensor_id=row[1], sensor_type=row[2],
-                    latitude=float(row[3]), longitude=float(row[4]), sector_id=row[5],
-                    gateway_id=row[6], installation_status=row[7], commissioned_at=row[8],
-                    firmware_version=row[9], hardware_version=row[10], calibration_status=row[11],
-                    last_seen=row[12], battery_level=float(row[13]), signal_strength=float(row[14]),
-                    network_type=row[15], status=row[16], created_at=row[17],
-                    commissioning_progress=existing_prog
-                )
-                self._devices[device_id] = dev
-                return dev
-        except Exception:
-            pass
+        dev = self._devices.get(device_id)
+        if dev is None or dev.status in (STATUS_COMMISSIONING, STATUS_OFFLINE):
+            try:
+                conn = self._get_conn()
+                cur = conn.cursor()
+                cur.execute("""
+                    SELECT device_id, sensor_id, sensor_type, latitude, longitude,
+                           sector_id, gateway_id, installation_status, commissioned_at,
+                           firmware_version, hardware_version, calibration_status,
+                           last_seen, battery_level, signal_strength, network_type,
+                           status, created_at
+                    FROM sensor_registry
+                    WHERE device_id = ?
+                """, (device_id,))
+                row = cur.fetchone()
+                conn.close()
+                if row:
+                    if dev is None:
+                        dev = SensorDevice(
+                            device_id=row[0], sensor_id=row[1], sensor_type=row[2],
+                            latitude=float(row[3]), longitude=float(row[4]), sector_id=row[5],
+                            gateway_id=row[6], installation_status=row[7], commissioned_at=row[8],
+                            firmware_version=row[9], hardware_version=row[10], calibration_status=row[11],
+                            last_seen=row[12], battery_level=float(row[13]), signal_strength=float(row[14]),
+                            network_type=row[15], status=row[16], created_at=row[17],
+                            commissioning_progress=list(COMMISSIONING_STAGES) if row[16] == STATUS_ACTIVE else []
+                        )
+                        self._devices[device_id] = dev
+                    elif row[16] == STATUS_ACTIVE and dev.status != STATUS_ACTIVE:
+                        dev.status = STATUS_ACTIVE
+                        dev.commissioned_at = row[8]
+                        dev.last_seen = row[12]
+                        dev.battery_level = float(row[13])
+                        dev.signal_strength = float(row[14])
+                        dev.commissioning_progress = list(COMMISSIONING_STAGES)
+            except Exception:
+                pass
         return self._devices.get(device_id)
 
     def get_gateway(self, gateway_id: str) -> Optional[GatewayInfo]:
