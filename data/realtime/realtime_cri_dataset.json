@@ -1,13 +1,13 @@
 {
   "dataset_name": "PARVAT NETRA — Real-Time Multimodal CRI Dataset",
-  "generated_at_utc": "2026-09-22T12:43:50.146220+00:00",
+  "generated_at_utc": "2026-09-22T12:46:47.982455+00:00",
   "sector_count": 20,
   "provenance_standard": "SIH 26001 / NDMA / GSI Guidelines",
   "evaluation_engine": "PAHAD AI Multimodal Fusion Engine v3.1",
   "records": [
     {
-      "record_id": "CRI_RT_SK_NH10_KM48_20260922_124217",
-      "timestamp": "2026-09-22T12:42:12.867234+00:00",
+      "record_id": "CRI_RT_SK_NH10_KM48_20260922_124515",
+      "timestamp": "2026-09-22T12:45:10.797848+00:00",
       "sector_id": "SK-NH10-KM48",
       "sector_name": "NH-10 Km 48 (29th Mile Sector)",
       "state": "Sikkim",
@@ -84,11 +84,11 @@
       "evidence_confidence": 0.81,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Accelerate telemetry polling to 5-minute intervals",
-      "data_hash_sha256": "37c6c0f75650bcbd5f24b72f29f3b442c02dc9c44e3728401789734c222c9642"
+      "data_hash_sha256": "345c8ee3c8ece359da9e8b78d8b35ca3d7e6ae066ccda3454ab038deb0c762e0"
     },
     {
-      "record_id": "CRI_RT_SK_SINGTAM_01_20260922_124222",
-      "timestamp": "2026-09-22T12:42:17.717585+00:00",
+      "record_id": "CRI_RT_SK_SINGTAM_01_20260922_124520",
+      "timestamp": "2026-09-22T12:45:15.796711+00:00",
       "sector_id": "SK-SINGTAM-01",
       "sector_name": "Singtam Teesta Basin Toe-Scour Zone",
       "state": "Sikkim",
@@ -165,11 +165,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "e7ec0964f8f83a22da26102b899e31f863fab0794628a42e5aa4ef6cf5ce1aff"
+      "data_hash_sha256": "43139f0638acd81982877fbfa244c8044a6584fbbccbab9502f4ed27764b20b2"
     },
     {
-      "record_id": "CRI_RT_SK_DIKCHU_01_20260922_124227",
-      "timestamp": "2026-09-22T12:42:22.594949+00:00",
+      "record_id": "CRI_RT_SK_DIKCHU_01_20260922_124525",
+      "timestamp": "2026-09-22T12:45:20.738548+00:00",
       "sector_id": "SK-DIKCHU-01",
       "sector_name": "Dikchu Hydro Sector Bluffs",
       "state": "Sikkim",
@@ -246,11 +246,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "a6c0004aff252fe7844aad4bfec06ae28e263f2974a1078dae579c1945a02c4f"
+      "data_hash_sha256": "80766aa47ebe2212b0c8000109d3cb9b0f54b5a6a4c83abbbdcbd72da674cf5f"
     },
     {
-      "record_id": "CRI_RT_SK_MANGAN_01_20260922_124232",
-      "timestamp": "2026-09-22T12:42:27.255134+00:00",
+      "record_id": "CRI_RT_SK_MANGAN_01_20260922_124530",
+      "timestamp": "2026-09-22T12:45:25.591418+00:00",
       "sector_id": "SK-MANGAN-01",
       "sector_name": "Mangan Relict Landslide Complex",
       "state": "Sikkim",
@@ -327,11 +327,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "cda82910bbf26335f2d2f9d653f9e4c445b6117e89c5365f1102f4d8dbcaa7a2"
+      "data_hash_sha256": "6573c323fc631c7d5f172d441399176d0925f28fb1faffa07805d47af0073aeb"
     },
     {
-      "record_id": "CRI_RT_MZ_HUNTHAR_01_20260922_124237",
-      "timestamp": "2026-09-22T12:42:32.399363+00:00",
+      "record_id": "CRI_RT_MZ_HUNTHAR_01_20260922_124535",
+      "timestamp": "2026-09-22T12:45:30.422186+00:00",
       "sector_id": "MZ-HUNTHAR-01",
       "sector_name": "Aizawl NH-6 Hunthar Veng Slump",
       "state": "Mizoram",
@@ -408,11 +408,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "045218986a353f1dfe698b03b6cd29945914603b133454e00cda1728612d1f11"
+      "data_hash_sha256": "515951468d6f009bce647095b5d63ce16b0a219382c6ccefd8df93af24ccb833"
     },
     {
-      "record_id": "CRI_RT_MZ_SAIRANG_01_20260922_124241",
-      "timestamp": "2026-09-22T12:42:37.152553+00:00",
+      "record_id": "CRI_RT_MZ_SAIRANG_01_20260922_124540",
+      "timestamp": "2026-09-22T12:45:35.250340+00:00",
       "sector_id": "MZ-SAIRANG-01",
       "sector_name": "Sairang Railway Terminal Ridge",
       "state": "Mizoram",
@@ -489,11 +489,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "76aa732e0565b06382c4c3a2c959fa70ddcb6dc3ae2cae72b59df16331df20c3"
+      "data_hash_sha256": "888ad1fa65dc04c01a5c314bcac2c40db051a119781d58ec955467f6fc472272"
     },
     {
-      "record_id": "CRI_RT_MZ_KOLASIB_01_20260922_124247",
-      "timestamp": "2026-09-22T12:42:41.967579+00:00",
+      "record_id": "CRI_RT_MZ_KOLASIB_01_20260922_124545",
+      "timestamp": "2026-09-22T12:45:40.138047+00:00",
       "sector_id": "MZ-KOLASIB-01",
       "sector_name": "Kolasib Sinking Carriageway",
       "state": "Mizoram",
@@ -570,11 +570,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "971e0a1bc2f2db5e031f4621721e1acea71fdf35df0d9e5a413fa310c1b99989"
+      "data_hash_sha256": "263ae6340859494dfbfcec2d14125a7981974642a371cb9dc0806a43c74a67a6"
     },
     {
-      "record_id": "CRI_RT_NL_PAGALA_01_20260922_124252",
-      "timestamp": "2026-09-22T12:42:47.122537+00:00",
+      "record_id": "CRI_RT_NL_PAGALA_01_20260922_124549",
+      "timestamp": "2026-09-22T12:45:45.035027+00:00",
       "sector_id": "NL-PAGALA-01",
       "sector_name": "Kohima NH-29 Pagala Pahar",
       "state": "Nagaland",
@@ -651,11 +651,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "151fbead8d592f8f79b248345eb4d284d522bda012d336e8fb0543ad66a9531d"
+      "data_hash_sha256": "0ebeb5309bd4faf02045c4a5efeff540b9b041b5a228e66e489065e916377d34"
     },
     {
-      "record_id": "CRI_RT_NL_DZUDZA_01_20260922_124257",
-      "timestamp": "2026-09-22T12:42:52.144535+00:00",
+      "record_id": "CRI_RT_NL_DZUDZA_01_20260922_124554",
+      "timestamp": "2026-09-22T12:45:49.747435+00:00",
       "sector_id": "NL-DZUDZA-01",
       "sector_name": "Dzüdza River Bridge Bluffs",
       "state": "Nagaland",
@@ -732,11 +732,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "89659d950f3749836c97b4f8952d6d4adf8492f94e9d40cb6a758ee6c58fa28e"
+      "data_hash_sha256": "02ae9be5389e11614a1089a7b192d16af7e632344ff78995bcda8776b71aa76d"
     },
     {
-      "record_id": "CRI_RT_NL_PIPHEMA_01_20260922_124302",
-      "timestamp": "2026-09-22T12:42:57.199721+00:00",
+      "record_id": "CRI_RT_NL_PIPHEMA_01_20260922_124559",
+      "timestamp": "2026-09-22T12:45:54.662285+00:00",
       "sector_id": "NL-PIPHEMA-01",
       "sector_name": "Piphema Sinking Zone",
       "state": "Nagaland",
@@ -813,11 +813,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "847b9c067d5dfbd9b98bc6e537d4f51c471b228f3cc25a3225daa48787f20364"
+      "data_hash_sha256": "244260b32a0c569a6f27753396a3c3fd1118847b260abcb38780b86687fe6fde"
     },
     {
-      "record_id": "CRI_RT_AR_BHALUK_01_20260922_124306",
-      "timestamp": "2026-09-22T12:43:02.197309+00:00",
+      "record_id": "CRI_RT_AR_BHALUK_01_20260922_124604",
+      "timestamp": "2026-09-22T12:45:59.496720+00:00",
       "sector_id": "AR-BHALUK-01",
       "sector_name": "Bhalukpong-Tawang Axis Km 32",
       "state": "Arunachal Pradesh",
@@ -894,11 +894,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "b1e0b60795b39cfd5b4555deb2a19cb6ebeb1ec387825fa5855be5c25ffacba5"
+      "data_hash_sha256": "46bd58d264229c979058407ae2b70d0c9ddd28a14b0d2ef80f15a0269ba838e3"
     },
     {
-      "record_id": "CRI_RT_AR_PASIGHAT_01_20260922_124311",
-      "timestamp": "2026-09-22T12:43:06.933223+00:00",
+      "record_id": "CRI_RT_AR_PASIGHAT_01_20260922_124609",
+      "timestamp": "2026-09-22T12:46:04.369537+00:00",
       "sector_id": "AR-PASIGHAT-01",
       "sector_name": "Pasighat Siang River Scour Escarpment",
       "state": "Arunachal Pradesh",
@@ -975,11 +975,11 @@
       "evidence_confidence": 0.55,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "0954b602feb19f96e18777f266403bc5a42467e5f25c864d6d2ad5a958e71681"
+      "data_hash_sha256": "5529af0e0337a37c22f26877e892272b1f7d77e15b07444b1fdb8cbd85004683"
     },
     {
-      "record_id": "CRI_RT_AR_SELA_01_20260922_124316",
-      "timestamp": "2026-09-22T12:43:11.581480+00:00",
+      "record_id": "CRI_RT_AR_SELA_01_20260922_124613",
+      "timestamp": "2026-09-22T12:46:09.153498+00:00",
       "sector_id": "AR-SELA-01",
       "sector_name": "Sela Pass North Approach Km 8",
       "state": "Arunachal Pradesh",
@@ -1056,11 +1056,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "adfb936398951a6d3bcba81710d784a466d3fb296c6bb0ac561c66bc3f5b370f"
+      "data_hash_sha256": "aa8d000cc705e9a7ecd81d0a97cd110d18ec7168e8f4053987393553778743ed"
     },
     {
-      "record_id": "CRI_RT_MN_TUPUL_01_20260922_124321",
-      "timestamp": "2026-09-22T12:43:16.487732+00:00",
+      "record_id": "CRI_RT_MN_TUPUL_01_20260922_124619",
+      "timestamp": "2026-09-22T12:46:13.990967+00:00",
       "sector_id": "MN-TUPUL-01",
       "sector_name": "Noney Tupul Railway Corridor",
       "state": "Manipur",
@@ -1137,11 +1137,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Accelerate telemetry polling to 5-minute intervals",
-      "data_hash_sha256": "7abc24b87b94eee8ce479ec82cc0e4fef2630cf8727576cfe501b082d48664c1"
+      "data_hash_sha256": "07d94cc7b92ebc5cbda1e2c5c23e0a1563225848f066fd4a072fd85d72cd81ee"
     },
     {
-      "record_id": "CRI_RT_MN_JIRIBAM_01_20260922_124326",
-      "timestamp": "2026-09-22T12:43:21.332148+00:00",
+      "record_id": "CRI_RT_MN_JIRIBAM_01_20260922_124623",
+      "timestamp": "2026-09-22T12:46:19.036014+00:00",
       "sector_id": "MN-JIRIBAM-01",
       "sector_name": "Imphal-Jiribam NH-37 Km 78",
       "state": "Manipur",
@@ -1218,11 +1218,11 @@
       "evidence_confidence": 0.55,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "8424d458e85a597991888f5edd330fa7cbd748ed0250498a02b3e06079d6e804"
+      "data_hash_sha256": "4307022b2963f8819a901a26c36eb79f5417d36be0c57360bfd69ee569e7d046"
     },
     {
-      "record_id": "CRI_RT_ML_SONAPUR_01_20260922_124330",
-      "timestamp": "2026-09-22T12:43:26.198713+00:00",
+      "record_id": "CRI_RT_ML_SONAPUR_01_20260922_124628",
+      "timestamp": "2026-09-22T12:46:23.531669+00:00",
       "sector_id": "ML-SONAPUR-01",
       "sector_name": "Sonapur Tunnel NH-06",
       "state": "Meghalaya",
@@ -1299,11 +1299,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "d5b1a707d6f905d6b24cd2b662ece897c710c68445661c35b9271a6b6c8b7024"
+      "data_hash_sha256": "6d1ce79ce2c31370aeff7756492199c306ba6af25d18758f157f8b7d2facbff6"
     },
     {
-      "record_id": "CRI_RT_ML_CHERRA_01_20260922_124335",
-      "timestamp": "2026-09-22T12:43:30.989326+00:00",
+      "record_id": "CRI_RT_ML_CHERRA_01_20260922_124633",
+      "timestamp": "2026-09-22T12:46:28.652221+00:00",
       "sector_id": "ML-CHERRA-01",
       "sector_name": "Cherrapunji South Escarpment",
       "state": "Meghalaya",
@@ -1380,11 +1380,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "c8f544287ebc74872054de27c819b059244cb6df91173e62f6e5bbd673c3822f"
+      "data_hash_sha256": "6b8d0bfa0074e9c7f1e455ef94a2f91a205a6f7163017d7f3f37afce867e0f61"
     },
     {
-      "record_id": "CRI_RT_AS_DIMA_01_20260922_124340",
-      "timestamp": "2026-09-22T12:43:35.684803+00:00",
+      "record_id": "CRI_RT_AS_DIMA_01_20260922_124638",
+      "timestamp": "2026-09-22T12:46:33.511075+00:00",
       "sector_id": "AS-DIMA-01",
       "sector_name": "Dima Hasao Hill Railway Corridor Km 42",
       "state": "Assam",
@@ -1461,11 +1461,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "f65d95b84a06e2cc523a433ff121259775d040262d2bdf4d551887e7c3c706d4"
+      "data_hash_sha256": "e9a7feac4e48967bd8af64e173ffbd4a8748915432f6958bc9fbcd217c9e3cbc"
     },
     {
-      "record_id": "CRI_RT_AS_GUWAHATI_01_20260922_124345",
-      "timestamp": "2026-09-22T12:43:40.428350+00:00",
+      "record_id": "CRI_RT_AS_GUWAHATI_01_20260922_124642",
+      "timestamp": "2026-09-22T12:46:38.161952+00:00",
       "sector_id": "AS-GUWAHATI-01",
       "sector_name": "Guwahati Narakasur Hills",
       "state": "Assam",
@@ -1542,11 +1542,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "415fddb4bd8175a717f788dc545badc0d3e9b5ef9e092dd374d59302a9e96c00"
+      "data_hash_sha256": "b4f54ca2dfe823ab2c98b4ffcd659ee6e0c1efad2767593e7d275f06557988a8"
     },
     {
-      "record_id": "CRI_RT_TR_BARAMURA_01_20260922_124350",
-      "timestamp": "2026-09-22T12:43:45.396224+00:00",
+      "record_id": "CRI_RT_TR_BARAMURA_01_20260922_124647",
+      "timestamp": "2026-09-22T12:46:42.803607+00:00",
       "sector_id": "TR-BARAMURA-01",
       "sector_name": "Baramura Hill Range NH-08",
       "state": "Tripura",
@@ -1623,7 +1623,7 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "d82f1e572792aeaf7043a3643a7d368e0e378a6e5b00f0f7fb684d90517873cf"
+      "data_hash_sha256": "6e3896eab984e286bd8b5b4f5c6f8aba36e1c6432682ea8468e2574bbd5a0fd6"
     }
   ]
 }
