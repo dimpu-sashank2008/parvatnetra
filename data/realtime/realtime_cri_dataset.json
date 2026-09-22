@@ -1,13 +1,13 @@
 {
   "dataset_name": "PARVAT NETRA — Real-Time Multimodal CRI Dataset",
-  "generated_at_utc": "2026-09-22T12:22:06.099774+00:00",
+  "generated_at_utc": "2026-09-22T12:25:09.386383+00:00",
   "sector_count": 20,
   "provenance_standard": "SIH 26001 / NDMA / GSI Guidelines",
   "evaluation_engine": "PAHAD AI Multimodal Fusion Engine v3.1",
   "records": [
     {
-      "record_id": "CRI_RT_SK_NH10_KM48_20260922_122015",
-      "timestamp": "2026-09-22T12:20:10.914077+00:00",
+      "record_id": "CRI_RT_SK_NH10_KM48_20260922_122330",
+      "timestamp": "2026-09-22T12:23:25.916817+00:00",
       "sector_id": "SK-NH10-KM48",
       "sector_name": "NH-10 Km 48 (29th Mile Sector)",
       "state": "Sikkim",
@@ -84,11 +84,11 @@
       "evidence_confidence": 0.81,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Accelerate telemetry polling to 5-minute intervals",
-      "data_hash_sha256": "a39dcd16cbe8226420773c6f1c07bf465666bf16e6eca246ee928b9e76ecae43"
+      "data_hash_sha256": "a559ea208d85ecbfdec9b5062e10997e1e4187df32acd2f67f6664d5a91d6e82"
     },
     {
-      "record_id": "CRI_RT_SK_SINGTAM_01_20260922_122021",
-      "timestamp": "2026-09-22T12:20:15.642140+00:00",
+      "record_id": "CRI_RT_SK_SINGTAM_01_20260922_122335",
+      "timestamp": "2026-09-22T12:23:30.864437+00:00",
       "sector_id": "SK-SINGTAM-01",
       "sector_name": "Singtam Teesta Basin Toe-Scour Zone",
       "state": "Sikkim",
@@ -124,7 +124,7 @@
       "visibility_color": "#38BDF8",
       "rainfall_threshold_status": "EXCEEDED",
       "weather_source": "Open-Meteo Multi-Model Ensemble (ECMWF IFS / DWD ICON / NOAA GFS)",
-      "weather_provenance": "LIVE",
+      "weather_provenance": "CACHED",
       "ecmwf_24h_mm": 0.0,
       "gfs_24h_mm": 0.0,
       "icon_24h_mm": 0.0,
@@ -165,11 +165,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Accelerate telemetry polling to 5-minute intervals",
-      "data_hash_sha256": "0626f88cae3b6f3fddccd97aef231659c492fea236be04f6bee255cdf11d3f1c"
+      "data_hash_sha256": "57b4ceb373740e78c3fa16bdc5c82faf0197af1a2bfe04a502fcd4f603c7521e"
     },
     {
-      "record_id": "CRI_RT_SK_DIKCHU_01_20260922_122027",
-      "timestamp": "2026-09-22T12:20:21.421946+00:00",
+      "record_id": "CRI_RT_SK_DIKCHU_01_20260922_122340",
+      "timestamp": "2026-09-22T12:23:35.564220+00:00",
       "sector_id": "SK-DIKCHU-01",
       "sector_name": "Dikchu Hydro Sector Bluffs",
       "state": "Sikkim",
@@ -205,7 +205,7 @@
       "visibility_color": "#38BDF8",
       "rainfall_threshold_status": "EXCEEDED",
       "weather_source": "Open-Meteo Multi-Model Ensemble (ECMWF IFS / DWD ICON / NOAA GFS)",
-      "weather_provenance": "LIVE",
+      "weather_provenance": "CACHED",
       "ecmwf_24h_mm": 0.0,
       "gfs_24h_mm": 0.0,
       "icon_24h_mm": 0.0,
@@ -246,11 +246,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "621ace15c84126b8c458af8e9863ccaba727c76f98d7a0ce0670219a96d107c5"
+      "data_hash_sha256": "a89b7332daf4451c7add4096685af4cd16d55016865719e55b166b5fb51cde7b"
     },
     {
-      "record_id": "CRI_RT_SK_MANGAN_01_20260922_122033",
-      "timestamp": "2026-09-22T12:20:27.243308+00:00",
+      "record_id": "CRI_RT_SK_MANGAN_01_20260922_122345",
+      "timestamp": "2026-09-22T12:23:40.240926+00:00",
       "sector_id": "SK-MANGAN-01",
       "sector_name": "Mangan Relict Landslide Complex",
       "state": "Sikkim",
@@ -286,7 +286,7 @@
       "visibility_color": "#10B981",
       "rainfall_threshold_status": "EXCEEDED",
       "weather_source": "Open-Meteo Multi-Model Ensemble (ECMWF IFS / DWD ICON / NOAA GFS)",
-      "weather_provenance": "LIVE",
+      "weather_provenance": "CACHED",
       "ecmwf_24h_mm": 0.0,
       "gfs_24h_mm": 0.0,
       "icon_24h_mm": 0.0,
@@ -327,11 +327,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "41ff0381a9485c62a6648cf2b439a4d26e4347779ad308bf7b413a3f232196d0"
+      "data_hash_sha256": "f516a4a93024fe8018aef360f849c156ac9eb5fc78e0cada786aaba7505a4623"
     },
     {
-      "record_id": "CRI_RT_MZ_HUNTHAR_01_20260922_122038",
-      "timestamp": "2026-09-22T12:20:33.115059+00:00",
+      "record_id": "CRI_RT_MZ_HUNTHAR_01_20260922_122351",
+      "timestamp": "2026-09-22T12:23:45.083694+00:00",
       "sector_id": "MZ-HUNTHAR-01",
       "sector_name": "Aizawl NH-6 Hunthar Veng Slump",
       "state": "Mizoram",
@@ -367,7 +367,7 @@
       "visibility_color": "#10B981",
       "rainfall_threshold_status": "EXCEEDED",
       "weather_source": "Open-Meteo Multi-Model Ensemble (ECMWF IFS / DWD ICON / NOAA GFS)",
-      "weather_provenance": "LIVE",
+      "weather_provenance": "CACHED",
       "ecmwf_24h_mm": 0.0,
       "gfs_24h_mm": 0.0,
       "icon_24h_mm": 0.0,
@@ -408,11 +408,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "b7c1a9cff69f2004ded1bc4be6e1867d33efe34f3967968416722e7d29fadd48"
+      "data_hash_sha256": "020b011c284034a2a6cb9f73abb617b22a37e2395b18ceba03bd880fcc29d286"
     },
     {
-      "record_id": "CRI_RT_MZ_SAIRANG_01_20260922_122044",
-      "timestamp": "2026-09-22T12:20:38.783031+00:00",
+      "record_id": "CRI_RT_MZ_SAIRANG_01_20260922_122357",
+      "timestamp": "2026-09-22T12:23:51.136786+00:00",
       "sector_id": "MZ-SAIRANG-01",
       "sector_name": "Sairang Railway Terminal Ridge",
       "state": "Mizoram",
@@ -448,7 +448,7 @@
       "visibility_color": "#10B981",
       "rainfall_threshold_status": "EXCEEDED",
       "weather_source": "Open-Meteo Multi-Model Ensemble (ECMWF IFS / DWD ICON / NOAA GFS)",
-      "weather_provenance": "LIVE",
+      "weather_provenance": "CACHED",
       "ecmwf_24h_mm": 0.0,
       "gfs_24h_mm": 0.0,
       "icon_24h_mm": 0.0,
@@ -461,7 +461,7 @@
       "seismic_trigger_score": 0.0,
       "seismic_trigger_level": "LOW",
       "seismic_source": "SeismicService (USGS/NCS/HimalayanFaults)",
-      "seismic_provenance": "CACHED",
+      "seismic_provenance": "LIVE",
       "pore_water_pressure_kpa": 0.0,
       "displacement_rate_mm_day": 0.28,
       "cumulative_displacement_mm": 3.84,
@@ -489,11 +489,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "112f61de223be8752a05b3df90b8dafeeb0a79659214e4f6d100b3d079efa167"
+      "data_hash_sha256": "daab3341d0ee91fa143082d28084baf0f6076d8dd4498bb5857862eba913300d"
     },
     {
-      "record_id": "CRI_RT_MZ_KOLASIB_01_20260922_122050",
-      "timestamp": "2026-09-22T12:20:44.724900+00:00",
+      "record_id": "CRI_RT_MZ_KOLASIB_01_20260922_122401",
+      "timestamp": "2026-09-22T12:23:57.184629+00:00",
       "sector_id": "MZ-KOLASIB-01",
       "sector_name": "Kolasib Sinking Carriageway",
       "state": "Mizoram",
@@ -529,7 +529,7 @@
       "visibility_color": "#10B981",
       "rainfall_threshold_status": "EXCEEDED",
       "weather_source": "Open-Meteo Multi-Model Ensemble (ECMWF IFS / DWD ICON / NOAA GFS)",
-      "weather_provenance": "LIVE",
+      "weather_provenance": "CACHED",
       "ecmwf_24h_mm": 0.0,
       "gfs_24h_mm": 0.0,
       "icon_24h_mm": 0.0,
@@ -570,11 +570,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "98613e1b041c6b05b5e504f9dd553a7d8f9f5ed92cf38bc337a2f88cb349f696"
+      "data_hash_sha256": "b6e278d0bde46eb8059c9188b61c83ba1f7ea0cc830bd2d3455393866bc8c074"
     },
     {
-      "record_id": "CRI_RT_NL_PAGALA_01_20260922_122056",
-      "timestamp": "2026-09-22T12:20:50.492336+00:00",
+      "record_id": "CRI_RT_NL_PAGALA_01_20260922_122406",
+      "timestamp": "2026-09-22T12:24:01.945712+00:00",
       "sector_id": "NL-PAGALA-01",
       "sector_name": "Kohima NH-29 Pagala Pahar",
       "state": "Nagaland",
@@ -610,7 +610,7 @@
       "visibility_color": "#10B981",
       "rainfall_threshold_status": "EXCEEDED",
       "weather_source": "Open-Meteo Multi-Model Ensemble (ECMWF IFS / DWD ICON / NOAA GFS)",
-      "weather_provenance": "LIVE",
+      "weather_provenance": "CACHED",
       "ecmwf_24h_mm": 0.0,
       "gfs_24h_mm": 0.0,
       "icon_24h_mm": 0.0,
@@ -651,11 +651,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "75d596c3132119531ff07ecbe50fcc9b935bae638a58afe5127c1f7bb5c7220c"
+      "data_hash_sha256": "500fb37a11710de99df6b0eaa1d704037012e14cf0b3dbce646b72555b412c91"
     },
     {
-      "record_id": "CRI_RT_NL_DZUDZA_01_20260922_122101",
-      "timestamp": "2026-09-22T12:20:56.213221+00:00",
+      "record_id": "CRI_RT_NL_DZUDZA_01_20260922_122411",
+      "timestamp": "2026-09-22T12:24:06.887440+00:00",
       "sector_id": "NL-DZUDZA-01",
       "sector_name": "Dzüdza River Bridge Bluffs",
       "state": "Nagaland",
@@ -691,7 +691,7 @@
       "visibility_color": "#10B981",
       "rainfall_threshold_status": "EXCEEDED",
       "weather_source": "Open-Meteo Multi-Model Ensemble (ECMWF IFS / DWD ICON / NOAA GFS)",
-      "weather_provenance": "LIVE",
+      "weather_provenance": "CACHED",
       "ecmwf_24h_mm": 0.0,
       "gfs_24h_mm": 0.0,
       "icon_24h_mm": 0.0,
@@ -732,11 +732,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "570e463e165e267f996ea102ac8b6334f54eec5f5b960dc9f0fe096e8b328cef"
+      "data_hash_sha256": "574412b9b9a0cc86471d738bb0a1714d0450adaf96ea1ef9a14a8d286cd2b655"
     },
     {
-      "record_id": "CRI_RT_NL_PIPHEMA_01_20260922_122107",
-      "timestamp": "2026-09-22T12:21:01.747878+00:00",
+      "record_id": "CRI_RT_NL_PIPHEMA_01_20260922_122417",
+      "timestamp": "2026-09-22T12:24:11.960074+00:00",
       "sector_id": "NL-PIPHEMA-01",
       "sector_name": "Piphema Sinking Zone",
       "state": "Nagaland",
@@ -772,7 +772,7 @@
       "visibility_color": "#10B981",
       "rainfall_threshold_status": "EXCEEDED",
       "weather_source": "Open-Meteo Multi-Model Ensemble (ECMWF IFS / DWD ICON / NOAA GFS)",
-      "weather_provenance": "LIVE",
+      "weather_provenance": "CACHED",
       "ecmwf_24h_mm": 0.0,
       "gfs_24h_mm": 0.0,
       "icon_24h_mm": 0.0,
@@ -813,11 +813,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Accelerate telemetry polling to 5-minute intervals",
-      "data_hash_sha256": "42c4cb4134abd968ed62c4a63964880f69216308324bea87b3a0bb641928de0b"
+      "data_hash_sha256": "c52ff704724d7ee3163da4be8a1fc83a4c9b64294d7c4cca8d3916b43eee4bcb"
     },
     {
-      "record_id": "CRI_RT_AR_BHALUK_01_20260922_122113",
-      "timestamp": "2026-09-22T12:21:07.396503+00:00",
+      "record_id": "CRI_RT_AR_BHALUK_01_20260922_122422",
+      "timestamp": "2026-09-22T12:24:17.215489+00:00",
       "sector_id": "AR-BHALUK-01",
       "sector_name": "Bhalukpong-Tawang Axis Km 32",
       "state": "Arunachal Pradesh",
@@ -853,7 +853,7 @@
       "visibility_color": "#10B981",
       "rainfall_threshold_status": "NORMAL",
       "weather_source": "Open-Meteo Multi-Model Ensemble (ECMWF IFS / DWD ICON / NOAA GFS)",
-      "weather_provenance": "LIVE",
+      "weather_provenance": "CACHED",
       "ecmwf_24h_mm": 0.0,
       "gfs_24h_mm": 0.0,
       "icon_24h_mm": 0.0,
@@ -894,11 +894,11 @@
       "evidence_confidence": 0.55,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "37790bca3e7734e0d58696dd039f5a33b5c14addcd358289c2e07d7ebae91e25"
+      "data_hash_sha256": "6f72a0da7c077a5dabb9f5698f4286b1a330b629a021a30238c513a381df48cb"
     },
     {
-      "record_id": "CRI_RT_AR_PASIGHAT_01_20260922_122118",
-      "timestamp": "2026-09-22T12:21:13.086808+00:00",
+      "record_id": "CRI_RT_AR_PASIGHAT_01_20260922_122427",
+      "timestamp": "2026-09-22T12:24:22.290974+00:00",
       "sector_id": "AR-PASIGHAT-01",
       "sector_name": "Pasighat Siang River Scour Escarpment",
       "state": "Arunachal Pradesh",
@@ -934,7 +934,7 @@
       "visibility_color": "#10B981",
       "rainfall_threshold_status": "NORMAL",
       "weather_source": "Open-Meteo Multi-Model Ensemble (ECMWF IFS / DWD ICON / NOAA GFS)",
-      "weather_provenance": "LIVE",
+      "weather_provenance": "CACHED",
       "ecmwf_24h_mm": 0.0,
       "gfs_24h_mm": 0.0,
       "icon_24h_mm": 0.0,
@@ -975,11 +975,11 @@
       "evidence_confidence": 0.55,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "2986145d04383111d9b47f8b89b97ccb7553b6c171e3af8e9a01400bb6acc550"
+      "data_hash_sha256": "a2226e3a96de2740ec785fd9caece9711bf01ad374e716b33024c07e66c7b0d8"
     },
     {
-      "record_id": "CRI_RT_AR_SELA_01_20260922_122125",
-      "timestamp": "2026-09-22T12:21:18.996946+00:00",
+      "record_id": "CRI_RT_AR_SELA_01_20260922_122432",
+      "timestamp": "2026-09-22T12:24:27.348802+00:00",
       "sector_id": "AR-SELA-01",
       "sector_name": "Sela Pass North Approach Km 8",
       "state": "Arunachal Pradesh",
@@ -1015,7 +1015,7 @@
       "visibility_color": "#10B981",
       "rainfall_threshold_status": "EXCEEDED",
       "weather_source": "Open-Meteo Multi-Model Ensemble (ECMWF IFS / DWD ICON / NOAA GFS)",
-      "weather_provenance": "LIVE",
+      "weather_provenance": "CACHED",
       "ecmwf_24h_mm": 0.0,
       "gfs_24h_mm": 0.0,
       "icon_24h_mm": 0.0,
@@ -1056,11 +1056,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "50830b964d4c91aee672bcc2592c44435811359a4ca968d801ff477d19968323"
+      "data_hash_sha256": "77b865c4ea8acab2551793b351532b50fe50fd98a126a434c8a34e224890ffa1"
     },
     {
-      "record_id": "CRI_RT_MN_TUPUL_01_20260922_122131",
-      "timestamp": "2026-09-22T12:21:25.011670+00:00",
+      "record_id": "CRI_RT_MN_TUPUL_01_20260922_122437",
+      "timestamp": "2026-09-22T12:24:32.308138+00:00",
       "sector_id": "MN-TUPUL-01",
       "sector_name": "Noney Tupul Railway Corridor",
       "state": "Manipur",
@@ -1096,7 +1096,7 @@
       "visibility_color": "#10B981",
       "rainfall_threshold_status": "NORMAL",
       "weather_source": "Open-Meteo Multi-Model Ensemble (ECMWF IFS / DWD ICON / NOAA GFS)",
-      "weather_provenance": "LIVE",
+      "weather_provenance": "CACHED",
       "ecmwf_24h_mm": 0.0,
       "gfs_24h_mm": 0.0,
       "icon_24h_mm": 0.0,
@@ -1137,11 +1137,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Accelerate telemetry polling to 5-minute intervals",
-      "data_hash_sha256": "c48dc839e9fc6b4a261faa87372cb9e76964fdeb1aaa5eb29faa8d1e0537d58b"
+      "data_hash_sha256": "634a26dee76d974d6685ae64df5b4645cc37a33d4559d89d0b0330fc980e1620"
     },
     {
-      "record_id": "CRI_RT_MN_JIRIBAM_01_20260922_122137",
-      "timestamp": "2026-09-22T12:21:31.204974+00:00",
+      "record_id": "CRI_RT_MN_JIRIBAM_01_20260922_122442",
+      "timestamp": "2026-09-22T12:24:37.492271+00:00",
       "sector_id": "MN-JIRIBAM-01",
       "sector_name": "Imphal-Jiribam NH-37 Km 78",
       "state": "Manipur",
@@ -1177,7 +1177,7 @@
       "visibility_color": "#10B981",
       "rainfall_threshold_status": "NORMAL",
       "weather_source": "Open-Meteo Multi-Model Ensemble (ECMWF IFS / DWD ICON / NOAA GFS)",
-      "weather_provenance": "LIVE",
+      "weather_provenance": "CACHED",
       "ecmwf_24h_mm": 0.0,
       "gfs_24h_mm": 0.0,
       "icon_24h_mm": 0.0,
@@ -1218,11 +1218,11 @@
       "evidence_confidence": 0.55,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "fd0645ae16e7b73006cd6f273ca9ca1afea32f11d1f19474589094a340a21f7c"
+      "data_hash_sha256": "44a6f9072b641742aba5f552da53bdcf2134210662ca3daf345e3506502b88a9"
     },
     {
-      "record_id": "CRI_RT_ML_SONAPUR_01_20260922_122142",
-      "timestamp": "2026-09-22T12:21:37.039722+00:00",
+      "record_id": "CRI_RT_ML_SONAPUR_01_20260922_122447",
+      "timestamp": "2026-09-22T12:24:42.381781+00:00",
       "sector_id": "ML-SONAPUR-01",
       "sector_name": "Sonapur Tunnel NH-06",
       "state": "Meghalaya",
@@ -1258,7 +1258,7 @@
       "visibility_color": "#10B981",
       "rainfall_threshold_status": "EXCEEDED",
       "weather_source": "Open-Meteo Multi-Model Ensemble (ECMWF IFS / DWD ICON / NOAA GFS)",
-      "weather_provenance": "LIVE",
+      "weather_provenance": "CACHED",
       "ecmwf_24h_mm": 0.0,
       "gfs_24h_mm": 0.0,
       "icon_24h_mm": 0.0,
@@ -1299,11 +1299,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "c5d432d0bb44ceec91ba7bb5b533318390ed1003fe80ac8d0ff5d31ce2ff9d84"
+      "data_hash_sha256": "d7bbb58617e05e9757695950b10171356f14af08631a85f5cb5f25fa3ad49eed"
     },
     {
-      "record_id": "CRI_RT_ML_CHERRA_01_20260922_122148",
-      "timestamp": "2026-09-22T12:21:42.905314+00:00",
+      "record_id": "CRI_RT_ML_CHERRA_01_20260922_122453",
+      "timestamp": "2026-09-22T12:24:47.933895+00:00",
       "sector_id": "ML-CHERRA-01",
       "sector_name": "Cherrapunji South Escarpment",
       "state": "Meghalaya",
@@ -1339,7 +1339,7 @@
       "visibility_color": "#10B981",
       "rainfall_threshold_status": "EXCEEDED",
       "weather_source": "Open-Meteo Multi-Model Ensemble (ECMWF IFS / DWD ICON / NOAA GFS)",
-      "weather_provenance": "LIVE",
+      "weather_provenance": "CACHED",
       "ecmwf_24h_mm": 0.0,
       "gfs_24h_mm": 0.0,
       "icon_24h_mm": 0.0,
@@ -1380,11 +1380,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "f4ece8d2f8422a05722ba9893b5987ccc221551238f010edc337097a2c1d9d18"
+      "data_hash_sha256": "e9054d74d0e76dbc8ba2ef893e253af9a54d15267f337bbeb8126459766bb1a5"
     },
     {
-      "record_id": "CRI_RT_AS_DIMA_01_20260922_122154",
-      "timestamp": "2026-09-22T12:21:48.854787+00:00",
+      "record_id": "CRI_RT_AS_DIMA_01_20260922_122459",
+      "timestamp": "2026-09-22T12:24:53.702039+00:00",
       "sector_id": "AS-DIMA-01",
       "sector_name": "Dima Hasao Hill Railway Corridor Km 42",
       "state": "Assam",
@@ -1420,7 +1420,7 @@
       "visibility_color": "#10B981",
       "rainfall_threshold_status": "EXCEEDED",
       "weather_source": "Open-Meteo Multi-Model Ensemble (ECMWF IFS / DWD ICON / NOAA GFS)",
-      "weather_provenance": "LIVE",
+      "weather_provenance": "CACHED",
       "ecmwf_24h_mm": 0.0,
       "gfs_24h_mm": 0.0,
       "icon_24h_mm": 0.0,
@@ -1461,11 +1461,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "6478febd605cc50fc7ba3aa32836069673cecd4dacc5e0f279dd8cd89395dbea"
+      "data_hash_sha256": "ca670e3f2cdd73d33135093cf5a45f5d7f128e53416af8788fe176666129bd04"
     },
     {
-      "record_id": "CRI_RT_AS_GUWAHATI_01_20260922_122200",
-      "timestamp": "2026-09-22T12:21:54.448198+00:00",
+      "record_id": "CRI_RT_AS_GUWAHATI_01_20260922_122504",
+      "timestamp": "2026-09-22T12:24:59.139135+00:00",
       "sector_id": "AS-GUWAHATI-01",
       "sector_name": "Guwahati Narakasur Hills",
       "state": "Assam",
@@ -1501,7 +1501,7 @@
       "visibility_color": "#10B981",
       "rainfall_threshold_status": "EXCEEDED",
       "weather_source": "Open-Meteo Multi-Model Ensemble (ECMWF IFS / DWD ICON / NOAA GFS)",
-      "weather_provenance": "LIVE",
+      "weather_provenance": "CACHED",
       "ecmwf_24h_mm": 0.0,
       "gfs_24h_mm": 0.0,
       "icon_24h_mm": 0.0,
@@ -1542,11 +1542,11 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "8f4faa4f0e7224f4fe44e9d2429a045fc2af1b8bc86061652d0f4c7c74653cdc"
+      "data_hash_sha256": "ed8e2051fd58d6e95afab623f0c84c311737723d661e6673e90a0e2cdaec0e4d"
     },
     {
-      "record_id": "CRI_RT_TR_BARAMURA_01_20260922_122206",
-      "timestamp": "2026-09-22T12:22:00.148669+00:00",
+      "record_id": "CRI_RT_TR_BARAMURA_01_20260922_122509",
+      "timestamp": "2026-09-22T12:25:04.257169+00:00",
       "sector_id": "TR-BARAMURA-01",
       "sector_name": "Baramura Hill Range NH-08",
       "state": "Tripura",
@@ -1582,7 +1582,7 @@
       "visibility_color": "#38BDF8",
       "rainfall_threshold_status": "EXCEEDED",
       "weather_source": "Open-Meteo Multi-Model Ensemble (ECMWF IFS / DWD ICON / NOAA GFS)",
-      "weather_provenance": "LIVE",
+      "weather_provenance": "CACHED",
       "ecmwf_24h_mm": 0.0,
       "gfs_24h_mm": 0.0,
       "icon_24h_mm": 0.0,
@@ -1623,7 +1623,7 @@
       "evidence_confidence": 0.66,
       "overall_provenance": "[LIVE/HYBRID]",
       "recommended_action": "Maintain 1-hour standard sensor polling",
-      "data_hash_sha256": "62a1f7d59a2396a6f5006bdff48a96c389196ef4689683251733727a9ae6c1c4"
+      "data_hash_sha256": "9c58774a4c352138487e37d01434df6b9fa68d1b057046aaf398779ec22e1d08"
     }
   ]
 }
