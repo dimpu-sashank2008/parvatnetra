@@ -1,0 +1,22 @@
+{
+  "manifest_version": "5.3.0",
+  "phase": "V5.3",
+  "generated_at_utc": "2026-09-22T17:05:35.248839+00:00",
+  "dataset_files": {
+    "data/processed/canonical_event_inventory_v5_3.json": "183e76ccd42c94c6fc27a6a2432412cb433c4086b1dd4b93baf6abfbd7f43e86",
+    "data/processed/v5_3_event_evidence_registry.json": "110fa547dca9c94f202b62f83b57e1952ae814b5e6b54b0260e6becceddf6a2f",
+    "data/processed/v5_3_event_lineage.json": "76671bf1e0ca1a5ffe8dc8390a700995b3740a4b54f7fbc5652bd7e890244813",
+    "data/processed/canonical_event_inventory_v5_2.json": "28399ee8fe52746e1fe0ffa4ab6ab003d0917d1798ee9d337021e5d6993a9da4",
+    "data/raw/historical_landslides_ner.csv": "910e9b2c5ccdb52af36f5f6dfb3a615884fa46c16c0dabaf8866471f0bd24baf",
+    "data/raw/historical_landslides_expansion_v5_2.json": "d60a7c6df8d57e1d665f5f034ddf7eec6d5f7674f926678e8ee147f84065bfbe"
+  },
+  "immutability_hashes": {
+    "v3_weights_sha256": "7cb823888646ca2b074389de3719c9d9385197bbdf6763cf9e4e69bc3c15c183",
+    "v4_5_research_weights_sha256": "31e16ce003cdd2c5934df034e6229661d27a8530a6a0dbc6a18e1ff56277da9f"
+  },
+  "model_gate_status": {
+    "v3_production": "ACTIVE_PRODUCTION_FROZEN",
+    "v4_5_research": "OFFLINE_RESEARCH_ONLY",
+    "kinematic_ml": "NOT_TRAINED_DATA_PENDING"
+  }
+}
