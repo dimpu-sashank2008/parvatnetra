@@ -225,13 +225,13 @@
                     <!-- 3D Contextual Legend -->
                     <div class="pointer-events-auto bg-[#070B10]/95 backdrop-blur border border-slate-700/80 rounded p-2.5 shadow-2xl text-[10px] space-y-1.5 max-w-[280px]">
                         <div class="font-bold text-sky-400 flex items-center justify-between border-b border-slate-800 pb-1">
-                            <span>PAHAD 3D HAZARD CORRIDORS</span>
+                            <span>3D TERRAIN LAYERS</span>
                             <span class="text-[9px] text-amber-400 font-mono">20 EVALUATED</span>
                         </div>
                         <div class="grid grid-cols-2 gap-x-2 gap-y-1 text-[9px]">
                             <div class="flex items-center gap-1.5">
                                 <span class="w-2.5 h-2.5 rounded-sm bg-red-600 inline-block shrink-0"></span>
-                                <span class="text-slate-300">EXTREME (&gt;80)</span>
+                                <span class="text-slate-300">CRI Extreme (FoS &lt; 1.10)</span>
                             </div>
                             <div class="flex items-center gap-1.5">
                                 <span class="w-2.5 h-2.5 rounded-sm bg-orange-600 inline-block shrink-0"></span>
@@ -426,10 +426,26 @@
             this.viewer.scene.screenSpaceCameraController.enableCollisionDetection = false;
 
             // Attempt Google Photorealistic 3D Tiles if API Key is configured
-            if (window.GOOGLE_MAPS_API_KEY && typeof Cesium.createGooglePhotorealistic3DTileset === 'function') {
+            let googleKey = window.GOOGLE_MAPS_API_KEY;
+            if (!googleKey) {
+                try {
+                    const keyRes = await fetch('/api/gods-eye/tile-key');
+                    if (keyRes.ok) {
+                        const keyData = await keyRes.json();
+                        if (keyData && keyData.key) {
+                            googleKey = keyData.key;
+                            window.GOOGLE_MAPS_API_KEY = googleKey;
+                        }
+                    }
+                } catch (kErr) {
+                    console.warn('[GodsEye3D] Could not fetch tile key from /api/gods-eye/tile-key:', kErr);
+                }
+            }
+
+            if (googleKey && typeof Cesium.createGooglePhotorealistic3DTileset === 'function') {
                 try {
                     const tileset = await Cesium.createGooglePhotorealistic3DTileset({
-                        key: window.GOOGLE_MAPS_API_KEY
+                        key: googleKey
                     });
                     this.viewer.scene.primitives.add(tileset);
                     this.providerStatus = 'CONFIGURED';

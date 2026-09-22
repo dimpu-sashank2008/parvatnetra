@@ -1,6 +1,6 @@
 {
   "schema_version": "5.2.0",
-  "last_updated_utc": "2026-09-22T09:02:38.615323+00:00",
+  "last_updated_utc": "2026-09-22T09:08:36.703890+00:00",
   "canonical_events_count": 42,
   "unverified_events_count": 1,
   "rejected_events_count": 2,
@@ -38,10 +38,10 @@
           "duplicate_reference": "SDMA-CROSSREF-EV-01",
           "distance_km": 0.149,
           "time_diff_hours": 0.0,
-          "merged_at": "2026-09-22T09:02:38.585126+00:00"
+          "merged_at": "2026-09-22T09:08:36.681062+00:00"
         }
       ],
-      "ingested_at": "2026-09-22T09:02:28.547898+00:00"
+      "ingested_at": "2026-09-22T09:01:05.496040+00:00"
     },
     {
       "event_id": "EV-02",
@@ -70,7 +70,7 @@
       "raw_record_hash": "494cd8ae84c544a3ced47df87b300b7329fff713a54af1542dfdd86fe25c2a98",
       "canonical_hash": "ea06e8771ba709b04de7851b5234c5a5f70c2198b1c11d9c53521e0e08abd993",
       "merged_sources": [],
-      "ingested_at": "2026-09-22T09:02:28.547898+00:00"
+      "ingested_at": "2026-09-22T09:01:05.496040+00:00"
     },
     {
       "event_id": "EV-03",
@@ -99,7 +99,7 @@
       "raw_record_hash": "fc75f7419e7decb05cce5289ee3a23b7445234355ab0bf78345a6f21688d5cb0",
       "canonical_hash": "04a5979c0f8da5c1f2e40f1d39a8d75a7746a656db6014293c14e95aba08022b",
       "merged_sources": [],
-      "ingested_at": "2026-09-22T09:02:28.547898+00:00"
+      "ingested_at": "2026-09-22T09:01:05.496040+00:00"
     },
     {
       "event_id": "EV-04",
@@ -128,7 +128,7 @@
       "raw_record_hash": "e514e1a8eb8ffe84a8fcaa7b6dcbe77e4820f1d10e0de0bf7c07ad4e99eeb4d4",
       "canonical_hash": "af7ed268a34f7b011be7ca5eadbc589d577e45a4ac3dbdff62503cd5d82bd1e9",
       "merged_sources": [],
-      "ingested_at": "2026-09-22T09:02:28.547898+00:00"
+      "ingested_at": "2026-09-22T09:01:05.496040+00:00"
     },
     {
       "event_id": "EV-05",
@@ -157,7 +157,7 @@
       "raw_record_hash": "0eec7d73d37bbc587d035c3bf4033a89d4bb8f268f132e71fffd9a92fe4f9895",
       "canonical_hash": "8f39c2582488fc29934ac74f26f635f840c173b805c77729704f6624283d3755",
       "merged_sources": [],
-      "ingested_at": "2026-09-22T09:02:28.547898+00:00"
+      "ingested_at": "2026-09-22T09:01:05.496040+00:00"
     },
     {
       "event_id": "EV-06",
@@ -186,7 +186,7 @@
       "raw_record_hash": "13de416937d275e15f11fd88da3cfdd3445d8213c9dcb28a21e840b268431fae",
       "canonical_hash": "8a264ec625a6ae9ac42f50850bc2aea7e15c7a6d754f7e10c5c4434029cf49cb",
       "merged_sources": [],
-      "ingested_at": "2026-09-22T09:02:28.547898+00:00"
+      "ingested_at": "2026-09-22T09:01:05.496040+00:00"
     },
     {
       "event_id": "EV-07",
@@ -215,7 +215,7 @@
       "raw_record_hash": "5dc533be3fceec3429375addc28859a2868cdc52b353310ecd08f79ecad34084",
       "canonical_hash": "38f389cd3a6216628780b45628b33f27226473f5fbcddd2214cee4a6c58fd921",
       "merged_sources": [],
-      "ingested_at": "2026-09-22T09:02:28.547898+00:00"
+      "ingested_at": "2026-09-22T09:01:05.496040+00:00"
     },
     {
       "event_id": "EV-08",
@@ -244,7 +244,7 @@
       "raw_record_hash": "7480424917e48a1c2f85f864736df0e9e26eea7b249463cf8b6c1934ba41ded9",
       "canonical_hash": "a2a4bb3023237ce02a5239b760214707bc3789f5fd2cf7425a87b8bec242154e",
       "merged_sources": [],
-      "ingested_at": "2026-09-22T09:02:28.548903+00:00"
+      "ingested_at": "2026-09-22T09:01:05.496040+00:00"
     },
     {
       "event_id": "EV-09",
@@ -273,7 +273,7 @@
       "raw_record_hash": "ad16e09df728193150257f9a626806ca934ceb67a0e8dfbb3267d0101c2b778e",
       "canonical_hash": "7ede039ec4a6028af7b189aa2134cb1316b3fb725dc6de8c6ae70d2e7e4e6ad1",
       "merged_sources": [],
-      "ingested_at": "2026-09-22T09:02:28.548903+00:00"
+      "ingested_at": "2026-09-22T09:01:05.496040+00:00"
     },
     {
       "event_id": "EV-10",
@@ -302,7 +302,7 @@
       "raw_record_hash": "83bb4191f6829faea6f5c2bc1952bebcf805f536a1b9117590066ab4d1d37c10",
       "canonical_hash": "432344ad6561a465f88e37699b992a8123758f308be293022a7bac5309116880",
       "merged_sources": [],
-      "ingested_at": "2026-09-22T09:02:28.548903+00:00"
+      "ingested_at": "2026-09-22T09:01:05.496040+00:00"
     },
     {
       "event_id": "EV-11",
@@ -331,7 +331,7 @@
       "raw_record_hash": "1a2ddaceae2844fddd6eac071442330622c265bcb4893d6715cf9f3006b92a21",
       "canonical_hash": "e33fb7f9a852a1da2102411f3c1397e84d4b2d0d8aab6a84a035d1b155bbe4a0",
       "merged_sources": [],
-      "ingested_at": "2026-09-22T09:02:28.548903+00:00"
+      "ingested_at": "2026-09-22T09:01:05.496040+00:00"
     },
     {
       "event_id": "EV-12",
@@ -360,7 +360,7 @@
       "raw_record_hash": "600af98450e0ad0e28c24e83426fbc64fd7aa36d555942dcb28fa76501079e34",
       "canonical_hash": "8a3ddfbcd473831e59d4690ca2254d54644264d3313f9008a1651cf19a6cb261",
       "merged_sources": [],
-      "ingested_at": "2026-09-22T09:02:28.548903+00:00"
+      "ingested_at": "2026-09-22T09:01:05.496040+00:00"
     },
     {
       "event_id": "EV-13",
@@ -389,7 +389,7 @@
       "raw_record_hash": "b8bab47c537005575237d49dd927c3b10b0beb36cfb71debf2b8179711a294e3",
       "canonical_hash": "4494ba630a609622afe4c22377b2a694c58d9a32e8e99dd3433dc02a6c7cd2cd",
       "merged_sources": [],
-      "ingested_at": "2026-09-22T09:02:28.548903+00:00"
+      "ingested_at": "2026-09-22T09:01:05.496040+00:00"
     },
     {
       "event_id": "EV-14",
@@ -418,7 +418,7 @@
       "raw_record_hash": "ce073abeb0595cfc10c4fedce93098290000d2bd9c4f7adc78c826ba919ff4a7",
       "canonical_hash": "662277499e3e44600b80f68e399fba8fa09e7f8d2bfcf732398da445cccb485e",
       "merged_sources": [],
-      "ingested_at": "2026-09-22T09:02:28.548903+00:00"
+      "ingested_at": "2026-09-22T09:01:05.496040+00:00"
     },
     {
       "event_id": "EV-15",
@@ -447,7 +447,7 @@
       "raw_record_hash": "fe0a337e4df830842b6b47d3a95179060d490d2c918b88abc25e95239f52cf44",
       "canonical_hash": "0aa86a6eb37a6e522be22b613845b705e27720fd7d361845ed63fe6acef29ff0",
       "merged_sources": [],
-      "ingested_at": "2026-09-22T09:02:28.548903+00:00"
+      "ingested_at": "2026-09-22T09:01:05.496040+00:00"
     },
     {
       "event_id": "EV-16",
@@ -476,7 +476,7 @@
       "raw_record_hash": "8017f0772f1403451639e78f3b8790b6e553b368e3fc0ad5a15b0397f2e76ad3",
       "canonical_hash": "97ab723df40d5206f522b1f23f39e27aabde6e73c40b54a76dd17e43beba31fd",
       "merged_sources": [],
-      "ingested_at": "2026-09-22T09:02:28.548903+00:00"
+      "ingested_at": "2026-09-22T09:01:05.496040+00:00"
     },
     {
       "event_id": "EV-17",
@@ -505,7 +505,7 @@
       "raw_record_hash": "871d2eff16dd62119d9273e155661fd32c6f4da205a2eba6711372c3f98e8546",
       "canonical_hash": "3c6379d647dc860fc82c1a8fc6169926fec65669613025db3d2cb80924416b69",
       "merged_sources": [],
-      "ingested_at": "2026-09-22T09:02:28.548903+00:00"
+      "ingested_at": "2026-09-22T09:01:05.496040+00:00"
     },
     {
       "event_id": "EV-18",
@@ -535,7 +535,7 @@
       "raw_record_hash": "b6cf4c0258825cf6ce495af7758251fe0e270ac0e48b54a25f361fb4d8aaec5a",
       "canonical_hash": "7ec6a8acac4b03129939bf979fedeabb16693e90bddad4046c3fccea285540b6",
       "merged_sources": [],
-      "ingested_at": "2026-09-22T09:02:28.548903+00:00"
+      "ingested_at": "2026-09-22T09:01:05.497038+00:00"
     },
     {
       "event_id": "EV-19",
@@ -565,7 +565,7 @@
       "raw_record_hash": "857ac5dd7b4d6140b0b885c98fa44677683cb0a9c2637a1682131e4548fc5e88",
       "canonical_hash": "5c8dcce2e1b1225ca9acc0e3d37114f250e41cd80aca0d96109071423a38d82d",
       "merged_sources": [],
-      "ingested_at": "2026-09-22T09:02:28.548903+00:00"
+      "ingested_at": "2026-09-22T09:01:05.497038+00:00"
     },
     {
       "event_id": "EV-20",
@@ -595,7 +595,7 @@
       "raw_record_hash": "d5946046ee45114a22157f81ca4f6dd4a7459e61e9e3b6a37df26cc3aca9d67c",
       "canonical_hash": "49ad0d804ca3798cbb2123249c376cca3253002740a2cae69bdecb743a528769",
       "merged_sources": [],
-      "ingested_at": "2026-09-22T09:02:28.548903+00:00"
+      "ingested_at": "2026-09-22T09:01:05.497038+00:00"
     },
     {
       "event_id": "EV-21",
@@ -625,7 +625,7 @@
       "raw_record_hash": "6a915e1019da967283d3650805147538fd0c10a05cf4b31e8f61670fd1492f9d",
       "canonical_hash": "f9d59ebd0eee0704660e877a4ce6d79fc168ea8a5c97129c4bc7cd6c9c2ec5de",
       "merged_sources": [],
-      "ingested_at": "2026-09-22T09:02:28.548903+00:00"
+      "ingested_at": "2026-09-22T09:01:05.497038+00:00"
     },
     {
       "event_id": "EV-22",
@@ -655,7 +655,7 @@
       "raw_record_hash": "2140095a24b203687694a2def98a57d32bf751126109e17a865097857c88232a",
       "canonical_hash": "5740a38199e8181f4cb15230a563d295f6c5a9da311dd970e289ff15636e8cf0",
       "merged_sources": [],
-      "ingested_at": "2026-09-22T09:02:28.548903+00:00"
+      "ingested_at": "2026-09-22T09:01:05.497038+00:00"
     },
     {
       "event_id": "EV-23",
@@ -685,7 +685,7 @@
       "raw_record_hash": "48f16aa692eba58d0661c4dc4764b5a67ded28db1484a9204323bec89dda1ec5",
       "canonical_hash": "1edc8a1a0a182bf6a93657eb37ea1d4c41b6d5ddb34ec378f1f13553ace66266",
       "merged_sources": [],
-      "ingested_at": "2026-09-22T09:02:28.548903+00:00"
+      "ingested_at": "2026-09-22T09:01:05.497038+00:00"
     },
     {
       "event_id": "EV-24",
@@ -715,7 +715,7 @@
       "raw_record_hash": "016e0e9aa97254d0483e77cead2641a020b519b51b01387d0f773cae5c1ca0a4",
       "canonical_hash": "62ce93ca4b88fd766d6d33a0bbcf05c86cb8b2ff9078dac9cea332a499faf4b7",
       "merged_sources": [],
-      "ingested_at": "2026-09-22T09:02:28.548903+00:00"
+      "ingested_at": "2026-09-22T09:01:05.497038+00:00"
     },
     {
       "event_id": "EV-25",
@@ -745,7 +745,7 @@
       "raw_record_hash": "9f82f00ba8484d3cf139a26eaede01a703e470468d57bee6800aaf44fe9c1e06",
       "canonical_hash": "383c81cdff111e851946c775b2878d299d6db1a1fa25c749ffe8e5bc21a23dbc",
       "merged_sources": [],
-      "ingested_at": "2026-09-22T09:02:28.548903+00:00"
+      "ingested_at": "2026-09-22T09:01:05.497038+00:00"
     },
     {
       "event_id": "EV-26",
@@ -775,7 +775,7 @@
       "raw_record_hash": "57f2fb2b599331102af0f8805e83acb128d2684b392a7b249b33e6d606efd75b",
       "canonical_hash": "232101f9e1816d6a3fbc98474e3be23ce3358d8ae808c0ff7c8bd13719158c9f",
       "merged_sources": [],
-      "ingested_at": "2026-09-22T09:02:28.548903+00:00"
+      "ingested_at": "2026-09-22T09:01:05.497038+00:00"
     },
     {
       "event_id": "EV-27",
@@ -805,7 +805,7 @@
       "raw_record_hash": "60782549eefb197758df9eb617ce54eab8d40fd39e8213373f8d7730209cf9a1",
       "canonical_hash": "3cc8ec01627e4e25bffcbf9b49a8e56589b8fbde35ff241a0adc1e2fc30effbc",
       "merged_sources": [],
-      "ingested_at": "2026-09-22T09:02:28.548903+00:00"
+      "ingested_at": "2026-09-22T09:01:05.497038+00:00"
     },
     {
       "event_id": "EV-28",
@@ -835,7 +835,7 @@
       "raw_record_hash": "31787c1a186688a251d49260330493e1619d217ffbba007ba440db7c8848446b",
       "canonical_hash": "ed011dba2d77898b352b1415fd78325aace38f29db4aacf54fe6b39f25759072",
       "merged_sources": [],
-      "ingested_at": "2026-09-22T09:02:28.548903+00:00"
+      "ingested_at": "2026-09-22T09:01:05.497038+00:00"
     },
     {
       "event_id": "EV-29",
@@ -865,7 +865,7 @@
       "raw_record_hash": "336252b4f898072adbff93232070b0b54bc6f92e23da743a7049ac218b4f2f76",
       "canonical_hash": "1e7305969db5332c1549bdb2dc565f045982db48bdb5154bc0a38add383ed962",
       "merged_sources": [],
-      "ingested_at": "2026-09-22T09:02:28.548903+00:00"
+      "ingested_at": "2026-09-22T09:01:05.497038+00:00"
     },
     {
       "event_id": "EV-30",
@@ -895,7 +895,7 @@
       "raw_record_hash": "32f6a331ea9df6767836a22ccc8fa82aa978b4eaaad2081547f4decbc69a702d",
       "canonical_hash": "f6e40628e724a172c26dbfc8ee03e19f58e92880d21a9e8946821b68addc34f5",
       "merged_sources": [],
-      "ingested_at": "2026-09-22T09:02:28.548903+00:00"
+      "ingested_at": "2026-09-22T09:01:05.497038+00:00"
     },
     {
       "event_id": "EV-31",
@@ -925,7 +925,7 @@
       "raw_record_hash": "b225d301e7c9809a64d5cbcfc6185d48fd2624b1d75957dee1baa3bd21b85e0e",
       "canonical_hash": "c9629e82a1a10c8a1ea8531161a1012d26f58ec263e8aaeda3488884ba6b3fdc",
       "merged_sources": [],
-      "ingested_at": "2026-09-22T09:02:28.548903+00:00"
+      "ingested_at": "2026-09-22T09:01:05.497038+00:00"
     },
     {
       "event_id": "EV-32",
@@ -955,7 +955,7 @@
       "raw_record_hash": "f65e70fac35e2b4ecf545384c3092349c4e96f2de9ddcc75a0bd39168130ce02",
       "canonical_hash": "aefe0f045f330de2afed186c7c89441e7c07bd184050716936fb1e22fddd8355",
       "merged_sources": [],
-      "ingested_at": "2026-09-22T09:02:28.548903+00:00"
+      "ingested_at": "2026-09-22T09:01:05.497038+00:00"
     },
     {
       "event_id": "EV-33",
@@ -985,7 +985,7 @@
       "raw_record_hash": "f77b21030f923f0c8c859435ef24bc3f2540b813a42b808608f1371df6c4e331",
       "canonical_hash": "0101c48fbb984ed7d15a05caac028fe49d4d971190c81a13464e36f3de57ff2b",
       "merged_sources": [],
-      "ingested_at": "2026-09-22T09:02:28.548903+00:00"
+      "ingested_at": "2026-09-22T09:01:05.497038+00:00"
     },
     {
       "event_id": "EV-34",
@@ -1015,7 +1015,7 @@
       "raw_record_hash": "d28d500d64d7b287cd0e7a611deefa6c6ac9197555ccdcd6ca88f18ab129ac72",
       "canonical_hash": "ecf803eef36b96a2e5a5c3244f424a428f73ca79620f12ccebaee5875600d9f1",
       "merged_sources": [],
-      "ingested_at": "2026-09-22T09:02:28.548903+00:00"
+      "ingested_at": "2026-09-22T09:01:05.497038+00:00"
     },
     {
       "event_id": "EV-35",
@@ -1045,7 +1045,7 @@
       "raw_record_hash": "503666a5c109b5a5a205ca4b0474616dfea24f1236b48341619d009bfad2e0f8",
       "canonical_hash": "b4338593b0722b3c38212dcb539feea83ca1b5f58d1a16404767f993bdc2d1e2",
       "merged_sources": [],
-      "ingested_at": "2026-09-22T09:02:28.548903+00:00"
+      "ingested_at": "2026-09-22T09:01:05.497038+00:00"
     },
     {
       "event_id": "EV-36",
@@ -1075,7 +1075,7 @@
       "raw_record_hash": "da33f3d4d41e40e1e17b501973b0de45d0eac8b27654d99bcc689a1249aa7a58",
       "canonical_hash": "0d68ce64fb49655d987b9083eaa6546df8dac388093a4d2574bcdec2195e6396",
       "merged_sources": [],
-      "ingested_at": "2026-09-22T09:02:28.548903+00:00"
+      "ingested_at": "2026-09-22T09:01:05.497038+00:00"
     },
     {
       "event_id": "EV-37",
@@ -1105,7 +1105,7 @@
       "raw_record_hash": "ac9ca98f8a1291888e5c8abef9cfb6946bfd928181d7bd7186956150d1bd36c1",
       "canonical_hash": "e4c70b445bd5ad688e2186b234ff1355139a33edd8c2db98411ec8e26414e844",
       "merged_sources": [],
-      "ingested_at": "2026-09-22T09:02:28.548903+00:00"
+      "ingested_at": "2026-09-22T09:01:05.497038+00:00"
     },
     {
       "event_id": "EV-38",
@@ -1135,7 +1135,7 @@
       "raw_record_hash": "7e807863d1d4c9a797e5d48a8456e2acac493057c43d0efe3f450a4016dee0ab",
       "canonical_hash": "5d823170732cefe11c2eaf8a2bdbca6069e240cee4e53d8573a5698ce0d11126",
       "merged_sources": [],
-      "ingested_at": "2026-09-22T09:02:28.549903+00:00"
+      "ingested_at": "2026-09-22T09:01:05.497038+00:00"
     },
     {
       "event_id": "EV-39",
@@ -1165,7 +1165,7 @@
       "raw_record_hash": "d8caa1653838835caff64dc8a63a67831aac072793cd2b3b486bce53f4a9e4e4",
       "canonical_hash": "2643e7b730787240c67c6ea0ef87066bf88c94e88dca01412e24106bbf64df34",
       "merged_sources": [],
-      "ingested_at": "2026-09-22T09:02:28.549903+00:00"
+      "ingested_at": "2026-09-22T09:01:05.497038+00:00"
     },
     {
       "event_id": "EV-40",
@@ -1195,7 +1195,7 @@
       "raw_record_hash": "9e366f157fbbb63249a3e486748a01f9d541273b592dd04d9e5007e8b9184194",
       "canonical_hash": "dd13c7f459b65ed12657af4c0f057c1dbad4439abff5bebdd7d09972568edd01",
       "merged_sources": [],
-      "ingested_at": "2026-09-22T09:02:28.549903+00:00"
+      "ingested_at": "2026-09-22T09:01:05.497038+00:00"
     },
     {
       "event_id": "EV-41",
@@ -1225,7 +1225,7 @@
       "raw_record_hash": "9fd8ec0177e385fa9898fad304920d46af23276071177d25907448e9725534ad",
       "canonical_hash": "21f017d264009281e71b95c9de69d13479cf312fc7aa24069a0e771c9f926157",
       "merged_sources": [],
-      "ingested_at": "2026-09-22T09:02:28.549903+00:00"
+      "ingested_at": "2026-09-22T09:01:05.497038+00:00"
     },
     {
       "event_id": "EV-42",
@@ -1255,7 +1255,7 @@
       "raw_record_hash": "9f778f92d5c762871c6c11c792c83e8fb6a683769fc646206b419c63c4f946cc",
       "canonical_hash": "457f1bc291d9addfe7e5c3375e88b51cd6b6e78f5dc645c3a6733aecc57e267e",
       "merged_sources": [],
-      "ingested_at": "2026-09-22T09:02:28.549903+00:00"
+      "ingested_at": "2026-09-22T09:01:05.497038+00:00"
     }
   ],
   "controls": [

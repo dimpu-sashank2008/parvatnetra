@@ -2830,7 +2830,7 @@
         <a href="javascript:void(0)" onclick="toggleSidebarMenu(false); toggleJudgeDefenseOverlay(true);" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-amber-950/30 transition text-[#FDE68A] border-l-2 border-amber-500/80">
           <i class="ph-bold ph-shield-check text-amber-400"></i>
           <span class="font-bold">SIH Top-1 Judge Defense</span>
-          <span class="eoc-nav-badge ml-auto text-[9px] font-mono px-1.5 py-0.5 rounded bg-amber-950/80 text-amber-300 border border-amber-500 font-bold tracking-wider">★ TOP-1</span>
+          <span class="eoc-nav-badge ml-auto text-[9px] font-mono px-1.5 py-0.5 rounded bg-amber-950/80 text-amber-300 border border-amber-500 font-bold tracking-wider">TOP-1</span>
         </a>
         <a href="javascript:void(0)" onclick="toggleSidebarMenu(false); openDataTruthModal();" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
           <i class="ph-bold ph-certificate text-emerald-400"></i>
@@ -2843,8 +2843,8 @@
           <span class="eoc-nav-badge ml-auto text-[9px] font-mono px-1.5 py-0.5 rounded bg-cyan-950/60 text-cyan-300 border border-cyan-700">PHYSICS</span>
         </a>
 
-        <!-- 1. PAHAD PREDICTIVE AI -->
-        <div class="eoc-nav-section-title text-[10px] font-black tracking-widest text-[#94A3B8] uppercase px-4 py-1.5 mt-2">1. PAHAD PREDICTIVE AI</div>
+        <!-- 1. PAHAD AI CORE -->
+        <div class="eoc-nav-section-title text-[10px] font-black tracking-widest text-[#94A3B8] uppercase px-4 py-1.5 mt-2">1. PAHAD AI CORE</div>
         <a href="javascript:void(0)" onclick="navigateToPanel('prediction')" class="eoc-nav-item active flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
           <i class="ph-bold ph-brain text-emerald-400"></i>
           <span>Current Prediction &amp; CRI</span>
@@ -2861,12 +2861,17 @@
           <span class="eoc-nav-badge ml-auto text-[9px] font-mono px-1.5 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">FUSED</span>
         </a>
 
-        <!-- 2. GIS & TERRAIN INTELLIGENCE -->
-        <div class="eoc-nav-section-title text-[10px] font-black tracking-widest text-[#94A3B8] uppercase px-4 py-1.5 mt-2">2. GIS &amp; TERRAIN INTELLIGENCE</div>
+        <!-- 2. MAP & TERRAIN INTELLIGENCE -->
+        <div class="eoc-nav-section-title text-[10px] font-black tracking-widest text-[#94A3B8] uppercase px-4 py-1.5 mt-2">2. MAP &amp; TERRAIN INTELLIGENCE</div>
         <a href="javascript:void(0)" onclick="navigateToPanel('map')" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
           <i class="ph-bold ph-map-trifold text-sky-400"></i>
           <span>Operational GIS Hazard Map</span>
           <span class="eoc-nav-badge ml-auto text-[9px] font-mono px-1.5 py-0.5 rounded bg-sky-950/60 text-sky-300 border border-sky-800">LEAFLET</span>
+        </a>
+        <a href="javascript:void(0)" onclick="toggleSidebarMenu(false); switchMainBasemap('gods-eye-3d');" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
+          <i class="ph-bold ph-eye text-amber-400"></i>
+          <span>God's Eye 3D Photorealistic</span>
+          <span class="eoc-nav-badge ml-auto text-[9px] font-mono px-1.5 py-0.5 rounded bg-amber-950/60 text-amber-300 border border-amber-800">CESIUM 3D</span>
         </a>
         <a href="javascript:void(0)" onclick="toggleSidebarMenu(false); open3DTerrainModel('NH-10 Km 48 (29th Mile Sector)', 0.745);" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
           <i class="ph-bold ph-cube text-purple-400"></i>
@@ -2912,8 +2917,8 @@
           <span class="eoc-nav-badge ml-auto text-[9px] font-mono px-1.5 py-0.5 rounded bg-orange-950/60 text-orange-300 border border-orange-800">OFFLINE</span>
         </a>
 
-        <!-- 4. EOC TACTICAL COMMAND -->
-        <div class="eoc-nav-section-title text-[10px] font-black tracking-widest text-[#94A3B8] uppercase px-4 py-1.5 mt-2">4. EOC TACTICAL COMMAND</div>
+        <!-- 4. EOC COMMAND & TACTICAL -->
+        <div class="eoc-nav-section-title text-[10px] font-black tracking-widest text-[#94A3B8] uppercase px-4 py-1.5 mt-2">4. EOC COMMAND &amp; TACTICAL</div>
         <a href="javascript:void(0)" onclick="navigateToPanel('sitrep')" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
           <i class="ph-bold ph-file-text text-amber-300"></i>
           <span>Autonomous AI SITREP</span>
@@ -2935,8 +2940,13 @@
           <span class="eoc-nav-badge ml-auto text-[9px] font-mono px-1.5 py-0.5 rounded bg-emerald-950/60 text-emerald-300 border border-emerald-800">IRC SP:84</span>
         </a>
 
-        <!-- 5. PUBLIC WARNING & SAFEGUARDS -->
-        <div class="eoc-nav-section-title text-[10px] font-black tracking-widest text-[#94A3B8] uppercase px-4 py-1.5 mt-2">5. PUBLIC WARNING &amp; SAFEGUARDS</div>
+        <!-- 5. RESPONSE & PUBLIC WARNING -->
+        <div class="eoc-nav-section-title text-[10px] font-black tracking-widest text-[#94A3B8] uppercase px-4 py-1.5 mt-2">5. RESPONSE &amp; PUBLIC WARNING</div>
+        <a href="javascript:void(0)" onclick="navigateToPanel('response')" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
+          <i class="ph-bold ph-shield-check text-rose-400"></i>
+          <span>Emergency Response Console</span>
+          <span class="eoc-nav-badge ml-auto text-[9px] font-mono px-1.5 py-0.5 rounded bg-rose-950/60 text-rose-300 border border-rose-800">ACTION</span>
+        </a>
         <a href="javascript:void(0)" onclick="toggleSidebarMenu(false); openCapModal();" class="eoc-nav-item flex items-center gap-2.5 px-4 py-2 hover:bg-[#1A1A1A] transition text-[#E5E5E5]">
           <i class="ph-bold ph-shield-warning text-rose-400"></i>
           <span>NDMA CAP v1.2 Dispatch</span>
@@ -3168,7 +3178,7 @@
                 </span>
               </div>
               <p class="text-[10px] sm:text-[11px] font-medium text-slate-600 dark:text-slate-300 tracking-normal m-0 truncate max-w-[200px] xl:max-w-[260px] hidden sm:block">
-                AI-Assisted Landslide Risk Intelligence • <span onclick="event.preventDefault(); startInteractiveTour(1);" class="text-slate-900 dark:text-slate-200 hover:underline font-bold cursor-pointer transition">PAHAD AI ↗</span>
+                AI-Assisted Landslide Risk Intelligence for the Northeast • <span onclick="event.preventDefault(); startInteractiveTour(1);" class="text-slate-900 dark:text-slate-200 hover:underline font-bold cursor-pointer transition">PAHAD AI ↗</span>
               </p>
             </div>
           </a>
@@ -3660,11 +3670,11 @@
                                 </div>
                                 <div class="grid grid-cols-2 gap-1.5 text-[10px] font-mono">
                                     <button type="button" onclick="switchMainBasemap('bhuvan')" id="mb-bhuvan" class="px-2 py-1.5 rounded bg-orange-950/40 text-orange-400 hover:text-white hover:bg-orange-950/60 border border-orange-900/80 text-center transition flex items-center justify-center gap-1.5 font-bold" title="ISRO / NRSC RESOURCESAT-2 Sovereign Imagery">
-                                        <span class="text-xs">🛰️</span>
+                                        <i class="ph-bold ph-satellite text-xs"></i>
                                         <span>ISRO Bhuvan</span>
                                     </button>
                                     <button type="button" onclick="switchMainBasemap('gods-eye-3d')" id="mb-gods-eye" class="px-2 py-1.5 rounded bg-amber-950/40 text-amber-400 hover:text-white hover:bg-amber-950/60 border border-amber-900/80 text-center transition flex items-center justify-center gap-1.5 font-bold" title="God's Eye Style Photorealistic 3D Geospatial View">
-                                        <span class="text-xs">👁️</span>
+                                        <i class="ph-bold ph-eye text-xs"></i>
                                         <span>God's Eye 3D</span>
                                     </button>
                                 </div>
@@ -3727,7 +3737,12 @@
                             <div class="lcp-item"><span class="lcp-dot" style="background:#10b981;"></span><span class="lcp-label">Shelters (NDMA Camps)</span><button class="lcp-toggle on" id="lc-toggle-shelters" onclick="toggleLayerById('habitations',this)" aria-label="Toggle Shelters"></button></div>
                             <div class="lcp-item"><span class="lcp-dot" style="background:#ec4899;"></span><span class="lcp-label">Hospitals &amp; Medical Units</span><button class="lcp-toggle on" id="lc-toggle-hospitals" onclick="toggleLayerById('habitations',this)" aria-label="Toggle Hospitals"></button></div>
                             <div class="lcp-item"><span class="lcp-dot" style="background:#8b5cf6;"></span><span class="lcp-label">Schools &amp; Staging Sites</span><button class="lcp-toggle on" id="lc-toggle-schools" onclick="toggleLayerById('habitations',this)" aria-label="Toggle Schools"></button></div>
-                            <div class="lcp-item" style="margin-bottom:6px;"><span class="lcp-dot" style="background:#d97706;"></span><span class="lcp-label">Bridges &amp; Crossings</span><button class="lcp-toggle on" id="lc-toggle-bridges" onclick="toggleLayerById('cuts',this)" aria-label="Toggle Bridges"></button></div>
+                            <div class="lcp-item"><span class="lcp-dot" style="background:#d97706;"></span><span class="lcp-label">Bridges &amp; Crossings</span><button class="lcp-toggle on" id="lc-toggle-bridges" onclick="toggleLayerById('cuts',this)" aria-label="Toggle Bridges"></button></div>
+                            <div class="lcp-item"><span class="lcp-dot" style="background:#0284c7;"></span><span class="lcp-label">Teesta Scour Reaches</span><button class="lcp-toggle on" id="toggle-river-btn" onclick="toggleRiverLayer(this)" aria-label="Toggle Teesta River"></button></div>
+                            <div class="lcp-item"><span class="lcp-dot" style="background:#d97706;"></span><span class="lcp-label">Anthropogenic Hill Cuts</span><button class="lcp-toggle on" id="toggle-cuts-btn" onclick="toggleCutsLayer(this)" aria-label="Toggle Anthropogenic Cuts"></button></div>
+                            <div class="lcp-item"><span class="lcp-dot" style="background:#8b5cf6;"></span><span class="lcp-label">Bypass Detours</span><button class="lcp-toggle on" id="toggle-detours-btn" onclick="toggleDetoursLayer(this)" aria-label="Toggle Bypass Detours"></button></div>
+                            <div class="lcp-item"><span class="lcp-dot" style="background:#10b981;"></span><span class="lcp-label">Isolated Habitations</span><button class="lcp-toggle on" id="toggle-habitations-btn" onclick="toggleHabitationsLayer(this)" aria-label="Toggle Critical Habitations"></button></div>
+                            <div class="lcp-item" style="margin-bottom:6px;"><span class="lcp-dot" style="background:#f59e0b;"></span><span class="lcp-label">Field Incident Reports</span><button class="lcp-toggle on" id="toggle-reports-btn" onclick="toggleReportsLayer(this)" aria-label="Toggle Field Incident Reports"></button></div>
                         </div>
                     </div>
                 </div>
@@ -5026,6 +5041,7 @@
 
         <!-- ACTIVE CORRIDOR BYPASS & SAFE SHELTER FINDER WIDGET -->
         <div id="citizen-bypass-calculator-card" class="border border-slate-300 bg-white p-4 rounded-none shadow-none mb-5">
+            <div id="evac-logistics-card" class="w-full">
             <div class="flex flex-wrap items-center justify-between gap-2 mb-4 border-b border-slate-200 pb-3">
                 <div class="flex items-center gap-2">
                     <i class="ph-bold ph-shield-check text-xl text-[#002147]"></i>
@@ -5208,6 +5224,7 @@
                         <div class="rounded-none p-2.5 bg-slate-50 border border-slate-300"><span class="font-bold text-slate-700 block mb-1 uppercase font-mono">[AS] Assamese</span><p id="cap-text-as-citizen" class="text-slate-800 leading-relaxed font-medium">&#2488;&#2468;&#2480;&#2509;&#2453;&#2476;&#2494;&#2923;&#2496;: NH-10 &#2478;&#2494;&#2480;&#2509;&#2455;&#2468; &#2476;&#2495;&#2474;&#2470;&#2404; SDRF: 112</p></div>
                     </div>
                 </div>
+            </div>
             </div>
 
             <!-- TASK 3: Incident Desk + Contacts -->
@@ -9811,6 +9828,36 @@ function toggleInSARLayer(btn){
     toggleLayerById('insar', b);
 }
 window.toggleInSARLayer = toggleInSARLayer;
+
+function toggleRiverLayer(btn){
+    var b = btn || document.getElementById('toggle-river-btn') || document.getElementById('lc-toggle-rainfall');
+    toggleLayerById('river', b);
+}
+window.toggleRiverLayer = toggleRiverLayer;
+
+function toggleCutsLayer(btn){
+    var b = btn || document.getElementById('toggle-cuts-btn') || document.getElementById('lc-toggle-bridges');
+    toggleLayerById('cuts', b);
+}
+window.toggleCutsLayer = toggleCutsLayer;
+
+function toggleDetoursLayer(btn){
+    var b = btn || document.getElementById('toggle-detours-btn') || document.getElementById('lc-toggle-seismic');
+    toggleLayerById('detours', b);
+}
+window.toggleDetoursLayer = toggleDetoursLayer;
+
+function toggleHabitationsLayer(btn){
+    var b = btn || document.getElementById('toggle-habitations-btn') || document.getElementById('lc-toggle-shelters');
+    toggleLayerById('habitations', b);
+}
+window.toggleHabitationsLayer = toggleHabitationsLayer;
+
+function toggleReportsLayer(btn){
+    var b = btn || document.getElementById('toggle-reports-btn') || document.getElementById('lc-toggle-reports');
+    toggleLayerById('reports', b);
+}
+window.toggleReportsLayer = toggleReportsLayer;
 
 var blockedCorridorPopupHtml = `
 <div class="text-xs p-1.5 min-w-[270px]">

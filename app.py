@@ -9029,6 +9029,19 @@ def api_gods_eye_config():
         return jsonify({"status": "ERROR", "message": str(e)}), 500
 
 
+@app.route("/api/gods-eye/tile-key", methods=["GET"])
+def api_gods_eye_tile_key():
+    """
+    GET /api/gods-eye/tile-key
+    Returns client-side credential for Google Photorealistic 3D Tiles rendering on localhost.
+    """
+    key = os.environ.get("GOOGLE_MAPS_API_KEY", "")
+    return jsonify({
+        "status": "CONFIGURED" if key else "AUTH_REQUIRED",
+        "key": key
+    }), 200
+
+
 if __name__ == "__main__":
 
 
