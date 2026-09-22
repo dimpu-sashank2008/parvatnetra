@@ -1,5 +1,5 @@
 {
-  "updated_at_utc": "2026-09-22T13:01:34.755764+00:00",
+  "updated_at_utc": "2026-09-22T13:11:52.919800+00:00",
   "evidence": {
     "PIEZO-NH10-KM48-01": [
       {
@@ -2203,6 +2203,71 @@
     },
     {
       "linkage_id": "link-a0b037ce",
+      "event_id": "CTRL-2023-WINTER-DRY",
+      "sensor_id": "PIEZO-NH10-KM48-01",
+      "corridor_id": "CORR-NH10-SIKKIM-KM48",
+      "event_timestamp_utc": "2023-12-20T12:00:00Z",
+      "observation_window_start": "2023-12-17T12:00:00Z",
+      "observation_window_end": "2023-12-20T12:00:00Z",
+      "label": "NON_EVENT",
+      "label_source": "IMD_AND_BRO_VERIFIED_STABLE_WINDOW",
+      "verification_status": "LINKED",
+      "notes": "Verified continuous dry winter weather, zero highway blockages"
+    },
+    {
+      "linkage_id": "link-662b8268",
+      "event_id": "EVT-TEST-GLOF-01",
+      "sensor_id": "PIEZO-NH10-KM48-01",
+      "corridor_id": "CORR-NH10-SIKKIM-KM48",
+      "event_timestamp_utc": "2024-06-15T10:00:00Z",
+      "observation_window_start": "2024-06-12T10:00:00Z",
+      "observation_window_end": "2024-06-15T10:00:00Z",
+      "label": "EVENT",
+      "label_source": "GSI_SPECIAL_REPORT_2024",
+      "verification_status": "LINKED",
+      "notes": "Documented debris flow"
+    },
+    {
+      "linkage_id": "link-ed4d0668",
+      "event_id": "CTRL-TEST-DRY-01",
+      "sensor_id": "PIEZO-NH10-KM48-01",
+      "corridor_id": "CORR-NH10-SIKKIM-KM48",
+      "event_timestamp_utc": "2024-01-15T12:00:00Z",
+      "observation_window_start": "2024-01-12T12:00:00Z",
+      "observation_window_end": "2024-01-15T12:00:00Z",
+      "label": "NON_EVENT",
+      "label_source": "IMD_AWS_VERIFIED_DRY",
+      "verification_status": "LINKED",
+      "notes": "Zero precipitation, zero deformation"
+    },
+    {
+      "linkage_id": "link-44cf013a",
+      "event_id": "SPAN-TEST-UNCERTAIN-01",
+      "sensor_id": "PIEZO-NH10-KM48-01",
+      "corridor_id": "CORR-NH10-SIKKIM-KM48",
+      "event_timestamp_utc": "2024-03-01T00:00:00Z",
+      "observation_window_start": "2024-02-28T00:00:00Z",
+      "observation_window_end": "2024-03-01T00:00:00Z",
+      "label": "UNKNOWN",
+      "label_source": "UNMONITORED_GAP",
+      "verification_status": "LINKED",
+      "notes": "Telemetry dropout; ground truth unknown"
+    },
+    {
+      "linkage_id": "link-569e7cc1",
+      "event_id": "EVT-2023-TEESTA-SURGE",
+      "sensor_id": "PIEZO-NH10-KM48-01",
+      "corridor_id": "CORR-NH10-SIKKIM-KM48",
+      "event_timestamp_utc": "2023-10-04T06:00:00Z",
+      "observation_window_start": "2023-10-01T06:00:00Z",
+      "observation_window_end": "2023-10-04T06:00:00Z",
+      "label": "EVENT",
+      "label_source": "GSI_OFFICIAL_DISASTER_BULLETIN",
+      "verification_status": "LINKED",
+      "notes": "South Lhonak Lake outbreak flood causing massive basal scour"
+    },
+    {
+      "linkage_id": "link-9f5ac5df",
       "event_id": "CTRL-2023-WINTER-DRY",
       "sensor_id": "PIEZO-NH10-KM48-01",
       "corridor_id": "CORR-NH10-SIKKIM-KM48",
