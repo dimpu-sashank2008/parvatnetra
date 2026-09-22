@@ -1,7 +1,7 @@
 # PARVAT NETRA • REAL-TIME MULTIMODAL CRI DATASET REPORT
 **Evaluation Engine:** PAHAD AI Multimodal Fusion Engine v3.1  
-**Generated UTC:** 2026-09-22T13:05:07.280991+00:00  
-**Dataset SHA-256:** `21a1d790694bff853cbe66712d290857cfc4285e000e65c24661cd4a204d05c5`  
+**Generated UTC:** 2026-09-22T13:08:32.100635+00:00  
+**Dataset SHA-256:** `30e762ee0763233e6f31c8e70da3c06110ea1cdfd77ad55d2955fea137f5cd25`  
 **Filed Files:** `data/realtime/realtime_cri_dataset.csv`, `data/realtime/realtime_cri_dataset.json`  
 
 ---
@@ -9,7 +9,7 @@
 ## 1. Executive Summary
 This dataset files live multi-modal sensor and meteorological observations across all 20 GSI critical monitoring corridors in the 8 North-Eastern Region (NER) states:
 - **Total Sectors Evaluated:** 20
-- **Average Sector CRI:** 12.28 / 100
+- **Average Sector CRI:** 12.06 / 100
 - **Average Mohr-Coulomb FoS:** 3.294
 - **Peak 24h Rainfall Recorded:** 27.4 mm
 - **Alert Band Distribution:**
@@ -31,7 +31,7 @@ This dataset files live multi-modal sensor and meteorological observations acros
 | `SK-MANGAN-01` | Mangan-Chungthang Road | Sikkim | 17.1 mm | 3.7 M | 2.953 | 10.64 | **10.64** | `LOW` | 1/3 | `[LIVE/HYBRID]` |
 | `MZ-HUNTHAR-01` | NH-06 / Western Arterial | Mizoram | 7.6 mm | 3.7 M | 3.031 | 10.75 | **10.75** | `LOW` | 1/3 | `[LIVE/HYBRID]` |
 | `MZ-SAIRANG-01` | Bairabi-Sairang Rail Spur | Mizoram | 6.8 mm | 3.7 M | 4.116 | 6.28 | **6.28** | `LOW` | 1/3 | `[LIVE/HYBRID]` |
-| `MZ-KOLASIB-01` | NH-306 Silchar-Aizawl Link | Mizoram | 13.2 mm | 3.7 M | 3.583 | 12.55 | **12.55** | `LOW` | 1/3 | `[LIVE/HYBRID]` |
+| `MZ-KOLASIB-01` | NH-306 Silchar-Aizawl Link | Mizoram | 4.54 mm | 3.7 M | 3.583 | 8.24 | **8.24** | `LOW` | 1/3 | `[LIVE/HYBRID]` |
 | `NL-PAGALA-01` | NH-29 Dimapur-Kohima Lifeline | Nagaland | 2.5 mm | 3.7 M | 1.919 | 11.75 | **11.75** | `LOW` | 1/3 | `[LIVE/HYBRID]` |
 | `NL-DZUDZA-01` | NH-29 Km 15 | Nagaland | 8.9 mm | 3.7 M | 2.337 | 12.95 | **12.95** | `LOW` | 1/3 | `[LIVE/HYBRID]` |
 | `NL-PIPHEMA-01` | NH-29 | Nagaland | 27.4 mm | 3.7 M | 2.753 | 19.22 | **19.22** | `LOW` | 1/3 | `[LIVE/HYBRID]` |
